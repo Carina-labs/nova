@@ -16,13 +16,12 @@ jobs:
         uses: actions/checkout@v2
       -
         name: Docker meta
-        id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        id: meta
+        uses: docker/metadata-action@v3
         with:
-          images: a41ventures/carina
-          tag-semver: |
-            {{version}}
-            {{major}}.{{minor}}
+          images: name/app
+          tags: |
+            type=sha
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -40,5 +39,5 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          labels: ${{ steps.docker_meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
