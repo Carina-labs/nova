@@ -41,3 +41,14 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
+  update_helm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Update helm img tag
+        uses: Carina-labs/tag-changer@main
+        with:
+          A41_PAT: ${{ secrets.A41_PAT }}
+          TAGS: ${{ job.build.steps.meta.outputs.tags }}
