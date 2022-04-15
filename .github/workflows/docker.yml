@@ -43,6 +43,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+    if: "startsWith(github.event.head_commit.message, 'feat:')"
 
   update_helm:
     needs: build
