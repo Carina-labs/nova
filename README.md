@@ -1,6 +1,3 @@
-Need to filter commit for CI (Build for every commit is not reasonable)
-
-
 # novachain
 **novachain** is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://starport.com).
 
