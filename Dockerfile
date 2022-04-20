@@ -13,7 +13,7 @@ RUN BUILD_TAGS=muslc make build
 ## Deploy image
 FROM golang:1.18.1-alpine
 
-COPY --from=build /novachain/build/bin/novachaind /bin/novachaind
+COPY --from=build /novachain/build/novachaind /bin/novachaind
 
 ENV HOME /novachain
 WORKDIR $HOME
