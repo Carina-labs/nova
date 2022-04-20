@@ -95,4 +95,4 @@ install: go.sum
 	go install -mod=readonly $(BUILD_FLAGS) ./cmd/novachaind
 
 build:
-	go build $(BUILD_FLAGS) -o build/novachaind ./cmd/novachaind
+	go build $(BUILD_FLAGS) -o ./build/novachaind ./cmd/novachaind
