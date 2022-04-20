@@ -8,7 +8,7 @@ COPY . /novachain
 # For more details see https://github.com/CosmWasm/wasmvm#builds-of-libwasmvm 
 ADD https://github.com/CosmWasm/wasmvm/releases/download/v1.0.0-beta7/libwasmvm_muslc.a /lib/libwasmvm_muslc.a
 RUN sha256sum /lib/libwasmvm_muslc.a | grep d0152067a5609bfdfb3f0d5d6c0f2760f79d5f2cd7fd8513cafa9932d22eb350
-RUN RUN apk update && apk add --no-cache gcc libc-dev git make
+RUN apk update && apk add --no-cache gcc libc-dev git make
 RUN BUILD_TAGS=muslc make build
 
 ## Deploy image
