@@ -1,15 +1,23 @@
 ## Build Image
 FROM golang:1.18.1-alpine as build
 
+# this comes from standard alpine nightly file
+#  https://github.com/rust-lang/docker-rust-nightly/blob/master/alpine3.12/Dockerfile
+# with some changes to support our toolchain, etc
+RUN set -eux; apk add --no-cache ca-certificates build-base;
+RUN apk add git
+
 WORKDIR /novachain
 COPY . /novachain
 
-# From https://github.com/CosmWasm/wasmd/blob/master/Dockerfile
-# For more details see https://github.com/CosmWasm/wasmvm#builds-of-libwasmvm 
-ADD https://github.com/CosmWasm/wasmvm/releases/download/v1.0.0-beta7/libwasmvm_muslc.a /lib/libwasmvm_muslc.a
-RUN sha256sum /lib/libwasmvm_muslc.a | grep d0152067a5609bfdfb3f0d5d6c0f2760f79d5f2cd7fd8513cafa9932d22eb350
-RUN apk update && apk add --no-cache gcc libc-dev git make
-RUN BUILD_TAGS=muslc make build
+# See https://github.com/CosmWasm/wasmvm/releases
+ADD https://github.com/CosmWasm/wasmvm/releases/download/v1.0.0-beta10/libwasmvm_muslc.x86_64.a /lib/libwasmvm_muslc.x86_64.a
+RUN sha256sum /lib/libwasmvm_muslc.x86_64.a | grep 2f44efa9c6c1cda138bd1f46d8d53c5ebfe1f4a53cf3457b01db86472c4917ac
+
+# Copy the library you want to the final location that will be found by the linker flag `-lwasmvm_muslc`
+RUN cp /lib/libwasmvm_muslc.x86_64.a /lib/libwasmvm_muslc.a
+
+RUN LEDGER_ENABLED=false BUILD_TAGS=muslc LINK_STATICALLY=true make build
 
 ## Deploy image
 FROM golang:1.18.1-alpine
