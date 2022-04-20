@@ -1,5 +1,5 @@
 ## Build Image
-FROM golang:1.18.1-bullseye as build
+FROM golang:1.18.1-alpine as build
 
 WORKDIR /novachain
 COPY . /novachain
@@ -11,7 +11,7 @@ RUN sha256sum /lib/libwasmvm_muslc.a | grep d0152067a5609bfdfb3f0d5d6c0f2760f79d
 RUN BUILD_TAGS=muslc make build
 
 ## Deploy image
-FROM gcr.io/distroless/base-debian11:nonroot
+FROM golang:1.18.1-alpine
 
 COPY --from=build /novachain/build/novachaind /bin/novachaind
 
