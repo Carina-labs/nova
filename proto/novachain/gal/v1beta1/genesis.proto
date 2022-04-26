@@ -1,0 +1,34 @@
+syntax = "proto3";
+package novachain.gal.v1beta1;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
+import "cosmos_proto/cosmos.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/Carina-labs/novachain/x/gal/types";
+
+// Params defines the parameters for the gal module.
+message Params {
+
+}
+
+// GenesisState defines the gal module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  repeated DepositAccount depositAccounts = 2;
+}
+
+// DepositAccount defines snToken's total share and deposit information.
+message DepositAccount {
+  string denom = 1;
+  repeated DepositInfo depositInfos = 2;
+  int64 totalShare = 3;
+}
+
+// DepositInfo defines user address, share and debt.
+message DepositInfo {
+  string address = 1;
+  int64 share = 2;
+  int64 debt = 3;
+}
