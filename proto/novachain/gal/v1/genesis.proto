@@ -24,6 +24,7 @@ message DepositAccount {
   string denom = 1;
   repeated DepositInfo depositInfos = 2;
   int64 totalShare = 3;
+  int64 lastBlockUpdate = 4;
 }
 
 // DepositInfo defines user address, share and debt.
