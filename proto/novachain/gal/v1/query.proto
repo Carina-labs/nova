@@ -1,13 +1,15 @@
 syntax = "proto3";
 package novachain.gal.v1beta1;
 
+import "google/api/annotations.proto";
+
 option go_package = "github.com/Carina-labs/novachain/x/gal/types";
 
 // Query defines the gRPC querier service.
 service Query {
   rpc Balance(QueryBalanceRequest) returns (QueryBalanceResponse) {
-    option (google.api.http).get = "/novachain/gal/v1beta1/balances/{address}/by_denom"
-  };
+    option (google.api.http).get = "/novachain/gal/v1/balances/{address}/by_denom";
+  }
 }
 
 // QueryBalanceRequest defines request form to query balance of snToken with address.
