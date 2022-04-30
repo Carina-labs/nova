@@ -88,7 +88,6 @@ endif
 
 #$(info $$BUILD_FLAGS is [$(BUILD_FLAGS)])
 
-
 all: install build
 
 install: go.sum
@@ -96,3 +95,5 @@ install: go.sum
 
 build:
 	go build $(BUILD_FLAGS) -o ./build/novachaind ./cmd/novachaind
+
+.PHONY: all install build
