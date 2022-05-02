@@ -1,15 +1,32 @@
 syntax = "proto3";
-package novachain.gal.v1beta1;
+package novachain.gal.v1;
 
+import "gogoproto/gogo.proto";
+import "novachain/gal/v1/params.proto";
 import "google/api/annotations.proto";
 
 option go_package = "github.com/Carina-labs/novachain/x/gal/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/novachain/gal/v1/params";
+  }
+
   rpc Balance(QueryBalanceRequest) returns (QueryBalanceResponse) {
     option (google.api.http).get = "/novachain/gal/v1/balances/{address}/by_denom";
   }
+}
+
+// QueryParamsRequest is the request type for the Query/Params RPC method.
+message QueryParamsRequest {
+
+}
+
+// QueryParamsResponse is the response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params defines the parameters of the module.
+  Params params = 1 [ (gogoproto.nullable) = false ];
 }
 
 // QueryBalanceRequest defines request form to query balance of snToken with address.
