@@ -19,7 +19,7 @@ jobs:
         include:
           - targetos: darwin
             arch: arm64
-    name: osmosis ${{ matrix.arch }} for ${{ matrix.targetos }}
+    name: novachain ${{ matrix.arch }} for ${{ matrix.targetos }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2.1.4
@@ -29,7 +29,7 @@ jobs:
           GOOS: ${{ matrix.targetos }}
           GOARCH: ${{ matrix.arch }}
 
-      - name: Compile osmosis
+      - name: Compile novachain
         run: |
           go mod download
           make install
