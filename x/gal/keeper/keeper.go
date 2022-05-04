@@ -40,10 +40,32 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 	return params
 }
 
-func (k Keeper) DepositNativeToken() {
+func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Coins) {
+	// wAtom -> [ GAL ] -> snAtom
+	for _, coin := range amt {
+		// mint new sn token
+		if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
 
+		}
+
+		// burn wrapped token
+		if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
+			
+		}
+	}
 }
 
-func (k Keeper) WithdrawNovaToken() {
-	
+func (k Keeper) WithdrawNovaToken(ctx sdk.Context, withdrawer string, amt sdk.Coins) {
+	// snAtom -> [GAL] -> wAtom
+	for _, coin := range amt {
+		// burn sn token
+		if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
+
+		}
+
+		// mint new w token
+		if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
+
+		}
+	}
 }
