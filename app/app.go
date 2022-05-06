@@ -2,7 +2,6 @@ package app
 
 import (
 	"io"
-	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -95,8 +94,6 @@ import (
 
 	"github.com/tendermint/spm/cosmoscmd"
 	"github.com/tendermint/spm/openapiconsole"
-
-	"github.com/Carina-labs/novachain/docs"
 )
 
 const (
@@ -675,7 +672,6 @@ func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig
 	ModuleBasics.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
 
 	// register app's OpenAPI routes.
-	apiSvr.Router.Handle("/static/openapi.yml", http.FileServer(http.FS(docs.Docs)))
 	apiSvr.Router.HandleFunc("/", openapiconsole.Handler(Name, "/static/openapi.yml"))
 }
 
