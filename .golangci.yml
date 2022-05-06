@@ -4,23 +4,15 @@ run:
 linters:
   disable-all: true
   enable:
-    - asciicheck
-    - depguard
-    - errcheck
-    - exportloopref
+    - deadcode
     - goconst
-    - gofmt
-    - goheader
     - goimports
-    - gomodguard
-    - goprintffuncname
+    - gosimple
     - govet
     - ineffassign
     - misspell
-    - testpackage
-    - typecheck
     - unconvert
-    - whitespace
+    - varcheck
 
 issues:
   max-issues-per-linter: 10000
