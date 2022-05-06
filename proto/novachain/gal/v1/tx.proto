@@ -12,7 +12,7 @@ option go_package = "github.com/Carina-labs/novachain/x/gal/types";
 service Msg {
   rpc deposit(MsgDeposit) returns (MsgDepositResponse);
 
-  rpc withdraw(MsgWithdraw) returns (MsgsWithdrawResponse);
+  rpc withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
 }
 
 // MsgDeposit defines user who deposit and amount of coins.
@@ -32,5 +32,5 @@ message MsgWithdraw {
       [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
-message MsgsWithdrawResponse {
+message MsgWithdrawResponse {
 }
