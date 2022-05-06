@@ -7,8 +7,8 @@ FROM golang:1.18.1-alpine as build
 RUN set -eux; apk add --no-cache ca-certificates build-base;
 RUN apk add git
 
-WORKDIR /novachain
-COPY . /novachain
+WORKDIR /nova
+COPY . /nova
 
 # See https://github.com/CosmWasm/wasmvm/releases
 ADD https://github.com/CosmWasm/wasmvm/releases/download/v1.0.0-beta10/libwasmvm_muslc.x86_64.a /lib/libwasmvm_muslc.x86_64.a
@@ -22,9 +22,9 @@ RUN LEDGER_ENABLED=false BUILD_TAGS=muslc LINK_STATICALLY=true make build
 ## Deploy image
 FROM golang:1.18.1-alpine
 
-COPY --from=build /novachain/build/novachaind /bin/novachaind
+COPY --from=build /nova/build/novad /bin/novad
 
-ENV HOME /novachain
+ENV HOME /nova
 WORKDIR $HOME
 
 EXPOSE 26656 
