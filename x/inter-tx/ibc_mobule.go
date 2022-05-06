@@ -1,4 +1,4 @@
-package gal
+package inter_tx
 
 import (
 	proto "github.com/gogo/protobuf/proto"
