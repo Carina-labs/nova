@@ -8,6 +8,8 @@ on:
     branches:
       - main
       - dev
+permissions:
+  contents: read
 
 jobs:
   golangci:
@@ -24,6 +26,8 @@ jobs:
             **/**.go
             go.mod
             go.sum
-      - name: Run golangci-lint
-        run: make lint
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.29
         if: env.GIT_DIFF
