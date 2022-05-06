@@ -6,11 +6,8 @@ linters:
   enable:
     - asciicheck
     - depguard
-    - durationcheck
     - errcheck
-    - errname
     - exportloopref
-    - forcetypeassert
     - goconst
     - gofmt
     - goheader
@@ -18,13 +15,8 @@ linters:
     - gomodguard
     - goprintffuncname
     - govet
-    - importas
     - ineffassign
-    - makezero
     - misspell
-    - nakedret
-    - paralleltest
-    - promlinter
     - testpackage
     - typecheck
     - unconvert
