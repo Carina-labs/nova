@@ -2,37 +2,35 @@ package keeper
 
 import (
 	"github.com/Carina-labs/novachain/x/gal/types"
+	interTxKeeper "github.com/Carina-labs/novachain/x/inter-tx/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	icacontrollerkeeper "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/controller/keeper"
 	"github.com/tendermint/tendermint/libs/log"
 )
 
 // Keeper defines a module interface that facilitates the transfer of coins between accounts.
 type Keeper struct {
-	cdc                 codec.BinaryCodec
-	storeKey            sdk.StoreKey
-	paramSpace          paramtypes.Subspace
-	bankKeeper          types.BankKeeper
-	scopedKeeper        capabilitykeeper.ScopedKeeper
-	icaControllerKeeper icacontrollerkeeper.Keeper
+	cdc           codec.BinaryCodec
+	storeKey      sdk.StoreKey
+	paramSpace    paramtypes.Subspace
+	bankKeeper    types.BankKeeper
+	scopedKeeper  capabilitykeeper.ScopedKeeper
+	interTxKeeper interTxKeeper.Keeper
 }
 
 func NewKeeper(cdc codec.BinaryCodec,
 	key sdk.StoreKey,
 	paramSpace paramtypes.Subspace,
 	bankKeeper types.BankKeeper,
-	scopedKeeper capabilitykeeper.ScopedKeeper,
-	iaKeeper icacontrollerkeeper.Keeper) Keeper {
+	interTxKeeper interTxKeeper.Keeper) Keeper {
 	return Keeper{
-		cdc:                 cdc,
-		storeKey:            key,
-		bankKeeper:          bankKeeper,
-		paramSpace:          paramSpace,
-		scopedKeeper:        scopedKeeper,
-		icaControllerKeeper: iaKeeper,
+		cdc:           cdc,
+		storeKey:      key,
+		bankKeeper:    bankKeeper,
+		paramSpace:    paramSpace,
+		interTxKeeper: interTxKeeper,
 	}
 }
 
