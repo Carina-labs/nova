@@ -94,5 +94,9 @@ install: go.sum
 
 build:
 	go build $(BUILD_FLAGS) -o ./build/novad ./cmd/novad
+
+lint:
+	echo "Start a linter"
+	go run github.com/golangci/golangci-lint/cmd/golangci-lint run --timeout=10m
   
-.PHONY: all install build
+.PHONY: all install build lint
