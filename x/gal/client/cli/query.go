@@ -1,10 +1,17 @@
 package cli
 
 import (
+	"fmt"
 	"github.com/Carina-labs/novachain/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/flags"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/spf13/cobra"
+	"strings"
+)
+
+const (
+	FlagDenom = "denom"
 )
 
 // GetQueryCmd creates and returns the intertx query command
@@ -17,23 +24,42 @@ func GetQueryCmd() *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
-	cmd.AddCommand(getInterchainAccountCmd())
+	cmd.AddCommand(GetSharesCmd())
 
 	return cmd
 }
 
-func getInterchainAccountCmd() *cobra.Command {
+func GetSharesCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "interchainaccounts [connection-id] [owner-account]",
-		Args: cobra.ExactArgs(2),
+		Use:   "shares [address]",
+		Short: "Query for account shares by address",
+		Long: strings.TrimSpace(fmt.Sprintf(`Query the total shares of an account or of a specific denomination.
+Example:
+  $ %s query %s shares [address]
+  $ %s query %s shares [address] --denom=[denom]`,
+			version.AppName, types.ModuleName, version.AppName, types.ModuleName)),
+		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			denom, err := cmd.Flags().GetString(FlagDenom)
 			if err != nil {
 				return err
 			}
 
 			queryClient := types.NewQueryClient(clientCtx)
-			res, err := queryClient.InterchainAccountFromAddress(cmd.Context(), types.NewQueryInterchainAccountRequest(args[0], args[1]))
+
+			addr, err := sdk.AccAddressFromBech32(args[0])
+			if err != nil {
+				return err
+			}
+
+			ctx := cmd.Context()
+			params := types.NewQuerySharesRequest(addr, denom)
+			res, err := queryClient.Share(ctx, params)
 			if err != nil {
 				return err
 			}
@@ -41,8 +67,6 @@ func getInterchainAccountCmd() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
-	flags.AddQueryFlagsToCmd(cmd)
 
 	return cmd
 }

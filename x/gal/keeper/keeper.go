@@ -50,32 +50,42 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 	return params
 }
 
-func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Coins) {
+func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Coins) error {
 	// wAtom -> [ GAL ] -> snAtom
-	//for _, coin := range amt {
-	//	// mint new sn token
-	//	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
-	//
-	//	}
-	//
-	//	// burn wrapped token
-	//	if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
-	//
-	//	}
-	//}
+	for _, coin := range amt {
+		// mint new sn token
+		if err := k.bankKeeper.MintCoins(ctx, types.ModuleName,
+			sdk.Coins{sdk.Coin{Denom: getPairSnToken(coin.Denom), Amount: coin.Amount}}); err != nil {
+			return err
+		}
+
+		// burn wrapped token
+		if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{coin}); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
-func (k Keeper) WithdrawNovaToken(ctx sdk.Context, withdrawer string, amt sdk.Coins) {
+func (k Keeper) WithdrawNovaToken(ctx sdk.Context, withdrawer string, amt sdk.Coins) error {
 	// snAtom -> [GAL] -> wAtom
-	//for _, coin := range amt {
-	//	// burn sn token
-	//	if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
-	//
-	//	}
-	//
-	//	// mint new w token
-	//	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
-	//
-	//	}
-	//}
+	for _, coin := range amt {
+		// burn sn token
+		if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName,
+			sdk.Coins{sdk.Coin{Denom: coin.Denom, Amount: coin.Amount}}); err != nil {
+			return err
+		}
+
+		// mint new w token
+		if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func getPairSnToken(denom string) string {
+	return ""
 }
