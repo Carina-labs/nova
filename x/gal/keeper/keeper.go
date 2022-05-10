@@ -8,29 +8,35 @@ import (
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/tendermint/tendermint/libs/log"
+
+	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 )
 
 // Keeper defines a module interface that facilitates the transfer of coins between accounts.
 type Keeper struct {
-	cdc           codec.BinaryCodec
-	storeKey      sdk.StoreKey
-	paramSpace    paramtypes.Subspace
-	bankKeeper    types.BankKeeper
-	scopedKeeper  capabilitykeeper.ScopedKeeper
-	interTxKeeper interTxKeeper.Keeper
+	cdc        codec.BinaryCodec
+	storeKey   sdk.StoreKey
+	paramSpace paramtypes.Subspace
+
+	bankKeeper        types.BankKeeper
+	scopedKeeper      capabilitykeeper.ScopedKeeper
+	interTxKeeper     interTxKeeper.Keeper
+	ibcTransferKeeper transfer.Keeper
 }
 
 func NewKeeper(cdc codec.BinaryCodec,
 	key sdk.StoreKey,
 	paramSpace paramtypes.Subspace,
 	bankKeeper types.BankKeeper,
-	interTxKeeper interTxKeeper.Keeper) Keeper {
+	interTxKeeper interTxKeeper.Keeper,
+	ibcTransferKeeper transfer.Keeper) Keeper {
 	return Keeper{
-		cdc:           cdc,
-		storeKey:      key,
-		bankKeeper:    bankKeeper,
-		paramSpace:    paramSpace,
-		interTxKeeper: interTxKeeper,
+		cdc:               cdc,
+		storeKey:          key,
+		bankKeeper:        bankKeeper,
+		paramSpace:        paramSpace,
+		interTxKeeper:     interTxKeeper,
+		ibcTransferKeeper: ibcTransferKeeper,
 	}
 }
 
@@ -59,10 +65,14 @@ func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Co
 			return err
 		}
 
-		// burn wrapped token
-		if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{coin}); err != nil {
-			return err
-		}
+		//// burn wrapped token
+		//if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{coin}); err != nil {
+		//	return err
+		//}
+
+		// ibc transfer to target chain
+
+		// send ica message to remote delegation
 	}
 
 	return nil
