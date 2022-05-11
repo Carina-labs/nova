@@ -7,10 +7,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	types2 "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	"github.com/tendermint/tendermint/libs/log"
-
 	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
+	types2 "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	types3 "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	"github.com/tendermint/tendermint/libs/log"
 )
 
 // Keeper defines a module interface that facilitates the transfer of coins between accounts.
@@ -60,31 +60,41 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Coins) error {
 	// wAtom -> [ GAL ] -> snAtom
 	for _, coin := range amt {
+		goCtx := sdk.WrapSDKContext(ctx)
+
+		// IBC send token to target chain
+		// TODO : need to store IBC info(channel, port, receiver address) to store
+
+		testSourcePort := "transfer"
+		testSourceChannel
+
+		_, err := k.ibcTransferKeeper.Transfer(goCtx,
+			&types2.MsgTransfer{
+				SourcePort:    "",
+				SourceChannel: "",
+				Token: sdk.Coin{
+					Denom:  "",
+					Amount: sdk.NewInt(0),
+				},
+				Sender:   "",
+				Receiver: "",
+				TimeoutHeight: types3.Height{
+					RevisionHeight: 0,
+					RevisionNumber: 0,
+				},
+				TimeoutTimestamp: 0,
+			},
+		)
+
+		if err != nil {
+			return err
+		}
+
 		// mint new sn token
 		if err := k.bankKeeper.MintCoins(ctx, types.ModuleName,
 			sdk.Coins{sdk.Coin{Denom: getPairSnToken(coin.Denom), Amount: coin.Amount}}); err != nil {
 			return err
 		}
-
-		result, err := k.ibcTransferKeeper.Transfer(ctx,
-			&types2.MsgTransfer{
-				SourcePort:       '',
-				SourceChannel:    '',
-				Token:            nil,
-				Sender:           '',
-				Receiver:         '',
-				TimeoutHeight:    '',
-				TimeoutTimestamp: '',
-			})
-
-		//// burn wrapped token
-		//if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{coin}); err != nil {
-		//	return err
-		//}
-
-		// ibc transfer to target chain
-
-		// send ica message to remote delegation
 	}
 
 	return nil
