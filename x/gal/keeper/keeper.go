@@ -7,6 +7,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
+	types2 "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	types3 "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	"github.com/tendermint/tendermint/libs/log"
 
 	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
@@ -59,6 +61,37 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Coins) error {
 	// wAtom -> [ GAL ] -> snAtom
 	for _, coin := range amt {
+		goCtx := sdk.WrapSDKContext(ctx)
+
+		// IBC send token to target chain
+		// TODO : need to store IBC info(channel, port, receiver address) to store
+		testSourcePort := "transfer"
+		testSourceChannel := "channel-0"
+		testSender := ""
+		testReceiver := ""
+
+		_, err := k.ibcTransferKeeper.Transfer(goCtx,
+			&types2.MsgTransfer{
+				SourcePort:    testSourcePort,
+				SourceChannel: testSourceChannel,
+				Token: sdk.Coin{
+					Denom:  "",
+					Amount: sdk.NewInt(0),
+				},
+				Sender:   testSender,
+				Receiver: testReceiver,
+				TimeoutHeight: types3.Height{
+					RevisionHeight: 0,
+					RevisionNumber: 0,
+				},
+				TimeoutTimestamp: 0,
+			},
+		)
+
+		if err != nil {
+			return err
+		}
+
 		// mint new sn token
 		if err := k.bankKeeper.MintCoins(ctx, types.ModuleName,
 			sdk.Coins{sdk.Coin{Denom: getPairSnToken(coin.Denom), Amount: coin.Amount}}); err != nil {
