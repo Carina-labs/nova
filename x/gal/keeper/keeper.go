@@ -11,8 +11,6 @@ import (
 	types2 "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	types3 "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	"github.com/tendermint/tendermint/libs/log"
-
-	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 )
 
 // Keeper defines a module interface that facilitates the transfer of coins between accounts.
@@ -66,20 +64,21 @@ func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Co
 
 		// IBC send token to target chain
 		// TODO : need to store IBC info(channel, port, receiver address) to store
-
 		testSourcePort := "transfer"
-		testSourceChannel
+		testSourceChannel := "channel-0"
+		testSender := ""
+		testReceiver := ""
 
 		_, err := k.ibcTransferKeeper.Transfer(goCtx,
 			&types2.MsgTransfer{
-				SourcePort:    "",
-				SourceChannel: "",
+				SourcePort:    testSourcePort,
+				SourceChannel: testSourceChannel,
 				Token: sdk.Coin{
 					Denom:  "",
 					Amount: sdk.NewInt(0),
 				},
-				Sender:   "",
-				Receiver: "",
+				Sender:   testSender,
+				Receiver: testReceiver,
 				TimeoutHeight: types3.Height{
 					RevisionHeight: 0,
 					RevisionNumber: 0,
@@ -97,15 +96,6 @@ func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Co
 			sdk.Coins{sdk.Coin{Denom: getPairSnToken(coin.Denom), Amount: coin.Amount}}); err != nil {
 			return err
 		}
-		// send ica message to remote delegation
-
-		//// burn wrapped token
-		//if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{coin}); err != nil {
-		//	return err
-		//}
-
-		// ibc transfer to target chain
-
 	}
 
 	return nil
