@@ -20,6 +20,7 @@ type Keeper struct {
 	paramSpace paramtypes.Subspace
 
 	bankKeeper        types.BankKeeper
+	accountKeeper     types.AccountKeeper
 	scopedKeeper      capabilitykeeper.ScopedKeeper
 	interTxKeeper     interTxKeeper.Keeper
 	ibcTransferKeeper transfer.Keeper
@@ -29,12 +30,14 @@ func NewKeeper(cdc codec.BinaryCodec,
 	key sdk.StoreKey,
 	paramSpace paramtypes.Subspace,
 	bankKeeper types.BankKeeper,
+	accountKeeper types.AccountKeeper,
 	interTxKeeper interTxKeeper.Keeper,
 	ibcTransferKeeper transfer.Keeper) Keeper {
 	return Keeper{
 		cdc:               cdc,
 		storeKey:          key,
 		bankKeeper:        bankKeeper,
+		accountKeeper:     accountKeeper,
 		paramSpace:        paramSpace,
 		interTxKeeper:     interTxKeeper,
 		ibcTransferKeeper: ibcTransferKeeper,
@@ -57,7 +60,7 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 	return params
 }
 
-func (k Keeper) DepositNativeToken(ctx sdk.Context,
+func (k Keeper) DepositCoin(ctx sdk.Context,
 	depositor string,
 	receiver string,
 	sourcePort string,

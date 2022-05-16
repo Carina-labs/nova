@@ -1,12 +1,17 @@
 package app
 
 import (
+	"github.com/Carina-labs/novachain/x/gal"
+	inter_tx "github.com/Carina-labs/novachain/x/inter-tx"
+	icacontrollerkeeper "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/controller/keeper"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 
+	galkeeper "github.com/Carina-labs/novachain/x/gal/keeper"
+	intertx_keeper "github.com/Carina-labs/novachain/x/inter-tx/keeper"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
@@ -145,6 +150,8 @@ var (
 		transfer.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		wasm.AppModuleBasic{},
+		gal.AppModuleBasic{},
+		inter_tx.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -157,6 +164,7 @@ var (
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 		wasm.ModuleName:                {authtypes.Burner},
+		gal.ModuleName:                 {authtypes.Minter, authtypes.Burner},
 	}
 )
 
@@ -230,22 +238,26 @@ type App struct {
 	memKeys map[string]*sdk.MemoryStoreKey
 
 	// keepers
-	AccountKeeper    authkeeper.AccountKeeper
-	BankKeeper       bankkeeper.Keeper
-	CapabilityKeeper *capabilitykeeper.Keeper
-	StakingKeeper    stakingkeeper.Keeper
-	SlashingKeeper   slashingkeeper.Keeper
-	MintKeeper       mintkeeper.Keeper
-	DistrKeeper      distrkeeper.Keeper
-	GovKeeper        govkeeper.Keeper
-	CrisisKeeper     crisiskeeper.Keeper
-	UpgradeKeeper    upgradekeeper.Keeper
-	ParamsKeeper     paramskeeper.Keeper
-	IBCKeeper        *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly
-	EvidenceKeeper   evidencekeeper.Keeper
-	TransferKeeper   ibctransferkeeper.Keeper
-	FeeGrantKeeper   feegrantkeeper.Keeper
-	WasmKeeper       wasmkeeper.Keeper
+	AccountKeeper       authkeeper.AccountKeeper
+	BankKeeper          bankkeeper.Keeper
+	CapabilityKeeper    *capabilitykeeper.Keeper
+	StakingKeeper       stakingkeeper.Keeper
+	SlashingKeeper      slashingkeeper.Keeper
+	MintKeeper          mintkeeper.Keeper
+	DistrKeeper         distrkeeper.Keeper
+	GovKeeper           govkeeper.Keeper
+	CrisisKeeper        crisiskeeper.Keeper
+	UpgradeKeeper       upgradekeeper.Keeper
+	ParamsKeeper        paramskeeper.Keeper
+	IBCKeeper           *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly
+	EvidenceKeeper      evidencekeeper.Keeper
+	TransferKeeper      ibctransferkeeper.Keeper
+	FeeGrantKeeper      feegrantkeeper.Keeper
+	WasmKeeper          wasmkeeper.Keeper
+	GalKeeper           galkeeper.Keeper
+	InterTxKeeper       intertx_keeper.Keeper
+	IcaControllerKeeper icacontrollerkeeper.Keeper
+	IbcTransferKeeper   ibctransferkeeper.Keeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper      capabilitykeeper.ScopedKeeper
@@ -286,7 +298,7 @@ func New(
 		minttypes.StoreKey, distrtypes.StoreKey, slashingtypes.StoreKey,
 		govtypes.StoreKey, paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey,
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey,
-		wasm.StoreKey,
+		wasm.StoreKey, gal.StoreKey, inter_tx.StoreKey, ibctransfertypes.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
@@ -423,6 +435,28 @@ func New(
 	ibcRouter.AddRoute(wasm.ModuleName, wasm.NewIBCHandler(app.WasmKeeper, app.IBCKeeper.ChannelKeeper))
 	app.IBCKeeper.SetRouter(ibcRouter)
 
+	app.InterTxKeeper = intertx_keeper.NewKeeper(
+		appCodec, keys[inter_tx.StoreKey], app.IcaControllerKeeper, app.ScopedIBCKeeper)
+
+	app.IbcTransferKeeper = ibctransferkeeper.NewKeeper(appCodec,
+		keys[ibctransfertypes.StoreKey],
+		app.GetSubspace(ibctransfertypes.StoreKey),
+		app.IBCKeeper.ChannelKeeper,
+		app.IBCKeeper.ChannelKeeper,
+		&app.IBCKeeper.PortKeeper,
+		app.AccountKeeper,
+		app.BankKeeper,
+		app.ScopedIBCKeeper)
+
+	app.GalKeeper = galkeeper.NewKeeper(
+		appCodec,
+		keys[gal.StoreKey],
+		app.GetSubspace(gal.ModuleName),
+		app.BankKeeper,
+		app.AccountKeeper,
+		app.InterTxKeeper,
+		app.IbcTransferKeeper)
+
 	/****  Module Options ****/
 
 	// NOTE: we may consider parsing `appOpts` inside module constructors. For the moment
@@ -454,6 +488,8 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		wasm.NewAppModule(appCodec, &app.WasmKeeper, app.StakingKeeper),
+		gal.NewAppModule(appCodec, app.GalKeeper, app.AccountKeeper),
+		inter_tx.NewAppModule(appCodec, app.InterTxKeeper),
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -464,14 +500,14 @@ func New(
 		authtypes.ModuleName, banktypes.ModuleName, paramstypes.ModuleName, genutiltypes.ModuleName, paramstypes.ModuleName, crisistypes.ModuleName,
 		govtypes.ModuleName, ibctransfertypes.ModuleName, upgradetypes.ModuleName, capabilitytypes.ModuleName, minttypes.ModuleName,
 		distrtypes.ModuleName, slashingtypes.ModuleName, evidencetypes.ModuleName, stakingtypes.ModuleName, ibchost.ModuleName,
-		feegrant.ModuleName, vestingtypes.ModuleName, wasm.ModuleName,
+		feegrant.ModuleName, vestingtypes.ModuleName, wasm.ModuleName, gal.ModuleName, inter_tx.ModuleName,
 	)
 
 	app.mm.SetOrderEndBlockers(
 		authtypes.ModuleName, banktypes.ModuleName, paramstypes.ModuleName, genutiltypes.ModuleName, paramstypes.ModuleName, crisistypes.ModuleName,
 		govtypes.ModuleName, ibctransfertypes.ModuleName, upgradetypes.ModuleName, capabilitytypes.ModuleName, minttypes.ModuleName,
 		distrtypes.ModuleName, slashingtypes.ModuleName, evidencetypes.ModuleName, stakingtypes.ModuleName, ibchost.ModuleName,
-		feegrant.ModuleName, vestingtypes.ModuleName, wasm.ModuleName,
+		feegrant.ModuleName, vestingtypes.ModuleName, wasm.ModuleName, gal.ModuleName, inter_tx.ModuleName,
 	)
 	// NOTE: The genutils module must occur after staking so that pools are
 	// properly initialized with tokens from genesis accounts.
@@ -498,6 +534,8 @@ func New(
 		vestingtypes.ModuleName,
 		crisistypes.ModuleName,
 		wasm.ModuleName,
+		gal.ModuleName,
+		inter_tx.ModuleName,
 	)
 
 	app.mm.RegisterInvariants(&app.CrisisKeeper)
