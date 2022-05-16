@@ -57,28 +57,30 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 	return params
 }
 
-func (k Keeper) DepositNativeToken(ctx sdk.Context, depositor string, amt sdk.Coins) error {
+func (k Keeper) DepositNativeToken(ctx sdk.Context,
+	depositor string,
+	receiver string,
+	sourcePort string,
+	sourceChannel string,
+	amt sdk.Coins) error {
 	// wAtom -> [ GAL ] -> snAtom
 	for _, coin := range amt {
 		goCtx := sdk.WrapSDKContext(ctx)
 
 		// IBC send token to target chain
-		// TODO : need to store IBC info(channel, port, receiver address) to store
-		testSourcePort := "transfer"
-		testSourceChannel := "channel-0"
-		testSender := ""
-		testReceiver := ""
+		// testSourcePort := "transfer"
+		// testSourceChannel := "channel-0"
 
 		_, err := k.ibcTransferKeeper.Transfer(goCtx,
 			&types2.MsgTransfer{
-				SourcePort:    testSourcePort,
-				SourceChannel: testSourceChannel,
+				SourcePort:    sourcePort,
+				SourceChannel: sourceChannel,
 				Token: sdk.Coin{
 					Denom:  "",
 					Amount: sdk.NewInt(0),
 				},
-				Sender:   testSender,
-				Receiver: testReceiver,
+				Sender:   depositor,
+				Receiver: receiver,
 				TimeoutHeight: types3.Height{
 					RevisionHeight: 0,
 					RevisionNumber: 0,
