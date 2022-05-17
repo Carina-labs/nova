@@ -35,6 +35,11 @@ func NewKeeper(cdc codec.BinaryCodec,
 	accountKeeper types.AccountKeeper,
 	interTxKeeper interTxKeeper.Keeper,
 	ibcTransferKeeper transfer.Keeper) Keeper {
+
+	if !paramSpace.HasKeyTable() {
+		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())
+	}
+
 	return Keeper{
 		cdc:               cdc,
 		storeKey:          key,

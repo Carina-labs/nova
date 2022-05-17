@@ -20,7 +20,9 @@ func NewParams(snTokenDenoms []string) Params {
 
 func DefaultParams() Params {
 	return Params{
-		SnTokenDenoms: []string{},
+		SnTokenDenoms: []string{
+			"snAtom",
+		},
 	}
 }
 

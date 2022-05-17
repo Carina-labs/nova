@@ -7,7 +7,12 @@ func NewGenesisState() *GenesisState {
 
 // DefaultGenesisState returns a default gal module genesis state.
 func DefaultGenesisState() *GenesisState {
-	return &GenesisState{}
+
+	genesisParam := DefaultParams()
+
+	return &GenesisState{
+		Params: genesisParam,
+	}
 }
 
 // Validate performs basic validation of supply genesis data returning an
