@@ -30,7 +30,7 @@ func GetTxCmd() *cobra.Command {
 
 func NewDepositCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "deposit [from_key_or_address] [amount]",
+		Use:   "deposit [from_key_or_address] [to_address] [amount]",
 		Short: "Deposit wrapped token to nova",
 		Long: `Deposit wrapped token to nova.
 Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
@@ -43,12 +43,17 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			coins, err := sdk.ParseCoinsNormalized(args[1])
+			receiver, err := sdk.AccAddressFromBech32(args[1])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgDeposit(clientCtx.GetFromAddress(), coins)
+			coins, err := sdk.ParseCoinsNormalized(args[2])
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgDeposit(clientCtx.GetFromAddress(), receiver, coins)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
