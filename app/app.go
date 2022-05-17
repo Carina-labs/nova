@@ -257,7 +257,6 @@ type App struct {
 	GalKeeper           galkeeper.Keeper
 	InterTxKeeper       intertx_keeper.Keeper
 	IcaControllerKeeper icacontrollerkeeper.Keeper
-	IbcTransferKeeper   ibctransferkeeper.Keeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper      capabilitykeeper.ScopedKeeper
@@ -311,7 +310,6 @@ func New(
 		wasm.StoreKey,
 		gal.StoreKey,
 		inter_tx.StoreKey,
-		ibctransfertypes.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
@@ -451,16 +449,6 @@ func New(
 	app.InterTxKeeper = intertx_keeper.NewKeeper(
 		appCodec, keys[inter_tx.StoreKey], app.IcaControllerKeeper, app.ScopedIBCKeeper)
 
-	app.IbcTransferKeeper = ibctransferkeeper.NewKeeper(appCodec,
-		keys[ibctransfertypes.StoreKey],
-		app.GetSubspace(ibctransfertypes.StoreKey),
-		app.IBCKeeper.ChannelKeeper,
-		app.IBCKeeper.ChannelKeeper,
-		&app.IBCKeeper.PortKeeper,
-		app.AccountKeeper,
-		app.BankKeeper,
-		app.ScopedIBCKeeper)
-
 	app.GalKeeper = galkeeper.NewKeeper(
 		appCodec,
 		keys[gal.StoreKey],
@@ -468,7 +456,7 @@ func New(
 		app.BankKeeper,
 		app.AccountKeeper,
 		app.InterTxKeeper,
-		app.IbcTransferKeeper)
+		app.TransferKeeper)
 
 	/****  Module Options ****/
 
@@ -502,7 +490,7 @@ func New(
 		transferModule,
 		wasm.NewAppModule(appCodec, &app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
 		gal.NewAppModule(appCodec, app.GalKeeper, app.AccountKeeper),
-		inter_tx.NewAppModule(appCodec, app.InterTxKeeper),
+		// inter_tx.NewAppModule(appCodec, app.InterTxKeeper),
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -606,7 +594,7 @@ func New(
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
 		gal.NewAppModule(appCodec, app.GalKeeper, app.AccountKeeper),
-		inter_tx.NewAppModule(appCodec, app.InterTxKeeper),
+		// inter_tx.NewAppModule(appCodec, app.InterTxKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
 
