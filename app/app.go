@@ -518,7 +518,7 @@ func New(
 		vestingtypes.ModuleName,
 		wasm.ModuleName,
 		gal.ModuleName,
-		inter_tx.ModuleName,
+		// inter_tx.ModuleName,
 	)
 
 	app.mm.SetOrderEndBlockers(
@@ -542,7 +542,7 @@ func New(
 		vestingtypes.ModuleName,
 		wasm.ModuleName,
 		gal.ModuleName,
-		inter_tx.ModuleName,
+		// inter_tx.ModuleName,
 	)
 	// NOTE: The genutils module must occur after staking so that pools are
 	// properly initialized with tokens from genesis accounts.
