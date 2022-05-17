@@ -84,15 +84,12 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 			&types2.MsgTransfer{
 				SourcePort:    sourcePort,
 				SourceChannel: sourceChannel,
-				Token: sdk.Coin{
-					Denom:  "",
-					Amount: sdk.NewInt(0),
-				},
+				Token: coin,
 				Sender:   depositor,
 				Receiver: receiver,
 				TimeoutHeight: types3.Height{
 					RevisionHeight: 0,
-					RevisionNumber: 0,
+					RevisionNumber: 100,
 				},
 				TimeoutTimestamp: 0,
 			},
@@ -103,10 +100,10 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 		}
 
 		// mint new sn token
-		if err := k.bankKeeper.MintCoins(ctx, types.ModuleName,
-			sdk.Coins{sdk.Coin{Denom: getPairSnToken(coin.Denom), Amount: coin.Amount}}); err != nil {
-			return err
-		}
+		//if err := k.bankKeeper.MintCoins(ctx, types.ModuleName,
+		//	sdk.Coins{sdk.Coin{Denom: getPairSnToken(coin.Denom), Amount: coin.Amount}}); err != nil {
+		//	return err
+		//}
 	}
 
 	return nil
