@@ -105,7 +105,7 @@ import (
 )
 
 const (
-	AccountAddressPrefix = "cosmos"
+	AccountAddressPrefix = "nova"
 	Name                 = "novachain"
 )
 
@@ -294,11 +294,24 @@ func New(
 	bApp.SetInterfaceRegistry(interfaceRegistry)
 
 	keys := sdk.NewKVStoreKeys(
-		authtypes.StoreKey, banktypes.StoreKey, stakingtypes.StoreKey,
-		minttypes.StoreKey, distrtypes.StoreKey, slashingtypes.StoreKey,
-		govtypes.StoreKey, paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey,
-		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey,
-		wasm.StoreKey, gal.StoreKey, inter_tx.StoreKey, ibctransfertypes.StoreKey,
+		authtypes.StoreKey,
+		banktypes.StoreKey,
+		stakingtypes.StoreKey,
+		minttypes.StoreKey,
+		distrtypes.StoreKey,
+		slashingtypes.StoreKey,
+		govtypes.StoreKey,
+		paramstypes.StoreKey,
+		ibchost.StoreKey,
+		upgradetypes.StoreKey,
+		feegrant.StoreKey,
+		evidencetypes.StoreKey,
+		ibctransfertypes.StoreKey,
+		capabilitytypes.StoreKey,
+		wasm.StoreKey,
+		gal.StoreKey,
+		inter_tx.StoreKey,
+		ibctransfertypes.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
@@ -497,17 +510,51 @@ func New(
 	// CanWithdrawInvariant invariant.
 	// NOTE: staking module is required if HistoricalEntries param > 0
 	app.mm.SetOrderBeginBlockers(
-		authtypes.ModuleName, banktypes.ModuleName, paramstypes.ModuleName, genutiltypes.ModuleName, paramstypes.ModuleName, crisistypes.ModuleName,
-		govtypes.ModuleName, ibctransfertypes.ModuleName, upgradetypes.ModuleName, capabilitytypes.ModuleName, minttypes.ModuleName,
-		distrtypes.ModuleName, slashingtypes.ModuleName, evidencetypes.ModuleName, stakingtypes.ModuleName, ibchost.ModuleName,
-		feegrant.ModuleName, vestingtypes.ModuleName, wasm.ModuleName, gal.ModuleName, inter_tx.ModuleName,
+		authtypes.ModuleName,
+		banktypes.ModuleName,
+		paramstypes.ModuleName,
+		genutiltypes.ModuleName,
+		paramstypes.ModuleName,
+		crisistypes.ModuleName,
+		govtypes.ModuleName,
+		ibctransfertypes.ModuleName,
+		upgradetypes.ModuleName,
+		capabilitytypes.ModuleName,
+		minttypes.ModuleName,
+		distrtypes.ModuleName,
+		slashingtypes.ModuleName,
+		evidencetypes.ModuleName,
+		stakingtypes.ModuleName,
+		ibchost.ModuleName,
+		feegrant.ModuleName,
+		vestingtypes.ModuleName,
+		wasm.ModuleName,
+		gal.ModuleName,
+		inter_tx.ModuleName,
 	)
 
 	app.mm.SetOrderEndBlockers(
-		authtypes.ModuleName, banktypes.ModuleName, paramstypes.ModuleName, genutiltypes.ModuleName, paramstypes.ModuleName, crisistypes.ModuleName,
-		govtypes.ModuleName, ibctransfertypes.ModuleName, upgradetypes.ModuleName, capabilitytypes.ModuleName, minttypes.ModuleName,
-		distrtypes.ModuleName, slashingtypes.ModuleName, evidencetypes.ModuleName, stakingtypes.ModuleName, ibchost.ModuleName,
-		feegrant.ModuleName, vestingtypes.ModuleName, wasm.ModuleName, gal.ModuleName, inter_tx.ModuleName,
+		authtypes.ModuleName,
+		banktypes.ModuleName,
+		paramstypes.ModuleName,
+		genutiltypes.ModuleName,
+		paramstypes.ModuleName,
+		crisistypes.ModuleName,
+		govtypes.ModuleName,
+		ibctransfertypes.ModuleName,
+		upgradetypes.ModuleName,
+		capabilitytypes.ModuleName,
+		minttypes.ModuleName,
+		distrtypes.ModuleName,
+		slashingtypes.ModuleName,
+		evidencetypes.ModuleName,
+		stakingtypes.ModuleName,
+		ibchost.ModuleName,
+		feegrant.ModuleName,
+		vestingtypes.ModuleName,
+		wasm.ModuleName,
+		gal.ModuleName,
+		inter_tx.ModuleName,
 	)
 	// NOTE: The genutils module must occur after staking so that pools are
 	// properly initialized with tokens from genesis accounts.
@@ -558,6 +605,8 @@ func New(
 		wasm.NewAppModule(appCodec, &app.WasmKeeper, app.StakingKeeper),
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
+		gal.NewAppModule(appCodec, app.GalKeeper, app.AccountKeeper),
+		inter_tx.NewAppModule(appCodec, app.InterTxKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
 
@@ -751,6 +800,8 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibctransfertypes.ModuleName)
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(wasm.ModuleName)
+	paramsKeeper.Subspace(gal.ModuleName)
+	paramsKeeper.Subspace(inter_tx.ModuleName)
 
 	return paramsKeeper
 }

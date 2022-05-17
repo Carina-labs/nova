@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"context"
 	"github.com/Carina-labs/novachain/x/gal/types"
 	interTxKeeper "github.com/Carina-labs/novachain/x/inter-tx/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -126,4 +127,8 @@ func (k Keeper) WithdrawNovaToken(ctx sdk.Context, withdrawer string, amt sdk.Co
 
 func getPairSnToken(denom string) string {
 	return ""
+}
+
+func (k Keeper) Share(context context.Context, rq *types.QuerySharesRequest) (*types.QuerySharesResponse, error) {
+	return nil, nil
 }

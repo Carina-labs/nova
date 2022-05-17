@@ -1,7 +1,9 @@
 package gal
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/Carina-labs/novachain/x/gal/keeper"
 	"github.com/Carina-labs/novachain/x/gal/simulation"
 	"github.com/Carina-labs/novachain/x/gal/types"
@@ -46,18 +48,23 @@ func (AppModuleBasic) DefaultGenesis(cdc codec.JSONCodec) json.RawMessage {
 
 // ValidateGenesis performs genesis state validation for the gal module.
 func (AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, _ client.TxEncodingConfig, bz json.RawMessage) error {
-	// TODO : implements this!
-	return nil
+	var data types.GenesisState
+	if err := cdc.UnmarshalJSON(bz, &data); err != nil {
+		return fmt.Errorf("failed to unmarshal %s genesis state: %w", types.ModuleName, err)
+	}
+
+	return data.Validate()
 }
 
 // RegisterRESTRoutes registers the REST routes for the gal module.
-func (AppModuleBasic) RegisterRESTRoutes(clientCtx client.Context, _ *mux.Router) {
-	// TODO : implements this!
+func (AppModuleBasic) RegisterRESTRoutes(clientCtx client.Context, rtr *mux.Router) {
+	// rest.RegisterHandlers(clientCtx, rtr)
 }
 
 // RegisterGRPCGatewayRoutes registers the gRPC Gateway routes for the gal module.
 func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *runtime.ServeMux) {
 	// TODO : implements this!
+	types.RegisterQueryHandlerClient(context.Background(), mux, types.NewQueryClient(clientCtx))
 }
 
 // GetTxCmd returns the root tx command for the gal module.
@@ -85,7 +92,8 @@ type AppModule struct {
 
 // RegisterServices reigsters mopdule services.
 func (am AppModule) RegisterServices(cfg module.Configurator) {
-
+	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(am.keeper))
+	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
 }
 
 // NewAppModule creates a new AppModule object

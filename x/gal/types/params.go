@@ -34,6 +34,10 @@ func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	}
 }
 
+func (p *Params) String() string {
+	return ""
+}
+
 func validateSnTokenDenoms(i interface{}) error {
 	return nil
 }
