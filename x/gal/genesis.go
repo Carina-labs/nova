@@ -13,5 +13,5 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState *types.GenesisState)
 
 // ExportGenesis returns the gal module's genesis state.
 func ExportGenesis(ctx sdk.Context, keeper keeper.Keeper) *types.GenesisState {
-	return types.NewGenesisState()
+	return types.DefaultGenesisState()
 }
