@@ -35,7 +35,7 @@ func NewDepositCmd() *cobra.Command {
 		Long: `Deposit wrapped token to nova.
 Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(2),
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.Flags().Set(flags.FlagFrom, args[0])
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -43,10 +43,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			receiver, err := sdk.AccAddressFromBech32(args[1])
-			if err != nil {
-				return err
-			}
+			receiver := args[1]
 
 			coins, err := sdk.ParseCoinsNormalized(args[2])
 			if err != nil {
@@ -58,6 +55,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
 }
