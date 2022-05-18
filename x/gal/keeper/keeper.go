@@ -100,7 +100,11 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 	return nil
 }
 
-func (k Keeper) WithdrawNovaToken(ctx sdk.Context, withdrawer string, amt sdk.Coins) error {
+func (k Keeper) UnStaking(ctx sdk.Context) {
+
+}
+
+func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer string, amt sdk.Coins) error {
 	// snAtom -> [GAL] -> wAtom
 	for _, coin := range amt {
 		// burn sn token

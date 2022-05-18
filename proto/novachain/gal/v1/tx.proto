@@ -27,6 +27,17 @@ message MsgDeposit {
 message MsgDepositResponse {
 }
 
+// MsgUnStaking defines user who want to un-stake his/her asset.
+message MsgUnStaking {
+  string depositor = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  repeated cosmos.base.v1beta1.Coin amount = 2
+      [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+}
+
+message MsgUnStakingResponse {
+
+}
+
 // MsgWithdraw defines user who withdraw and amount of coins.
 message MsgWithdraw {
   string withdrawer = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
