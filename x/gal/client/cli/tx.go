@@ -63,8 +63,8 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 func NewWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "withdraw [to_key_or_address] [amount]",
-		Short: "Deposit wrapped token to nova",
-		Long: `Deposit wrapped token to nova.
+		Short: "Withdraw wrapped token to nova",
+		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 		Args: cobra.ExactArgs(0),
