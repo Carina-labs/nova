@@ -77,20 +77,16 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 	for _, coin := range amt {
 		goCtx := sdk.WrapSDKContext(ctx)
 
-		// IBC send token to target chain
-		// testSourcePort := "transfer"
-		// testSourceChannel := "channel-0"
-
 		_, err := k.ibcTransferKeeper.Transfer(goCtx,
 			&types2.MsgTransfer{
 				SourcePort:    sourcePort,
 				SourceChannel: sourceChannel,
-				Token: coin,
-				Sender:   depositor,
-				Receiver: receiver,
+				Token:         coin,
+				Sender:        depositor,
+				Receiver:      receiver,
 				TimeoutHeight: types3.Height{
-					RevisionHeight: 0,
-					RevisionNumber: 100,
+					RevisionHeight: 100,
+					RevisionNumber: 0,
 				},
 				TimeoutTimestamp: 0,
 			},
@@ -99,12 +95,6 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 		if err != nil {
 			return err
 		}
-
-		// mint new sn token
-		//if err := k.bankKeeper.MintCoins(ctx, types.ModuleName,
-		//	sdk.Coins{sdk.Coin{Denom: getPairSnToken(coin.Denom), Amount: coin.Amount}}); err != nil {
-		//	return err
-		//}
 	}
 
 	return nil
