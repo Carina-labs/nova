@@ -86,7 +86,8 @@ func (AppModuleBasic) GetQueryCmd() *cobra.Command {
 type AppModule struct {
 	AppModuleBasic
 
-	keeper keeper.Keeper
+	keeper        keeper.Keeper
+	accountKeeper types.AccountKeeper
 }
 
 func (am AppModule) GenerateGenesisState(input *module.SimulationState) {
@@ -115,10 +116,11 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 }
 
 // NewAppModule creates and returns a new intertx AppModule
-func NewAppModule(cdc codec.Codec, keeper keeper.Keeper) AppModule {
+func NewAppModule(cdc codec.Codec, keeper keeper.Keeper, accountKeeper types.AccountKeeper) AppModule {
 	return AppModule{
 		AppModuleBasic: NewAppModuleBasic(cdc),
 		keeper:         keeper,
+		accountKeeper:  accountKeeper,
 	}
 }
 
