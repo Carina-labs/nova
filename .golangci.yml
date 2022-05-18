@@ -1,0 +1,19 @@
+run:
+  tests: false
+
+linters:
+  disable-all: true
+  enable:
+    - deadcode
+    - goconst
+    - goimports
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - unconvert
+    - varcheck
+
+issues:
+  max-issues-per-linter: 10000
+  max-same-issues: 10000

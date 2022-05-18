@@ -18,7 +18,6 @@ SDK_PACK := $(shell go list -m github.com/cosmos/cosmos-sdk | sed  's/ /\@/g')
 TM_VERSION := $(shell go list -m github.com/tendermint/tendermint | sed 's:.* ::') # grab everything after the space in "github.com/tendermint/tendermint v0.34.7"
 DOCKER := $(shell which docker)
 BUILDDIR ?= $(CURDIR)/build
-TEST_DOCKER_REPO=jackzampolin/novachaintest
 
 export GO111MODULE = on
 
@@ -61,8 +60,8 @@ build_tags_comma_sep := $(subst $(whitespace),$(comma),$(build_tags))
 
 # process linker flags
 
-ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=novachain \
-		  -X github.com/cosmos/cosmos-sdk/version.AppName=novachaind \
+ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=nova \
+		  -X github.com/cosmos/cosmos-sdk/version.AppName=novad \
 		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
 		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)" \
@@ -88,11 +87,12 @@ endif
 
 #$(info $$BUILD_FLAGS is [$(BUILD_FLAGS)])
 
-
 all: install build
 
 install: go.sum
-	go install -mod=readonly $(BUILD_FLAGS) ./cmd/novachaind
+	go install -mod=readonly $(BUILD_FLAGS) ./cmd/novad
 
 build:
-	go build $(BUILD_FLAGS) -o ./build/novachaind ./cmd/novachaind
+	go build $(BUILD_FLAGS) -o ./build/novad ./cmd/novad
+  
+.PHONY: all install build

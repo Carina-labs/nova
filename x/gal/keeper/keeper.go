@@ -8,10 +8,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 	types2 "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	types3 "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	"github.com/tendermint/tendermint/libs/log"
+
+	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 )
 
 // Keeper defines a module interface that facilitates the transfer of coins between accounts.
@@ -76,20 +77,16 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 	for _, coin := range amt {
 		goCtx := sdk.WrapSDKContext(ctx)
 
-		// IBC send token to target chain
-		// testSourcePort := "transfer"
-		// testSourceChannel := "channel-0"
-
 		_, err := k.ibcTransferKeeper.Transfer(goCtx,
 			&types2.MsgTransfer{
 				SourcePort:    sourcePort,
 				SourceChannel: sourceChannel,
-				Token: coin,
-				Sender:   depositor,
-				Receiver: receiver,
+				Token:         coin,
+				Sender:        depositor,
+				Receiver:      receiver,
 				TimeoutHeight: types3.Height{
-					RevisionHeight: 0,
-					RevisionNumber: 100,
+					RevisionHeight: 100,
+					RevisionNumber: 0,
 				},
 				TimeoutTimestamp: 0,
 			},
@@ -98,18 +95,16 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 		if err != nil {
 			return err
 		}
-
-		// mint new sn token
-		//if err := k.bankKeeper.MintCoins(ctx, types.ModuleName,
-		//	sdk.Coins{sdk.Coin{Denom: getPairSnToken(coin.Denom), Amount: coin.Amount}}); err != nil {
-		//	return err
-		//}
 	}
 
 	return nil
 }
 
-func (k Keeper) WithdrawNovaToken(ctx sdk.Context, withdrawer string, amt sdk.Coins) error {
+func (k Keeper) UnStaking(ctx sdk.Context) {
+
+}
+
+func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer string, amt sdk.Coins) error {
 	// snAtom -> [GAL] -> wAtom
 	for _, coin := range amt {
 		// burn sn token
