@@ -2,10 +2,11 @@ package types
 
 import (
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
+	"github.com/ghodss/yaml"
 )
 
 var (
-	KeySnTokenDenoms = []byte("snTokenDenoms")
+	KeyWhiteListedTokenDenoms = []byte("whiteListedTokenDenoms")
 )
 
 func ParamKeyTable() paramtypes.KeyTable {
@@ -14,14 +15,16 @@ func ParamKeyTable() paramtypes.KeyTable {
 
 func NewParams(snTokenDenoms []string) Params {
 	return Params{
-		SnTokenDenoms: snTokenDenoms,
+		WhiteListedTokenDenoms: snTokenDenoms,
 	}
 }
 
 func DefaultParams() Params {
 	return Params{
-		SnTokenDenoms: []string{
-			"snAtom",
+		WhiteListedTokenDenoms: []string{
+			"uatom",
+			"ujuno",
+			"uosmo",
 		},
 	}
 }
@@ -32,12 +35,13 @@ func (Params) Validate() error {
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
-		paramtypes.NewParamSetPair(KeySnTokenDenoms, &p.SnTokenDenoms, validateSnTokenDenoms),
+		paramtypes.NewParamSetPair(KeyWhiteListedTokenDenoms, &p.WhiteListedTokenDenoms, validateSnTokenDenoms),
 	}
 }
 
 func (p *Params) String() string {
-	return ""
+	out, _ := yaml.Marshal(p)
+	return string(out)
 }
 
 func validateSnTokenDenoms(i interface{}) error {
