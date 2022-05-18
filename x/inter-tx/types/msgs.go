@@ -11,36 +11,59 @@ import (
 )
 
 var (
-	_ sdk.Msg = &MsgRegisterAccount{}
-	_ sdk.Msg = &MsgSubmitTx{}
-
-	_ codectypes.UnpackInterfacesMessage = MsgSubmitTx{}
+	_ sdk.Msg = &MsgRegisterZone{}
+	_ sdk.Msg = &MsgICADelegate{}
+	_ sdk.Msg = &MsgICAUndelegate{}
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
-func NewMsgRegisterAccount(owner, connectionID string) *MsgRegisterAccount {
-	return &MsgRegisterAccount{
-		Owner:        owner,
-		ConnectionId: connectionID,
+func NewMsgRegisterZone(zone_name, chain_id, connection_id, owner_address, validator_adress, denom string) *MsgRegisterZone {
+	return &MsgRegisterZone{
+		ZoneName:         zone_name,
+		ChainId:          chain_id,
+		ConnectionId:     connection_id,
+		OwnerAddress:     owner_address,
+		ValidatorAddress: validator_adress,
+		Denom:            denom,
+		AuthzAddress:     "test",
 	}
 }
 
 // ValidateBasic implements sdk.Msg
-func (msg MsgRegisterAccount) ValidateBasic() error {
-	if strings.TrimSpace(msg.Owner) == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing sender address")
+func (msg MsgRegisterZone) ValidateBasic() error {
+	if strings.TrimSpace(msg.ZoneName) == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing zone name")
 	}
 
-	if _, err := sdk.AccAddressFromBech32(msg.Owner); err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "failed to parse address: %s", msg.Owner)
+	if strings.TrimSpace(msg.ChainId) == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing chain id")
 	}
 
+	if strings.TrimSpace(msg.ConnectionId) == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing connection id")
+	}
+
+	if strings.TrimSpace(msg.OwnerAddress) == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing owner address")
+	}
+
+	if strings.TrimSpace(msg.ValidatorAddress) == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing validator address")
+	}
+
+	if strings.TrimSpace(msg.Denom) == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing denom")
+	}
+
+	if strings.TrimSpace(msg.AuthzAddress) == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing authz address")
+	}
 	return nil
 }
 
 // GetSigners implements sdk.Msg
-func (msg MsgRegisterAccount) GetSigners() []sdk.AccAddress {
-	accAddr, err := sdk.AccAddressFromBech32(msg.Owner)
+func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
 	if err != nil {
 		panic(err)
 	}
@@ -48,24 +71,80 @@ func (msg MsgRegisterAccount) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-// NewMsgSubmitTx creates and returns a new MsgSubmitTx instance
-func NewMsgSubmitTx(sdkMsgs []sdk.Msg, connectionID, owner string) (*MsgSubmitTx, error) {
+func NewMsgICADelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgICADelegate {
+	return &MsgICADelegate{
+		ZoneName:      zone_name,
+		SenderAddress: sender,
+		OwnerAddress:  owner,
+		Amount:        amount,
+	}
+}
 
-	var err error
-
-	msgs := make([]*codectypes.Any, len(sdkMsgs))
-	for i, msg := range sdkMsgs {
-		msgs[i], err = PackTxMsgAny(msg)
-		if err != nil {
-			return nil, err
-		}
+// ValidateBasic implements sdk.Msg
+func (msg MsgICADelegate) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
+	if err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid owner address")
 	}
 
-	return &MsgSubmitTx{
-		ConnectionId: connectionID,
-		Owner:        owner,
-		Msgs:         msgs,
-	}, nil
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	return nil
+}
+
+// GetSigners implements sdk.Msg
+func (msg MsgICADelegate) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{accAddr}
+}
+
+func NewMsgICAUnDelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgICAUndelegate {
+	return &MsgICAUndelegate{
+		ZoneName:      zone_name,
+		SenderAddress: sender,
+		OwnerAddress:  owner,
+		Amount:        amount,
+	}
+}
+
+// ValidateBasic implements sdk.Msg
+func (msg MsgICAUndelegate) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
+	if err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid owner address")
+	}
+
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	return nil
+}
+
+// GetSigners implements sdk.Msg
+func (msg MsgICAUndelegate) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{accAddr}
 }
 
 // PackTxMsgAny marshals the sdk.Msg payload to a protobuf Any type
@@ -81,56 +160,4 @@ func PackTxMsgAny(sdkMsg sdk.Msg) (*codectypes.Any, error) {
 	}
 
 	return any, nil
-}
-
-// UnpackInterfaces implements codectypes.UnpackInterfacesMessage
-func (msg MsgSubmitTx) UnpackInterfaces(unpacker codectypes.AnyUnpacker) error {
-
-	// sdkMsg := make([]sdk.Msg, len(msg.Msgs))
-
-	for _, data := range msg.Msgs {
-		var sdkMsg sdk.Msg
-		err := unpacker.UnpackAny(data, &sdkMsg)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// GetTxMsg fetches the cached any message
-func (msgs *MsgSubmitTx) GetTxMsgs() []sdk.Msg {
-
-	sdkMsg := make([]sdk.Msg, len(msgs.Msgs))
-	for i, msg := range msgs.Msgs {
-		var ok bool
-
-		sdkMsg[i], ok = msg.GetCachedValue().(sdk.Msg)
-		if !ok {
-			return nil
-		}
-	}
-
-	return sdkMsg
-}
-
-// GetSigners implements sdk.Msg
-func (msg MsgSubmitTx) GetSigners() []sdk.AccAddress {
-	accAddr, err := sdk.AccAddressFromBech32(msg.Owner)
-	if err != nil {
-		panic(err)
-	}
-
-	return []sdk.AccAddress{accAddr}
-}
-
-// ValidateBasic implements sdk.Msg
-func (msg MsgSubmitTx) ValidateBasic() error {
-	_, err := sdk.AccAddressFromBech32(msg.Owner)
-	if err != nil {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid owner address")
-	}
-
-	return nil
 }

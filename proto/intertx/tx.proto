@@ -2,40 +2,59 @@ syntax = "proto3";
 
 package intertx;
 
-option go_package = "github.com/Carina-labs/novachain/x/inter-tx/types";
-
 import "gogoproto/gogo.proto";
 import "google/protobuf/any.proto";
+import "intertx/genesis.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/Carina-labs/novachain/x/inter-tx/types";
 
 // Msg defines the intertx Msg service.
 service Msg {
-  // Register defines a rpc handler for MsgRegisterAccount
-  rpc RegisterAccount(MsgRegisterAccount) returns (MsgRegisterAccountResponse);
+  // Register defines a rpc handler for MsgRegisterZone
+  rpc RegisterZone(MsgRegisterZone) returns (MsgRegisterZoneResponse);
   // SubmitTx defines a rpc handler for MsgSubmitTx
-  rpc SubmitTx(MsgSubmitTx) returns (MsgSubmitTxResponse);
+  //rpc SubmitTx(MsgSubmitTx) returns (MsgSubmitTxResponse);
+
+  // ICADelegate defines a rpc handler for MsgICADelegate
+  rpc ICADelegate(MsgICADelegate) returns (MsgICADelegateResponse);
+  // ICAUnDelegate defines a rpc handler for MsgICAUnDelegate
+  rpc ICAUndelegate(MsgICAUndelegate) returns (MsgICAUndelegateResponse);
 }
 
-// MsgRegisterAccount defines the payload for Msg/RegisterAccount
-message MsgRegisterAccount {
+// MsgRegisterZone defines the payload for Msg/RegisterZone
+message MsgRegisterZone {
   option (gogoproto.equal)           = false;
   option (gogoproto.goproto_getters) = false;
 
-  string owner                      = 1;
-  string connection_id              = 2 [(gogoproto.moretags) = "yaml:\"connection_id\""];
+  string zone_name = 1;
+  string chain_id = 2;
+  string connection_id = 3 [(gogoproto.moretags) = "yaml:\"connection_id\""];
+  string owner_address = 4;
+  string validator_address = 5;
+  string denom = 6;
+  string authz_address = 7;
+  //repeated string authz_permit = 8;
 }
 
-// MsgRegisterAccountResponse defines the response for Msg/RegisterAccount
-message MsgRegisterAccountResponse {}
+// MsgRegisterZoneResponse defines the response for Msg/RegisterZone
+message MsgRegisterZoneResponse {}
 
-// MsgSubmitTx defines the payload for Msg/SubmitTx
-message MsgSubmitTx {
-  option (gogoproto.equal)           = false;
-  option (gogoproto.goproto_getters) = false;
-
-  string owner                       = 1;
-  string connection_id = 2 [(gogoproto.moretags) = "yaml:\"connection_id\""];
-  repeated google.protobuf.Any msgs            = 3;
+message MsgICADelegate{
+//  RegisteredZone zone_name = 1;
+  string zone_name = 1;
+  string sender_address = 2;
+  string owner_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
-// MsgSubmitTxResponse defines the response for Msg/SubmitTx
-message MsgSubmitTxResponse {}
+message MsgICADelegateResponse{}
+
+message MsgICAUndelegate{
+  string zone_name = 1;
+  string sender_address = 2;
+  string owner_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+}
+
+message MsgICAUndelegateResponse{}

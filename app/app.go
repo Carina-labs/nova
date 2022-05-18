@@ -8,6 +8,7 @@ import (
 
 	"github.com/Carina-labs/novachain/x/gal"
 
+	galkeeper "github.com/Carina-labs/novachain/x/gal/keeper"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
@@ -55,7 +56,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/feegrant"
 	feegrantkeeper "github.com/cosmos/cosmos-sdk/x/feegrant/keeper"
 	feegrantmodule "github.com/cosmos/cosmos-sdk/x/feegrant/module"
-	galkeeper "github.com/Carina-labs/novachain/x/gal/keeper"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	genutiltypes "github.com/cosmos/cosmos-sdk/x/genutil/types"
 	"github.com/cosmos/cosmos-sdk/x/gov"
@@ -194,7 +194,7 @@ func init() {
 		panic(err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, "."+Name)
+	DefaultNodeHome = filepath.Join(userHomeDir, ".novad")
 }
 
 func GetWasmEnabledProposals() []wasm.ProposalType {
@@ -439,8 +439,8 @@ func New(
 
 	icaModule := ica.NewAppModule(&app.ICAControllerKeeper, &app.ICAHostKeeper)
 
-	app.IntertxKeeper = intertxkeeper.NewKeeper(appCodec, keys[intertxtypes.StoreKey], app.ICAControllerKeeper, scopedintertxKeeper)
-	intertxModule := intertx.NewAppModule(appCodec, app.IntertxKeeper)
+	app.IntertxKeeper = intertxkeeper.NewKeeper(appCodec, keys[intertxtypes.StoreKey], app.AccountKeeper, app.ICAControllerKeeper, scopedintertxKeeper, app.GetSubspace(intertxtypes.ModuleName))
+	intertxModule := intertx.NewAppModule(appCodec, app.IntertxKeeper, app.AccountKeeper)
 	intertxIBCModule := intertx.NewIBCModule(app.IntertxKeeper)
 
 	icaControllerIBCModule := icacontroller.NewIBCModule(app.ICAControllerKeeper, intertxIBCModule)
@@ -677,10 +677,9 @@ func New(
 				SignModeHandler: encodingConfig.TxConfig.SignModeHandler(),
 				SigGasConsumer:  ante.DefaultSigVerificationGasConsumer,
 			},
-			IBCChannelkeeper:  app.IBCKeeper,
-			TxCounterStoreKey: keys[wasm.StoreKey],
-			WasmConfig:        wasmConfig,
-			Cdc:               appCodec,
+			IBCKeeper:         app.IBCKeeper,
+			WasmConfig:        &wasmConfig,
+			TXCounterStoreKey: keys[wasm.StoreKey],
 		},
 	)
 	if err != nil {

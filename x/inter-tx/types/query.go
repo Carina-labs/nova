@@ -1,16 +1,17 @@
 package types
 
-// NewQueryInterchainAccountRequest creates and returns a new QueryInterchainAccountFromAddressRequest
-func NewQueryInterchainAccountRequest(connectionID, owner string) *QueryInterchainAccountFromAddressRequest {
-	return &QueryInterchainAccountFromAddressRequest{
+// NewQueryInterchainAccountRequest creates and returns a new QueryInterchainAccountFromZoneRequest
+// Zone_name으로 조회하도록 변경(zone name)
+func NewQueryInterchainAccountRequest(portID, connectionID string) *QueryInterchainAccountFromZoneRequest {
+	return &QueryInterchainAccountFromZoneRequest{
+		PortId:       portID,
 		ConnectionId: connectionID,
-		Owner:        owner,
 	}
 }
 
-// NewQueryInterchainAccountResponse creates and returns a new QueryInterchainAccountFromAddressResponse
-func NewQueryInterchainAccountResponse(interchainAccAddr string) *QueryInterchainAccountFromAddressResponse {
-	return &QueryInterchainAccountFromAddressResponse{
+// NewQueryInterchainAccountResponse creates and returns a new QueryInterchainAccountFromZoneResponse
+func NewQueryInterchainAccountResponse(interchainAccAddr string) *QueryInterchainAccountFromZoneResponse {
+	return &QueryInterchainAccountFromZoneResponse{
 		InterchainAccountAddress: interchainAccAddr,
 	}
 }

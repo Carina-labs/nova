@@ -2,14 +2,11 @@ package keeper
 
 import (
 	"context"
-	"time"
 
 	"github.com/Carina-labs/novachain/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
+
+	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
 var _ types.MsgServer = msgServer{}
@@ -23,53 +20,56 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 	return &msgServer{Keeper: keeper}
 }
 
-// RegisterAccount implements the Msg/RegisterAccount interface
-func (k msgServer) RegisterAccount(goCtx context.Context, msg *types.MsgRegisterAccount) (*types.MsgRegisterAccountResponse, error) {
+// RegisterZone implements the Msg/RegisterZone interface
+func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+	k.SetRegesterZone(ctx, *zone)
 
-	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, msg.ConnectionId, msg.Owner); err != nil {
+	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.ConnectionId, zone.OwnerAddress); err != nil {
 		return nil, err
 	}
 
-	return &types.MsgRegisterAccountResponse{}, nil
+	return &types.MsgRegisterZoneResponse{}, nil
 }
 
-// SubmitTx implements the Msg/SubmitTx interface
-func (k msgServer) SubmitTx(goCtx context.Context, msg *types.MsgSubmitTx) (*types.MsgSubmitTxResponse, error) {
+func (k msgServer) ICADelegate(goCtx context.Context, msg *types.MsgICADelegate) (*types.MsgICADelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	portID, err := icatypes.NewControllerPortID(msg.Owner)
+	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+
+	if !ok {
+		panic("zone name not found")
+	}
+
+	var msgs []sdk.Msg
+
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
+	err := k.SendICATx(ctx, zone_info.OwnerAddress, zone_info.ConnectionId, msgs)
+
 	if err != nil {
-		return nil, err
+		panic("ICADelegate transaction failed to send")
 	}
 
-	channelID, found := k.icaControllerKeeper.GetActiveChannelID(ctx, msg.ConnectionId, portID)
-	if !found {
-		return nil, sdkerrors.Wrapf(icatypes.ErrActiveChannelNotFound, "failed to retrieve active channel for port %s", portID)
+	return nil, nil
+}
+
+func (k msgServer) ICAUndelegate(goCtx context.Context, msg *types.MsgICAUndelegate) (*types.MsgICAUndelegateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+
+	if !ok {
+		panic("zone name not found")
 	}
 
-	chanCap, found := k.scopedKeeper.GetCapability(ctx, host.ChannelCapabilityPath(portID, channelID))
-	if !found {
-		return nil, sdkerrors.Wrap(channeltypes.ErrChannelCapabilityNotFound, "module does not own channel capability")
-	}
+	var msgs []sdk.Msg
 
-	data, err := icatypes.SerializeCosmosTx(k.cdc, msg.GetTxMsgs())
+	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
+	err := k.SendICATx(ctx, zone_info.OwnerAddress, zone_info.ConnectionId, msgs)
+
 	if err != nil {
-		return nil, err
+		panic("ICAUnDelegate transaction failed to send")
 	}
 
-	packetData := icatypes.InterchainAccountPacketData{
-		Type: icatypes.EXECUTE_TX,
-		Data: data,
-	}
-
-	// timeoutTimestamp set to max value with the unsigned bit shifted to sastisfy hermes timestamp conversion
-	// it is the responsibility of the auth module developer to ensure an appropriate timeout timestamp
-	timeoutTimestamp := time.Now().Add(time.Minute).UnixNano()
-	_, err = k.icaControllerKeeper.SendTx(ctx, chanCap, msg.ConnectionId, portID, packetData, uint64(timeoutTimestamp))
-	if err != nil {
-		return nil, err
-	}
-
-	return &types.MsgSubmitTxResponse{}, nil
+	return nil, nil
 }
