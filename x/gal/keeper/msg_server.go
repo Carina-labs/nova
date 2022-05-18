@@ -25,7 +25,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if err := m.keeper.WithdrawNovaToken(ctx, withdraw.Withdrawer, withdraw.Amount); err != nil {
+	if err := m.keeper.WithdrawCoin(ctx, withdraw.Withdrawer, withdraw.Amount); err != nil {
 		return nil, err
 	}
 	return &types.MsgWithdrawResponse{}, nil
