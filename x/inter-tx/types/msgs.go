@@ -17,13 +17,13 @@ var (
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
-func NewMsgRegisterZone(zone_name, chain_id, connection_id, owner_address, validator_adress, denom string) *MsgRegisterZone {
+func NewMsgRegisterZone(zone_name, chain_id, connection_id, owner_address, validator_address, denom string) *MsgRegisterZone {
 	return &MsgRegisterZone{
 		ZoneName:         zone_name,
 		ChainId:          chain_id,
 		ConnectionId:     connection_id,
 		OwnerAddress:     owner_address,
-		ValidatorAddress: validator_adress,
+		ValidatorAddress: validator_address,
 		Denom:            denom,
 		AuthzAddress:     "test",
 	}
