@@ -32,13 +32,13 @@ func GetTxCmd() *cobra.Command {
 }
 
 // TODO
-// authz 권한 등록,
 func getRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "register [zone-name] [chain-id] [owner-address] [connection-id] [validator_address] [denom]",
 		Args: cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.Flags().Set(flags.FlagFrom, args[2])
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -72,6 +72,7 @@ func getDelegateTxCmd() *cobra.Command {
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.Flags().Set(flags.FlagFrom, args[2])
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -86,7 +87,7 @@ func getDelegateTxCmd() *cobra.Command {
 				panic("coin error")
 			}
 
-			msg := types.NewMsgICADelegate(zone_name, sender, owner_address, amount)
+			msg := types.NewMsgIcaDelegate(zone_name, sender, owner_address, amount)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -103,6 +104,7 @@ func getUndelegateTxCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.Flags().Set(flags.FlagFrom, args[2])
 			clientCtx, err := client.GetClientTxContext(cmd)
+
 			if err != nil {
 				return err
 			}
@@ -112,7 +114,7 @@ func getUndelegateTxCmd() *cobra.Command {
 			owner_address := clientCtx.GetFromAddress().String()
 			amount, _ := sdk.ParseCoinNormalized(args[3])
 
-			msg := types.NewMsgICAUnDelegate(zone_name, sender, owner_address, amount)
+			msg := types.NewMsgIcaUnDelegate(zone_name, sender, owner_address, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -120,55 +122,3 @@ func getUndelegateTxCmd() *cobra.Command {
 
 	return cmd
 }
-
-// zone-name, msgs(json)
-// func getSubmitTxCmd() *cobra.Command {
-// 	cmd := &cobra.Command{
-// 		Use:  "submit [connection-id] [msgs(json)]",
-// 		Args: cobra.ExactArgs(2),
-// 		RunE: func(cmd *cobra.Command, args []string) error {
-// 			clientCtx, err := client.GetClientTxContext(cmd)
-// 			if err != nil {
-// 				return err
-// 			}
-
-// 			cdc := codec.NewProtoCodec(clientCtx.InterfaceRegistry)
-
-// 			var connection_id = args[0]
-// 			var msgs = strings.Split(args[1], "&&")
-
-// 			txMsgs := make([]sdk.Msg, len(msgs))
-
-// 			for i, msg := range msgs {
-// 				var txMsg sdk.Msg
-// 				if err := cdc.UnmarshalInterfaceJSON([]byte(msg), &txMsg); err != nil {
-// 					// check for file path if JSON input is not provided
-// 					// contents, err := ioutil.ReadFile(msg)
-// 					if err != nil {
-// 						return errors.Wrap(err, "neither JSON input nor path to .json file for sdk msg were provided")
-// 					}
-// 					// if err := cdc.UnmarshalInterfaceJSON(contents, txMsg); err != nil {
-// 					// 	return errors.Wrap(err, "error unmarshalling sdk msg file")
-// 					// }
-// 				}
-
-// 				txMsgs[i] = txMsg
-// 			}
-
-// 			msg, err := types.NewMsgSubmitTx(txMsgs, connection_id, clientCtx.GetFromAddress().String())
-// 			if err != nil {
-// 				return err
-// 			}
-
-// 			if err := msg.ValidateBasic(); err != nil {
-// 				return err
-// 			}
-
-// 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-// 		},
-// 	}
-
-// 	flags.AddTxFlagsToCmd(cmd)
-
-// 	return cmd
-// }

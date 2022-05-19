@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package intertx;
+package novachain.intertx.v1;
 
 import "gogoproto/gogo.proto";
 import "google/protobuf/any.proto";
-import "intertx/genesis.proto";
+import "novachain/intertx/v1/genesis.proto";
 import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "github.com/Carina-labs/novachain/x/inter-tx/types";
@@ -13,10 +13,10 @@ option go_package = "github.com/Carina-labs/novachain/x/inter-tx/types";
 service Msg {
   // Register defines a rpc handler for MsgRegisterZone
   rpc RegisterZone(MsgRegisterZone) returns (MsgRegisterZoneResponse);
-  // ICADelegate defines a rpc handler for MsgICADelegate
-  rpc ICADelegate(MsgICADelegate) returns (MsgICADelegateResponse);
-  // ICAUnDelegate defines a rpc handler for MsgICAUnDelegate
-  rpc ICAUndelegate(MsgICAUndelegate) returns (MsgICAUndelegateResponse);
+  // IcaDelegate defines a rpc handler for MsgIcaDelegate
+  rpc IcaDelegate(MsgIcaDelegate) returns (MsgIcaDelegateResponse);
+  // IcaUnDelegate defines a rpc handler for MsgIcaUnDelegate
+  rpc IcaUndelegate(MsgIcaUndelegate) returns (MsgIcaUndelegateResponse);
 }
 
 // MsgRegisterZone defines the payload for Msg/RegisterZone
@@ -37,7 +37,7 @@ message MsgRegisterZone {
 // MsgRegisterZoneResponse defines the response for Msg/RegisterZone
 message MsgRegisterZoneResponse {}
 
-message MsgICADelegate{
+message MsgIcaDelegate{
 //  RegisteredZone zone_name = 1;
   string zone_name = 1;
   string sender_address = 2;
@@ -45,13 +45,13 @@ message MsgICADelegate{
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
-message MsgICADelegateResponse{}
+message MsgIcaDelegateResponse{}
 
-message MsgICAUndelegate{
+message MsgIcaUndelegate{
   string zone_name = 1;
   string sender_address = 2;
   string owner_address = 3;
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
-message MsgICAUndelegateResponse{}
+message MsgIcaUndelegateResponse{}

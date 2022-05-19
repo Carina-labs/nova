@@ -12,8 +12,8 @@ import (
 
 var (
 	_ sdk.Msg = &MsgRegisterZone{}
-	_ sdk.Msg = &MsgICADelegate{}
-	_ sdk.Msg = &MsgICAUndelegate{}
+	_ sdk.Msg = &MsgIcaDelegate{}
+	_ sdk.Msg = &MsgIcaUndelegate{}
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
@@ -71,8 +71,8 @@ func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgICADelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgICADelegate {
-	return &MsgICADelegate{
+func NewMsgIcaDelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgIcaDelegate {
+	return &MsgIcaDelegate{
 		ZoneName:      zone_name,
 		SenderAddress: sender,
 		OwnerAddress:  owner,
@@ -81,7 +81,7 @@ func NewMsgICADelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgICA
 }
 
 // ValidateBasic implements sdk.Msg
-func (msg MsgICADelegate) ValidateBasic() error {
+func (msg MsgIcaDelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
 	if err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid owner address")
@@ -99,7 +99,7 @@ func (msg MsgICADelegate) ValidateBasic() error {
 }
 
 // GetSigners implements sdk.Msg
-func (msg MsgICADelegate) GetSigners() []sdk.AccAddress {
+func (msg MsgIcaDelegate) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
 
 	if err != nil {
@@ -109,8 +109,8 @@ func (msg MsgICADelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgICAUnDelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgICAUndelegate {
-	return &MsgICAUndelegate{
+func NewMsgIcaUnDelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgIcaUndelegate {
+	return &MsgIcaUndelegate{
 		ZoneName:      zone_name,
 		SenderAddress: sender,
 		OwnerAddress:  owner,
@@ -119,7 +119,7 @@ func NewMsgICAUnDelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgI
 }
 
 // ValidateBasic implements sdk.Msg
-func (msg MsgICAUndelegate) ValidateBasic() error {
+func (msg MsgIcaUndelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
 	if err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid owner address")
@@ -137,7 +137,7 @@ func (msg MsgICAUndelegate) ValidateBasic() error {
 }
 
 // GetSigners implements sdk.Msg
-func (msg MsgICAUndelegate) GetSigners() []sdk.AccAddress {
+func (msg MsgIcaUndelegate) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
 
 	if err != nil {

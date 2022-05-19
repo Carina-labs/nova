@@ -11,7 +11,7 @@ import (
 func GetQueryCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,
-		Short:                      "Querying commands for the intertx module",
+		Short:                      "Querying commands for the inter-tx module",
 		DisableFlagParsing:         true,
 		SuggestionsMinimumDistance: 2,
 		RunE:                       client.ValidateCmd,
@@ -24,7 +24,8 @@ func GetQueryCmd() *cobra.Command {
 
 func getInterchainAccountCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "interchainaccounts [owner-account] [connection-id]",
+		Use: "interchainaccounts [owner-account] [connection-id]",
+
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -34,6 +35,7 @@ func getInterchainAccountCmd() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 			res, err := queryClient.InterchainAccountFromZone(cmd.Context(), types.NewQueryInterchainAccountRequest(args[0], args[1]))
+
 			if err != nil {
 				return err
 			}

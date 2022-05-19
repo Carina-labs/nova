@@ -12,6 +12,7 @@ func NewQueryInterchainAccountRequest(portID, connectionID string) *QueryInterch
 // NewQueryInterchainAccountResponse creates and returns a new QueryInterchainAccountFromZoneResponse
 func NewQueryInterchainAccountResponse(interchainAccAddr string) *QueryInterchainAccountFromZoneResponse {
 	return &QueryInterchainAccountFromZoneResponse{
+
 		InterchainAccountAddress: interchainAccAddr,
 	}
 }

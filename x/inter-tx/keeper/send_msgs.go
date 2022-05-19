@@ -12,7 +12,7 @@ import (
 )
 
 // SubmitTx implements the Msg/SubmitTx interface
-func (k Keeper) SendICATx(ctx sdk.Context, owner_address, connection_id string, msgs []sdk.Msg) error {
+func (k Keeper) SendIcaTx(ctx sdk.Context, owner_address, connection_id string, msgs []sdk.Msg) error {
 
 	portID, err := icatypes.NewControllerPortID(owner_address)
 	if err != nil {
