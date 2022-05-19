@@ -6,9 +6,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Carina-labs/novachain/x/gal"
-
-	galkeeper "github.com/Carina-labs/novachain/x/gal/keeper"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
@@ -277,7 +274,6 @@ type App struct {
 	GalKeeper           galkeeper.Keeper
 	IntertxKeeper       intertxkeeper.Keeper
 	WasmKeeper          wasmkeeper.Keeper
-	GalKeeper           galkeeper.Keeper
 	AuthzKeeper         authzkeeper.Keeper
 
 	// make scoped keepers public for test purposes
