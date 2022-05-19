@@ -6,6 +6,9 @@ package types
 import (
 	context "context"
 	fmt "fmt"
+	io "io"
+	math_bits "math/bits"
+	math "math"
 	_ "github.com/cosmos/cosmos-sdk/codec/types"
 	types "github.com/cosmos/cosmos-sdk/types"
 	_ "github.com/gogo/protobuf/gogoproto"

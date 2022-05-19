@@ -13,9 +13,6 @@ option go_package = "github.com/Carina-labs/novachain/x/inter-tx/types";
 service Msg {
   // Register defines a rpc handler for MsgRegisterZone
   rpc RegisterZone(MsgRegisterZone) returns (MsgRegisterZoneResponse);
-  // SubmitTx defines a rpc handler for MsgSubmitTx
-  //rpc SubmitTx(MsgSubmitTx) returns (MsgSubmitTxResponse);
-
   // ICADelegate defines a rpc handler for MsgICADelegate
   rpc ICADelegate(MsgICADelegate) returns (MsgICADelegateResponse);
   // ICAUnDelegate defines a rpc handler for MsgICAUnDelegate
