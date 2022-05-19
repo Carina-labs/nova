@@ -99,6 +99,10 @@ import (
 	ibchost "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
 
+	gal "github.com/Carina-labs/novachain/x/gal"
+	galkeeper "github.com/Carina-labs/novachain/x/gal/keeper"
+	galtypes "github.com/Carina-labs/novachain/x/gal/types"
+
 	intertx "github.com/Carina-labs/novachain/x/inter-tx"
 	intertxkeeper "github.com/Carina-labs/novachain/x/inter-tx/keeper"
 	intertxtypes "github.com/Carina-labs/novachain/x/inter-tx/types"
@@ -161,6 +165,7 @@ var (
 		vesting.AppModuleBasic{},
 		wasm.AppModuleBasic{},
 		ica.AppModuleBasic{},
+		gal.AppModuleBasic{},
 		intertx.AppModuleBasic{},
 		authzmodule.AppModuleBasic{},
 		gal.AppModuleBasic{},
@@ -194,7 +199,7 @@ func init() {
 		panic(err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, "."+Name)
+	DefaultNodeHome = filepath.Join(userHomeDir, ".novad")
 }
 
 func GetWasmEnabledProposals() []wasm.ProposalType {
@@ -269,6 +274,7 @@ type App struct {
 	EvidenceKeeper      evidencekeeper.Keeper
 	TransferKeeper      ibctransferkeeper.Keeper
 	FeeGrantKeeper      feegrantkeeper.Keeper
+	GalKeeper           galkeeper.Keeper
 	IntertxKeeper       intertxkeeper.Keeper
 	WasmKeeper          wasmkeeper.Keeper
 	GalKeeper           galkeeper.Keeper
@@ -446,6 +452,8 @@ func New(
 	icaControllerIBCModule := icacontroller.NewIBCModule(app.ICAControllerKeeper, intertxIBCModule)
 	icaHostIBCModule := icahost.NewIBCModule(app.ICAHostKeeper)
 
+	app.GalKeeper = galkeeper.NewKeeper(appCodec, keys[galtypes.StoreKey], app.GetSubspace(galtypes.ModuleName), app.BankKeeper, app.AccountKeeper, app.IntertxKeeper, app.TransferKeeper)
+
 	// Create evidence Keeper for to register the IBC light client misbehaviour evidence route
 	evidenceKeeper := evidencekeeper.NewKeeper(
 		appCodec, keys[evidencetypes.StoreKey], &app.StakingKeeper, app.SlashingKeeper,
@@ -464,22 +472,10 @@ func New(
 	supportedFeatures := "iterator,staking,stargate"
 
 	app.WasmKeeper = wasm.NewKeeper(
-		appCodec,
-		keys[wasm.StoreKey],
-		app.GetSubspace(wasm.ModuleName),
-		app.AccountKeeper,
-		app.BankKeeper,
-		app.StakingKeeper,
-		app.DistrKeeper,
-		app.IBCKeeper.ChannelKeeper,
-		&app.IBCKeeper.PortKeeper,
-		scopedWasmKeeper,
-		app.TransferKeeper,
-		app.MsgServiceRouter(),
-		app.GRPCQueryRouter(),
-		wasmDir,
-		wasmConfig,
-		supportedFeatures,
+		appCodec, keys[wasm.StoreKey], app.GetSubspace(wasm.ModuleName), app.AccountKeeper, app.BankKeeper,
+		app.StakingKeeper, app.DistrKeeper, app.IBCKeeper.ChannelKeeper, &app.IBCKeeper.PortKeeper,
+		scopedWasmKeeper, app.TransferKeeper, app.MsgServiceRouter(), app.GRPCQueryRouter(),
+		wasmDir, wasmConfig, supportedFeatures,
 	)
 
 	// register wasm gov proposal types
@@ -655,7 +651,6 @@ func New(
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
 		gal.NewAppModule(appCodec, app.GalKeeper, app.AccountKeeper),
-		// inter_tx.NewAppModule(appCodec, app.InterTxKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
 
@@ -677,9 +672,10 @@ func New(
 				SignModeHandler: encodingConfig.TxConfig.SignModeHandler(),
 				SigGasConsumer:  ante.DefaultSigVerificationGasConsumer,
 			},
-			IBCKeeper:         app.IBCKeeper,
-			WasmConfig:        &wasmConfig,
-			TXCounterStoreKey: keys[wasm.StoreKey],
+			IBCChannelkeeper:  app.IBCKeeper,
+			TxCounterStoreKey: keys[wasm.StoreKey],
+			WasmConfig:        wasmConfig,
+			Cdc:               appCodec,
 		},
 	)
 	if err != nil {
