@@ -2,12 +2,14 @@ package cli
 
 import (
 	"fmt"
+
+	"strings"
+
 	"github.com/Carina-labs/novachain/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/spf13/cobra"
-	"strings"
 )
 
 const (

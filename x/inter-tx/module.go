@@ -2,8 +2,9 @@ package inter_tx
 
 import (
 	"encoding/json"
-	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"math/rand"
+
+	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
