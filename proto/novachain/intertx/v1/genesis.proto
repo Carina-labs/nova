@@ -1,5 +1,5 @@
 syntax = "proto3";
-package intertx;
+package novachain.intertx.v1;
 
 import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
@@ -8,14 +8,14 @@ import "cosmos/base/v1beta1/coin.proto";
 option go_package = "github.com/Carina-labs/novachain/x/inter-tx/types";
 
 message RegisteredZone {
-  ICAConnectionInfo connection_info = 1;
+  IcaConnectionInfo connection_info = 1;
   string validator_address = 2;
   string local_denom = 3;
   string authz_address = 4;
   //repeated string authz_permit = 5;
 }
 
-message ICAAccount {
+message IcaAccount {
   string zone_name = 1;
   string owner_address = 2;
   cosmos.base.v1beta1.Coin balance = 3 [
@@ -25,7 +25,7 @@ message ICAAccount {
 }
 
 //zone name, connection id, portID(owner address)
-message ICAConnectionInfo {
+message IcaConnectionInfo {
   string zone_name = 1;
   string connection_id = 2;
   string owner_address = 3;

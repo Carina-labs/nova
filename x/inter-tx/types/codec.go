@@ -15,8 +15,8 @@ var (
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(MsgRegisterZone{}, "intertx/MsgRegisterZone", nil)
-	cdc.RegisterConcrete(MsgICADelegate{}, "intertx/MsgICADelegate", nil)
-	cdc.RegisterConcrete(MsgICAUndelegate{}, "intertx/MsgICAUndelegate", nil)
+	cdc.RegisterConcrete(MsgIcaDelegate{}, "intertx/MsgIcaDelegate", nil)
+	cdc.RegisterConcrete(MsgIcaUndelegate{}, "intertx/MsgIcaUndelegate", nil)
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
@@ -24,7 +24,7 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterImplementations(
 		(*sdk.Msg)(nil),
 		&MsgRegisterZone{},
-		&MsgICADelegate{},
-		&MsgICAUndelegate{},
+		&MsgIcaDelegate{},
+		&MsgIcaUndelegate{},
 	)
 }
