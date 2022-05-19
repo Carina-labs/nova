@@ -1,8 +1,11 @@
 package types
 
 import (
+	"context"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
+	types2 "github.com/cosmos/cosmos-sdk/x/bank/types"
 )
 
 // BankKeeper defines the contract needed to be fulfilled for banking and supply dependencies.
@@ -13,6 +16,7 @@ type BankKeeper interface {
 	SendCoinsFromModuleToModule(ctx sdk.Context, senderModule string, recipientModule string, amt sdk.Coins) error
 	MintCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) error
 	BurnCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) error
+	Balance(ctx context.Context, request *types2.QueryBalanceRequest) (*types2.QueryBalanceResponse, error)
 }
 
 // AccountKeeper defines the account contract that must be fulfilled when
