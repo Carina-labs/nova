@@ -196,7 +196,7 @@ func init() {
 		panic(err)
 	}
 
-	DefaultNodeHome = filepath.Join(userHomeDir, ".novad")
+	DefaultNodeHome = filepath.Join(userHomeDir, "."+Name)
 }
 
 func GetWasmEnabledProposals() []wasm.ProposalType {
