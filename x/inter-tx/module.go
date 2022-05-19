@@ -2,9 +2,6 @@ package inter_tx
 
 import (
 	"encoding/json"
-	"math/rand"
-
-	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
@@ -88,31 +85,6 @@ type AppModule struct {
 
 	keeper        keeper.Keeper
 	accountKeeper types.AccountKeeper
-}
-
-func (am AppModule) GenerateGenesisState(input *module.SimulationState) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (am AppModule) ProposalContents(simState module.SimulationState) []simtypes.WeightedProposalContent {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (am AppModule) RandomizedParams(r *rand.Rand) []simtypes.ParamChange {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (am AppModule) RegisterStoreDecoder(registry sdk.StoreDecoderRegistry) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
-	//TODO implement me
-	panic("implement me")
 }
 
 // NewAppModule creates and returns a new intertx AppModule
