@@ -13,7 +13,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 	return paramtypes.NewKeyTable().RegisterParamSet(&Params{})
 }
 
-func NewParams(snTokenDenoms []string) Params {
+func NewParams(snTokenDenoms map[string]string) Params {
 	return Params{
 		WhiteListedTokenDenoms: snTokenDenoms,
 	}
@@ -21,10 +21,10 @@ func NewParams(snTokenDenoms []string) Params {
 
 func DefaultParams() Params {
 	return Params{
-		WhiteListedTokenDenoms: []string{
-			"uatom",
-			"ujuno",
-			"uosmo",
+		WhiteListedTokenDenoms: map[string]string{
+			"uatom": "statom",
+			"ujuno": "stjuno",
+			"uosmo": "stosmo",
 		},
 	}
 }

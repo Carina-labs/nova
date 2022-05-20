@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math/rand"
+
 	"github.com/Carina-labs/novachain/x/gal/client/cli"
 	"github.com/Carina-labs/novachain/x/gal/keeper"
 	"github.com/Carina-labs/novachain/x/gal/simulation"
@@ -18,7 +20,6 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
-	"math/rand"
 )
 
 var (
