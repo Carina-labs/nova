@@ -54,8 +54,8 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 }
 
 // SetParams sets the total set of gal parameters.
-func (k Keeper) SetParams(ctx sdk.Context, params *types.Params) {
-	k.paramSpace.SetParamSet(ctx, params)
+func (k Keeper) SetParams(ctx sdk.Context, params types.Params) {
+	k.paramSpace.SetParamSet(ctx, &params)
 }
 
 // GetParams returns total set of gal parameters.
