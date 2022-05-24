@@ -96,3 +96,28 @@ build:
 	go build $(BUILD_FLAGS) -o ./build/novad ./cmd/novad
   
 .PHONY: all install build
+
+########################################################################################################
+#####                                        Protobuf                                              #####
+########################################################################################################
+
+.PHONY: protogen protogen-api protogen-all
+
+protoConVer=v0.3.0
+protoImgName=a41ventures/nova-protogen:$(protoConVer)
+protogenConName=nova-proto-gen-$(protoConVer)
+protogenApiConName=nova-proto-gen-api-$(protoConVer)
+
+protogen-all: protogen protogen-api
+
+protogen:
+	@if docker ps -a --format '{{.Names}}' | grep -Eq "^${protogenConName}$$"; \
+	then docker start -a $(protogenConName); \
+	else docker run --name $(protogenConName) -v $(CURDIR):/workspace --workdir /workspace $(protoImgName) \
+	bash ./scripts/protogen.sh; fi
+
+protogen-api:
+	@if docker ps -a --format '{{.Names}}' | grep -Eq "^${protogenApiConName}$$"; \
+	then docker start -a $(protogenApiConName); \
+	else docker run --name $(protogenApiConName) -v $(CURDIR):/workspace --workdir /workspace $(protoImgName) \
+	bash ./scripts/protogen-api.sh; fi

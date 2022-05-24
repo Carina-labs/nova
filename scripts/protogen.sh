@@ -1,13 +1,19 @@
 #!/bin/bash
 
-#buf generate
-#
-#cp -r ./gen/proto/go/novachain/gal/v1/* ./x/gal/types
-#rm -rf gen
-
 set -eo pipefail
 
-echo "Generating gogo proto code"
+echo "##################################"
+echo "######## Cleaning API dir ########"
+echo "##################################"
+echo -e "\n"
+
+find ./ -type f \( -iname \*.pb.go -o -iname \*.pb.gw.go \) -delete
+
+
+echo "##################################"
+echo "### Generating gogo proto code ###"
+echo "##################################"
+
 cd proto
 proto_dirs=$(find ./novachain -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
 for dir in $proto_dirs; do
