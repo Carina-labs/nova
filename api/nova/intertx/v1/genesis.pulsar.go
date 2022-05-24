@@ -3,7 +3,7 @@ package intertxv1
 
 import (
 	fmt "fmt"
-	v1beta1 "github.com/Carina-labs/novachain/api/cosmos/base/v1beta1"
+	v1beta1 "github.com/Carina-labs/nova/api/cosmos/base/v1beta1"
 	_ "github.com/cosmos/cosmos-proto"
 	runtime "github.com/cosmos/cosmos-proto/runtime"
 	_ "github.com/gogo/protobuf/gogoproto"
@@ -24,8 +24,8 @@ var (
 )
 
 func init() {
-	file_novachain_intertx_v1_genesis_proto_init()
-	md_RegisteredZone = File_novachain_intertx_v1_genesis_proto.Messages().ByName("RegisteredZone")
+	file_nova_intertx_v1_genesis_proto_init()
+	md_RegisteredZone = File_nova_intertx_v1_genesis_proto.Messages().ByName("RegisteredZone")
 	fd_RegisteredZone_connection_info = md_RegisteredZone.Fields().ByName("connection_info")
 	fd_RegisteredZone_validator_address = md_RegisteredZone.Fields().ByName("validator_address")
 	fd_RegisteredZone_local_denom = md_RegisteredZone.Fields().ByName("local_denom")
@@ -41,7 +41,7 @@ func (x *RegisteredZone) ProtoReflect() protoreflect.Message {
 }
 
 func (x *RegisteredZone) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_intertx_v1_genesis_proto_msgTypes[0]
+	mi := &file_nova_intertx_v1_genesis_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -136,19 +136,19 @@ func (x *fastReflection_RegisteredZone) Range(f func(protoreflect.FieldDescripto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_RegisteredZone) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.RegisteredZone.connection_info":
+	case "nova.intertx.v1.RegisteredZone.connection_info":
 		return x.ConnectionInfo != nil
-	case "novachain.intertx.v1.RegisteredZone.validator_address":
+	case "nova.intertx.v1.RegisteredZone.validator_address":
 		return x.ValidatorAddress != ""
-	case "novachain.intertx.v1.RegisteredZone.local_denom":
+	case "nova.intertx.v1.RegisteredZone.local_denom":
 		return x.LocalDenom != ""
-	case "novachain.intertx.v1.RegisteredZone.authz_address":
+	case "nova.intertx.v1.RegisteredZone.authz_address":
 		return x.AuthzAddress != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.RegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.RegisteredZone"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -160,19 +160,19 @@ func (x *fastReflection_RegisteredZone) Has(fd protoreflect.FieldDescriptor) boo
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_RegisteredZone) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.RegisteredZone.connection_info":
+	case "nova.intertx.v1.RegisteredZone.connection_info":
 		x.ConnectionInfo = nil
-	case "novachain.intertx.v1.RegisteredZone.validator_address":
+	case "nova.intertx.v1.RegisteredZone.validator_address":
 		x.ValidatorAddress = ""
-	case "novachain.intertx.v1.RegisteredZone.local_denom":
+	case "nova.intertx.v1.RegisteredZone.local_denom":
 		x.LocalDenom = ""
-	case "novachain.intertx.v1.RegisteredZone.authz_address":
+	case "nova.intertx.v1.RegisteredZone.authz_address":
 		x.AuthzAddress = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.RegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.RegisteredZone"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -184,23 +184,23 @@ func (x *fastReflection_RegisteredZone) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_RegisteredZone) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.intertx.v1.RegisteredZone.connection_info":
+	case "nova.intertx.v1.RegisteredZone.connection_info":
 		value := x.ConnectionInfo
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "novachain.intertx.v1.RegisteredZone.validator_address":
+	case "nova.intertx.v1.RegisteredZone.validator_address":
 		value := x.ValidatorAddress
 		return protoreflect.ValueOfString(value)
-	case "novachain.intertx.v1.RegisteredZone.local_denom":
+	case "nova.intertx.v1.RegisteredZone.local_denom":
 		value := x.LocalDenom
 		return protoreflect.ValueOfString(value)
-	case "novachain.intertx.v1.RegisteredZone.authz_address":
+	case "nova.intertx.v1.RegisteredZone.authz_address":
 		value := x.AuthzAddress
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.RegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.RegisteredZone"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.RegisteredZone does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.RegisteredZone does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -216,19 +216,19 @@ func (x *fastReflection_RegisteredZone) Get(descriptor protoreflect.FieldDescrip
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_RegisteredZone) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.RegisteredZone.connection_info":
+	case "nova.intertx.v1.RegisteredZone.connection_info":
 		x.ConnectionInfo = value.Message().Interface().(*IcaConnectionInfo)
-	case "novachain.intertx.v1.RegisteredZone.validator_address":
+	case "nova.intertx.v1.RegisteredZone.validator_address":
 		x.ValidatorAddress = value.Interface().(string)
-	case "novachain.intertx.v1.RegisteredZone.local_denom":
+	case "nova.intertx.v1.RegisteredZone.local_denom":
 		x.LocalDenom = value.Interface().(string)
-	case "novachain.intertx.v1.RegisteredZone.authz_address":
+	case "nova.intertx.v1.RegisteredZone.authz_address":
 		x.AuthzAddress = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.RegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.RegisteredZone"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -244,22 +244,22 @@ func (x *fastReflection_RegisteredZone) Set(fd protoreflect.FieldDescriptor, val
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_RegisteredZone) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.RegisteredZone.connection_info":
+	case "nova.intertx.v1.RegisteredZone.connection_info":
 		if x.ConnectionInfo == nil {
 			x.ConnectionInfo = new(IcaConnectionInfo)
 		}
 		return protoreflect.ValueOfMessage(x.ConnectionInfo.ProtoReflect())
-	case "novachain.intertx.v1.RegisteredZone.validator_address":
-		panic(fmt.Errorf("field validator_address of message novachain.intertx.v1.RegisteredZone is not mutable"))
-	case "novachain.intertx.v1.RegisteredZone.local_denom":
-		panic(fmt.Errorf("field local_denom of message novachain.intertx.v1.RegisteredZone is not mutable"))
-	case "novachain.intertx.v1.RegisteredZone.authz_address":
-		panic(fmt.Errorf("field authz_address of message novachain.intertx.v1.RegisteredZone is not mutable"))
+	case "nova.intertx.v1.RegisteredZone.validator_address":
+		panic(fmt.Errorf("field validator_address of message nova.intertx.v1.RegisteredZone is not mutable"))
+	case "nova.intertx.v1.RegisteredZone.local_denom":
+		panic(fmt.Errorf("field local_denom of message nova.intertx.v1.RegisteredZone is not mutable"))
+	case "nova.intertx.v1.RegisteredZone.authz_address":
+		panic(fmt.Errorf("field authz_address of message nova.intertx.v1.RegisteredZone is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.RegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.RegisteredZone"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -268,20 +268,20 @@ func (x *fastReflection_RegisteredZone) Mutable(fd protoreflect.FieldDescriptor)
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_RegisteredZone) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.RegisteredZone.connection_info":
+	case "nova.intertx.v1.RegisteredZone.connection_info":
 		m := new(IcaConnectionInfo)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "novachain.intertx.v1.RegisteredZone.validator_address":
+	case "nova.intertx.v1.RegisteredZone.validator_address":
 		return protoreflect.ValueOfString("")
-	case "novachain.intertx.v1.RegisteredZone.local_denom":
+	case "nova.intertx.v1.RegisteredZone.local_denom":
 		return protoreflect.ValueOfString("")
-	case "novachain.intertx.v1.RegisteredZone.authz_address":
+	case "nova.intertx.v1.RegisteredZone.authz_address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.RegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.RegisteredZone"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.RegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -291,7 +291,7 @@ func (x *fastReflection_RegisteredZone) NewField(fd protoreflect.FieldDescriptor
 func (x *fastReflection_RegisteredZone) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.intertx.v1.RegisteredZone", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.intertx.v1.RegisteredZone", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -650,8 +650,8 @@ var (
 )
 
 func init() {
-	file_novachain_intertx_v1_genesis_proto_init()
-	md_IcaAccount = File_novachain_intertx_v1_genesis_proto.Messages().ByName("IcaAccount")
+	file_nova_intertx_v1_genesis_proto_init()
+	md_IcaAccount = File_nova_intertx_v1_genesis_proto.Messages().ByName("IcaAccount")
 	fd_IcaAccount_zone_name = md_IcaAccount.Fields().ByName("zone_name")
 	fd_IcaAccount_owner_address = md_IcaAccount.Fields().ByName("owner_address")
 	fd_IcaAccount_balance = md_IcaAccount.Fields().ByName("balance")
@@ -666,7 +666,7 @@ func (x *IcaAccount) ProtoReflect() protoreflect.Message {
 }
 
 func (x *IcaAccount) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_intertx_v1_genesis_proto_msgTypes[1]
+	mi := &file_nova_intertx_v1_genesis_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -755,17 +755,17 @@ func (x *fastReflection_IcaAccount) Range(f func(protoreflect.FieldDescriptor, p
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_IcaAccount) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaAccount.zone_name":
+	case "nova.intertx.v1.IcaAccount.zone_name":
 		return x.ZoneName != ""
-	case "novachain.intertx.v1.IcaAccount.owner_address":
+	case "nova.intertx.v1.IcaAccount.owner_address":
 		return x.OwnerAddress != ""
-	case "novachain.intertx.v1.IcaAccount.balance":
+	case "nova.intertx.v1.IcaAccount.balance":
 		return x.Balance != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaAccount"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaAccount"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -777,17 +777,17 @@ func (x *fastReflection_IcaAccount) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_IcaAccount) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaAccount.zone_name":
+	case "nova.intertx.v1.IcaAccount.zone_name":
 		x.ZoneName = ""
-	case "novachain.intertx.v1.IcaAccount.owner_address":
+	case "nova.intertx.v1.IcaAccount.owner_address":
 		x.OwnerAddress = ""
-	case "novachain.intertx.v1.IcaAccount.balance":
+	case "nova.intertx.v1.IcaAccount.balance":
 		x.Balance = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaAccount"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaAccount"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -799,20 +799,20 @@ func (x *fastReflection_IcaAccount) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_IcaAccount) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.intertx.v1.IcaAccount.zone_name":
+	case "nova.intertx.v1.IcaAccount.zone_name":
 		value := x.ZoneName
 		return protoreflect.ValueOfString(value)
-	case "novachain.intertx.v1.IcaAccount.owner_address":
+	case "nova.intertx.v1.IcaAccount.owner_address":
 		value := x.OwnerAddress
 		return protoreflect.ValueOfString(value)
-	case "novachain.intertx.v1.IcaAccount.balance":
+	case "nova.intertx.v1.IcaAccount.balance":
 		value := x.Balance
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaAccount"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaAccount"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaAccount does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaAccount does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -828,17 +828,17 @@ func (x *fastReflection_IcaAccount) Get(descriptor protoreflect.FieldDescriptor)
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_IcaAccount) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaAccount.zone_name":
+	case "nova.intertx.v1.IcaAccount.zone_name":
 		x.ZoneName = value.Interface().(string)
-	case "novachain.intertx.v1.IcaAccount.owner_address":
+	case "nova.intertx.v1.IcaAccount.owner_address":
 		x.OwnerAddress = value.Interface().(string)
-	case "novachain.intertx.v1.IcaAccount.balance":
+	case "nova.intertx.v1.IcaAccount.balance":
 		x.Balance = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaAccount"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaAccount"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -854,20 +854,20 @@ func (x *fastReflection_IcaAccount) Set(fd protoreflect.FieldDescriptor, value p
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_IcaAccount) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaAccount.balance":
+	case "nova.intertx.v1.IcaAccount.balance":
 		if x.Balance == nil {
 			x.Balance = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Balance.ProtoReflect())
-	case "novachain.intertx.v1.IcaAccount.zone_name":
-		panic(fmt.Errorf("field zone_name of message novachain.intertx.v1.IcaAccount is not mutable"))
-	case "novachain.intertx.v1.IcaAccount.owner_address":
-		panic(fmt.Errorf("field owner_address of message novachain.intertx.v1.IcaAccount is not mutable"))
+	case "nova.intertx.v1.IcaAccount.zone_name":
+		panic(fmt.Errorf("field zone_name of message nova.intertx.v1.IcaAccount is not mutable"))
+	case "nova.intertx.v1.IcaAccount.owner_address":
+		panic(fmt.Errorf("field owner_address of message nova.intertx.v1.IcaAccount is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaAccount"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaAccount"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -876,18 +876,18 @@ func (x *fastReflection_IcaAccount) Mutable(fd protoreflect.FieldDescriptor) pro
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_IcaAccount) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaAccount.zone_name":
+	case "nova.intertx.v1.IcaAccount.zone_name":
 		return protoreflect.ValueOfString("")
-	case "novachain.intertx.v1.IcaAccount.owner_address":
+	case "nova.intertx.v1.IcaAccount.owner_address":
 		return protoreflect.ValueOfString("")
-	case "novachain.intertx.v1.IcaAccount.balance":
+	case "nova.intertx.v1.IcaAccount.balance":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaAccount"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaAccount"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaAccount does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -897,7 +897,7 @@ func (x *fastReflection_IcaAccount) NewField(fd protoreflect.FieldDescriptor) pr
 func (x *fastReflection_IcaAccount) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.intertx.v1.IcaAccount", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.intertx.v1.IcaAccount", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1213,8 +1213,8 @@ var (
 )
 
 func init() {
-	file_novachain_intertx_v1_genesis_proto_init()
-	md_IcaConnectionInfo = File_novachain_intertx_v1_genesis_proto.Messages().ByName("IcaConnectionInfo")
+	file_nova_intertx_v1_genesis_proto_init()
+	md_IcaConnectionInfo = File_nova_intertx_v1_genesis_proto.Messages().ByName("IcaConnectionInfo")
 	fd_IcaConnectionInfo_zone_name = md_IcaConnectionInfo.Fields().ByName("zone_name")
 	fd_IcaConnectionInfo_connection_id = md_IcaConnectionInfo.Fields().ByName("connection_id")
 	fd_IcaConnectionInfo_owner_address = md_IcaConnectionInfo.Fields().ByName("owner_address")
@@ -1229,7 +1229,7 @@ func (x *IcaConnectionInfo) ProtoReflect() protoreflect.Message {
 }
 
 func (x *IcaConnectionInfo) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_intertx_v1_genesis_proto_msgTypes[2]
+	mi := &file_nova_intertx_v1_genesis_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1318,17 +1318,17 @@ func (x *fastReflection_IcaConnectionInfo) Range(f func(protoreflect.FieldDescri
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_IcaConnectionInfo) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaConnectionInfo.zone_name":
+	case "nova.intertx.v1.IcaConnectionInfo.zone_name":
 		return x.ZoneName != ""
-	case "novachain.intertx.v1.IcaConnectionInfo.connection_id":
+	case "nova.intertx.v1.IcaConnectionInfo.connection_id":
 		return x.ConnectionId != ""
-	case "novachain.intertx.v1.IcaConnectionInfo.owner_address":
+	case "nova.intertx.v1.IcaConnectionInfo.owner_address":
 		return x.OwnerAddress != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaConnectionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaConnectionInfo"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1340,17 +1340,17 @@ func (x *fastReflection_IcaConnectionInfo) Has(fd protoreflect.FieldDescriptor) 
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_IcaConnectionInfo) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaConnectionInfo.zone_name":
+	case "nova.intertx.v1.IcaConnectionInfo.zone_name":
 		x.ZoneName = ""
-	case "novachain.intertx.v1.IcaConnectionInfo.connection_id":
+	case "nova.intertx.v1.IcaConnectionInfo.connection_id":
 		x.ConnectionId = ""
-	case "novachain.intertx.v1.IcaConnectionInfo.owner_address":
+	case "nova.intertx.v1.IcaConnectionInfo.owner_address":
 		x.OwnerAddress = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaConnectionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaConnectionInfo"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1362,20 +1362,20 @@ func (x *fastReflection_IcaConnectionInfo) Clear(fd protoreflect.FieldDescriptor
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_IcaConnectionInfo) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.intertx.v1.IcaConnectionInfo.zone_name":
+	case "nova.intertx.v1.IcaConnectionInfo.zone_name":
 		value := x.ZoneName
 		return protoreflect.ValueOfString(value)
-	case "novachain.intertx.v1.IcaConnectionInfo.connection_id":
+	case "nova.intertx.v1.IcaConnectionInfo.connection_id":
 		value := x.ConnectionId
 		return protoreflect.ValueOfString(value)
-	case "novachain.intertx.v1.IcaConnectionInfo.owner_address":
+	case "nova.intertx.v1.IcaConnectionInfo.owner_address":
 		value := x.OwnerAddress
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaConnectionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaConnectionInfo"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaConnectionInfo does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaConnectionInfo does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1391,17 +1391,17 @@ func (x *fastReflection_IcaConnectionInfo) Get(descriptor protoreflect.FieldDesc
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_IcaConnectionInfo) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaConnectionInfo.zone_name":
+	case "nova.intertx.v1.IcaConnectionInfo.zone_name":
 		x.ZoneName = value.Interface().(string)
-	case "novachain.intertx.v1.IcaConnectionInfo.connection_id":
+	case "nova.intertx.v1.IcaConnectionInfo.connection_id":
 		x.ConnectionId = value.Interface().(string)
-	case "novachain.intertx.v1.IcaConnectionInfo.owner_address":
+	case "nova.intertx.v1.IcaConnectionInfo.owner_address":
 		x.OwnerAddress = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaConnectionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaConnectionInfo"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1417,17 +1417,17 @@ func (x *fastReflection_IcaConnectionInfo) Set(fd protoreflect.FieldDescriptor, 
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_IcaConnectionInfo) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaConnectionInfo.zone_name":
-		panic(fmt.Errorf("field zone_name of message novachain.intertx.v1.IcaConnectionInfo is not mutable"))
-	case "novachain.intertx.v1.IcaConnectionInfo.connection_id":
-		panic(fmt.Errorf("field connection_id of message novachain.intertx.v1.IcaConnectionInfo is not mutable"))
-	case "novachain.intertx.v1.IcaConnectionInfo.owner_address":
-		panic(fmt.Errorf("field owner_address of message novachain.intertx.v1.IcaConnectionInfo is not mutable"))
+	case "nova.intertx.v1.IcaConnectionInfo.zone_name":
+		panic(fmt.Errorf("field zone_name of message nova.intertx.v1.IcaConnectionInfo is not mutable"))
+	case "nova.intertx.v1.IcaConnectionInfo.connection_id":
+		panic(fmt.Errorf("field connection_id of message nova.intertx.v1.IcaConnectionInfo is not mutable"))
+	case "nova.intertx.v1.IcaConnectionInfo.owner_address":
+		panic(fmt.Errorf("field owner_address of message nova.intertx.v1.IcaConnectionInfo is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaConnectionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaConnectionInfo"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1436,17 +1436,17 @@ func (x *fastReflection_IcaConnectionInfo) Mutable(fd protoreflect.FieldDescript
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_IcaConnectionInfo) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.intertx.v1.IcaConnectionInfo.zone_name":
+	case "nova.intertx.v1.IcaConnectionInfo.zone_name":
 		return protoreflect.ValueOfString("")
-	case "novachain.intertx.v1.IcaConnectionInfo.connection_id":
+	case "nova.intertx.v1.IcaConnectionInfo.connection_id":
 		return protoreflect.ValueOfString("")
-	case "novachain.intertx.v1.IcaConnectionInfo.owner_address":
+	case "nova.intertx.v1.IcaConnectionInfo.owner_address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.intertx.v1.IcaConnectionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.IcaConnectionInfo"))
 		}
-		panic(fmt.Errorf("message novachain.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.intertx.v1.IcaConnectionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1456,7 +1456,7 @@ func (x *fastReflection_IcaConnectionInfo) NewField(fd protoreflect.FieldDescrip
 func (x *fastReflection_IcaConnectionInfo) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.intertx.v1.IcaConnectionInfo", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.intertx.v1.IcaConnectionInfo", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1757,7 +1757,7 @@ func (x *fastReflection_IcaConnectionInfo) ProtoMethods() *protoiface.Methods {
 // versions:
 // 	protoc-gen-go v1.27.0
 // 	protoc        (unknown)
-// source: novachain/intertx/v1/genesis.proto
+// source: nova/intertx/v1/genesis.proto
 
 const (
 	// Verify that this generated code is sufficiently up-to-date.
@@ -1780,7 +1780,7 @@ type RegisteredZone struct {
 func (x *RegisteredZone) Reset() {
 	*x = RegisteredZone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_intertx_v1_genesis_proto_msgTypes[0]
+		mi := &file_nova_intertx_v1_genesis_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1794,7 +1794,7 @@ func (*RegisteredZone) ProtoMessage() {}
 
 // Deprecated: Use RegisteredZone.ProtoReflect.Descriptor instead.
 func (*RegisteredZone) Descriptor() ([]byte, []int) {
-	return file_novachain_intertx_v1_genesis_proto_rawDescGZIP(), []int{0}
+	return file_nova_intertx_v1_genesis_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *RegisteredZone) GetConnectionInfo() *IcaConnectionInfo {
@@ -1838,7 +1838,7 @@ type IcaAccount struct {
 func (x *IcaAccount) Reset() {
 	*x = IcaAccount{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_intertx_v1_genesis_proto_msgTypes[1]
+		mi := &file_nova_intertx_v1_genesis_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1852,7 +1852,7 @@ func (*IcaAccount) ProtoMessage() {}
 
 // Deprecated: Use IcaAccount.ProtoReflect.Descriptor instead.
 func (*IcaAccount) Descriptor() ([]byte, []int) {
-	return file_novachain_intertx_v1_genesis_proto_rawDescGZIP(), []int{1}
+	return file_nova_intertx_v1_genesis_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *IcaAccount) GetZoneName() string {
@@ -1890,7 +1890,7 @@ type IcaConnectionInfo struct {
 func (x *IcaConnectionInfo) Reset() {
 	*x = IcaConnectionInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_intertx_v1_genesis_proto_msgTypes[2]
+		mi := &file_nova_intertx_v1_genesis_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1904,7 +1904,7 @@ func (*IcaConnectionInfo) ProtoMessage() {}
 
 // Deprecated: Use IcaConnectionInfo.ProtoReflect.Descriptor instead.
 func (*IcaConnectionInfo) Descriptor() ([]byte, []int) {
-	return file_novachain_intertx_v1_genesis_proto_rawDescGZIP(), []int{2}
+	return file_nova_intertx_v1_genesis_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *IcaConnectionInfo) GetZoneName() string {
@@ -1928,90 +1928,86 @@ func (x *IcaConnectionInfo) GetOwnerAddress() string {
 	return ""
 }
 
-var File_novachain_intertx_v1_genesis_proto protoreflect.FileDescriptor
+var File_nova_intertx_v1_genesis_proto protoreflect.FileDescriptor
 
-var file_novachain_intertx_v1_genesis_proto_rawDesc = []byte{
-	0x0a, 0x22, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x69, 0x6e, 0x74, 0x65,
-	0x72, 0x74, 0x78, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x12, 0x14, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e,
-	0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63,
-	0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31,
-	0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xd5, 0x01, 0x0a, 0x0e,
-	0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x12, 0x50,
-	0x0a, 0x0f, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x6e, 0x66,
-	0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68,
-	0x61, 0x69, 0x6e, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x49,
-	0x63, 0x61, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f,
-	0x52, 0x0e, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f,
-	0x12, 0x2b, 0x0a, 0x11, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x5f, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x76, 0x61, 0x6c,
-	0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x1f, 0x0a,
-	0x0b, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x5f, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0a, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x44, 0x65, 0x6e, 0x6f, 0x6d, 0x12, 0x23,
-	0x0a, 0x0d, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18,
-	0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x41, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x22, 0xb5, 0x01, 0x0a, 0x0a, 0x49, 0x63, 0x61, 0x41, 0x63, 0x63, 0x6f, 0x75,
-	0x6e, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12,
-	0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x41, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x12, 0x65, 0x0a, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62,
-	0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e,
-	0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d,
-	0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69,
-	0x6e, 0x73, 0x52, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x22, 0x7a, 0x0a, 0x11, 0x49,
-	0x63, 0x61, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f,
-	0x12, 0x1b, 0x0a, 0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x23, 0x0a,
-	0x0d, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x49, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72,
-	0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0xdf, 0x01, 0x0a, 0x18, 0x63, 0x6f, 0x6d, 0x2e,
-	0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74,
-	0x78, 0x2e, 0x76, 0x31, 0x42, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x50, 0x72, 0x6f,
-	0x74, 0x6f, 0x50, 0x01, 0x5a, 0x43, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76,
-	0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x63,
-	0x68, 0x61, 0x69, 0x6e, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2f, 0x76, 0x31, 0x3b,
-	0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa,
-	0x02, 0x14, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x49, 0x6e, 0x74, 0x65,
-	0x72, 0x74, 0x78, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x14, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61,
-	0x69, 0x6e, 0x5c, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x20,
-	0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5c, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74,
-	0x78, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0xea, 0x02, 0x16, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x3a, 0x3a, 0x49, 0x6e,
-	0x74, 0x65, 0x72, 0x74, 0x78, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+var file_nova_intertx_v1_genesis_proto_rawDesc = []byte{
+	0x0a, 0x1d, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2f, 0x76,
+	0x31, 0x2f, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
+	0x0f, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31,
+	0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x1a, 0x1e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76,
+	0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x22, 0xd0, 0x01, 0x0a, 0x0e, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x65, 0x64,
+	0x5a, 0x6f, 0x6e, 0x65, 0x12, 0x4b, 0x0a, 0x0f, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e,
+	0x49, 0x63, 0x61, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x0e, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66,
+	0x6f, 0x12, 0x2b, 0x0a, 0x11, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x5f, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x76, 0x61,
+	0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x1f,
+	0x0a, 0x0b, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x5f, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x44, 0x65, 0x6e, 0x6f, 0x6d, 0x12,
+	0x23, 0x0a, 0x0d, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x41, 0x64, 0x64,
+	0x72, 0x65, 0x73, 0x73, 0x22, 0xb5, 0x01, 0x0a, 0x0a, 0x49, 0x63, 0x61, 0x41, 0x63, 0x63, 0x6f,
+	0x75, 0x6e, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x41, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x65, 0x0a, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
+	0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69,
+	0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75,
+	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73,
+	0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f,
+	0x69, 0x6e, 0x73, 0x52, 0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x22, 0x7a, 0x0a, 0x11,
+	0x49, 0x63, 0x61, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66,
+	0x6f, 0x12, 0x1b, 0x0a, 0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x23,
+	0x0a, 0x0d, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x49, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64,
+	0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65,
+	0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0xbc, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d,
+	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31,
+	0x42, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
+	0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72,
+	0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2f, 0x76,
+	0x31, 0x3b, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49,
+	0x58, 0xaa, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78,
+	0x2e, 0x56, 0x31, 0xca, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x6e, 0x74, 0x65, 0x72,
+	0x74, 0x78, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x6e, 0x74,
+	0x65, 0x72, 0x74, 0x78, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x49, 0x6e, 0x74, 0x65,
+	0x72, 0x74, 0x78, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_novachain_intertx_v1_genesis_proto_rawDescOnce sync.Once
-	file_novachain_intertx_v1_genesis_proto_rawDescData = file_novachain_intertx_v1_genesis_proto_rawDesc
+	file_nova_intertx_v1_genesis_proto_rawDescOnce sync.Once
+	file_nova_intertx_v1_genesis_proto_rawDescData = file_nova_intertx_v1_genesis_proto_rawDesc
 )
 
-func file_novachain_intertx_v1_genesis_proto_rawDescGZIP() []byte {
-	file_novachain_intertx_v1_genesis_proto_rawDescOnce.Do(func() {
-		file_novachain_intertx_v1_genesis_proto_rawDescData = protoimpl.X.CompressGZIP(file_novachain_intertx_v1_genesis_proto_rawDescData)
+func file_nova_intertx_v1_genesis_proto_rawDescGZIP() []byte {
+	file_nova_intertx_v1_genesis_proto_rawDescOnce.Do(func() {
+		file_nova_intertx_v1_genesis_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_intertx_v1_genesis_proto_rawDescData)
 	})
-	return file_novachain_intertx_v1_genesis_proto_rawDescData
+	return file_nova_intertx_v1_genesis_proto_rawDescData
 }
 
-var file_novachain_intertx_v1_genesis_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
-var file_novachain_intertx_v1_genesis_proto_goTypes = []interface{}{
-	(*RegisteredZone)(nil),    // 0: novachain.intertx.v1.RegisteredZone
-	(*IcaAccount)(nil),        // 1: novachain.intertx.v1.IcaAccount
-	(*IcaConnectionInfo)(nil), // 2: novachain.intertx.v1.IcaConnectionInfo
+var file_nova_intertx_v1_genesis_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_nova_intertx_v1_genesis_proto_goTypes = []interface{}{
+	(*RegisteredZone)(nil),    // 0: nova.intertx.v1.RegisteredZone
+	(*IcaAccount)(nil),        // 1: nova.intertx.v1.IcaAccount
+	(*IcaConnectionInfo)(nil), // 2: nova.intertx.v1.IcaConnectionInfo
 	(*v1beta1.Coin)(nil),      // 3: cosmos.base.v1beta1.Coin
 }
-var file_novachain_intertx_v1_genesis_proto_depIdxs = []int32{
-	2, // 0: novachain.intertx.v1.RegisteredZone.connection_info:type_name -> novachain.intertx.v1.IcaConnectionInfo
-	3, // 1: novachain.intertx.v1.IcaAccount.balance:type_name -> cosmos.base.v1beta1.Coin
+var file_nova_intertx_v1_genesis_proto_depIdxs = []int32{
+	2, // 0: nova.intertx.v1.RegisteredZone.connection_info:type_name -> nova.intertx.v1.IcaConnectionInfo
+	3, // 1: nova.intertx.v1.IcaAccount.balance:type_name -> cosmos.base.v1beta1.Coin
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
@@ -2019,13 +2015,13 @@ var file_novachain_intertx_v1_genesis_proto_depIdxs = []int32{
 	0, // [0:2] is the sub-list for field type_name
 }
 
-func init() { file_novachain_intertx_v1_genesis_proto_init() }
-func file_novachain_intertx_v1_genesis_proto_init() {
-	if File_novachain_intertx_v1_genesis_proto != nil {
+func init() { file_nova_intertx_v1_genesis_proto_init() }
+func file_nova_intertx_v1_genesis_proto_init() {
+	if File_nova_intertx_v1_genesis_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_novachain_intertx_v1_genesis_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_intertx_v1_genesis_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RegisteredZone); i {
 			case 0:
 				return &v.state
@@ -2037,7 +2033,7 @@ func file_novachain_intertx_v1_genesis_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_intertx_v1_genesis_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_intertx_v1_genesis_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IcaAccount); i {
 			case 0:
 				return &v.state
@@ -2049,7 +2045,7 @@ func file_novachain_intertx_v1_genesis_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_intertx_v1_genesis_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_intertx_v1_genesis_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*IcaConnectionInfo); i {
 			case 0:
 				return &v.state
@@ -2066,18 +2062,18 @@ func file_novachain_intertx_v1_genesis_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_novachain_intertx_v1_genesis_proto_rawDesc,
+			RawDescriptor: file_nova_intertx_v1_genesis_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_novachain_intertx_v1_genesis_proto_goTypes,
-		DependencyIndexes: file_novachain_intertx_v1_genesis_proto_depIdxs,
-		MessageInfos:      file_novachain_intertx_v1_genesis_proto_msgTypes,
+		GoTypes:           file_nova_intertx_v1_genesis_proto_goTypes,
+		DependencyIndexes: file_nova_intertx_v1_genesis_proto_depIdxs,
+		MessageInfos:      file_nova_intertx_v1_genesis_proto_msgTypes,
 	}.Build()
-	File_novachain_intertx_v1_genesis_proto = out.File
-	file_novachain_intertx_v1_genesis_proto_rawDesc = nil
-	file_novachain_intertx_v1_genesis_proto_goTypes = nil
-	file_novachain_intertx_v1_genesis_proto_depIdxs = nil
+	File_nova_intertx_v1_genesis_proto = out.File
+	file_nova_intertx_v1_genesis_proto_rawDesc = nil
+	file_nova_intertx_v1_genesis_proto_goTypes = nil
+	file_nova_intertx_v1_genesis_proto_depIdxs = nil
 }

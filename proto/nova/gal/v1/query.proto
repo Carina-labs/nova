@@ -1,21 +1,21 @@
 syntax = "proto3";
-package novachain.gal.v1;
+package nova.gal.v1;
 
 import "gogoproto/gogo.proto";
-import "novachain/gal/v1/params.proto";
+import "nova/gal/v1/params.proto";
 import "google/api/annotations.proto";
 import "cosmos_proto/cosmos.proto";
 
-option go_package = "github.com/Carina-labs/novachain/x/gal/types";
+option go_package = "github.com/Carina-labs/nova/x/gal/types";
 
 // Query defines the gRPC querier service.
 service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/novachain/gal/v1/params";
+    option (google.api.http).get = "/nova/gal/v1/params";
   }
 
   rpc Share(QuerySharesRequest) returns (QuerySharesResponse) {
-    option (google.api.http).get = "/novachain/gal/v1/shares/{address}/by_denom";
+    option (google.api.http).get = "/nova/gal/v1/shares/{address}/by_denom";
   }
 }
 

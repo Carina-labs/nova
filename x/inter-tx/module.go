@@ -9,9 +9,9 @@ import (
 
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/Carina-labs/novachain/x/inter-tx/client/cli"
-	"github.com/Carina-labs/novachain/x/inter-tx/keeper"
-	"github.com/Carina-labs/novachain/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/inter-tx/client/cli"
+	"github.com/Carina-labs/nova/x/inter-tx/keeper"
+	"github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"

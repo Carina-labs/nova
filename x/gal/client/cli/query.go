@@ -5,7 +5,7 @@ import (
 
 	"strings"
 
-	"github.com/Carina-labs/novachain/x/gal/types"
+	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/version"

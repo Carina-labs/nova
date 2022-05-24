@@ -12,7 +12,7 @@ import (
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/Carina-labs/novachain/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/inter-tx/types"
 )
 
 type Keeper struct {

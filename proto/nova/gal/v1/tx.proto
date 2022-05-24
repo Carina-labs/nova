@@ -1,12 +1,12 @@
 syntax = "proto3";
-package novachain.gal.v1;
+package nova.gal.v1;
 
 import "gogoproto/gogo.proto";
 import "google/protobuf/any.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "cosmos_proto/cosmos.proto";
 
-option go_package = "github.com/Carina-labs/novachain/x/gal/types";
+option go_package = "github.com/Carina-labs/nova/x/gal/types";
 
 // Msg defines the gal Msg service.
 service Msg {

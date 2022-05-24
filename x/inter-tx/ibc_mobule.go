@@ -3,7 +3,7 @@ package inter_tx
 import (
 	proto "github.com/gogo/protobuf/proto"
 
-	"github.com/Carina-labs/novachain/x/inter-tx/keeper"
+	"github.com/Carina-labs/nova/x/inter-tx/keeper"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"

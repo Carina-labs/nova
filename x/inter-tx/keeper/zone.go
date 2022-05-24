@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"github.com/Carina-labs/novachain/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

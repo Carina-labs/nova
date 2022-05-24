@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             (unknown)
-// source: novachain/intertx/v1/query.proto
+// source: nova/intertx/v1/query.proto
 
 package intertxv1
 
@@ -36,7 +36,7 @@ func NewQueryClient(cc grpc.ClientConnInterface) QueryClient {
 
 func (c *queryClient) InterchainAccountFromZone(ctx context.Context, in *QueryInterchainAccountFromZoneRequest, opts ...grpc.CallOption) (*QueryInterchainAccountFromZoneResponse, error) {
 	out := new(QueryInterchainAccountFromZoneResponse)
-	err := c.cc.Invoke(ctx, "/novachain.intertx.v1.Query/InterchainAccountFromZone", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.intertx.v1.Query/InterchainAccountFromZone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func _Query_InterchainAccountFromZone_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novachain.intertx.v1.Query/InterchainAccountFromZone",
+		FullMethod: "/nova.intertx.v1.Query/InterchainAccountFromZone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).InterchainAccountFromZone(ctx, req.(*QueryInterchainAccountFromZoneRequest))
@@ -94,7 +94,7 @@ func _Query_InterchainAccountFromZone_Handler(srv interface{}, ctx context.Conte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Query_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "novachain.intertx.v1.Query",
+	ServiceName: "nova.intertx.v1.Query",
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -103,5 +103,5 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "novachain/intertx/v1/query.proto",
+	Metadata: "nova/intertx/v1/query.proto",
 }

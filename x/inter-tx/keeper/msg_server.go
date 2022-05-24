@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"github.com/Carina-labs/novachain/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"

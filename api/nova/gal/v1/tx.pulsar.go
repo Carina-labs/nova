@@ -3,7 +3,7 @@ package galv1
 
 import (
 	fmt "fmt"
-	v1beta1 "github.com/Carina-labs/novachain/api/cosmos/base/v1beta1"
+	v1beta1 "github.com/Carina-labs/nova/api/cosmos/base/v1beta1"
 	_ "github.com/cosmos/cosmos-proto"
 	runtime "github.com/cosmos/cosmos-proto/runtime"
 	_ "github.com/gogo/protobuf/gogoproto"
@@ -75,8 +75,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_tx_proto_init()
-	md_MsgDeposit = File_novachain_gal_v1_tx_proto.Messages().ByName("MsgDeposit")
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgDeposit = File_nova_gal_v1_tx_proto.Messages().ByName("MsgDeposit")
 	fd_MsgDeposit_depositor = md_MsgDeposit.Fields().ByName("depositor")
 	fd_MsgDeposit_receiver = md_MsgDeposit.Fields().ByName("receiver")
 	fd_MsgDeposit_amount = md_MsgDeposit.Fields().ByName("amount")
@@ -91,7 +91,7 @@ func (x *MsgDeposit) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgDeposit) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_tx_proto_msgTypes[0]
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -180,17 +180,17 @@ func (x *fastReflection_MsgDeposit) Range(f func(protoreflect.FieldDescriptor, p
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgDeposit) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgDeposit.depositor":
+	case "nova.gal.v1.MsgDeposit.depositor":
 		return x.Depositor != ""
-	case "novachain.gal.v1.MsgDeposit.receiver":
+	case "nova.gal.v1.MsgDeposit.receiver":
 		return x.Receiver != ""
-	case "novachain.gal.v1.MsgDeposit.amount":
+	case "nova.gal.v1.MsgDeposit.amount":
 		return len(x.Amount) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDeposit"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDeposit"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -202,17 +202,17 @@ func (x *fastReflection_MsgDeposit) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgDeposit) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgDeposit.depositor":
+	case "nova.gal.v1.MsgDeposit.depositor":
 		x.Depositor = ""
-	case "novachain.gal.v1.MsgDeposit.receiver":
+	case "nova.gal.v1.MsgDeposit.receiver":
 		x.Receiver = ""
-	case "novachain.gal.v1.MsgDeposit.amount":
+	case "nova.gal.v1.MsgDeposit.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDeposit"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDeposit"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -224,13 +224,13 @@ func (x *fastReflection_MsgDeposit) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgDeposit) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.gal.v1.MsgDeposit.depositor":
+	case "nova.gal.v1.MsgDeposit.depositor":
 		value := x.Depositor
 		return protoreflect.ValueOfString(value)
-	case "novachain.gal.v1.MsgDeposit.receiver":
+	case "nova.gal.v1.MsgDeposit.receiver":
 		value := x.Receiver
 		return protoreflect.ValueOfString(value)
-	case "novachain.gal.v1.MsgDeposit.amount":
+	case "nova.gal.v1.MsgDeposit.amount":
 		if len(x.Amount) == 0 {
 			return protoreflect.ValueOfList(&_MsgDeposit_3_list{})
 		}
@@ -238,9 +238,9 @@ func (x *fastReflection_MsgDeposit) Get(descriptor protoreflect.FieldDescriptor)
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDeposit"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDeposit"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDeposit does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDeposit does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -256,19 +256,19 @@ func (x *fastReflection_MsgDeposit) Get(descriptor protoreflect.FieldDescriptor)
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgDeposit) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgDeposit.depositor":
+	case "nova.gal.v1.MsgDeposit.depositor":
 		x.Depositor = value.Interface().(string)
-	case "novachain.gal.v1.MsgDeposit.receiver":
+	case "nova.gal.v1.MsgDeposit.receiver":
 		x.Receiver = value.Interface().(string)
-	case "novachain.gal.v1.MsgDeposit.amount":
+	case "nova.gal.v1.MsgDeposit.amount":
 		lv := value.List()
 		clv := lv.(*_MsgDeposit_3_list)
 		x.Amount = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDeposit"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDeposit"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -284,21 +284,21 @@ func (x *fastReflection_MsgDeposit) Set(fd protoreflect.FieldDescriptor, value p
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgDeposit) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgDeposit.amount":
+	case "nova.gal.v1.MsgDeposit.amount":
 		if x.Amount == nil {
 			x.Amount = []*v1beta1.Coin{}
 		}
 		value := &_MsgDeposit_3_list{list: &x.Amount}
 		return protoreflect.ValueOfList(value)
-	case "novachain.gal.v1.MsgDeposit.depositor":
-		panic(fmt.Errorf("field depositor of message novachain.gal.v1.MsgDeposit is not mutable"))
-	case "novachain.gal.v1.MsgDeposit.receiver":
-		panic(fmt.Errorf("field receiver of message novachain.gal.v1.MsgDeposit is not mutable"))
+	case "nova.gal.v1.MsgDeposit.depositor":
+		panic(fmt.Errorf("field depositor of message nova.gal.v1.MsgDeposit is not mutable"))
+	case "nova.gal.v1.MsgDeposit.receiver":
+		panic(fmt.Errorf("field receiver of message nova.gal.v1.MsgDeposit is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDeposit"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDeposit"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -307,18 +307,18 @@ func (x *fastReflection_MsgDeposit) Mutable(fd protoreflect.FieldDescriptor) pro
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgDeposit) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgDeposit.depositor":
+	case "nova.gal.v1.MsgDeposit.depositor":
 		return protoreflect.ValueOfString("")
-	case "novachain.gal.v1.MsgDeposit.receiver":
+	case "nova.gal.v1.MsgDeposit.receiver":
 		return protoreflect.ValueOfString("")
-	case "novachain.gal.v1.MsgDeposit.amount":
+	case "nova.gal.v1.MsgDeposit.amount":
 		list := []*v1beta1.Coin{}
 		return protoreflect.ValueOfList(&_MsgDeposit_3_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDeposit"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDeposit"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDeposit does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -328,7 +328,7 @@ func (x *fastReflection_MsgDeposit) NewField(fd protoreflect.FieldDescriptor) pr
 func (x *fastReflection_MsgDeposit) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.MsgDeposit", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgDeposit", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -643,8 +643,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_tx_proto_init()
-	md_MsgDepositResponse = File_novachain_gal_v1_tx_proto.Messages().ByName("MsgDepositResponse")
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgDepositResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgDepositResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgDepositResponse)(nil)
@@ -656,7 +656,7 @@ func (x *MsgDepositResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgDepositResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_tx_proto_msgTypes[1]
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -729,9 +729,9 @@ func (x *fastReflection_MsgDepositResponse) Has(fd protoreflect.FieldDescriptor)
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDepositResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDepositResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -745,9 +745,9 @@ func (x *fastReflection_MsgDepositResponse) Clear(fd protoreflect.FieldDescripto
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDepositResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDepositResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -761,9 +761,9 @@ func (x *fastReflection_MsgDepositResponse) Get(descriptor protoreflect.FieldDes
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDepositResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDepositResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDepositResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDepositResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -781,9 +781,9 @@ func (x *fastReflection_MsgDepositResponse) Set(fd protoreflect.FieldDescriptor,
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDepositResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDepositResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -801,9 +801,9 @@ func (x *fastReflection_MsgDepositResponse) Mutable(fd protoreflect.FieldDescrip
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDepositResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDepositResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -814,9 +814,9 @@ func (x *fastReflection_MsgDepositResponse) NewField(fd protoreflect.FieldDescri
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgDepositResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgDepositResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgDepositResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -826,7 +826,7 @@ func (x *fastReflection_MsgDepositResponse) NewField(fd protoreflect.FieldDescri
 func (x *fastReflection_MsgDepositResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.MsgDepositResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgDepositResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1052,8 +1052,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_tx_proto_init()
-	md_MsgUnStaking = File_novachain_gal_v1_tx_proto.Messages().ByName("MsgUnStaking")
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgUnStaking = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUnStaking")
 	fd_MsgUnStaking_depositor = md_MsgUnStaking.Fields().ByName("depositor")
 	fd_MsgUnStaking_amount = md_MsgUnStaking.Fields().ByName("amount")
 }
@@ -1067,7 +1067,7 @@ func (x *MsgUnStaking) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgUnStaking) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_tx_proto_msgTypes[2]
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1150,15 +1150,15 @@ func (x *fastReflection_MsgUnStaking) Range(f func(protoreflect.FieldDescriptor,
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgUnStaking) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgUnStaking.depositor":
+	case "nova.gal.v1.MsgUnStaking.depositor":
 		return x.Depositor != ""
-	case "novachain.gal.v1.MsgUnStaking.amount":
+	case "nova.gal.v1.MsgUnStaking.amount":
 		return len(x.Amount) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1170,15 +1170,15 @@ func (x *fastReflection_MsgUnStaking) Has(fd protoreflect.FieldDescriptor) bool 
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgUnStaking) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgUnStaking.depositor":
+	case "nova.gal.v1.MsgUnStaking.depositor":
 		x.Depositor = ""
-	case "novachain.gal.v1.MsgUnStaking.amount":
+	case "nova.gal.v1.MsgUnStaking.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1190,10 +1190,10 @@ func (x *fastReflection_MsgUnStaking) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgUnStaking) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.gal.v1.MsgUnStaking.depositor":
+	case "nova.gal.v1.MsgUnStaking.depositor":
 		value := x.Depositor
 		return protoreflect.ValueOfString(value)
-	case "novachain.gal.v1.MsgUnStaking.amount":
+	case "nova.gal.v1.MsgUnStaking.amount":
 		if len(x.Amount) == 0 {
 			return protoreflect.ValueOfList(&_MsgUnStaking_2_list{})
 		}
@@ -1201,9 +1201,9 @@ func (x *fastReflection_MsgUnStaking) Get(descriptor protoreflect.FieldDescripto
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStaking does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1219,17 +1219,17 @@ func (x *fastReflection_MsgUnStaking) Get(descriptor protoreflect.FieldDescripto
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgUnStaking) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgUnStaking.depositor":
+	case "nova.gal.v1.MsgUnStaking.depositor":
 		x.Depositor = value.Interface().(string)
-	case "novachain.gal.v1.MsgUnStaking.amount":
+	case "nova.gal.v1.MsgUnStaking.amount":
 		lv := value.List()
 		clv := lv.(*_MsgUnStaking_2_list)
 		x.Amount = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1245,19 +1245,19 @@ func (x *fastReflection_MsgUnStaking) Set(fd protoreflect.FieldDescriptor, value
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgUnStaking) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgUnStaking.amount":
+	case "nova.gal.v1.MsgUnStaking.amount":
 		if x.Amount == nil {
 			x.Amount = []*v1beta1.Coin{}
 		}
 		value := &_MsgUnStaking_2_list{list: &x.Amount}
 		return protoreflect.ValueOfList(value)
-	case "novachain.gal.v1.MsgUnStaking.depositor":
-		panic(fmt.Errorf("field depositor of message novachain.gal.v1.MsgUnStaking is not mutable"))
+	case "nova.gal.v1.MsgUnStaking.depositor":
+		panic(fmt.Errorf("field depositor of message nova.gal.v1.MsgUnStaking is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1266,16 +1266,16 @@ func (x *fastReflection_MsgUnStaking) Mutable(fd protoreflect.FieldDescriptor) p
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgUnStaking) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgUnStaking.depositor":
+	case "nova.gal.v1.MsgUnStaking.depositor":
 		return protoreflect.ValueOfString("")
-	case "novachain.gal.v1.MsgUnStaking.amount":
+	case "nova.gal.v1.MsgUnStaking.amount":
 		list := []*v1beta1.Coin{}
 		return protoreflect.ValueOfList(&_MsgUnStaking_2_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1285,7 +1285,7 @@ func (x *fastReflection_MsgUnStaking) NewField(fd protoreflect.FieldDescriptor) 
 func (x *fastReflection_MsgUnStaking) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.MsgUnStaking", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUnStaking", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1557,8 +1557,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_tx_proto_init()
-	md_MsgUnStakingResponse = File_novachain_gal_v1_tx_proto.Messages().ByName("MsgUnStakingResponse")
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgUnStakingResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUnStakingResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgUnStakingResponse)(nil)
@@ -1570,7 +1570,7 @@ func (x *MsgUnStakingResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgUnStakingResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_tx_proto_msgTypes[3]
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1643,9 +1643,9 @@ func (x *fastReflection_MsgUnStakingResponse) Has(fd protoreflect.FieldDescripto
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1659,9 +1659,9 @@ func (x *fastReflection_MsgUnStakingResponse) Clear(fd protoreflect.FieldDescrip
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1675,9 +1675,9 @@ func (x *fastReflection_MsgUnStakingResponse) Get(descriptor protoreflect.FieldD
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStakingResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1695,9 +1695,9 @@ func (x *fastReflection_MsgUnStakingResponse) Set(fd protoreflect.FieldDescripto
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1715,9 +1715,9 @@ func (x *fastReflection_MsgUnStakingResponse) Mutable(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1728,9 +1728,9 @@ func (x *fastReflection_MsgUnStakingResponse) NewField(fd protoreflect.FieldDesc
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1740,7 +1740,7 @@ func (x *fastReflection_MsgUnStakingResponse) NewField(fd protoreflect.FieldDesc
 func (x *fastReflection_MsgUnStakingResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.MsgUnStakingResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUnStakingResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1966,8 +1966,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_tx_proto_init()
-	md_MsgWithdraw = File_novachain_gal_v1_tx_proto.Messages().ByName("MsgWithdraw")
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgWithdraw = File_nova_gal_v1_tx_proto.Messages().ByName("MsgWithdraw")
 	fd_MsgWithdraw_withdrawer = md_MsgWithdraw.Fields().ByName("withdrawer")
 	fd_MsgWithdraw_amount = md_MsgWithdraw.Fields().ByName("amount")
 }
@@ -1981,7 +1981,7 @@ func (x *MsgWithdraw) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgWithdraw) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_tx_proto_msgTypes[4]
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2064,15 +2064,15 @@ func (x *fastReflection_MsgWithdraw) Range(f func(protoreflect.FieldDescriptor, 
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgWithdraw) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdraw.withdrawer":
 		return x.Withdrawer != ""
-	case "novachain.gal.v1.MsgWithdraw.amount":
+	case "nova.gal.v1.MsgWithdraw.amount":
 		return len(x.Amount) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2084,15 +2084,15 @@ func (x *fastReflection_MsgWithdraw) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgWithdraw) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdraw.withdrawer":
 		x.Withdrawer = ""
-	case "novachain.gal.v1.MsgWithdraw.amount":
+	case "nova.gal.v1.MsgWithdraw.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2104,10 +2104,10 @@ func (x *fastReflection_MsgWithdraw) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgWithdraw) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdraw.withdrawer":
 		value := x.Withdrawer
 		return protoreflect.ValueOfString(value)
-	case "novachain.gal.v1.MsgWithdraw.amount":
+	case "nova.gal.v1.MsgWithdraw.amount":
 		if len(x.Amount) == 0 {
 			return protoreflect.ValueOfList(&_MsgWithdraw_2_list{})
 		}
@@ -2115,9 +2115,9 @@ func (x *fastReflection_MsgWithdraw) Get(descriptor protoreflect.FieldDescriptor
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdraw does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2133,17 +2133,17 @@ func (x *fastReflection_MsgWithdraw) Get(descriptor protoreflect.FieldDescriptor
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgWithdraw) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdraw.withdrawer":
 		x.Withdrawer = value.Interface().(string)
-	case "novachain.gal.v1.MsgWithdraw.amount":
+	case "nova.gal.v1.MsgWithdraw.amount":
 		lv := value.List()
 		clv := lv.(*_MsgWithdraw_2_list)
 		x.Amount = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2159,19 +2159,19 @@ func (x *fastReflection_MsgWithdraw) Set(fd protoreflect.FieldDescriptor, value 
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgWithdraw) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgWithdraw.amount":
+	case "nova.gal.v1.MsgWithdraw.amount":
 		if x.Amount == nil {
 			x.Amount = []*v1beta1.Coin{}
 		}
 		value := &_MsgWithdraw_2_list{list: &x.Amount}
 		return protoreflect.ValueOfList(value)
-	case "novachain.gal.v1.MsgWithdraw.withdrawer":
-		panic(fmt.Errorf("field withdrawer of message novachain.gal.v1.MsgWithdraw is not mutable"))
+	case "nova.gal.v1.MsgWithdraw.withdrawer":
+		panic(fmt.Errorf("field withdrawer of message nova.gal.v1.MsgWithdraw is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2180,16 +2180,16 @@ func (x *fastReflection_MsgWithdraw) Mutable(fd protoreflect.FieldDescriptor) pr
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgWithdraw) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdraw.withdrawer":
 		return protoreflect.ValueOfString("")
-	case "novachain.gal.v1.MsgWithdraw.amount":
+	case "nova.gal.v1.MsgWithdraw.amount":
 		list := []*v1beta1.Coin{}
 		return protoreflect.ValueOfList(&_MsgWithdraw_2_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2199,7 +2199,7 @@ func (x *fastReflection_MsgWithdraw) NewField(fd protoreflect.FieldDescriptor) p
 func (x *fastReflection_MsgWithdraw) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.MsgWithdraw", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgWithdraw", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2471,8 +2471,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_tx_proto_init()
-	md_MsgWithdrawResponse = File_novachain_gal_v1_tx_proto.Messages().ByName("MsgWithdrawResponse")
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgWithdrawResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgWithdrawResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgWithdrawResponse)(nil)
@@ -2484,7 +2484,7 @@ func (x *MsgWithdrawResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgWithdrawResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_tx_proto_msgTypes[5]
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2557,9 +2557,9 @@ func (x *fastReflection_MsgWithdrawResponse) Has(fd protoreflect.FieldDescriptor
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2573,9 +2573,9 @@ func (x *fastReflection_MsgWithdrawResponse) Clear(fd protoreflect.FieldDescript
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2589,9 +2589,9 @@ func (x *fastReflection_MsgWithdrawResponse) Get(descriptor protoreflect.FieldDe
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdrawResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2609,9 +2609,9 @@ func (x *fastReflection_MsgWithdrawResponse) Set(fd protoreflect.FieldDescriptor
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2629,9 +2629,9 @@ func (x *fastReflection_MsgWithdrawResponse) Mutable(fd protoreflect.FieldDescri
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2642,9 +2642,9 @@ func (x *fastReflection_MsgWithdrawResponse) NewField(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2654,7 +2654,7 @@ func (x *fastReflection_MsgWithdrawResponse) NewField(fd protoreflect.FieldDescr
 func (x *fastReflection_MsgWithdrawResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.MsgWithdrawResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgWithdrawResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2826,7 +2826,7 @@ func (x *fastReflection_MsgWithdrawResponse) ProtoMethods() *protoiface.Methods 
 // versions:
 // 	protoc-gen-go v1.27.0
 // 	protoc        (unknown)
-// source: novachain/gal/v1/tx.proto
+// source: nova/gal/v1/tx.proto
 
 const (
 	// Verify that this generated code is sufficiently up-to-date.
@@ -2850,7 +2850,7 @@ type MsgDeposit struct {
 func (x *MsgDeposit) Reset() {
 	*x = MsgDeposit{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_tx_proto_msgTypes[0]
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2864,7 +2864,7 @@ func (*MsgDeposit) ProtoMessage() {}
 
 // Deprecated: Use MsgDeposit.ProtoReflect.Descriptor instead.
 func (*MsgDeposit) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_tx_proto_rawDescGZIP(), []int{0}
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *MsgDeposit) GetDepositor() string {
@@ -2897,7 +2897,7 @@ type MsgDepositResponse struct {
 func (x *MsgDepositResponse) Reset() {
 	*x = MsgDepositResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_tx_proto_msgTypes[1]
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2911,7 +2911,7 @@ func (*MsgDepositResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgDepositResponse.ProtoReflect.Descriptor instead.
 func (*MsgDepositResponse) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_tx_proto_rawDescGZIP(), []int{1}
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{1}
 }
 
 // MsgUnStaking defines user who want to un-stake his/her asset.
@@ -2927,7 +2927,7 @@ type MsgUnStaking struct {
 func (x *MsgUnStaking) Reset() {
 	*x = MsgUnStaking{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_tx_proto_msgTypes[2]
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2941,7 +2941,7 @@ func (*MsgUnStaking) ProtoMessage() {}
 
 // Deprecated: Use MsgUnStaking.ProtoReflect.Descriptor instead.
 func (*MsgUnStaking) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_tx_proto_rawDescGZIP(), []int{2}
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *MsgUnStaking) GetDepositor() string {
@@ -2967,7 +2967,7 @@ type MsgUnStakingResponse struct {
 func (x *MsgUnStakingResponse) Reset() {
 	*x = MsgUnStakingResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_tx_proto_msgTypes[3]
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2981,7 +2981,7 @@ func (*MsgUnStakingResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgUnStakingResponse.ProtoReflect.Descriptor instead.
 func (*MsgUnStakingResponse) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_tx_proto_rawDescGZIP(), []int{3}
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{3}
 }
 
 // MsgWithdraw defines user who withdraw and amount of coins.
@@ -2997,7 +2997,7 @@ type MsgWithdraw struct {
 func (x *MsgWithdraw) Reset() {
 	*x = MsgWithdraw{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_tx_proto_msgTypes[4]
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3011,7 +3011,7 @@ func (*MsgWithdraw) ProtoMessage() {}
 
 // Deprecated: Use MsgWithdraw.ProtoReflect.Descriptor instead.
 func (*MsgWithdraw) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_tx_proto_rawDescGZIP(), []int{4}
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *MsgWithdraw) GetWithdrawer() string {
@@ -3037,7 +3037,7 @@ type MsgWithdrawResponse struct {
 func (x *MsgWithdrawResponse) Reset() {
 	*x = MsgWithdrawResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_tx_proto_msgTypes[5]
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3051,117 +3051,113 @@ func (*MsgWithdrawResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgWithdrawResponse.ProtoReflect.Descriptor instead.
 func (*MsgWithdrawResponse) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_tx_proto_rawDescGZIP(), []int{5}
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{5}
 }
 
-var File_novachain_gal_v1_tx_proto protoreflect.FileDescriptor
+var File_nova_gal_v1_tx_proto protoreflect.FileDescriptor
 
-var file_novachain_gal_v1_tx_proto_rawDesc = []byte{
-	0x0a, 0x19, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x67, 0x61, 0x6c, 0x2f,
-	0x76, 0x31, 0x2f, 0x74, 0x78, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x10, 0x6e, 0x6f, 0x76,
-	0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67,
-	0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x75, 0x66, 0x2f, 0x61, 0x6e, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e,
-	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65,
-	0x74, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19,
-	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xdf, 0x01, 0x0a, 0x0a, 0x4d, 0x73,
-	0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x12, 0x36, 0x0a, 0x09, 0x64, 0x65, 0x70, 0x6f,
+var file_nova_gal_v1_tx_proto_rawDesc = []byte{
+	0x0a, 0x14, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x74, 0x78,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0b, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c,
+	0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67,
+	0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x61, 0x6e, 0x79, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73,
+	0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22,
+	0xdf, 0x01, 0x0a, 0x0a, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x12, 0x36,
+	0x0a, 0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x64, 0x65, 0x70,
+	0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x12, 0x34, 0x0a, 0x08, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76,
+	0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f,
+	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69,
+	0x6e, 0x67, 0x52, 0x08, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x12, 0x63, 0x0a, 0x06,
+	0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63,
+	0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74,
+	0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f,
+	0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d,
+	0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79,
+	0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
+	0x74, 0x22, 0x14, 0x0a, 0x12, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xab, 0x01, 0x0a, 0x0c, 0x4d, 0x73, 0x67, 0x55,
+	0x6e, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x12, 0x36, 0x0a, 0x09, 0x64, 0x65, 0x70, 0x6f,
 	0x73, 0x69, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d,
 	0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53,
 	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72,
-	0x12, 0x34, 0x0a, 0x08, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x08, 0x72, 0x65,
-	0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
-	0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
-	0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69,
-	0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f,
-	0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x14, 0x0a, 0x12, 0x4d,
-	0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0xab, 0x01, 0x0a, 0x0c, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x53, 0x74, 0x61, 0x6b, 0x69,
-	0x6e, 0x67, 0x12, 0x36, 0x0a, 0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
-	0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52,
-	0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d,
-	0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31,
-	0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
-	0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65,
-	0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22,
-	0x16, 0x0a, 0x14, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xac, 0x01, 0x0a, 0x0b, 0x4d, 0x73, 0x67, 0x57,
-	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x38, 0x0a, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x64,
-	0x72, 0x61, 0x77, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d,
-	0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53,
-	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x65,
-	0x72, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28,
-	0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e,
-	0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde,
-	0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73,
-	0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06,
-	0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x15, 0x0a, 0x13, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74,
-	0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xa6, 0x01,
-	0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x4d, 0x0a, 0x07, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74,
-	0x12, 0x1c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c,
-	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x1a, 0x24,
-	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76,
-	0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x50, 0x0a, 0x08, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
-	0x12, 0x1d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c,
-	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x1a,
-	0x25, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e,
-	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xbe, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42,
-	0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3b, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61,
-	0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x61, 0x70, 0x69,
-	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76,
-	0x31, 0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58, 0xaa, 0x02, 0x10,
-	0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31,
-	0xca, 0x02, 0x10, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5c, 0x47, 0x61, 0x6c,
-	0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1c, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5c,
-	0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x3a, 0x3a,
-	0x47, 0x61, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76,
+	0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f,
+	0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64,
+	0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x16, 0x0a, 0x14, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x53, 0x74,
+	0x61, 0x6b, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xac, 0x01,
+	0x0a, 0x0b, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x38, 0x0a,
+	0x0a, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x0a, 0x77, 0x69, 0x74,
+	0x68, 0x64, 0x72, 0x61, 0x77, 0x65, 0x72, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
+	0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f,
+	0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68,
+	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f,
+	0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43,
+	0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x15, 0x0a, 0x13,
+	0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x32, 0x92, 0x01, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x43, 0x0a, 0x07, 0x64,
+	0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x12, 0x17, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61,
+	0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x1a,
+	0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
+	0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x46, 0x0a, 0x08, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x18, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69,
+	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x1a, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61,
+	0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x9b, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d,
+	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78,
+	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f,
+	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61,
+	0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58,
+	0xaa, 0x02, 0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02,
+	0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x17, 0x4e,
+	0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0d, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x47,
+	0x61, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_novachain_gal_v1_tx_proto_rawDescOnce sync.Once
-	file_novachain_gal_v1_tx_proto_rawDescData = file_novachain_gal_v1_tx_proto_rawDesc
+	file_nova_gal_v1_tx_proto_rawDescOnce sync.Once
+	file_nova_gal_v1_tx_proto_rawDescData = file_nova_gal_v1_tx_proto_rawDesc
 )
 
-func file_novachain_gal_v1_tx_proto_rawDescGZIP() []byte {
-	file_novachain_gal_v1_tx_proto_rawDescOnce.Do(func() {
-		file_novachain_gal_v1_tx_proto_rawDescData = protoimpl.X.CompressGZIP(file_novachain_gal_v1_tx_proto_rawDescData)
+func file_nova_gal_v1_tx_proto_rawDescGZIP() []byte {
+	file_nova_gal_v1_tx_proto_rawDescOnce.Do(func() {
+		file_nova_gal_v1_tx_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_gal_v1_tx_proto_rawDescData)
 	})
-	return file_novachain_gal_v1_tx_proto_rawDescData
+	return file_nova_gal_v1_tx_proto_rawDescData
 }
 
-var file_novachain_gal_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_novachain_gal_v1_tx_proto_goTypes = []interface{}{
-	(*MsgDeposit)(nil),           // 0: novachain.gal.v1.MsgDeposit
-	(*MsgDepositResponse)(nil),   // 1: novachain.gal.v1.MsgDepositResponse
-	(*MsgUnStaking)(nil),         // 2: novachain.gal.v1.MsgUnStaking
-	(*MsgUnStakingResponse)(nil), // 3: novachain.gal.v1.MsgUnStakingResponse
-	(*MsgWithdraw)(nil),          // 4: novachain.gal.v1.MsgWithdraw
-	(*MsgWithdrawResponse)(nil),  // 5: novachain.gal.v1.MsgWithdrawResponse
+var file_nova_gal_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_nova_gal_v1_tx_proto_goTypes = []interface{}{
+	(*MsgDeposit)(nil),           // 0: nova.gal.v1.MsgDeposit
+	(*MsgDepositResponse)(nil),   // 1: nova.gal.v1.MsgDepositResponse
+	(*MsgUnStaking)(nil),         // 2: nova.gal.v1.MsgUnStaking
+	(*MsgUnStakingResponse)(nil), // 3: nova.gal.v1.MsgUnStakingResponse
+	(*MsgWithdraw)(nil),          // 4: nova.gal.v1.MsgWithdraw
+	(*MsgWithdrawResponse)(nil),  // 5: nova.gal.v1.MsgWithdrawResponse
 	(*v1beta1.Coin)(nil),         // 6: cosmos.base.v1beta1.Coin
 }
-var file_novachain_gal_v1_tx_proto_depIdxs = []int32{
-	6, // 0: novachain.gal.v1.MsgDeposit.amount:type_name -> cosmos.base.v1beta1.Coin
-	6, // 1: novachain.gal.v1.MsgUnStaking.amount:type_name -> cosmos.base.v1beta1.Coin
-	6, // 2: novachain.gal.v1.MsgWithdraw.amount:type_name -> cosmos.base.v1beta1.Coin
-	0, // 3: novachain.gal.v1.Msg.deposit:input_type -> novachain.gal.v1.MsgDeposit
-	4, // 4: novachain.gal.v1.Msg.withdraw:input_type -> novachain.gal.v1.MsgWithdraw
-	1, // 5: novachain.gal.v1.Msg.deposit:output_type -> novachain.gal.v1.MsgDepositResponse
-	5, // 6: novachain.gal.v1.Msg.withdraw:output_type -> novachain.gal.v1.MsgWithdrawResponse
+var file_nova_gal_v1_tx_proto_depIdxs = []int32{
+	6, // 0: nova.gal.v1.MsgDeposit.amount:type_name -> cosmos.base.v1beta1.Coin
+	6, // 1: nova.gal.v1.MsgUnStaking.amount:type_name -> cosmos.base.v1beta1.Coin
+	6, // 2: nova.gal.v1.MsgWithdraw.amount:type_name -> cosmos.base.v1beta1.Coin
+	0, // 3: nova.gal.v1.Msg.deposit:input_type -> nova.gal.v1.MsgDeposit
+	4, // 4: nova.gal.v1.Msg.withdraw:input_type -> nova.gal.v1.MsgWithdraw
+	1, // 5: nova.gal.v1.Msg.deposit:output_type -> nova.gal.v1.MsgDepositResponse
+	5, // 6: nova.gal.v1.Msg.withdraw:output_type -> nova.gal.v1.MsgWithdrawResponse
 	5, // [5:7] is the sub-list for method output_type
 	3, // [3:5] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
@@ -3169,13 +3165,13 @@ var file_novachain_gal_v1_tx_proto_depIdxs = []int32{
 	0, // [0:3] is the sub-list for field type_name
 }
 
-func init() { file_novachain_gal_v1_tx_proto_init() }
-func file_novachain_gal_v1_tx_proto_init() {
-	if File_novachain_gal_v1_tx_proto != nil {
+func init() { file_nova_gal_v1_tx_proto_init() }
+func file_nova_gal_v1_tx_proto_init() {
+	if File_nova_gal_v1_tx_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_novachain_gal_v1_tx_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_tx_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgDeposit); i {
 			case 0:
 				return &v.state
@@ -3187,7 +3183,7 @@ func file_novachain_gal_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_tx_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_tx_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgDepositResponse); i {
 			case 0:
 				return &v.state
@@ -3199,7 +3195,7 @@ func file_novachain_gal_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_tx_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_tx_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgUnStaking); i {
 			case 0:
 				return &v.state
@@ -3211,7 +3207,7 @@ func file_novachain_gal_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_tx_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_tx_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgUnStakingResponse); i {
 			case 0:
 				return &v.state
@@ -3223,7 +3219,7 @@ func file_novachain_gal_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_tx_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_tx_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgWithdraw); i {
 			case 0:
 				return &v.state
@@ -3235,7 +3231,7 @@ func file_novachain_gal_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_tx_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_tx_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgWithdrawResponse); i {
 			case 0:
 				return &v.state
@@ -3252,18 +3248,18 @@ func file_novachain_gal_v1_tx_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_novachain_gal_v1_tx_proto_rawDesc,
+			RawDescriptor: file_nova_gal_v1_tx_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_novachain_gal_v1_tx_proto_goTypes,
-		DependencyIndexes: file_novachain_gal_v1_tx_proto_depIdxs,
-		MessageInfos:      file_novachain_gal_v1_tx_proto_msgTypes,
+		GoTypes:           file_nova_gal_v1_tx_proto_goTypes,
+		DependencyIndexes: file_nova_gal_v1_tx_proto_depIdxs,
+		MessageInfos:      file_nova_gal_v1_tx_proto_msgTypes,
 	}.Build()
-	File_novachain_gal_v1_tx_proto = out.File
-	file_novachain_gal_v1_tx_proto_rawDesc = nil
-	file_novachain_gal_v1_tx_proto_goTypes = nil
-	file_novachain_gal_v1_tx_proto_depIdxs = nil
+	File_nova_gal_v1_tx_proto = out.File
+	file_nova_gal_v1_tx_proto_rawDesc = nil
+	file_nova_gal_v1_tx_proto_goTypes = nil
+	file_nova_gal_v1_tx_proto_depIdxs = nil
 }
