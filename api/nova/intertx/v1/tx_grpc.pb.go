@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             (unknown)
-// source: novachain/intertx/v1/tx.proto
+// source: nova/intertx/v1/tx.proto
 
 package intertxv1
 
@@ -40,7 +40,7 @@ func NewMsgClient(cc grpc.ClientConnInterface) MsgClient {
 
 func (c *msgClient) RegisterZone(ctx context.Context, in *MsgRegisterZone, opts ...grpc.CallOption) (*MsgRegisterZoneResponse, error) {
 	out := new(MsgRegisterZoneResponse)
-	err := c.cc.Invoke(ctx, "/novachain.intertx.v1.Msg/RegisterZone", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.intertx.v1.Msg/RegisterZone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (c *msgClient) RegisterZone(ctx context.Context, in *MsgRegisterZone, opts 
 
 func (c *msgClient) IcaDelegate(ctx context.Context, in *MsgIcaDelegate, opts ...grpc.CallOption) (*MsgIcaDelegateResponse, error) {
 	out := new(MsgIcaDelegateResponse)
-	err := c.cc.Invoke(ctx, "/novachain.intertx.v1.Msg/IcaDelegate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.intertx.v1.Msg/IcaDelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (c *msgClient) IcaDelegate(ctx context.Context, in *MsgIcaDelegate, opts ..
 
 func (c *msgClient) IcaUndelegate(ctx context.Context, in *MsgIcaUndelegate, opts ...grpc.CallOption) (*MsgIcaUndelegateResponse, error) {
 	out := new(MsgIcaUndelegateResponse)
-	err := c.cc.Invoke(ctx, "/novachain.intertx.v1.Msg/IcaUndelegate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.intertx.v1.Msg/IcaUndelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func _Msg_RegisterZone_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novachain.intertx.v1.Msg/RegisterZone",
+		FullMethod: "/nova.intertx.v1.Msg/RegisterZone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).RegisterZone(ctx, req.(*MsgRegisterZone))
@@ -132,7 +132,7 @@ func _Msg_IcaDelegate_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novachain.intertx.v1.Msg/IcaDelegate",
+		FullMethod: "/nova.intertx.v1.Msg/IcaDelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaDelegate(ctx, req.(*MsgIcaDelegate))
@@ -150,7 +150,7 @@ func _Msg_IcaUndelegate_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/novachain.intertx.v1.Msg/IcaUndelegate",
+		FullMethod: "/nova.intertx.v1.Msg/IcaUndelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaUndelegate(ctx, req.(*MsgIcaUndelegate))
@@ -162,7 +162,7 @@ func _Msg_IcaUndelegate_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Msg_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "novachain.intertx.v1.Msg",
+	ServiceName: "nova.intertx.v1.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -179,5 +179,5 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "novachain/intertx/v1/tx.proto",
+	Metadata: "nova/intertx/v1/tx.proto",
 }

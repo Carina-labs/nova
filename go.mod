@@ -1,4 +1,4 @@
-module github.com/Carina-labs/novachain
+module github.com/Carina-labs/nova
 
 go 1.18
 

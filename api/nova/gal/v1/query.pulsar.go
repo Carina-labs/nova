@@ -20,8 +20,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_query_proto_init()
-	md_QueryParamsRequest = File_novachain_gal_v1_query_proto.Messages().ByName("QueryParamsRequest")
+	file_nova_gal_v1_query_proto_init()
+	md_QueryParamsRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryParamsRequest")
 }
 
 var _ protoreflect.Message = (*fastReflection_QueryParamsRequest)(nil)
@@ -33,7 +33,7 @@ func (x *QueryParamsRequest) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QueryParamsRequest) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_query_proto_msgTypes[0]
+	mi := &file_nova_gal_v1_query_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -106,9 +106,9 @@ func (x *fastReflection_QueryParamsRequest) Has(fd protoreflect.FieldDescriptor)
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -122,9 +122,9 @@ func (x *fastReflection_QueryParamsRequest) Clear(fd protoreflect.FieldDescripto
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -138,9 +138,9 @@ func (x *fastReflection_QueryParamsRequest) Get(descriptor protoreflect.FieldDes
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -158,9 +158,9 @@ func (x *fastReflection_QueryParamsRequest) Set(fd protoreflect.FieldDescriptor,
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -178,9 +178,9 @@ func (x *fastReflection_QueryParamsRequest) Mutable(fd protoreflect.FieldDescrip
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -191,9 +191,9 @@ func (x *fastReflection_QueryParamsRequest) NewField(fd protoreflect.FieldDescri
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -203,7 +203,7 @@ func (x *fastReflection_QueryParamsRequest) NewField(fd protoreflect.FieldDescri
 func (x *fastReflection_QueryParamsRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.QueryParamsRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryParamsRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -377,8 +377,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_query_proto_init()
-	md_QueryParamsResponse = File_novachain_gal_v1_query_proto.Messages().ByName("QueryParamsResponse")
+	file_nova_gal_v1_query_proto_init()
+	md_QueryParamsResponse = File_nova_gal_v1_query_proto.Messages().ByName("QueryParamsResponse")
 	fd_QueryParamsResponse_params = md_QueryParamsResponse.Fields().ByName("params")
 }
 
@@ -391,7 +391,7 @@ func (x *QueryParamsResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QueryParamsResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_query_proto_msgTypes[1]
+	mi := &file_nova_gal_v1_query_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -468,13 +468,13 @@ func (x *fastReflection_QueryParamsResponse) Range(f func(protoreflect.FieldDesc
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_QueryParamsResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryParamsResponse.params":
+	case "nova.gal.v1.QueryParamsResponse.params":
 		return x.Params != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -486,13 +486,13 @@ func (x *fastReflection_QueryParamsResponse) Has(fd protoreflect.FieldDescriptor
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryParamsResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryParamsResponse.params":
+	case "nova.gal.v1.QueryParamsResponse.params":
 		x.Params = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -504,14 +504,14 @@ func (x *fastReflection_QueryParamsResponse) Clear(fd protoreflect.FieldDescript
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_QueryParamsResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.gal.v1.QueryParamsResponse.params":
+	case "nova.gal.v1.QueryParamsResponse.params":
 		value := x.Params
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -527,13 +527,13 @@ func (x *fastReflection_QueryParamsResponse) Get(descriptor protoreflect.FieldDe
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryParamsResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryParamsResponse.params":
+	case "nova.gal.v1.QueryParamsResponse.params":
 		x.Params = value.Message().Interface().(*Params)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -549,16 +549,16 @@ func (x *fastReflection_QueryParamsResponse) Set(fd protoreflect.FieldDescriptor
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryParamsResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryParamsResponse.params":
+	case "nova.gal.v1.QueryParamsResponse.params":
 		if x.Params == nil {
 			x.Params = new(Params)
 		}
 		return protoreflect.ValueOfMessage(x.Params.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -567,14 +567,14 @@ func (x *fastReflection_QueryParamsResponse) Mutable(fd protoreflect.FieldDescri
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_QueryParamsResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryParamsResponse.params":
+	case "nova.gal.v1.QueryParamsResponse.params":
 		m := new(Params)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryParamsResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryParamsResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryParamsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -584,7 +584,7 @@ func (x *fastReflection_QueryParamsResponse) NewField(fd protoreflect.FieldDescr
 func (x *fastReflection_QueryParamsResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.QueryParamsResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryParamsResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -813,8 +813,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_query_proto_init()
-	md_QuerySharesRequest = File_novachain_gal_v1_query_proto.Messages().ByName("QuerySharesRequest")
+	file_nova_gal_v1_query_proto_init()
+	md_QuerySharesRequest = File_nova_gal_v1_query_proto.Messages().ByName("QuerySharesRequest")
 	fd_QuerySharesRequest_denom = md_QuerySharesRequest.Fields().ByName("denom")
 	fd_QuerySharesRequest_address = md_QuerySharesRequest.Fields().ByName("address")
 }
@@ -828,7 +828,7 @@ func (x *QuerySharesRequest) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QuerySharesRequest) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_query_proto_msgTypes[2]
+	mi := &file_nova_gal_v1_query_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -911,15 +911,15 @@ func (x *fastReflection_QuerySharesRequest) Range(f func(protoreflect.FieldDescr
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_QuerySharesRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesRequest.denom":
+	case "nova.gal.v1.QuerySharesRequest.denom":
 		return x.Denom != ""
-	case "novachain.gal.v1.QuerySharesRequest.address":
+	case "nova.gal.v1.QuerySharesRequest.address":
 		return x.Address != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -931,15 +931,15 @@ func (x *fastReflection_QuerySharesRequest) Has(fd protoreflect.FieldDescriptor)
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QuerySharesRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesRequest.denom":
+	case "nova.gal.v1.QuerySharesRequest.denom":
 		x.Denom = ""
-	case "novachain.gal.v1.QuerySharesRequest.address":
+	case "nova.gal.v1.QuerySharesRequest.address":
 		x.Address = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -951,17 +951,17 @@ func (x *fastReflection_QuerySharesRequest) Clear(fd protoreflect.FieldDescripto
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_QuerySharesRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.gal.v1.QuerySharesRequest.denom":
+	case "nova.gal.v1.QuerySharesRequest.denom":
 		value := x.Denom
 		return protoreflect.ValueOfString(value)
-	case "novachain.gal.v1.QuerySharesRequest.address":
+	case "nova.gal.v1.QuerySharesRequest.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -977,15 +977,15 @@ func (x *fastReflection_QuerySharesRequest) Get(descriptor protoreflect.FieldDes
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QuerySharesRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesRequest.denom":
+	case "nova.gal.v1.QuerySharesRequest.denom":
 		x.Denom = value.Interface().(string)
-	case "novachain.gal.v1.QuerySharesRequest.address":
+	case "nova.gal.v1.QuerySharesRequest.address":
 		x.Address = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1001,15 +1001,15 @@ func (x *fastReflection_QuerySharesRequest) Set(fd protoreflect.FieldDescriptor,
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QuerySharesRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesRequest.denom":
-		panic(fmt.Errorf("field denom of message novachain.gal.v1.QuerySharesRequest is not mutable"))
-	case "novachain.gal.v1.QuerySharesRequest.address":
-		panic(fmt.Errorf("field address of message novachain.gal.v1.QuerySharesRequest is not mutable"))
+	case "nova.gal.v1.QuerySharesRequest.denom":
+		panic(fmt.Errorf("field denom of message nova.gal.v1.QuerySharesRequest is not mutable"))
+	case "nova.gal.v1.QuerySharesRequest.address":
+		panic(fmt.Errorf("field address of message nova.gal.v1.QuerySharesRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1018,15 +1018,15 @@ func (x *fastReflection_QuerySharesRequest) Mutable(fd protoreflect.FieldDescrip
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_QuerySharesRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesRequest.denom":
+	case "nova.gal.v1.QuerySharesRequest.denom":
 		return protoreflect.ValueOfString("")
-	case "novachain.gal.v1.QuerySharesRequest.address":
+	case "nova.gal.v1.QuerySharesRequest.address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1036,7 +1036,7 @@ func (x *fastReflection_QuerySharesRequest) NewField(fd protoreflect.FieldDescri
 func (x *fastReflection_QuerySharesRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.QuerySharesRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QuerySharesRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1297,8 +1297,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_query_proto_init()
-	md_QuerySharesResponse = File_novachain_gal_v1_query_proto.Messages().ByName("QuerySharesResponse")
+	file_nova_gal_v1_query_proto_init()
+	md_QuerySharesResponse = File_nova_gal_v1_query_proto.Messages().ByName("QuerySharesResponse")
 	fd_QuerySharesResponse_address = md_QuerySharesResponse.Fields().ByName("address")
 	fd_QuerySharesResponse_shares = md_QuerySharesResponse.Fields().ByName("shares")
 }
@@ -1312,7 +1312,7 @@ func (x *QuerySharesResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QuerySharesResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_query_proto_msgTypes[3]
+	mi := &file_nova_gal_v1_query_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1395,15 +1395,15 @@ func (x *fastReflection_QuerySharesResponse) Range(f func(protoreflect.FieldDesc
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_QuerySharesResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesResponse.address":
+	case "nova.gal.v1.QuerySharesResponse.address":
 		return x.Address != ""
-	case "novachain.gal.v1.QuerySharesResponse.shares":
+	case "nova.gal.v1.QuerySharesResponse.shares":
 		return x.Shares != int64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1415,15 +1415,15 @@ func (x *fastReflection_QuerySharesResponse) Has(fd protoreflect.FieldDescriptor
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QuerySharesResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesResponse.address":
+	case "nova.gal.v1.QuerySharesResponse.address":
 		x.Address = ""
-	case "novachain.gal.v1.QuerySharesResponse.shares":
+	case "nova.gal.v1.QuerySharesResponse.shares":
 		x.Shares = int64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1435,17 +1435,17 @@ func (x *fastReflection_QuerySharesResponse) Clear(fd protoreflect.FieldDescript
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_QuerySharesResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.gal.v1.QuerySharesResponse.address":
+	case "nova.gal.v1.QuerySharesResponse.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
-	case "novachain.gal.v1.QuerySharesResponse.shares":
+	case "nova.gal.v1.QuerySharesResponse.shares":
 		value := x.Shares
 		return protoreflect.ValueOfInt64(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1461,15 +1461,15 @@ func (x *fastReflection_QuerySharesResponse) Get(descriptor protoreflect.FieldDe
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QuerySharesResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesResponse.address":
+	case "nova.gal.v1.QuerySharesResponse.address":
 		x.Address = value.Interface().(string)
-	case "novachain.gal.v1.QuerySharesResponse.shares":
+	case "nova.gal.v1.QuerySharesResponse.shares":
 		x.Shares = value.Int()
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1485,15 +1485,15 @@ func (x *fastReflection_QuerySharesResponse) Set(fd protoreflect.FieldDescriptor
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QuerySharesResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesResponse.address":
-		panic(fmt.Errorf("field address of message novachain.gal.v1.QuerySharesResponse is not mutable"))
-	case "novachain.gal.v1.QuerySharesResponse.shares":
-		panic(fmt.Errorf("field shares of message novachain.gal.v1.QuerySharesResponse is not mutable"))
+	case "nova.gal.v1.QuerySharesResponse.address":
+		panic(fmt.Errorf("field address of message nova.gal.v1.QuerySharesResponse is not mutable"))
+	case "nova.gal.v1.QuerySharesResponse.shares":
+		panic(fmt.Errorf("field shares of message nova.gal.v1.QuerySharesResponse is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1502,15 +1502,15 @@ func (x *fastReflection_QuerySharesResponse) Mutable(fd protoreflect.FieldDescri
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_QuerySharesResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QuerySharesResponse.address":
+	case "nova.gal.v1.QuerySharesResponse.address":
 		return protoreflect.ValueOfString("")
-	case "novachain.gal.v1.QuerySharesResponse.shares":
+	case "nova.gal.v1.QuerySharesResponse.shares":
 		return protoreflect.ValueOfInt64(int64(0))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QuerySharesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QuerySharesResponse"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QuerySharesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1520,7 +1520,7 @@ func (x *fastReflection_QuerySharesResponse) NewField(fd protoreflect.FieldDescr
 func (x *fastReflection_QuerySharesResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.QuerySharesResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QuerySharesResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1764,8 +1764,8 @@ var (
 )
 
 func init() {
-	file_novachain_gal_v1_query_proto_init()
-	md_QueryAllSharesRequest = File_novachain_gal_v1_query_proto.Messages().ByName("QueryAllSharesRequest")
+	file_nova_gal_v1_query_proto_init()
+	md_QueryAllSharesRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryAllSharesRequest")
 	fd_QueryAllSharesRequest_address = md_QueryAllSharesRequest.Fields().ByName("address")
 }
 
@@ -1778,7 +1778,7 @@ func (x *QueryAllSharesRequest) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QueryAllSharesRequest) slowProtoReflect() protoreflect.Message {
-	mi := &file_novachain_gal_v1_query_proto_msgTypes[4]
+	mi := &file_nova_gal_v1_query_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1855,13 +1855,13 @@ func (x *fastReflection_QueryAllSharesRequest) Range(f func(protoreflect.FieldDe
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_QueryAllSharesRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryAllSharesRequest.address":
 		return x.Address != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1873,13 +1873,13 @@ func (x *fastReflection_QueryAllSharesRequest) Has(fd protoreflect.FieldDescript
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryAllSharesRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryAllSharesRequest.address":
 		x.Address = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1891,14 +1891,14 @@ func (x *fastReflection_QueryAllSharesRequest) Clear(fd protoreflect.FieldDescri
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_QueryAllSharesRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "novachain.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryAllSharesRequest.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryAllSharesRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1914,13 +1914,13 @@ func (x *fastReflection_QueryAllSharesRequest) Get(descriptor protoreflect.Field
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryAllSharesRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryAllSharesRequest.address":
 		x.Address = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1936,13 +1936,13 @@ func (x *fastReflection_QueryAllSharesRequest) Set(fd protoreflect.FieldDescript
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryAllSharesRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryAllSharesRequest.address":
-		panic(fmt.Errorf("field address of message novachain.gal.v1.QueryAllSharesRequest is not mutable"))
+	case "nova.gal.v1.QueryAllSharesRequest.address":
+		panic(fmt.Errorf("field address of message nova.gal.v1.QueryAllSharesRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1951,13 +1951,13 @@ func (x *fastReflection_QueryAllSharesRequest) Mutable(fd protoreflect.FieldDesc
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_QueryAllSharesRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "novachain.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryAllSharesRequest.address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: novachain.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
 		}
-		panic(fmt.Errorf("message novachain.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1967,7 +1967,7 @@ func (x *fastReflection_QueryAllSharesRequest) NewField(fd protoreflect.FieldDes
 func (x *fastReflection_QueryAllSharesRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in novachain.gal.v1.QueryAllSharesRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryAllSharesRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2182,7 +2182,7 @@ func (x *fastReflection_QueryAllSharesRequest) ProtoMethods() *protoiface.Method
 // versions:
 // 	protoc-gen-go v1.27.0
 // 	protoc        (unknown)
-// source: novachain/gal/v1/query.proto
+// source: nova/gal/v1/query.proto
 
 const (
 	// Verify that this generated code is sufficiently up-to-date.
@@ -2201,7 +2201,7 @@ type QueryParamsRequest struct {
 func (x *QueryParamsRequest) Reset() {
 	*x = QueryParamsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_query_proto_msgTypes[0]
+		mi := &file_nova_gal_v1_query_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2215,7 +2215,7 @@ func (*QueryParamsRequest) ProtoMessage() {}
 
 // Deprecated: Use QueryParamsRequest.ProtoReflect.Descriptor instead.
 func (*QueryParamsRequest) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_query_proto_rawDescGZIP(), []int{0}
+	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{0}
 }
 
 // QueryParamsResponse is the response type for the Query/Params RPC method.
@@ -2231,7 +2231,7 @@ type QueryParamsResponse struct {
 func (x *QueryParamsResponse) Reset() {
 	*x = QueryParamsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_query_proto_msgTypes[1]
+		mi := &file_nova_gal_v1_query_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2245,7 +2245,7 @@ func (*QueryParamsResponse) ProtoMessage() {}
 
 // Deprecated: Use QueryParamsResponse.ProtoReflect.Descriptor instead.
 func (*QueryParamsResponse) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_query_proto_rawDescGZIP(), []int{1}
+	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *QueryParamsResponse) GetParams() *Params {
@@ -2268,7 +2268,7 @@ type QuerySharesRequest struct {
 func (x *QuerySharesRequest) Reset() {
 	*x = QuerySharesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_query_proto_msgTypes[2]
+		mi := &file_nova_gal_v1_query_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2282,7 +2282,7 @@ func (*QuerySharesRequest) ProtoMessage() {}
 
 // Deprecated: Use QuerySharesRequest.ProtoReflect.Descriptor instead.
 func (*QuerySharesRequest) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_query_proto_rawDescGZIP(), []int{2}
+	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *QuerySharesRequest) GetDenom() string {
@@ -2312,7 +2312,7 @@ type QuerySharesResponse struct {
 func (x *QuerySharesResponse) Reset() {
 	*x = QuerySharesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_query_proto_msgTypes[3]
+		mi := &file_nova_gal_v1_query_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2326,7 +2326,7 @@ func (*QuerySharesResponse) ProtoMessage() {}
 
 // Deprecated: Use QuerySharesResponse.ProtoReflect.Descriptor instead.
 func (*QuerySharesResponse) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_query_proto_rawDescGZIP(), []int{3}
+	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *QuerySharesResponse) GetAddress() string {
@@ -2354,7 +2354,7 @@ type QueryAllSharesRequest struct {
 func (x *QueryAllSharesRequest) Reset() {
 	*x = QueryAllSharesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_novachain_gal_v1_query_proto_msgTypes[4]
+		mi := &file_nova_gal_v1_query_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2368,7 +2368,7 @@ func (*QueryAllSharesRequest) ProtoMessage() {}
 
 // Deprecated: Use QueryAllSharesRequest.ProtoReflect.Descriptor instead.
 func (*QueryAllSharesRequest) Descriptor() ([]byte, []int) {
-	return file_novachain_gal_v1_query_proto_rawDescGZIP(), []int{4}
+	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *QueryAllSharesRequest) GetAddress() string {
@@ -2378,101 +2378,96 @@ func (x *QueryAllSharesRequest) GetAddress() string {
 	return ""
 }
 
-var File_novachain_gal_v1_query_proto protoreflect.FileDescriptor
+var File_nova_gal_v1_query_proto protoreflect.FileDescriptor
 
-var file_novachain_gal_v1_query_proto_rawDesc = []byte{
-	0x0a, 0x1c, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x67, 0x61, 0x6c, 0x2f,
-	0x76, 0x31, 0x2f, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x10,
-	0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31,
-	0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1d, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69,
-	0x6e, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70,
-	0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x14,
-	0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x22, 0x4d, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72,
-	0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x36, 0x0a, 0x06, 0x70,
-	0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6e, 0x6f,
-	0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50,
-	0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x70, 0x61, 0x72,
-	0x61, 0x6d, 0x73, 0x22, 0x5e, 0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x68, 0x61, 0x72,
-	0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x64, 0x65, 0x6e,
-	0x6f, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x12,
-	0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x22, 0x61, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x68, 0x61, 0x72,
-	0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d,
-	0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53,
-	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x16,
-	0x0a, 0x06, 0x73, 0x68, 0x61, 0x72, 0x65, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06,
-	0x73, 0x68, 0x61, 0x72, 0x65, 0x73, 0x22, 0x4b, 0x0a, 0x15, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41,
-	0x6c, 0x6c, 0x53, 0x68, 0x61, 0x72, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x32, 0x8c, 0x02, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x77, 0x0a,
-	0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68,
-	0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e,
-	0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31,
-	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x20, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1a, 0x12, 0x18, 0x2f, 0x6e,
-	0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f,
-	0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x89, 0x01, 0x0a, 0x05, 0x53, 0x68, 0x61, 0x72, 0x65,
-	0x12, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c,
-	0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x68, 0x61, 0x72, 0x65, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61,
-	0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53,
-	0x68, 0x61, 0x72, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x33, 0x82,
-	0xd3, 0xe4, 0x93, 0x02, 0x2d, 0x12, 0x2b, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69,
-	0x6e, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x68, 0x61, 0x72, 0x65, 0x73, 0x2f,
-	0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x62, 0x79, 0x5f, 0x64, 0x65, 0x6e,
-	0x6f, 0x6d, 0x42, 0xc1, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x63,
-	0x68, 0x61, 0x69, 0x6e, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65,
-	0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3b, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62,
-	0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x6e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31,
-	0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58, 0xaa, 0x02, 0x10, 0x4e,
-	0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31, 0xca,
-	0x02, 0x10, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5c, 0x47, 0x61, 0x6c, 0x5c,
-	0x56, 0x31, 0xe2, 0x02, 0x1c, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5c, 0x47,
-	0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0xea, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x3a, 0x3a, 0x47,
-	0x61, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+var file_nova_gal_v1_query_proto_rawDesc = []byte{
+	0x0a, 0x17, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x71, 0x75,
+	0x65, 0x72, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0b, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x18, 0x6e, 0x6f,
+	0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61,
+	0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22,
+	0x14, 0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x48, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61,
+	0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x31, 0x0a, 0x06,
+	0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d,
+	0x73, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22,
+	0x5e, 0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x68, 0x61, 0x72, 0x65, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x12, 0x32, 0x0a, 0x07, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4,
+	0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22,
+	0x61, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x68, 0x61, 0x72, 0x65, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73,
+	0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e,
+	0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x68,
+	0x61, 0x72, 0x65, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x73, 0x68, 0x61, 0x72,
+	0x65, 0x73, 0x22, 0x4b, 0x0a, 0x15, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x53, 0x68,
+	0x61, 0x72, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x32, 0x0a, 0x07, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4,
+	0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x32,
+	0xed, 0x01, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x68, 0x0a, 0x06, 0x50, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x12, 0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76,
+	0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e,
+	0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x15, 0x12, 0x13,
+	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x12, 0x7a, 0x0a, 0x05, 0x53, 0x68, 0x61, 0x72, 0x65, 0x12, 0x1f, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x53, 0x68, 0x61, 0x72, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x53, 0x68, 0x61, 0x72, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x2e, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x28, 0x12, 0x26, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67,
+	0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x68, 0x61, 0x72, 0x65, 0x73, 0x2f, 0x7b, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x62, 0x79, 0x5f, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x42,
+	0x9e, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c,
+	0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61,
+	0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61,
+	0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x67,
+	0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58, 0xaa, 0x02, 0x0b, 0x4e, 0x6f, 0x76,
+	0x61, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x5c,
+	0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x17, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61,
+	0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0xea, 0x02, 0x0d, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x47, 0x61, 0x6c, 0x3a, 0x3a, 0x56, 0x31,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_novachain_gal_v1_query_proto_rawDescOnce sync.Once
-	file_novachain_gal_v1_query_proto_rawDescData = file_novachain_gal_v1_query_proto_rawDesc
+	file_nova_gal_v1_query_proto_rawDescOnce sync.Once
+	file_nova_gal_v1_query_proto_rawDescData = file_nova_gal_v1_query_proto_rawDesc
 )
 
-func file_novachain_gal_v1_query_proto_rawDescGZIP() []byte {
-	file_novachain_gal_v1_query_proto_rawDescOnce.Do(func() {
-		file_novachain_gal_v1_query_proto_rawDescData = protoimpl.X.CompressGZIP(file_novachain_gal_v1_query_proto_rawDescData)
+func file_nova_gal_v1_query_proto_rawDescGZIP() []byte {
+	file_nova_gal_v1_query_proto_rawDescOnce.Do(func() {
+		file_nova_gal_v1_query_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_gal_v1_query_proto_rawDescData)
 	})
-	return file_novachain_gal_v1_query_proto_rawDescData
+	return file_nova_gal_v1_query_proto_rawDescData
 }
 
-var file_novachain_gal_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
-var file_novachain_gal_v1_query_proto_goTypes = []interface{}{
-	(*QueryParamsRequest)(nil),    // 0: novachain.gal.v1.QueryParamsRequest
-	(*QueryParamsResponse)(nil),   // 1: novachain.gal.v1.QueryParamsResponse
-	(*QuerySharesRequest)(nil),    // 2: novachain.gal.v1.QuerySharesRequest
-	(*QuerySharesResponse)(nil),   // 3: novachain.gal.v1.QuerySharesResponse
-	(*QueryAllSharesRequest)(nil), // 4: novachain.gal.v1.QueryAllSharesRequest
-	(*Params)(nil),                // 5: novachain.gal.v1.Params
+var file_nova_gal_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_nova_gal_v1_query_proto_goTypes = []interface{}{
+	(*QueryParamsRequest)(nil),    // 0: nova.gal.v1.QueryParamsRequest
+	(*QueryParamsResponse)(nil),   // 1: nova.gal.v1.QueryParamsResponse
+	(*QuerySharesRequest)(nil),    // 2: nova.gal.v1.QuerySharesRequest
+	(*QuerySharesResponse)(nil),   // 3: nova.gal.v1.QuerySharesResponse
+	(*QueryAllSharesRequest)(nil), // 4: nova.gal.v1.QueryAllSharesRequest
+	(*Params)(nil),                // 5: nova.gal.v1.Params
 }
-var file_novachain_gal_v1_query_proto_depIdxs = []int32{
-	5, // 0: novachain.gal.v1.QueryParamsResponse.params:type_name -> novachain.gal.v1.Params
-	0, // 1: novachain.gal.v1.Query.Params:input_type -> novachain.gal.v1.QueryParamsRequest
-	2, // 2: novachain.gal.v1.Query.Share:input_type -> novachain.gal.v1.QuerySharesRequest
-	1, // 3: novachain.gal.v1.Query.Params:output_type -> novachain.gal.v1.QueryParamsResponse
-	3, // 4: novachain.gal.v1.Query.Share:output_type -> novachain.gal.v1.QuerySharesResponse
+var file_nova_gal_v1_query_proto_depIdxs = []int32{
+	5, // 0: nova.gal.v1.QueryParamsResponse.params:type_name -> nova.gal.v1.Params
+	0, // 1: nova.gal.v1.Query.Params:input_type -> nova.gal.v1.QueryParamsRequest
+	2, // 2: nova.gal.v1.Query.Share:input_type -> nova.gal.v1.QuerySharesRequest
+	1, // 3: nova.gal.v1.Query.Params:output_type -> nova.gal.v1.QueryParamsResponse
+	3, // 4: nova.gal.v1.Query.Share:output_type -> nova.gal.v1.QuerySharesResponse
 	3, // [3:5] is the sub-list for method output_type
 	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -2480,14 +2475,14 @@ var file_novachain_gal_v1_query_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_novachain_gal_v1_query_proto_init() }
-func file_novachain_gal_v1_query_proto_init() {
-	if File_novachain_gal_v1_query_proto != nil {
+func init() { file_nova_gal_v1_query_proto_init() }
+func file_nova_gal_v1_query_proto_init() {
+	if File_nova_gal_v1_query_proto != nil {
 		return
 	}
-	file_novachain_gal_v1_params_proto_init()
+	file_nova_gal_v1_params_proto_init()
 	if !protoimpl.UnsafeEnabled {
-		file_novachain_gal_v1_query_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_query_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryParamsRequest); i {
 			case 0:
 				return &v.state
@@ -2499,7 +2494,7 @@ func file_novachain_gal_v1_query_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_query_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_query_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryParamsResponse); i {
 			case 0:
 				return &v.state
@@ -2511,7 +2506,7 @@ func file_novachain_gal_v1_query_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_query_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_query_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QuerySharesRequest); i {
 			case 0:
 				return &v.state
@@ -2523,7 +2518,7 @@ func file_novachain_gal_v1_query_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_query_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_query_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QuerySharesResponse); i {
 			case 0:
 				return &v.state
@@ -2535,7 +2530,7 @@ func file_novachain_gal_v1_query_proto_init() {
 				return nil
 			}
 		}
-		file_novachain_gal_v1_query_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_gal_v1_query_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryAllSharesRequest); i {
 			case 0:
 				return &v.state
@@ -2552,18 +2547,18 @@ func file_novachain_gal_v1_query_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_novachain_gal_v1_query_proto_rawDesc,
+			RawDescriptor: file_nova_gal_v1_query_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_novachain_gal_v1_query_proto_goTypes,
-		DependencyIndexes: file_novachain_gal_v1_query_proto_depIdxs,
-		MessageInfos:      file_novachain_gal_v1_query_proto_msgTypes,
+		GoTypes:           file_nova_gal_v1_query_proto_goTypes,
+		DependencyIndexes: file_nova_gal_v1_query_proto_depIdxs,
+		MessageInfos:      file_nova_gal_v1_query_proto_msgTypes,
 	}.Build()
-	File_novachain_gal_v1_query_proto = out.File
-	file_novachain_gal_v1_query_proto_rawDesc = nil
-	file_novachain_gal_v1_query_proto_goTypes = nil
-	file_novachain_gal_v1_query_proto_depIdxs = nil
+	File_nova_gal_v1_query_proto = out.File
+	file_nova_gal_v1_query_proto_rawDesc = nil
+	file_nova_gal_v1_query_proto_goTypes = nil
+	file_nova_gal_v1_query_proto_depIdxs = nil
 }

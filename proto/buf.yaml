@@ -1,5 +1,5 @@
 version: v1
-name: buf.build/a4x/novachain
+name: buf.build/a4x/nova
 deps:
   - buf.build/googleapis/googleapis
   - buf.build/cosmos/gogo-proto
