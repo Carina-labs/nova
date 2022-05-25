@@ -58,8 +58,8 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 }
 
 // SetParams sets the total set of gal parameters.
-func (k Keeper) SetParams(ctx sdk.Context, params *types.Params) {
-	k.paramSpace.SetParamSet(ctx, params)
+func (k Keeper) SetParams(ctx sdk.Context, params types.Params) {
+	k.paramSpace.SetParamSet(ctx, &params)
 }
 
 // GetParams returns total set of gal parameters.
@@ -74,7 +74,7 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 	sourcePort string,
 	sourceChannel string,
 	amt sdk.Coins) error {
-	// wAtom -> [ GAL ] -> snAtom
+	//wAtom -> [ GAL ] -> snAtom
 	for _, coin := range amt {
 		goCtx := sdk.WrapSDKContext(ctx)
 
