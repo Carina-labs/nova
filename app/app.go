@@ -417,15 +417,6 @@ func New(
 		AddRoute(upgradetypes.RouterKey, upgrade.NewSoftwareUpgradeProposalHandler(app.UpgradeKeeper)).
 		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(app.IBCKeeper.ClientKeeper))
 
-	// Create Transfer Keepers
-	app.TransferKeeper = ibctransferkeeper.NewKeeper(
-		appCodec, keys[ibctransfertypes.StoreKey], app.GetSubspace(ibctransfertypes.ModuleName),
-		app.IBCKeeper.ChannelKeeper, app.IBCKeeper.ChannelKeeper, &app.IBCKeeper.PortKeeper,
-		app.AccountKeeper, app.BankKeeper, scopedTransferKeeper,
-	)
-	transferModule := transfer.NewAppModule(app.TransferKeeper)
-	transferIBCModule := transfer.NewIBCModule(app.TransferKeeper)
-
 	app.ICAControllerKeeper = icacontrollerkeeper.NewKeeper(
 		appCodec, keys[icacontrollertypes.StoreKey], app.GetSubspace(icacontrollertypes.SubModuleName),
 		app.IBCKeeper.ChannelKeeper, // may be replaced with middleware such as ics29 fee
@@ -448,7 +439,21 @@ func New(
 	icaControllerIBCModule := icacontroller.NewIBCModule(app.ICAControllerKeeper, intertxIBCModule)
 	icaHostIBCModule := icahost.NewIBCModule(app.ICAHostKeeper)
 
-	app.GalKeeper = galkeeper.NewKeeper(appCodec, keys[galtypes.StoreKey], app.GetSubspace(galtypes.ModuleName), app.BankKeeper, app.AccountKeeper, app.IntertxKeeper, app.TransferKeeper)
+	// Create Transfer Keepers
+	transferKeeper := ibctransferkeeper.NewKeeper(
+		appCodec, keys[ibctransfertypes.StoreKey], app.GetSubspace(ibctransfertypes.ModuleName),
+		app.IBCKeeper.ChannelKeeper, app.IBCKeeper.ChannelKeeper, &app.IBCKeeper.PortKeeper,
+		app.AccountKeeper, app.BankKeeper, scopedTransferKeeper,
+	)
+
+	app.GalKeeper = galkeeper.NewKeeper(appCodec, keys[galtypes.StoreKey], app.GetSubspace(galtypes.ModuleName), app.BankKeeper, app.AccountKeeper, app.IntertxKeeper, transferKeeper)
+
+	app.TransferKeeper = *transferKeeper.SetHooks(
+		ibctransfertypes.NewMultiTransferHooks(app.GalKeeper.Hooks()),
+	)
+
+	transferModule := transfer.NewAppModule(app.TransferKeeper)
+	transferIBCModule := transfer.NewIBCModule(app.TransferKeeper)
 
 	// Create evidence Keeper for to register the IBC light client misbehaviour evidence route
 	evidenceKeeper := evidencekeeper.NewKeeper(
