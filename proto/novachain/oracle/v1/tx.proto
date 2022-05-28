@@ -1,0 +1,20 @@
+syntax = "proto3";
+package novachain.oracle.v1;
+
+option go_package = "github.com/Carina-labs/novachain/x/oracle/types";
+
+service Msg {
+  rpc UpdateChainState(MsgUpdateChainState) returns (MsgUpdateChainStateResponse);
+}
+
+message MsgUpdateChainState {
+  string chain_denom = 1;
+  uint64 staked_balance = 2;
+  uint64 decimal = 3;
+  uint64 block_height = 4;
+  bytes proof = 5;
+}
+
+message MsgUpdateChainStateResponse {
+
+}
