@@ -1,0 +1,22 @@
+syntax = "proto3";
+package novachain.oracle.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/Carina-labs/novachain/x/oracle/types";
+
+service Query {
+  rpc State(QueryStateRequest) returns (QueryStateResponse) {
+    option (google.api.http).get = "/nova/oracle/v1/state";
+  }
+}
+
+message QueryStateRequest {
+  string chain_denom = 1;
+  optional int64 block_height = 2;
+}
+
+message QueryStateResponse {
+  int64 total_staked_balance = 1;
+  int64 decimal = 2;
+}
