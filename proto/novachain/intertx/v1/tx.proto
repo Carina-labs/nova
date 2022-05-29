@@ -29,9 +29,9 @@ message MsgRegisterZone {
   string connection_id = 3 [(gogoproto.moretags) = "yaml:\"connection_id\""];
   string owner_address = 4;
   string validator_address = 5;
-  string denom = 6;
+  string base_denom = 6;
   string authz_address = 7;
-  //repeated string authz_permit = 8;
+  repeated string authz_permit = 8;
 }
 
 // MsgRegisterZoneResponse defines the response for Msg/RegisterZone

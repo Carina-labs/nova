@@ -5,14 +5,16 @@ import (
 	"github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
-func (k Keeper) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacketData) error {
-	amt := data.Amount + data.Denom
-	amount, err := sdk.ParseCoinsNormalized(amt)
+func (k Keeper) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacketData, base_denom string) error {
+	//getstAsset
+	stAsset := k.interTxKeeper.GetstDenomForBaseDenom(ctx, base_denom)
 
+	amt := data.Amount + stAsset
+
+	amount, err := sdk.ParseCoinsNormalized(amt)
 	if err != nil {
 		return err
 	}
-
 	k.MintStTokenAndDistribute(ctx, data.Sender, amount)
 	return nil
 }
@@ -28,6 +30,6 @@ func (k Keeper) Hooks() Hooks {
 	return Hooks{k}
 }
 
-func (h Hooks) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacketData) {
-	h.k.AfterTransferEnd(ctx, data)
+func (h Hooks) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacketData, base_denom string) {
+	h.k.AfterTransferEnd(ctx, data, base_denom)
 }

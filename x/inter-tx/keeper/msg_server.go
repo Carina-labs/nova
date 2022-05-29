@@ -23,7 +23,21 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 // RegisterZone implements the Msg/RegisterZone interface
 func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	k.SetRegesterZone(ctx, *zone)
+
+	ZoneInfo := &types.RegisteredZone{
+		ZoneName: zone.ZoneName,
+		ConnectionInfo: &types.IcaConnectionInfo{
+			ConnectionId: zone.ConnectionId,
+			OwnerAddress: zone.OwnerAddress,
+		},
+		ValidatorAddress: zone.ValidatorAddress,
+		BaseDenom:        zone.BaseDenom,
+		StDenom:          "st" + zone.BaseDenom,
+		SnDenom:          "sn" + zone.BaseDenom,
+		AuthzAddress:     zone.AuthzAddress,
+	}
+
+	k.SetRegesterZone(ctx, *ZoneInfo)
 
 	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.ConnectionId, zone.OwnerAddress); err != nil {
 		return nil, err

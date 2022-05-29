@@ -7,7 +7,7 @@ import (
 )
 
 //setRegesterZone
-func (k Keeper) SetRegesterZone(ctx sdk.Context, zone types.MsgRegisterZone) {
+func (k Keeper) SetRegesterZone(ctx sdk.Context, zone types.RegisteredZone) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	bz := k.cdc.MustMarshal(&zone)
 	store.Set([]byte(zone.ZoneName), bz)
@@ -27,22 +27,50 @@ func (k Keeper) GetRegisteredZone(ctx sdk.Context, zone_name string) (types.MsgR
 	return zone, true
 }
 
-// func (k Keeper) SetICAConnectionInfo(ctx sdk.Context, connection_info types.MsgRegisterZone) {
-// 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixConnectionInfo)
-// 	bz := k.cdc.MustMarshal(&connection_info)
-// 	store.Set([]byte(connection_info.ZoneName), bz)
-// }
+// IterateRegisteredZones iterate through zones
+func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zoneInfo types.RegisteredZone) (stop bool)) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
+	iterator := sdk.KVStorePrefixIterator(store, nil)
+	defer iterator.Close()
+	i := int64(0)
 
-// func (k Keeper) getICAConnectionInfo(ctx sdk.Context, zone_name string) (types.ICAConnectionInfo, bool) {
-// 	connectionInfo := types.ICAConnectionInfo{}
-// 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixConnectionInfo)
-// 	bz := store.Get([]byte(zone_name))
+	for ; iterator.Valid(); iterator.Next() {
 
-// 	if len(bz) == 0 {
-// 		return connectionInfo, false
-// 	}
+		zone := types.RegisteredZone{}
 
-// 	k.cdc.MustUnmarshal(bz, &connectionInfo)
-// 	return connectionInfo, true
+		k.cdc.MustUnmarshal(iterator.Value(), &zone)
+		stop := fn(i, zone)
+		if stop {
+			break
+		}
+		i++
+	}
+}
 
-// }
+func (k Keeper) GetZoneForDenom(ctx sdk.Context, denom string) *types.RegisteredZone {
+	var zone *types.RegisteredZone
+
+	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
+		if zoneInfo.BaseDenom == denom {
+			zone = &zoneInfo
+			return true
+		}
+		return false
+	})
+
+	return zone
+}
+
+func (k Keeper) GetstDenomForBaseDenom(ctx sdk.Context, denom string) string {
+	var zone *types.RegisteredZone
+
+	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
+		if zoneInfo.BaseDenom == denom {
+			zone = &zoneInfo
+			return true
+		}
+		return false
+	})
+
+	return zone.StDenom
+}
