@@ -14,8 +14,8 @@ func (k Keeper) SetRegesterZone(ctx sdk.Context, zone types.RegisteredZone) {
 }
 
 //GetRegisteredZone
-func (k Keeper) GetRegisteredZone(ctx sdk.Context, zone_name string) (types.MsgRegisterZone, bool) {
-	zone := types.MsgRegisterZone{}
+func (k Keeper) GetRegisteredZone(ctx sdk.Context, zone_name string) (types.RegisteredZone, bool) {
+	zone := types.RegisteredZone{}
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	bz := store.Get([]byte(zone_name))
 

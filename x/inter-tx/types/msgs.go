@@ -14,6 +14,7 @@ var (
 	_ sdk.Msg = &MsgRegisterZone{}
 	_ sdk.Msg = &MsgIcaDelegate{}
 	_ sdk.Msg = &MsgIcaUndelegate{}
+	_ sdk.Msg = &MsgIcaAutoCompound{}
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
@@ -160,4 +161,41 @@ func PackTxMsgAny(sdkMsg sdk.Msg) (*codectypes.Any, error) {
 	}
 
 	return any, nil
+}
+
+func NewMsgIcaAutoCompound(zone_name, sender, owner string, amount sdk.Coin) *MsgIcaAutoCompound {
+	return &MsgIcaAutoCompound{
+		ZoneName:      zone_name,
+		SenderAddress: sender,
+		OwnerAddress:  owner,
+		Amount:        amount,
+	}
+}
+
+// ValidateBasic implements sdk.Msg
+func (msg MsgIcaAutoCompound) ValidateBasic() error {
+	if strings.TrimSpace(msg.ZoneName) == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing zone name")
+	}
+
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	return nil
+}
+
+// GetSigners implements sdk.Msg
+func (msg MsgIcaAutoCompound) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{accAddr}
 }

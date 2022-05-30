@@ -32,13 +32,14 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // MsgRegisterZone defines the payload for Msg/RegisterZone
 type MsgRegisterZone struct {
-	ZoneName         string `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
-	ChainId          string `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	ConnectionId     string `protobuf:"bytes,3,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty" yaml:"connection_id"`
-	OwnerAddress     string `protobuf:"bytes,4,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
-	ValidatorAddress string `protobuf:"bytes,5,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
-	BaseDenom        string `protobuf:"bytes,6,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
-	AuthzAddress     string `protobuf:"bytes,7,opt,name=authz_address,json=authzAddress,proto3" json:"authz_address,omitempty"`
+	ZoneName         string   `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
+	ChainId          string   `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	ConnectionId     string   `protobuf:"bytes,3,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty" yaml:"connection_id"`
+	OwnerAddress     string   `protobuf:"bytes,4,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
+	ValidatorAddress string   `protobuf:"bytes,5,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
+	BaseDenom        string   `protobuf:"bytes,6,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
+	AuthzAddress     string   `protobuf:"bytes,7,opt,name=authz_address,json=authzAddress,proto3" json:"authz_address,omitempty"`
+	AuthzPermit      []string `protobuf:"bytes,8,rep,name=authz_permit,json=authzPermit,proto3" json:"authz_permit,omitempty"`
 }
 
 func (m *MsgRegisterZone) Reset()         { *m = MsgRegisterZone{} }
@@ -320,6 +321,110 @@ func (m *MsgIcaUndelegateResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaUndelegateResponse proto.InternalMessageInfo
 
+type MsgIcaAutoCompound struct {
+	ZoneName      string     `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
+	SenderAddress string     `protobuf:"bytes,2,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
+	OwnerAddress  string     `protobuf:"bytes,3,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
+	Amount        types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
+}
+
+func (m *MsgIcaAutoCompound) Reset()         { *m = MsgIcaAutoCompound{} }
+func (m *MsgIcaAutoCompound) String() string { return proto.CompactTextString(m) }
+func (*MsgIcaAutoCompound) ProtoMessage()    {}
+func (*MsgIcaAutoCompound) Descriptor() ([]byte, []int) {
+	return fileDescriptor_51a4b63e8e2fdb7a, []int{6}
+}
+func (m *MsgIcaAutoCompound) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgIcaAutoCompound) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgIcaAutoCompound.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgIcaAutoCompound) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIcaAutoCompound.Merge(m, src)
+}
+func (m *MsgIcaAutoCompound) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgIcaAutoCompound) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIcaAutoCompound.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgIcaAutoCompound proto.InternalMessageInfo
+
+func (m *MsgIcaAutoCompound) GetZoneName() string {
+	if m != nil {
+		return m.ZoneName
+	}
+	return ""
+}
+
+func (m *MsgIcaAutoCompound) GetSenderAddress() string {
+	if m != nil {
+		return m.SenderAddress
+	}
+	return ""
+}
+
+func (m *MsgIcaAutoCompound) GetOwnerAddress() string {
+	if m != nil {
+		return m.OwnerAddress
+	}
+	return ""
+}
+
+func (m *MsgIcaAutoCompound) GetAmount() types.Coin {
+	if m != nil {
+		return m.Amount
+	}
+	return types.Coin{}
+}
+
+type MsgIcaAutoCompoundResponse struct {
+}
+
+func (m *MsgIcaAutoCompoundResponse) Reset()         { *m = MsgIcaAutoCompoundResponse{} }
+func (m *MsgIcaAutoCompoundResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgIcaAutoCompoundResponse) ProtoMessage()    {}
+func (*MsgIcaAutoCompoundResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_51a4b63e8e2fdb7a, []int{7}
+}
+func (m *MsgIcaAutoCompoundResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgIcaAutoCompoundResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgIcaAutoCompoundResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgIcaAutoCompoundResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIcaAutoCompoundResponse.Merge(m, src)
+}
+func (m *MsgIcaAutoCompoundResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgIcaAutoCompoundResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIcaAutoCompoundResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgIcaAutoCompoundResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgRegisterZone)(nil), "novachain.intertx.v1.MsgRegisterZone")
 	proto.RegisterType((*MsgRegisterZoneResponse)(nil), "novachain.intertx.v1.MsgRegisterZoneResponse")
@@ -327,48 +432,54 @@ func init() {
 	proto.RegisterType((*MsgIcaDelegateResponse)(nil), "novachain.intertx.v1.MsgIcaDelegateResponse")
 	proto.RegisterType((*MsgIcaUndelegate)(nil), "novachain.intertx.v1.MsgIcaUndelegate")
 	proto.RegisterType((*MsgIcaUndelegateResponse)(nil), "novachain.intertx.v1.MsgIcaUndelegateResponse")
+	proto.RegisterType((*MsgIcaAutoCompound)(nil), "novachain.intertx.v1.MsgIcaAutoCompound")
+	proto.RegisterType((*MsgIcaAutoCompoundResponse)(nil), "novachain.intertx.v1.MsgIcaAutoCompoundResponse")
 }
 
 func init() { proto.RegisterFile("novachain/intertx/v1/tx.proto", fileDescriptor_51a4b63e8e2fdb7a) }
 
 var fileDescriptor_51a4b63e8e2fdb7a = []byte{
-	// 571 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x94, 0x3f, 0x6f, 0xd3, 0x40,
-	0x18, 0xc6, 0xed, 0xa4, 0xa4, 0xc9, 0x35, 0x29, 0xc5, 0x8a, 0xc0, 0x31, 0xaa, 0x83, 0x0c, 0x45,
-	0x48, 0x10, 0x9f, 0x52, 0x06, 0xa4, 0x4a, 0x0c, 0xa4, 0x5d, 0x22, 0x14, 0x86, 0x48, 0x2c, 0x5d,
-	0xa2, 0xb3, 0x7d, 0x5c, 0x4e, 0x8a, 0xef, 0x22, 0xdf, 0x25, 0x24, 0xfd, 0x04, 0x8c, 0x7c, 0x84,
-	0x8e, 0xcc, 0x08, 0x89, 0xaf, 0xd0, 0xb1, 0x23, 0x53, 0x85, 0x92, 0x85, 0x99, 0x4f, 0x80, 0x7c,
-	0x76, 0xfe, 0x12, 0x20, 0x2b, 0x5b, 0xee, 0x79, 0x7e, 0xbe, 0xe7, 0xde, 0xf7, 0xbd, 0x1c, 0x38,
-	0x64, 0x7c, 0x88, 0xfc, 0x2e, 0xa2, 0x0c, 0x52, 0x26, 0x71, 0x24, 0x47, 0x70, 0x58, 0x87, 0x72,
-	0xe4, 0xf6, 0x23, 0x2e, 0xb9, 0x51, 0x9e, 0xdb, 0x6e, 0x6a, 0xbb, 0xc3, 0xba, 0x55, 0x26, 0x9c,
-	0x70, 0x05, 0xc0, 0xf8, 0x57, 0xc2, 0x5a, 0x15, 0xc2, 0x39, 0xe9, 0x61, 0xa8, 0x56, 0xde, 0xe0,
-	0x1d, 0x44, 0x6c, 0x9c, 0x5a, 0xce, 0xc6, 0x14, 0x82, 0x19, 0x16, 0x54, 0xa4, 0x8c, 0xed, 0x73,
-	0x11, 0x72, 0x01, 0x3d, 0x24, 0x30, 0x1c, 0xd6, 0x3d, 0x2c, 0x51, 0x1d, 0xfa, 0x9c, 0xb2, 0xc4,
-	0x77, 0x3e, 0x65, 0xc0, 0xed, 0x96, 0x20, 0x6d, 0x4c, 0xa8, 0x90, 0x38, 0x3a, 0xe7, 0x0c, 0x1b,
-	0xf7, 0x41, 0xe1, 0x82, 0x33, 0xdc, 0x61, 0x28, 0xc4, 0xa6, 0xfe, 0x40, 0x7f, 0x52, 0x68, 0xe7,
-	0x63, 0xe1, 0x0d, 0x0a, 0xb1, 0x51, 0x01, 0x79, 0x15, 0xd9, 0xa1, 0x81, 0x99, 0x51, 0xde, 0xae,
-	0x5a, 0x37, 0x03, 0xe3, 0x25, 0x28, 0xf9, 0x9c, 0x31, 0xec, 0x4b, 0xca, 0x95, 0x9f, 0x8d, 0xfd,
-	0x86, 0xf9, 0xf3, 0xa6, 0x5a, 0x1e, 0xa3, 0xb0, 0x77, 0xe2, 0xac, 0xd8, 0x4e, 0xbb, 0xb8, 0x58,
-	0x37, 0x03, 0xe3, 0x21, 0x28, 0xf1, 0xf7, 0x0c, 0x47, 0x1d, 0x14, 0x04, 0x11, 0x16, 0xc2, 0xdc,
-	0x51, 0xdb, 0x17, 0x95, 0xf8, 0x2a, 0xd1, 0x8c, 0xa7, 0xe0, 0xce, 0x10, 0xf5, 0x68, 0x80, 0x24,
-	0x5f, 0x80, 0xb7, 0x14, 0x78, 0x30, 0x37, 0x66, 0xf0, 0x21, 0x00, 0x71, 0xdd, 0x9d, 0x00, 0x33,
-	0x1e, 0x9a, 0x39, 0x45, 0x15, 0x62, 0xe5, 0x2c, 0x16, 0xe2, 0x40, 0x34, 0x90, 0xdd, 0x8b, 0xf9,
-	0x3e, 0xbb, 0x49, 0xa0, 0x12, 0xd3, 0x3d, 0x4e, 0xf2, 0x1f, 0x2e, 0xab, 0xda, 0x8f, 0xcb, 0xaa,
-	0xe6, 0x54, 0xc0, 0xbd, 0xb5, 0x4e, 0xb5, 0xb1, 0xe8, 0x73, 0x26, 0xb0, 0xf3, 0x59, 0x07, 0xfb,
-	0x2d, 0x41, 0x9a, 0x3e, 0x3a, 0xc3, 0x3d, 0x4c, 0x90, 0xfc, 0x47, 0x13, 0x8f, 0xc0, 0xbe, 0xc0,
-	0x2c, 0x58, 0xaa, 0x35, 0x69, 0x65, 0x29, 0x51, 0x67, 0xe7, 0xff, 0xad, 0x23, 0xd9, 0x0d, 0x1d,
-	0x79, 0x01, 0x72, 0x28, 0xe4, 0x03, 0x26, 0x55, 0xbf, 0xf6, 0x8e, 0x2b, 0x6e, 0x32, 0x72, 0x37,
-	0x2e, 0xd4, 0x4d, 0x47, 0xee, 0x9e, 0x72, 0xca, 0x1a, 0x3b, 0x57, 0x37, 0x55, 0xad, 0x9d, 0xe2,
-	0x8e, 0x09, 0xee, 0xae, 0x9e, 0x79, 0x5e, 0xce, 0x17, 0x1d, 0x1c, 0x24, 0xd6, 0x5b, 0x16, 0xfc,
-	0x3f, 0x05, 0x59, 0xc0, 0x5c, 0x3f, 0xf5, 0xac, 0xa4, 0xe3, 0xaf, 0x19, 0x90, 0x6d, 0x09, 0x62,
-	0x04, 0xa0, 0xb8, 0x72, 0xd7, 0x8f, 0xdc, 0x4d, 0xff, 0x45, 0x77, 0x6d, 0xd0, 0x56, 0x6d, 0x2b,
-	0x6c, 0x96, 0x66, 0x20, 0xb0, 0xb7, 0x7c, 0x17, 0x1e, 0xfd, 0xf1, 0xeb, 0x25, 0xca, 0x7a, 0xb6,
-	0x0d, 0x35, 0x8f, 0x20, 0xa0, 0xb4, 0x3a, 0x9f, 0xc7, 0x7f, 0xfb, 0x7c, 0xc1, 0x59, 0xee, 0x76,
-	0xdc, 0x2c, 0xa8, 0xf1, 0xfa, 0x6a, 0x62, 0xeb, 0xd7, 0x13, 0x5b, 0xff, 0x3e, 0xb1, 0xf5, 0x8f,
-	0x53, 0x5b, 0xbb, 0x9e, 0xda, 0xda, 0xb7, 0xa9, 0xad, 0x9d, 0xd7, 0x09, 0x95, 0xdd, 0x81, 0xe7,
-	0xfa, 0x3c, 0x84, 0xa7, 0x28, 0xa2, 0x0c, 0xd5, 0x7a, 0xc8, 0x13, 0x70, 0xf1, 0x2c, 0x8d, 0x92,
-	0x87, 0xa9, 0x26, 0x47, 0x50, 0x8e, 0xfb, 0x58, 0x78, 0x39, 0xf5, 0xea, 0x3c, 0xff, 0x15, 0x00,
-	0x00, 0xff, 0xff, 0xe7, 0xb1, 0x0b, 0x95, 0x21, 0x05, 0x00, 0x00,
+	// 635 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x55, 0xcb, 0x6e, 0xd3, 0x40,
+	0x14, 0x8d, 0x9b, 0xd2, 0x26, 0xb7, 0x4d, 0x5b, 0xac, 0x0a, 0x1c, 0x43, 0x9d, 0x62, 0x28, 0xaa,
+	0x04, 0xb5, 0x49, 0x59, 0x20, 0x55, 0x62, 0xd1, 0xc7, 0xa6, 0x42, 0x45, 0x28, 0x12, 0x9b, 0x6e,
+	0xa2, 0x89, 0x3d, 0xb8, 0x23, 0xc5, 0x73, 0x23, 0xcf, 0x24, 0xa4, 0xfd, 0x02, 0x96, 0x7c, 0x42,
+	0x57, 0x7c, 0x00, 0x42, 0x7c, 0x43, 0x25, 0x36, 0x5d, 0xb2, 0xaa, 0x50, 0xbb, 0x61, 0xcd, 0x17,
+	0x20, 0x8f, 0x63, 0xe7, 0xd1, 0x50, 0xb2, 0xed, 0x2e, 0x73, 0xce, 0x99, 0x7b, 0xee, 0x3d, 0xba,
+	0x19, 0xc3, 0x0a, 0xc7, 0x0e, 0xf1, 0x8e, 0x08, 0xe3, 0x2e, 0xe3, 0x92, 0x46, 0xb2, 0xeb, 0x76,
+	0xaa, 0xae, 0xec, 0x3a, 0xad, 0x08, 0x25, 0xea, 0xcb, 0x19, 0xed, 0xf4, 0x68, 0xa7, 0x53, 0x35,
+	0x97, 0x03, 0x0c, 0x50, 0x09, 0xdc, 0xf8, 0x57, 0xa2, 0x35, 0xcb, 0x01, 0x62, 0xd0, 0xa4, 0xae,
+	0x3a, 0x35, 0xda, 0x1f, 0x5c, 0xc2, 0x8f, 0x7b, 0x94, 0x3d, 0xd6, 0x25, 0xa0, 0x9c, 0x0a, 0x26,
+	0x7a, 0x1a, 0xcb, 0x43, 0x11, 0xa2, 0x70, 0x1b, 0x44, 0x50, 0xb7, 0x53, 0x6d, 0x50, 0x49, 0xaa,
+	0xae, 0x87, 0x8c, 0x27, 0xbc, 0xfd, 0x63, 0x0a, 0x16, 0x0f, 0x44, 0x50, 0xa3, 0x01, 0x13, 0x92,
+	0x46, 0x87, 0xc8, 0xa9, 0xfe, 0x00, 0x8a, 0x27, 0xc8, 0x69, 0x9d, 0x93, 0x90, 0x1a, 0xda, 0xaa,
+	0xb6, 0x5e, 0xac, 0x15, 0x62, 0xe0, 0x2d, 0x09, 0xa9, 0x5e, 0x86, 0x82, 0xb2, 0xac, 0x33, 0xdf,
+	0x98, 0x52, 0xdc, 0xac, 0x3a, 0xef, 0xfb, 0xfa, 0x6b, 0x28, 0x79, 0xc8, 0x39, 0xf5, 0x24, 0x43,
+	0xc5, 0xe7, 0x63, 0x7e, 0xc7, 0xf8, 0x73, 0x51, 0x59, 0x3e, 0x26, 0x61, 0x73, 0xcb, 0x1e, 0xa2,
+	0xed, 0xda, 0x7c, 0xff, 0xbc, 0xef, 0xeb, 0x8f, 0xa1, 0x84, 0x1f, 0x39, 0x8d, 0xea, 0xc4, 0xf7,
+	0x23, 0x2a, 0x84, 0x31, 0xad, 0xca, 0xcf, 0x2b, 0x70, 0x3b, 0xc1, 0xf4, 0x67, 0x70, 0xb7, 0x43,
+	0x9a, 0xcc, 0x27, 0x12, 0xfb, 0xc2, 0x3b, 0x4a, 0xb8, 0x94, 0x11, 0xa9, 0x78, 0x05, 0x20, 0x9e,
+	0xbb, 0xee, 0x53, 0x8e, 0xa1, 0x31, 0xa3, 0x54, 0xc5, 0x18, 0xd9, 0x8b, 0x81, 0xd8, 0x90, 0xb4,
+	0xe5, 0xd1, 0x49, 0x56, 0x67, 0x36, 0x31, 0x54, 0x60, 0x5a, 0xe3, 0x11, 0x24, 0xe7, 0x7a, 0x8b,
+	0x46, 0x21, 0x93, 0x46, 0x61, 0x35, 0xbf, 0x5e, 0xac, 0xcd, 0x29, 0xec, 0x9d, 0x82, 0xb6, 0x0a,
+	0x9f, 0x4e, 0x2b, 0xb9, 0xdf, 0xa7, 0x95, 0x9c, 0x5d, 0x86, 0xfb, 0x23, 0x61, 0xd6, 0xa8, 0x68,
+	0x21, 0x17, 0xd4, 0xfe, 0xaa, 0xc1, 0xc2, 0x81, 0x08, 0xf6, 0x3d, 0xb2, 0x47, 0x9b, 0x34, 0x20,
+	0xf2, 0x3f, 0x39, 0xaf, 0xc1, 0x82, 0xa0, 0xdc, 0x1f, 0x88, 0x23, 0x49, 0xbb, 0x94, 0xa0, 0x69,
+	0x7b, 0xd7, 0x42, 0xcb, 0x8f, 0x09, 0xed, 0x15, 0xcc, 0x90, 0x10, 0xdb, 0x5c, 0xaa, 0x48, 0xe7,
+	0x36, 0xcb, 0x4e, 0xb2, 0x15, 0x4e, 0x9c, 0x85, 0xd3, 0xdb, 0x0a, 0x67, 0x17, 0x19, 0xdf, 0x99,
+	0x3e, 0xbb, 0xa8, 0xe4, 0x6a, 0x3d, 0xb9, 0x6d, 0xc0, 0xbd, 0xe1, 0x9e, 0xb3, 0x71, 0xbe, 0x69,
+	0xb0, 0x94, 0x50, 0xef, 0xb9, 0x7f, 0x7b, 0x06, 0x32, 0xc1, 0x18, 0xed, 0x3a, 0x1b, 0xe9, 0xbb,
+	0x06, 0x7a, 0x42, 0x6e, 0xb7, 0x25, 0xee, 0x62, 0xd8, 0xc2, 0x36, 0xf7, 0x6f, 0xc1, 0x50, 0x0f,
+	0xc1, 0xbc, 0xde, 0x77, 0x3a, 0xd6, 0xe6, 0x97, 0x3c, 0xe4, 0x0f, 0x44, 0xa0, 0xfb, 0x30, 0x3f,
+	0xf4, 0x2f, 0x5f, 0x73, 0xc6, 0xbd, 0x42, 0xce, 0xc8, 0xfe, 0x9a, 0x1b, 0x13, 0xc9, 0x52, 0x37,
+	0x9d, 0xc0, 0xdc, 0xe0, 0x8a, 0x3f, 0xf9, 0xe7, 0xed, 0x01, 0x95, 0xf9, 0x7c, 0x12, 0x55, 0x66,
+	0x11, 0x40, 0x69, 0x78, 0xed, 0x9e, 0xde, 0x74, 0xbd, 0xaf, 0x33, 0x9d, 0xc9, 0x74, 0x99, 0x51,
+	0x08, 0x8b, 0xa3, 0xcb, 0xb0, 0x7e, 0x53, 0x89, 0x41, 0xa5, 0xf9, 0x62, 0x52, 0x65, 0x6a, 0xb7,
+	0xf3, 0xe6, 0xec, 0xd2, 0xd2, 0xce, 0x2f, 0x2d, 0xed, 0xd7, 0xa5, 0xa5, 0x7d, 0xbe, 0xb2, 0x72,
+	0xe7, 0x57, 0x56, 0xee, 0xe7, 0x95, 0x95, 0x3b, 0xac, 0x06, 0x4c, 0x1e, 0xb5, 0x1b, 0x8e, 0x87,
+	0xa1, 0xbb, 0x4b, 0x22, 0xc6, 0xc9, 0x46, 0x93, 0x34, 0x84, 0xdb, 0x7f, 0xff, 0xbb, 0xc9, 0x17,
+	0x60, 0x43, 0x76, 0x5d, 0x79, 0xdc, 0xa2, 0xa2, 0x31, 0xa3, 0x9e, 0xf7, 0x97, 0x7f, 0x03, 0x00,
+	0x00, 0xff, 0xff, 0xe7, 0x58, 0xcb, 0xf1, 0x8a, 0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -389,6 +500,8 @@ type MsgClient interface {
 	IcaDelegate(ctx context.Context, in *MsgIcaDelegate, opts ...grpc.CallOption) (*MsgIcaDelegateResponse, error)
 	// IcaUnDelegate defines a rpc handler for MsgIcaUnDelegate
 	IcaUndelegate(ctx context.Context, in *MsgIcaUndelegate, opts ...grpc.CallOption) (*MsgIcaUndelegateResponse, error)
+	// IcaAutoCompound defines a rpc handler for MsgIcaAutoCompound
+	IcaAutoCompound(ctx context.Context, in *MsgIcaAutoCompound, opts ...grpc.CallOption) (*MsgIcaAutoCompoundResponse, error)
 }
 
 type msgClient struct {
@@ -426,6 +539,15 @@ func (c *msgClient) IcaUndelegate(ctx context.Context, in *MsgIcaUndelegate, opt
 	return out, nil
 }
 
+func (c *msgClient) IcaAutoCompound(ctx context.Context, in *MsgIcaAutoCompound, opts ...grpc.CallOption) (*MsgIcaAutoCompoundResponse, error) {
+	out := new(MsgIcaAutoCompoundResponse)
+	err := c.cc.Invoke(ctx, "/novachain.intertx.v1.Msg/IcaAutoCompound", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// Register defines a rpc handler for MsgRegisterZone
@@ -434,6 +556,8 @@ type MsgServer interface {
 	IcaDelegate(context.Context, *MsgIcaDelegate) (*MsgIcaDelegateResponse, error)
 	// IcaUnDelegate defines a rpc handler for MsgIcaUnDelegate
 	IcaUndelegate(context.Context, *MsgIcaUndelegate) (*MsgIcaUndelegateResponse, error)
+	// IcaAutoCompound defines a rpc handler for MsgIcaAutoCompound
+	IcaAutoCompound(context.Context, *MsgIcaAutoCompound) (*MsgIcaAutoCompoundResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -448,6 +572,9 @@ func (*UnimplementedMsgServer) IcaDelegate(ctx context.Context, req *MsgIcaDeleg
 }
 func (*UnimplementedMsgServer) IcaUndelegate(ctx context.Context, req *MsgIcaUndelegate) (*MsgIcaUndelegateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IcaUndelegate not implemented")
+}
+func (*UnimplementedMsgServer) IcaAutoCompound(ctx context.Context, req *MsgIcaAutoCompound) (*MsgIcaAutoCompoundResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IcaAutoCompound not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -508,6 +635,24 @@ func _Msg_IcaUndelegate_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_IcaAutoCompound_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgIcaAutoCompound)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).IcaAutoCompound(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/novachain.intertx.v1.Msg/IcaAutoCompound",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).IcaAutoCompound(ctx, req.(*MsgIcaAutoCompound))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "novachain.intertx.v1.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -523,6 +668,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IcaUndelegate",
 			Handler:    _Msg_IcaUndelegate_Handler,
+		},
+		{
+			MethodName: "IcaAutoCompound",
+			Handler:    _Msg_IcaAutoCompound_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -549,6 +698,15 @@ func (m *MsgRegisterZone) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.AuthzPermit) > 0 {
+		for iNdEx := len(m.AuthzPermit) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.AuthzPermit[iNdEx])
+			copy(dAtA[i:], m.AuthzPermit[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.AuthzPermit[iNdEx])))
+			i--
+			dAtA[i] = 0x42
+		}
+	}
 	if len(m.AuthzAddress) > 0 {
 		i -= len(m.AuthzAddress)
 		copy(dAtA[i:], m.AuthzAddress)
@@ -778,6 +936,83 @@ func (m *MsgIcaUndelegateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgIcaAutoCompound) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgIcaAutoCompound) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgIcaAutoCompound) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintTx(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0x22
+	if len(m.OwnerAddress) > 0 {
+		i -= len(m.OwnerAddress)
+		copy(dAtA[i:], m.OwnerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.OwnerAddress)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.SenderAddress) > 0 {
+		i -= len(m.SenderAddress)
+		copy(dAtA[i:], m.SenderAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.SenderAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ZoneName) > 0 {
+		i -= len(m.ZoneName)
+		copy(dAtA[i:], m.ZoneName)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneName)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgIcaAutoCompoundResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgIcaAutoCompoundResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgIcaAutoCompoundResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -822,6 +1057,12 @@ func (m *MsgRegisterZone) Size() (n int) {
 	l = len(m.AuthzAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
+	}
+	if len(m.AuthzPermit) > 0 {
+		for _, s := range m.AuthzPermit {
+			l = len(s)
+			n += 1 + l + sovTx(uint64(l))
+		}
 	}
 	return n
 }
@@ -891,6 +1132,38 @@ func (m *MsgIcaUndelegate) Size() (n int) {
 }
 
 func (m *MsgIcaUndelegateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgIcaAutoCompound) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneName)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.SenderAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.OwnerAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = m.Amount.Size()
+	n += 1 + l + sovTx(uint64(l))
+	return n
+}
+
+func (m *MsgIcaAutoCompoundResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1157,6 +1430,38 @@ func (m *MsgRegisterZone) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.AuthzAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AuthzPermit", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AuthzPermit = append(m.AuthzPermit, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1664,6 +1969,235 @@ func (m *MsgIcaUndelegateResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgIcaUndelegateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgIcaAutoCompound) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgIcaAutoCompound: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgIcaAutoCompound: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SenderAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SenderAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OwnerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgIcaAutoCompoundResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgIcaAutoCompoundResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgIcaAutoCompoundResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

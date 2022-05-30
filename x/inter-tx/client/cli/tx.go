@@ -26,6 +26,7 @@ func GetTxCmd() *cobra.Command {
 		getRegisterZoneCmd(),
 		getDelegateTxCmd(),
 		getUndelegateTxCmd(),
+		getAutoCompoundTxCmd(),
 	)
 
 	return cmd
@@ -115,6 +116,32 @@ func getUndelegateTxCmd() *cobra.Command {
 			amount, _ := sdk.ParseCoinNormalized(args[3])
 
 			msg := types.NewMsgIcaUnDelegate(zone_name, sender, owner_address, amount)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func getAutoCompoundTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "autocompound [zone-name] [sender(host-address)] [owner-address] [amount]",
+		Args: cobra.ExactArgs(4),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			cmd.Flags().Set(flags.FlagFrom, args[2])
+			clientCtx, err := client.GetClientTxContext(cmd)
+
+			if err != nil {
+				return err
+			}
+
+			zone_name := args[0]
+			sender := args[1]
+			owner := clientCtx.GetFromAddress().String()
+			amount, _ := sdk.ParseCoinNormalized(args[3])
+
+			msg := types.NewMsgIcaAutoCompound(zone_name, sender, owner, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

@@ -6,6 +6,7 @@ import (
 	"github.com/Carina-labs/novachain/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
+	distributiontype "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
@@ -58,7 +59,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	var msgs []sdk.Msg
 
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
-	err := k.SendIcaTx(ctx, zone_info.OwnerAddress, zone_info.ConnectionId, msgs)
+	err := k.SendIcaTx(ctx, zone_info.ConnectionInfo.OwnerAddress, zone_info.ConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		panic("IcaDelegate transaction failed to send")
@@ -79,11 +80,32 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	var msgs []sdk.Msg
 
 	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
-	err := k.SendIcaTx(ctx, zone_info.OwnerAddress, zone_info.ConnectionId, msgs)
+	err := k.SendIcaTx(ctx, zone_info.ConnectionInfo.OwnerAddress, zone_info.ConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		panic("IcaUnDelegate transaction failed to send")
 	}
 
-	return nil, nil
+	return &types.MsgIcaUndelegateResponse{}, nil
+}
+
+func (k msgServer) IcaAutoCompound(goCtx context.Context, msg *types.MsgIcaAutoCompound) (*types.MsgIcaAutoCompoundResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+	if !ok {
+		panic("zone name not found")
+	}
+
+	var msgs []sdk.Msg
+
+	msgs = append(msgs, &distributiontype.MsgWithdrawDelegatorReward{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress})
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
+
+	err := k.SendIcaTx(ctx, msg.OwnerAddress, zone_info.ConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		panic("IcaAutoCompound transaction failed to send")
+	}
+
+	return &types.MsgIcaAutoCompoundResponse{}, nil
 }

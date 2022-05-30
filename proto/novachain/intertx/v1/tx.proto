@@ -17,6 +17,8 @@ service Msg {
   rpc IcaDelegate(MsgIcaDelegate) returns (MsgIcaDelegateResponse);
   // IcaUnDelegate defines a rpc handler for MsgIcaUnDelegate
   rpc IcaUndelegate(MsgIcaUndelegate) returns (MsgIcaUndelegateResponse);
+  // IcaAutoCompound defines a rpc handler for MsgIcaAutoCompound
+  rpc IcaAutoCompound(MsgIcaAutoCompound) returns (MsgIcaAutoCompoundResponse);
 }
 
 // MsgRegisterZone defines the payload for Msg/RegisterZone
@@ -55,3 +57,12 @@ message MsgIcaUndelegate{
 }
 
 message MsgIcaUndelegateResponse{}
+
+message MsgIcaAutoCompound{
+  string zone_name = 1;
+  string sender_address = 2;
+  string owner_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+}
+
+message MsgIcaAutoCompoundResponse{}
