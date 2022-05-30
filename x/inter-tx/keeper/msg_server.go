@@ -89,7 +89,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	return &types.MsgIcaUndelegateResponse{}, nil
 }
 
-func (k msgServer) IcaAutoCompound(goCtx context.Context, msg *types.MsgIcaAutoCompound) (*types.MsgIcaAutoCompoundResponse, error) {
+func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoStaking) (*types.MsgIcaAutoStakingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
@@ -107,5 +107,5 @@ func (k msgServer) IcaAutoCompound(goCtx context.Context, msg *types.MsgIcaAutoC
 		panic("IcaAutoCompound transaction failed to send")
 	}
 
-	return &types.MsgIcaAutoCompoundResponse{}, nil
+	return &types.MsgIcaAutoStakingResponse{}, nil
 }

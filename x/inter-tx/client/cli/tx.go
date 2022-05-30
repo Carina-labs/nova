@@ -26,7 +26,7 @@ func GetTxCmd() *cobra.Command {
 		getRegisterZoneCmd(),
 		getDelegateTxCmd(),
 		getUndelegateTxCmd(),
-		getAutoCompoundTxCmd(),
+		getAutoStakingTxCmd(),
 	)
 
 	return cmd
@@ -124,9 +124,9 @@ func getUndelegateTxCmd() *cobra.Command {
 	return cmd
 }
 
-func getAutoCompoundTxCmd() *cobra.Command {
+func getAutoStakingTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "autocompound [zone-name] [sender(host-address)] [owner-address] [amount]",
+		Use:  "autostaking [zone-name] [sender(host-address)] [owner-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.Flags().Set(flags.FlagFrom, args[2])
@@ -141,7 +141,7 @@ func getAutoCompoundTxCmd() *cobra.Command {
 			owner := clientCtx.GetFromAddress().String()
 			amount, _ := sdk.ParseCoinNormalized(args[3])
 
-			msg := types.NewMsgIcaAutoCompound(zone_name, sender, owner, amount)
+			msg := types.NewMsgIcaAutoStaking(zone_name, sender, owner, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
