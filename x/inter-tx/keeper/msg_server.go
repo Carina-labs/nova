@@ -6,7 +6,6 @@ import (
 
 	"github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-
 	distributiontype "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
@@ -25,6 +24,7 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 // RegisterZone implements the Msg/RegisterZone interface
 func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+	k.SetRegesterZone(ctx, *zone)
 
 	ZoneInfo := &types.RegisteredZone{
 		ZoneName: zone.ZoneName,
@@ -40,7 +40,6 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 	}
 
 	k.SetRegesterZone(ctx, *ZoneInfo)
-
 	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.ConnectionId, zone.OwnerAddress); err != nil {
 		return nil, err
 	}
@@ -99,7 +98,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	}
 
 	var msgs []sdk.Msg
-
+  
 	msgs = append(msgs, &distributiontype.MsgWithdrawDelegatorReward{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress})
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
 

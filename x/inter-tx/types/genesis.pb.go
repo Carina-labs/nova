@@ -75,7 +75,6 @@ func (m *RegisteredZone) GetZoneName() string {
 	}
 	return ""
 }
-
 func (m *RegisteredZone) GetConnectionInfo() *IcaConnectionInfo {
 	if m != nil {
 		return m.ConnectionInfo
@@ -468,10 +467,6 @@ func (m *RegisteredZone) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ZoneName)
-	if l > 0 {
-		n += 1 + l + sovGenesis(uint64(l))
-	}
 	if m.ConnectionInfo != nil {
 		l = m.ConnectionInfo.Size()
 		n += 1 + l + sovGenesis(uint64(l))

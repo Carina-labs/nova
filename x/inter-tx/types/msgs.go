@@ -55,7 +55,6 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 	if strings.TrimSpace(msg.BaseDenom) == "" {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing denom")
 	}
-
 	if strings.TrimSpace(msg.AuthzAddress) == "" {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing authz address")
 	}
@@ -87,7 +86,6 @@ func (msg MsgIcaDelegate) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid owner address")
 	}
-
 	if !msg.Amount.IsValid() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
@@ -148,19 +146,15 @@ func (msg MsgIcaUndelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-// PackTxMsgAny marshals the sdk.Msg payload to a protobuf Any type
-func PackTxMsgAny(sdkMsg sdk.Msg) (*codectypes.Any, error) {
-	msg, ok := sdkMsg.(proto.Message)
-	if !ok {
-		return nil, fmt.Errorf("can't proto marshal %T", sdkMsg)
-	}
+// GetSigners implements sdk.Msg
+func (msg MsgIcaDelegate) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
 
-	any, err := codectypes.NewAnyWithValue(msg)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	return any, nil
+	return []sdk.AccAddress{accAddr}
 }
 
 func NewMsgIcaAutoStaking(zone_name, sender, owner string, amount sdk.Coin) *MsgIcaAutoStaking {

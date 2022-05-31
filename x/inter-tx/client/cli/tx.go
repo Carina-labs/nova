@@ -109,7 +109,6 @@ func getUndelegateTxCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
 			zone_name := args[0]
 			sender := args[1]
 			owner_address := clientCtx.GetFromAddress().String()

@@ -40,6 +40,7 @@ type MsgRegisterZone struct {
 	BaseDenom        string   `protobuf:"bytes,6,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
 	AuthzAddress     string   `protobuf:"bytes,7,opt,name=authz_address,json=authzAddress,proto3" json:"authz_address,omitempty"`
 	AuthzPermit      []string `protobuf:"bytes,8,rep,name=authz_permit,json=authzPermit,proto3" json:"authz_permit,omitempty"`
+
 }
 
 func (m *MsgRegisterZone) Reset()         { *m = MsgRegisterZone{} }
@@ -1038,7 +1039,7 @@ func (m *MsgRegisterZone) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.ConnectionId)
+	l = len(m.SenderAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1158,6 +1159,7 @@ func (m *MsgIcaAutoStaking) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
+
 	l = m.Amount.Size()
 	n += 1 + l + sovTx(uint64(l))
 	return n
@@ -1763,6 +1765,7 @@ func (m *MsgIcaDelegateResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *MsgIcaUndelegate) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1921,16 +1924,34 @@ func (m *MsgIcaUndelegate) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTx(dAtA[iNdEx:])
-			if err != nil {
-				return err
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ConnectionId", wireType)
 			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthTx
 			}
-			if (iNdEx + skippy) > l {
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
 			iNdEx += skippy
@@ -1942,6 +1963,7 @@ func (m *MsgIcaUndelegate) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func (m *MsgIcaUndelegateResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2172,6 +2194,7 @@ func (m *MsgIcaAutoStaking) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *MsgIcaAutoStakingResponse) Unmarshal(dAtA []byte) error {
+
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
