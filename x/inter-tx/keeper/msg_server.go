@@ -54,7 +54,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 
 	if !ok {
-		return &types.MsgIcaDelegateResponse{}, errors.New("zone name is not foune")
+		return &types.MsgIcaDelegateResponse{}, errors.New("zone name is not found")
 	}
 
 	var msgs []sdk.Msg
@@ -75,7 +75,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 
 	if !ok {
-		return &types.MsgIcaUndelegateResponse{}, errors.New("zone name is not foune")
+		return &types.MsgIcaUndelegateResponse{}, errors.New("zone name is not found")
 	}
 
 	var msgs []sdk.Msg
@@ -95,7 +95,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
-		return &types.MsgIcaAutoStakingResponse{}, errors.New("zone name is not foune")
+		return &types.MsgIcaAutoStakingResponse{}, errors.New("zone name is not found")
 	}
 
 	var msgs []sdk.Msg
