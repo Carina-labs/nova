@@ -11,10 +11,6 @@ message ChainInfo {
   string chain_denom = 1;
   string validator_address = 2;
   int64 last_block_height = 3;
-  map<int64, ChainState> state_map = 4;
-}
-
-message ChainState {
-  int64 total_staked_balance = 1;
-  int64 decimal = 2;
+  int64 total_staked_balance = 5;
+  int64 decimal = 6;
 }

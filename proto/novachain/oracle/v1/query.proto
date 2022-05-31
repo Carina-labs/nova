@@ -13,10 +13,10 @@ service Query {
 
 message QueryStateRequest {
   string chain_denom = 1;
-  optional int64 block_height = 2;
 }
 
 message QueryStateResponse {
   int64 total_staked_balance = 1;
   int64 decimal = 2;
+  int64 last_block_height = 3;
 }
