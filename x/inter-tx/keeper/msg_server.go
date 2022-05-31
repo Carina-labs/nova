@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"errors"
 
 	"github.com/Carina-labs/novachain/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -53,7 +54,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 
 	if !ok {
-		panic("zone name not found")
+		return &types.MsgIcaDelegateResponse{}, errors.New("zone name is not foune")
 	}
 
 	var msgs []sdk.Msg
@@ -62,10 +63,10 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	err := k.SendIcaTx(ctx, zone_info.ConnectionInfo.OwnerAddress, zone_info.ConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
-		panic("IcaDelegate transaction failed to send")
+		return &types.MsgIcaDelegateResponse{}, errors.New("IcaDelegate transaction failed to send")
 	}
 
-	return nil, nil
+	return &types.MsgIcaDelegateResponse{}, nil
 }
 
 func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndelegate) (*types.MsgIcaUndelegateResponse, error) {
@@ -74,7 +75,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 
 	if !ok {
-		panic("zone name not found")
+		return &types.MsgIcaUndelegateResponse{}, errors.New("zone name is not foune")
 	}
 
 	var msgs []sdk.Msg
@@ -83,7 +84,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	err := k.SendIcaTx(ctx, zone_info.ConnectionInfo.OwnerAddress, zone_info.ConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
-		panic("IcaUnDelegate transaction failed to send")
+		return &types.MsgIcaUndelegateResponse{}, errors.New("IcaUnDelegate transaction failed to send")
 	}
 
 	return &types.MsgIcaUndelegateResponse{}, nil
@@ -94,7 +95,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
-		panic("zone name not found")
+		return &types.MsgIcaAutoStakingResponse{}, errors.New("zone name is not foune")
 	}
 
 	var msgs []sdk.Msg
@@ -104,7 +105,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 	err := k.SendIcaTx(ctx, msg.OwnerAddress, zone_info.ConnectionInfo.ConnectionId, msgs)
 	if err != nil {
-		panic("IcaAutoCompound transaction failed to send")
+		return &types.MsgIcaAutoStakingResponse{}, errors.New("IcaAutoStaking transaction failed to send")
 	}
 
 	return &types.MsgIcaAutoStakingResponse{}, nil
