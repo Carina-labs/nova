@@ -96,13 +96,13 @@ import (
 	ibchost "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
 
-	gal "github.com/Carina-labs/novachain/x/gal"
-	galkeeper "github.com/Carina-labs/novachain/x/gal/keeper"
-	galtypes "github.com/Carina-labs/novachain/x/gal/types"
+	gal "github.com/Carina-labs/nova/x/gal"
+	galkeeper "github.com/Carina-labs/nova/x/gal/keeper"
+	galtypes "github.com/Carina-labs/nova/x/gal/types"
 
-	intertx "github.com/Carina-labs/novachain/x/inter-tx"
-	intertxkeeper "github.com/Carina-labs/novachain/x/inter-tx/keeper"
-	intertxtypes "github.com/Carina-labs/novachain/x/inter-tx/types"
+	intertx "github.com/Carina-labs/nova/x/inter-tx"
+	intertxkeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
+	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 
 	"github.com/spf13/cast"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -117,7 +117,7 @@ import (
 
 const (
 	AccountAddressPrefix = "nova"
-	Name                 = "novachain"
+	Name                 = "nova"
 )
 
 var (

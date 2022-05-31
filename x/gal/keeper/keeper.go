@@ -1,8 +1,8 @@
 package keeper
 
 import (
-	"github.com/Carina-labs/novachain/x/gal/types"
-	interTxKeeper "github.com/Carina-labs/novachain/x/inter-tx/keeper"
+	"github.com/Carina-labs/nova/x/gal/types"
+	interTxKeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"

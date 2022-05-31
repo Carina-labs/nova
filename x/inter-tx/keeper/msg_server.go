@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/Carina-labs/novachain/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	distributiontype "github.com/cosmos/cosmos-sdk/x/distribution/types"
