@@ -12,7 +12,6 @@ message MsgUpdateChainState {
   uint64 staked_balance = 2;
   uint64 decimal = 3;
   uint64 block_height = 4;
-  bytes proof = 5;
 }
 
 message MsgUpdateChainStateResponse {
