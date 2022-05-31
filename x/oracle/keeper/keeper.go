@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"github.com/Carina-labs/novachain/x/gal/types"
+	"github.com/Carina-labs/novachain/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
@@ -28,10 +28,14 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
-func (k Keeper) UpdateChainState(chainDenom string, stakedBalance uint64) {
+func (k Keeper) UpdateChainState(ctx sdk.Context, updateInfo *types.MsgUpdateChainState) error {
+	if err := updateInfo.ValidateBasic(); err != nil {
+		return err
+	}
 
+	return nil
 }
 
-func (k Keeper) GetChainState(chainDenom string) uint64 {
-	return 0
+func (k Keeper) GetChainState(chainDenom string) *types.QueryStateResponse {
+	return &types.QueryStateResponse{}
 }
