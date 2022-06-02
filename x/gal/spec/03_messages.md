@@ -11,6 +11,8 @@ message MsgDeposit {
   repeated cosmos.base.v1beta1.Coin amount = 3;
 }
 ```
+`MsgDeposit` is a message used when depositing for asset liquidity.
+
 ## MsgDepositResponse
 
 ---
@@ -19,6 +21,7 @@ message MsgDepositResponse {
   
 }
 ```
+`MsgDepositResponse` is a message used response for `MsgDepsit`
 
 ## MsgUnStaking
 
@@ -29,6 +32,9 @@ message MsgUnStaking {
   repeated cosmos.base.v1beta1.Coin amount = 2;
 }
 ```
+`MsgUnStaking` is a message used when user want to unstake their asset.
+
+
 ## MsgUnStakingResponse
 
 ---
@@ -37,6 +43,9 @@ message MsgUnStakingResponse {
   
 }
 ```
+`MsgUnStakingResponse` is a message used response for `MsgUnStaking`
+As a result, the unstacked asset does not return to the user's wallet via IBC. If you just wait for the unstaking wait period,
+you will be able to do IBC.
 ## MsgWithdraw
 
 ---
@@ -46,6 +55,8 @@ message MsgWithdraw {
   repeated cosmos.base.v1beta1.Coin amount = 2;
 }
 ```
+`MsgWithdraw` is a message used when user want to withdraw their asset with IBC.
+
 ## MsgWithdrawResponse
 
 ---
@@ -54,3 +65,4 @@ message MsgWithdrawResponse {
   
 }
 ```
+`MsgWithdrawResponse` is a message used response for `MsgWithdraw`
