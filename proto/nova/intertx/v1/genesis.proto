@@ -9,13 +9,14 @@ option go_package = "github.com/Carina-labs/nova/x/inter-tx/types";
 
 message RegisteredZone {
   string zone_name = 1;
-  IcaConnectionInfo connection_info = 2;
-  string validator_address = 3;
-  string base_denom = 4;
-  string sn_denom = 5;
-  string st_denom = 6;
-  string authz_address = 7;
-  repeated string authz_permit = 8;
+  IcaConnectionInfo ica_connection_info = 2;
+  TransferConnectionInfo transfer_connection_info = 3;
+  string validator_address = 4;
+  string base_denom = 5;
+  string sn_denom = 6;
+  string st_denom = 7;
+  string authz_address = 8;
+  //repeated string authz_permit = 9;
 }
 
 message IcaAccount {
@@ -31,4 +32,10 @@ message IcaAccount {
 message IcaConnectionInfo {
   string connection_id = 1;
   string owner_address = 2;
+}
+
+message TransferConnectionInfo {
+  string connection_id = 1;
+  string port_id = 2;
+  string channel_id = 3;
 }
