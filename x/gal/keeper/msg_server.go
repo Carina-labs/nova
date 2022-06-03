@@ -17,7 +17,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if err := m.keeper.DepositCoin(ctx, deposit.Depositor,
-		deposit.Receiver, "transfer", "channel-2", deposit.Amount); err != nil {
+		deposit.Receiver, "transfer", deposit.Channel, deposit.Amount); err != nil {
 		return nil, err
 	}
 	return &types.MsgDepositResponse{}, nil

@@ -12,11 +12,12 @@ const (
 
 var _ sdk.Msg = &MsgDeposit{}
 
-func NewMsgDeposit(fromAddr sdk.AccAddress, toAddr string, amount sdk.Coins) *MsgDeposit {
+func NewMsgDeposit(fromAddr sdk.AccAddress, toAddr string, amount sdk.Coins, channel string) *MsgDeposit {
 	return &MsgDeposit{
 		Depositor: fromAddr.String(),
 		Receiver:  toAddr,
 		Amount:    amount,
+		Channel:   channel,
 	}
 }
 

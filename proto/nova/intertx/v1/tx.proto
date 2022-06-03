@@ -1,5 +1,4 @@
 syntax = "proto3";
-
 package nova.intertx.v1;
 
 import "gogoproto/gogo.proto";
@@ -17,6 +16,10 @@ service Msg {
   rpc IcaDelegate(MsgIcaDelegate) returns (MsgIcaDelegateResponse);
   // IcaUnDelegate defines a rpc handler for MsgIcaUnDelegate
   rpc IcaUndelegate(MsgIcaUndelegate) returns (MsgIcaUndelegateResponse);
+  // IcaWithdraw defines a rpc handler for MsgIcaWithdraw
+  rpc IcaWithdraw(MsgIcaWithdraw) returns (MsgIcaWithdrawResponse);
+  // IcaAutoStaking defines a rpc handler for MsgIcaAutoStaking
+  rpc IcaAutoStaking(MsgIcaAutoStaking) returns (MsgIcaAutoStakingResponse);
 }
 
 // MsgRegisterZone defines the payload for Msg/RegisterZone
@@ -26,19 +29,18 @@ message MsgRegisterZone {
 
   string zone_name = 1;
   string chain_id = 2;
-  string connection_id = 3 [(gogoproto.moretags) = "yaml:\"connection_id\""];
-  string owner_address = 4;
+  IcaConnectionInfo ica_info = 3;
+  TransferConnectionInfo transfer_info = 4;
   string validator_address = 5;
-  string denom = 6;
+  string base_denom = 6;
   string authz_address = 7;
-  //repeated string authz_permit = 8;
+// repeated string authz_permit = 8;
 }
 
 // MsgRegisterZoneResponse defines the response for Msg/RegisterZone
 message MsgRegisterZoneResponse {}
 
 message MsgIcaDelegate{
-//  RegisteredZone zone_name = 1;
   string zone_name = 1;
   string sender_address = 2;
   string owner_address = 3;
@@ -55,3 +57,22 @@ message MsgIcaUndelegate{
 }
 
 message MsgIcaUndelegateResponse{}
+
+message MsgIcaAutoStaking{
+  string zone_name = 1;
+  string sender_address = 2;
+  string owner_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+}
+
+message MsgIcaAutoStakingResponse{}
+
+message MsgIcaWithdraw{
+  string zone_name = 1;
+  string sender_address = 2;
+  string owner_address = 3;
+  string receiver_address = 4;
+  cosmos.base.v1beta1.Coin amount = 5[(gogoproto.nullable) = false];
+}
+
+message MsgIcaWithdrawResponse{}

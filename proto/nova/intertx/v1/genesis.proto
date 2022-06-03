@@ -8,11 +8,15 @@ import "cosmos/base/v1beta1/coin.proto";
 option go_package = "github.com/Carina-labs/nova/x/inter-tx/types";
 
 message RegisteredZone {
-  IcaConnectionInfo connection_info = 1;
-  string validator_address = 2;
-  string local_denom = 3;
-  string authz_address = 4;
-  //repeated string authz_permit = 5;
+  string zone_name = 1;
+  IcaConnectionInfo ica_connection_info = 2;
+  TransferConnectionInfo transfer_connection_info = 3;
+  string validator_address = 4;
+  string base_denom = 5;
+  string sn_denom = 6;
+  string st_denom = 7;
+  string authz_address = 8;
+  //repeated string authz_permit = 9;
 }
 
 message IcaAccount {
@@ -26,7 +30,12 @@ message IcaAccount {
 
 //zone name, connection id, portID(owner address)
 message IcaConnectionInfo {
-  string zone_name = 1;
-  string connection_id = 2;
-  string owner_address = 3;
+  string connection_id = 1;
+  string owner_address = 2;
+}
+
+message TransferConnectionInfo {
+  string connection_id = 1;
+  string port_id = 2;
+  string channel_id = 3;
 }
