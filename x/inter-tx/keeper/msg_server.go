@@ -27,7 +27,6 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 // RegisterZone implements the Msg/RegisterZone interface
 func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	k.SetRegesterZone(ctx, *zone)
 
 	ZoneInfo := &types.RegisteredZone{
 		ZoneName: zone.ZoneName,
@@ -107,7 +106,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	}
 
 	var msgs []sdk.Msg
-  
+
 	msgs = append(msgs, &distributiontype.MsgWithdrawDelegatorReward{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress})
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
 
