@@ -27,4 +27,4 @@ message DepositInfo {
   int64 debt = 3;
 }
 ```
-`DepositInfo` specifies the user's deposit history.
+`DepositInfo` specifies the user's deposit information.
