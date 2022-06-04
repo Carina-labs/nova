@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"context"
-	"github.com/Carina-labs/novachain/x/oracle/types"
+	"github.com/Carina-labs/nova/x/oracle/types"
 )
 
 var _ types.MsgServer = msgServer{}
