@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"encoding/json"
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -33,6 +34,17 @@ func (k Keeper) UpdateChainState(ctx sdk.Context, updateInfo *types.MsgUpdateCha
 		return err
 	}
 
+	store := ctx.KVStore(k.storeKey)
+	data := make(map[string]interface{})
+	data["balance"] = updateInfo.StakedBalance
+	data["decimal"] = updateInfo.Decimal
+	data["height"] = updateInfo.BlockHeight
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	store.Set([]byte(updateInfo.ChainDenom), bytes)
 	return nil
 }
 
