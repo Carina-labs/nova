@@ -14,13 +14,24 @@ type msgServer struct {
 
 func (m msgServer) UpdateChainState(ctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
 	goCtx := sdk.UnwrapSDKContext(ctx)
-	err := m.keeper.UpdateChainState(goCtx, state)
 
+	err := m.keeper.UpdateChainState(goCtx, state)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return &types.MsgUpdateChainStateResponse{}, nil
+}
+
+func (m msgServer) GetChainState(ctx context.Context, request *types.QueryStateRequest) (*types.QueryStateResponse, error) {
+	goCtx := sdk.UnwrapSDKContext(ctx)
+
+	result, err := m.keeper.GetChainState(goCtx, request.ChainDenom)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
 
 func NewMsgServerImpl(keeper Keeper) types.MsgServer {

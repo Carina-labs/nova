@@ -16,7 +16,7 @@ message QueryStateRequest {
 }
 
 message QueryStateResponse {
-  int64 total_staked_balance = 1;
-  int64 decimal = 2;
-  int64 last_block_height = 3;
+  uint64 total_staked_balance = 1;
+  uint64 decimal = 2;
+  uint64 last_block_height = 3;
 }
