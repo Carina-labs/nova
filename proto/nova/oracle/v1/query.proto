@@ -3,7 +3,7 @@ package novachain.oracle.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/Carina-labs/novachain/x/oracle/types";
+option go_package = "github.com/Carina-labs/nova/x/oracle/types";
 
 service Query {
   rpc State(QueryStateRequest) returns (QueryStateResponse) {

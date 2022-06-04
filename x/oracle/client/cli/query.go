@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/Carina-labs/novachain/x/oracle/types"
+	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/spf13/cobra"
 )
