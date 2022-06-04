@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/Carina-labs/novachain/x/oracle/types"
+	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -24,7 +24,7 @@ func GetTxCmd() *cobra.Command {
 
 func NewUpdateStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update_state [chain_denom] [balance] [decimal] [block_height] [proof]",
+		Use:   "update_state [chain_denom] [balance] [decimal] [block_height]",
 		Short: "",
 		Long:  "",
 		Args:  cobra.ExactArgs(5),
@@ -50,9 +50,7 @@ func NewUpdateStateCmd() *cobra.Command {
 				return err
 			}
 
-			proof := []byte(args[4])
-
-			msg := types.NewMsgUpdateChainState(chainDenom, balance.Uint64(), decimal.Uint64(), blockHeight.Uint64(), proof)
+			msg := types.NewMsgUpdateChainState(chainDenom, balance.Uint64(), decimal.Uint64(), blockHeight.Uint64())
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
