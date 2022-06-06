@@ -1,6 +1,8 @@
 package app
 
 import (
+	oracle "github.com/Carina-labs/nova/x/oracle"
+	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	"io"
 	"os"
 	"path/filepath"
@@ -98,8 +100,6 @@ import (
 
 	gal "github.com/Carina-labs/nova/x/gal"
 	galkeeper "github.com/Carina-labs/nova/x/gal/keeper"
-	galtypes "github.com/Carina-labs/nova/x/gal/types"
-
 	intertx "github.com/Carina-labs/nova/x/inter-tx"
 	intertxkeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
@@ -275,6 +275,7 @@ type App struct {
 	IntertxKeeper       intertxkeeper.Keeper
 	WasmKeeper          wasmkeeper.Keeper
 	AuthzKeeper         authzkeeper.Keeper
+	OracleKeeper        oraclekeeper.Keeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper           capabilitykeeper.ScopedKeeper
@@ -334,6 +335,7 @@ func New(
 		icahosttypes.StoreKey,
 		intertxtypes.StoreKey,
 		authzkeeper.StoreKey,
+		oracle.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
@@ -446,8 +448,6 @@ func New(
 		app.AccountKeeper, app.BankKeeper, scopedTransferKeeper,
 	)
 
-	app.GalKeeper = galkeeper.NewKeeper(appCodec, keys[galtypes.StoreKey], app.GetSubspace(galtypes.ModuleName), app.BankKeeper, app.AccountKeeper, app.IntertxKeeper, transferKeeper)
-
 	app.TransferKeeper = *transferKeeper.SetHooks(
 		ibctransfertypes.NewMultiTransferHooks(app.GalKeeper.Hooks()),
 	)
@@ -498,6 +498,7 @@ func New(
 	ibcRouter.AddRoute(intertxtypes.ModuleName, icaControllerIBCModule)
 	ibcRouter.AddRoute(wasm.ModuleName, wasm.NewIBCHandler(app.WasmKeeper, app.IBCKeeper.ChannelKeeper))
 	app.IBCKeeper.SetRouter(ibcRouter)
+	app.OracleKeeper = oraclekeeper.NewKeeper(appCodec, keys[oracle.StoreKey], app.GetSubspace(oracle.ModuleName))
 	app.GalKeeper = galkeeper.NewKeeper(
 		appCodec,
 		keys[gal.StoreKey],
@@ -505,7 +506,8 @@ func New(
 		app.BankKeeper,
 		app.AccountKeeper,
 		app.IntertxKeeper,
-		app.TransferKeeper)
+		app.TransferKeeper,
+		app.OracleKeeper)
 
 	/****  Module Options ****/
 

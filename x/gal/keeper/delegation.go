@@ -5,8 +5,6 @@ import (
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 )
@@ -45,10 +43,10 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 	return nil
 }
 
-//Redelegate wAsset
-
 //stAsset mint
-func (k Keeper) MintStTokenAndDistribute(ctx sdk.Context, depositor string, amt sdk.Coins) error {
+func (k Keeper) MintStTokenAndDistribute(ctx sdk.Context,
+	depositor string,
+	amt sdk.Coins) error {
 	depositorAddr, err := sdk.AccAddressFromBech32(depositor)
 	if err != nil {
 		return err
@@ -65,19 +63,18 @@ func (k Keeper) MintStTokenAndDistribute(ctx sdk.Context, depositor string, amt 
 	return nil
 }
 
-func (k Keeper) CalculateShares(ctx sdk.Context, depositor string, coin sdk.Coin) (float64, error) {
-	totalSupply := k.bankKeeper.GetSupply(ctx, coin.Denom)
-	depositorBalance, err := k.bankKeeper.Balance(ctx.Context(), &banktypes.QueryBalanceRequest{
-		Address: depositor,
-		Denom:   coin.Denom,
-	})
-
+func (k Keeper) CalculateShares(ctx sdk.Context,
+	targetDenom string,
+	coin sdk.Coin) (float64, error) {
+	targetTotalSupply, err := k.oracleKeeper.GetChainState(ctx, targetDenom)
 	if err != nil {
 		return 0, err
 	}
 
-	shares := float64(depositorBalance.Balance.Amount.Int64()/totalSupply.Amount.Int64()) * 100
-	return shares, nil
+	amt := coin.Amount.Uint64()
+	shares := amt/amt + targetTotalSupply.TotalStakedBalance
+
+	return float64(shares * 100), nil
 }
 
 func (k Keeper) getPairSnToken(ctx sdk.Context, denom string) (stTokenDenom string) {
