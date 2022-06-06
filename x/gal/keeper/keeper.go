@@ -88,11 +88,10 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer string, amt sdk.Coins) 
 	return nil
 }
 
-func (k Keeper) SetShare(ctx sdk.Context, depositor string, targetChain string, shares float64) error {
+func (k Keeper) SetShare(ctx sdk.Context, depositor string, shares float64) error {
 	store := ctx.KVStore(k.storeKey)
 	data := make(map[string]interface{})
 	data["depositor"] = depositor
-	data["chain"] = targetChain
 	data["shares"] = shares
 	bytes, err := json.Marshal(data)
 	if err != nil {
@@ -103,7 +102,7 @@ func (k Keeper) SetShare(ctx sdk.Context, depositor string, targetChain string, 
 	return nil
 }
 
-func (k Keeper) GetShare(ctx sdk.Context, depositor string, targetChain string) (*types.QuerySharesResponse, error) {
+func (k Keeper) GetShare(ctx sdk.Context, depositor string) (*types.QuerySharesResponse, error) {
 	store := ctx.KVStore(k.storeKey)
 	if !store.Has([]byte(depositor)) {
 		return nil, errors.New(fmt.Sprintf("Depositor %s is not in state...", depositor))
