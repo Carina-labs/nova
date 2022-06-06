@@ -90,7 +90,7 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer string, amt sdk.Coins) 
 
 func (k Keeper) SetShare(ctx sdk.Context, depositor string, targetChain string, shares float64) error {
 	store := ctx.KVStore(k.storeKey)
-	data := make(map[string]interface)
+	data := make(map[string]interface{})
 	data["depositor"] = depositor
 	data["chain"] = targetChain
 	data["shares"] = shares
@@ -115,8 +115,7 @@ func (k Keeper) GetShare(ctx sdk.Context, depositor string, targetChain string) 
 		return nil, err
 	}
 
-	// TODO : fix int64 -> float64
-	shares, ok := result["shares"].(int64)
+	shares, ok := result["shares"].(float32)
 	if !ok {
 		// TODO : fix error msg
 		return nil, errors.New(fmt.Sprintf("Convert fail"))
@@ -124,6 +123,6 @@ func (k Keeper) GetShare(ctx sdk.Context, depositor string, targetChain string) 
 
 	return &types.QuerySharesResponse{
 		Address: depositor,
-		Shares: shares,
+		Shares:  shares,
 	}, nil
 }
