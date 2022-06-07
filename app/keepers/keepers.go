@@ -301,7 +301,7 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 }
 
 func KVStoreKeys() []string {
-	return []string {
+	return []string{
 		authtypes.StoreKey,
 		banktypes.StoreKey,
 		stakingtypes.StoreKey,

@@ -240,7 +240,7 @@ func New(
 			encodingConfig,
 			skipGenesisInvariants,
 			transferModule,
-		)...
+		)...,
 	)
 
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -384,6 +384,7 @@ func (app *App) AppCodec() codec.Codec {
 func (app *App) InterfaceRegistry() types.InterfaceRegistry {
 	return app.interfaceRegistry
 }
+
 // GetSubspace returns a param subspace for a given module name.
 //
 // NOTE: This is solely to be used for testing purposes.

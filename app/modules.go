@@ -42,9 +42,9 @@ import (
 	ica "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibc "github.com/cosmos/ibc-go/v3/modules/core"
 	ibchost "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 	"github.com/tendermint/spm/cosmoscmd"
-	ibc "github.com/cosmos/ibc-go/v3/modules/core"
 )
 
 func (app *App) GetModuleManager(
@@ -54,7 +54,7 @@ func (app *App) GetModuleManager(
 ) []module.AppModule {
 	appCodec := encodingConfig.Marshaler
 
-	return []module.AppModule {
+	return []module.AppModule{
 		genutil.NewAppModule(
 			app.AccountKeeper, app.StakingKeeper, app.BaseApp.DeliverTx,
 			encodingConfig.TxConfig,
@@ -84,7 +84,7 @@ func (app *App) GetModuleManager(
 }
 
 func GetOrderInitGenesis() []string {
-	return []string {
+	return []string{
 		capabilitytypes.ModuleName,
 		authtypes.ModuleName,
 		banktypes.ModuleName,
@@ -112,7 +112,7 @@ func GetOrderInitGenesis() []string {
 }
 
 func GetOrderBeginBlocker() []string {
-	return []string {
+	return []string{
 		authtypes.ModuleName,
 		banktypes.ModuleName,
 		paramstypes.ModuleName,
@@ -140,7 +140,7 @@ func GetOrderBeginBlocker() []string {
 }
 
 func GetOrderEndBlocker() []string {
-	return []string {
+	return []string{
 		authtypes.ModuleName,
 		banktypes.ModuleName,
 		paramstypes.ModuleName,
