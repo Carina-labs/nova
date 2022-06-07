@@ -108,7 +108,7 @@ func (a AppModule) RegisterInvariants(registry sdk.InvariantRegistry) {}
 
 // Deprecated
 func (a AppModule) Route() sdk.Route {
-	return sdk.Route{}
+	return sdk.NewRoute(types.RouterKey, NewHandler(&a.keeper))
 }
 
 func (a AppModule) QuerierRoute() string {
