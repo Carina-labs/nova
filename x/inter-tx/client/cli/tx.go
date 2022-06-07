@@ -39,7 +39,9 @@ func getRegisterZoneCmd() *cobra.Command {
 		Use:  "register [zone-name] [chain-id] [owner-address] [connection-id] [transfer-channel-id] [transfer-connection-id] [transfer-port-id] [validator_address] [base-denom]",
 		Args: cobra.ExactArgs(9),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[2])
+			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
+				return err
+			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -76,7 +78,9 @@ func getDelegateTxCmd() *cobra.Command {
 		Use:  "delegate [zone-name] [sender(host-address)] [owner-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[2])
+			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
+				return err
+			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -107,18 +111,21 @@ func getUndelegateTxCmd() *cobra.Command {
 		Use:  "undelegate [zone_name] [sender(host-address)] [owner-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[2])
-			clientCtx, err := client.GetClientTxContext(cmd)
+			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
+				return err
+			}
 
+			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
-			zone_name := args[0]
+
+			zoneName := args[0]
 			sender := args[1]
-			owner_address := clientCtx.GetFromAddress().String()
+			ownerAddress := clientCtx.GetFromAddress().String()
 			amount, _ := sdk.ParseCoinNormalized(args[3])
 
-			msg := types.NewMsgIcaUnDelegate(zone_name, sender, owner_address, amount)
+			msg := types.NewMsgIcaUnDelegate(zoneName, sender, ownerAddress, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -132,19 +139,24 @@ func getAutoStakingTxCmd() *cobra.Command {
 		Use:  "autostaking [zone-name] [sender(host-address)] [owner-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[2])
+			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
+				return err
+			}
 			clientCtx, err := client.GetClientTxContext(cmd)
 
 			if err != nil {
 				return err
 			}
 
-			zone_name := args[0]
+			zoneName := args[0]
 			sender := args[1]
 			owner := clientCtx.GetFromAddress().String()
-			amount, _ := sdk.ParseCoinNormalized(args[3])
+			amount, err := sdk.ParseCoinNormalized(args[3])
+			if err != nil {
+				return err
+			}
 
-			msg := types.NewMsgIcaAutoStaking(zone_name, sender, owner, amount)
+			msg := types.NewMsgIcaAutoStaking(zoneName, sender, owner, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -158,20 +170,25 @@ func getWithdrawTxCmd() *cobra.Command {
 		Use:  "withdraw [zone-name] [sender-address(host-address)] [owner-address] [reveiver] [amount]",
 		Args: cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[2])
+			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
+				return err
+			}
 			clientCtx, err := client.GetClientTxContext(cmd)
 
 			if err != nil {
 				return err
 			}
 
-			zone_name := args[0]
+			zoneName := args[0]
 			sender := args[1]
 			owner := clientCtx.GetFromAddress().String()
 			receiver := args[3]
-			amount, _ := sdk.ParseCoinNormalized(args[4])
+			amount, err := sdk.ParseCoinNormalized(args[4])
+			if err != nil {
+				return err
+			}
 
-			msg := types.NewMsgIcaWithdraw(zone_name, sender, owner, receiver, amount)
+			msg := types.NewMsgIcaWithdraw(zoneName, sender, owner, receiver, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
