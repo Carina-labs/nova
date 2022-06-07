@@ -1,10 +1,12 @@
 syntax = "proto3";
 package novachain.oracle.v1;
 
+import "gogoproto/gogo.proto";
+
 option go_package = "github.com/Carina-labs/nova/x/oracle/types";
 
 message GenesisState {
-  repeated ChainInfo states = 1;
+  repeated ChainInfo states = 1 [(gogoproto.nullable) = false];
 }
 
 message ChainInfo {

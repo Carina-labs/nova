@@ -6,15 +6,7 @@ func NewGenesisState() *GenesisState {
 
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
-		States: []ChainInfo{
-			{
-				ChainDenom:         "test",
-				ValidatorAddress:   "test",
-				LastBlockHeight:    1,
-				TotalStakedBalance: 1,
-				Decimal:            1,
-			},
-		},
+		States: []ChainInfo{},
 	}
 }
 
