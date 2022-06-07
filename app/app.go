@@ -185,9 +185,9 @@ var (
 )
 
 var (
-	_ cosmoscmd.App           = (*App)(nil)
-	_ servertypes.Application = (*App)(nil)
-	_ simapp.App              = (*App)(nil)
+	_ cosmoscmd.App           = (*NovaApp)(nil)
+	_ servertypes.Application = (*NovaApp)(nil)
+	_ simapp.App              = (*NovaApp)(nil)
 )
 
 func init() {
@@ -236,10 +236,10 @@ func getGovProposalHandlers() []govclient.ProposalHandler {
 	return govProposalHandlers
 }
 
-// App extends an ABCI application, but with most of its parameters exported.
+// NovaApp extends an ABCI application, but with most of its parameters exported.
 // They are exported for convenience in creating helper functions, as object
 // capabilities aren't needed for testing.
-type App struct {
+type NovaApp struct {
 	*baseapp.BaseApp
 
 	cdc               *codec.LegacyAmino
@@ -292,8 +292,8 @@ type App struct {
 	sm *module.SimulationManager
 }
 
-// New returns a reference to an initialized blockchain app
-func New(
+// NewNovaApp returns a reference to an initialized blockchain app
+func NewNovaApp(
 	logger log.Logger,
 	db dbm.DB,
 	traceStore io.Writer,
@@ -304,7 +304,7 @@ func New(
 	encodingConfig cosmoscmd.EncodingConfig,
 	appOpts servertypes.AppOptions,
 	baseAppOptions ...func(*baseapp.BaseApp),
-) cosmoscmd.App {
+) *NovaApp {
 	appCodec := encodingConfig.Marshaler
 	cdc := encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
@@ -340,7 +340,7 @@ func New(
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
 
-	app := &App{
+	app := &NovaApp{
 		BaseApp:           bApp,
 		cdc:               cdc,
 		appCodec:          appCodec,
@@ -704,24 +704,24 @@ func New(
 	return app
 }
 
-// Name returns the name of the App
-func (app *App) Name() string { return app.BaseApp.Name() }
+// Name returns the name of the NovaApp
+func (app *NovaApp) Name() string { return app.BaseApp.Name() }
 
 // GetBaseApp returns the base app of the application
-func (app App) GetBaseApp() *baseapp.BaseApp { return app.BaseApp }
+func (app NovaApp) GetBaseApp() *baseapp.BaseApp { return app.BaseApp }
 
 // BeginBlocker application updates every begin block
-func (app *App) BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
+func (app *NovaApp) BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
 	return app.mm.BeginBlock(ctx, req)
 }
 
 // EndBlocker application updates every end block
-func (app *App) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
+func (app *NovaApp) EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
 	return app.mm.EndBlock(ctx, req)
 }
 
 // InitChainer application update at chain initialization
-func (app *App) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
+func (app *NovaApp) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
 	var genesisState GenesisState
 	if err := tmjson.Unmarshal(req.AppStateBytes, &genesisState); err != nil {
 		panic(err)
@@ -731,12 +731,12 @@ func (app *App) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.Res
 }
 
 // LoadHeight loads a particular height
-func (app *App) LoadHeight(height int64) error {
+func (app *NovaApp) LoadHeight(height int64) error {
 	return app.LoadVersion(height)
 }
 
 // ModuleAccountAddrs returns all the app's module account addresses.
-func (app *App) ModuleAccountAddrs() map[string]bool {
+func (app *NovaApp) ModuleAccountAddrs() map[string]bool {
 	modAccAddrs := make(map[string]bool)
 	for acc := range maccPerms {
 		modAccAddrs[authtypes.NewModuleAddress(acc).String()] = true
@@ -749,7 +749,7 @@ func (app *App) ModuleAccountAddrs() map[string]bool {
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
-func (app *App) LegacyAmino() *codec.LegacyAmino {
+func (app *NovaApp) LegacyAmino() *codec.LegacyAmino {
 	return app.cdc
 }
 
@@ -757,47 +757,47 @@ func (app *App) LegacyAmino() *codec.LegacyAmino {
 //
 // NOTE: This is solely to be used for testing purposes as it may be desirable
 // for modules to register their own custom testing types.
-func (app *App) AppCodec() codec.Codec {
+func (app *NovaApp) AppCodec() codec.Codec {
 	return app.appCodec
 }
 
 // InterfaceRegistry returns an InterfaceRegistry
-func (app *App) InterfaceRegistry() types.InterfaceRegistry {
+func (app *NovaApp) InterfaceRegistry() types.InterfaceRegistry {
 	return app.interfaceRegistry
 }
 
 // GetKey returns the KVStoreKey for the provided store key.
 //
 // NOTE: This is solely to be used for testing purposes.
-func (app *App) GetKey(storeKey string) *sdk.KVStoreKey {
+func (app *NovaApp) GetKey(storeKey string) *sdk.KVStoreKey {
 	return app.keys[storeKey]
 }
 
 // GetTKey returns the TransientStoreKey for the provided store key.
 //
 // NOTE: This is solely to be used for testing purposes.
-func (app *App) GetTKey(storeKey string) *sdk.TransientStoreKey {
+func (app *NovaApp) GetTKey(storeKey string) *sdk.TransientStoreKey {
 	return app.tkeys[storeKey]
 }
 
 // GetMemKey returns the MemStoreKey for the provided mem key.
 //
 // NOTE: This is solely used for testing purposes.
-func (app *App) GetMemKey(storeKey string) *sdk.MemoryStoreKey {
+func (app *NovaApp) GetMemKey(storeKey string) *sdk.MemoryStoreKey {
 	return app.memKeys[storeKey]
 }
 
 // GetSubspace returns a param subspace for a given module name.
 //
 // NOTE: This is solely to be used for testing purposes.
-func (app *App) GetSubspace(moduleName string) paramstypes.Subspace {
+func (app *NovaApp) GetSubspace(moduleName string) paramstypes.Subspace {
 	subspace, _ := app.ParamsKeeper.GetSubspace(moduleName)
 	return subspace
 }
 
 // RegisterAPIRoutes registers all application module routes with the provided
 // API server.
-func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
+func (app *NovaApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
 	clientCtx := apiSvr.ClientCtx
 	rpc.RegisterRoutes(clientCtx, apiSvr.Router)
 	// Register legacy tx routes.
@@ -817,12 +817,12 @@ func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig
 }
 
 // RegisterTxService implements the Application.RegisterTxService method.
-func (app *App) RegisterTxService(clientCtx client.Context) {
+func (app *NovaApp) RegisterTxService(clientCtx client.Context) {
 	authtx.RegisterTxService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.BaseApp.Simulate, app.interfaceRegistry)
 }
 
 // RegisterTendermintService implements the Application.RegisterTendermintService method.
-func (app *App) RegisterTendermintService(clientCtx client.Context) {
+func (app *NovaApp) RegisterTendermintService(clientCtx client.Context) {
 	tmservice.RegisterTendermintService(app.BaseApp.GRPCQueryRouter(), clientCtx, app.interfaceRegistry)
 }
 
@@ -859,6 +859,6 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 }
 
 // SimulationManager implements the SimulationApp interface
-func (app *App) SimulationManager() *module.SimulationManager {
+func (app *NovaApp) SimulationManager() *module.SimulationManager {
 	return app.sm
 }

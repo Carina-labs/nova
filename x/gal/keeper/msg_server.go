@@ -15,20 +15,30 @@ type msgServer struct {
 
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+	depositorAddr, err := sdk.AccAddressFromBech32(deposit.Depositor)
+	if err != nil {
+		return nil, err
+	}
 
-	if err := m.keeper.DepositCoin(ctx, deposit.Depositor,
+	if err := m.keeper.DepositCoin(ctx, depositorAddr,
 		deposit.Receiver, "transfer", deposit.Channel, deposit.Amount); err != nil {
 		return nil, err
 	}
+	
 	return &types.MsgDepositResponse{}, nil
 }
 
 func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	if err := m.keeper.WithdrawCoin(ctx, withdraw.Withdrawer, withdraw.Amount); err != nil {
+	withdrawerAddr, err := sdk.AccAddressFromBech32(withdraw.Withdrawer)
+	if err != nil {
 		return nil, err
 	}
+
+	if err := m.keeper.WithdrawCoin(ctx, withdrawerAddr, withdraw.Amount); err != nil {
+		return nil, err
+	}
+
 	return &types.MsgWithdrawResponse{}, nil
 }
 

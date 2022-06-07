@@ -18,8 +18,11 @@ const (
 var (
 	// KeySupply defines key to store the total supply of snTokens.
 	KeySupply = []byte{0x00}
-	// KeyDepositInfo defines key to store deposit information of snTokens.
-	KeyDepositInfo = []byte{0x01}
+	// KeyShare defines key to store deposit information of snTokens.
+	KeyShare = []byte{0x01}
 	// KeyWithdrawInfo defines key to store withdraw information of snTokens.
 	KeyWithdrawInfo = []byte{0x02}
+
+	KeyDepositor = "depositor"
+	KeyShares    = "shares"
 )

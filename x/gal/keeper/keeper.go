@@ -8,6 +8,7 @@ import (
 	interTxKeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
@@ -70,7 +71,7 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 	return params
 }
 
-func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer string, amt sdk.Coins) error {
+func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer sdk.Address, amt sdk.Coins) error {
 	// snAtom -> [GAL] -> wAtom
 	for _, coin := range amt {
 		// burn sn token
@@ -88,11 +89,11 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer string, amt sdk.Coins) 
 	return nil
 }
 
-func (k Keeper) SetShare(ctx sdk.Context, depositor string, shares float64) error {
-	store := ctx.KVStore(k.storeKey)
+func (k Keeper) SetShare(ctx sdk.Context, depositor sdk.AccAddress, shares float64) error {
+	store := k.getShareStore(ctx)
 	data := make(map[string]interface{})
-	data["depositor"] = depositor
-	data["shares"] = shares
+	data[types.KeyDepositor] = depositor.String()
+	data[types.KeyShares] = shares
 	bytes, err := json.Marshal(data)
 	if err != nil {
 		return err
@@ -102,26 +103,30 @@ func (k Keeper) SetShare(ctx sdk.Context, depositor string, shares float64) erro
 	return nil
 }
 
-func (k Keeper) GetShare(ctx sdk.Context, depositor string) (*types.QuerySharesResponse, error) {
-	store := ctx.KVStore(k.storeKey)
+func (k Keeper) GetShare(ctx sdk.Context, depositor sdk.AccAddress) (*types.QuerySharesResponse, error) {
+	store := k.getShareStore(ctx)
 	if !store.Has([]byte(depositor)) {
 		return nil, errors.New(fmt.Sprintf("Depositor %s is not in state...", depositor))
 	}
 
 	result := make(map[string]interface{})
-	err := json.Unmarshal(store.Get([]byte(depositor)), &result)
+	err := json.Unmarshal(store.Get([]byte(depositor.String())), &result)
 	if err != nil {
 		return nil, err
 	}
 
-	shares, ok := result["shares"].(float32)
+	shares, ok := result[types.KeyShares].(float32)
 	if !ok {
 		// TODO : fix error msg
 		return nil, errors.New(fmt.Sprintf("Convert fail"))
 	}
 
 	return &types.QuerySharesResponse{
-		Address: depositor,
+		Address: depositor.String(),
 		Shares:  shares,
 	}, nil
+}
+
+func (k Keeper) getShareStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
 }

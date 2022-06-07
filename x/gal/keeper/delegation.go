@@ -11,7 +11,7 @@ import (
 
 //delegate wAsset
 func (k Keeper) DepositCoin(ctx sdk.Context,
-	depositor string,
+	depositor sdk.AccAddress,
 	receiver string,
 	sourcePort string,
 	sourceChannel string,
@@ -25,7 +25,7 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 				SourcePort:    sourcePort,
 				SourceChannel: sourceChannel,
 				Token:         coin,
-				Sender:        depositor,
+				Sender:        depositor.String(),
 				Receiver:      receiver,
 				TimeoutHeight: ibcclienttypes.Height{
 					RevisionHeight: 500000,
@@ -45,9 +45,9 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 
 //stAsset mint
 func (k Keeper) MintStTokenAndDistribute(ctx sdk.Context,
-	depositor string,
+	depositor sdk.Address,
 	amt sdk.Coins) error {
-	depositorAddr, err := sdk.AccAddressFromBech32(depositor)
+	depositorAddr, err := sdk.AccAddressFromBech32(depositor.String())
 	if err != nil {
 		return err
 	}
