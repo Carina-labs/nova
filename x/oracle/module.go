@@ -1,7 +1,11 @@
 package oracle
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
+	"log"
+	"math/rand"
 
 	"github.com/Carina-labs/nova/x/oracle/client/cli"
 	"github.com/Carina-labs/nova/x/oracle/keeper"
@@ -11,6 +15,7 @@ import (
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
+	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/spf13/cobra"
@@ -35,43 +40,41 @@ func (a AppModuleBasic) Name() string {
 }
 
 func (a AppModuleBasic) RegisterLegacyAminoCodec(amino *codec.LegacyAmino) {
-	//TODO implement me
-	panic("implement me")
+	types.RegisterCodec(amino)
 }
 
 func (a AppModuleBasic) RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
-	//TODO implement me
-	panic("implement me")
+	types.RegisterInterfaces(registry)
 }
 
-func (a AppModuleBasic) DefaultGenesis(jsonCodec codec.JSONCodec) json.RawMessage {
-	//TODO implement me
-	panic("implement me")
+func (a AppModuleBasic) DefaultGenesis(cdc codec.JSONCodec) json.RawMessage {
+	return cdc.MustMarshalJSON(types.DefaultGenesis())
 }
 
-func (a AppModuleBasic) ValidateGenesis(jsonCodec codec.JSONCodec, config client.TxEncodingConfig, message json.RawMessage) error {
-	//TODO implement me
-	panic("implement me")
+func (a AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, config client.TxEncodingConfig, message json.RawMessage) error {
+	var genState types.GenesisState
+	if err := cdc.UnmarshalJSON(message, &genState); err != nil {
+		return fmt.Errorf("failed to unmarshal %s genesis sate: %w", types.ModuleName, err)
+	}
+	return genState.Validate()
 }
 
 func (a AppModuleBasic) RegisterRESTRoutes(context client.Context, router *mux.Router) {
-	//TODO implement me
-	panic("implement me")
+
 }
 
-func (a AppModuleBasic) RegisterGRPCGatewayRoutes(context client.Context, serveMux *runtime.ServeMux) {
-	//TODO implement me
-	panic("implement me")
+func (a AppModuleBasic) RegisterGRPCGatewayRoutes(ctx client.Context, serveMux *runtime.ServeMux) {
+	if err := types.RegisterQueryHandlerClient(context.Background(), serveMux, types.NewQueryClient(ctx)); err != nil {
+		log.Fatal("failed to register query handler client", err)
+	}
 }
 
 func (a AppModuleBasic) GetTxCmd() *cobra.Command {
-	//TODO implement me
-	panic("implement me")
+	return cli.GetTxCmd()
 }
 
 func (a AppModuleBasic) GetQueryCmd() *cobra.Command {
-	//TODO implement me
-	panic("implement me")
+	return cli.GetQueryCmd()
 }
 
 type AppModule struct {
@@ -87,95 +90,78 @@ func NewAppModule(cdc codec.Codec, keeper keeper.Keeper) AppModule {
 	}
 }
 
-func (a AppModule) Name() string {
-	//TODO implement me
-	panic("implement me")
+func (a AppModule) InitGenesis(ctx sdk.Context, jsonCodec codec.JSONCodec, message json.RawMessage) []abci.ValidatorUpdate {
+	var genState types.GenesisState
+
+	a.cdc.MustUnmarshalJSON(message, &genState)
+	a.keeper.InitGenesis(ctx, &genState)
+
+	return []abci.ValidatorUpdate{}
 }
 
-func (a AppModule) RegisterLegacyAminoCodec(amino *codec.LegacyAmino) {
-	//TODO implement me
-	panic("implement me")
+func (a AppModule) ExportGenesis(ctx sdk.Context, jsonCodec codec.JSONCodec) json.RawMessage {
+	gs := a.keeper.ExportGenesis(ctx)
+	return a.cdc.MustMarshalJSON(gs)
 }
 
-func (a AppModule) RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
-	//TODO implement me
-	panic("implement me")
-}
+func (a AppModule) RegisterInvariants(registry sdk.InvariantRegistry) {}
 
-func (a AppModule) DefaultGenesis(jsonCodec codec.JSONCodec) json.RawMessage {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (a AppModule) ValidateGenesis(jsonCodec codec.JSONCodec, config client.TxEncodingConfig, message json.RawMessage) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (a AppModule) RegisterRESTRoutes(context client.Context, router *mux.Router) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (a AppModule) RegisterGRPCGatewayRoutes(context client.Context, mux *runtime.ServeMux) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (a AppModule) GetTxCmd() *cobra.Command {
-	return cli.GetTxCmd()
-}
-
-func (a AppModule) GetQueryCmd() *cobra.Command {
-	return cli.GetQueryCmd()
-}
-
-func (a AppModule) InitGenesis(context sdk.Context, jsonCodec codec.JSONCodec, message json.RawMessage) []abci.ValidatorUpdate {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (a AppModule) ExportGenesis(context sdk.Context, jsonCodec codec.JSONCodec) json.RawMessage {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (a AppModule) RegisterInvariants(registry sdk.InvariantRegistry) {
-	//TODO implement me
-	panic("implement me")
-}
-
+// Deprecated
 func (a AppModule) Route() sdk.Route {
-	//TODO implement me
-	panic("implement me")
+	return sdk.Route{}
 }
 
 func (a AppModule) QuerierRoute() string {
-	//TODO implement me
-	panic("implement me")
+	return types.RouterKey
 }
 
 func (a AppModule) LegacyQuerierHandler(amino *codec.LegacyAmino) sdk.Querier {
-	//TODO implement me
-	panic("implement me")
+	return func(sdk.Context, []string, abci.RequestQuery) ([]byte, error) {
+		return nil, fmt.Errorf("legacy querier not supported for the x/%s module", types.ModuleName)
+	}
 }
 
-func (a AppModule) RegisterServices(configurator module.Configurator) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (a AppModule) ConsensusVersion() uint64 {
-	//TODO implement me
-	panic("implement me")
+func (a AppModule) RegisterServices(cfg module.Configurator) {
+	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(a.keeper))
+	types.RegisterQueryServer(cfg.QueryServer(), keeper.NewQuerier(a.keeper))
 }
 
 func (a AppModule) BeginBlock(context sdk.Context, block abci.RequestBeginBlock) {
-	//TODO implement me
-	panic("implement me")
+
 }
 
 func (a AppModule) EndBlock(context sdk.Context, block abci.RequestEndBlock) []abci.ValidatorUpdate {
-	//TODO implement me
-	panic("implement me")
+	return []abci.ValidatorUpdate{}
 }
+
+// ___________________________________________________________________________
+
+// AppModuleSimulation functions
+
+// GenerateGenesisState creates a randomized GenState of the pool-incentives module.
+func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
+	// TODO
+}
+
+// ProposalContents doesn't return any content functions for governance proposals.
+func (AppModule) ProposalContents(simState module.SimulationState) []simtypes.WeightedProposalContent {
+	return nil // TODO
+}
+
+// RandomizedParams creates randomized pool-incentives param changes for the simulator.
+func (AppModule) RandomizedParams(r *rand.Rand) []simtypes.ParamChange {
+	return nil // TODO
+}
+
+// RegisterStoreDecoder registers a decoder for supply module's types.
+func (a AppModule) RegisterStoreDecoder(sdr sdk.StoreDecoderRegistry) {
+	// TODO
+}
+
+// WeightedOperations returns the all the lockup module operations with their respective weights.
+func (a AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
+	return nil
+}
+
+// ConsensusVersion implements AppModule/ConsensusVersion.
+func (AppModule) ConsensusVersion() uint64 { return 1 }

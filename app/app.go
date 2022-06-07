@@ -9,6 +9,7 @@ import (
 	"github.com/Carina-labs/nova/app/keepers"
 	gal "github.com/Carina-labs/nova/x/gal"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/oracle"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -280,6 +281,7 @@ func New(
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
 		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper),
+		oracle.NewAppModule(appCodec, *app.OracleKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
 
