@@ -21,7 +21,12 @@ func (k Keeper) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacket
 		return err
 
 	}
-	k.MintStTokenAndDistribute(ctx, senderAddr, amount)
+
+	err = k.MintStTokenAndDistribute(ctx, senderAddr, amount)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 

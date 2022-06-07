@@ -92,20 +92,19 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer sdk.Address, amt sdk.Co
 func (k Keeper) SetShare(ctx sdk.Context, depositor sdk.AccAddress, shares float64) error {
 	store := k.getShareStore(ctx)
 	data := make(map[string]interface{})
-	data[types.KeyDepositor] = depositor.String()
 	data[types.KeyShares] = shares
 	bytes, err := json.Marshal(data)
 	if err != nil {
 		return err
 	}
 
-	store.Set([]byte(depositor), bytes)
+	store.Set([]byte(depositor.String()), bytes)
 	return nil
 }
 
 func (k Keeper) GetShare(ctx sdk.Context, depositor sdk.AccAddress) (*types.QuerySharesResponse, error) {
 	store := k.getShareStore(ctx)
-	if !store.Has([]byte(depositor)) {
+	if !store.Has([]byte(depositor.String())) {
 		return nil, errors.New(fmt.Sprintf("Depositor %s is not in state...", depositor))
 	}
 
@@ -115,7 +114,7 @@ func (k Keeper) GetShare(ctx sdk.Context, depositor sdk.AccAddress) (*types.Quer
 		return nil, err
 	}
 
-	shares, ok := result[types.KeyShares].(float32)
+	shares, ok := result[types.KeyShares].(float64)
 	if !ok {
 		// TODO : fix error msg
 		return nil, errors.New(fmt.Sprintf("Convert fail"))

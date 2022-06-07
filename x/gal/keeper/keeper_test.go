@@ -18,9 +18,42 @@ func TestKeeperTestSuite(t *testing.T) {
 
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
+	suite.setRandomState()
+}
+
+func (suite *KeeperTestSuite) setRandomState() {
+	for _, acc := range suite.TestAccs {
+		err := suite.App.GalKeeper.SetShare(suite.Ctx, acc, 0.2)
+		if err != nil {
+			panic(err)
+		}
+	}
 }
 
 func (suite *KeeperTestSuite) TestGetShares() {
-	_, err := suite.App.GalKeeper.GetShare(suite.Ctx, suite.TestAccs[0])
-	suite.NoError(err)
+	tcs := []struct {
+		expected float64
+	}{
+		{
+			expected: 0.2,
+		},
+		{
+			expected: 0.2,
+		},
+		{
+			expected: 0.2,
+		},
+		{
+			expected: 0.2,
+		},
+		{
+			expected: 0.2,
+		},
+	}
+
+	for i, tc := range tcs {
+		shares, err := suite.App.GalKeeper.GetShare(suite.Ctx, suite.TestAccs[i])
+		suite.NoError(err)
+		suite.Same(tc.expected, shares.Shares)
+	}
 }

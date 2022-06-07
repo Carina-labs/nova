@@ -16,6 +16,7 @@ type KeeperTestHelper struct {
 	Ctx         sdk.Context
 	QueryHelper *baseapp.QueryServiceTestHelper
 	TestAccs    []sdk.AccAddress
+	nTestAccs   int
 }
 
 func (s *KeeperTestHelper) Setup() {
@@ -25,7 +26,8 @@ func (s *KeeperTestHelper) Setup() {
 		GRPCQueryRouter: s.App.GRPCQueryRouter(),
 		Ctx:             s.Ctx,
 	}
-	s.TestAccs = CreateRandomAccounts(5)
+	s.nTestAccs = 5
+	s.TestAccs = CreateRandomAccounts(s.nTestAccs)
 }
 
 func CreateRandomAccounts(n int) []sdk.AccAddress {
