@@ -17,7 +17,12 @@ func NewMsgUpdateChainState(chainDenom string,
 }
 
 func (msg MsgUpdateChainState) GetSigners() []sdk.AccAddress {
-	return nil
+	signer, err := sdk.AccAddressFromBech32(msg.Operator)
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{ signer }
 }
 
 func (msg MsgUpdateChainState) ValidateBasic() error {

@@ -23,7 +23,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type GenesisState struct {
-	States []ChainInfo `protobuf:"bytes,1,rep,name=states,proto3" json:"states,omitempty"`
+	States []*ChainInfo `protobuf:"bytes,1,rep,name=states,proto3" json:"states,omitempty"`
 }
 
 func (m *GenesisState) Reset()         { *m = GenesisState{} }
@@ -59,7 +59,7 @@ func (m *GenesisState) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GenesisState proto.InternalMessageInfo
 
-func (m *GenesisState) GetStates() []ChainInfo {
+func (m *GenesisState) GetStates() []*ChainInfo {
 	if m != nil {
 		return m.States
 	}
@@ -378,7 +378,7 @@ func (m *GenesisState) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.States = append(m.States, ChainInfo{})
+			m.States = append(m.States, &ChainInfo{})
 			if err := m.States[len(m.States)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
