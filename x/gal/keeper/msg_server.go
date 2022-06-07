@@ -20,11 +20,19 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
-	if err := m.keeper.DepositCoin(ctx, depositorAddr,
-		deposit.Receiver, "transfer", deposit.Channel, deposit.Amount); err != nil {
+	receiverAddr, err := sdk.AccAddressFromBech32(deposit.Receiver)
+	if err != nil {
 		return nil, err
 	}
-	
+
+	for _, coin := range deposit.Amount {
+		err := m.keeper.DepositCoin(
+			ctx, depositorAddr, receiverAddr, "transfer", deposit.Channel, coin)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	return &types.MsgDepositResponse{}, nil
 }
 

@@ -3,6 +3,7 @@ package keeper_test
 import (
 	"github.com/Carina-labs/nova/app"
 	"github.com/Carina-labs/nova/x/gal/types"
+	types2 "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/stretchr/testify/suite"
 	"testing"
 )
@@ -19,6 +20,15 @@ func TestKeeperTestSuite(t *testing.T) {
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
 	suite.setRandomState()
+}
+
+func (suite *KeeperTestSuite) SetupTestOracle(msgs []*types2.MsgUpdateChainState) {
+	for _, msg := range msgs {
+		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, msg)
+		if err != nil {
+			panic(err)
+		}
+	}
 }
 
 func (suite *KeeperTestSuite) setRandomState() {

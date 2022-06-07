@@ -12,32 +12,29 @@ import (
 //delegate wAsset
 func (k Keeper) DepositCoin(ctx sdk.Context,
 	depositor sdk.AccAddress,
-	receiver string,
+	receiver sdk.AccAddress,
 	sourcePort string,
 	sourceChannel string,
-	amt sdk.Coins) error {
+	amt sdk.Coin) error {
 	// wAtom -> [ GAL ] -> snAtom
-	for _, coin := range amt {
-		goCtx := sdk.WrapSDKContext(ctx)
+	goCtx := sdk.WrapSDKContext(ctx)
 
-		_, err := k.ibcTransferKeeper.Transfer(goCtx,
-			&transfertypes.MsgTransfer{
-				SourcePort:    sourcePort,
-				SourceChannel: sourceChannel,
-				Token:         coin,
-				Sender:        depositor.String(),
-				Receiver:      receiver,
-				TimeoutHeight: ibcclienttypes.Height{
-					RevisionHeight: 500000,
-					RevisionNumber: 0,
-				},
-				TimeoutTimestamp: 0,
+	_, err := k.ibcTransferKeeper.Transfer(goCtx,
+		&transfertypes.MsgTransfer{
+			SourcePort:    sourcePort,
+			SourceChannel: sourceChannel,
+			Token:         amt,
+			Sender:        depositor.String(),
+			Receiver:      receiver.String(),
+			TimeoutHeight: ibcclienttypes.Height{
+				RevisionHeight: 500000,
+				RevisionNumber: 0,
 			},
-		)
-
-		if err != nil {
-			return err
-		}
+			TimeoutTimestamp: 0,
+		},
+	)
+	if err != nil {
+		return err
 	}
 
 	return nil
