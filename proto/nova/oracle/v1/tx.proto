@@ -8,7 +8,7 @@ service Msg {
 }
 
 message MsgUpdateChainState {
-  string validator = 1;
+  string operator = 1;
   string chain_denom = 2;
   uint64 staked_balance = 3;
   uint64 decimal = 4;
