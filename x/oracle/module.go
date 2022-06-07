@@ -51,12 +51,12 @@ func (a AppModuleBasic) DefaultGenesis(cdc codec.JSONCodec) json.RawMessage {
 	return cdc.MustMarshalJSON(types.DefaultGenesis())
 }
 
-func (a AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, config client.TxEncodingConfig, message json.RawMessage) error {
-	var genState types.GenesisState
-	if err := cdc.UnmarshalJSON(message, &genState); err != nil {
+func (a AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, config client.TxEncodingConfig, bz json.RawMessage) error {
+	var data types.GenesisState
+	if err := cdc.UnmarshalJSON(bz, &data); err != nil {
 		return fmt.Errorf("failed to unmarshal %s genesis sate: %w", types.ModuleName, err)
 	}
-	return genState.Validate()
+	return data.Validate()
 }
 
 func (a AppModuleBasic) RegisterRESTRoutes(context client.Context, router *mux.Router) {
