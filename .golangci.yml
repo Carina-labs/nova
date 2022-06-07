@@ -6,7 +6,6 @@ linters:
   enable:
     - deadcode
     - goconst
-    - goimports
     - gosimple
     - govet
     - ineffassign
