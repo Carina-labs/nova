@@ -2,8 +2,8 @@ package keeper
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -54,7 +54,7 @@ func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.QueryS
 	store := ctx.KVStore(k.storeKey)
 	if !store.Has([]byte(chainDenom)) {
 		// TODO : aggregate errors to types
-		return nil, errors.New(fmt.Sprintf("%s is not supported.", chainDenom))
+		return nil, fmt.Errorf("%s is not supported", chainDenom)
 	}
 
 	result := make(map[string]uint64)

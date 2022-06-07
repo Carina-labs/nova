@@ -78,7 +78,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 			if err := cmd.Flags().Set("to", args[0]); err != nil {
 				return err
 			}
-			
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
