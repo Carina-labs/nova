@@ -45,24 +45,24 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
     # if: "startsWith(github.event.head_commit.message, 'feat:')"
 
-  update_helm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: |
-          mkdir -p output
-          echo "my env logging" > output/log
-          echo ${{ needs.build.outputs.tags }} >> output/log
-          
-      - name: Check docker img tag value
-        uses: actions/upload-artifact@v3
-        with:
-          name: log-artifact
-          path: output/**/*
-
-      - name: Update helm img tag
-        uses: Carina-labs/tag-changer@main
-        with:
-          A41_PAT: ${{ secrets.A41_PAT }}
-          TAGS: ${{ needs.build.outputs.tags }}
+#  update_helm:
+#    needs: build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - run: |
+#          mkdir -p output
+#          echo "my env logging" > output/log
+#          echo ${{ needs.build.outputs.tags }} >> output/log
+#
+#      - name: Check docker img tag value
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: log-artifact
+#          path: output/**/*
+#
+#      - name: Update helm img tag
+#        uses: Carina-labs/tag-changer@main
+#        with:
+#          A41_PAT: ${{ secrets.A41_PAT }}
+#          TAGS: ${{ needs.build.outputs.tags }}
