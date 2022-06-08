@@ -16,9 +16,9 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 	sourcePort string,
 	sourceChannel string,
 	amt sdk.Coin) error {
-	// wAtom -> [ GAL ] -> snAtom
 	goCtx := sdk.WrapSDKContext(ctx)
 
+	// 1. IBC transfer
 	_, err := k.ibcTransferKeeper.Transfer(goCtx,
 		&transfertypes.MsgTransfer{
 			SourcePort:    sourcePort,
@@ -41,7 +41,7 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 }
 
 //stAsset mint
-func (k Keeper) MintStTokenAndDistribute(ctx sdk.Context,
+func (k Keeper) MintShareTokens(ctx sdk.Context,
 	depositor sdk.Address,
 	amt sdk.Coins) error {
 	depositorAddr, err := sdk.AccAddressFromBech32(depositor.String())
