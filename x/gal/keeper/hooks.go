@@ -26,7 +26,11 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacketD
 	}
 
 	// Mint share tokens
-	totalSharedToken := h.k.bankKeeper.GetSupply(ctx, h.k.getPairSnToken(ctx, base_denom))
+	pairDenom, err := h.k.getPairSnToken(ctx, base_denom)
+	if err != nil {
+		h.k.Logger(ctx).Error(err.Error())
+	}
+	totalSharedToken := h.k.bankKeeper.GetSupply(ctx, pairDenom)
 	userDepositToken, err := strconv.ParseInt(data.Amount, 10, 64)
 	if err != nil {
 		h.k.Logger(ctx).Error(err.Error())

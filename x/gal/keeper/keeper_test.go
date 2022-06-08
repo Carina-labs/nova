@@ -1,23 +1,20 @@
 package keeper_test
 
 import (
-	"testing"
-
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/types"
 	types2 "github.com/Carina-labs/nova/x/oracle/types"
-	"github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
+	"testing"
 )
 
 type KeeperTestSuite struct {
 	apptesting.KeeperTestHelper
 	queryClient types.QueryClient
-
-	suite.Suite
 
 	coordinator *novatesting.Coordinator
 	chainA      *novatesting.TestChain
@@ -25,7 +22,14 @@ type KeeperTestSuite struct {
 	path        *novatesting.Path
 }
 
+func TestKeeperTestSuite(t *testing.T) {
+	suite.Run(t, new(KeeperTestSuite))
+}
+
 func (suite *KeeperTestSuite) SetupTest() {
+	suite.Setup()
+	suite.setRandomState()
+
 	//Coordinator is a testing struct which contains N TestChain's
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
 	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
@@ -40,8 +44,50 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.path = path
 }
 
-func TestKeeperSuite(t *testing.T) {
-	suite.Run(t, new(KeeperTestSuite))
+func (suite *KeeperTestSuite) SetupTestOracle(msgs []*types2.MsgUpdateChainState) {
+	for _, msg := range msgs {
+		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, msg)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
+func (suite *KeeperTestSuite) setRandomState() {
+	for _, acc := range suite.TestAccs {
+		err := suite.App.GalKeeper.SetShare(suite.Ctx, acc, 0.2)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
+func (suite *KeeperTestSuite) TestGetShares() {
+	tcs := []struct {
+		expected float64
+	}{
+		{
+			expected: 0.2,
+		},
+		{
+			expected: 0.2,
+		},
+		{
+			expected: 0.2,
+		},
+		{
+			expected: 0.2,
+		},
+		{
+			expected: 0.2,
+		},
+	}
+
+	for i, tc := range tcs {
+		shares, err := suite.App.GalKeeper.GetShare(suite.Ctx, suite.TestAccs[i])
+		suite.NoError(err)
+		suite.Equal(tc.expected, shares.Shares)
+	}
 }
 
 func (suite *KeeperTestSuite) TestDepositCoins() {
@@ -77,7 +123,7 @@ func (suite *KeeperTestSuite) TestDepositCoins() {
 	packetErr := path.RelayPacket(packet)
 	suite.Require().NoError(packetErr) // relay committed
 
-	voucherDenomTrace := types.ParseDenomTrace(types.GetPrefixedDenom(sourcePort, sourceChannel, testDenom))
+	voucherDenomTrace := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom(sourcePort, sourceChannel, testDenom))
 	IBCTestDemnom := voucherDenomTrace.IBCDenom()
 
 	depositorBalanceAfterDeposit := appChainA.BankKeeper.GetBalance(ctxA, accountAddrA, testDenom)
