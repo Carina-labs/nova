@@ -14,13 +14,13 @@ func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
 			panic(fmt.Errorf("failed to initialize genesis state at %s, err: %v", types.ModuleName, err))
 		}
 	}
+
+	k.SetParams(ctx, genState.Params)
 }
 
 func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 	result := &types.GenesisState{
-		Params: types.Params{
-			OracleOperators: []string{},
-		},
+		Params: k.GetParams(ctx),
 		States: []types.ChainInfo{},
 	}
 

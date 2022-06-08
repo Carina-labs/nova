@@ -327,6 +327,7 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(intertxtypes.ModuleName)
+	paramsKeeper.Subspace(oracle.ModuleName)
 	paramsKeeper.Subspace(gal.ModuleName)
 	paramsKeeper.Subspace(oracle.ModuleName)
 
