@@ -1,6 +1,7 @@
-package app
+package apptesting
 
 import (
+	"github.com/Carina-labs/nova/app"
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"
@@ -14,25 +15,25 @@ import (
 type TestHelper struct {
 	suite.Suite
 
-	App *NovaApp
+	App *app.NovaApp
 	Ctx sdk.Context
 }
 
-func Setup(isCheckTx bool) *NovaApp {
+func Setup(isCheckTx bool) *app.NovaApp {
 	db := dbm.NewMemDB()
-	encodingConfig := cosmoscmd.MakeEncodingConfig(ModuleBasics)
-	app := NewNovaApp(log.NewNopLogger(),
+	encodingConfig := cosmoscmd.MakeEncodingConfig(app.ModuleBasics)
+	app := app.NewNovaApp(log.NewNopLogger(),
 		db,
 		nil,
 		true,
 		map[int64]bool{},
-		DefaultNodeHome,
+		app.DefaultNodeHome,
 		5,
 		encodingConfig,
 		simapp.EmptyAppOptions{})
 
 	if !isCheckTx {
-		genesisState := NewDefaultGenesisState(encodingConfig.Marshaler)
+		genesisState := app.NewDefaultGenesisState(encodingConfig.Marshaler)
 		stateBytes, err := json.MarshalIndent(genesisState, "", " ")
 		if err != nil {
 			panic(err)
@@ -45,5 +46,5 @@ func Setup(isCheckTx bool) *NovaApp {
 			})
 	}
 
-	return app.(*NovaApp)
+	return app.(*app.NovaApp)
 }
