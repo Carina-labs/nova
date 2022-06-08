@@ -1,18 +1,31 @@
 syntax = "proto3";
-package novachain.oracle.v1;
+package nova.oracle.v1;
 
 import "gogoproto/gogo.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/oracle/types";
 
 message GenesisState {
+  // params defines all the parameters of module.
+  Params params = 1 [(gogoproto.nullable) = false];
+
+  // states is an amount of coins on the host chain.
   repeated ChainInfo states = 1 [(gogoproto.nullable) = false];
 }
 
 message ChainInfo {
+  // chain_denom defines the denom of host chain's native currency.
   string chain_denom = 1;
-  string validator_address = 2;
+
+  // operator_address is an oracle operator's address
+  string operator_address = 2;
+
+  // last_block_height is the block height observed by the operator on the host chain.
   int64 last_block_height = 3;
+
+  // total_staked_balance is total staked asset on the host chain.
   int64 total_staked_balance = 5;
+
+  // decimal of the native currency in host chain.
   int64 decimal = 6;
 }
