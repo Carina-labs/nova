@@ -130,3 +130,17 @@ func (k Keeper) GetShare(ctx sdk.Context, depositor sdk.AccAddress) (*types.Quer
 func (k Keeper) getShareStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
 }
+
+func (k Keeper) calculateAlpha(ctx sdk.Context, denom string, depositAmt int) (float64, error) {
+	res, err := k.oracleKeeper.GetChainState(ctx, denom)
+	if err != nil {
+		return 0, err
+	}
+
+	alpha := float64(depositAmt) / k.calculateCoinAmount(res.TotalStakedBalance, res.Decimal)
+	return alpha, nil
+}
+
+func (k Keeper) calculateCoinAmount(amt uint64, decimal uint64) float64 {
+	return float64(amt) / float64(10^decimal)
+}
