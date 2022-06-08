@@ -22,11 +22,11 @@ message ChainInfo {
   string operator_address = 2;
 
   // last_block_height is the block height observed by the operator on the host chain.
-  int64 last_block_height = 3;
+  uint64 last_block_height = 3;
 
   // total_staked_balance is total staked asset on the host chain.
-  int64 total_staked_balance = 5;
+  uint64 total_staked_balance = 5;
 
   // decimal of the native currency in host chain.
-  int64 decimal = 6;
+  uint64 decimal = 6;
 }
