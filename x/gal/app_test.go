@@ -1,8 +1,8 @@
 package gal_test
 
 import (
-	"github.com/Carina-labs/novachain/app"
-	"github.com/Carina-labs/novachain/x/gal/types"
+	"github.com/Carina-labs/nova/app"
+	"github.com/Carina-labs/nova/x/gal/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"github.com/stretchr/testify/require"
 	abcitypes "github.com/tendermint/tendermint/abci/types"
