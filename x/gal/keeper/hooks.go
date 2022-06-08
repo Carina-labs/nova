@@ -33,7 +33,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacketD
 	}
 
 	// alpha = user_deposit_amount / total_staked_amount
-	alpha, err := h.k.calculateAlpha(ctx, data.Denom, int(userDepositToken))
+	alpha, err := h.k.calculateAlpha(ctx, base_denom, int(userDepositToken))
 	if err != nil {
 		h.k.Logger(ctx).Error(err.Error())
 	}

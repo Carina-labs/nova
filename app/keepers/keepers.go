@@ -203,6 +203,14 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appKeepers.AccountKeeper, appKeepers.BankKeeper, appKeepers.ScopedTransferKeeper,
 	)
 
+	// Register OracleModule
+	oracleKeeper := oraclekeeper.NewKeeper(
+		appCodec,
+		appKeepers.keys[oracletypes.StoreKey],
+		appKeepers.GetSubspace(oracletypes.ModuleName),
+	)
+	appKeepers.OracleKeeper = &oracleKeeper
+
 	// Register GAL module.
 	galKeeper := galkeeper.NewKeeper(
 		appCodec,
@@ -214,14 +222,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		*appKeepers.OracleKeeper,
 	)
 	appKeepers.GalKeeper = &galKeeper
-
-	// Register OracleModule
-	oracleKeeper := oraclekeeper.NewKeeper(
-		appCodec,
-		appKeepers.keys[oracletypes.StoreKey],
-		appKeepers.GetSubspace(oracletypes.ModuleName),
-	)
-	appKeepers.OracleKeeper = &oracleKeeper
 
 	appKeepers.TransferKeeper = transferKeeper.SetHooks(
 		ibctransfertypes.NewMultiTransferHooks(appKeepers.GalKeeper.Hooks()),
