@@ -22,7 +22,7 @@ type TestHelper struct {
 func Setup(isCheckTx bool) *app.NovaApp {
 	db := dbm.NewMemDB()
 	encodingConfig := cosmoscmd.MakeEncodingConfig(app.ModuleBasics)
-	app := app.NewNovaApp(log.NewNopLogger(),
+	novaApp := app.NewNovaApp(log.NewNopLogger(),
 		db,
 		nil,
 		true,
@@ -38,7 +38,7 @@ func Setup(isCheckTx bool) *app.NovaApp {
 		if err != nil {
 			panic(err)
 		}
-		app.InitChain(
+		novaApp.InitChain(
 			abci.RequestInitChain{
 				Validators:      []abci.ValidatorUpdate{},
 				ConsensusParams: simapp.DefaultConsensusParams,
@@ -46,5 +46,5 @@ func Setup(isCheckTx bool) *app.NovaApp {
 			})
 	}
 
-	return app.(*app.NovaApp)
+	return novaApp.(*app.NovaApp)
 }
