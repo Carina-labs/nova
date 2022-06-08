@@ -1,15 +1,22 @@
 package keeper_test
 
 import (
+	"testing"
+
+	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
+	"github.com/Carina-labs/nova/x/gal/types"
+	types2 "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"testing"
 )
 
 type KeeperTestSuite struct {
+	apptesting.KeeperTestHelper
+	queryClient types.QueryClient
+
 	suite.Suite
 
 	coordinator *novatesting.Coordinator

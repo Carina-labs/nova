@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -106,7 +105,7 @@ func (k Keeper) SetShare(ctx sdk.Context, depositor sdk.AccAddress, shares float
 func (k Keeper) GetShare(ctx sdk.Context, depositor sdk.AccAddress) (*types.QuerySharesResponse, error) {
 	store := k.getShareStore(ctx)
 	if !store.Has([]byte(depositor.String())) {
-		return nil, errors.New(fmt.Sprintf("Depositor %s is not in state...", depositor))
+		return nil, fmt.Errorf("Depositor %s is not in state...", depositor)
 	}
 
 	result := make(map[string]interface{})
@@ -118,7 +117,7 @@ func (k Keeper) GetShare(ctx sdk.Context, depositor sdk.AccAddress) (*types.Quer
 	shares, ok := result[types.KeyShares].(float64)
 	if !ok {
 		// TODO : fix error msg
-		return nil, errors.New(fmt.Sprintf("Convert fail"))
+		return nil, fmt.Errorf("Convert fail")
 	}
 
 	return &types.QuerySharesResponse{
