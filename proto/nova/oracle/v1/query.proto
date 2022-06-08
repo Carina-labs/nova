@@ -1,5 +1,5 @@
 syntax = "proto3";
-package novachain.oracle.v1;
+package nova.oracle.v1;
 
 import "google/api/annotations.proto";
 
