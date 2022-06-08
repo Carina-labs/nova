@@ -3,6 +3,7 @@ package keeper
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	interTxKeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
@@ -52,6 +53,7 @@ func NewKeeper(cdc codec.BinaryCodec,
 		paramSpace:        paramSpace,
 		interTxKeeper:     interTxKeeper,
 		ibcTransferKeeper: ibcTransferKeeper,
+		oracleKeeper:      oracleKeeper,
 	}
 }
 
@@ -141,5 +143,6 @@ func (k Keeper) calculateAlpha(ctx sdk.Context, denom string, depositAmt int) (f
 }
 
 func (k Keeper) calculateCoinAmount(amt uint64, decimal uint64) float64 {
-	return float64(amt) / float64(10^decimal)
+	res := float64(amt) / math.Pow10(int(decimal))
+	return res
 }
