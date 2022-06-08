@@ -45,5 +45,5 @@ func Setup(isCheckTx bool) *NovaApp {
 			})
 	}
 
-	return app
+	return app.(*NovaApp)
 }
