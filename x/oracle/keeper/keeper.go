@@ -1,8 +1,8 @@
 package keeper
 
 import (
-	"encoding/json"
 	"fmt"
+	"github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -31,41 +31,29 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
-func (k Keeper) UpdateChainState(ctx sdk.Context, updateInfo *types.MsgUpdateChainState) error {
-	if err := updateInfo.ValidateBasic(); err != nil {
-		return err
-	}
-
+func (k Keeper) UpdateChainState(ctx sdk.Context, updateInfo *types.ChainInfo) error {
 	store := ctx.KVStore(k.storeKey)
-	data := make(map[string]uint64)
-	data["balance"] = updateInfo.StakedBalance
-	data["decimal"] = updateInfo.Decimal
-	data["height"] = updateInfo.BlockHeight
-	bytes, err := json.Marshal(data)
+	bz, err := updateInfo.Marshal()
 	if err != nil {
 		return err
 	}
 
-	store.Set([]byte(updateInfo.ChainDenom), bytes)
+	store.Set([]byte(updateInfo.ChainDenom), bz)
 	return nil
 }
 
-func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.QueryStateResponse, error) {
+func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.ChainInfo, error) {
+	chainInfo := types.ChainInfo{}
 	store := ctx.KVStore(k.storeKey)
 	if !store.Has([]byte(chainDenom)) {
 		// TODO : aggregate errors to types
 		return nil, fmt.Errorf("%s is not supported", chainDenom)
 	}
 
-	result := make(map[string]uint64)
-	err := json.Unmarshal(store.Get([]byte(chainDenom)), &result)
-	if err != nil {
+	data := store.Get([]byte(chainDenom))
+	if err := proto.Unmarshal(data, &chainInfo); err != nil {
 		return nil, err
 	}
 
-	return &types.QueryStateResponse{
-		TotalStakedBalance: result["balance"],
-		Decimal:            result["decimal"],
-		LastBlockHeight:    result["height"],
-	}, nil
+	return &chainInfo, nil
 }

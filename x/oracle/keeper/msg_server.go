@@ -15,8 +15,17 @@ type msgServer struct {
 func (m msgServer) UpdateChainState(ctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
 	goCtx := sdk.UnwrapSDKContext(ctx)
 
-	err := m.keeper.UpdateChainState(goCtx, state)
-	if err != nil {
+	if err := state.ValidateBasic(); err != nil {
+		return nil, err
+	}
+
+	if err := m.keeper.UpdateChainState(goCtx, &types.ChainInfo{
+		ChainDenom:         state.ChainDenom,
+		OperatorAddress:    state.Operator,
+		LastBlockHeight:    state.BlockHeight,
+		TotalStakedBalance: state.TotalStakedBalance,
+		Decimal:            state.Decimal,
+	}); err != nil {
 		return nil, err
 	}
 
@@ -31,7 +40,11 @@ func (m msgServer) GetChainState(ctx context.Context, request *types.QueryStateR
 		return nil, err
 	}
 
-	return result, nil
+	return &types.QueryStateResponse{
+		TotalStakedBalance: result.TotalStakedBalance,
+		Decimal: result.Decimal,
+		LastBlockHeight: result.LastBlockHeight,
+	}, nil
 }
 
 func NewMsgServerImpl(keeper Keeper) types.MsgServer {

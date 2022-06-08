@@ -1,8 +1,8 @@
 package keeper
 
 import (
-	"encoding/json"
 	"fmt"
+	"github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -10,12 +10,7 @@ import (
 
 func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
 	for _, chainInfo := range genState.States {
-		if err := k.UpdateChainState(ctx, &types.MsgUpdateChainState{
-			ChainDenom:    chainInfo.ChainDenom,
-			StakedBalance: uint64(chainInfo.TotalStakedBalance),
-			Decimal:       uint64(chainInfo.Decimal),
-			BlockHeight:   uint64(chainInfo.LastBlockHeight),
-		}); err != nil {
+		if err := k.UpdateChainState(ctx, &chainInfo); err != nil {
 			panic(fmt.Errorf("failed to initialize genesis state at %s, err: %v", types.ModuleName, err))
 		}
 	}
@@ -23,6 +18,9 @@ func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
 
 func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 	result := &types.GenesisState{
+		Params: types.Params{
+			OracleOperators: []string{},
+		},
 		States: []types.ChainInfo{},
 	}
 
@@ -36,17 +34,17 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 	}()
 
 	for ; iterator.Valid(); iterator.Next() {
-		value := make(map[string]uint64)
-		if err := json.Unmarshal(iterator.Value(), &value); err != nil {
+		value := types.ChainInfo{}
+		if err := proto.Unmarshal(iterator.Value(), &value); err != nil {
 			panic(fmt.Errorf("unable to unmarshal chain state: %v", err))
 		}
 
 		result.States = append(result.States, types.ChainInfo{
-			ChainDenom:         string(iterator.Key()),
-			ValidatorAddress:   "", // TODO; what is validatorAddres ?
-			LastBlockHeight:    int64(value["height"]),
-			TotalStakedBalance: int64(value["balance"]),
-			Decimal:            int64(value["decimal"]),
+			ChainDenom:         value.ChainDenom,
+			OperatorAddress:    value.OperatorAddress,
+			LastBlockHeight:    value.LastBlockHeight,
+			TotalStakedBalance: value.TotalStakedBalance,
+			Decimal:            value.Decimal,
 		})
 	}
 

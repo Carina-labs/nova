@@ -12,7 +12,7 @@ func NewMsgUpdateChainState(chainDenom string,
 	return &MsgUpdateChainState{
 		Operator:      signer.String(),
 		ChainDenom:    chainDenom,
-		StakedBalance: balance,
+		TotalStakedBalance: balance,
 		Decimal:       decimal,
 		BlockHeight:   blockHeight,
 	}
