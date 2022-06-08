@@ -2,7 +2,7 @@ package types
 
 const (
 	ModuleName   = "oracle"
-	StoreKEy     = ModuleName
+	StoreKey     = ModuleName
 	RouterKey    = ModuleName
 	QuerierRoute = ModuleName
 )

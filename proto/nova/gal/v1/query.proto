@@ -39,7 +39,7 @@ message QuerySharesRequest {
 // QuerySharesResponse defines response of QueryBalanceRequest.
 message QuerySharesResponse {
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  int64 shares = 2;
+  double shares = 2;
 }
 
 message QueryAllSharesRequest {

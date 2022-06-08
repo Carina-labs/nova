@@ -18,7 +18,7 @@ func main() {
 		app.DefaultNodeHome,
 		app.Name,
 		app.ModuleBasics,
-		app.New,
+		app.NewNovaApp,
 		cmdOptions...,
 	)
 	if err := svrcmd.Execute(rootCmd, app.DefaultNodeHome); err != nil {
