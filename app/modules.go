@@ -4,6 +4,8 @@ import (
 	"github.com/Carina-labs/nova/x/gal"
 	intertx "github.com/Carina-labs/nova/x/inter-tx"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/oracle"
+	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
@@ -59,27 +61,28 @@ func (app *App) GetModuleManager(
 			app.AccountKeeper, app.StakingKeeper, app.BaseApp.DeliverTx,
 			encodingConfig.TxConfig,
 		),
-		auth.NewAppModule(appCodec, app.AccountKeeper, nil),
-		vesting.NewAppModule(app.AccountKeeper, app.BankKeeper),
-		bank.NewAppModule(appCodec, app.BankKeeper, app.AccountKeeper),
+		auth.NewAppModule(appCodec, *app.AccountKeeper, nil),
+		vesting.NewAppModule(*app.AccountKeeper, app.BankKeeper),
+		bank.NewAppModule(appCodec, *app.BankKeeper, app.AccountKeeper),
 		capability.NewAppModule(appCodec, *app.CapabilityKeeper),
-		feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, app.FeeGrantKeeper, app.interfaceRegistry),
-		crisis.NewAppModule(&app.CrisisKeeper, skipGenesisInvariants),
-		authzmodule.NewAppModule(appCodec, app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
-		gov.NewAppModule(appCodec, app.GovKeeper, app.AccountKeeper, app.BankKeeper),
-		mint.NewAppModule(appCodec, app.MintKeeper, app.AccountKeeper),
-		slashing.NewAppModule(appCodec, app.SlashingKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
-		distr.NewAppModule(appCodec, app.DistrKeeper, app.AccountKeeper, app.BankKeeper, app.StakingKeeper),
-		staking.NewAppModule(appCodec, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
-		upgrade.NewAppModule(app.UpgradeKeeper),
-		evidence.NewAppModule(app.EvidenceKeeper),
+		feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, *app.FeeGrantKeeper, app.interfaceRegistry),
+		crisis.NewAppModule(app.CrisisKeeper, skipGenesisInvariants),
+		authzmodule.NewAppModule(appCodec, *app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
+		gov.NewAppModule(appCodec, *app.GovKeeper, app.AccountKeeper, app.BankKeeper),
+		mint.NewAppModule(appCodec, *app.MintKeeper, app.AccountKeeper),
+		slashing.NewAppModule(appCodec, *app.SlashingKeeper, app.AccountKeeper, app.BankKeeper, *app.StakingKeeper),
+		distr.NewAppModule(appCodec, *app.DistrKeeper, app.AccountKeeper, app.BankKeeper, *app.StakingKeeper),
+		staking.NewAppModule(appCodec, *app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
+		upgrade.NewAppModule(*app.UpgradeKeeper),
+		evidence.NewAppModule(*app.EvidenceKeeper),
 		ibc.NewAppModule(app.IBCKeeper),
-		params.NewAppModule(app.ParamsKeeper),
+		params.NewAppModule(*app.ParamsKeeper),
 		transferModule,
-		wasm.NewAppModule(appCodec, &app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
-		gal.NewAppModule(appCodec, app.GalKeeper, app.AccountKeeper),
-		ica.NewAppModule(&app.ICAControllerKeeper, &app.ICAHostKeeper),
-		intertx.NewAppModule(appCodec, app.IntertxKeeper, app.AccountKeeper),
+		wasm.NewAppModule(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
+		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper),
+		oracle.NewAppModule(appCodec, *app.OracleKeeper),
+		ica.NewAppModule(app.ICAControllerKeeper, app.ICAHostKeeper),
+		intertx.NewAppModule(appCodec, *app.IntertxKeeper, app.AccountKeeper),
 	}
 }
 
@@ -105,6 +108,7 @@ func GetOrderInitGenesis() []string {
 		crisistypes.ModuleName,
 		wasm.ModuleName,
 		gal.ModuleName,
+		oracletypes.ModuleName,
 		icatypes.ModuleName,
 		intertxtypes.ModuleName,
 		authz.ModuleName,
@@ -133,6 +137,7 @@ func GetOrderBeginBlocker() []string {
 		vestingtypes.ModuleName,
 		wasm.ModuleName,
 		gal.ModuleName,
+		oracletypes.ModuleName,
 		icatypes.ModuleName,
 		intertxtypes.ModuleName,
 		authzkeeper.StoreKey,
@@ -161,6 +166,7 @@ func GetOrderEndBlocker() []string {
 		vestingtypes.ModuleName,
 		wasm.ModuleName,
 		gal.ModuleName,
+		oracletypes.ModuleName,
 		icatypes.ModuleName,
 		intertxtypes.ModuleName,
 		authzkeeper.StoreKey,
