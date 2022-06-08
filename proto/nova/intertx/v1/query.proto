@@ -1,0 +1,23 @@
+syntax = "proto3";
+package nova.intertx.v1;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/inter-tx/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // QueryInterchainAccountFromZone returns the interchain account for given owner address on a given connection pair
+  rpc InterchainAccountFromZone(QueryInterchainAccountFromZoneRequest) returns (QueryInterchainAccountFromZoneResponse);
+}
+
+// QueryInterchainAccountFromZoneRequest is the request type for the Query/InterchainAccountFromZone RPC
+message QueryInterchainAccountFromZoneRequest {
+  string port_id = 1;
+  string connection_id = 2 [(gogoproto.moretags) = "yaml:\"connection_id\""];
+}
+
+// QueryInterchainAccountFromZoneResponse the response type for the Query/InterchainAccountFromZone RPC
+message QueryInterchainAccountFromZoneResponse {
+  string interchain_account_address = 1 [(gogoproto.moretags) = "yaml:\"interchain_account_address\""];
+}

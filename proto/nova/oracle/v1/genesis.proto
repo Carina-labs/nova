@@ -1,0 +1,18 @@
+syntax = "proto3";
+package novachain.oracle.v1;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/oracle/types";
+
+message GenesisState {
+  repeated ChainInfo states = 1 [(gogoproto.nullable) = false];
+}
+
+message ChainInfo {
+  string chain_denom = 1;
+  string validator_address = 2;
+  int64 last_block_height = 3;
+  int64 total_staked_balance = 5;
+  int64 decimal = 6;
+}

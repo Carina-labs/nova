@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"github.com/Carina-labs/novachain/x/gal/types"
+	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -15,20 +15,38 @@ type msgServer struct {
 
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	if err := m.keeper.DepositCoin(ctx, deposit.Depositor,
-		deposit.Receiver, "transfer", "channel-2", deposit.Amount); err != nil {
+	depositorAddr, err := sdk.AccAddressFromBech32(deposit.Depositor)
+	if err != nil {
 		return nil, err
 	}
+
+	receiverAddr, err := sdk.AccAddressFromBech32(deposit.Receiver)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, coin := range deposit.Amount {
+		err := m.keeper.DepositCoin(
+			ctx, depositorAddr, receiverAddr, "transfer", deposit.Channel, coin)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	return &types.MsgDepositResponse{}, nil
 }
 
 func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	if err := m.keeper.WithdrawCoin(ctx, withdraw.Withdrawer, withdraw.Amount); err != nil {
+	withdrawerAddr, err := sdk.AccAddressFromBech32(withdraw.Withdrawer)
+	if err != nil {
 		return nil, err
 	}
+
+	if err := m.keeper.WithdrawCoin(ctx, withdrawerAddr, withdraw.Amount); err != nil {
+		return nil, err
+	}
+
 	return &types.MsgWithdrawResponse{}, nil
 }
 

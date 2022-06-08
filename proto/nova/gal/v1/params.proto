@@ -1,0 +1,15 @@
+syntax = "proto3";
+package nova.gal.v1;
+import "gogoproto/gogo.proto";
+option go_package = "github.com/Carina-labs/nova/x/gal/types";
+
+// Params defines the parameters for the gal module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+
+  // white-listed tokens in nova
+  map<string, string> white_listed_token_denoms = 1 [(gogoproto.moretags) = "yaml:\"white_listed_token_denoms\""];
+
+  // expected blocks per year
+  uint64 blocks_per_year = 2 [(gogoproto.moretags) = "yaml:\"blocks_per_year\""];
+}

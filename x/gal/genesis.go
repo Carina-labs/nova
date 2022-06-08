@@ -1,8 +1,8 @@
 package gal
 
 import (
-	"github.com/Carina-labs/novachain/x/gal/keeper"
-	"github.com/Carina-labs/novachain/x/gal/types"
+	"github.com/Carina-labs/nova/x/gal/keeper"
+	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 

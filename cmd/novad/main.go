@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/Carina-labs/novachain/app"
+	"github.com/Carina-labs/nova/app"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	"github.com/tendermint/spm/cosmoscmd"
 	tmcmds "github.com/tendermint/tendermint/cmd/tendermint/commands"
@@ -18,7 +18,7 @@ func main() {
 		app.DefaultNodeHome,
 		app.Name,
 		app.ModuleBasics,
-		app.New,
+		app.NewNovaApp,
 		cmdOptions...,
 	)
 	if err := svrcmd.Execute(rootCmd, app.DefaultNodeHome); err != nil {

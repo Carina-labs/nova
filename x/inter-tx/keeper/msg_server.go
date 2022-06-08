@@ -2,14 +2,15 @@ package keeper
 
 import (
 	"context"
+	"errors"
 	"time"
 
-	"github.com/Carina-labs/novachain/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
+	distributiontype "github.com/cosmos/cosmos-sdk/x/distribution/types"
+	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
+	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 )
 
 var _ types.MsgServer = msgServer{}
@@ -23,53 +24,129 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 	return &msgServer{Keeper: keeper}
 }
 
-// RegisterAccount implements the Msg/RegisterAccount interface
-func (k msgServer) RegisterAccount(goCtx context.Context, msg *types.MsgRegisterAccount) (*types.MsgRegisterAccountResponse, error) {
+// RegisterZone implements the Msg/RegisterZone interface
+func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, msg.ConnectionId, msg.Owner); err != nil {
+	ZoneInfo := &types.RegisteredZone{
+		ZoneName: zone.ZoneName,
+		IcaConnectionInfo: &types.IcaConnectionInfo{
+			ConnectionId: zone.IcaInfo.ConnectionId,
+			OwnerAddress: zone.IcaInfo.OwnerAddress,
+		},
+		TransferConnectionInfo: &types.TransferConnectionInfo{
+			ConnectionId: zone.TransferInfo.ConnectionId,
+			PortId:       zone.TransferInfo.PortId,
+			ChannelId:    zone.TransferInfo.ChannelId,
+		},
+		ValidatorAddress: zone.ValidatorAddress,
+		BaseDenom:        zone.BaseDenom,
+		StDenom:          "st" + zone.BaseDenom,
+		SnDenom:          "sn" + zone.BaseDenom,
+		AuthzAddress:     zone.AuthzAddress,
+	}
+
+	k.SetRegesterZone(ctx, *ZoneInfo)
+
+	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.OwnerAddress); err != nil {
 		return nil, err
 	}
 
-	return &types.MsgRegisterAccountResponse{}, nil
+	return &types.MsgRegisterZoneResponse{}, nil
 }
 
-// SubmitTx implements the Msg/SubmitTx interface
-func (k msgServer) SubmitTx(goCtx context.Context, msg *types.MsgSubmitTx) (*types.MsgSubmitTxResponse, error) {
+func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate) (*types.MsgIcaDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	portID, err := icatypes.NewControllerPortID(msg.Owner)
+	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+
+	if !ok {
+		return &types.MsgIcaDelegateResponse{}, errors.New("zone name is not found")
+	}
+
+	var msgs []sdk.Msg
+
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
+	err := k.SendIcaTx(ctx, zone_info.IcaConnectionInfo.OwnerAddress, zone_info.IcaConnectionInfo.ConnectionId, msgs)
+
 	if err != nil {
-		return nil, err
+		return &types.MsgIcaDelegateResponse{}, errors.New("IcaDelegate transaction failed to send")
 	}
 
-	channelID, found := k.icaControllerKeeper.GetActiveChannelID(ctx, msg.ConnectionId, portID)
-	if !found {
-		return nil, sdkerrors.Wrapf(icatypes.ErrActiveChannelNotFound, "failed to retrieve active channel for port %s", portID)
+	return &types.MsgIcaDelegateResponse{}, nil
+}
+
+func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndelegate) (*types.MsgIcaUndelegateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+
+	if !ok {
+		return &types.MsgIcaUndelegateResponse{}, errors.New("zone name is not found")
 	}
 
-	chanCap, found := k.scopedKeeper.GetCapability(ctx, host.ChannelCapabilityPath(portID, channelID))
-	if !found {
-		return nil, sdkerrors.Wrap(channeltypes.ErrChannelCapabilityNotFound, "module does not own channel capability")
-	}
+	var msgs []sdk.Msg
 
-	data, err := icatypes.SerializeCosmosTx(k.cdc, msg.GetTxMsgs())
+	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
+	err := k.SendIcaTx(ctx, zone_info.IcaConnectionInfo.OwnerAddress, zone_info.IcaConnectionInfo.ConnectionId, msgs)
+
 	if err != nil {
-		return nil, err
+		return &types.MsgIcaUndelegateResponse{}, errors.New("IcaUnDelegate transaction failed to send")
 	}
 
-	packetData := icatypes.InterchainAccountPacketData{
-		Type: icatypes.EXECUTE_TX,
-		Data: data,
+	return &types.MsgIcaUndelegateResponse{}, nil
+}
+
+func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoStaking) (*types.MsgIcaAutoStakingResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+	if !ok {
+		return &types.MsgIcaAutoStakingResponse{}, errors.New("zone name is not found")
 	}
 
-	// timeoutTimestamp set to max value with the unsigned bit shifted to sastisfy hermes timestamp conversion
-	// it is the responsibility of the auth module developer to ensure an appropriate timeout timestamp
-	timeoutTimestamp := time.Now().Add(time.Minute).UnixNano()
-	_, err = k.icaControllerKeeper.SendTx(ctx, chanCap, msg.ConnectionId, portID, packetData, uint64(timeoutTimestamp))
+	var msgs []sdk.Msg
+
+	msgs = append(msgs, &distributiontype.MsgWithdrawDelegatorReward{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress})
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
+
+	err := k.SendIcaTx(ctx, msg.OwnerAddress, zone_info.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
-		return nil, err
+		return &types.MsgIcaAutoStakingResponse{}, errors.New("IcaAutoStaking transaction failed to send")
 	}
 
-	return &types.MsgSubmitTxResponse{}, nil
+	return &types.MsgIcaAutoStakingResponse{}, nil
+}
+
+func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+	if !ok {
+		return &types.MsgIcaWithdrawResponse{}, errors.New("zone name is not found")
+	}
+
+	var msgs []sdk.Msg
+
+	//transfer msg
+	//sourceport, Source channel, Token, Sender, receiver, TimeoutHeight, TimeoutTimestamp
+	msgs = append(msgs, &ibctransfertypes.MsgTransfer{
+		SourcePort:    zone_info.TransferConnectionInfo.PortId,
+		SourceChannel: zone_info.TransferConnectionInfo.ChannelId,
+		Token:         msg.Amount,
+		Sender:        msg.SenderAddress,
+		Receiver:      msg.ReceiverAddress,
+		TimeoutHeight: ibcclienttypes.Height{
+			RevisionHeight: 0,
+			RevisionNumber: 0,
+		},
+		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+	})
+
+	err := k.SendIcaTx(ctx, msg.OwnerAddress, zone_info.IcaConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		return &types.MsgIcaWithdrawResponse{}, errors.New("IcaWithdraw transaction failed to send")
+	}
+
+	return &types.MsgIcaWithdrawResponse{}, nil
 }

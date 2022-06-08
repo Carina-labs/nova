@@ -1,18 +1,20 @@
 package keeper
 
 import (
-	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
 
-	"github.com/Carina-labs/novachain/x/gal/types"
-	interTxKeeper "github.com/Carina-labs/novachain/x/inter-tx/keeper"
+	"github.com/Carina-labs/nova/x/gal/types"
+	interTxKeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
+	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
-	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+
 	"github.com/tendermint/tendermint/libs/log"
 )
 
@@ -27,6 +29,7 @@ type Keeper struct {
 	scopedKeeper      capabilitykeeper.ScopedKeeper
 	interTxKeeper     interTxKeeper.Keeper
 	ibcTransferKeeper transfer.Keeper
+	oracleKeeper      oraclekeeper.Keeper
 }
 
 func NewKeeper(cdc codec.BinaryCodec,
@@ -35,7 +38,8 @@ func NewKeeper(cdc codec.BinaryCodec,
 	bankKeeper types.BankKeeper,
 	accountKeeper types.AccountKeeper,
 	interTxKeeper interTxKeeper.Keeper,
-	ibcTransferKeeper transfer.Keeper) Keeper {
+	ibcTransferKeeper transfer.Keeper,
+	oracleKeeper oraclekeeper.Keeper) Keeper {
 
 	if !paramSpace.HasKeyTable() {
 		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())
@@ -68,44 +72,7 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 	return params
 }
 
-func (k Keeper) DepositCoin(ctx sdk.Context,
-	depositor string,
-	receiver string,
-	sourcePort string,
-	sourceChannel string,
-	amt sdk.Coins) error {
-	//wAtom -> [ GAL ] -> snAtom
-	for _, coin := range amt {
-		goCtx := sdk.WrapSDKContext(ctx)
-
-		_, err := k.ibcTransferKeeper.Transfer(goCtx,
-			&transfertypes.MsgTransfer{
-				SourcePort:    sourcePort,
-				SourceChannel: sourceChannel,
-				Token:         coin,
-				Sender:        depositor,
-				Receiver:      receiver,
-				TimeoutHeight: ibcclienttypes.Height{
-					RevisionHeight: 100,
-					RevisionNumber: 0,
-				},
-				TimeoutTimestamp: 0,
-			},
-		)
-
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (k Keeper) UnStaking(ctx sdk.Context) {
-
-}
-
-func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer string, amt sdk.Coins) error {
+func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer sdk.Address, amt sdk.Coins) error {
 	// snAtom -> [GAL] -> wAtom
 	for _, coin := range amt {
 		// burn sn token
@@ -123,43 +90,57 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer string, amt sdk.Coins) 
 	return nil
 }
 
-func (k Keeper) MintStTokenAndDistribute(ctx sdk.Context, depositor string, amt sdk.Coins) error {
-	depositorAddr, err := sdk.AccAddressFromBech32(depositor)
+func (k Keeper) SetShare(ctx sdk.Context, depositor sdk.AccAddress, shares float64) error {
+	store := k.getShareStore(ctx)
+	data := make(map[string]interface{})
+	data[types.KeyShares] = shares
+	bytes, err := json.Marshal(data)
 	if err != nil {
 		return err
 	}
 
-	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, amt); err != nil {
-		return err
-	}
-
-	if err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, depositorAddr, amt); err != nil {
-		return err
-	}
-
+	store.Set([]byte(depositor.String()), bytes)
 	return nil
 }
 
-func (k Keeper) CalculateShares(ctx sdk.Context, depositor string, coin sdk.Coin) (float64, error) {
-	totalSupply := k.bankKeeper.GetSupply(ctx, coin.Denom)
-	depositorBalance, err := k.bankKeeper.Balance(ctx.Context(), &banktypes.QueryBalanceRequest{
-		Address: depositor,
-		Denom:   coin.Denom,
-	})
+func (k Keeper) GetShare(ctx sdk.Context, depositor sdk.AccAddress) (*types.QuerySharesResponse, error) {
+	store := k.getShareStore(ctx)
+	if !store.Has([]byte(depositor.String())) {
+		return nil, errors.New(fmt.Sprintf("Depositor %s is not in state...", depositor))
+	}
 
+	result := make(map[string]interface{})
+	err := json.Unmarshal(store.Get([]byte(depositor.String())), &result)
+	if err != nil {
+		return nil, err
+	}
+
+	shares, ok := result[types.KeyShares].(float64)
+	if !ok {
+		// TODO : fix error msg
+		return nil, errors.New(fmt.Sprintf("Convert fail"))
+	}
+
+	return &types.QuerySharesResponse{
+		Address: depositor.String(),
+		Shares:  shares,
+	}, nil
+}
+
+func (k Keeper) getShareStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
+}
+
+func (k Keeper) calculateAlpha(ctx sdk.Context, denom string, depositAmt int) (float64, error) {
+	res, err := k.oracleKeeper.GetChainState(ctx, denom)
 	if err != nil {
 		return 0, err
 	}
 
-	shares := float64(depositorBalance.Balance.Amount.Int64()/totalSupply.Amount.Int64()) * 100
-	return shares, nil
+	alpha := float64(depositAmt) / k.calculateCoinAmount(res.TotalStakedBalance, res.Decimal)
+	return alpha, nil
 }
 
-func (k Keeper) getPairSnToken(ctx sdk.Context, denom string) (stTokenDenom string) {
-	k.paramSpace.Get(ctx, types.KeyWhiteListedTokenDenoms, &stTokenDenom)
-	return
-}
-
-func (k Keeper) Share(context context.Context, rq *types.QuerySharesRequest) (*types.QuerySharesResponse, error) {
-	return nil, nil
+func (k Keeper) calculateCoinAmount(amt uint64, decimal uint64) float64 {
+	return float64(amt) / float64(10^decimal)
 }

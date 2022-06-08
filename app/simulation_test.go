@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Carina-labs/novachain/app"
+	"github.com/Carina-labs/nova/app"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/simapp"
@@ -74,7 +74,7 @@ func BenchmarkSimulation(b *testing.B) {
 
 	encoding := cosmoscmd.MakeEncodingConfig(app.ModuleBasics)
 
-	app := app.New(
+	app := app.NewNovaApp(
 		logger,
 		db,
 		nil,
