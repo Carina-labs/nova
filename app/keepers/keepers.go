@@ -6,6 +6,7 @@ import (
 	galtypes "github.com/Carina-labs/nova/x/gal/types"
 	intertx "github.com/Carina-labs/nova/x/inter-tx"
 	intertxkeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
+	"github.com/Carina-labs/nova/x/oracle"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/CosmWasm/wasmd/x/wasm"
@@ -326,6 +327,7 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(intertxtypes.ModuleName)
+	paramsKeeper.Subspace(oracle.ModuleName)
 	paramsKeeper.Subspace(gal.ModuleName)
 
 	return paramsKeeper

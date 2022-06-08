@@ -1,11 +1,14 @@
 package types
 
-func NewGenesisState() *GenesisState {
-	return &GenesisState{}
+func NewGenesisState(params Params) *GenesisState {
+	return &GenesisState{
+		Params: Params{},
+	}
 }
 
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
+		Params: DefaultParams(),
 		States: []ChainInfo{},
 	}
 }
