@@ -1,7 +1,7 @@
 package gal_test
 
 import (
-	"github.com/Carina-labs/nova/app"
+	"github.com/Carina-labs/nova/app/apptesting"
 	"github.com/Carina-labs/nova/x/gal/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	"github.com/stretchr/testify/require"
@@ -11,7 +11,7 @@ import (
 )
 
 func TestModuleParams(t *testing.T) {
-	novaApp := app.Setup(false)
+	novaApp := apptesting.Setup(false)
 	ctx := novaApp.NewContext(false, tmproto.Header{})
 	novaApp.InitChainer(ctx, abcitypes.RequestInitChain{
 		AppStateBytes: []byte("{}"),
