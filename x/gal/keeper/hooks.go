@@ -25,7 +25,13 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacketD
 	if err != nil {
 		h.k.Logger(ctx).Error(err.Error())
 	} else {
-		if err := h.k.MintStTokenAndDistribute(ctx, data.Sender, amount); err != nil {
+		sender, err := sdk.AccAddressFromBech32(data.Sender)
+		if err != nil {
+			h.k.Logger(ctx).Error(err.Error())
+			return
+		}
+
+		if err := h.k.MintStTokenAndDistribute(ctx, sender, amount); err != nil {
 			h.k.Logger(ctx).Error(err.Error())
 		}
 	}

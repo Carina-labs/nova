@@ -49,7 +49,7 @@ import (
 	"github.com/tendermint/spm/cosmoscmd"
 )
 
-func (app *App) GetModuleManager(
+func (app *NovaApp) GetModuleManager(
 	encodingConfig cosmoscmd.EncodingConfig,
 	skipGenesisInvariants bool,
 	transferModule module.AppModule,

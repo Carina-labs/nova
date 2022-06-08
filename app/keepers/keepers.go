@@ -211,6 +211,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appKeepers.BankKeeper, appKeepers.AccountKeeper,
 		*appKeepers.IntertxKeeper,
 		transferKeeper,
+		*appKeepers.OracleKeeper,
 	)
 	appKeepers.GalKeeper = &galKeeper
 
