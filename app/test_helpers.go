@@ -2,7 +2,7 @@ package app
 
 import (
 	"encoding/json"
-	"github.com/Carina-labs/novachain/testing/helpers"
+	"github.com/Carina-labs/nova/testing/helpers"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -28,7 +28,7 @@ import (
 	"time"
 )
 
-func SetupWithVal(t *testing.T, chainId string) *App {
+func SetupWithVal(t *testing.T, chainId string) *NovaApp {
 	t.Helper()
 	privVal := mock.NewPV()
 	pubKey, err := privVal.GetPubKey()
@@ -49,7 +49,7 @@ func SetupWithVal(t *testing.T, chainId string) *App {
 }
 
 func genesisStateWithValSet(t *testing.T,
-	app *App, genesisState GenesisState,
+	app *NovaApp, genesisState GenesisState,
 	valSet *tmtypes.ValidatorSet, genAccs []authtypes.GenesisAccount,
 	balances ...banktypes.Balance,
 ) GenesisState {
@@ -111,7 +111,7 @@ func genesisStateWithValSet(t *testing.T,
 	return genesisState
 }
 
-func SetupWithGenesisValSet(t *testing.T, valSet *tmtypes.ValidatorSet, genAccs []authtypes.GenesisAccount, chainID string, balances ...banktypes.Balance) *App {
+func SetupWithGenesisValSet(t *testing.T, valSet *tmtypes.ValidatorSet, genAccs []authtypes.GenesisAccount, chainID string, balances ...banktypes.Balance) *NovaApp {
 	t.Helper()
 
 	app, genesisState := setup(true, 5)
@@ -142,34 +142,34 @@ func SetupWithGenesisValSet(t *testing.T, valSet *tmtypes.ValidatorSet, genAccs 
 	return app
 }
 
-func Setup(isCheckTx bool) *App {
-	app, genesisState := setup(!isCheckTx, 5)
-	if !isCheckTx {
-		// init chain must be called to stop deliverState from being nil
-		stateBytes, err := json.MarshalIndent(genesisState, "", " ")
-		if err != nil {
-			panic(err)
-		}
+//func Setup(isCheckTx bool) *NovaApp {
+//	app, genesisState := setup(!isCheckTx, 5)
+//	if !isCheckTx {
+//		// init chain must be called to stop deliverState from being nil
+//		stateBytes, err := json.MarshalIndent(genesisState, "", " ")
+//		if err != nil {
+//			panic(err)
+//		}
+//
+//		// Initialize the chain
+//		app.InitChain(
+//			abci.RequestInitChain{
+//				Validators:      []abci.ValidatorUpdate{},
+//				ConsensusParams: simapp.DefaultConsensusParams,
+//				AppStateBytes:   stateBytes,
+//			},
+//		)
+//	}
+//
+//	return app
+//}
 
-		// Initialize the chain
-		app.InitChain(
-			abci.RequestInitChain{
-				Validators:      []abci.ValidatorUpdate{},
-				ConsensusParams: simapp.DefaultConsensusParams,
-				AppStateBytes:   stateBytes,
-			},
-		)
-	}
-
-	return app
-}
-
-func setup(withGenesis bool, invCheckPeriod uint) (*App, GenesisState) {
+func setup(withGenesis bool, invCheckPeriod uint) (*NovaApp, GenesisState) {
 	db := dbm.NewMemDB()
 	encCdc := cosmoscmd.MakeEncodingConfig(ModuleBasics)
 
-	app := New(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, invCheckPeriod, encCdc, simapp.EmptyAppOptions{})
-	originalApp := app.(*App)
+	app := NewNovaApp(log.NewNopLogger(), db, nil, true, map[int64]bool{}, DefaultNodeHome, invCheckPeriod, encCdc, simapp.EmptyAppOptions{})
+	originalApp := app.(*NovaApp)
 	if withGenesis {
 		return originalApp, NewDefaultGenesisState(encCdc.Marshaler)
 	}

@@ -2,7 +2,7 @@ package novatesting
 
 import (
 	"fmt"
-	"github.com/Carina-labs/novachain/app"
+	"github.com/Carina-labs/nova/app"
 	"testing"
 	"time"
 
@@ -51,7 +51,7 @@ type TestChain struct {
 	*testing.T
 
 	Coordinator   *Coordinator
-	App           *app.App //nova app
+	App           *app.NovaApp //nova app
 	ChainID       string
 	LastHeader    *ibctmtypes.Header // header for last block height committed
 	CurrentHeader tmproto.Header     // header for current block height
@@ -187,7 +187,7 @@ func (chain *TestChain) GetContext() sdk.Context {
 // GetApp returns the App to allow usage ofnon-interface fields.
 // CONTRACT: This function should not be called by third parties implementing
 // their own App.
-func (chain *TestChain) GetApp() *app.App {
+func (chain *TestChain) GetApp() *app.NovaApp {
 	novaApp := chain.App
 	return novaApp
 }

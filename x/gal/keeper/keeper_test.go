@@ -1,8 +1,7 @@
 package keeper_test
 
 import (
-	novatesting "github.com/Carina-labs/novachain/testing"
-	sdk "github.com/cosmos/cosmos-sdk/types"
+	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
@@ -60,8 +59,8 @@ func (suite *KeeperTestSuite) TestDepositCoins() {
 	println("sender : ", depositorBalance.String())
 	println("receiver : ", receiverBalance.String())
 
-	sendAmountCoins := sdk.NewCoins(depositorBalance) //deposit all aphoton balance of depositor
-	errDeposit := appChainA.GalKeeper.DepositCoin(ctxA, accountAddrA.String(), accountAddrB.String(), sourcePort, sourceChannel, sendAmountCoins)
+	sendAmountCoin := depositorBalance //deposit all aphoton balance of depositor
+	errDeposit := appChainA.GalKeeper.DepositCoin(ctxA, accountAddrA, accountAddrB, sourcePort, sourceChannel, sendAmountCoin)
 	require.NoError(suite.T(), errDeposit)
 
 	suite.chainA.NextBlock()                                                            //must execute
