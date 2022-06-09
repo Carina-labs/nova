@@ -87,21 +87,32 @@ endif
 
 #$(info $$BUILD_FLAGS is [$(BUILD_FLAGS)])
 
-all: install build
+all: build lint test
 
 install: go.sum
 	go install -mod=readonly $(BUILD_FLAGS) ./cmd/novad
 
 build:
 	go build $(BUILD_FLAGS) -o ./build/novad ./cmd/novad
-  
-.PHONY: all install build
+
+########################################################################################################
+#####                                     Test & Linting                                           #####
+########################################################################################################
+
+test:
+	@go test -v ./x/...
+
+lint:
+	@echo "--> Running linter"
+	@go run github.com/golangci/golangci-lint/cmd/golangci-lint run --timeout=10m
+
+format:
+	@go run github.com/golangci/golangci-lint/cmd/golangci-lint run ./... --fix
+	@go run mvdan.cc/gofumpt -l -w x/ app/ ante/ tests/
 
 ########################################################################################################
 #####                                        Protobuf                                              #####
 ########################################################################################################
-
-.PHONY: protogen protogen-api protogen-all
 
 protoConVer=v0.3.0
 protoImgName=a41ventures/nova-protogen:$(protoConVer)
@@ -121,3 +132,5 @@ protogen-api:
 	then docker start -a $(protogenApiConName); \
 	else docker run --name $(protogenApiConName) -v $(CURDIR):/workspace --workdir /workspace $(protoImgName) \
 	bash ./scripts/protogen-api.sh; fi
+
+.PHONY: protogen protogen-api protogen-all all install build

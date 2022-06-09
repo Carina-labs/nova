@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/ghodss/yaml"
@@ -22,7 +23,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 }
 
 func DefaultParams() Params {
-	return Params {
+	return Params{
 		OracleOperators: []string{},
 	}
 }
@@ -52,7 +53,7 @@ func validateOracleOperators(i interface{}) error {
 		return fmt.Errorf("invalid parameter: %T", i)
 	}
 
-	for i, _ := range operators {
+	for i := range operators {
 		val := operators[i]
 		_, err := sdk.AccAddressFromBech32(val)
 
