@@ -6,7 +6,6 @@ import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"strconv"
 )
 
 func (k Keeper) getDepositCache(ctx sdk.Context) prefix.Store {
@@ -16,9 +15,7 @@ func (k Keeper) getDepositCache(ctx sdk.Context) prefix.Store {
 func (k Keeper) CacheDepositAmt(ctx sdk.Context, depositor sdk.AccAddress, amt sdk.Coin) error {
 	store := k.getDepositCache(ctx)
 	data := make(map[string]string)
-
-	data[types.KeyDenom] = amt.Denom
-	data[types.KeyAmount] = amt.Amount.String()
+	data[types.KeyCoin] = amt.String()
 	bytes, err := json.Marshal(data)
 	if err != nil {
 		return err
@@ -41,20 +38,19 @@ func (k Keeper) GetCachedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (
 		return nil, err
 	}
 
-	amt, err := strconv.ParseInt(result[types.KeyAmount], 10, 0)
+	coinStr, ok := result[types.KeyCoin]
+	if !ok {
+		return nil, fmt.Errorf("coin is not exist")
+	}
+
+	coin, err := sdk.ParseCoinNormalized(coinStr)
 	if err != nil {
 		return nil, err
 	}
 
-	denom, ok := result[types.KeyDenom]
-	if !ok {
-		return nil, fmt.Errorf("denom is not registered")
-	}
-
 	return &types.QueryCachedDepositAmountResponse{
 		Address: depositorStr,
-		Denom:   denom,
-		Amount:  amt,
+		Amount:  coin,
 	}, nil
 }
 

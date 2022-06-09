@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "nova/gal/v1/params.proto";
 import "google/api/annotations.proto";
 import "cosmos_proto/cosmos.proto";
+import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/gal/types";
 
@@ -39,8 +40,7 @@ message QueryCacheDepositAmountRequest {
 // QuerySharesResponse defines response of QueryBalanceRequest.
 message QueryCachedDepositAmountResponse {
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  string denom = 2;
-  int64 amount = 3;
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
 }
 
 message QueryAllSharesRequest {
