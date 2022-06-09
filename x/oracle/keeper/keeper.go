@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+
 	"github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/oracle/types"
@@ -32,6 +33,19 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 }
 
 func (k Keeper) UpdateChainState(ctx sdk.Context, updateInfo *types.ChainInfo) error {
+	params := k.GetParams(ctx)
+	isValid := false
+	for i := range params.OracleOperators {
+		if params.OracleOperators[i] == updateInfo.OperatorAddress {
+			isValid = true
+			break
+		}
+	}
+
+	if !isValid {
+		return fmt.Errorf("you are not valid oracle operator: %s", updateInfo.OperatorAddress)
+	}
+
 	store := ctx.KVStore(k.storeKey)
 	bz, err := updateInfo.Marshal()
 	if err != nil {
