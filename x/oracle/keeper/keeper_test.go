@@ -14,6 +14,7 @@ var (
 	fooDenom     = "uatom"
 	invalidDenom = "invalid_denom"
 	fooOperator  = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	fooBalance int64 = 1000000000
 )
 
 type KeeperTestSuite struct {
@@ -34,10 +35,9 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 	oracleKeeper := suite.App.OracleKeeper
 
 	chainInfo := types.ChainInfo{
-		ChainDenom:         fooDenom,
+		Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 		OperatorAddress:    fooOperator.String(),
 		LastBlockHeight:    10,
-		TotalStakedBalance: 1000000000,
 		Decimal:            6,
 	}
 
@@ -51,10 +51,9 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		{
 			name: "no operator",
 			chainInfo: types.ChainInfo{
-				ChainDenom:         fooDenom,
+				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress:    fooOperator.String(),
 				LastBlockHeight:    10,
-				TotalStakedBalance: 1000000000,
 				Decimal:            6,
 			},
 			queryDenom: fooDenom,
@@ -64,10 +63,9 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		{
 			name: "no data with incorrect query",
 			chainInfo: types.ChainInfo{
-				ChainDenom:         fooDenom,
+				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress:    fooOperator.String(),
 				LastBlockHeight:    10,
-				TotalStakedBalance: 1000000000,
 				Decimal:            6,
 			},
 			queryDenom: invalidDenom,
@@ -77,10 +75,9 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		{
 			name: "should success",
 			chainInfo: types.ChainInfo{
-				ChainDenom:         fooDenom,
+				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress:    fooOperator.String(),
 				LastBlockHeight:    10,
-				TotalStakedBalance: 1000000000,
 				Decimal:            6,
 			},
 			queryDenom: fooDenom,

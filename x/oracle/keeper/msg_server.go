@@ -17,10 +17,9 @@ func (m msgServer) UpdateChainState(ctx context.Context, state *types.MsgUpdateC
 	goCtx := sdk.UnwrapSDKContext(ctx)
 
 	if err := m.keeper.UpdateChainState(goCtx, &types.ChainInfo{
-		ChainDenom:         state.ChainDenom,
+		Coin:               state.Coin,
 		OperatorAddress:    state.Operator,
 		LastBlockHeight:    state.BlockHeight,
-		TotalStakedBalance: state.TotalStakedBalance,
 		Decimal:            state.Decimal,
 	}); err != nil {
 		return nil, err
@@ -38,7 +37,7 @@ func (m msgServer) GetChainState(ctx context.Context, request *types.QueryStateR
 	}
 
 	return &types.QueryStateResponse{
-		TotalStakedBalance: result.TotalStakedBalance,
+		Coin:               result.Coin,
 		Decimal:            result.Decimal,
 		LastBlockHeight:    result.LastBlockHeight,
 	}, nil

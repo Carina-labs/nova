@@ -55,7 +55,7 @@ func NewUpdateStateCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgUpdateChainState(chainDenom, clientCtx.GetFromAddress(), balance.Uint64(), decimal.Uint64(), blockHeight.Uint64())
+			msg := types.NewMsgUpdateChainState(sdk.NewCoin(chainDenom, sdk.NewIntFromBigInt(balance.BigInt())), clientCtx.GetFromAddress(), decimal.Uint64(), blockHeight.Uint64())
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},

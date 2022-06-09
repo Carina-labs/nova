@@ -23,10 +23,9 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 		{
 			name: "should get state",
 			chainInfo: types.ChainInfo{
-				ChainDenom:         fooDenom,
+				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress:    operator.String(),
 				LastBlockHeight:    10,
-				TotalStakedBalance: 1000000000,
 				Decimal:            6,
 			},
 			queryDenom: fooDenom,
@@ -35,10 +34,9 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 		{
 			name: "should get error",
 			chainInfo: types.ChainInfo{
-				ChainDenom:         fooDenom,
+				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress:    operator.String(),
 				LastBlockHeight:    10,
-				TotalStakedBalance: 1000000000,
 				Decimal:            6,
 			},
 			queryDenom: invalidDenom,
@@ -66,7 +64,7 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 
 			suite.Require().NoError(err)
 			suite.Require().Equal(val.LastBlockHeight, tt.chainInfo.LastBlockHeight)
-			suite.Require().Equal(val.TotalStakedBalance, tt.chainInfo.TotalStakedBalance)
+			suite.Require().Equal(val.Coin, tt.chainInfo.Coin)
 			suite.Require().Equal(val.Decimal, tt.chainInfo.Decimal)
 		})
 	}

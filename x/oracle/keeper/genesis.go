@@ -40,10 +40,9 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 		}
 
 		result.States = append(result.States, types.ChainInfo{
-			ChainDenom:         value.ChainDenom,
+			Coin:               value.Coin,
 			OperatorAddress:    value.OperatorAddress,
 			LastBlockHeight:    value.LastBlockHeight,
-			TotalStakedBalance: value.TotalStakedBalance,
 			Decimal:            value.Decimal,
 		})
 	}
