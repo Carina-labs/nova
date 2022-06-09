@@ -24,5 +24,6 @@ var (
 	KeyWithdrawInfo = []byte{0x02}
 
 	KeyDepositor = "depositor"
-	KeyShares    = "shares"
+	KeyDenom     = "denom"
+	KeyAmount    = "amount"
 )

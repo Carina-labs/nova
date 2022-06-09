@@ -8,8 +8,8 @@ const (
 	QueryTotalShares = "total_shares"
 )
 
-func NewQuerySharesRequest(addr sdk.AccAddress, denom string) *QuerySharesRequest {
-	return &QuerySharesRequest{
+func NewQuerySharesRequest(addr sdk.AccAddress, denom string) *QueryCacheDepositAmountRequest {
+	return &QueryCacheDepositAmountRequest{
 		Address: addr.String(),
 		Denom:   denom,
 	}

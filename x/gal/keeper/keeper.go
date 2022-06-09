@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"strconv"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	interTxKeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
@@ -91,10 +92,12 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer sdk.Address, amt sdk.Co
 	return nil
 }
 
-func (k Keeper) SetShare(ctx sdk.Context, depositor sdk.AccAddress, shares float64) error {
+func (k Keeper) CacheDepositAmt(ctx sdk.Context, depositor sdk.AccAddress, amt sdk.Coin) error {
 	store := k.getShareStore(ctx)
-	data := make(map[string]interface{})
-	data[types.KeyShares] = shares
+	data := make(map[string]string)
+
+	data[types.KeyDenom] = amt.Denom
+	data[types.KeyAmount] = amt.Amount.String()
 	bytes, err := json.Marshal(data)
 	if err != nil {
 		return err
@@ -104,27 +107,25 @@ func (k Keeper) SetShare(ctx sdk.Context, depositor sdk.AccAddress, shares float
 	return nil
 }
 
-func (k Keeper) GetShare(ctx sdk.Context, depositor sdk.AccAddress) (*types.QuerySharesResponse, error) {
+func (k Keeper) GetCachedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (*types.QueryCachedDepositAmountResponse, error) {
 	store := k.getShareStore(ctx)
 	if !store.Has([]byte(depositor.String())) {
-		return nil, fmt.Errorf("Depositor %s is not in state...", depositor)
+		return nil, fmt.Errorf("depositor %s is not in state", depositor)
 	}
 
-	result := make(map[string]interface{})
+	result := make(map[string]string)
 	err := json.Unmarshal(store.Get([]byte(depositor.String())), &result)
 	if err != nil {
 		return nil, err
 	}
-
-	shares, ok := result[types.KeyShares].(float64)
-	if !ok {
-		// TODO : fix error msg
-		return nil, fmt.Errorf("Convert fail")
+	amt, err := strconv.ParseInt(result[types.KeyAmount], 10, 0)
+	if err != nil {
+		return nil, err
 	}
 
-	return &types.QuerySharesResponse{
+	return &types.QueryCachedDepositAmountResponse{
 		Address: depositor.String(),
-		Shares:  shares,
+		Amount:  amt,
 	}, nil
 }
 
@@ -132,7 +133,7 @@ func (k Keeper) getShareStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
 }
 
-func (k Keeper) calculateAlpha(ctx sdk.Context, denom string, depositAmt int) (float64, error) {
+func (k Keeper) calculateAlpha(ctx sdk.Context, denom string, depositAmt int64) (float64, error) {
 	res, err := k.oracleKeeper.GetChainState(ctx, denom)
 	if err != nil {
 		return 0, err

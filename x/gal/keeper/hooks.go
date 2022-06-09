@@ -1,9 +1,9 @@
 package keeper
 
 import (
+	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	"strconv"
 )
 
 // Hooks wrapper struct for gal keeper
@@ -18,35 +18,17 @@ func (k Keeper) Hooks() Hooks {
 }
 
 func (h Hooks) AfterTransferEnd(ctx sdk.Context, data types.FungibleTokenPacketData, base_denom string) {
-	stAsset := h.k.interTxKeeper.GetstDenomForBaseDenom(ctx, base_denom)
-
-	senderAddr, err := sdk.AccAddressFromBech32(data.Sender)
+	depositor, err := sdk.AccAddressFromBech32(data.Sender)
 	if err != nil {
 		h.k.Logger(ctx).Error(err.Error())
 	}
 
-	// Mint share tokens
-	pairDenom, err := h.k.getPairSnToken(ctx, base_denom)
-	if err != nil {
-		h.k.Logger(ctx).Error(err.Error())
-	}
-	totalSharedToken := h.k.bankKeeper.GetSupply(ctx, pairDenom)
-	userDepositToken, err := strconv.ParseInt(data.Amount, 10, 64)
-	if err != nil {
-		h.k.Logger(ctx).Error(err.Error())
+	amt, ok := sdk.NewIntFromString(data.Amount)
+	if !ok {
+		h.k.Logger(ctx).Error(fmt.Sprintf("type casting error, %s", data.Amount))
 	}
 
-	// alpha = user_deposit_amount / total_staked_amount
-	alpha, err := h.k.calculateAlpha(ctx, base_denom, int(userDepositToken))
-	if err != nil {
-		h.k.Logger(ctx).Error(err.Error())
-	}
-
-	// minted_amount = alpha * total_share_token_supply
-	err = h.k.MintShareTokens(ctx, senderAddr, sdk.Coins{sdk.Coin{
-		Denom:  stAsset,
-		Amount: sdk.NewInt(int64(alpha * float64(totalSharedToken.Amount.Int64()))),
-	}})
+	err = h.k.CacheDepositAmt(ctx, depositor, sdk.NewCoin(data.Denom, amt))
 	if err != nil {
 		h.k.Logger(ctx).Error(err.Error())
 	}

@@ -5,6 +5,7 @@ import (
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/types"
 	types2 "github.com/Carina-labs/nova/x/oracle/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
@@ -55,7 +56,7 @@ func (suite *KeeperTestSuite) SetupTestOracle(msgs []*types2.MsgUpdateChainState
 
 func (suite *KeeperTestSuite) setRandomState() {
 	for _, acc := range suite.TestAccs {
-		err := suite.App.GalKeeper.SetShare(suite.Ctx, acc, 0.2)
+		err := suite.App.GalKeeper.CacheDepositAmt(suite.Ctx, acc, sdk.NewInt64Coin("uosmo", 2))
 		if err != nil {
 			panic(err)
 		}
@@ -64,29 +65,29 @@ func (suite *KeeperTestSuite) setRandomState() {
 
 func (suite *KeeperTestSuite) TestGetShares() {
 	tcs := []struct {
-		expected float64
+		expected int64
 	}{
 		{
-			expected: 0.2,
+			expected: 2,
 		},
 		{
-			expected: 0.2,
+			expected: 2,
 		},
 		{
-			expected: 0.2,
+			expected: 2,
 		},
 		{
-			expected: 0.2,
+			expected: 2,
 		},
 		{
-			expected: 0.2,
+			expected: 2,
 		},
 	}
 
 	for i, tc := range tcs {
-		shares, err := suite.App.GalKeeper.GetShare(suite.Ctx, suite.TestAccs[i])
+		shares, err := suite.App.GalKeeper.GetCachedDepositAmt(suite.Ctx, suite.TestAccs[i])
 		suite.NoError(err)
-		suite.Equal(tc.expected, shares.Shares)
+		suite.Equal(tc.expected, shares.Amount)
 	}
 }
 
