@@ -45,17 +45,17 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 //stAsset mint
 func (k Keeper) MintShareTokens(ctx sdk.Context,
 	depositor sdk.Address,
-	amt sdk.Coins) error {
+	amt sdk.Coin) error {
 	depositorAddr, err := sdk.AccAddressFromBech32(depositor.String())
 	if err != nil {
 		return err
 	}
 
-	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, amt); err != nil {
+	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(amt)); err != nil {
 		return err
 	}
 
-	if err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, depositorAddr, amt); err != nil {
+	if err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, depositorAddr, sdk.NewCoins(amt)); err != nil {
 		return err
 	}
 
@@ -92,6 +92,6 @@ func (k Keeper) SetPairToken(ctx sdk.Context, denom string, shareTokenDenom stri
 	k.paramSpace.Set(ctx, types.KeyWhiteListedTokenDenoms, data)
 }
 
-func (k Keeper) Share(context context.Context, rq *types.QuerySharesRequest) (*types.QuerySharesResponse, error) {
+func (k Keeper) Share(context context.Context, rq *types.QueryCacheDepositAmountRequest) (*types.QueryCachedDepositAmountResponse, error) {
 	return nil, nil
 }
