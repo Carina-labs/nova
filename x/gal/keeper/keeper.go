@@ -9,8 +9,6 @@ import (
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
-	"math"
-
 	"github.com/tendermint/tendermint/libs/log"
 )
 
@@ -85,19 +83,4 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer sdk.Address, amt sdk.Co
 	}
 
 	return nil
-}
-
-func (k Keeper) calculateAlpha(ctx sdk.Context, denom string, depositAmt int64) (float64, error) {
-	res, err := k.oracleKeeper.GetChainState(ctx, denom)
-	if err != nil {
-		return 0, err
-	}
-
-	alpha := float64(depositAmt) / k.calculateCoinAmount(res.TotalStakedBalance, res.Decimal)
-	return alpha, nil
-}
-
-func (k Keeper) calculateCoinAmount(amt uint64, decimal uint64) float64 {
-	res := float64(amt) / math.Pow10(int(decimal))
-	return res
 }

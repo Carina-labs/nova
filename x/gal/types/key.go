@@ -26,4 +26,5 @@ var (
 	KeyDepositor = "depositor"
 	KeyDenom     = "denom"
 	KeyAmount    = "amount"
+	KeyCoin      = "coin"
 )

@@ -4,22 +4,22 @@ import sdk "github.com/cosmos/cosmos-sdk/types"
 
 func (suite *KeeperTestSuite) TestGetCachedDepositAmt() {
 	tcs := []struct {
-		expected int64
+		expected sdk.Coin
 	}{
 		{
-			expected: 2,
+			expected: sdk.NewInt64Coin("uosmo", 2),
 		},
 		{
-			expected: 2,
+			expected: sdk.NewInt64Coin("uosmo", 2),
 		},
 		{
-			expected: 2,
+			expected: sdk.NewInt64Coin("uosmo", 2),
 		},
 		{
-			expected: 2,
+			expected: sdk.NewInt64Coin("uosmo", 2),
 		},
 		{
-			expected: 2,
+			expected: sdk.NewInt64Coin("uosmo", 2),
 		},
 	}
 
@@ -36,8 +36,8 @@ func (suite *KeeperTestSuite) TestCacheDepositAmt() {
 
 	res, err := suite.App.GalKeeper.GetCachedDepositAmt(suite.Ctx, suite.TestAccs[0])
 	suite.Equal(suite.TestAccs[0].String(), res.Address)
-	suite.Equal("atom", res.Denom)
-	suite.Equal(int64(1000), res.Amount)
+	suite.Equal("atom", res.Amount.Denom)
+	suite.Equal(sdk.NewInt(1000), res.Amount.Amount)
 }
 
 func (suite *KeeperTestSuite) TestClearCachedDepositAmt() {
