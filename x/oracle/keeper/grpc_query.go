@@ -22,8 +22,12 @@ func (q Querier) State(ctx context.Context, request *types.QueryStateRequest) (*
 	}
 
 	return &types.QueryStateResponse{
-		TotalStakedBalance: res.TotalStakedBalance,
+		Coin:               res.Coin,
 		Decimal:            res.Decimal,
 		LastBlockHeight:    res.LastBlockHeight,
 	}, nil
+}
+
+func (q Querier) Params(ctx context.Context, request *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {
+	return nil, nil
 }

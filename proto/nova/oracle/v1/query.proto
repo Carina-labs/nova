@@ -36,7 +36,7 @@ message QueryStateResponse {
     (gogoproto.moretags) = "yaml:\"coin\"",
     (gogoproto.nullable) = false
   ];
-  uint64 total_staked_balance = 2 [ (gogoproto.moretags) = "yaml:\"total_staked_balance\"" ];
+  string operator = 2 [ (gogoproto.moretags) = "yaml:\"operator\"" ];
   uint64 decimal = 3 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
   uint64 last_block_height = 4 [ (gogoproto.moretags) = "yaml:\"last_block_height\"" ];
 }
