@@ -3,10 +3,28 @@ package keeper_test
 import "math/big"
 
 func (suite *KeeperTestSuite) TestCalculateMintAmount() {
-	userDepositAmt := big.NewInt(1000)
-	totalShareTokenSupply := big.NewInt(10000)
-	totalStakedAmount := big.NewInt(1000000)
 
-	res := suite.App.GalKeeper.CalculateMintAmount(userDepositAmt, totalShareTokenSupply, totalStakedAmount)
-	suite.Equal(int64(10), res.Int64())
+	tcs := []struct {
+		userDepositAmt        int64
+		totalShareTokenSupply int64 ``
+		totalStakedAmount     int64
+		expected              int64
+	}{
+		{
+			userDepositAmt:        950 * 1000000,
+			totalShareTokenSupply: 900000000 * 1000000,
+			totalStakedAmount:     2500000 * 1000000,
+			expected:              342000 * 1000000,
+		},
+	}
+
+	for _, tc := range tcs {
+		userDepositAmt := big.NewInt(tc.userDepositAmt)
+		totalShareTokenSupply := big.NewInt(tc.totalShareTokenSupply)
+		totalStakedAmount := big.NewInt(tc.totalStakedAmount)
+
+		res := suite.App.GalKeeper.CalculateMintAmount(userDepositAmt, totalShareTokenSupply, totalStakedAmount)
+		println(res.Int64() / 1000000)
+		suite.Equal(tc.expected, res.Int64())
+	}
 }
