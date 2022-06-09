@@ -33,8 +33,9 @@ func GetStateCmd() *cobra.Command {
 			chainDenom := args[0]
 			queryClient := types.NewQueryClient(clientCtx)
 			ctx := cmd.Context()
-			params := types.NewQueryChainStateRequest(chainDenom)
-			res, err := queryClient.State(ctx, params)
+			
+			msg := types.NewQueryChainStateRequest(chainDenom)
+			res, err := queryClient.State(ctx, msg)
 			if err != nil {
 				return err
 			}

@@ -10,12 +10,20 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+var (
+	fooDenom     = "uatom"
+	invalidDenom = "invalid_denom"
+	fooOperator  = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+)
+
 type KeeperTestSuite struct {
 	apptesting.KeeperTestHelper
+	queryClient types.QueryClient
 }
 
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
+	suite.queryClient = types.NewQueryClient(suite.QueryHelper)
 }
 
 func TestKeeperTestSuite(t *testing.T) {
@@ -24,12 +32,10 @@ func TestKeeperTestSuite(t *testing.T) {
 
 func (suite *KeeperTestSuite) TestUpdateChainState() {
 	oracleKeeper := suite.App.OracleKeeper
-	pk := ed25519.GenPrivKey().PubKey()
-	operator := sdk.AccAddress(pk.Address())
 
 	chainInfo := types.ChainInfo{
-		ChainDenom:         "atom",
-		OperatorAddress:    operator.String(),
+		ChainDenom:         fooDenom,
+		OperatorAddress:    fooOperator.String(),
 		LastBlockHeight:    10,
 		TotalStakedBalance: 1000000000,
 		Decimal:            6,
@@ -45,64 +51,66 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		{
 			name: "no operator",
 			chainInfo: types.ChainInfo{
-				ChainDenom:         "atom",
-				OperatorAddress:    operator.String(),
+				ChainDenom:         fooDenom,
+				OperatorAddress:    fooOperator.String(),
 				LastBlockHeight:    10,
 				TotalStakedBalance: 1000000000,
 				Decimal:            6,
 			},
-			queryDenom: "atom",
+			queryDenom: fooDenom,
 			operator:   nil,
 			wantErr:    true,
 		},
 		{
 			name: "no data with incorrect query",
 			chainInfo: types.ChainInfo{
-				ChainDenom:         "atom",
-				OperatorAddress:    operator.String(),
+				ChainDenom:         fooDenom,
+				OperatorAddress:    fooOperator.String(),
 				LastBlockHeight:    10,
 				TotalStakedBalance: 1000000000,
 				Decimal:            6,
 			},
-			queryDenom: "nova",
-			operator:   &operator,
+			queryDenom: invalidDenom,
+			operator:   &fooOperator,
 			wantErr:    true,
 		},
 		{
 			name: "should success",
 			chainInfo: types.ChainInfo{
-				ChainDenom:         "atom",
-				OperatorAddress:    operator.String(),
+				ChainDenom:         fooDenom,
+				OperatorAddress:    fooOperator.String(),
 				LastBlockHeight:    10,
 				TotalStakedBalance: 1000000000,
 				Decimal:            6,
 			},
-			queryDenom: "atom",
-			operator:   &operator,
+			queryDenom: fooDenom,
+			operator:   &fooOperator,
 			wantErr:    false,
 		},
 	}
 
 	for _, tt := range tests {
-		if tt.operator != nil {
-			oracleKeeper.SetParams(suite.Ctx, types.Params{
-				OracleOperators: []string{tt.operator.String()},
-			})
-		}
+		suite.Run(tt.name, func() {
+			if tt.operator != nil {
+				oracleKeeper.SetParams(suite.Ctx, types.Params{
+					OracleOperators: []string{tt.operator.String()},
+				})
+			}
 
-		err := oracleKeeper.UpdateChainState(suite.Ctx, &chainInfo)
-		if tt.operator == nil && tt.wantErr {
-			suite.Require().NotNil(err, "[%s] error expected but no error found", tt.name)
-			continue
-		}
-		suite.Require().NoError(err)
-
-		got, err := oracleKeeper.GetChainState(suite.Ctx, tt.queryDenom)
-		if tt.wantErr {
-			suite.Require().NotNil(err, "[%s] error expected but no error found", tt.name)
-		} else {
+			err := oracleKeeper.UpdateChainState(suite.Ctx, &chainInfo)
+			if tt.operator == nil && tt.wantErr {
+				suite.Require().NotNil(err, "[%s] error expected but no error found", tt.name)
+				return
+			}
 			suite.Require().NoError(err)
-			suite.Require().Equal(&chainInfo, got)
-		}
+
+			got, err := oracleKeeper.GetChainState(suite.Ctx, tt.queryDenom)
+			if tt.wantErr {
+				suite.Require().NotNil(err, "[%s] error expected but no error found", tt.name)
+			} else {
+				suite.Require().NoError(err)
+				suite.Require().Equal(&chainInfo, got)
+			}
+		})
 	}
 }
