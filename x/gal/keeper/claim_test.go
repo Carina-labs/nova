@@ -6,7 +6,7 @@ func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 
 	tcs := []struct {
 		userDepositAmt        int64
-		totalShareTokenSupply int64 ``
+		totalShareTokenSupply int64
 		totalStakedAmount     int64
 		expected              int64
 	}{
@@ -15,6 +15,12 @@ func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 			totalShareTokenSupply: 900000000 * 1000000,
 			totalStakedAmount:     2500000 * 1000000,
 			expected:              342000 * 1000000,
+		},
+		{
+			userDepositAmt:        123 * 1000000,
+			totalShareTokenSupply: 871312859 * 1000000,
+			totalStakedAmount:     2159872 * 1000000,
+			expected:              49619367099,
 		},
 	}
 
