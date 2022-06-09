@@ -1,6 +1,9 @@
 syntax = "proto3";
 package nova.oracle.v1;
 
+import "cosmos/base/v1beta1/coin.proto";
+import "gogoproto/gogo.proto";
+
 option go_package = "github.com/Carina-labs/nova/x/oracle/types";
 
 service Msg {
@@ -8,13 +11,16 @@ service Msg {
 }
 
 message MsgUpdateChainState {
-  string operator = 1;
-  string chain_denom = 2;
-  uint64 total_staked_balance = 3;
-  uint64 decimal = 4;
-  uint64 block_height = 5;
+  cosmos.base.v1beta1.Coin coin = 1 [
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.moretags) = "yaml:\"coin\"",
+    (gogoproto.nullable) = false
+  ];
+  string operator = 2 [ (gogoproto.moretags) = "yaml:\"operator\"" ];
+  uint64 decimal = 3 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
+  uint64 block_height = 4 [ (gogoproto.moretags) = "yaml:\"block_height\"" ];
 }
 
 message MsgUpdateChainStateResponse {
-  bool success = 1;
+  bool success = 1 [ (gogoproto.moretags) = "yaml:\"success\"" ];
 }

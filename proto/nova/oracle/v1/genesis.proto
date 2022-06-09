@@ -2,6 +2,8 @@ syntax = "proto3";
 package nova.oracle.v1;
 
 import "nova/oracle/v1/params.proto";
+
+import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/oracle/types";
@@ -15,18 +17,19 @@ message GenesisState {
 }
 
 message ChainInfo {
-  // chain_denom defines the denom of host chain's native currency.
-  string chain_denom = 1;
+  // coin is total staked asset on the host chain.
+  cosmos.base.v1beta1.Coin coin = 1 [
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.moretags) = "yaml:\"coin\"",
+    (gogoproto.nullable) = false
+  ];
 
   // operator_address is an oracle operator's address
-  string operator_address = 2;
+  string operator_address = 2 [ (gogoproto.moretags) = "yaml:\"operator_address\"" ];
 
   // last_block_height is the block height observed by the operator on the host chain.
-  uint64 last_block_height = 3;
-
-  // total_staked_balance is total staked asset on the host chain.
-  uint64 total_staked_balance = 5;
+  uint64 last_block_height = 3 [ (gogoproto.moretags) = "yaml:\"last_block_height\"" ];
 
   // decimal of the native currency in host chain.
-  uint64 decimal = 6;
+  uint64 decimal = 4 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
 }
