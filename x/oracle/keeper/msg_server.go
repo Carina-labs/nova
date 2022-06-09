@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+
 	"github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -14,10 +15,6 @@ type msgServer struct {
 
 func (m msgServer) UpdateChainState(ctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
 	goCtx := sdk.UnwrapSDKContext(ctx)
-
-	if err := state.ValidateBasic(); err != nil {
-		return nil, err
-	}
 
 	if err := m.keeper.UpdateChainState(goCtx, &types.ChainInfo{
 		ChainDenom:         state.ChainDenom,
@@ -42,8 +39,8 @@ func (m msgServer) GetChainState(ctx context.Context, request *types.QueryStateR
 
 	return &types.QueryStateResponse{
 		TotalStakedBalance: result.TotalStakedBalance,
-		Decimal: result.Decimal,
-		LastBlockHeight: result.LastBlockHeight,
+		Decimal:            result.Decimal,
+		LastBlockHeight:    result.LastBlockHeight,
 	}, nil
 }
 
