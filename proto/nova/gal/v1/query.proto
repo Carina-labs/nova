@@ -39,7 +39,8 @@ message QueryCacheDepositAmountRequest {
 // QuerySharesResponse defines response of QueryBalanceRequest.
 message QueryCachedDepositAmountResponse {
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  int64 amount = 2;
+  string denom = 2;
+  int64 amount = 3;
 }
 
 message QueryAllSharesRequest {
