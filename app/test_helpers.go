@@ -142,27 +142,27 @@ func SetupWithGenesisValSet(t *testing.T, valSet *tmtypes.ValidatorSet, genAccs 
 	return app
 }
 
-//func Setup(isCheckTx bool) *NovaApp {
-//	app, genesisState := setup(!isCheckTx, 5)
-//	if !isCheckTx {
-//		// init chain must be called to stop deliverState from being nil
-//		stateBytes, err := json.MarshalIndent(genesisState, "", " ")
-//		if err != nil {
-//			panic(err)
-//		}
-//
-//		// Initialize the chain
-//		app.InitChain(
-//			abci.RequestInitChain{
-//				Validators:      []abci.ValidatorUpdate{},
-//				ConsensusParams: simapp.DefaultConsensusParams,
-//				AppStateBytes:   stateBytes,
-//			},
-//		)
-//	}
-//
-//	return app
-//}
+func Setup(isCheckTx bool) *NovaApp {
+	app, genesisState := setup(!isCheckTx, 5)
+	if !isCheckTx {
+		// init chain must be called to stop deliverState from being nil
+		stateBytes, err := json.MarshalIndent(genesisState, "", " ")
+		if err != nil {
+			panic(err)
+		}
+
+		// Initialize the chain
+		app.InitChain(
+			abci.RequestInitChain{
+				Validators:      []abci.ValidatorUpdate{},
+				ConsensusParams: simapp.DefaultConsensusParams,
+				AppStateBytes:   stateBytes,
+			},
+		)
+	}
+
+	return app
+}
 
 func setup(withGenesis bool, invCheckPeriod uint) (*NovaApp, GenesisState) {
 	db := dbm.NewMemDB()

@@ -2,6 +2,8 @@ package keeper
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -74,9 +76,20 @@ func (k Keeper) CalculateShares(ctx sdk.Context,
 	return float64(shares * 100), nil
 }
 
-func (k Keeper) getPairSnToken(ctx sdk.Context, denom string) (stTokenDenom string) {
-	k.paramSpace.Get(ctx, types.KeyWhiteListedTokenDenoms, &stTokenDenom)
-	return
+func (k Keeper) getPairSnToken(ctx sdk.Context, denom string) (string, error) {
+	data := make(map[string]string)
+	k.paramSpace.Get(ctx, types.KeyWhiteListedTokenDenoms, &data)
+	if _, ok := data[denom]; !ok {
+		return "", errors.New(fmt.Sprintf("%s is not in white list", denom))
+	}
+
+	return data[denom], nil
+}
+
+func (k Keeper) SetPairToken(ctx sdk.Context, denom string, shareTokenDenom string) {
+	data := make(map[string]string)
+	data[denom] = shareTokenDenom
+	k.paramSpace.Set(ctx, types.KeyWhiteListedTokenDenoms, data)
 }
 
 func (k Keeper) Share(context context.Context, rq *types.QuerySharesRequest) (*types.QuerySharesResponse, error) {

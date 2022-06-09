@@ -220,7 +220,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appKeepers.BankKeeper, appKeepers.AccountKeeper,
 		*appKeepers.IntertxKeeper,
 		transferKeeper,
-		*appKeepers.OracleKeeper,
+		oracleKeeper,
 	)
 	appKeepers.GalKeeper = &galKeeper
 
@@ -329,6 +329,7 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 	paramsKeeper.Subspace(intertxtypes.ModuleName)
 	paramsKeeper.Subspace(oracle.ModuleName)
 	paramsKeeper.Subspace(gal.ModuleName)
+	paramsKeeper.Subspace(oracle.ModuleName)
 
 	return paramsKeeper
 }
