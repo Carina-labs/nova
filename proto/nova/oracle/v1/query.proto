@@ -1,22 +1,42 @@
 syntax = "proto3";
 package nova.oracle.v1;
 
+import "cosmos/base/v1beta1/coin.proto";
 import "google/api/annotations.proto";
+import "gogoproto/gogo.proto";
+
+import "nova/oracle/v1/params.proto";
+
 
 option go_package = "github.com/Carina-labs/nova/x/oracle/types";
 
 service Query {
+  // Params returns the total set of minting parameters.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/nova/oracle/v1/params";
+  }
+
   rpc State(QueryStateRequest) returns (QueryStateResponse) {
     option (google.api.http).get = "/nova/oracle/v1/state";
   }
 }
 
-message QueryStateRequest {
-  string chain_denom = 1;
+message QueryParamsRequest {}
+message QueryParamsResponse {
+  // params defines the parameters of the module.
+  Params params = 1 [ (gogoproto.nullable) = false ];
 }
 
+message QueryStateRequest {
+  string chain_denom = 1 [ (gogoproto.moretags) = "yaml:\"chain_denom\"" ];
+}
 message QueryStateResponse {
-  uint64 total_staked_balance = 1;
-  uint64 decimal = 2;
-  uint64 last_block_height = 3;
+  cosmos.base.v1beta1.Coin coin = 1 [
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.moretags) = "yaml:\"coin\"",
+    (gogoproto.nullable) = false
+  ];
+  uint64 total_staked_balance = 2 [ (gogoproto.moretags) = "yaml:\"total_staked_balance\"" ];
+  uint64 decimal = 3 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
+  uint64 last_block_height = 4 [ (gogoproto.moretags) = "yaml:\"last_block_height\"" ];
 }
