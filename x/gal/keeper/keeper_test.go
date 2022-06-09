@@ -63,34 +63,6 @@ func (suite *KeeperTestSuite) setRandomState() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestGetShares() {
-	tcs := []struct {
-		expected int64
-	}{
-		{
-			expected: 2,
-		},
-		{
-			expected: 2,
-		},
-		{
-			expected: 2,
-		},
-		{
-			expected: 2,
-		},
-		{
-			expected: 2,
-		},
-	}
-
-	for i, tc := range tcs {
-		shares, err := suite.App.GalKeeper.GetCachedDepositAmt(suite.Ctx, suite.TestAccs[i])
-		suite.NoError(err)
-		suite.Equal(tc.expected, shares.Amount)
-	}
-}
-
 func (suite *KeeperTestSuite) TestDepositCoins() {
 	appChainA, ctxA := suite.chainA.App, suite.chainA.GetContext() //source channel
 	appChainB, ctxB := suite.chainB.App, suite.chainB.GetContext() //dest channel
