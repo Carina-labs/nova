@@ -19,10 +19,10 @@ var (
 	md_MsgRegisterZone                   protoreflect.MessageDescriptor
 	fd_MsgRegisterZone_zone_name         protoreflect.FieldDescriptor
 	fd_MsgRegisterZone_chain_id          protoreflect.FieldDescriptor
-	fd_MsgRegisterZone_connection_id     protoreflect.FieldDescriptor
-	fd_MsgRegisterZone_owner_address     protoreflect.FieldDescriptor
+	fd_MsgRegisterZone_ica_info          protoreflect.FieldDescriptor
+	fd_MsgRegisterZone_transfer_info     protoreflect.FieldDescriptor
 	fd_MsgRegisterZone_validator_address protoreflect.FieldDescriptor
-	fd_MsgRegisterZone_denom             protoreflect.FieldDescriptor
+	fd_MsgRegisterZone_base_denom        protoreflect.FieldDescriptor
 	fd_MsgRegisterZone_authz_address     protoreflect.FieldDescriptor
 )
 
@@ -31,10 +31,10 @@ func init() {
 	md_MsgRegisterZone = File_nova_intertx_v1_tx_proto.Messages().ByName("MsgRegisterZone")
 	fd_MsgRegisterZone_zone_name = md_MsgRegisterZone.Fields().ByName("zone_name")
 	fd_MsgRegisterZone_chain_id = md_MsgRegisterZone.Fields().ByName("chain_id")
-	fd_MsgRegisterZone_connection_id = md_MsgRegisterZone.Fields().ByName("connection_id")
-	fd_MsgRegisterZone_owner_address = md_MsgRegisterZone.Fields().ByName("owner_address")
+	fd_MsgRegisterZone_ica_info = md_MsgRegisterZone.Fields().ByName("ica_info")
+	fd_MsgRegisterZone_transfer_info = md_MsgRegisterZone.Fields().ByName("transfer_info")
 	fd_MsgRegisterZone_validator_address = md_MsgRegisterZone.Fields().ByName("validator_address")
-	fd_MsgRegisterZone_denom = md_MsgRegisterZone.Fields().ByName("denom")
+	fd_MsgRegisterZone_base_denom = md_MsgRegisterZone.Fields().ByName("base_denom")
 	fd_MsgRegisterZone_authz_address = md_MsgRegisterZone.Fields().ByName("authz_address")
 }
 
@@ -115,15 +115,15 @@ func (x *fastReflection_MsgRegisterZone) Range(f func(protoreflect.FieldDescript
 			return
 		}
 	}
-	if x.ConnectionId != "" {
-		value := protoreflect.ValueOfString(x.ConnectionId)
-		if !f(fd_MsgRegisterZone_connection_id, value) {
+	if x.IcaInfo != nil {
+		value := protoreflect.ValueOfMessage(x.IcaInfo.ProtoReflect())
+		if !f(fd_MsgRegisterZone_ica_info, value) {
 			return
 		}
 	}
-	if x.OwnerAddress != "" {
-		value := protoreflect.ValueOfString(x.OwnerAddress)
-		if !f(fd_MsgRegisterZone_owner_address, value) {
+	if x.TransferInfo != nil {
+		value := protoreflect.ValueOfMessage(x.TransferInfo.ProtoReflect())
+		if !f(fd_MsgRegisterZone_transfer_info, value) {
 			return
 		}
 	}
@@ -133,9 +133,9 @@ func (x *fastReflection_MsgRegisterZone) Range(f func(protoreflect.FieldDescript
 			return
 		}
 	}
-	if x.Denom != "" {
-		value := protoreflect.ValueOfString(x.Denom)
-		if !f(fd_MsgRegisterZone_denom, value) {
+	if x.BaseDenom != "" {
+		value := protoreflect.ValueOfString(x.BaseDenom)
+		if !f(fd_MsgRegisterZone_base_denom, value) {
 			return
 		}
 	}
@@ -164,14 +164,14 @@ func (x *fastReflection_MsgRegisterZone) Has(fd protoreflect.FieldDescriptor) bo
 		return x.ZoneName != ""
 	case "nova.intertx.v1.MsgRegisterZone.chain_id":
 		return x.ChainId != ""
-	case "nova.intertx.v1.MsgRegisterZone.connection_id":
-		return x.ConnectionId != ""
-	case "nova.intertx.v1.MsgRegisterZone.owner_address":
-		return x.OwnerAddress != ""
+	case "nova.intertx.v1.MsgRegisterZone.ica_info":
+		return x.IcaInfo != nil
+	case "nova.intertx.v1.MsgRegisterZone.transfer_info":
+		return x.TransferInfo != nil
 	case "nova.intertx.v1.MsgRegisterZone.validator_address":
 		return x.ValidatorAddress != ""
-	case "nova.intertx.v1.MsgRegisterZone.denom":
-		return x.Denom != ""
+	case "nova.intertx.v1.MsgRegisterZone.base_denom":
+		return x.BaseDenom != ""
 	case "nova.intertx.v1.MsgRegisterZone.authz_address":
 		return x.AuthzAddress != ""
 	default:
@@ -194,14 +194,14 @@ func (x *fastReflection_MsgRegisterZone) Clear(fd protoreflect.FieldDescriptor) 
 		x.ZoneName = ""
 	case "nova.intertx.v1.MsgRegisterZone.chain_id":
 		x.ChainId = ""
-	case "nova.intertx.v1.MsgRegisterZone.connection_id":
-		x.ConnectionId = ""
-	case "nova.intertx.v1.MsgRegisterZone.owner_address":
-		x.OwnerAddress = ""
+	case "nova.intertx.v1.MsgRegisterZone.ica_info":
+		x.IcaInfo = nil
+	case "nova.intertx.v1.MsgRegisterZone.transfer_info":
+		x.TransferInfo = nil
 	case "nova.intertx.v1.MsgRegisterZone.validator_address":
 		x.ValidatorAddress = ""
-	case "nova.intertx.v1.MsgRegisterZone.denom":
-		x.Denom = ""
+	case "nova.intertx.v1.MsgRegisterZone.base_denom":
+		x.BaseDenom = ""
 	case "nova.intertx.v1.MsgRegisterZone.authz_address":
 		x.AuthzAddress = ""
 	default:
@@ -226,17 +226,17 @@ func (x *fastReflection_MsgRegisterZone) Get(descriptor protoreflect.FieldDescri
 	case "nova.intertx.v1.MsgRegisterZone.chain_id":
 		value := x.ChainId
 		return protoreflect.ValueOfString(value)
-	case "nova.intertx.v1.MsgRegisterZone.connection_id":
-		value := x.ConnectionId
-		return protoreflect.ValueOfString(value)
-	case "nova.intertx.v1.MsgRegisterZone.owner_address":
-		value := x.OwnerAddress
-		return protoreflect.ValueOfString(value)
+	case "nova.intertx.v1.MsgRegisterZone.ica_info":
+		value := x.IcaInfo
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "nova.intertx.v1.MsgRegisterZone.transfer_info":
+		value := x.TransferInfo
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	case "nova.intertx.v1.MsgRegisterZone.validator_address":
 		value := x.ValidatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.intertx.v1.MsgRegisterZone.denom":
-		value := x.Denom
+	case "nova.intertx.v1.MsgRegisterZone.base_denom":
+		value := x.BaseDenom
 		return protoreflect.ValueOfString(value)
 	case "nova.intertx.v1.MsgRegisterZone.authz_address":
 		value := x.AuthzAddress
@@ -265,14 +265,14 @@ func (x *fastReflection_MsgRegisterZone) Set(fd protoreflect.FieldDescriptor, va
 		x.ZoneName = value.Interface().(string)
 	case "nova.intertx.v1.MsgRegisterZone.chain_id":
 		x.ChainId = value.Interface().(string)
-	case "nova.intertx.v1.MsgRegisterZone.connection_id":
-		x.ConnectionId = value.Interface().(string)
-	case "nova.intertx.v1.MsgRegisterZone.owner_address":
-		x.OwnerAddress = value.Interface().(string)
+	case "nova.intertx.v1.MsgRegisterZone.ica_info":
+		x.IcaInfo = value.Message().Interface().(*IcaConnectionInfo)
+	case "nova.intertx.v1.MsgRegisterZone.transfer_info":
+		x.TransferInfo = value.Message().Interface().(*TransferConnectionInfo)
 	case "nova.intertx.v1.MsgRegisterZone.validator_address":
 		x.ValidatorAddress = value.Interface().(string)
-	case "nova.intertx.v1.MsgRegisterZone.denom":
-		x.Denom = value.Interface().(string)
+	case "nova.intertx.v1.MsgRegisterZone.base_denom":
+		x.BaseDenom = value.Interface().(string)
 	case "nova.intertx.v1.MsgRegisterZone.authz_address":
 		x.AuthzAddress = value.Interface().(string)
 	default:
@@ -295,18 +295,24 @@ func (x *fastReflection_MsgRegisterZone) Set(fd protoreflect.FieldDescriptor, va
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgRegisterZone) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "nova.intertx.v1.MsgRegisterZone.ica_info":
+		if x.IcaInfo == nil {
+			x.IcaInfo = new(IcaConnectionInfo)
+		}
+		return protoreflect.ValueOfMessage(x.IcaInfo.ProtoReflect())
+	case "nova.intertx.v1.MsgRegisterZone.transfer_info":
+		if x.TransferInfo == nil {
+			x.TransferInfo = new(TransferConnectionInfo)
+		}
+		return protoreflect.ValueOfMessage(x.TransferInfo.ProtoReflect())
 	case "nova.intertx.v1.MsgRegisterZone.zone_name":
 		panic(fmt.Errorf("field zone_name of message nova.intertx.v1.MsgRegisterZone is not mutable"))
 	case "nova.intertx.v1.MsgRegisterZone.chain_id":
 		panic(fmt.Errorf("field chain_id of message nova.intertx.v1.MsgRegisterZone is not mutable"))
-	case "nova.intertx.v1.MsgRegisterZone.connection_id":
-		panic(fmt.Errorf("field connection_id of message nova.intertx.v1.MsgRegisterZone is not mutable"))
-	case "nova.intertx.v1.MsgRegisterZone.owner_address":
-		panic(fmt.Errorf("field owner_address of message nova.intertx.v1.MsgRegisterZone is not mutable"))
 	case "nova.intertx.v1.MsgRegisterZone.validator_address":
 		panic(fmt.Errorf("field validator_address of message nova.intertx.v1.MsgRegisterZone is not mutable"))
-	case "nova.intertx.v1.MsgRegisterZone.denom":
-		panic(fmt.Errorf("field denom of message nova.intertx.v1.MsgRegisterZone is not mutable"))
+	case "nova.intertx.v1.MsgRegisterZone.base_denom":
+		panic(fmt.Errorf("field base_denom of message nova.intertx.v1.MsgRegisterZone is not mutable"))
 	case "nova.intertx.v1.MsgRegisterZone.authz_address":
 		panic(fmt.Errorf("field authz_address of message nova.intertx.v1.MsgRegisterZone is not mutable"))
 	default:
@@ -326,13 +332,15 @@ func (x *fastReflection_MsgRegisterZone) NewField(fd protoreflect.FieldDescripto
 		return protoreflect.ValueOfString("")
 	case "nova.intertx.v1.MsgRegisterZone.chain_id":
 		return protoreflect.ValueOfString("")
-	case "nova.intertx.v1.MsgRegisterZone.connection_id":
-		return protoreflect.ValueOfString("")
-	case "nova.intertx.v1.MsgRegisterZone.owner_address":
-		return protoreflect.ValueOfString("")
+	case "nova.intertx.v1.MsgRegisterZone.ica_info":
+		m := new(IcaConnectionInfo)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "nova.intertx.v1.MsgRegisterZone.transfer_info":
+		m := new(TransferConnectionInfo)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	case "nova.intertx.v1.MsgRegisterZone.validator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.intertx.v1.MsgRegisterZone.denom":
+	case "nova.intertx.v1.MsgRegisterZone.base_denom":
 		return protoreflect.ValueOfString("")
 	case "nova.intertx.v1.MsgRegisterZone.authz_address":
 		return protoreflect.ValueOfString("")
@@ -413,19 +421,19 @@ func (x *fastReflection_MsgRegisterZone) ProtoMethods() *protoiface.Methods {
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.ConnectionId)
-		if l > 0 {
+		if x.IcaInfo != nil {
+			l = options.Size(x.IcaInfo)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.OwnerAddress)
-		if l > 0 {
+		if x.TransferInfo != nil {
+			l = options.Size(x.TransferInfo)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		l = len(x.ValidatorAddress)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.Denom)
+		l = len(x.BaseDenom)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
@@ -469,10 +477,10 @@ func (x *fastReflection_MsgRegisterZone) ProtoMethods() *protoiface.Methods {
 			i--
 			dAtA[i] = 0x3a
 		}
-		if len(x.Denom) > 0 {
-			i -= len(x.Denom)
-			copy(dAtA[i:], x.Denom)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Denom)))
+		if len(x.BaseDenom) > 0 {
+			i -= len(x.BaseDenom)
+			copy(dAtA[i:], x.BaseDenom)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.BaseDenom)))
 			i--
 			dAtA[i] = 0x32
 		}
@@ -483,17 +491,31 @@ func (x *fastReflection_MsgRegisterZone) ProtoMethods() *protoiface.Methods {
 			i--
 			dAtA[i] = 0x2a
 		}
-		if len(x.OwnerAddress) > 0 {
-			i -= len(x.OwnerAddress)
-			copy(dAtA[i:], x.OwnerAddress)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.OwnerAddress)))
+		if x.TransferInfo != nil {
+			encoded, err := options.Marshal(x.TransferInfo)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
 			dAtA[i] = 0x22
 		}
-		if len(x.ConnectionId) > 0 {
-			i -= len(x.ConnectionId)
-			copy(dAtA[i:], x.ConnectionId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ConnectionId)))
+		if x.IcaInfo != nil {
+			encoded, err := options.Marshal(x.IcaInfo)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
 			dAtA[i] = 0x1a
 		}
@@ -626,9 +648,9 @@ func (x *fastReflection_MsgRegisterZone) ProtoMethods() *protoiface.Methods {
 				iNdEx = postIndex
 			case 3:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ConnectionId", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field IcaInfo", wireType)
 				}
-				var stringLen uint64
+				var msglen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -638,29 +660,33 @@ func (x *fastReflection_MsgRegisterZone) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					msglen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if msglen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + msglen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.ConnectionId = string(dAtA[iNdEx:postIndex])
+				if x.IcaInfo == nil {
+					x.IcaInfo = &IcaConnectionInfo{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.IcaInfo); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
 				iNdEx = postIndex
 			case 4:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TransferInfo", wireType)
 				}
-				var stringLen uint64
+				var msglen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -670,23 +696,27 @@ func (x *fastReflection_MsgRegisterZone) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					msglen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if msglen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + msglen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.OwnerAddress = string(dAtA[iNdEx:postIndex])
+				if x.TransferInfo == nil {
+					x.TransferInfo = &TransferConnectionInfo{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.TransferInfo); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
 				iNdEx = postIndex
 			case 5:
 				if wireType != 2 {
@@ -722,7 +752,7 @@ func (x *fastReflection_MsgRegisterZone) ProtoMethods() *protoiface.Methods {
 				iNdEx = postIndex
 			case 6:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Denom", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field BaseDenom", wireType)
 				}
 				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
@@ -750,7 +780,7 @@ func (x *fastReflection_MsgRegisterZone) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Denom = string(dAtA[iNdEx:postIndex])
+				x.BaseDenom = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 7:
 				if wireType != 2 {
@@ -3141,6 +3171,2036 @@ func (x *fastReflection_MsgIcaUndelegateResponse) ProtoMethods() *protoiface.Met
 	}
 }
 
+var (
+	md_MsgIcaAutoStaking                protoreflect.MessageDescriptor
+	fd_MsgIcaAutoStaking_zone_name      protoreflect.FieldDescriptor
+	fd_MsgIcaAutoStaking_sender_address protoreflect.FieldDescriptor
+	fd_MsgIcaAutoStaking_owner_address  protoreflect.FieldDescriptor
+	fd_MsgIcaAutoStaking_amount         protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_intertx_v1_tx_proto_init()
+	md_MsgIcaAutoStaking = File_nova_intertx_v1_tx_proto.Messages().ByName("MsgIcaAutoStaking")
+	fd_MsgIcaAutoStaking_zone_name = md_MsgIcaAutoStaking.Fields().ByName("zone_name")
+	fd_MsgIcaAutoStaking_sender_address = md_MsgIcaAutoStaking.Fields().ByName("sender_address")
+	fd_MsgIcaAutoStaking_owner_address = md_MsgIcaAutoStaking.Fields().ByName("owner_address")
+	fd_MsgIcaAutoStaking_amount = md_MsgIcaAutoStaking.Fields().ByName("amount")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgIcaAutoStaking)(nil)
+
+type fastReflection_MsgIcaAutoStaking MsgIcaAutoStaking
+
+func (x *MsgIcaAutoStaking) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaAutoStaking)(x)
+}
+
+func (x *MsgIcaAutoStaking) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_intertx_v1_tx_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgIcaAutoStaking_messageType fastReflection_MsgIcaAutoStaking_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaAutoStaking_messageType{}
+
+type fastReflection_MsgIcaAutoStaking_messageType struct{}
+
+func (x fastReflection_MsgIcaAutoStaking_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaAutoStaking)(nil)
+}
+func (x fastReflection_MsgIcaAutoStaking_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAutoStaking)
+}
+func (x fastReflection_MsgIcaAutoStaking_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAutoStaking
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgIcaAutoStaking) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAutoStaking
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgIcaAutoStaking) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaAutoStaking_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgIcaAutoStaking) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAutoStaking)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgIcaAutoStaking) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaAutoStaking)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgIcaAutoStaking) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneName != "" {
+		value := protoreflect.ValueOfString(x.ZoneName)
+		if !f(fd_MsgIcaAutoStaking_zone_name, value) {
+			return
+		}
+	}
+	if x.SenderAddress != "" {
+		value := protoreflect.ValueOfString(x.SenderAddress)
+		if !f(fd_MsgIcaAutoStaking_sender_address, value) {
+			return
+		}
+	}
+	if x.OwnerAddress != "" {
+		value := protoreflect.ValueOfString(x.OwnerAddress)
+		if !f(fd_MsgIcaAutoStaking_owner_address, value) {
+			return
+		}
+	}
+	if x.Amount != nil {
+		value := protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+		if !f(fd_MsgIcaAutoStaking_amount, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgIcaAutoStaking) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaAutoStaking.zone_name":
+		return x.ZoneName != ""
+	case "nova.intertx.v1.MsgIcaAutoStaking.sender_address":
+		return x.SenderAddress != ""
+	case "nova.intertx.v1.MsgIcaAutoStaking.owner_address":
+		return x.OwnerAddress != ""
+	case "nova.intertx.v1.MsgIcaAutoStaking.amount":
+		return x.Amount != nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStaking"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAutoStaking) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaAutoStaking.zone_name":
+		x.ZoneName = ""
+	case "nova.intertx.v1.MsgIcaAutoStaking.sender_address":
+		x.SenderAddress = ""
+	case "nova.intertx.v1.MsgIcaAutoStaking.owner_address":
+		x.OwnerAddress = ""
+	case "nova.intertx.v1.MsgIcaAutoStaking.amount":
+		x.Amount = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStaking"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgIcaAutoStaking) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.intertx.v1.MsgIcaAutoStaking.zone_name":
+		value := x.ZoneName
+		return protoreflect.ValueOfString(value)
+	case "nova.intertx.v1.MsgIcaAutoStaking.sender_address":
+		value := x.SenderAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.intertx.v1.MsgIcaAutoStaking.owner_address":
+		value := x.OwnerAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.intertx.v1.MsgIcaAutoStaking.amount":
+		value := x.Amount
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStaking"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStaking does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAutoStaking) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaAutoStaking.zone_name":
+		x.ZoneName = value.Interface().(string)
+	case "nova.intertx.v1.MsgIcaAutoStaking.sender_address":
+		x.SenderAddress = value.Interface().(string)
+	case "nova.intertx.v1.MsgIcaAutoStaking.owner_address":
+		x.OwnerAddress = value.Interface().(string)
+	case "nova.intertx.v1.MsgIcaAutoStaking.amount":
+		x.Amount = value.Message().Interface().(*v1beta1.Coin)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStaking"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAutoStaking) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaAutoStaking.amount":
+		if x.Amount == nil {
+			x.Amount = new(v1beta1.Coin)
+		}
+		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+	case "nova.intertx.v1.MsgIcaAutoStaking.zone_name":
+		panic(fmt.Errorf("field zone_name of message nova.intertx.v1.MsgIcaAutoStaking is not mutable"))
+	case "nova.intertx.v1.MsgIcaAutoStaking.sender_address":
+		panic(fmt.Errorf("field sender_address of message nova.intertx.v1.MsgIcaAutoStaking is not mutable"))
+	case "nova.intertx.v1.MsgIcaAutoStaking.owner_address":
+		panic(fmt.Errorf("field owner_address of message nova.intertx.v1.MsgIcaAutoStaking is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStaking"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgIcaAutoStaking) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaAutoStaking.zone_name":
+		return protoreflect.ValueOfString("")
+	case "nova.intertx.v1.MsgIcaAutoStaking.sender_address":
+		return protoreflect.ValueOfString("")
+	case "nova.intertx.v1.MsgIcaAutoStaking.owner_address":
+		return protoreflect.ValueOfString("")
+	case "nova.intertx.v1.MsgIcaAutoStaking.amount":
+		m := new(v1beta1.Coin)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStaking"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgIcaAutoStaking) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.intertx.v1.MsgIcaAutoStaking", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgIcaAutoStaking) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAutoStaking) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgIcaAutoStaking) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgIcaAutoStaking) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgIcaAutoStaking)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneName)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.SenderAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.OwnerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Amount != nil {
+			l = options.Size(x.Amount)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAutoStaking)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Amount != nil {
+			encoded, err := options.Marshal(x.Amount)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.OwnerAddress) > 0 {
+			i -= len(x.OwnerAddress)
+			copy(dAtA[i:], x.OwnerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.OwnerAddress)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.SenderAddress) > 0 {
+			i -= len(x.SenderAddress)
+			copy(dAtA[i:], x.SenderAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.SenderAddress)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneName) > 0 {
+			i -= len(x.ZoneName)
+			copy(dAtA[i:], x.ZoneName)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneName)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAutoStaking)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAutoStaking: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAutoStaking: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneName = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field SenderAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.SenderAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.OwnerAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Amount == nil {
+					x.Amount = &v1beta1.Coin{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgIcaAutoStakingResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_intertx_v1_tx_proto_init()
+	md_MsgIcaAutoStakingResponse = File_nova_intertx_v1_tx_proto.Messages().ByName("MsgIcaAutoStakingResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgIcaAutoStakingResponse)(nil)
+
+type fastReflection_MsgIcaAutoStakingResponse MsgIcaAutoStakingResponse
+
+func (x *MsgIcaAutoStakingResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaAutoStakingResponse)(x)
+}
+
+func (x *MsgIcaAutoStakingResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_intertx_v1_tx_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgIcaAutoStakingResponse_messageType fastReflection_MsgIcaAutoStakingResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaAutoStakingResponse_messageType{}
+
+type fastReflection_MsgIcaAutoStakingResponse_messageType struct{}
+
+func (x fastReflection_MsgIcaAutoStakingResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaAutoStakingResponse)(nil)
+}
+func (x fastReflection_MsgIcaAutoStakingResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAutoStakingResponse)
+}
+func (x fastReflection_MsgIcaAutoStakingResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAutoStakingResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAutoStakingResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaAutoStakingResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgIcaAutoStakingResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAutoStakingResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaAutoStakingResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStakingResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStakingResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStakingResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStakingResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStakingResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAutoStakingResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStakingResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgIcaAutoStakingResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaAutoStakingResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgIcaAutoStakingResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.intertx.v1.MsgIcaAutoStakingResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgIcaAutoStakingResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAutoStakingResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgIcaAutoStakingResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgIcaAutoStakingResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgIcaAutoStakingResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAutoStakingResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAutoStakingResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAutoStakingResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAutoStakingResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgIcaWithdraw                  protoreflect.MessageDescriptor
+	fd_MsgIcaWithdraw_zone_name        protoreflect.FieldDescriptor
+	fd_MsgIcaWithdraw_sender_address   protoreflect.FieldDescriptor
+	fd_MsgIcaWithdraw_owner_address    protoreflect.FieldDescriptor
+	fd_MsgIcaWithdraw_receiver_address protoreflect.FieldDescriptor
+	fd_MsgIcaWithdraw_amount           protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_intertx_v1_tx_proto_init()
+	md_MsgIcaWithdraw = File_nova_intertx_v1_tx_proto.Messages().ByName("MsgIcaWithdraw")
+	fd_MsgIcaWithdraw_zone_name = md_MsgIcaWithdraw.Fields().ByName("zone_name")
+	fd_MsgIcaWithdraw_sender_address = md_MsgIcaWithdraw.Fields().ByName("sender_address")
+	fd_MsgIcaWithdraw_owner_address = md_MsgIcaWithdraw.Fields().ByName("owner_address")
+	fd_MsgIcaWithdraw_receiver_address = md_MsgIcaWithdraw.Fields().ByName("receiver_address")
+	fd_MsgIcaWithdraw_amount = md_MsgIcaWithdraw.Fields().ByName("amount")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgIcaWithdraw)(nil)
+
+type fastReflection_MsgIcaWithdraw MsgIcaWithdraw
+
+func (x *MsgIcaWithdraw) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaWithdraw)(x)
+}
+
+func (x *MsgIcaWithdraw) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_intertx_v1_tx_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgIcaWithdraw_messageType fastReflection_MsgIcaWithdraw_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaWithdraw_messageType{}
+
+type fastReflection_MsgIcaWithdraw_messageType struct{}
+
+func (x fastReflection_MsgIcaWithdraw_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaWithdraw)(nil)
+}
+func (x fastReflection_MsgIcaWithdraw_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaWithdraw)
+}
+func (x fastReflection_MsgIcaWithdraw_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaWithdraw
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgIcaWithdraw) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaWithdraw
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgIcaWithdraw) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaWithdraw_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgIcaWithdraw) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaWithdraw)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgIcaWithdraw) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaWithdraw)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgIcaWithdraw) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneName != "" {
+		value := protoreflect.ValueOfString(x.ZoneName)
+		if !f(fd_MsgIcaWithdraw_zone_name, value) {
+			return
+		}
+	}
+	if x.SenderAddress != "" {
+		value := protoreflect.ValueOfString(x.SenderAddress)
+		if !f(fd_MsgIcaWithdraw_sender_address, value) {
+			return
+		}
+	}
+	if x.OwnerAddress != "" {
+		value := protoreflect.ValueOfString(x.OwnerAddress)
+		if !f(fd_MsgIcaWithdraw_owner_address, value) {
+			return
+		}
+	}
+	if x.ReceiverAddress != "" {
+		value := protoreflect.ValueOfString(x.ReceiverAddress)
+		if !f(fd_MsgIcaWithdraw_receiver_address, value) {
+			return
+		}
+	}
+	if x.Amount != nil {
+		value := protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+		if !f(fd_MsgIcaWithdraw_amount, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgIcaWithdraw) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaWithdraw.zone_name":
+		return x.ZoneName != ""
+	case "nova.intertx.v1.MsgIcaWithdraw.sender_address":
+		return x.SenderAddress != ""
+	case "nova.intertx.v1.MsgIcaWithdraw.owner_address":
+		return x.OwnerAddress != ""
+	case "nova.intertx.v1.MsgIcaWithdraw.receiver_address":
+		return x.ReceiverAddress != ""
+	case "nova.intertx.v1.MsgIcaWithdraw.amount":
+		return x.Amount != nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdraw"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaWithdraw) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaWithdraw.zone_name":
+		x.ZoneName = ""
+	case "nova.intertx.v1.MsgIcaWithdraw.sender_address":
+		x.SenderAddress = ""
+	case "nova.intertx.v1.MsgIcaWithdraw.owner_address":
+		x.OwnerAddress = ""
+	case "nova.intertx.v1.MsgIcaWithdraw.receiver_address":
+		x.ReceiverAddress = ""
+	case "nova.intertx.v1.MsgIcaWithdraw.amount":
+		x.Amount = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdraw"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgIcaWithdraw) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.intertx.v1.MsgIcaWithdraw.zone_name":
+		value := x.ZoneName
+		return protoreflect.ValueOfString(value)
+	case "nova.intertx.v1.MsgIcaWithdraw.sender_address":
+		value := x.SenderAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.intertx.v1.MsgIcaWithdraw.owner_address":
+		value := x.OwnerAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.intertx.v1.MsgIcaWithdraw.receiver_address":
+		value := x.ReceiverAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.intertx.v1.MsgIcaWithdraw.amount":
+		value := x.Amount
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdraw"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdraw does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaWithdraw) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaWithdraw.zone_name":
+		x.ZoneName = value.Interface().(string)
+	case "nova.intertx.v1.MsgIcaWithdraw.sender_address":
+		x.SenderAddress = value.Interface().(string)
+	case "nova.intertx.v1.MsgIcaWithdraw.owner_address":
+		x.OwnerAddress = value.Interface().(string)
+	case "nova.intertx.v1.MsgIcaWithdraw.receiver_address":
+		x.ReceiverAddress = value.Interface().(string)
+	case "nova.intertx.v1.MsgIcaWithdraw.amount":
+		x.Amount = value.Message().Interface().(*v1beta1.Coin)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdraw"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaWithdraw) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaWithdraw.amount":
+		if x.Amount == nil {
+			x.Amount = new(v1beta1.Coin)
+		}
+		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+	case "nova.intertx.v1.MsgIcaWithdraw.zone_name":
+		panic(fmt.Errorf("field zone_name of message nova.intertx.v1.MsgIcaWithdraw is not mutable"))
+	case "nova.intertx.v1.MsgIcaWithdraw.sender_address":
+		panic(fmt.Errorf("field sender_address of message nova.intertx.v1.MsgIcaWithdraw is not mutable"))
+	case "nova.intertx.v1.MsgIcaWithdraw.owner_address":
+		panic(fmt.Errorf("field owner_address of message nova.intertx.v1.MsgIcaWithdraw is not mutable"))
+	case "nova.intertx.v1.MsgIcaWithdraw.receiver_address":
+		panic(fmt.Errorf("field receiver_address of message nova.intertx.v1.MsgIcaWithdraw is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdraw"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgIcaWithdraw) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.intertx.v1.MsgIcaWithdraw.zone_name":
+		return protoreflect.ValueOfString("")
+	case "nova.intertx.v1.MsgIcaWithdraw.sender_address":
+		return protoreflect.ValueOfString("")
+	case "nova.intertx.v1.MsgIcaWithdraw.owner_address":
+		return protoreflect.ValueOfString("")
+	case "nova.intertx.v1.MsgIcaWithdraw.receiver_address":
+		return protoreflect.ValueOfString("")
+	case "nova.intertx.v1.MsgIcaWithdraw.amount":
+		m := new(v1beta1.Coin)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdraw"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgIcaWithdraw) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.intertx.v1.MsgIcaWithdraw", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgIcaWithdraw) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaWithdraw) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgIcaWithdraw) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgIcaWithdraw) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgIcaWithdraw)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneName)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.SenderAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.OwnerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ReceiverAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Amount != nil {
+			l = options.Size(x.Amount)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaWithdraw)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Amount != nil {
+			encoded, err := options.Marshal(x.Amount)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x2a
+		}
+		if len(x.ReceiverAddress) > 0 {
+			i -= len(x.ReceiverAddress)
+			copy(dAtA[i:], x.ReceiverAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ReceiverAddress)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.OwnerAddress) > 0 {
+			i -= len(x.OwnerAddress)
+			copy(dAtA[i:], x.OwnerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.OwnerAddress)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.SenderAddress) > 0 {
+			i -= len(x.SenderAddress)
+			copy(dAtA[i:], x.SenderAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.SenderAddress)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneName) > 0 {
+			i -= len(x.ZoneName)
+			copy(dAtA[i:], x.ZoneName)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneName)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaWithdraw)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaWithdraw: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaWithdraw: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneName = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field SenderAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.SenderAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.OwnerAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ReceiverAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ReceiverAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Amount == nil {
+					x.Amount = &v1beta1.Coin{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgIcaWithdrawResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_intertx_v1_tx_proto_init()
+	md_MsgIcaWithdrawResponse = File_nova_intertx_v1_tx_proto.Messages().ByName("MsgIcaWithdrawResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgIcaWithdrawResponse)(nil)
+
+type fastReflection_MsgIcaWithdrawResponse MsgIcaWithdrawResponse
+
+func (x *MsgIcaWithdrawResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaWithdrawResponse)(x)
+}
+
+func (x *MsgIcaWithdrawResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_intertx_v1_tx_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgIcaWithdrawResponse_messageType fastReflection_MsgIcaWithdrawResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaWithdrawResponse_messageType{}
+
+type fastReflection_MsgIcaWithdrawResponse_messageType struct{}
+
+func (x fastReflection_MsgIcaWithdrawResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaWithdrawResponse)(nil)
+}
+func (x fastReflection_MsgIcaWithdrawResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaWithdrawResponse)
+}
+func (x fastReflection_MsgIcaWithdrawResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaWithdrawResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgIcaWithdrawResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaWithdrawResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgIcaWithdrawResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaWithdrawResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgIcaWithdrawResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaWithdrawResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgIcaWithdrawResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaWithdrawResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgIcaWithdrawResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgIcaWithdrawResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdrawResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaWithdrawResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdrawResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgIcaWithdrawResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdrawResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdrawResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaWithdrawResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdrawResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaWithdrawResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdrawResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgIcaWithdrawResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.intertx.v1.MsgIcaWithdrawResponse"))
+		}
+		panic(fmt.Errorf("message nova.intertx.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgIcaWithdrawResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.intertx.v1.MsgIcaWithdrawResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgIcaWithdrawResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaWithdrawResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgIcaWithdrawResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgIcaWithdrawResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgIcaWithdrawResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaWithdrawResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaWithdrawResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaWithdrawResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaWithdrawResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -3160,13 +5220,13 @@ type MsgRegisterZone struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ZoneName         string `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
-	ChainId          string `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	ConnectionId     string `protobuf:"bytes,3,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
-	OwnerAddress     string `protobuf:"bytes,4,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
-	ValidatorAddress string `protobuf:"bytes,5,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
-	Denom            string `protobuf:"bytes,6,opt,name=denom,proto3" json:"denom,omitempty"`
-	AuthzAddress     string `protobuf:"bytes,7,opt,name=authz_address,json=authzAddress,proto3" json:"authz_address,omitempty"` //repeated string authz_permit = 8;
+	ZoneName         string                  `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
+	ChainId          string                  `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	IcaInfo          *IcaConnectionInfo      `protobuf:"bytes,3,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
+	TransferInfo     *TransferConnectionInfo `protobuf:"bytes,4,opt,name=transfer_info,json=transferInfo,proto3" json:"transfer_info,omitempty"`
+	ValidatorAddress string                  `protobuf:"bytes,5,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
+	BaseDenom        string                  `protobuf:"bytes,6,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
+	AuthzAddress     string                  `protobuf:"bytes,7,opt,name=authz_address,json=authzAddress,proto3" json:"authz_address,omitempty"` // repeated string authz_permit = 8;
 }
 
 func (x *MsgRegisterZone) Reset() {
@@ -3203,18 +5263,18 @@ func (x *MsgRegisterZone) GetChainId() string {
 	return ""
 }
 
-func (x *MsgRegisterZone) GetConnectionId() string {
+func (x *MsgRegisterZone) GetIcaInfo() *IcaConnectionInfo {
 	if x != nil {
-		return x.ConnectionId
+		return x.IcaInfo
 	}
-	return ""
+	return nil
 }
 
-func (x *MsgRegisterZone) GetOwnerAddress() string {
+func (x *MsgRegisterZone) GetTransferInfo() *TransferConnectionInfo {
 	if x != nil {
-		return x.OwnerAddress
+		return x.TransferInfo
 	}
-	return ""
+	return nil
 }
 
 func (x *MsgRegisterZone) GetValidatorAddress() string {
@@ -3224,9 +5284,9 @@ func (x *MsgRegisterZone) GetValidatorAddress() string {
 	return ""
 }
 
-func (x *MsgRegisterZone) GetDenom() string {
+func (x *MsgRegisterZone) GetBaseDenom() string {
 	if x != nil {
-		return x.Denom
+		return x.BaseDenom
 	}
 	return ""
 }
@@ -3270,7 +5330,6 @@ type MsgIcaDelegate struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	//  RegisteredZone zone_name = 1;
 	ZoneName      string        `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
 	SenderAddress string        `protobuf:"bytes,2,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
 	OwnerAddress  string        `protobuf:"bytes,3,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
@@ -3436,6 +5495,184 @@ func (*MsgIcaUndelegateResponse) Descriptor() ([]byte, []int) {
 	return file_nova_intertx_v1_tx_proto_rawDescGZIP(), []int{5}
 }
 
+type MsgIcaAutoStaking struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneName      string        `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
+	SenderAddress string        `protobuf:"bytes,2,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
+	OwnerAddress  string        `protobuf:"bytes,3,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
+	Amount        *v1beta1.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
+}
+
+func (x *MsgIcaAutoStaking) Reset() {
+	*x = MsgIcaAutoStaking{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_intertx_v1_tx_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgIcaAutoStaking) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgIcaAutoStaking) ProtoMessage() {}
+
+// Deprecated: Use MsgIcaAutoStaking.ProtoReflect.Descriptor instead.
+func (*MsgIcaAutoStaking) Descriptor() ([]byte, []int) {
+	return file_nova_intertx_v1_tx_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *MsgIcaAutoStaking) GetZoneName() string {
+	if x != nil {
+		return x.ZoneName
+	}
+	return ""
+}
+
+func (x *MsgIcaAutoStaking) GetSenderAddress() string {
+	if x != nil {
+		return x.SenderAddress
+	}
+	return ""
+}
+
+func (x *MsgIcaAutoStaking) GetOwnerAddress() string {
+	if x != nil {
+		return x.OwnerAddress
+	}
+	return ""
+}
+
+func (x *MsgIcaAutoStaking) GetAmount() *v1beta1.Coin {
+	if x != nil {
+		return x.Amount
+	}
+	return nil
+}
+
+type MsgIcaAutoStakingResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgIcaAutoStakingResponse) Reset() {
+	*x = MsgIcaAutoStakingResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_intertx_v1_tx_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgIcaAutoStakingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgIcaAutoStakingResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgIcaAutoStakingResponse.ProtoReflect.Descriptor instead.
+func (*MsgIcaAutoStakingResponse) Descriptor() ([]byte, []int) {
+	return file_nova_intertx_v1_tx_proto_rawDescGZIP(), []int{7}
+}
+
+type MsgIcaWithdraw struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneName        string        `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
+	SenderAddress   string        `protobuf:"bytes,2,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
+	OwnerAddress    string        `protobuf:"bytes,3,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
+	ReceiverAddress string        `protobuf:"bytes,4,opt,name=receiver_address,json=receiverAddress,proto3" json:"receiver_address,omitempty"`
+	Amount          *v1beta1.Coin `protobuf:"bytes,5,opt,name=amount,proto3" json:"amount,omitempty"`
+}
+
+func (x *MsgIcaWithdraw) Reset() {
+	*x = MsgIcaWithdraw{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_intertx_v1_tx_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgIcaWithdraw) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgIcaWithdraw) ProtoMessage() {}
+
+// Deprecated: Use MsgIcaWithdraw.ProtoReflect.Descriptor instead.
+func (*MsgIcaWithdraw) Descriptor() ([]byte, []int) {
+	return file_nova_intertx_v1_tx_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *MsgIcaWithdraw) GetZoneName() string {
+	if x != nil {
+		return x.ZoneName
+	}
+	return ""
+}
+
+func (x *MsgIcaWithdraw) GetSenderAddress() string {
+	if x != nil {
+		return x.SenderAddress
+	}
+	return ""
+}
+
+func (x *MsgIcaWithdraw) GetOwnerAddress() string {
+	if x != nil {
+		return x.OwnerAddress
+	}
+	return ""
+}
+
+func (x *MsgIcaWithdraw) GetReceiverAddress() string {
+	if x != nil {
+		return x.ReceiverAddress
+	}
+	return ""
+}
+
+func (x *MsgIcaWithdraw) GetAmount() *v1beta1.Coin {
+	if x != nil {
+		return x.Amount
+	}
+	return nil
+}
+
+type MsgIcaWithdrawResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgIcaWithdrawResponse) Reset() {
+	*x = MsgIcaWithdrawResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_intertx_v1_tx_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgIcaWithdrawResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgIcaWithdrawResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgIcaWithdrawResponse.ProtoReflect.Descriptor instead.
+func (*MsgIcaWithdrawResponse) Descriptor() ([]byte, []int) {
+	return file_nova_intertx_v1_tx_proto_rawDescGZIP(), []int{9}
+}
+
 var File_nova_intertx_v1_tx_proto protoreflect.FileDescriptor
 
 var file_nova_intertx_v1_tx_proto_rawDesc = []byte{
@@ -3448,83 +5685,127 @@ var file_nova_intertx_v1_tx_proto_rawDesc = []byte{
 	0x76, 0x61, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65,
 	0x6e, 0x65, 0x73, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x63, 0x6f, 0x73,
 	0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31,
-	0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x9f, 0x02, 0x0a, 0x0f,
+	0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xd1, 0x02, 0x0a, 0x0f,
 	0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a, 0x6f, 0x6e, 0x65, 0x12,
 	0x1b, 0x0a, 0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08,
 	0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
-	0x63, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x3d, 0x0a, 0x0d, 0x63, 0x6f, 0x6e, 0x6e, 0x65,
-	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18,
-	0xf2, 0xde, 0x1f, 0x14, 0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x22, 0x52, 0x0c, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f,
-	0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f,
-	0x77, 0x6e, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x2b, 0x0a, 0x11, 0x76,
-	0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f,
-	0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x64, 0x65, 0x6e, 0x6f,
-	0x6d, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x12, 0x23,
-	0x0a, 0x0d, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18,
-	0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x41, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x3a, 0x08, 0x88, 0xa0, 0x1f, 0x00, 0xe8, 0xa0, 0x1f, 0x00, 0x22, 0x19, 0x0a,
-	0x17, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a, 0x6f, 0x6e, 0x65,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xb2, 0x01, 0x0a, 0x0e, 0x4d, 0x73, 0x67,
-	0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x7a,
-	0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
-	0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x65, 0x6e, 0x64,
-	0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0d, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12,
-	0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x41, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61,
-	0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42,
-	0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x18, 0x0a,
-	0x16, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xb4, 0x01, 0x0a, 0x10, 0x4d, 0x73, 0x67, 0x49,
-	0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09,
-	0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x65, 0x6e,
-	0x64, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x0d, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x41, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18,
-	0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62,
-	0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e,
-	0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x1a,
-	0x0a, 0x18, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61,
-	0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x99, 0x02, 0x0a, 0x03, 0x4d,
-	0x73, 0x67, 0x12, 0x5a, 0x0a, 0x0c, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a, 0x6f,
-	0x6e, 0x65, 0x12, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74,
-	0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72,
-	0x5a, 0x6f, 0x6e, 0x65, 0x1a, 0x28, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65,
-	0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74,
-	0x65, 0x72, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x57,
-	0x0a, 0x0b, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x1f, 0x2e,
+	0x63, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x3d, 0x0a, 0x08, 0x69, 0x63, 0x61, 0x5f, 0x69,
+	0x6e, 0x66, 0x6f, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
+	0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x63, 0x61, 0x43,
+	0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x07, 0x69,
+	0x63, 0x61, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x4c, 0x0a, 0x0d, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66,
+	0x65, 0x72, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e,
 	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e,
-	0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x27,
+	0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x0c, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72,
+	0x49, 0x6e, 0x66, 0x6f, 0x12, 0x2b, 0x0a, 0x11, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f,
+	0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x10, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x62, 0x61, 0x73, 0x65, 0x44, 0x65, 0x6e, 0x6f, 0x6d,
+	0x12, 0x23, 0x0a, 0x0d, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x41, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x3a, 0x08, 0x88, 0xa0, 0x1f, 0x00, 0xe8, 0xa0, 0x1f, 0x00, 0x22,
+	0x19, 0x0a, 0x17, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a, 0x6f,
+	0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xb2, 0x01, 0x0a, 0x0e, 0x4d,
+	0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a,
+	0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x65,
+	0x6e, 0x64, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0d, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x41,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
+	0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69,
+	0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22,
+	0x18, 0x0a, 0x16, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xb4, 0x01, 0x0a, 0x10, 0x4d, 0x73,
+	0x67, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x1b,
+	0x0a, 0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x73,
+	0x65, 0x6e, 0x64, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72,
+	0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
+	0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f,
+	0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
+	0x22, 0x1a, 0x0a, 0x18, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65,
+	0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xb5, 0x01, 0x0a,
+	0x11, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x6f, 0x53, 0x74, 0x61, 0x6b, 0x69,
+	0x6e, 0x67, 0x12, 0x1b, 0x0a, 0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x25, 0x0a, 0x0e, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x41,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f,
+	0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x6f,
+	0x77, 0x6e, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x37, 0x0a, 0x06, 0x61,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f,
+	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61,
+	0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d,
+	0x6f, 0x75, 0x6e, 0x74, 0x22, 0x1b, 0x0a, 0x19, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75,
+	0x74, 0x6f, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0xdd, 0x01, 0x0a, 0x0e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x12, 0x1b, 0x0a, 0x09, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x7a, 0x6f, 0x6e, 0x65, 0x4e, 0x61, 0x6d,
+	0x65, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x65, 0x6e, 0x64, 0x65,
+	0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x6f, 0x77, 0x6e, 0x65,
+	0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x29, 0x0a,
+	0x10, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65,
+	0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75,
+	0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
+	0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43,
+	0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
+	0x74, 0x22, 0x18, 0x0a, 0x16, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68, 0x64,
+	0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xd4, 0x03, 0x0a, 0x03,
+	0x4d, 0x73, 0x67, 0x12, 0x5a, 0x0a, 0x0c, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a,
+	0x6f, 0x6e, 0x65, 0x12, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72,
+	0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65,
+	0x72, 0x5a, 0x6f, 0x6e, 0x65, 0x1a, 0x28, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74,
+	0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73,
+	0x74, 0x65, 0x72, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x57, 0x0a, 0x0b, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x1f,
 	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31,
-	0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0d, 0x49, 0x63, 0x61, 0x55, 0x6e,
-	0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x21, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63,
-	0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x29, 0x2e, 0x6e, 0x6f,
-	0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
-	0x67, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb7, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x42, 0x07,
-	0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62,
-	0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f,
-	0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x6e, 0x74, 0x65, 0x72,
-	0x74, 0x78, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa, 0x02, 0x0f, 0x4e, 0x6f, 0x76,
-	0x61, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0f, 0x4e,
-	0x6f, 0x76, 0x61, 0x5c, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x5c, 0x56, 0x31, 0xe2, 0x02,
-	0x1b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x5c, 0x56, 0x31,
-	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4e,
-	0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x3a, 0x3a, 0x56, 0x31,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a,
+	0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76,
+	0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0d, 0x49, 0x63, 0x61, 0x55,
+	0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x21, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
+	0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49,
+	0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x29, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
+	0x73, 0x67, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x57, 0x0a, 0x0b, 0x49, 0x63, 0x61, 0x57, 0x69,
+	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e,
+	0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x57,
+	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x1a, 0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69,
+	0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61,
+	0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x60, 0x0a, 0x0e, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x6f, 0x53, 0x74, 0x61, 0x6b, 0x69,
+	0x6e, 0x67, 0x12, 0x22, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74,
+	0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x6f, 0x53,
+	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x1a, 0x2a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x6e,
+	0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41,
+	0x75, 0x74, 0x6f, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x42, 0xb7, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72,
+	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f,
+	0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x6e, 0x74, 0x65,
+	0x72, 0x74, 0x78, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x76, 0x31,
+	0xa2, 0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x74, 0x78, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x5c,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1b, 0x4e, 0x6f, 0x76,
+	0x61, 0x5c, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4e, 0x6f, 0x76, 0x61, 0x3a,
+	0x3a, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x74, 0x78, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3539,30 +5820,44 @@ func file_nova_intertx_v1_tx_proto_rawDescGZIP() []byte {
 	return file_nova_intertx_v1_tx_proto_rawDescData
 }
 
-var file_nova_intertx_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_nova_intertx_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_nova_intertx_v1_tx_proto_goTypes = []interface{}{
-	(*MsgRegisterZone)(nil),          // 0: nova.intertx.v1.MsgRegisterZone
-	(*MsgRegisterZoneResponse)(nil),  // 1: nova.intertx.v1.MsgRegisterZoneResponse
-	(*MsgIcaDelegate)(nil),           // 2: nova.intertx.v1.MsgIcaDelegate
-	(*MsgIcaDelegateResponse)(nil),   // 3: nova.intertx.v1.MsgIcaDelegateResponse
-	(*MsgIcaUndelegate)(nil),         // 4: nova.intertx.v1.MsgIcaUndelegate
-	(*MsgIcaUndelegateResponse)(nil), // 5: nova.intertx.v1.MsgIcaUndelegateResponse
-	(*v1beta1.Coin)(nil),             // 6: cosmos.base.v1beta1.Coin
+	(*MsgRegisterZone)(nil),           // 0: nova.intertx.v1.MsgRegisterZone
+	(*MsgRegisterZoneResponse)(nil),   // 1: nova.intertx.v1.MsgRegisterZoneResponse
+	(*MsgIcaDelegate)(nil),            // 2: nova.intertx.v1.MsgIcaDelegate
+	(*MsgIcaDelegateResponse)(nil),    // 3: nova.intertx.v1.MsgIcaDelegateResponse
+	(*MsgIcaUndelegate)(nil),          // 4: nova.intertx.v1.MsgIcaUndelegate
+	(*MsgIcaUndelegateResponse)(nil),  // 5: nova.intertx.v1.MsgIcaUndelegateResponse
+	(*MsgIcaAutoStaking)(nil),         // 6: nova.intertx.v1.MsgIcaAutoStaking
+	(*MsgIcaAutoStakingResponse)(nil), // 7: nova.intertx.v1.MsgIcaAutoStakingResponse
+	(*MsgIcaWithdraw)(nil),            // 8: nova.intertx.v1.MsgIcaWithdraw
+	(*MsgIcaWithdrawResponse)(nil),    // 9: nova.intertx.v1.MsgIcaWithdrawResponse
+	(*IcaConnectionInfo)(nil),         // 10: nova.intertx.v1.IcaConnectionInfo
+	(*TransferConnectionInfo)(nil),    // 11: nova.intertx.v1.TransferConnectionInfo
+	(*v1beta1.Coin)(nil),              // 12: cosmos.base.v1beta1.Coin
 }
 var file_nova_intertx_v1_tx_proto_depIdxs = []int32{
-	6, // 0: nova.intertx.v1.MsgIcaDelegate.amount:type_name -> cosmos.base.v1beta1.Coin
-	6, // 1: nova.intertx.v1.MsgIcaUndelegate.amount:type_name -> cosmos.base.v1beta1.Coin
-	0, // 2: nova.intertx.v1.Msg.RegisterZone:input_type -> nova.intertx.v1.MsgRegisterZone
-	2, // 3: nova.intertx.v1.Msg.IcaDelegate:input_type -> nova.intertx.v1.MsgIcaDelegate
-	4, // 4: nova.intertx.v1.Msg.IcaUndelegate:input_type -> nova.intertx.v1.MsgIcaUndelegate
-	1, // 5: nova.intertx.v1.Msg.RegisterZone:output_type -> nova.intertx.v1.MsgRegisterZoneResponse
-	3, // 6: nova.intertx.v1.Msg.IcaDelegate:output_type -> nova.intertx.v1.MsgIcaDelegateResponse
-	5, // 7: nova.intertx.v1.Msg.IcaUndelegate:output_type -> nova.intertx.v1.MsgIcaUndelegateResponse
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	10, // 0: nova.intertx.v1.MsgRegisterZone.ica_info:type_name -> nova.intertx.v1.IcaConnectionInfo
+	11, // 1: nova.intertx.v1.MsgRegisterZone.transfer_info:type_name -> nova.intertx.v1.TransferConnectionInfo
+	12, // 2: nova.intertx.v1.MsgIcaDelegate.amount:type_name -> cosmos.base.v1beta1.Coin
+	12, // 3: nova.intertx.v1.MsgIcaUndelegate.amount:type_name -> cosmos.base.v1beta1.Coin
+	12, // 4: nova.intertx.v1.MsgIcaAutoStaking.amount:type_name -> cosmos.base.v1beta1.Coin
+	12, // 5: nova.intertx.v1.MsgIcaWithdraw.amount:type_name -> cosmos.base.v1beta1.Coin
+	0,  // 6: nova.intertx.v1.Msg.RegisterZone:input_type -> nova.intertx.v1.MsgRegisterZone
+	2,  // 7: nova.intertx.v1.Msg.IcaDelegate:input_type -> nova.intertx.v1.MsgIcaDelegate
+	4,  // 8: nova.intertx.v1.Msg.IcaUndelegate:input_type -> nova.intertx.v1.MsgIcaUndelegate
+	8,  // 9: nova.intertx.v1.Msg.IcaWithdraw:input_type -> nova.intertx.v1.MsgIcaWithdraw
+	6,  // 10: nova.intertx.v1.Msg.IcaAutoStaking:input_type -> nova.intertx.v1.MsgIcaAutoStaking
+	1,  // 11: nova.intertx.v1.Msg.RegisterZone:output_type -> nova.intertx.v1.MsgRegisterZoneResponse
+	3,  // 12: nova.intertx.v1.Msg.IcaDelegate:output_type -> nova.intertx.v1.MsgIcaDelegateResponse
+	5,  // 13: nova.intertx.v1.Msg.IcaUndelegate:output_type -> nova.intertx.v1.MsgIcaUndelegateResponse
+	9,  // 14: nova.intertx.v1.Msg.IcaWithdraw:output_type -> nova.intertx.v1.MsgIcaWithdrawResponse
+	7,  // 15: nova.intertx.v1.Msg.IcaAutoStaking:output_type -> nova.intertx.v1.MsgIcaAutoStakingResponse
+	11, // [11:16] is the sub-list for method output_type
+	6,  // [6:11] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_nova_intertx_v1_tx_proto_init() }
@@ -3644,6 +5939,54 @@ func file_nova_intertx_v1_tx_proto_init() {
 				return nil
 			}
 		}
+		file_nova_intertx_v1_tx_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgIcaAutoStaking); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_intertx_v1_tx_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgIcaAutoStakingResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_intertx_v1_tx_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgIcaWithdraw); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_intertx_v1_tx_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgIcaWithdrawResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -3651,7 +5994,7 @@ func file_nova_intertx_v1_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_intertx_v1_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
