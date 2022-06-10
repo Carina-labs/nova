@@ -2,9 +2,6 @@ package keeper
 
 import (
 	"context"
-	"errors"
-	"fmt"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
@@ -60,30 +57,6 @@ func (k Keeper) MintShareTokens(ctx sdk.Context,
 	}
 
 	return nil
-}
-
-func (k Keeper) CalculateShares(ctx sdk.Context,
-	targetDenom string,
-	coin sdk.Coin) (float64, error) {
-	targetTotalSupply, err := k.oracleKeeper.GetChainState(ctx, targetDenom)
-	if err != nil {
-		return 0, err
-	}
-
-	amt := coin.Amount.Uint64()
-	shares := amt/amt + targetTotalSupply.TotalStakedBalance
-
-	return float64(shares * 100), nil
-}
-
-func (k Keeper) getPairSnToken(ctx sdk.Context, denom string) (string, error) {
-	data := make(map[string]string)
-	k.paramSpace.Get(ctx, types.KeyWhiteListedTokenDenoms, &data)
-	if _, ok := data[denom]; !ok {
-		return "", errors.New(fmt.Sprintf("%s is not in white list", denom))
-	}
-
-	return data[denom], nil
 }
 
 func (k Keeper) SetPairToken(ctx sdk.Context, denom string, shareTokenDenom string) {

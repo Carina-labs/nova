@@ -45,7 +45,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.path = path
 }
 
-func (suite *KeeperTestSuite) SetupTestOracle(msgs []*types2.MsgUpdateChainState) {
+func (suite *KeeperTestSuite) SetupTestOracle(msgs []*types2.ChainInfo) {
 	for _, msg := range msgs {
 		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, msg)
 		if err != nil {
