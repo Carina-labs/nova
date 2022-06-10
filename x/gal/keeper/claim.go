@@ -19,7 +19,7 @@ func (k Keeper) ClaimAndMint(ctx sdk.Context, claimer string, amt sdk.Coin) {
 		k.Logger(ctx).Error(err.Error())
 	}
 
-	mintAmt := k.CalculateMintAmount(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), big.NewInt(int64(totalStakedAmount.TotalStakedBalance)))
+	mintAmt := k.CalculateMintAmount(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
 
 	err = k.MintShareTokens(ctx, claimerAddr, sdk.NewCoin(stAsset, sdk.NewIntFromBigInt(mintAmt)))
 	if err != nil {

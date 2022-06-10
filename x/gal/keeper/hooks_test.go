@@ -9,12 +9,11 @@ import (
 )
 
 func (suite *KeeperTestSuite) TestAfterTransferEnd() {
-	suite.SetupTestOracle([]*types.MsgUpdateChainState{
+	suite.SetupTestOracle([]*types.ChainInfo{
 		{
-			ChainDenom:    "osmo",
-			StakedBalance: 1000000000,
-			Decimal:       6,
-			BlockHeight:   10000,
+			Coin:            sdk.NewInt64Coin("osmo", 1000000000),
+			Decimal:         6,
+			LastBlockHeight: 10000,
 		},
 	})
 
