@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	ChainIDPrefix   = "novatest"
+	ChainIDPrefix   = "test"
 	globalStartTime = time.Now().UTC()
 	TimeIncrement   = time.Second * 5
 )
@@ -38,6 +38,22 @@ func NewCoordinator(t *testing.T, n int) *Coordinator {
 	for i := 1; i <= n; i++ {
 		chainID := GetChainID(i)
 		chains[chainID] = NewTestChain(t, coord, chainID)
+	}
+	coord.Chains = chains
+
+	return coord
+}
+
+func NewCoordinatorWithChainState(t *testing.T, n int, chainState NovaTestState) *Coordinator {
+	chains := make(map[string]*TestChain)
+	coord := &Coordinator{
+		T:           t,
+		CurrentTime: globalStartTime,
+	}
+
+	for i := 1; i <= n; i++ {
+		chainID := GetChainID(i)
+		chains[chainID] = NewTestChainWithOptions(t, coord, chainID, chainState.testZoneStates[i-1])
 	}
 	coord.Chains = chains
 
