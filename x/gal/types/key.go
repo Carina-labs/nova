@@ -24,8 +24,8 @@ var (
 	KeyWithdrawRecordInfo = []byte{0x02}
 	// KeyUndelegateRecordInfo defines key to store undelegate record information of wAsset.
 	KeyUndelegateRecordInfo = []byte{0x03}
-	// KeywithdrawReceiptInfo defines key to store withdraw receipt information of wAsset.
-	KeywithdrawReceiptInfo = []byte{0x04}
+	// KeyWithdrawReceiptInfo defines key to store withdraw receipt information of wAsset.
+	KeyWithdrawReceiptInfo = []byte{0x04}
 	// KeyUndelegateReceiptInfo defines key to store undelegate receipt information of wAsset.
 	KeyUndelegateReceiptInfo = []byte{0x05}
 	// KeyShare defines key to store deposit information of snTokens.

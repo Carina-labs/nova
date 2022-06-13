@@ -72,7 +72,7 @@ message MsgUndelegateReceipt {
 message MsgUndelegateReceiptResponse{}
 
 message MsgWithdrawReceipt {
-  string zoen_id = 1;
+  string zone_id = 1;
   string withdrawer = 2;
   string recipient = 3;
   cosmos.base.v1beta1.Coin amount = 4
