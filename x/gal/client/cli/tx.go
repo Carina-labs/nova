@@ -23,7 +23,9 @@ func GetTxCmd() *cobra.Command {
 
 	cmd.AddCommand(
 		NewDepositCmd(),
-		NewWithdrawCmd(),
+		// NewWithdrawCmd(),
+		NewUndelegateRequestCmd(),
+		NewUndelegateCmd(),
 	)
 
 	return cmd
@@ -66,39 +68,101 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 	return cmd
 }
 
-func NewWithdrawCmd() *cobra.Command {
+func NewUndelegateRequestCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [to_key_or_address] [amount]",
-		Short: "Withdraw wrapped token to nova",
-		Long: `Withdraw bonded token to wrapped-native token.
-Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
-When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(0),
+		Use:  "undelegaterequest [zone-id] [depositor] [amount]",
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set("to", args[0]); err != nil {
-				return err
-			}
-
+			cmd.Flags().Set(flags.FlagFrom, args[1])
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			toAddr, err := sdk.AccAddressFromBech32(args[0])
+			zoneId := args[0]
+			depositor := args[1]
 			if err != nil {
 				return err
 			}
 
-			coins, err := sdk.ParseCoinsNormalized(args[1])
+			amount, err := sdk.ParseCoinNormalized(args[2])
 			if err != nil {
-				return err
+				panic("coin error")
 			}
 
-			msg := types.NewMsgWithdraw(toAddr, coins)
+			msg := types.NewMsgUndelegateRecord(zoneId, depositor, amount)
+
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
 }
+
+func NewUndelegateCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "undelegate [zone-id] [controller-address] [host-address]",
+		Args: cobra.ExactArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			cmd.Flags().Set(flags.FlagFrom, args[1])
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			controllerAddr := args[1]
+			hostAddr := args[2]
+
+			msg := types.NewMsgUndelegate(zoneId, controllerAddr, hostAddr)
+
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+// func NewWithdrawCmd() *cobra.Command {
+// 	cmd := &cobra.Command{
+// 		Use:   "withdraw [to_key_or_address] [amount]",
+// 		Short: "Withdraw wrapped token to nova",
+// 		Long: `Withdraw bonded token to wrapped-native token.
+// Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
+// When using '--dry-run' a key name cannot be used, only a bech32 address.`,
+// 		Args: cobra.ExactArgs(0),
+// 		RunE: func(cmd *cobra.Command, args []string) error {
+// 			cmd.Flags().Set("to", args[0])
+// 			clientCtx, err := client.GetClientTxContext(cmd)
+// 			if err != nil {
+// 				return err
+// 			}
+
+// 			toAddr, err := sdk.AccAddressFromBech32(args[0])
+// 			if err != nil {
+// 				return err
+// 			}
+
+// 			coins, err := sdk.ParseCoinsNormalized(args[1])
+// 			if err != nil {
+// 				return err
+// 			}
+
+// 			msg := types.NewMsgWithdraw(toAddr, coins)
+
+// 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+// 		},
+// 	}
+
+// 	return cmd
+// }

@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"fmt"
+
 	types3 "github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -26,7 +27,6 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 			BaseDenom:              "osmo",
 			SnDenom:                "snOsmo",
 			StDenom:                "stOsmo",
-			AuthzAddress:           "test",
 		},
 	)
 

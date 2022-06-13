@@ -191,11 +191,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	appKeepers.ICAHostKeeper = &icaHostKeeper
 
 	intertxKeeper := intertxkeeper.NewKeeper(appCodec, appKeepers.keys[intertxtypes.StoreKey], appKeepers.AccountKeeper, *appKeepers.ICAControllerKeeper, appKeepers.ScopedintertxKeeper, appKeepers.GetSubspace(intertxtypes.ModuleName))
-	appKeepers.IntertxKeeper = &intertxKeeper
-	intertxIBCModule := intertx.NewIBCModule(*appKeepers.IntertxKeeper)
-
-	icaControllerIBCModule := icacontroller.NewIBCModule(*appKeepers.ICAControllerKeeper, intertxIBCModule)
-	icaHostIBCModule := icahost.NewIBCModule(*appKeepers.ICAHostKeeper)
 
 	// Create Transfer Keepers
 	transferKeeper := ibctransferkeeper.NewKeeper(
@@ -218,7 +213,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appKeepers.keys[galtypes.StoreKey],
 		appKeepers.GetSubspace(galtypes.ModuleName),
 		appKeepers.BankKeeper, appKeepers.AccountKeeper,
-		*appKeepers.IntertxKeeper,
+		intertxKeeper,
 		transferKeeper,
 		oracleKeeper,
 	)
@@ -227,6 +222,15 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	appKeepers.TransferKeeper = transferKeeper.SetHooks(
 		ibctransfertypes.NewMultiTransferHooks(appKeepers.GalKeeper.Hooks()),
 	)
+
+	appKeepers.IntertxKeeper = intertxKeeper.SetHooks(
+		intertxtypes.NewMultiICAHooks(appKeepers.GalKeeper.IHooks()),
+	)
+
+	intertxIBCModule := intertx.NewIBCModule(*appKeepers.IntertxKeeper)
+
+	icaControllerIBCModule := icacontroller.NewIBCModule(*appKeepers.ICAControllerKeeper, intertxIBCModule)
+	icaHostIBCModule := icahost.NewIBCModule(*appKeepers.ICAHostKeeper)
 
 	transferIBCModule := transfer.NewIBCModule(*appKeepers.TransferKeeper)
 

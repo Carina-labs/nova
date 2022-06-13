@@ -2,15 +2,22 @@ package keeper
 
 import (
 	"context"
+	"errors"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
 var _ types.MsgServer = msgServer{}
 
 type msgServer struct {
 	keeper Keeper
+}
+
+// NewMsgServerImpl creates and returns a new types.MsgServer, fulfilling the intertx Msg service interface
+func NewMsgServerImpl(keeper Keeper) types.MsgServer {
+	return &msgServer{keeper: keeper}
 }
 
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
@@ -36,21 +43,96 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	return &types.MsgDepositResponse{}, nil
 }
 
-func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
+//denom : stAsset
+func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.MsgUndelegateRecord) (*types.MsgUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	withdrawerAddr, err := sdk.AccAddressFromBech32(withdraw.Withdrawer)
-	if err != nil {
-		return nil, err
+
+	// snAtom -> [GAL] -> wAtom
+	// change undelegate State
+	zoneInfo, found := m.keeper.interTxKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
+
+	if !found {
+		return nil, errors.New("zone not found")
 	}
 
-	if err := m.keeper.WithdrawCoin(ctx, withdrawerAddr, withdraw.Amount); err != nil {
-		return nil, err
+	undelegateInfo, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId+undelegate.Depositor)
+	if found {
+		undelegate.Amount = undelegate.Amount.Add(*undelegateInfo.Amount)
 	}
 
-	return &types.MsgWithdrawResponse{}, nil
+	amt := &sdk.Coin{
+		Denom:  zoneInfo.BaseDenom,
+		Amount: undelegate.Amount.Amount,
+	}
+
+	record := &types.UndelegateRecord{
+		ZoneId:    undelegate.ZoneId,
+		Delegator: undelegate.Depositor,
+		Amount:    amt,
+	}
+
+	m.keeper.SetUndelegateRecord(ctx, *record)
+
+	return &types.MsgUndelegateRecordResponse{}, nil
 }
 
-// NewMsgServerImpl creates and returns a new types.MsgServer, fulfilling the intertx Msg service interface
-func NewMsgServerImpl(keeper Keeper) types.MsgServer {
-	return &msgServer{keeper: keeper}
+func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	// burn stAsset
+	// if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
+	// 	sdk.Coins{sdk.Coin{Denom: undelegate.Amount.Denom, Amount: undelegate.Amount.Amount}}); err != nil {
+	// 	return nil, err
+	// }
+
+	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, msg.ZoneId)
+	if !ok {
+		return nil, errors.New("zone name is not found")
+	}
+
+	undelegateRecoreds := m.keeper.GetAllUndelegateRecord(ctx, msg.ZoneId)
+
+	m.keeper.ChangeUndelegateStatus(ctx, undelegateRecoreds)
+
+	amt := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, undelegateRecoreds)
+
+	var msgs []sdk.Msg
+
+	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: *amt})
+	err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+
+	if err != nil {
+		return nil, errors.New("IcaUnDelegate transaction failed to send")
+	}
+
+	return &types.MsgUndelegateResponse{}, nil
+}
+
+func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWithdrawRecord) (*types.MsgWithdrawRecordResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	// TODO
+
+	record := &types.WithdrawRecord{
+		ZoneId:         withdraw.ZoneId,
+		Withdrawer:     withdraw.Withdrawer,
+		Amount:         &withdraw.Amount,
+		CompletionTime: withdraw.Time,
+	}
+
+	m.keeper.SetWithdrawRecord(ctx, *record)
+
+	return &types.MsgWithdrawRecordResponse{}, nil
+}
+
+func (m msgServer) UndelegateReceipt(goCtx context.Context, msgUndelegateReceipt *types.MsgUndelegateReceipt) (*types.MsgUndelegateReceiptResponse, error) {
+	// TODO
+	return &types.MsgUndelegateReceiptResponse{}, nil
+}
+
+func (m msgServer) WithdrawReceipt(goCtx context.Context, withdrawReceipt *types.MsgWithdrawReceipt) (*types.MsgWithdrawReceiptResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	// TODO
+
+	m.keeper.SetWithdrawReceipt(ctx, *withdrawReceipt)
+	return &types.MsgWithdrawReceiptResponse{}, nil
 }
