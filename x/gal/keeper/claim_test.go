@@ -46,7 +46,7 @@ func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 		totalShareTokenSupply := big.NewInt(tc.totalShareTokenSupply)
 		totalStakedAmount := big.NewInt(tc.totalStakedAmount)
 
-		res := suite.App.GalKeeper.CalculateMintAmount(userDepositAmt, totalShareTokenSupply, totalStakedAmount)
+		res := suite.App.GalKeeper.CalculateAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount)
 		println(res.Int64())
 		suite.Equal(tc.expected, res.Int64())
 	}
