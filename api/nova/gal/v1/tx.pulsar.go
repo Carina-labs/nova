@@ -11,6 +11,7 @@ import (
 	protoiface "google.golang.org/protobuf/runtime/protoiface"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/known/anypb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	reflect "reflect"
 	sync "sync"
@@ -1058,79 +1059,30 @@ func (x *fastReflection_MsgDepositResponse) ProtoMethods() *protoiface.Methods {
 	}
 }
 
-var _ protoreflect.List = (*_MsgUnStaking_2_list)(nil)
-
-type _MsgUnStaking_2_list struct {
-	list *[]*v1beta1.Coin
-}
-
-func (x *_MsgUnStaking_2_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_MsgUnStaking_2_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
-}
-
-func (x *_MsgUnStaking_2_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_MsgUnStaking_2_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_MsgUnStaking_2_list) AppendMutable() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	*x.list = append(*x.list, v)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_MsgUnStaking_2_list) Truncate(n int) {
-	for i := n; i < len(*x.list); i++ {
-		(*x.list)[i] = nil
-	}
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_MsgUnStaking_2_list) NewElement() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_MsgUnStaking_2_list) IsValid() bool {
-	return x.list != nil
-}
-
 var (
-	md_MsgUnStaking           protoreflect.MessageDescriptor
-	fd_MsgUnStaking_depositor protoreflect.FieldDescriptor
-	fd_MsgUnStaking_amount    protoreflect.FieldDescriptor
+	md_MsgUndelegate                    protoreflect.MessageDescriptor
+	fd_MsgUndelegate_zone_id            protoreflect.FieldDescriptor
+	fd_MsgUndelegate_controller_address protoreflect.FieldDescriptor
+	fd_MsgUndelegate_host_address       protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_tx_proto_init()
-	md_MsgUnStaking = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUnStaking")
-	fd_MsgUnStaking_depositor = md_MsgUnStaking.Fields().ByName("depositor")
-	fd_MsgUnStaking_amount = md_MsgUnStaking.Fields().ByName("amount")
+	md_MsgUndelegate = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUndelegate")
+	fd_MsgUndelegate_zone_id = md_MsgUndelegate.Fields().ByName("zone_id")
+	fd_MsgUndelegate_controller_address = md_MsgUndelegate.Fields().ByName("controller_address")
+	fd_MsgUndelegate_host_address = md_MsgUndelegate.Fields().ByName("host_address")
 }
 
-var _ protoreflect.Message = (*fastReflection_MsgUnStaking)(nil)
+var _ protoreflect.Message = (*fastReflection_MsgUndelegate)(nil)
 
-type fastReflection_MsgUnStaking MsgUnStaking
+type fastReflection_MsgUndelegate MsgUndelegate
 
-func (x *MsgUnStaking) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgUnStaking)(x)
+func (x *MsgUndelegate) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgUndelegate)(x)
 }
 
-func (x *MsgUnStaking) slowProtoReflect() protoreflect.Message {
+func (x *MsgUndelegate) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_tx_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1142,43 +1094,43 @@ func (x *MsgUnStaking) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_MsgUnStaking_messageType fastReflection_MsgUnStaking_messageType
-var _ protoreflect.MessageType = fastReflection_MsgUnStaking_messageType{}
+var _fastReflection_MsgUndelegate_messageType fastReflection_MsgUndelegate_messageType
+var _ protoreflect.MessageType = fastReflection_MsgUndelegate_messageType{}
 
-type fastReflection_MsgUnStaking_messageType struct{}
+type fastReflection_MsgUndelegate_messageType struct{}
 
-func (x fastReflection_MsgUnStaking_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgUnStaking)(nil)
+func (x fastReflection_MsgUndelegate_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgUndelegate)(nil)
 }
-func (x fastReflection_MsgUnStaking_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgUnStaking)
+func (x fastReflection_MsgUndelegate_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegate)
 }
-func (x fastReflection_MsgUnStaking_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgUnStaking
+func (x fastReflection_MsgUndelegate_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegate
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_MsgUnStaking) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgUnStaking
+func (x *fastReflection_MsgUndelegate) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegate
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgUnStaking) Type() protoreflect.MessageType {
-	return _fastReflection_MsgUnStaking_messageType
+func (x *fastReflection_MsgUndelegate) Type() protoreflect.MessageType {
+	return _fastReflection_MsgUndelegate_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgUnStaking) New() protoreflect.Message {
-	return new(fastReflection_MsgUnStaking)
+func (x *fastReflection_MsgUndelegate) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegate)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgUnStaking) Interface() protoreflect.ProtoMessage {
-	return (*MsgUnStaking)(x)
+func (x *fastReflection_MsgUndelegate) Interface() protoreflect.ProtoMessage {
+	return (*MsgUndelegate)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1186,16 +1138,22 @@ func (x *fastReflection_MsgUnStaking) Interface() protoreflect.ProtoMessage {
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_MsgUnStaking) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Depositor != "" {
-		value := protoreflect.ValueOfString(x.Depositor)
-		if !f(fd_MsgUnStaking_depositor, value) {
+func (x *fastReflection_MsgUndelegate) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_MsgUndelegate_zone_id, value) {
 			return
 		}
 	}
-	if len(x.Amount) != 0 {
-		value := protoreflect.ValueOfList(&_MsgUnStaking_2_list{list: &x.Amount})
-		if !f(fd_MsgUnStaking_amount, value) {
+	if x.ControllerAddress != "" {
+		value := protoreflect.ValueOfString(x.ControllerAddress)
+		if !f(fd_MsgUndelegate_controller_address, value) {
+			return
+		}
+	}
+	if x.HostAddress != "" {
+		value := protoreflect.ValueOfString(x.HostAddress)
+		if !f(fd_MsgUndelegate_host_address, value) {
 			return
 		}
 	}
@@ -1212,17 +1170,19 @@ func (x *fastReflection_MsgUnStaking) Range(f func(protoreflect.FieldDescriptor,
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgUnStaking) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_MsgUndelegate) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgUnStaking.depositor":
-		return x.Depositor != ""
-	case "nova.gal.v1.MsgUnStaking.amount":
-		return len(x.Amount) != 0
+	case "nova.gal.v1.MsgUndelegate.zone_id":
+		return x.ZoneId != ""
+	case "nova.gal.v1.MsgUndelegate.controller_address":
+		return x.ControllerAddress != ""
+	case "nova.gal.v1.MsgUndelegate.host_address":
+		return x.HostAddress != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1232,17 +1192,19 @@ func (x *fastReflection_MsgUnStaking) Has(fd protoreflect.FieldDescriptor) bool 
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgUnStaking) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_MsgUndelegate) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgUnStaking.depositor":
-		x.Depositor = ""
-	case "nova.gal.v1.MsgUnStaking.amount":
-		x.Amount = nil
+	case "nova.gal.v1.MsgUndelegate.zone_id":
+		x.ZoneId = ""
+	case "nova.gal.v1.MsgUndelegate.controller_address":
+		x.ControllerAddress = ""
+	case "nova.gal.v1.MsgUndelegate.host_address":
+		x.HostAddress = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1252,22 +1214,22 @@ func (x *fastReflection_MsgUnStaking) Clear(fd protoreflect.FieldDescriptor) {
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgUnStaking) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgUndelegate) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.MsgUnStaking.depositor":
-		value := x.Depositor
+	case "nova.gal.v1.MsgUndelegate.zone_id":
+		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.MsgUnStaking.amount":
-		if len(x.Amount) == 0 {
-			return protoreflect.ValueOfList(&_MsgUnStaking_2_list{})
-		}
-		listValue := &_MsgUnStaking_2_list{list: &x.Amount}
-		return protoreflect.ValueOfList(listValue)
+	case "nova.gal.v1.MsgUndelegate.controller_address":
+		value := x.ControllerAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgUndelegate.host_address":
+		value := x.HostAddress
+		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegate does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1281,19 +1243,19 @@ func (x *fastReflection_MsgUnStaking) Get(descriptor protoreflect.FieldDescripto
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgUnStaking) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_MsgUndelegate) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgUnStaking.depositor":
-		x.Depositor = value.Interface().(string)
-	case "nova.gal.v1.MsgUnStaking.amount":
-		lv := value.List()
-		clv := lv.(*_MsgUnStaking_2_list)
-		x.Amount = *clv.list
+	case "nova.gal.v1.MsgUndelegate.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.gal.v1.MsgUndelegate.controller_address":
+		x.ControllerAddress = value.Interface().(string)
+	case "nova.gal.v1.MsgUndelegate.host_address":
+		x.HostAddress = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1307,49 +1269,48 @@ func (x *fastReflection_MsgUnStaking) Set(fd protoreflect.FieldDescriptor, value
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgUnStaking) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgUndelegate) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgUnStaking.amount":
-		if x.Amount == nil {
-			x.Amount = []*v1beta1.Coin{}
-		}
-		value := &_MsgUnStaking_2_list{list: &x.Amount}
-		return protoreflect.ValueOfList(value)
-	case "nova.gal.v1.MsgUnStaking.depositor":
-		panic(fmt.Errorf("field depositor of message nova.gal.v1.MsgUnStaking is not mutable"))
+	case "nova.gal.v1.MsgUndelegate.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.MsgUndelegate is not mutable"))
+	case "nova.gal.v1.MsgUndelegate.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.gal.v1.MsgUndelegate is not mutable"))
+	case "nova.gal.v1.MsgUndelegate.host_address":
+		panic(fmt.Errorf("field host_address of message nova.gal.v1.MsgUndelegate is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgUnStaking) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgUndelegate) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgUnStaking.depositor":
+	case "nova.gal.v1.MsgUndelegate.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.MsgUnStaking.amount":
-		list := []*v1beta1.Coin{}
-		return protoreflect.ValueOfList(&_MsgUnStaking_2_list{list: &list})
+	case "nova.gal.v1.MsgUndelegate.controller_address":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgUndelegate.host_address":
+		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgUnStaking) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_MsgUndelegate) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUnStaking", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUndelegate", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1357,7 +1318,7 @@ func (x *fastReflection_MsgUnStaking) WhichOneof(d protoreflect.OneofDescriptor)
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgUnStaking) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_MsgUndelegate) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1368,7 +1329,7 @@ func (x *fastReflection_MsgUnStaking) GetUnknown() protoreflect.RawFields {
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgUnStaking) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_MsgUndelegate) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1380,7 +1341,7 @@ func (x *fastReflection_MsgUnStaking) SetUnknown(fields protoreflect.RawFields) 
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_MsgUnStaking) IsValid() bool {
+func (x *fastReflection_MsgUndelegate) IsValid() bool {
 	return x != nil
 }
 
@@ -1390,9 +1351,9 @@ func (x *fastReflection_MsgUnStaking) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_MsgUndelegate) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgUnStaking)
+		x := input.Message.Interface().(*MsgUndelegate)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1404,15 +1365,17 @@ func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		l = len(x.Depositor)
+		l = len(x.ZoneId)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if len(x.Amount) > 0 {
-			for _, e := range x.Amount {
-				l = options.Size(e)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
+		l = len(x.ControllerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.HostAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -1424,7 +1387,7 @@ func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgUnStaking)
+		x := input.Message.Interface().(*MsgUndelegate)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1443,26 +1406,24 @@ func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Amount) > 0 {
-			for iNdEx := len(x.Amount) - 1; iNdEx >= 0; iNdEx-- {
-				encoded, err := options.Marshal(x.Amount[iNdEx])
-				if err != nil {
-					return protoiface.MarshalOutput{
-						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-						Buf:               input.Buf,
-					}, err
-				}
-				i -= len(encoded)
-				copy(dAtA[i:], encoded)
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-				i--
-				dAtA[i] = 0x12
-			}
+		if len(x.HostAddress) > 0 {
+			i -= len(x.HostAddress)
+			copy(dAtA[i:], x.HostAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.HostAddress)))
+			i--
+			dAtA[i] = 0x1a
 		}
-		if len(x.Depositor) > 0 {
-			i -= len(x.Depositor)
-			copy(dAtA[i:], x.Depositor)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Depositor)))
+		if len(x.ControllerAddress) > 0 {
+			i -= len(x.ControllerAddress)
+			copy(dAtA[i:], x.ControllerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ControllerAddress)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -1477,7 +1438,7 @@ func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgUnStaking)
+		x := input.Message.Interface().(*MsgUndelegate)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1509,13 +1470,960 @@ func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUnStaking: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegate: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUnStaking: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegate: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ControllerAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field HostAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.HostAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgUndelegateResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgUndelegateResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUndelegateResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgUndelegateResponse)(nil)
+
+type fastReflection_MsgUndelegateResponse MsgUndelegateResponse
+
+func (x *MsgUndelegateResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateResponse)(x)
+}
+
+func (x *MsgUndelegateResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgUndelegateResponse_messageType fastReflection_MsgUndelegateResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgUndelegateResponse_messageType{}
+
+type fastReflection_MsgUndelegateResponse_messageType struct{}
+
+func (x fastReflection_MsgUndelegateResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateResponse)(nil)
+}
+func (x fastReflection_MsgUndelegateResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateResponse)
+}
+func (x fastReflection_MsgUndelegateResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgUndelegateResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgUndelegateResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgUndelegateResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgUndelegateResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgUndelegateResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgUndelegateResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgUndelegateResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgUndelegateResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgUndelegateResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgUndelegateResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgUndelegateResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUndelegateResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgUndelegateResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgUndelegateResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgUndelegateResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgUndelegateResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUndelegateResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUndelegateResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgUndelegateRecord           protoreflect.MessageDescriptor
+	fd_MsgUndelegateRecord_zone_id   protoreflect.FieldDescriptor
+	fd_MsgUndelegateRecord_depositor protoreflect.FieldDescriptor
+	fd_MsgUndelegateRecord_amount    protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgUndelegateRecord = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUndelegateRecord")
+	fd_MsgUndelegateRecord_zone_id = md_MsgUndelegateRecord.Fields().ByName("zone_id")
+	fd_MsgUndelegateRecord_depositor = md_MsgUndelegateRecord.Fields().ByName("depositor")
+	fd_MsgUndelegateRecord_amount = md_MsgUndelegateRecord.Fields().ByName("amount")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgUndelegateRecord)(nil)
+
+type fastReflection_MsgUndelegateRecord MsgUndelegateRecord
+
+func (x *MsgUndelegateRecord) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateRecord)(x)
+}
+
+func (x *MsgUndelegateRecord) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgUndelegateRecord_messageType fastReflection_MsgUndelegateRecord_messageType
+var _ protoreflect.MessageType = fastReflection_MsgUndelegateRecord_messageType{}
+
+type fastReflection_MsgUndelegateRecord_messageType struct{}
+
+func (x fastReflection_MsgUndelegateRecord_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateRecord)(nil)
+}
+func (x fastReflection_MsgUndelegateRecord_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateRecord)
+}
+func (x fastReflection_MsgUndelegateRecord_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateRecord
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgUndelegateRecord) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateRecord
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgUndelegateRecord) Type() protoreflect.MessageType {
+	return _fastReflection_MsgUndelegateRecord_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgUndelegateRecord) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateRecord)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgUndelegateRecord) Interface() protoreflect.ProtoMessage {
+	return (*MsgUndelegateRecord)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgUndelegateRecord) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_MsgUndelegateRecord_zone_id, value) {
+			return
+		}
+	}
+	if x.Depositor != "" {
+		value := protoreflect.ValueOfString(x.Depositor)
+		if !f(fd_MsgUndelegateRecord_depositor, value) {
+			return
+		}
+	}
+	if x.Amount != nil {
+		value := protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+		if !f(fd_MsgUndelegateRecord_amount, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgUndelegateRecord) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateRecord.zone_id":
+		return x.ZoneId != ""
+	case "nova.gal.v1.MsgUndelegateRecord.depositor":
+		return x.Depositor != ""
+	case "nova.gal.v1.MsgUndelegateRecord.amount":
+		return x.Amount != nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecord"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecord does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateRecord) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateRecord.zone_id":
+		x.ZoneId = ""
+	case "nova.gal.v1.MsgUndelegateRecord.depositor":
+		x.Depositor = ""
+	case "nova.gal.v1.MsgUndelegateRecord.amount":
+		x.Amount = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecord"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecord does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgUndelegateRecord) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.gal.v1.MsgUndelegateRecord.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgUndelegateRecord.depositor":
+		value := x.Depositor
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgUndelegateRecord.amount":
+		value := x.Amount
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecord"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecord does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateRecord) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateRecord.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.gal.v1.MsgUndelegateRecord.depositor":
+		x.Depositor = value.Interface().(string)
+	case "nova.gal.v1.MsgUndelegateRecord.amount":
+		x.Amount = value.Message().Interface().(*v1beta1.Coin)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecord"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecord does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateRecord) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateRecord.amount":
+		if x.Amount == nil {
+			x.Amount = new(v1beta1.Coin)
+		}
+		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+	case "nova.gal.v1.MsgUndelegateRecord.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.MsgUndelegateRecord is not mutable"))
+	case "nova.gal.v1.MsgUndelegateRecord.depositor":
+		panic(fmt.Errorf("field depositor of message nova.gal.v1.MsgUndelegateRecord is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecord"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecord does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgUndelegateRecord) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateRecord.zone_id":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgUndelegateRecord.depositor":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgUndelegateRecord.amount":
+		m := new(v1beta1.Coin)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecord"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecord does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgUndelegateRecord) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUndelegateRecord", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgUndelegateRecord) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateRecord) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgUndelegateRecord) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgUndelegateRecord) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgUndelegateRecord)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Depositor)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Amount != nil {
+			l = options.Size(x.Amount)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUndelegateRecord)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Amount != nil {
+			encoded, err := options.Marshal(x.Amount)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.Depositor) > 0 {
+			i -= len(x.Depositor)
+			copy(dAtA[i:], x.Depositor)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Depositor)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUndelegateRecord)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateRecord: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Depositor", wireType)
 				}
@@ -1547,7 +2455,7 @@ func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
 				}
 				x.Depositor = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
-			case 2:
+			case 3:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 				}
@@ -1576,8 +2484,10 @@ func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Amount = append(x.Amount, &v1beta1.Coin{})
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount[len(x.Amount)-1]); err != nil {
+				if x.Amount == nil {
+					x.Amount = &v1beta1.Coin{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
@@ -1617,24 +2527,24 @@ func (x *fastReflection_MsgUnStaking) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_MsgUnStakingResponse protoreflect.MessageDescriptor
+	md_MsgUndelegateRecordResponse protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_tx_proto_init()
-	md_MsgUnStakingResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUnStakingResponse")
+	md_MsgUndelegateRecordResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUndelegateRecordResponse")
 }
 
-var _ protoreflect.Message = (*fastReflection_MsgUnStakingResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_MsgUndelegateRecordResponse)(nil)
 
-type fastReflection_MsgUnStakingResponse MsgUnStakingResponse
+type fastReflection_MsgUndelegateRecordResponse MsgUndelegateRecordResponse
 
-func (x *MsgUnStakingResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgUnStakingResponse)(x)
+func (x *MsgUndelegateRecordResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateRecordResponse)(x)
 }
 
-func (x *MsgUnStakingResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_gal_v1_tx_proto_msgTypes[3]
+func (x *MsgUndelegateRecordResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1645,43 +2555,43 @@ func (x *MsgUnStakingResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_MsgUnStakingResponse_messageType fastReflection_MsgUnStakingResponse_messageType
-var _ protoreflect.MessageType = fastReflection_MsgUnStakingResponse_messageType{}
+var _fastReflection_MsgUndelegateRecordResponse_messageType fastReflection_MsgUndelegateRecordResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgUndelegateRecordResponse_messageType{}
 
-type fastReflection_MsgUnStakingResponse_messageType struct{}
+type fastReflection_MsgUndelegateRecordResponse_messageType struct{}
 
-func (x fastReflection_MsgUnStakingResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgUnStakingResponse)(nil)
+func (x fastReflection_MsgUndelegateRecordResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateRecordResponse)(nil)
 }
-func (x fastReflection_MsgUnStakingResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgUnStakingResponse)
+func (x fastReflection_MsgUndelegateRecordResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateRecordResponse)
 }
-func (x fastReflection_MsgUnStakingResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgUnStakingResponse
+func (x fastReflection_MsgUndelegateRecordResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateRecordResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_MsgUnStakingResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgUnStakingResponse
+func (x *fastReflection_MsgUndelegateRecordResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateRecordResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgUnStakingResponse) Type() protoreflect.MessageType {
-	return _fastReflection_MsgUnStakingResponse_messageType
+func (x *fastReflection_MsgUndelegateRecordResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgUndelegateRecordResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgUnStakingResponse) New() protoreflect.Message {
-	return new(fastReflection_MsgUnStakingResponse)
+func (x *fastReflection_MsgUndelegateRecordResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateRecordResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgUnStakingResponse) Interface() protoreflect.ProtoMessage {
-	return (*MsgUnStakingResponse)(x)
+func (x *fastReflection_MsgUndelegateRecordResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgUndelegateRecordResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1689,7 +2599,7 @@ func (x *fastReflection_MsgUnStakingResponse) Interface() protoreflect.ProtoMess
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_MsgUnStakingResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_MsgUndelegateRecordResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 }
 
 // Has reports whether a field is populated.
@@ -1703,13 +2613,13 @@ func (x *fastReflection_MsgUnStakingResponse) Range(f func(protoreflect.FieldDes
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgUnStakingResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_MsgUndelegateRecordResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1719,13 +2629,13 @@ func (x *fastReflection_MsgUnStakingResponse) Has(fd protoreflect.FieldDescripto
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgUnStakingResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_MsgUndelegateRecordResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1735,13 +2645,13 @@ func (x *fastReflection_MsgUnStakingResponse) Clear(fd protoreflect.FieldDescrip
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgUnStakingResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgUndelegateRecordResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecordResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1755,13 +2665,13 @@ func (x *fastReflection_MsgUnStakingResponse) Get(descriptor protoreflect.FieldD
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgUnStakingResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_MsgUndelegateRecordResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1775,36 +2685,36 @@ func (x *fastReflection_MsgUnStakingResponse) Set(fd protoreflect.FieldDescripto
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgUnStakingResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgUndelegateRecordResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgUnStakingResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgUndelegateRecordResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUnStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgUnStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgUnStakingResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_MsgUndelegateRecordResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUnStakingResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUndelegateRecordResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1812,7 +2722,7 @@ func (x *fastReflection_MsgUnStakingResponse) WhichOneof(d protoreflect.OneofDes
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgUnStakingResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_MsgUndelegateRecordResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1823,7 +2733,7 @@ func (x *fastReflection_MsgUnStakingResponse) GetUnknown() protoreflect.RawField
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgUnStakingResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_MsgUndelegateRecordResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1835,7 +2745,7 @@ func (x *fastReflection_MsgUnStakingResponse) SetUnknown(fields protoreflect.Raw
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_MsgUnStakingResponse) IsValid() bool {
+func (x *fastReflection_MsgUndelegateRecordResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -1845,9 +2755,9 @@ func (x *fastReflection_MsgUnStakingResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgUnStakingResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_MsgUndelegateRecordResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgUnStakingResponse)
+		x := input.Message.Interface().(*MsgUndelegateRecordResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1869,7 +2779,7 @@ func (x *fastReflection_MsgUnStakingResponse) ProtoMethods() *protoiface.Methods
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgUnStakingResponse)
+		x := input.Message.Interface().(*MsgUndelegateRecordResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1899,7 +2809,7 @@ func (x *fastReflection_MsgUnStakingResponse) ProtoMethods() *protoiface.Methods
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgUnStakingResponse)
+		x := input.Message.Interface().(*MsgUndelegateRecordResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1931,10 +2841,10 @@ func (x *fastReflection_MsgUnStakingResponse) ProtoMethods() *protoiface.Methods
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUnStakingResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateRecordResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUnStakingResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			default:
@@ -1972,80 +2882,35 @@ func (x *fastReflection_MsgUnStakingResponse) ProtoMethods() *protoiface.Methods
 	}
 }
 
-var _ protoreflect.List = (*_MsgWithdraw_2_list)(nil)
-
-type _MsgWithdraw_2_list struct {
-	list *[]*v1beta1.Coin
-}
-
-func (x *_MsgWithdraw_2_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_MsgWithdraw_2_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
-}
-
-func (x *_MsgWithdraw_2_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_MsgWithdraw_2_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_MsgWithdraw_2_list) AppendMutable() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	*x.list = append(*x.list, v)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_MsgWithdraw_2_list) Truncate(n int) {
-	for i := n; i < len(*x.list); i++ {
-		(*x.list)[i] = nil
-	}
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_MsgWithdraw_2_list) NewElement() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_MsgWithdraw_2_list) IsValid() bool {
-	return x.list != nil
-}
-
 var (
-	md_MsgWithdraw            protoreflect.MessageDescriptor
-	fd_MsgWithdraw_withdrawer protoreflect.FieldDescriptor
-	fd_MsgWithdraw_amount     protoreflect.FieldDescriptor
+	md_MsgWithdrawRecord            protoreflect.MessageDescriptor
+	fd_MsgWithdrawRecord_zone_id    protoreflect.FieldDescriptor
+	fd_MsgWithdrawRecord_withdrawer protoreflect.FieldDescriptor
+	fd_MsgWithdrawRecord_recipient  protoreflect.FieldDescriptor
+	fd_MsgWithdrawRecord_amount     protoreflect.FieldDescriptor
+	fd_MsgWithdrawRecord_time       protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_tx_proto_init()
-	md_MsgWithdraw = File_nova_gal_v1_tx_proto.Messages().ByName("MsgWithdraw")
-	fd_MsgWithdraw_withdrawer = md_MsgWithdraw.Fields().ByName("withdrawer")
-	fd_MsgWithdraw_amount = md_MsgWithdraw.Fields().ByName("amount")
+	md_MsgWithdrawRecord = File_nova_gal_v1_tx_proto.Messages().ByName("MsgWithdrawRecord")
+	fd_MsgWithdrawRecord_zone_id = md_MsgWithdrawRecord.Fields().ByName("zone_id")
+	fd_MsgWithdrawRecord_withdrawer = md_MsgWithdrawRecord.Fields().ByName("withdrawer")
+	fd_MsgWithdrawRecord_recipient = md_MsgWithdrawRecord.Fields().ByName("recipient")
+	fd_MsgWithdrawRecord_amount = md_MsgWithdrawRecord.Fields().ByName("amount")
+	fd_MsgWithdrawRecord_time = md_MsgWithdrawRecord.Fields().ByName("time")
 }
 
-var _ protoreflect.Message = (*fastReflection_MsgWithdraw)(nil)
+var _ protoreflect.Message = (*fastReflection_MsgWithdrawRecord)(nil)
 
-type fastReflection_MsgWithdraw MsgWithdraw
+type fastReflection_MsgWithdrawRecord MsgWithdrawRecord
 
-func (x *MsgWithdraw) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgWithdraw)(x)
+func (x *MsgWithdrawRecord) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgWithdrawRecord)(x)
 }
 
-func (x *MsgWithdraw) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_gal_v1_tx_proto_msgTypes[4]
+func (x *MsgWithdrawRecord) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2056,43 +2921,43 @@ func (x *MsgWithdraw) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_MsgWithdraw_messageType fastReflection_MsgWithdraw_messageType
-var _ protoreflect.MessageType = fastReflection_MsgWithdraw_messageType{}
+var _fastReflection_MsgWithdrawRecord_messageType fastReflection_MsgWithdrawRecord_messageType
+var _ protoreflect.MessageType = fastReflection_MsgWithdrawRecord_messageType{}
 
-type fastReflection_MsgWithdraw_messageType struct{}
+type fastReflection_MsgWithdrawRecord_messageType struct{}
 
-func (x fastReflection_MsgWithdraw_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgWithdraw)(nil)
+func (x fastReflection_MsgWithdrawRecord_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgWithdrawRecord)(nil)
 }
-func (x fastReflection_MsgWithdraw_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgWithdraw)
+func (x fastReflection_MsgWithdrawRecord_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgWithdrawRecord)
 }
-func (x fastReflection_MsgWithdraw_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgWithdraw
+func (x fastReflection_MsgWithdrawRecord_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgWithdrawRecord
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_MsgWithdraw) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgWithdraw
+func (x *fastReflection_MsgWithdrawRecord) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgWithdrawRecord
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgWithdraw) Type() protoreflect.MessageType {
-	return _fastReflection_MsgWithdraw_messageType
+func (x *fastReflection_MsgWithdrawRecord) Type() protoreflect.MessageType {
+	return _fastReflection_MsgWithdrawRecord_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgWithdraw) New() protoreflect.Message {
-	return new(fastReflection_MsgWithdraw)
+func (x *fastReflection_MsgWithdrawRecord) New() protoreflect.Message {
+	return new(fastReflection_MsgWithdrawRecord)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgWithdraw) Interface() protoreflect.ProtoMessage {
-	return (*MsgWithdraw)(x)
+func (x *fastReflection_MsgWithdrawRecord) Interface() protoreflect.ProtoMessage {
+	return (*MsgWithdrawRecord)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -2100,16 +2965,34 @@ func (x *fastReflection_MsgWithdraw) Interface() protoreflect.ProtoMessage {
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_MsgWithdraw) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Withdrawer != "" {
-		value := protoreflect.ValueOfString(x.Withdrawer)
-		if !f(fd_MsgWithdraw_withdrawer, value) {
+func (x *fastReflection_MsgWithdrawRecord) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_MsgWithdrawRecord_zone_id, value) {
 			return
 		}
 	}
-	if len(x.Amount) != 0 {
-		value := protoreflect.ValueOfList(&_MsgWithdraw_2_list{list: &x.Amount})
-		if !f(fd_MsgWithdraw_amount, value) {
+	if x.Withdrawer != "" {
+		value := protoreflect.ValueOfString(x.Withdrawer)
+		if !f(fd_MsgWithdrawRecord_withdrawer, value) {
+			return
+		}
+	}
+	if x.Recipient != "" {
+		value := protoreflect.ValueOfString(x.Recipient)
+		if !f(fd_MsgWithdrawRecord_recipient, value) {
+			return
+		}
+	}
+	if x.Amount != nil {
+		value := protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+		if !f(fd_MsgWithdrawRecord_amount, value) {
+			return
+		}
+	}
+	if x.Time != nil {
+		value := protoreflect.ValueOfMessage(x.Time.ProtoReflect())
+		if !f(fd_MsgWithdrawRecord_time, value) {
 			return
 		}
 	}
@@ -2126,17 +3009,23 @@ func (x *fastReflection_MsgWithdraw) Range(f func(protoreflect.FieldDescriptor, 
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgWithdraw) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_MsgWithdrawRecord) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdrawRecord.zone_id":
+		return x.ZoneId != ""
+	case "nova.gal.v1.MsgWithdrawRecord.withdrawer":
 		return x.Withdrawer != ""
-	case "nova.gal.v1.MsgWithdraw.amount":
-		return len(x.Amount) != 0
+	case "nova.gal.v1.MsgWithdrawRecord.recipient":
+		return x.Recipient != ""
+	case "nova.gal.v1.MsgWithdrawRecord.amount":
+		return x.Amount != nil
+	case "nova.gal.v1.MsgWithdrawRecord.time":
+		return x.Time != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecord"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecord does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2146,17 +3035,23 @@ func (x *fastReflection_MsgWithdraw) Has(fd protoreflect.FieldDescriptor) bool {
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgWithdraw) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_MsgWithdrawRecord) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdrawRecord.zone_id":
+		x.ZoneId = ""
+	case "nova.gal.v1.MsgWithdrawRecord.withdrawer":
 		x.Withdrawer = ""
-	case "nova.gal.v1.MsgWithdraw.amount":
+	case "nova.gal.v1.MsgWithdrawRecord.recipient":
+		x.Recipient = ""
+	case "nova.gal.v1.MsgWithdrawRecord.amount":
 		x.Amount = nil
+	case "nova.gal.v1.MsgWithdrawRecord.time":
+		x.Time = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecord"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecord does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2166,22 +3061,28 @@ func (x *fastReflection_MsgWithdraw) Clear(fd protoreflect.FieldDescriptor) {
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgWithdraw) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgWithdrawRecord) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdrawRecord.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgWithdrawRecord.withdrawer":
 		value := x.Withdrawer
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.MsgWithdraw.amount":
-		if len(x.Amount) == 0 {
-			return protoreflect.ValueOfList(&_MsgWithdraw_2_list{})
-		}
-		listValue := &_MsgWithdraw_2_list{list: &x.Amount}
-		return protoreflect.ValueOfList(listValue)
+	case "nova.gal.v1.MsgWithdrawRecord.recipient":
+		value := x.Recipient
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgWithdrawRecord.amount":
+		value := x.Amount
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "nova.gal.v1.MsgWithdrawRecord.time":
+		value := x.Time
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecord"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecord does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2195,19 +3096,23 @@ func (x *fastReflection_MsgWithdraw) Get(descriptor protoreflect.FieldDescriptor
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgWithdraw) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_MsgWithdrawRecord) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdrawRecord.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.gal.v1.MsgWithdrawRecord.withdrawer":
 		x.Withdrawer = value.Interface().(string)
-	case "nova.gal.v1.MsgWithdraw.amount":
-		lv := value.List()
-		clv := lv.(*_MsgWithdraw_2_list)
-		x.Amount = *clv.list
+	case "nova.gal.v1.MsgWithdrawRecord.recipient":
+		x.Recipient = value.Interface().(string)
+	case "nova.gal.v1.MsgWithdrawRecord.amount":
+		x.Amount = value.Message().Interface().(*v1beta1.Coin)
+	case "nova.gal.v1.MsgWithdrawRecord.time":
+		x.Time = value.Message().Interface().(*timestamppb.Timestamp)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecord"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecord does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2221,49 +3126,64 @@ func (x *fastReflection_MsgWithdraw) Set(fd protoreflect.FieldDescriptor, value 
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgWithdraw) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgWithdrawRecord) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgWithdraw.amount":
+	case "nova.gal.v1.MsgWithdrawRecord.amount":
 		if x.Amount == nil {
-			x.Amount = []*v1beta1.Coin{}
+			x.Amount = new(v1beta1.Coin)
 		}
-		value := &_MsgWithdraw_2_list{list: &x.Amount}
-		return protoreflect.ValueOfList(value)
-	case "nova.gal.v1.MsgWithdraw.withdrawer":
-		panic(fmt.Errorf("field withdrawer of message nova.gal.v1.MsgWithdraw is not mutable"))
+		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+	case "nova.gal.v1.MsgWithdrawRecord.time":
+		if x.Time == nil {
+			x.Time = new(timestamppb.Timestamp)
+		}
+		return protoreflect.ValueOfMessage(x.Time.ProtoReflect())
+	case "nova.gal.v1.MsgWithdrawRecord.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.MsgWithdrawRecord is not mutable"))
+	case "nova.gal.v1.MsgWithdrawRecord.withdrawer":
+		panic(fmt.Errorf("field withdrawer of message nova.gal.v1.MsgWithdrawRecord is not mutable"))
+	case "nova.gal.v1.MsgWithdrawRecord.recipient":
+		panic(fmt.Errorf("field recipient of message nova.gal.v1.MsgWithdrawRecord is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecord"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecord does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgWithdraw) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgWithdrawRecord) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgWithdraw.withdrawer":
+	case "nova.gal.v1.MsgWithdrawRecord.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.MsgWithdraw.amount":
-		list := []*v1beta1.Coin{}
-		return protoreflect.ValueOfList(&_MsgWithdraw_2_list{list: &list})
+	case "nova.gal.v1.MsgWithdrawRecord.withdrawer":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgWithdrawRecord.recipient":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgWithdrawRecord.amount":
+		m := new(v1beta1.Coin)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "nova.gal.v1.MsgWithdrawRecord.time":
+		m := new(timestamppb.Timestamp)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecord"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecord does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgWithdraw) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_MsgWithdrawRecord) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgWithdraw", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgWithdrawRecord", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2271,7 +3191,7 @@ func (x *fastReflection_MsgWithdraw) WhichOneof(d protoreflect.OneofDescriptor) 
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgWithdraw) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_MsgWithdrawRecord) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -2282,7 +3202,7 @@ func (x *fastReflection_MsgWithdraw) GetUnknown() protoreflect.RawFields {
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgWithdraw) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_MsgWithdrawRecord) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -2294,7 +3214,7 @@ func (x *fastReflection_MsgWithdraw) SetUnknown(fields protoreflect.RawFields) {
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_MsgWithdraw) IsValid() bool {
+func (x *fastReflection_MsgWithdrawRecord) IsValid() bool {
 	return x != nil
 }
 
@@ -2304,9 +3224,9 @@ func (x *fastReflection_MsgWithdraw) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_MsgWithdrawRecord) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgWithdraw)
+		x := input.Message.Interface().(*MsgWithdrawRecord)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2318,15 +3238,25 @@ func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		l = len(x.Withdrawer)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if len(x.Amount) > 0 {
-			for _, e := range x.Amount {
-				l = options.Size(e)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
+		l = len(x.Recipient)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Amount != nil {
+			l = options.Size(x.Amount)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Time != nil {
+			l = options.Size(x.Time)
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -2338,7 +3268,7 @@ func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgWithdraw)
+		x := input.Message.Interface().(*MsgWithdrawRecord)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2357,26 +3287,52 @@ func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Amount) > 0 {
-			for iNdEx := len(x.Amount) - 1; iNdEx >= 0; iNdEx-- {
-				encoded, err := options.Marshal(x.Amount[iNdEx])
-				if err != nil {
-					return protoiface.MarshalOutput{
-						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-						Buf:               input.Buf,
-					}, err
-				}
-				i -= len(encoded)
-				copy(dAtA[i:], encoded)
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-				i--
-				dAtA[i] = 0x12
+		if x.Time != nil {
+			encoded, err := options.Marshal(x.Time)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
 			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x2a
+		}
+		if x.Amount != nil {
+			encoded, err := options.Marshal(x.Amount)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.Recipient) > 0 {
+			i -= len(x.Recipient)
+			copy(dAtA[i:], x.Recipient)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Recipient)))
+			i--
+			dAtA[i] = 0x1a
 		}
 		if len(x.Withdrawer) > 0 {
 			i -= len(x.Withdrawer)
 			copy(dAtA[i:], x.Withdrawer)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Withdrawer)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -2391,7 +3347,7 @@ func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgWithdraw)
+		x := input.Message.Interface().(*MsgWithdrawRecord)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2423,13 +3379,45 @@ func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdraw: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawRecord: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdraw: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawRecord: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Withdrawer", wireType)
 				}
@@ -2461,7 +3449,39 @@ func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
 				}
 				x.Withdrawer = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
-			case 2:
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Recipient", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Recipient = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 4:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 				}
@@ -2490,8 +3510,46 @@ func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Amount = append(x.Amount, &v1beta1.Coin{})
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount[len(x.Amount)-1]); err != nil {
+				if x.Amount == nil {
+					x.Amount = &v1beta1.Coin{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Time", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Time == nil {
+					x.Time = &timestamppb.Timestamp{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Time); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
@@ -2531,24 +3589,24 @@ func (x *fastReflection_MsgWithdraw) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_MsgWithdrawResponse protoreflect.MessageDescriptor
+	md_MsgWithdrawRecordResponse protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_tx_proto_init()
-	md_MsgWithdrawResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgWithdrawResponse")
+	md_MsgWithdrawRecordResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgWithdrawRecordResponse")
 }
 
-var _ protoreflect.Message = (*fastReflection_MsgWithdrawResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_MsgWithdrawRecordResponse)(nil)
 
-type fastReflection_MsgWithdrawResponse MsgWithdrawResponse
+type fastReflection_MsgWithdrawRecordResponse MsgWithdrawRecordResponse
 
-func (x *MsgWithdrawResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgWithdrawResponse)(x)
+func (x *MsgWithdrawRecordResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgWithdrawRecordResponse)(x)
 }
 
-func (x *MsgWithdrawResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_gal_v1_tx_proto_msgTypes[5]
+func (x *MsgWithdrawRecordResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2559,43 +3617,43 @@ func (x *MsgWithdrawResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_MsgWithdrawResponse_messageType fastReflection_MsgWithdrawResponse_messageType
-var _ protoreflect.MessageType = fastReflection_MsgWithdrawResponse_messageType{}
+var _fastReflection_MsgWithdrawRecordResponse_messageType fastReflection_MsgWithdrawRecordResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgWithdrawRecordResponse_messageType{}
 
-type fastReflection_MsgWithdrawResponse_messageType struct{}
+type fastReflection_MsgWithdrawRecordResponse_messageType struct{}
 
-func (x fastReflection_MsgWithdrawResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgWithdrawResponse)(nil)
+func (x fastReflection_MsgWithdrawRecordResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgWithdrawRecordResponse)(nil)
 }
-func (x fastReflection_MsgWithdrawResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgWithdrawResponse)
+func (x fastReflection_MsgWithdrawRecordResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgWithdrawRecordResponse)
 }
-func (x fastReflection_MsgWithdrawResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgWithdrawResponse
+func (x fastReflection_MsgWithdrawRecordResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgWithdrawRecordResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_MsgWithdrawResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgWithdrawResponse
+func (x *fastReflection_MsgWithdrawRecordResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgWithdrawRecordResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgWithdrawResponse) Type() protoreflect.MessageType {
-	return _fastReflection_MsgWithdrawResponse_messageType
+func (x *fastReflection_MsgWithdrawRecordResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgWithdrawRecordResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgWithdrawResponse) New() protoreflect.Message {
-	return new(fastReflection_MsgWithdrawResponse)
+func (x *fastReflection_MsgWithdrawRecordResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgWithdrawRecordResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgWithdrawResponse) Interface() protoreflect.ProtoMessage {
-	return (*MsgWithdrawResponse)(x)
+func (x *fastReflection_MsgWithdrawRecordResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgWithdrawRecordResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -2603,7 +3661,7 @@ func (x *fastReflection_MsgWithdrawResponse) Interface() protoreflect.ProtoMessa
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_MsgWithdrawResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_MsgWithdrawRecordResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 }
 
 // Has reports whether a field is populated.
@@ -2617,13 +3675,13 @@ func (x *fastReflection_MsgWithdrawResponse) Range(f func(protoreflect.FieldDesc
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgWithdrawResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_MsgWithdrawRecordResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2633,13 +3691,13 @@ func (x *fastReflection_MsgWithdrawResponse) Has(fd protoreflect.FieldDescriptor
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgWithdrawResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_MsgWithdrawRecordResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2649,13 +3707,13 @@ func (x *fastReflection_MsgWithdrawResponse) Clear(fd protoreflect.FieldDescript
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgWithdrawResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgWithdrawRecordResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecordResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2669,13 +3727,13 @@ func (x *fastReflection_MsgWithdrawResponse) Get(descriptor protoreflect.FieldDe
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgWithdrawResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_MsgWithdrawRecordResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2689,36 +3747,36 @@ func (x *fastReflection_MsgWithdrawResponse) Set(fd protoreflect.FieldDescriptor
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgWithdrawResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgWithdrawRecordResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgWithdrawResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgWithdrawRecordResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgWithdrawResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_MsgWithdrawRecordResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgWithdrawResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgWithdrawRecordResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2726,7 +3784,7 @@ func (x *fastReflection_MsgWithdrawResponse) WhichOneof(d protoreflect.OneofDesc
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgWithdrawResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_MsgWithdrawRecordResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -2737,7 +3795,7 @@ func (x *fastReflection_MsgWithdrawResponse) GetUnknown() protoreflect.RawFields
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgWithdrawResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_MsgWithdrawRecordResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -2749,7 +3807,7 @@ func (x *fastReflection_MsgWithdrawResponse) SetUnknown(fields protoreflect.RawF
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_MsgWithdrawResponse) IsValid() bool {
+func (x *fastReflection_MsgWithdrawRecordResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -2759,9 +3817,9 @@ func (x *fastReflection_MsgWithdrawResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgWithdrawResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_MsgWithdrawRecordResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgWithdrawResponse)
+		x := input.Message.Interface().(*MsgWithdrawRecordResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2783,7 +3841,7 @@ func (x *fastReflection_MsgWithdrawResponse) ProtoMethods() *protoiface.Methods 
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgWithdrawResponse)
+		x := input.Message.Interface().(*MsgWithdrawRecordResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2813,7 +3871,7 @@ func (x *fastReflection_MsgWithdrawResponse) ProtoMethods() *protoiface.Methods 
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgWithdrawResponse)
+		x := input.Message.Interface().(*MsgWithdrawRecordResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2845,10 +3903,2040 @@ func (x *fastReflection_MsgWithdrawResponse) ProtoMethods() *protoiface.Methods 
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawRecordResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgUndelegateReceipt           protoreflect.MessageDescriptor
+	fd_MsgUndelegateReceipt_zone_id   protoreflect.FieldDescriptor
+	fd_MsgUndelegateReceipt_depositor protoreflect.FieldDescriptor
+	fd_MsgUndelegateReceipt_amount    protoreflect.FieldDescriptor
+	fd_MsgUndelegateReceipt_txhash    protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgUndelegateReceipt = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUndelegateReceipt")
+	fd_MsgUndelegateReceipt_zone_id = md_MsgUndelegateReceipt.Fields().ByName("zone_id")
+	fd_MsgUndelegateReceipt_depositor = md_MsgUndelegateReceipt.Fields().ByName("depositor")
+	fd_MsgUndelegateReceipt_amount = md_MsgUndelegateReceipt.Fields().ByName("amount")
+	fd_MsgUndelegateReceipt_txhash = md_MsgUndelegateReceipt.Fields().ByName("txhash")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgUndelegateReceipt)(nil)
+
+type fastReflection_MsgUndelegateReceipt MsgUndelegateReceipt
+
+func (x *MsgUndelegateReceipt) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateReceipt)(x)
+}
+
+func (x *MsgUndelegateReceipt) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgUndelegateReceipt_messageType fastReflection_MsgUndelegateReceipt_messageType
+var _ protoreflect.MessageType = fastReflection_MsgUndelegateReceipt_messageType{}
+
+type fastReflection_MsgUndelegateReceipt_messageType struct{}
+
+func (x fastReflection_MsgUndelegateReceipt_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateReceipt)(nil)
+}
+func (x fastReflection_MsgUndelegateReceipt_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateReceipt)
+}
+func (x fastReflection_MsgUndelegateReceipt_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateReceipt
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgUndelegateReceipt) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateReceipt
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgUndelegateReceipt) Type() protoreflect.MessageType {
+	return _fastReflection_MsgUndelegateReceipt_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgUndelegateReceipt) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateReceipt)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgUndelegateReceipt) Interface() protoreflect.ProtoMessage {
+	return (*MsgUndelegateReceipt)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgUndelegateReceipt) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_MsgUndelegateReceipt_zone_id, value) {
+			return
+		}
+	}
+	if x.Depositor != "" {
+		value := protoreflect.ValueOfString(x.Depositor)
+		if !f(fd_MsgUndelegateReceipt_depositor, value) {
+			return
+		}
+	}
+	if x.Amount != nil {
+		value := protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+		if !f(fd_MsgUndelegateReceipt_amount, value) {
+			return
+		}
+	}
+	if x.Txhash != "" {
+		value := protoreflect.ValueOfString(x.Txhash)
+		if !f(fd_MsgUndelegateReceipt_txhash, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgUndelegateReceipt) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateReceipt.zone_id":
+		return x.ZoneId != ""
+	case "nova.gal.v1.MsgUndelegateReceipt.depositor":
+		return x.Depositor != ""
+	case "nova.gal.v1.MsgUndelegateReceipt.amount":
+		return x.Amount != nil
+	case "nova.gal.v1.MsgUndelegateReceipt.txhash":
+		return x.Txhash != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateReceipt) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateReceipt.zone_id":
+		x.ZoneId = ""
+	case "nova.gal.v1.MsgUndelegateReceipt.depositor":
+		x.Depositor = ""
+	case "nova.gal.v1.MsgUndelegateReceipt.amount":
+		x.Amount = nil
+	case "nova.gal.v1.MsgUndelegateReceipt.txhash":
+		x.Txhash = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgUndelegateReceipt) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.gal.v1.MsgUndelegateReceipt.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgUndelegateReceipt.depositor":
+		value := x.Depositor
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgUndelegateReceipt.amount":
+		value := x.Amount
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "nova.gal.v1.MsgUndelegateReceipt.txhash":
+		value := x.Txhash
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceipt does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateReceipt) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateReceipt.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.gal.v1.MsgUndelegateReceipt.depositor":
+		x.Depositor = value.Interface().(string)
+	case "nova.gal.v1.MsgUndelegateReceipt.amount":
+		x.Amount = value.Message().Interface().(*v1beta1.Coin)
+	case "nova.gal.v1.MsgUndelegateReceipt.txhash":
+		x.Txhash = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateReceipt) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateReceipt.amount":
+		if x.Amount == nil {
+			x.Amount = new(v1beta1.Coin)
+		}
+		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+	case "nova.gal.v1.MsgUndelegateReceipt.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.MsgUndelegateReceipt is not mutable"))
+	case "nova.gal.v1.MsgUndelegateReceipt.depositor":
+		panic(fmt.Errorf("field depositor of message nova.gal.v1.MsgUndelegateReceipt is not mutable"))
+	case "nova.gal.v1.MsgUndelegateReceipt.txhash":
+		panic(fmt.Errorf("field txhash of message nova.gal.v1.MsgUndelegateReceipt is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgUndelegateReceipt) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgUndelegateReceipt.zone_id":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgUndelegateReceipt.depositor":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgUndelegateReceipt.amount":
+		m := new(v1beta1.Coin)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "nova.gal.v1.MsgUndelegateReceipt.txhash":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgUndelegateReceipt) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUndelegateReceipt", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgUndelegateReceipt) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateReceipt) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgUndelegateReceipt) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgUndelegateReceipt) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgUndelegateReceipt)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Depositor)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Amount != nil {
+			l = options.Size(x.Amount)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Txhash)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUndelegateReceipt)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Txhash) > 0 {
+			i -= len(x.Txhash)
+			copy(dAtA[i:], x.Txhash)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Txhash)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if x.Amount != nil {
+			encoded, err := options.Marshal(x.Amount)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.Depositor) > 0 {
+			i -= len(x.Depositor)
+			copy(dAtA[i:], x.Depositor)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Depositor)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUndelegateReceipt)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateReceipt: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateReceipt: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Depositor", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Depositor = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Amount == nil {
+					x.Amount = &v1beta1.Coin{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Txhash", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Txhash = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgUndelegateReceiptResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgUndelegateReceiptResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgUndelegateReceiptResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgUndelegateReceiptResponse)(nil)
+
+type fastReflection_MsgUndelegateReceiptResponse MsgUndelegateReceiptResponse
+
+func (x *MsgUndelegateReceiptResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateReceiptResponse)(x)
+}
+
+func (x *MsgUndelegateReceiptResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgUndelegateReceiptResponse_messageType fastReflection_MsgUndelegateReceiptResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgUndelegateReceiptResponse_messageType{}
+
+type fastReflection_MsgUndelegateReceiptResponse_messageType struct{}
+
+func (x fastReflection_MsgUndelegateReceiptResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgUndelegateReceiptResponse)(nil)
+}
+func (x fastReflection_MsgUndelegateReceiptResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateReceiptResponse)
+}
+func (x fastReflection_MsgUndelegateReceiptResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateReceiptResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgUndelegateReceiptResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgUndelegateReceiptResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgUndelegateReceiptResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgUndelegateReceiptResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgUndelegateReceiptResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceiptResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateReceiptResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgUndelegateReceiptResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgUndelegateReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgUndelegateReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgUndelegateReceiptResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgUndelegateReceiptResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgUndelegateReceiptResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgUndelegateReceiptResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgUndelegateReceiptResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgUndelegateReceiptResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgUndelegateReceiptResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUndelegateReceiptResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgUndelegateReceiptResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateReceiptResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgUndelegateReceiptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgWithdrawReceipt            protoreflect.MessageDescriptor
+	fd_MsgWithdrawReceipt_zoen_id    protoreflect.FieldDescriptor
+	fd_MsgWithdrawReceipt_withdrawer protoreflect.FieldDescriptor
+	fd_MsgWithdrawReceipt_recipient  protoreflect.FieldDescriptor
+	fd_MsgWithdrawReceipt_amount     protoreflect.FieldDescriptor
+	fd_MsgWithdrawReceipt_txhash     protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgWithdrawReceipt = File_nova_gal_v1_tx_proto.Messages().ByName("MsgWithdrawReceipt")
+	fd_MsgWithdrawReceipt_zoen_id = md_MsgWithdrawReceipt.Fields().ByName("zoen_id")
+	fd_MsgWithdrawReceipt_withdrawer = md_MsgWithdrawReceipt.Fields().ByName("withdrawer")
+	fd_MsgWithdrawReceipt_recipient = md_MsgWithdrawReceipt.Fields().ByName("recipient")
+	fd_MsgWithdrawReceipt_amount = md_MsgWithdrawReceipt.Fields().ByName("amount")
+	fd_MsgWithdrawReceipt_txhash = md_MsgWithdrawReceipt.Fields().ByName("txhash")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgWithdrawReceipt)(nil)
+
+type fastReflection_MsgWithdrawReceipt MsgWithdrawReceipt
+
+func (x *MsgWithdrawReceipt) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgWithdrawReceipt)(x)
+}
+
+func (x *MsgWithdrawReceipt) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgWithdrawReceipt_messageType fastReflection_MsgWithdrawReceipt_messageType
+var _ protoreflect.MessageType = fastReflection_MsgWithdrawReceipt_messageType{}
+
+type fastReflection_MsgWithdrawReceipt_messageType struct{}
+
+func (x fastReflection_MsgWithdrawReceipt_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgWithdrawReceipt)(nil)
+}
+func (x fastReflection_MsgWithdrawReceipt_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgWithdrawReceipt)
+}
+func (x fastReflection_MsgWithdrawReceipt_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgWithdrawReceipt
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgWithdrawReceipt) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgWithdrawReceipt
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgWithdrawReceipt) Type() protoreflect.MessageType {
+	return _fastReflection_MsgWithdrawReceipt_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgWithdrawReceipt) New() protoreflect.Message {
+	return new(fastReflection_MsgWithdrawReceipt)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgWithdrawReceipt) Interface() protoreflect.ProtoMessage {
+	return (*MsgWithdrawReceipt)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgWithdrawReceipt) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoenId != "" {
+		value := protoreflect.ValueOfString(x.ZoenId)
+		if !f(fd_MsgWithdrawReceipt_zoen_id, value) {
+			return
+		}
+	}
+	if x.Withdrawer != "" {
+		value := protoreflect.ValueOfString(x.Withdrawer)
+		if !f(fd_MsgWithdrawReceipt_withdrawer, value) {
+			return
+		}
+	}
+	if x.Recipient != "" {
+		value := protoreflect.ValueOfString(x.Recipient)
+		if !f(fd_MsgWithdrawReceipt_recipient, value) {
+			return
+		}
+	}
+	if x.Amount != nil {
+		value := protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+		if !f(fd_MsgWithdrawReceipt_amount, value) {
+			return
+		}
+	}
+	if x.Txhash != "" {
+		value := protoreflect.ValueOfString(x.Txhash)
+		if !f(fd_MsgWithdrawReceipt_txhash, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgWithdrawReceipt) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgWithdrawReceipt.zoen_id":
+		return x.ZoenId != ""
+	case "nova.gal.v1.MsgWithdrawReceipt.withdrawer":
+		return x.Withdrawer != ""
+	case "nova.gal.v1.MsgWithdrawReceipt.recipient":
+		return x.Recipient != ""
+	case "nova.gal.v1.MsgWithdrawReceipt.amount":
+		return x.Amount != nil
+	case "nova.gal.v1.MsgWithdrawReceipt.txhash":
+		return x.Txhash != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgWithdrawReceipt) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgWithdrawReceipt.zoen_id":
+		x.ZoenId = ""
+	case "nova.gal.v1.MsgWithdrawReceipt.withdrawer":
+		x.Withdrawer = ""
+	case "nova.gal.v1.MsgWithdrawReceipt.recipient":
+		x.Recipient = ""
+	case "nova.gal.v1.MsgWithdrawReceipt.amount":
+		x.Amount = nil
+	case "nova.gal.v1.MsgWithdrawReceipt.txhash":
+		x.Txhash = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgWithdrawReceipt) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.gal.v1.MsgWithdrawReceipt.zoen_id":
+		value := x.ZoenId
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgWithdrawReceipt.withdrawer":
+		value := x.Withdrawer
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgWithdrawReceipt.recipient":
+		value := x.Recipient
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.MsgWithdrawReceipt.amount":
+		value := x.Amount
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "nova.gal.v1.MsgWithdrawReceipt.txhash":
+		value := x.Txhash
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceipt does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgWithdrawReceipt) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgWithdrawReceipt.zoen_id":
+		x.ZoenId = value.Interface().(string)
+	case "nova.gal.v1.MsgWithdrawReceipt.withdrawer":
+		x.Withdrawer = value.Interface().(string)
+	case "nova.gal.v1.MsgWithdrawReceipt.recipient":
+		x.Recipient = value.Interface().(string)
+	case "nova.gal.v1.MsgWithdrawReceipt.amount":
+		x.Amount = value.Message().Interface().(*v1beta1.Coin)
+	case "nova.gal.v1.MsgWithdrawReceipt.txhash":
+		x.Txhash = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgWithdrawReceipt) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgWithdrawReceipt.amount":
+		if x.Amount == nil {
+			x.Amount = new(v1beta1.Coin)
+		}
+		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+	case "nova.gal.v1.MsgWithdrawReceipt.zoen_id":
+		panic(fmt.Errorf("field zoen_id of message nova.gal.v1.MsgWithdrawReceipt is not mutable"))
+	case "nova.gal.v1.MsgWithdrawReceipt.withdrawer":
+		panic(fmt.Errorf("field withdrawer of message nova.gal.v1.MsgWithdrawReceipt is not mutable"))
+	case "nova.gal.v1.MsgWithdrawReceipt.recipient":
+		panic(fmt.Errorf("field recipient of message nova.gal.v1.MsgWithdrawReceipt is not mutable"))
+	case "nova.gal.v1.MsgWithdrawReceipt.txhash":
+		panic(fmt.Errorf("field txhash of message nova.gal.v1.MsgWithdrawReceipt is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgWithdrawReceipt) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.gal.v1.MsgWithdrawReceipt.zoen_id":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgWithdrawReceipt.withdrawer":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgWithdrawReceipt.recipient":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.MsgWithdrawReceipt.amount":
+		m := new(v1beta1.Coin)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "nova.gal.v1.MsgWithdrawReceipt.txhash":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceipt"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceipt does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgWithdrawReceipt) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgWithdrawReceipt", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgWithdrawReceipt) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgWithdrawReceipt) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgWithdrawReceipt) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgWithdrawReceipt) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgWithdrawReceipt)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoenId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Withdrawer)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Recipient)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Amount != nil {
+			l = options.Size(x.Amount)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Txhash)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgWithdrawReceipt)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Txhash) > 0 {
+			i -= len(x.Txhash)
+			copy(dAtA[i:], x.Txhash)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Txhash)))
+			i--
+			dAtA[i] = 0x2a
+		}
+		if x.Amount != nil {
+			encoded, err := options.Marshal(x.Amount)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.Recipient) > 0 {
+			i -= len(x.Recipient)
+			copy(dAtA[i:], x.Recipient)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Recipient)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.Withdrawer) > 0 {
+			i -= len(x.Withdrawer)
+			copy(dAtA[i:], x.Withdrawer)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Withdrawer)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoenId) > 0 {
+			i -= len(x.ZoenId)
+			copy(dAtA[i:], x.ZoenId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoenId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgWithdrawReceipt)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawReceipt: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawReceipt: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoenId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoenId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Withdrawer", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Withdrawer = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Recipient", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Recipient = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Amount == nil {
+					x.Amount = &v1beta1.Coin{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Txhash", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Txhash = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgWithdrawReceiptResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_gal_v1_tx_proto_init()
+	md_MsgWithdrawReceiptResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgWithdrawReceiptResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgWithdrawReceiptResponse)(nil)
+
+type fastReflection_MsgWithdrawReceiptResponse MsgWithdrawReceiptResponse
+
+func (x *MsgWithdrawReceiptResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgWithdrawReceiptResponse)(x)
+}
+
+func (x *MsgWithdrawReceiptResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_tx_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgWithdrawReceiptResponse_messageType fastReflection_MsgWithdrawReceiptResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgWithdrawReceiptResponse_messageType{}
+
+type fastReflection_MsgWithdrawReceiptResponse_messageType struct{}
+
+func (x fastReflection_MsgWithdrawReceiptResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgWithdrawReceiptResponse)(nil)
+}
+func (x fastReflection_MsgWithdrawReceiptResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgWithdrawReceiptResponse)
+}
+func (x fastReflection_MsgWithdrawReceiptResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgWithdrawReceiptResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgWithdrawReceiptResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgWithdrawReceiptResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgWithdrawReceiptResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgWithdrawReceiptResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgWithdrawReceiptResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceiptResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgWithdrawReceiptResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgWithdrawReceiptResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgWithdrawReceiptResponse"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.MsgWithdrawReceiptResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgWithdrawReceiptResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgWithdrawReceiptResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgWithdrawReceiptResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgWithdrawReceiptResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgWithdrawReceiptResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgWithdrawReceiptResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgWithdrawReceiptResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgWithdrawReceiptResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgWithdrawReceiptResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawReceiptResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgWithdrawReceiptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			default:
@@ -2986,18 +6074,18 @@ func (*MsgDepositResponse) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{1}
 }
 
-// MsgUnStaking defines user who want to un-stake his/her asset.
-type MsgUnStaking struct {
+type MsgUndelegate struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Depositor string          `protobuf:"bytes,1,opt,name=depositor,proto3" json:"depositor,omitempty"`
-	Amount    []*v1beta1.Coin `protobuf:"bytes,2,rep,name=amount,proto3" json:"amount,omitempty"`
+	ZoneId            string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ControllerAddress string `protobuf:"bytes,2,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	HostAddress       string `protobuf:"bytes,3,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
 }
 
-func (x *MsgUnStaking) Reset() {
-	*x = MsgUnStaking{}
+func (x *MsgUndelegate) Reset() {
+	*x = MsgUndelegate{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_tx_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3005,39 +6093,46 @@ func (x *MsgUnStaking) Reset() {
 	}
 }
 
-func (x *MsgUnStaking) String() string {
+func (x *MsgUndelegate) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MsgUnStaking) ProtoMessage() {}
+func (*MsgUndelegate) ProtoMessage() {}
 
-// Deprecated: Use MsgUnStaking.ProtoReflect.Descriptor instead.
-func (*MsgUnStaking) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgUndelegate.ProtoReflect.Descriptor instead.
+func (*MsgUndelegate) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *MsgUnStaking) GetDepositor() string {
+func (x *MsgUndelegate) GetZoneId() string {
 	if x != nil {
-		return x.Depositor
+		return x.ZoneId
 	}
 	return ""
 }
 
-func (x *MsgUnStaking) GetAmount() []*v1beta1.Coin {
+func (x *MsgUndelegate) GetControllerAddress() string {
 	if x != nil {
-		return x.Amount
+		return x.ControllerAddress
 	}
-	return nil
+	return ""
 }
 
-type MsgUnStakingResponse struct {
+func (x *MsgUndelegate) GetHostAddress() string {
+	if x != nil {
+		return x.HostAddress
+	}
+	return ""
+}
+
+type MsgUndelegateResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *MsgUnStakingResponse) Reset() {
-	*x = MsgUnStakingResponse{}
+func (x *MsgUndelegateResponse) Reset() {
+	*x = MsgUndelegateResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_tx_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3045,29 +6140,30 @@ func (x *MsgUnStakingResponse) Reset() {
 	}
 }
 
-func (x *MsgUnStakingResponse) String() string {
+func (x *MsgUndelegateResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MsgUnStakingResponse) ProtoMessage() {}
+func (*MsgUndelegateResponse) ProtoMessage() {}
 
-// Deprecated: Use MsgUnStakingResponse.ProtoReflect.Descriptor instead.
-func (*MsgUnStakingResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgUndelegateResponse.ProtoReflect.Descriptor instead.
+func (*MsgUndelegateResponse) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{3}
 }
 
-// MsgWithdraw defines user who withdraw and amount of coins.
-type MsgWithdraw struct {
+// MsgUnStaking defines user who want to un-stake his/her asset.
+type MsgUndelegateRecord struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Withdrawer string          `protobuf:"bytes,1,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
-	Amount     []*v1beta1.Coin `protobuf:"bytes,2,rep,name=amount,proto3" json:"amount,omitempty"`
+	ZoneId    string        `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Depositor string        `protobuf:"bytes,2,opt,name=depositor,proto3" json:"depositor,omitempty"`
+	Amount    *v1beta1.Coin `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
 }
 
-func (x *MsgWithdraw) Reset() {
-	*x = MsgWithdraw{}
+func (x *MsgUndelegateRecord) Reset() {
+	*x = MsgUndelegateRecord{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_tx_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3075,39 +6171,46 @@ func (x *MsgWithdraw) Reset() {
 	}
 }
 
-func (x *MsgWithdraw) String() string {
+func (x *MsgUndelegateRecord) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MsgWithdraw) ProtoMessage() {}
+func (*MsgUndelegateRecord) ProtoMessage() {}
 
-// Deprecated: Use MsgWithdraw.ProtoReflect.Descriptor instead.
-func (*MsgWithdraw) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgUndelegateRecord.ProtoReflect.Descriptor instead.
+func (*MsgUndelegateRecord) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *MsgWithdraw) GetWithdrawer() string {
+func (x *MsgUndelegateRecord) GetZoneId() string {
 	if x != nil {
-		return x.Withdrawer
+		return x.ZoneId
 	}
 	return ""
 }
 
-func (x *MsgWithdraw) GetAmount() []*v1beta1.Coin {
+func (x *MsgUndelegateRecord) GetDepositor() string {
+	if x != nil {
+		return x.Depositor
+	}
+	return ""
+}
+
+func (x *MsgUndelegateRecord) GetAmount() *v1beta1.Coin {
 	if x != nil {
 		return x.Amount
 	}
 	return nil
 }
 
-type MsgWithdrawResponse struct {
+type MsgUndelegateRecordResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *MsgWithdrawResponse) Reset() {
-	*x = MsgWithdrawResponse{}
+func (x *MsgUndelegateRecordResponse) Reset() {
+	*x = MsgUndelegateRecordResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_tx_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3115,15 +6218,287 @@ func (x *MsgWithdrawResponse) Reset() {
 	}
 }
 
-func (x *MsgWithdrawResponse) String() string {
+func (x *MsgUndelegateRecordResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MsgWithdrawResponse) ProtoMessage() {}
+func (*MsgUndelegateRecordResponse) ProtoMessage() {}
 
-// Deprecated: Use MsgWithdrawResponse.ProtoReflect.Descriptor instead.
-func (*MsgWithdrawResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgUndelegateRecordResponse.ProtoReflect.Descriptor instead.
+func (*MsgUndelegateRecordResponse) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{5}
+}
+
+// MsgWithdraw defines user who withdraw and amount of coins.
+type MsgWithdrawRecord struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneId     string                 `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Withdrawer string                 `protobuf:"bytes,2,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
+	Recipient  string                 `protobuf:"bytes,3,opt,name=recipient,proto3" json:"recipient,omitempty"`
+	Amount     *v1beta1.Coin          `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
+	Time       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=time,proto3" json:"time,omitempty"`
+}
+
+func (x *MsgWithdrawRecord) Reset() {
+	*x = MsgWithdrawRecord{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgWithdrawRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgWithdrawRecord) ProtoMessage() {}
+
+// Deprecated: Use MsgWithdrawRecord.ProtoReflect.Descriptor instead.
+func (*MsgWithdrawRecord) Descriptor() ([]byte, []int) {
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *MsgWithdrawRecord) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *MsgWithdrawRecord) GetWithdrawer() string {
+	if x != nil {
+		return x.Withdrawer
+	}
+	return ""
+}
+
+func (x *MsgWithdrawRecord) GetRecipient() string {
+	if x != nil {
+		return x.Recipient
+	}
+	return ""
+}
+
+func (x *MsgWithdrawRecord) GetAmount() *v1beta1.Coin {
+	if x != nil {
+		return x.Amount
+	}
+	return nil
+}
+
+func (x *MsgWithdrawRecord) GetTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Time
+	}
+	return nil
+}
+
+type MsgWithdrawRecordResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgWithdrawRecordResponse) Reset() {
+	*x = MsgWithdrawRecordResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgWithdrawRecordResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgWithdrawRecordResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgWithdrawRecordResponse.ProtoReflect.Descriptor instead.
+func (*MsgWithdrawRecordResponse) Descriptor() ([]byte, []int) {
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{7}
+}
+
+type MsgUndelegateReceipt struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneId    string        `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Depositor string        `protobuf:"bytes,2,opt,name=depositor,proto3" json:"depositor,omitempty"`
+	Amount    *v1beta1.Coin `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
+	Txhash    string        `protobuf:"bytes,4,opt,name=txhash,proto3" json:"txhash,omitempty"`
+}
+
+func (x *MsgUndelegateReceipt) Reset() {
+	*x = MsgUndelegateReceipt{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgUndelegateReceipt) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgUndelegateReceipt) ProtoMessage() {}
+
+// Deprecated: Use MsgUndelegateReceipt.ProtoReflect.Descriptor instead.
+func (*MsgUndelegateReceipt) Descriptor() ([]byte, []int) {
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *MsgUndelegateReceipt) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *MsgUndelegateReceipt) GetDepositor() string {
+	if x != nil {
+		return x.Depositor
+	}
+	return ""
+}
+
+func (x *MsgUndelegateReceipt) GetAmount() *v1beta1.Coin {
+	if x != nil {
+		return x.Amount
+	}
+	return nil
+}
+
+func (x *MsgUndelegateReceipt) GetTxhash() string {
+	if x != nil {
+		return x.Txhash
+	}
+	return ""
+}
+
+type MsgUndelegateReceiptResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgUndelegateReceiptResponse) Reset() {
+	*x = MsgUndelegateReceiptResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgUndelegateReceiptResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgUndelegateReceiptResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgUndelegateReceiptResponse.ProtoReflect.Descriptor instead.
+func (*MsgUndelegateReceiptResponse) Descriptor() ([]byte, []int) {
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{9}
+}
+
+type MsgWithdrawReceipt struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoenId     string        `protobuf:"bytes,1,opt,name=zoen_id,json=zoenId,proto3" json:"zoen_id,omitempty"`
+	Withdrawer string        `protobuf:"bytes,2,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
+	Recipient  string        `protobuf:"bytes,3,opt,name=recipient,proto3" json:"recipient,omitempty"`
+	Amount     *v1beta1.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
+	Txhash     string        `protobuf:"bytes,5,opt,name=txhash,proto3" json:"txhash,omitempty"`
+}
+
+func (x *MsgWithdrawReceipt) Reset() {
+	*x = MsgWithdrawReceipt{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgWithdrawReceipt) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgWithdrawReceipt) ProtoMessage() {}
+
+// Deprecated: Use MsgWithdrawReceipt.ProtoReflect.Descriptor instead.
+func (*MsgWithdrawReceipt) Descriptor() ([]byte, []int) {
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *MsgWithdrawReceipt) GetZoenId() string {
+	if x != nil {
+		return x.ZoenId
+	}
+	return ""
+}
+
+func (x *MsgWithdrawReceipt) GetWithdrawer() string {
+	if x != nil {
+		return x.Withdrawer
+	}
+	return ""
+}
+
+func (x *MsgWithdrawReceipt) GetRecipient() string {
+	if x != nil {
+		return x.Recipient
+	}
+	return ""
+}
+
+func (x *MsgWithdrawReceipt) GetAmount() *v1beta1.Coin {
+	if x != nil {
+		return x.Amount
+	}
+	return nil
+}
+
+func (x *MsgWithdrawReceipt) GetTxhash() string {
+	if x != nil {
+		return x.Txhash
+	}
+	return ""
+}
+
+type MsgWithdrawReceiptResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgWithdrawReceiptResponse) Reset() {
+	*x = MsgWithdrawReceiptResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_gal_v1_tx_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgWithdrawReceiptResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgWithdrawReceiptResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgWithdrawReceiptResponse.ProtoReflect.Descriptor instead.
+func (*MsgWithdrawReceiptResponse) Descriptor() ([]byte, []int) {
+	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{11}
 }
 
 var File_nova_gal_v1_tx_proto protoreflect.FileDescriptor
@@ -3137,58 +6512,135 @@ var file_nova_gal_v1_tx_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73,
 	0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22,
-	0xf9, 0x01, 0x0a, 0x0a, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x12, 0x36,
-	0x0a, 0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x64, 0x65, 0x70,
-	0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x12, 0x34, 0x0a, 0x08, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76,
-	0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f,
-	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69,
-	0x6e, 0x67, 0x52, 0x08, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x12, 0x63, 0x0a, 0x06,
-	0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63,
-	0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74,
-	0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f,
-	0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d,
-	0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79,
-	0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
-	0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x22, 0x14, 0x0a, 0x12, 0x4d,
-	0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0xab, 0x01, 0x0a, 0x0c, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x53, 0x74, 0x61, 0x6b, 0x69,
-	0x6e, 0x67, 0x12, 0x36, 0x0a, 0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
-	0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52,
-	0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d,
-	0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31,
-	0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
-	0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65,
-	0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22,
-	0x16, 0x0a, 0x14, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xac, 0x01, 0x0a, 0x0b, 0x4d, 0x73, 0x67, 0x57,
-	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x38, 0x0a, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x64,
-	0x72, 0x61, 0x77, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d,
+	0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
+	0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x22, 0xf9, 0x01, 0x0a, 0x0a, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x12,
+	0x36, 0x0a, 0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x64, 0x65,
+	0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x12, 0x34, 0x0a, 0x08, 0x72, 0x65, 0x63, 0x65, 0x69,
+	0x76, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63,
+	0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72,
+	0x69, 0x6e, 0x67, 0x52, 0x08, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x12, 0x63, 0x0a,
+	0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e,
+	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65,
+	0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf,
+	0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73,
+	0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74,
+	0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75,
+	0x6e, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x22, 0x14, 0x0a, 0x12,
+	0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x7a, 0x0a, 0x0d, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67,
+	0x61, 0x74, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x2d, 0x0a, 0x12,
+	0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x21, 0x0a, 0x0c, 0x68,
+	0x6f, 0x73, 0x74, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x68, 0x6f, 0x73, 0x74, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x17,
+	0x0a, 0x15, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xcb, 0x01, 0x0a, 0x13, 0x4d, 0x73, 0x67, 0x55,
+	0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x12,
+	0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x36, 0x0a, 0x09, 0x64, 0x65, 0x70, 0x6f,
+	0x73, 0x69, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d,
 	0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53,
-	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x65,
-	0x72, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28,
-	0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e,
-	0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde,
-	0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73,
-	0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06,
-	0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x15, 0x0a, 0x13, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74,
-	0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x92, 0x01,
-	0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x43, 0x0a, 0x07, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74,
+	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x09, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72,
+	0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76,
+	0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f,
+	0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64,
+	0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x1d, 0x0a, 0x1b, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65,
+	0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0xa3, 0x02, 0x0a, 0x11, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f,
+	0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e,
+	0x65, 0x49, 0x64, 0x12, 0x38, 0x0a, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x65,
+	0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73,
+	0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e,
+	0x67, 0x52, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x65, 0x72, 0x12, 0x1c, 0x0a,
+	0x09, 0x72, 0x65, 0x63, 0x69, 0x70, 0x69, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x72, 0x65, 0x63, 0x69, 0x70, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x63, 0x0a, 0x06, 0x61,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f,
+	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61,
+	0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
+	0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70,
+	0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
+	0x12, 0x38, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00,
+	0x90, 0xdf, 0x1f, 0x01, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x22, 0x1b, 0x0a, 0x19, 0x4d, 0x73,
+	0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xca, 0x01, 0x0a, 0x14, 0x4d, 0x73, 0x67, 0x55,
+	0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74,
+	0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x64, 0x65, 0x70,
+	0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x64, 0x65,
+	0x70, 0x6f, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
+	0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f,
+	0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68,
+	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f,
+	0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43,
+	0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x16, 0x0a, 0x06,
+	0x74, 0x78, 0x68, 0x61, 0x73, 0x68, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x74, 0x78,
+	0x68, 0x61, 0x73, 0x68, 0x22, 0x1e, 0x0a, 0x1c, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c,
+	0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0xe8, 0x01, 0x0a, 0x12, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a,
+	0x6f, 0x65, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f,
+	0x65, 0x6e, 0x49, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
+	0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72,
+	0x61, 0x77, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x72, 0x65, 0x63, 0x69, 0x70, 0x69, 0x65, 0x6e,
+	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x63, 0x69, 0x70, 0x69, 0x65,
+	0x6e, 0x74, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65,
+	0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8,
+	0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d,
+	0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52,
+	0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x74, 0x78, 0x68, 0x61, 0x73,
+	0x68, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x74, 0x78, 0x68, 0x61, 0x73, 0x68, 0x22,
+	0x1c, 0x0a, 0x1a, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65,
+	0x63, 0x65, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0x92, 0x04,
+	0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x43, 0x0a, 0x07, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74,
 	0x12, 0x17, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
 	0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x1a, 0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
 	0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73,
-	0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x46, 0x0a, 0x08, 0x77, 0x69,
-	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x18, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61,
-	0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
-	0x1a, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
-	0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4c, 0x0a, 0x0a, 0x55, 0x6e,
+	0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x1a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65,
+	0x67, 0x61, 0x74, 0x65, 0x1a, 0x22, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e,
+	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5e, 0x0a, 0x10, 0x55, 0x6e, 0x64, 0x65,
+	0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x12, 0x20, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x6e,
+	0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x1a, 0x28,
+	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67,
+	0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x58, 0x0a, 0x0e, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x12, 0x1e, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x1a, 0x26, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x61, 0x0a, 0x11, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65,
+	0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x12, 0x21, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67,
+	0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67,
+	0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x1a, 0x29, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65,
+	0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5b, 0x0a, 0x0f, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61,
+	0x77, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x12, 0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72,
+	0x61, 0x77, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x1a, 0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
+	0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64,
+	0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x65, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x42, 0x9b, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
 	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
 	0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61,
@@ -3214,29 +6666,47 @@ func file_nova_gal_v1_tx_proto_rawDescGZIP() []byte {
 	return file_nova_gal_v1_tx_proto_rawDescData
 }
 
-var file_nova_gal_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_nova_gal_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_nova_gal_v1_tx_proto_goTypes = []interface{}{
-	(*MsgDeposit)(nil),           // 0: nova.gal.v1.MsgDeposit
-	(*MsgDepositResponse)(nil),   // 1: nova.gal.v1.MsgDepositResponse
-	(*MsgUnStaking)(nil),         // 2: nova.gal.v1.MsgUnStaking
-	(*MsgUnStakingResponse)(nil), // 3: nova.gal.v1.MsgUnStakingResponse
-	(*MsgWithdraw)(nil),          // 4: nova.gal.v1.MsgWithdraw
-	(*MsgWithdrawResponse)(nil),  // 5: nova.gal.v1.MsgWithdrawResponse
-	(*v1beta1.Coin)(nil),         // 6: cosmos.base.v1beta1.Coin
+	(*MsgDeposit)(nil),                   // 0: nova.gal.v1.MsgDeposit
+	(*MsgDepositResponse)(nil),           // 1: nova.gal.v1.MsgDepositResponse
+	(*MsgUndelegate)(nil),                // 2: nova.gal.v1.MsgUndelegate
+	(*MsgUndelegateResponse)(nil),        // 3: nova.gal.v1.MsgUndelegateResponse
+	(*MsgUndelegateRecord)(nil),          // 4: nova.gal.v1.MsgUndelegateRecord
+	(*MsgUndelegateRecordResponse)(nil),  // 5: nova.gal.v1.MsgUndelegateRecordResponse
+	(*MsgWithdrawRecord)(nil),            // 6: nova.gal.v1.MsgWithdrawRecord
+	(*MsgWithdrawRecordResponse)(nil),    // 7: nova.gal.v1.MsgWithdrawRecordResponse
+	(*MsgUndelegateReceipt)(nil),         // 8: nova.gal.v1.MsgUndelegateReceipt
+	(*MsgUndelegateReceiptResponse)(nil), // 9: nova.gal.v1.MsgUndelegateReceiptResponse
+	(*MsgWithdrawReceipt)(nil),           // 10: nova.gal.v1.MsgWithdrawReceipt
+	(*MsgWithdrawReceiptResponse)(nil),   // 11: nova.gal.v1.MsgWithdrawReceiptResponse
+	(*v1beta1.Coin)(nil),                 // 12: cosmos.base.v1beta1.Coin
+	(*timestamppb.Timestamp)(nil),        // 13: google.protobuf.Timestamp
 }
 var file_nova_gal_v1_tx_proto_depIdxs = []int32{
-	6, // 0: nova.gal.v1.MsgDeposit.amount:type_name -> cosmos.base.v1beta1.Coin
-	6, // 1: nova.gal.v1.MsgUnStaking.amount:type_name -> cosmos.base.v1beta1.Coin
-	6, // 2: nova.gal.v1.MsgWithdraw.amount:type_name -> cosmos.base.v1beta1.Coin
-	0, // 3: nova.gal.v1.Msg.deposit:input_type -> nova.gal.v1.MsgDeposit
-	4, // 4: nova.gal.v1.Msg.withdraw:input_type -> nova.gal.v1.MsgWithdraw
-	1, // 5: nova.gal.v1.Msg.deposit:output_type -> nova.gal.v1.MsgDepositResponse
-	5, // 6: nova.gal.v1.Msg.withdraw:output_type -> nova.gal.v1.MsgWithdrawResponse
-	5, // [5:7] is the sub-list for method output_type
-	3, // [3:5] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	12, // 0: nova.gal.v1.MsgDeposit.amount:type_name -> cosmos.base.v1beta1.Coin
+	12, // 1: nova.gal.v1.MsgUndelegateRecord.amount:type_name -> cosmos.base.v1beta1.Coin
+	12, // 2: nova.gal.v1.MsgWithdrawRecord.amount:type_name -> cosmos.base.v1beta1.Coin
+	13, // 3: nova.gal.v1.MsgWithdrawRecord.time:type_name -> google.protobuf.Timestamp
+	12, // 4: nova.gal.v1.MsgUndelegateReceipt.amount:type_name -> cosmos.base.v1beta1.Coin
+	12, // 5: nova.gal.v1.MsgWithdrawReceipt.amount:type_name -> cosmos.base.v1beta1.Coin
+	0,  // 6: nova.gal.v1.Msg.Deposit:input_type -> nova.gal.v1.MsgDeposit
+	2,  // 7: nova.gal.v1.Msg.Undelegate:input_type -> nova.gal.v1.MsgUndelegate
+	4,  // 8: nova.gal.v1.Msg.UndelegateRecord:input_type -> nova.gal.v1.MsgUndelegateRecord
+	6,  // 9: nova.gal.v1.Msg.WithdrawRecord:input_type -> nova.gal.v1.MsgWithdrawRecord
+	8,  // 10: nova.gal.v1.Msg.UndelegateReceipt:input_type -> nova.gal.v1.MsgUndelegateReceipt
+	10, // 11: nova.gal.v1.Msg.WithdrawReceipt:input_type -> nova.gal.v1.MsgWithdrawReceipt
+	1,  // 12: nova.gal.v1.Msg.Deposit:output_type -> nova.gal.v1.MsgDepositResponse
+	3,  // 13: nova.gal.v1.Msg.Undelegate:output_type -> nova.gal.v1.MsgUndelegateResponse
+	5,  // 14: nova.gal.v1.Msg.UndelegateRecord:output_type -> nova.gal.v1.MsgUndelegateRecordResponse
+	7,  // 15: nova.gal.v1.Msg.WithdrawRecord:output_type -> nova.gal.v1.MsgWithdrawRecordResponse
+	9,  // 16: nova.gal.v1.Msg.UndelegateReceipt:output_type -> nova.gal.v1.MsgUndelegateReceiptResponse
+	11, // 17: nova.gal.v1.Msg.WithdrawReceipt:output_type -> nova.gal.v1.MsgWithdrawReceiptResponse
+	12, // [12:18] is the sub-list for method output_type
+	6,  // [6:12] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_nova_gal_v1_tx_proto_init() }
@@ -3270,7 +6740,7 @@ func file_nova_gal_v1_tx_proto_init() {
 			}
 		}
 		file_nova_gal_v1_tx_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgUnStaking); i {
+			switch v := v.(*MsgUndelegate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3282,7 +6752,7 @@ func file_nova_gal_v1_tx_proto_init() {
 			}
 		}
 		file_nova_gal_v1_tx_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgUnStakingResponse); i {
+			switch v := v.(*MsgUndelegateResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3294,7 +6764,7 @@ func file_nova_gal_v1_tx_proto_init() {
 			}
 		}
 		file_nova_gal_v1_tx_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgWithdraw); i {
+			switch v := v.(*MsgUndelegateRecord); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3306,7 +6776,79 @@ func file_nova_gal_v1_tx_proto_init() {
 			}
 		}
 		file_nova_gal_v1_tx_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgWithdrawResponse); i {
+			switch v := v.(*MsgUndelegateRecordResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_gal_v1_tx_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgWithdrawRecord); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_gal_v1_tx_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgWithdrawRecordResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_gal_v1_tx_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgUndelegateReceipt); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_gal_v1_tx_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgUndelegateReceiptResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_gal_v1_tx_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgWithdrawReceipt); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_gal_v1_tx_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgWithdrawReceiptResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3324,7 +6866,7 @@ func file_nova_gal_v1_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_gal_v1_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
