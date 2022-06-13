@@ -43,7 +43,7 @@ message UndelegateRecord {
   string zone_id = 1;
   string delegator = 2;
   cosmos.base.v1beta1.Coin amount = 3;
-  int64 status = 4;
+  int64 state = 4;
 }
 
 message WithdrawRecord {
