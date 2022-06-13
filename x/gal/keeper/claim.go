@@ -22,7 +22,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.
 		k.Logger(ctx).Error(err.Error())
 	}
 
-	mintAmt := k.CalculateMintAmount(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	mintAmt := k.CalculateAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
 
 	err = k.MintShareTokens(ctx, claimerAddr, sdk.NewCoin(stAsset, sdk.NewIntFromBigInt(mintAmt)))
 	if err != nil {
@@ -30,7 +30,19 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.
 	}
 }
 
-func (k Keeper) CalculateMintAmount(userDepositAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
+func (k Keeper) GetShareTokenMintingAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
+	stAsset := k.interTxKeeper.GetstDenomForBaseDenom(ctx, amt.Denom)
+	totalSharedToken := k.bankKeeper.GetSupply(ctx, stAsset)
+	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, amt.Denom)
+	if err != nil {
+		return sdk.Coin{}, err
+	}
+
+	mintAmt := k.CalculateAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	return sdk.NewInt64Coin(amt.Denom, mintAmt.Int64()), nil
+}
+
+func (k Keeper) CalculateAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
 	res := new(big.Int)
 	return res.Mul(userDepositAmt, totalShareTokenSupply).Div(res, totalStakedAmount)
 }
@@ -50,17 +62,14 @@ func (k Keeper) BurnShareTokenAndMintWrappedToken(ctx sdk.Context, burner string
 		k.Logger(ctx).Error(err.Error())
 	}
 
-	withdrawAmt := k.CalculateWithdrawAmount(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
-
 	err = k.BurnShareTokens(ctx, burnerAddr, amt)
 	if err != nil {
 		k.Logger(ctx).Error(err.Error())
 	}
 
-	err = k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(sdk.NewInt64Coin(baseAsset, withdrawAmt.Int64())))
-	if err != nil {
-		k.Logger(ctx).Error(err.Error())
-	}
+	withdrawAmt := k.CalculateWithdrawAmount(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	// record to receipt
+
 }
 
 func (k Keeper) CalculateWithdrawAmount(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {

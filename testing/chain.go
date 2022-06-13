@@ -153,6 +153,68 @@ func NewTestChainWithValSet(t *testing.T, coord *Coordinator, chainID string, va
 	return chain
 }
 
+func NewTestChainWithValSetAndOptions(t *testing.T, coord *Coordinator, chainID string, valSet *tmtypes.ValidatorSet, signers map[string]tmtypes.PrivValidator, chainState *TestZoneState) *TestChain {
+	genAccs := []authtypes.GenesisAccount{}
+	genBals := []banktypes.Balance{}
+	senderAccs := []SenderAccount{}
+
+	// generate genesis accounts
+	for i := 0; i < chainState.accounts.numAccounts; i++ {
+		senderPrivKey := secp256k1.GenPrivKey()
+		acc := authtypes.NewBaseAccount(senderPrivKey.PubKey().Address().Bytes(), senderPrivKey.PubKey(), uint64(i), 0)
+		amount := sdk.NewInt(chainState.accounts.amount)
+
+		balance := banktypes.Balance{
+			Address: acc.GetAddress().String(),
+			//Coins:   sdk.NewCoins(sdk.NewCoin(sdk.DefaultBondDenom, amount), sdk.NewCoin("aphoton", amount)),
+			Coins: sdk.NewCoins(sdk.NewCoin(chainState.denom, amount)),
+		}
+
+		genAccs = append(genAccs, acc)
+		genBals = append(genBals, balance)
+
+		senderAcc := SenderAccount{
+			SenderAccount: acc,
+			SenderPrivKey: senderPrivKey,
+		}
+
+		senderAccs = append(senderAccs, senderAcc)
+	}
+	delegationAmount := sdk.NewCoin(chainState.denom, sdk.NewInt(chainState.validators.delegationAmount))
+	testApp := app.SetupWithGenesisValSetAndOption(t, delegationAmount, valSet, genAccs, chainID, genBals...)
+
+	// create current header and call begin block
+	header := tmproto.Header{
+		ChainID: chainID,
+		Height:  1,
+		Time:    coord.CurrentTime.UTC(),
+	}
+
+	txConfig := app.GetEncodingConfig().TxConfig
+
+	// create an account to send transactions from
+	chain := &TestChain{
+		T:              t,
+		Coordinator:    coord,
+		ChainID:        chainID,
+		App:            testApp,
+		CurrentHeader:  header,
+		QueryServer:    testApp.IBCKeeper,
+		TxConfig:       txConfig,
+		Codec:          testApp.AppCodec(),
+		Vals:           valSet,
+		NextVals:       valSet,
+		Signers:        signers,
+		SenderPrivKey:  senderAccs[0].SenderPrivKey,
+		SenderAccount:  senderAccs[0].SenderAccount,
+		SenderAccounts: senderAccs,
+	}
+
+	coord.CommitBlock(chain)
+
+	return chain
+}
+
 // NewTestChain initializes a new test chain with a default of 4 validators
 // Use this function if the tests do not need custom control over the validator set
 func NewTestChain(t *testing.T, coord *Coordinator, chainID string) *TestChain {
@@ -177,6 +239,32 @@ func NewTestChain(t *testing.T, coord *Coordinator, chainID string) *TestChain {
 	valSet := tmtypes.NewValidatorSet(validators)
 
 	return NewTestChainWithValSet(t, coord, chainID, valSet, signersByAddress)
+}
+
+// NewTestChainWithOptions initializes a new test chain with a default of 4 validators
+// Use this function if the tests do not need custom control over the validator set
+func NewTestChainWithOptions(t *testing.T, coord *Coordinator, chainID string, chainState *TestZoneState) *TestChain {
+	// generate validators private/public key
+	var (
+		validatorsPerChain = chainState.validators.numValidators
+		validators         []*tmtypes.Validator
+		signersByAddress   = make(map[string]tmtypes.PrivValidator, validatorsPerChain)
+	)
+
+	for i := 0; i < validatorsPerChain; i++ {
+		privVal := mock.NewPV()
+		pubKey, err := privVal.GetPubKey()
+		require.NoError(t, err)
+		validators = append(validators, tmtypes.NewValidator(pubKey, 1))
+		signersByAddress[pubKey.Address().String()] = privVal
+	}
+
+	// construct validator set;
+	// Note that the validators are sorted by voting power
+	// or, if equal, by address lexical order
+	valSet := tmtypes.NewValidatorSet(validators)
+
+	return NewTestChainWithValSetAndOptions(t, coord, chainID, valSet, signersByAddress, chainState)
 }
 
 // GetContext returns the current context for the application.
