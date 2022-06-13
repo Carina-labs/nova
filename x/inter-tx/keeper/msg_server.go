@@ -43,7 +43,6 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		BaseDenom:        zone.BaseDenom,
 		StDenom:          "st" + zone.BaseDenom,
 		SnDenom:          "sn" + zone.BaseDenom,
-		AuthzAddress:     zone.AuthzAddress,
 	}
 
 	k.SetRegesterZone(ctx, *ZoneInfo)
@@ -55,11 +54,52 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 	return &types.MsgRegisterZoneResponse{}, nil
 }
 
+func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDeleteRegisteredZone) (*types.MsgDeleteRegisteredZoneResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone_info, ok := k.GetRegisteredZone(ctx, zone.ZoneName)
+
+	if !ok {
+		return &types.MsgDeleteRegisteredZoneResponse{}, errors.New("zone name is not found")
+	}
+
+	if zone_info.IcaConnectionInfo.OwnerAddress != zone.SenderAddress {
+		return &types.MsgDeleteRegisteredZoneResponse{}, errors.New("")
+	}
+
+	k.DeleteRegisterZone(ctx, zone.ZoneName)
+
+	return &types.MsgDeleteRegisteredZoneResponse{}, nil
+}
+
+func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZoneInfo) (*types.MsgChangeRegisteredZoneInfoResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone_info := &types.RegisteredZone{
+		ZoneName: zone.ZoneName,
+		IcaConnectionInfo: &types.IcaConnectionInfo{
+			ConnectionId: zone.IcaInfo.ConnectionId,
+			OwnerAddress: zone.IcaInfo.OwnerAddress,
+		},
+		TransferConnectionInfo: &types.TransferConnectionInfo{
+			ConnectionId: zone.TransferInfo.ConnectionId,
+			PortId:       zone.TransferInfo.PortId,
+			ChannelId:    zone.TransferInfo.ChannelId,
+		},
+		ValidatorAddress: zone.ValidatorAddress,
+		BaseDenom:        zone.BaseDenom,
+		StDenom:          "st" + zone.BaseDenom,
+		SnDenom:          "sn" + zone.BaseDenom,
+	}
+
+	k.SetRegesterZone(ctx, *zone_info)
+	return &types.MsgChangeRegisteredZoneInfoResponse{}, nil
+}
+
 func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate) (*types.MsgIcaDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
-
 	if !ok {
 		return &types.MsgIcaDelegateResponse{}, errors.New("zone name is not found")
 	}

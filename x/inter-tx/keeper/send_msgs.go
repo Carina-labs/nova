@@ -1,25 +1,45 @@
 package keeper
 
 import (
-	"fmt"
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+
+	// stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 )
 
-// SubmitTx implements the Msg/SubmitTx interface
-func (k Keeper) SendIcaTx(ctx sdk.Context, owner_address, connection_id string, msgs []sdk.Msg) error {
+// func (k Keeper) SendUndelegateMsg(ctx sdk.Context, zoneId, controllerAddr, hostAddr string, amt sdk.Coin) error {
+// 	zoneInfo, ok := k.GetRegisteredZone(ctx, zoneId)
 
-	portID, err := icatypes.NewControllerPortID(owner_address)
+// 	if !ok {
+// 		return errors.New("zone name is not found")
+// 	}
+
+// 	var msgs []sdk.Msg
+
+// 	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: hostAddr, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: amt})
+// 	err := k.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+
+// 	if err != nil {
+// 		return errors.New("IcaUnDelegate transaction failed to send")
+// 	}
+
+// 	return nil
+// }
+
+// SubmitTx implements the Msg/SubmitTx interface
+func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg) error {
+
+	portID, err := icatypes.NewControllerPortID(controllerId)
 	if err != nil {
 		return err
 	}
 
-	channelID, found := k.icaControllerKeeper.GetActiveChannelID(ctx, connection_id, portID)
+	channelID, found := k.icaControllerKeeper.GetActiveChannelID(ctx, connectionId, portID)
 	if !found {
 		return sdkerrors.Wrapf(icatypes.ErrActiveChannelNotFound, "failed to retrieve active channel for port %s", portID)
 	}
@@ -28,7 +48,6 @@ func (k Keeper) SendIcaTx(ctx sdk.Context, owner_address, connection_id string, 
 	if !found {
 		return sdkerrors.Wrap(channeltypes.ErrChannelCapabilityNotFound, "module does not own channel capability")
 	}
-	fmt.Println("msgs : ", msgs[0])
 	data, err := icatypes.SerializeCosmosTx(k.cdc, msgs)
 	if err != nil {
 		return err
@@ -42,7 +61,7 @@ func (k Keeper) SendIcaTx(ctx sdk.Context, owner_address, connection_id string, 
 	// timeoutTimestamp set to max value with the unsigned bit shifted to sastisfy hermes timestamp conversion
 	// it is the responsibility of the auth module developer to ensure an appropriate timeout timestamp
 	timeoutTimestamp := time.Now().Add(time.Minute).UnixNano()
-	_, err = k.icaControllerKeeper.SendTx(ctx, chanCap, connection_id, portID, packetData, uint64(timeoutTimestamp))
+	_, err = k.icaControllerKeeper.SendTx(ctx, chanCap, connectionId, portID, packetData, uint64(timeoutTimestamp))
 	if err != nil {
 		return err
 	}

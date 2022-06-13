@@ -1,9 +1,10 @@
 package keeper
 
 import (
+	"math/big"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"math/big"
 )
 
 // wrapped coin -> st coin

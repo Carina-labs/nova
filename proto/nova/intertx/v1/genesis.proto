@@ -15,8 +15,6 @@ message RegisteredZone {
   string base_denom = 5;
   string sn_denom = 6;
   string st_denom = 7;
-  string authz_address = 8;
-  //repeated string authz_permit = 9;
 }
 
 message IcaAccount {

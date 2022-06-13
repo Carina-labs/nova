@@ -280,7 +280,7 @@ func NewNovaApp(
 		wasm.NewAppModule(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
-		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper),
+		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
 	)
 	app.sm.RegisterStoreDecoders()

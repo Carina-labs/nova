@@ -1,16 +1,27 @@
 package types
 
 import (
+	"errors"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 const (
-	TypeMsgDeposit  = "deposit"
-	TypeMsgWithdraw = "withdraw"
+	TypeMsgDeposit           = "deposit"
+	TypeMsgUndelegate        = "undelegate"
+	TypeMsgWithdrawRecord    = "withdrawRecord"
+	TypeMsgUndelegateRecord  = "undelegateRecord"
+	TypeMsgWithdrawReceipt   = "withdrawReceipt"
+	TypeMsgUndelegateReceipt = "undelegateReceipt"
 )
 
 var _ sdk.Msg = &MsgDeposit{}
+var _ sdk.Msg = &MsgUndelegate{}
+var _ sdk.Msg = &MsgUndelegateRecord{}
+var _ sdk.Msg = &MsgWithdrawRecord{}
+var _ sdk.Msg = &MsgUndelegateReceipt{}
+var _ sdk.Msg = &MsgWithdrawReceipt{}
 
 func NewMsgDeposit(fromAddr sdk.AccAddress, toAddr string, amount sdk.Coins, channel string) *MsgDeposit {
 	return &MsgDeposit{
@@ -54,24 +65,102 @@ func (msg MsgDeposit) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{depositor}
 }
 
-var _ sdk.Msg = &MsgWithdraw{}
+func NewMsgUndelegate(zoneId, controllerAddr, hostAddr string) *MsgUndelegate {
+	return &MsgUndelegate{
+		ZoneId:            zoneId,
+		ControllerAddress: controllerAddr,
+		HostAddress:       hostAddr,
+	}
+}
 
-func NewMsgWithdraw(toAddr sdk.AccAddress, amount sdk.Coins) *MsgWithdraw {
-	return &MsgWithdraw{
+func (msg MsgUndelegate) Route() string {
+	return RouterKey
+}
+
+func (msg MsgUndelegate) Type() string {
+	return TypeMsgDeposit
+}
+
+func (msg MsgUndelegate) ValidateBasic() error {
+	if msg.ControllerAddress == "" {
+		return errors.New("controller address is not null")
+	}
+
+	if msg.HostAddress == "" {
+		return errors.New("host address is not null")
+	}
+
+	if msg.ZoneId == "" {
+		return errors.New("zone id is not found")
+	}
+	return nil
+}
+
+func (msg MsgUndelegate) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgUndelegate) GetSigners() []sdk.AccAddress {
+	depositor, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
+	return []sdk.AccAddress{depositor}
+}
+
+func NewMsgUndelegateRecord(zoneId, Depositor string, amount sdk.Coin) *MsgUndelegateRecord {
+	return &MsgUndelegateRecord{
+		ZoneId:    zoneId,
+		Depositor: Depositor,
+		Amount:    amount,
+	}
+}
+
+func (msg MsgUndelegateRecord) Route() string {
+	return RouterKey
+}
+
+func (msg MsgUndelegateRecord) Type() string {
+	return TypeMsgUndelegateRecord
+}
+
+func (msg MsgUndelegateRecord) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.Depositor); err != nil {
+		return err
+	}
+
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	return nil
+}
+
+func (msg MsgUndelegateRecord) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgUndelegateRecord) GetSigners() []sdk.AccAddress {
+	withdrawer, _ := sdk.AccAddressFromBech32(msg.Depositor)
+	return []sdk.AccAddress{withdrawer}
+}
+func NewMsgWithdrawRecord(toAddr sdk.AccAddress, amount sdk.Coin) *MsgWithdrawRecord {
+	return &MsgWithdrawRecord{
 		Withdrawer: toAddr.String(),
 		Amount:     amount,
 	}
 }
 
-func (msg MsgWithdraw) Route() string {
+func (msg MsgWithdrawRecord) Route() string {
 	return RouterKey
 }
 
-func (msg MsgWithdraw) Type() string {
-	return TypeMsgWithdraw
+func (msg MsgWithdrawRecord) Type() string {
+	return TypeMsgWithdrawRecord
 }
 
-func (msg MsgWithdraw) ValidateBasic() error {
+func (msg MsgWithdrawRecord) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
 		return err
 	}
@@ -80,18 +169,102 @@ func (msg MsgWithdraw) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
-	if !msg.Amount.IsAllPositive() {
+	if !msg.Amount.IsPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
 	return nil
 }
 
-func (msg MsgWithdraw) GetSignBytes() []byte {
+func (msg MsgWithdrawRecord) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgWithdraw) GetSigners() []sdk.AccAddress {
+func (msg MsgWithdrawRecord) GetSigners() []sdk.AccAddress {
+	withdrawer, _ := sdk.AccAddressFromBech32(msg.Withdrawer)
+	return []sdk.AccAddress{withdrawer}
+}
+
+func NewMsgUndelegateReceipt(zoneId, depositor string, amount sdk.Coin, txhash string) *MsgUndelegateReceipt {
+	return &MsgUndelegateReceipt{
+		ZoneId:    zoneId,
+		Depositor: depositor,
+		Amount:    amount,
+		Txhash:    txhash,
+	}
+}
+
+func (msg MsgUndelegateReceipt) Route() string {
+	return RouterKey
+}
+
+func (msg MsgUndelegateReceipt) Type() string {
+	return TypeMsgUndelegateReceipt
+}
+
+func (msg MsgUndelegateReceipt) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.Depositor); err != nil {
+		return err
+	}
+
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	return nil
+}
+
+func (msg MsgUndelegateReceipt) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgUndelegateReceipt) GetSigners() []sdk.AccAddress {
+	withdrawer, _ := sdk.AccAddressFromBech32(msg.Depositor)
+	return []sdk.AccAddress{withdrawer}
+}
+
+func NewMsgWithdrawReceipt(zoneId, withdrawer string, amount sdk.Coin, txhash string) *MsgWithdrawReceipt {
+	return &MsgWithdrawReceipt{
+		ZoenId:     zoneId,
+		Withdrawer: withdrawer,
+		Amount:     amount,
+		Txhash:     txhash,
+	}
+}
+
+func (msg MsgWithdrawReceipt) Route() string {
+	return RouterKey
+}
+
+func (msg MsgWithdrawReceipt) Type() string {
+	return TypeMsgWithdrawReceipt
+}
+
+func (msg MsgWithdrawReceipt) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
+		return err
+	}
+
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	return nil
+}
+
+func (msg MsgWithdrawReceipt) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgWithdrawReceipt) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.Withdrawer)
 	return []sdk.AccAddress{withdrawer}
 }

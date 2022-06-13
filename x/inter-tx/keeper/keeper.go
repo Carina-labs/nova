@@ -22,6 +22,7 @@ type Keeper struct {
 	authKeeper          types.AccountKeeper
 	scopedKeeper        capabilitykeeper.ScopedKeeper
 	icaControllerKeeper icacontrollerkeeper.Keeper
+	hooks               types.ICAHooks
 }
 
 func NewKeeper(cdc codec.Codec, storeKey sdk.StoreKey, ak types.AccountKeeper, iaKeeper icacontrollerkeeper.Keeper, scopedKeeper capabilitykeeper.ScopedKeeper, paramStore paramtypes.Subspace) Keeper {
@@ -46,4 +47,15 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 // ClaimCapability claims the channel capability passed via the OnOpenChanInit callback
 func (k *Keeper) ClaimCapability(ctx sdk.Context, cap *capabilitytypes.Capability, name string) error {
 	return k.scopedKeeper.ClaimCapability(ctx, cap, name)
+}
+
+// SetHooks set the epoch hooks
+func (k *Keeper) SetHooks(eh types.ICAHooks) *Keeper {
+	if k.hooks != nil {
+		panic("cannot set ICA hooks twice")
+	}
+
+	k.hooks = eh
+
+	return k
 }

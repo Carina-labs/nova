@@ -2,15 +2,15 @@ syntax = "proto3";
 package nova.intertx.v1;
 
 import "gogoproto/gogo.proto";
-import "google/protobuf/any.proto";
 import "nova/intertx/v1/genesis.proto";
 import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/inter-tx/types";
+option (gogoproto.goproto_getters_all) = false;
 
 // Msg defines the intertx Msg service.
 service Msg {
-  // Register defines a rpc handler for MsgRegisterZone
+  // RegisterZone defines a rpc handler for MsgRegisterZone
   rpc RegisterZone(MsgRegisterZone) returns (MsgRegisterZoneResponse);
   // IcaDelegate defines a rpc handler for MsgIcaDelegate
   rpc IcaDelegate(MsgIcaDelegate) returns (MsgIcaDelegateResponse);
@@ -25,7 +25,20 @@ service Msg {
 // MsgRegisterZone defines the payload for Msg/RegisterZone
 message MsgRegisterZone {
   option (gogoproto.equal)           = false;
-  option (gogoproto.goproto_getters) = false;
+  
+  string zone_name = 1;
+  string chain_id = 2;
+  IcaConnectionInfo ica_info = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+}
+
+// MsgRegisterZoneResponse defines the response for Msg/RegisterZone
+message MsgRegisterZoneResponse {}
+
+message MsgChangeRegisteredZoneInfo{
+  option (gogoproto.equal)           = false;
 
   string zone_name = 1;
   string chain_id = 2;
@@ -33,12 +46,17 @@ message MsgRegisterZone {
   TransferConnectionInfo transfer_info = 4;
   string validator_address = 5;
   string base_denom = 6;
-  string authz_address = 7;
-// repeated string authz_permit = 8;
 }
 
-// MsgRegisterZoneResponse defines the response for Msg/RegisterZone
-message MsgRegisterZoneResponse {}
+message MsgChangeRegisteredZoneInfoResponse{}
+
+message MsgDeleteRegisteredZone{
+  string zone_name = 1;
+  string chain_id = 2;
+  string sender_address = 3;
+}
+
+message MsgDeleteRegisteredZoneResponse{}
 
 message MsgIcaDelegate{
   string zone_name = 1;
