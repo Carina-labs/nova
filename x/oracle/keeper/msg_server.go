@@ -10,17 +10,23 @@ import (
 var _ types.MsgServer = msgServer{}
 
 type msgServer struct {
-	keeper Keeper
+	keeper *Keeper
 }
 
-func (m msgServer) UpdateChainState(ctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
+func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
+	return &msgServer{
+		keeper: keeper,
+	}
+}
+
+func (server msgServer) UpdateChainState(ctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
 	goCtx := sdk.UnwrapSDKContext(ctx)
 
-	if err := m.keeper.UpdateChainState(goCtx, &types.ChainInfo{
-		Coin:               state.Coin,
-		OperatorAddress:    state.Operator,
-		LastBlockHeight:    state.BlockHeight,
-		Decimal:            state.Decimal,
+	if err := server.keeper.UpdateChainState(goCtx, &types.ChainInfo{
+		Coin:            state.Coin,
+		OperatorAddress: state.Operator,
+		LastBlockHeight: state.BlockHeight,
+		Decimal:         state.Decimal,
 	}); err != nil {
 		return nil, err
 	}
@@ -28,21 +34,17 @@ func (m msgServer) UpdateChainState(ctx context.Context, state *types.MsgUpdateC
 	return &types.MsgUpdateChainStateResponse{}, nil
 }
 
-func (m msgServer) GetChainState(ctx context.Context, request *types.QueryStateRequest) (*types.QueryStateResponse, error) {
+func (server msgServer) GetChainState(ctx context.Context, request *types.QueryStateRequest) (*types.QueryStateResponse, error) {
 	goCtx := sdk.UnwrapSDKContext(ctx)
 
-	result, err := m.keeper.GetChainState(goCtx, request.ChainDenom)
+	result, err := server.keeper.GetChainState(goCtx, request.ChainDenom)
 	if err != nil {
 		return nil, err
 	}
 
 	return &types.QueryStateResponse{
-		Coin:               result.Coin,
-		Decimal:            result.Decimal,
-		LastBlockHeight:    result.LastBlockHeight,
+		Coin:            result.Coin,
+		Decimal:         result.Decimal,
+		LastBlockHeight: result.LastBlockHeight,
 	}, nil
-}
-
-func NewMsgServerImpl(keeper Keeper) types.MsgServer {
-	return &msgServer{keeper: keeper}
 }

@@ -11,10 +11,10 @@ import (
 )
 
 var (
-	fooDenom     = "uatom"
-	invalidDenom = "invalid_denom"
-	fooOperator  = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-	fooBalance int64 = 1000000000
+	fooDenom           = "uatom"
+	invalidDenom       = "invalid_denom"
+	fooOperator        = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	fooBalance   int64 = 1000000000
 )
 
 type KeeperTestSuite struct {
@@ -35,10 +35,10 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 	oracleKeeper := suite.App.OracleKeeper
 
 	chainInfo := types.ChainInfo{
-		Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-		OperatorAddress:    fooOperator.String(),
-		LastBlockHeight:    10,
-		Decimal:            6,
+		Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
+		OperatorAddress: fooOperator.String(),
+		LastBlockHeight: 10,
+		Decimal:         6,
 	}
 
 	tests := []struct {
@@ -51,10 +51,10 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		{
 			name: "no operator",
 			chainInfo: types.ChainInfo{
-				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-				OperatorAddress:    fooOperator.String(),
-				LastBlockHeight:    10,
-				Decimal:            6,
+				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
+				OperatorAddress: fooOperator.String(),
+				LastBlockHeight: 10,
+				Decimal:         6,
 			},
 			queryDenom: fooDenom,
 			operator:   nil,
@@ -63,10 +63,10 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		{
 			name: "no data with incorrect query",
 			chainInfo: types.ChainInfo{
-				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-				OperatorAddress:    fooOperator.String(),
-				LastBlockHeight:    10,
-				Decimal:            6,
+				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
+				OperatorAddress: fooOperator.String(),
+				LastBlockHeight: 10,
+				Decimal:         6,
 			},
 			queryDenom: invalidDenom,
 			operator:   &fooOperator,
@@ -75,10 +75,10 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		{
 			name: "should success",
 			chainInfo: types.ChainInfo{
-				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-				OperatorAddress:    fooOperator.String(),
-				LastBlockHeight:    10,
-				Decimal:            6,
+				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
+				OperatorAddress: fooOperator.String(),
+				LastBlockHeight: 10,
+				Decimal:         6,
 			},
 			queryDenom: fooDenom,
 			operator:   &fooOperator,
