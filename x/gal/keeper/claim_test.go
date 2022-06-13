@@ -11,16 +11,34 @@ func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 		expected              int64
 	}{
 		{
-			userDepositAmt:        950 * 1000000,
-			totalShareTokenSupply: 900000000 * 1000000,
-			totalStakedAmount:     2500000 * 1000000,
-			expected:              342000 * 1000000,
+			userDepositAmt:        1000_000000,
+			totalShareTokenSupply: 40000_000000,
+			totalStakedAmount:     40000_000000,
+			expected:              1000_000000,
 		},
 		{
-			userDepositAmt:        123 * 1000000,
-			totalShareTokenSupply: 871312859 * 1000000,
-			totalStakedAmount:     2159872 * 1000000,
-			expected:              49619367099,
+			userDepositAmt:        1000_000000,
+			totalShareTokenSupply: 40000_000000,
+			totalStakedAmount:     40000_000000,
+			expected:              1000_000000,
+		},
+		{
+			userDepositAmt:        1000_000000,
+			totalShareTokenSupply: 41000_000000,
+			totalStakedAmount:     42000_000000,
+			expected:              976_190476,
+		},
+		{
+			userDepositAmt:        1000_000000,
+			totalShareTokenSupply: 41976190480,
+			totalStakedAmount:     44500_000000,
+			expected:              943_285179,
+		},
+		{
+			userDepositAmt:        1000_000000,
+			totalShareTokenSupply: 42919_475660,
+			totalStakedAmount:     47500_000000,
+			expected:              903_567908,
 		},
 	}
 
@@ -30,7 +48,7 @@ func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 		totalStakedAmount := big.NewInt(tc.totalStakedAmount)
 
 		res := suite.App.GalKeeper.CalculateMintAmount(userDepositAmt, totalShareTokenSupply, totalStakedAmount)
-		println(res.Int64() / 1000000)
+		println(res.Int64())
 		suite.Equal(tc.expected, res.Int64())
 	}
 }
