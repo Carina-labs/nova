@@ -7,7 +7,6 @@ import (
 
 type ICAHooks interface {
 	AfterDelegateEnd()
-	BeforeUndelegateStart(sdk.Context, string)
 	AfterUndelegateEnd(sdk.Context, channeltypes.Packet, string)
 	AfterAutoStakingEnd()
 	AfterWithdrawEnd()
@@ -24,12 +23,6 @@ func NewMultiICAHooks(hooks ...ICAHooks) MultiICAHooks {
 func (h MultiICAHooks) AfterDelegateEnd() {
 	for i := range h {
 		h[i].AfterDelegateEnd()
-	}
-}
-
-func (h MultiICAHooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
-	for i := range h {
-		h[i].BeforeUndelegateStart(ctx, zoneId)
 	}
 }
 

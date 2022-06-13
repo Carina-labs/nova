@@ -79,22 +79,21 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, msg.ZoneId)
+
+	if !ok {
+		return nil, errors.New("zone name is not found")
+	}
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+
+	amt := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+
+	// GetShareTokenMintingAmt(amt)
 	// burn stAsset
 	// if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
 	// 	sdk.Coins{sdk.Coin{Denom: undelegate.Amount.Denom, Amount: undelegate.Amount.Amount}}); err != nil {
 	// 	return nil, err
 	// }
-
-	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, msg.ZoneId)
-	if !ok {
-		return nil, errors.New("zone name is not found")
-	}
-
-	undelegateRecoreds := m.keeper.GetAllUndelegateRecord(ctx, msg.ZoneId)
-
-	m.keeper.ChangeUndelegateStatus(ctx, undelegateRecoreds)
-
-	amt := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, undelegateRecoreds)
 
 	var msgs []sdk.Msg
 

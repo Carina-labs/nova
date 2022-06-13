@@ -15,12 +15,6 @@ func (k Keeper) AfterDelegateEnd() {
 	}
 }
 
-func (k Keeper) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
-	if k.hooks != nil {
-		k.hooks.BeforeUndelegateStart(ctx, zoneId)
-	}
-}
-
 func (k Keeper) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, txHash string) {
 	if k.hooks != nil {
 		k.hooks.AfterUndelegateEnd(ctx, packet, txHash)
