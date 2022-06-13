@@ -78,7 +78,7 @@ func (suite *KeeperTestSuite) TestCalculateBurnAmount() {
 		totalShareTokenSupply := big.NewInt(tc.totalShareTokenSupply)
 		totalStakedAmount := big.NewInt(tc.totalStakedAmount)
 
-		res := suite.App.GalKeeper.CalculateWithdrawAmount(burnedAmount, totalShareTokenSupply, totalStakedAmount)
+		res := suite.App.GalKeeper.CalculateLambda(burnedAmount, totalShareTokenSupply, totalStakedAmount)
 		print(res.Int64())
 		suite.Equal(tc.expected, res.Int64())
 	}
