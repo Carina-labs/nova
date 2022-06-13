@@ -59,6 +59,23 @@ func (k Keeper) MintShareTokens(ctx sdk.Context,
 	return nil
 }
 
+func (k Keeper) BurnShareTokens(ctx sdk.Context, burner sdk.Address, amt sdk.Coin) error {
+	burnerAddr, err := sdk.AccAddressFromBech32(burner.String())
+	if err != nil {
+		return err
+	}
+
+	if err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, burnerAddr, types.ModuleName, sdk.NewCoins(amt)); err != nil {
+		return err
+	}
+
+	if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.NewCoins(amt)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (k Keeper) SetPairToken(ctx sdk.Context, denom string, shareTokenDenom string) {
 	data := make(map[string]string)
 	data[denom] = shareTokenDenom
