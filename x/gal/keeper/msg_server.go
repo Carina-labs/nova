@@ -122,16 +122,3 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 
 	return &types.MsgWithdrawRecordResponse{}, nil
 }
-
-func (m msgServer) UndelegateReceipt(goCtx context.Context, msgUndelegateReceipt *types.MsgUndelegateReceipt) (*types.MsgUndelegateReceiptResponse, error) {
-	// TODO
-	return &types.MsgUndelegateReceiptResponse{}, nil
-}
-
-func (m msgServer) WithdrawReceipt(goCtx context.Context, withdrawReceipt *types.MsgWithdrawReceipt) (*types.MsgWithdrawReceiptResponse, error) {
-	ctx := sdk.UnwrapSDKContext(goCtx)
-	// TODO
-
-	m.keeper.SetWithdrawReceipt(ctx, *withdrawReceipt)
-	return &types.MsgWithdrawReceiptResponse{}, nil
-}

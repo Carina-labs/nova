@@ -53,18 +53,3 @@ message WithdrawRecord {
   cosmos.base.v1beta1.Coin amount = 4;
   google.protobuf.Timestamp completion_time = 5[(gogoproto.nullable) = false, (gogoproto.stdtime)= true];
 }
-
-message UndelegateReceipt {
-  repeated string zone_id = 1;
-  repeated string withdrawer = 2;
-  repeated cosmos.base.v1beta1.Coin amount = 3;
-  string txhash = 4;
-}
-
-message WithdrawReceipt {
-  repeated string zone_id = 1;
-  repeated string withdrawer = 2;
-  repeated string recipient = 3;
-  repeated cosmos.base.v1beta1.Coin amount = 4;
-  string txhash = 5;
-}

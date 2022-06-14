@@ -15,8 +15,6 @@ service Msg {
   rpc Undelegate(MsgUndelegate) returns (MsgUndelegateResponse);
   rpc UndelegateRecord(MsgUndelegateRecord) returns (MsgUndelegateRecordResponse);
   rpc WithdrawRecord(MsgWithdrawRecord) returns (MsgWithdrawRecordResponse);
-  rpc UndelegateReceipt(MsgUndelegateReceipt) returns (MsgUndelegateReceiptResponse);
-  rpc WithdrawReceipt(MsgWithdrawReceipt) returns (MsgWithdrawReceiptResponse);
 }
 
 // MsgDeposit defines user who deposit and amount of coins.
@@ -60,24 +58,3 @@ message MsgWithdrawRecord {
 }
 
 message MsgWithdrawRecordResponse {}
-
-message MsgUndelegateReceipt {
-  string zone_id = 1;
-  string depositor = 2;
-  cosmos.base.v1beta1.Coin amount = 3
-      [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
-  string txhash = 4;
-}
-
-message MsgUndelegateReceiptResponse{}
-
-message MsgWithdrawReceipt {
-  string zoen_id = 1;
-  string withdrawer = 2;
-  string recipient = 3;
-  cosmos.base.v1beta1.Coin amount = 4
-      [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
-  string txhash = 5;
-}
-
-message MsgWithdrawReceiptResponse {}

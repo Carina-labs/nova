@@ -19,15 +19,3 @@ func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) 
 func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context) {
 
 }
-
-func (k Keeper) GetWithdrawReceipt(ctx sdk.Context) {
-
-}
-
-func (k Keeper) SetWithdrawReceipt(ctx sdk.Context, receipt types.MsgWithdrawReceipt) {
-
-}
-
-func (k Keeper) DeleteWithdrawReceipt(ctx sdk.Context) {
-
-}
