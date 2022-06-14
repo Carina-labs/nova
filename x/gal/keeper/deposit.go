@@ -13,20 +13,14 @@ func (k Keeper) getDepositCache(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
 }
 
-func (k Keeper) CacheDepositAmt(ctx sdk.Context, depositor sdk.AccAddress, amt sdk.Coin) error {
+func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg types.MsgDeposit) error {
 	store := k.getDepositCache(ctx)
-	data := make(map[string]string)
-	data[types.KeyCoin] = amt.String()
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		return err
-	}
-
-	store.Set([]byte(depositor.String()), bytes)
+	bz := k.cdc.MustMarshal(&msg)
+	store.Set([]byte(msg.Depositor), bz)
 	return nil
 }
 
-func (k Keeper) GetCachedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (*types.QueryCachedDepositAmountResponse, error) {
+func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (*types.QueryCachedDepositAmountResponse, error) {
 	store := k.getDepositCache(ctx)
 	depositorStr := depositor.String()
 	if !store.Has([]byte(depositorStr)) {
@@ -41,7 +35,7 @@ func (k Keeper) GetCachedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (
 
 	coinStr, ok := result[types.KeyCoin]
 	if !ok {
-		return nil, fmt.Errorf("coin is not exist")
+		return nil, fmt.Errorf("%s coin is not exist", coinStr)
 	}
 
 	coin, err := sdk.ParseCoinNormalized(coinStr)
@@ -55,7 +49,7 @@ func (k Keeper) GetCachedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (
 	}, nil
 }
 
-func (k Keeper) ClearCachedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) error {
+func (k Keeper) ClearRecordedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) error {
 	store := k.getDepositCache(ctx)
 	depositorStr := depositor.String()
 	if !store.Has([]byte(depositorStr)) {

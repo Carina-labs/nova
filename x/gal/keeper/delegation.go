@@ -2,49 +2,12 @@ package keeper
 
 import (
 	"context"
-	"time"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 )
 
-//delegate wAsset
-func (k Keeper) DepositCoin(ctx sdk.Context,
-	depositor sdk.AccAddress,
-	receiver sdk.AccAddress,
-	sourcePort string,
-	sourceChannel string,
-	amt sdk.Coin) error {
-	goCtx := sdk.WrapSDKContext(ctx)
-
-	// 1. IBC transfer
-	_, err := k.ibcTransferKeeper.Transfer(goCtx,
-		&transfertypes.MsgTransfer{
-			SourcePort:    sourcePort,
-			SourceChannel: sourceChannel,
-			Token:         amt,
-			Sender:        depositor.String(),
-			Receiver:      receiver.String(),
-			TimeoutHeight: ibcclienttypes.Height{
-				RevisionHeight: 0,
-				RevisionNumber: 0,
-			},
-			TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
-		},
-	)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-//stAsset mint
-func (k Keeper) MintShareTokens(ctx sdk.Context,
-	depositor sdk.Address,
-	amt sdk.Coin) error {
+// MintShareTokens mints st-token(share token) regard with deposited token.
+func (k Keeper) MintShareTokens(ctx sdk.Context, depositor sdk.Address, amt sdk.Coin) error {
 	depositorAddr, err := sdk.AccAddressFromBech32(depositor.String())
 	if err != nil {
 		return err
