@@ -70,6 +70,35 @@ func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state int64, tim
 	})
 }
 
+func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state int64) {
+	var withdrawRecords types.WithdrawRecord
+
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
+		if undelegateInfo.ZoneId == zoneId && undelegateInfo.State == state {
+			withdrawRecords.ZoneId = zoneId
+			withdrawRecords.Withdrawer = undelegateInfo.Delegator
+			amt, err := k.GetWithdrawAmt(ctx, *undelegateInfo.Amount)
+			if err != nil {
+				return true
+			}
+			withdrawRecords.Amount = &amt
+			withdrawRecords.State = WITHDRAW_REGISTER
+		}
+		return false
+	})
+
+}
+
+func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state int64, time time.Time) {
+	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == state {
+			withdrawInfo.CompletionTime = time
+			k.SetWithdrawRecord(ctx, withdrawInfo)
+		}
+		return false
+	})
+}
+
 func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, amt sdk.Coin) error {
 	withdrawerAddr, err := sdk.AccAddressFromBech32(withdrawer)
 	if err != nil {
