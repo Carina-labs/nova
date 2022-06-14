@@ -24,25 +24,30 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 	return &msgServer{keeper: keeper}
 }
 
+// Deposit handles deposit action.
+// 1. User submits deposit tx.
+// 2. GAL module write it to "record" store.
+// 3. User's asset is transferred to the module(gal) account.
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	depositorAddr, err := sdk.AccAddressFromBech32(deposit.Depositor)
+
+	err := m.keeper.RecordDepositAmt(ctx, *deposit)
 	if err != nil {
 		return nil, err
 	}
 
-	receiverAddr, err := sdk.AccAddressFromBech32(deposit.Receiver)
-	if err != nil {
+	// IBC transfer
+	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
+	if !ok {
 		return nil, err
 	}
 
-	for _, coin := range deposit.Amount {
-		err := m.keeper.DepositCoin(
-			ctx, depositorAddr, receiverAddr, "transfer", deposit.Channel, coin)
-		if err != nil {
-			return nil, err
-		}
-	}
+	err = m.keeper.TransferToTargetZone(ctx,
+		zoneInfo.TransferConnectionInfo.PortId,
+		zoneInfo.TransferConnectionInfo.ChannelId,
+		deposit.Depositor,
+		zoneInfo.IcaConnectionInfo.OwnerAddress,
+		deposit.Amount[0])
 
 	return &types.MsgDepositResponse{}, nil
 }

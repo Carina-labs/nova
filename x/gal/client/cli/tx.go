@@ -49,16 +49,14 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			receiver := args[1]
-
-			coins, err := sdk.ParseCoinsNormalized(args[2])
+			coins, err := sdk.ParseCoinsNormalized(args[1])
 			if err != nil {
 				return err
 			}
 
-			channel := args[3]
+			channel := args[2]
 
-			msg := types.NewMsgDeposit(clientCtx.GetFromAddress(), receiver, coins, channel)
+			msg := types.NewMsgDeposit(clientCtx.GetFromAddress(), coins, channel)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
