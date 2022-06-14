@@ -3,6 +3,7 @@ package keeper
 import (
 	"github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 )
 
@@ -15,15 +16,9 @@ func (k Keeper) AfterDelegateEnd() {
 	}
 }
 
-func (k Keeper) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
+func (k Keeper) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, response *stakingtypes.MsgUndelegateResponse) {
 	if k.hooks != nil {
-		k.hooks.BeforeUndelegateStart(ctx, zoneId)
-	}
-}
-
-func (k Keeper) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, txHash string) {
-	if k.hooks != nil {
-		k.hooks.AfterUndelegateEnd(ctx, packet, txHash)
+		k.hooks.AfterUndelegateEnd(ctx, packet, response)
 	}
 }
 

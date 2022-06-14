@@ -50,10 +50,12 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 	// snAtom -> [GAL] -> wAtom
 	// change undelegate State
 	zoneInfo, found := m.keeper.interTxKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
-
 	if !found {
 		return nil, errors.New("zone not found")
 	}
+
+	//send stAsset to GAL moduleAccount
+	m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, sdk.AccAddress(undelegate.Depositor), types.ModuleName, sdk.Coins{undelegate.Amount})
 
 	undelegateInfo, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId+undelegate.Depositor)
 	if found {
@@ -79,26 +81,33 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// burn stAsset
+	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, msg.ZoneId)
+	if !ok {
+		return nil, errors.New("zone is not found")
+	}
+
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+
+	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+	totalStAsset.Denom = zoneInfo.StDenom
+
+	// burn stAsset, wAsset withdraw record에 저장 : 요청 할때 stAsset burn, wAsset 계산
 	// if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
-	// 	sdk.Coins{sdk.Coin{Denom: undelegate.Amount.Denom, Amount: undelegate.Amount.Amount}}); err != nil {
+	// 	sdk.Coins{sdk.Coin{Denom: totalStAsset.Denom, Amount: totalStAsset.Amount}}); err != nil {
 	// 	return nil, err
 	// }
 
-	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, msg.ZoneId)
-	if !ok {
-		return nil, errors.New("zone name is not found")
-	}
-
-	undelegateRecoreds := m.keeper.GetAllUndelegateRecord(ctx, msg.ZoneId)
-
-	m.keeper.ChangeUndelegateStatus(ctx, undelegateRecoreds)
-
-	amt := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, undelegateRecoreds)
+	// wAsset계산 + withdraw record 생성
+	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
 
 	var msgs []sdk.Msg
 
-	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: *amt})
+	totalRequestAmt := sdk.Coin{
+		Amount: totalStAsset.Amount,
+		Denom:  zoneInfo.BaseDenom,
+	}
+
+	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: totalRequestAmt})
 	err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
@@ -122,13 +131,4 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	m.keeper.SetWithdrawRecord(ctx, *record)
 
 	return &types.MsgWithdrawRecordResponse{}, nil
-}
-
-func (m msgServer) UndelegateReceipt(goCtx context.Context, msgUndelegateReceipt *types.MsgUndelegateReceipt) (*types.MsgUndelegateReceiptResponse, error) {
-	// TODO
-	return &types.MsgUndelegateReceiptResponse{}, nil
-}
-
-func (m msgServer) WithdrawReceipt(goCtx context.Context, withdrawReceipt *types.MsgWithdrawReceipt) (*types.MsgWithdrawReceiptResponse, error) {
-	return &types.MsgWithdrawReceiptResponse{}, nil
 }

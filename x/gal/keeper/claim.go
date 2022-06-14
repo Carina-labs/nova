@@ -58,6 +58,7 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 	}
 
 	withdrawAmt := k.CalculateLambda(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+
 	return sdk.NewInt64Coin(baseAsset, withdrawAmt.Int64()), nil
 }
 
