@@ -5,6 +5,7 @@ import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	types2 "github.com/cosmos/cosmos-sdk/x/bank/types"
 )
 
 func (k Keeper) GetWithdrawRecord(ctx sdk.Context) {
@@ -21,39 +22,36 @@ func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context) {
 
 }
 
-func (k Keeper) GetWithdrawReceipt(ctx sdk.Context, key string) ([]byte, error) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawReceiptInfo)
-	bk := []byte(key)
-	if !store.Has(bk) {
-		return nil, fmt.Errorf("The store does not have key %s", key)
+func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, amt sdk.Coin) error {
+	withdrawerAddr, err := sdk.AccAddressFromBech32(withdrawer)
+	if err != nil {
+		return err
 	}
 
-	return store.Get(bk), nil
-}
-
-func (k Keeper) SetWithdrawReceipt(ctx sdk.Context, receipt types.MsgWithdrawReceipt) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawReceiptInfo)
-	bz := k.cdc.MustMarshal(&receipt)
-	store.Set([]byte(receipt.ZoneId+receipt.Withdrawer), bz)
-}
-
-func (k Keeper) DeleteWithdrawReceipt(ctx sdk.Context) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawReceiptInfo)
-	iterator := sdk.KVStorePrefixIterator(store, nil)
-	defer iterator.Close()
-	for ; iterator.Valid(); iterator.Next() {
-		key := iterator.Key()
-		store.Delete(key)
-	}
-}
-
-func (k Keeper) DeleteWithdrawReceiptItem(ctx sdk.Context, key string) error {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawReceiptInfo)
-	bk := []byte(key)
-	if !store.Has(bk) {
-		return fmt.Errorf("The store does not have key %s", key)
+	// check record if user can withdraw asset
+	enable, err := k.isAbleToWithdraw(ctx, amt)
+	if !enable {
+		return fmt.Errorf("")
 	}
 
-	store.Delete(bk)
+	err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, withdrawerAddr, sdk.NewCoins(amt))
+	if err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func (k Keeper) isAbleToWithdraw(ctx sdk.Context, amt sdk.Coin) (bool, error) {
+	goCtx := sdk.WrapSDKContext(ctx)
+	balance, err := k.bankKeeper.Balance(goCtx, &types2.QueryBalanceRequest{
+		Address: types.ModuleName,
+		Denom:   amt.Denom,
+	})
+
+	if err != nil {
+		return false, err
+	}
+
+	return balance.Balance.Amount.Int64() > amt.Amount.Int64(), nil
 }
