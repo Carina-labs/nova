@@ -94,7 +94,7 @@ func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, undelegateinfo []types.
 	// TODO
 	for _, record := range undelegateinfo {
 		store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
-		ctx.Logger().Error(fmt.Sprintf("Removing undelegate records: %s", record.Delegator))
+		ctx.Logger().Info(fmt.Sprintf("Removing undelegate records: %s", record.Delegator))
 		store.Delete([]byte(record.ZoneId + record.Delegator))
 	}
 }
