@@ -229,7 +229,7 @@ func (msg MsgUndelegateReceipt) GetSigners() []sdk.AccAddress {
 
 func NewMsgWithdrawReceipt(zoneId, withdrawer string, amount sdk.Coin, txhash string) *MsgWithdrawReceipt {
 	return &MsgWithdrawReceipt{
-		ZoenId:     zoneId,
+		ZoneId:     zoneId,
 		Withdrawer: withdrawer,
 		Amount:     amount,
 		Txhash:     txhash,
