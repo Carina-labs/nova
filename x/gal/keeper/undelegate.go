@@ -99,19 +99,6 @@ func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, undelegateinfo []types.
 	}
 }
 
-func (k Keeper) GetUndelegatedReceipts(ctx sdk.Context) (types.MsgUndelegateReceipt, bool) {
-
-	return types.MsgUndelegateReceipt{}, false
-}
-
-func (k Keeper) SetUndelegateReceipt(ctx sdk.Context, txhash string) {
-	// TODO
-}
-
-func (k Keeper) DeleteUndelegateReceipt(ctx sdk.Context) {
-
-}
-
 // IterateUndelegatedRecords iterate through zones
 func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, undelegateInfo types.UndelegateRecord) (stop bool)) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
