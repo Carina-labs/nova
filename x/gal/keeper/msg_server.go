@@ -149,7 +149,7 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	// module account의 상태 조회
-	ok, err := m.keeper.isAbleToWithdraw(ctx, *withdrawRecord.Amount)
+	ok, err := m.keeper.IsAbleToWithdraw(ctx, *withdrawRecord.Amount)
 	if err != nil {
 		return nil, err
 	}
