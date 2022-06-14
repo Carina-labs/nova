@@ -7,26 +7,28 @@ import (
 )
 
 // wrapped coin -> st coin
-func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.Coin) {
+func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.Coin) error {
 	stAsset := k.interTxKeeper.GetstDenomForBaseDenom(ctx, amt.Denom)
 
 	claimerAddr, err := sdk.AccAddressFromBech32(claimer)
 	if err != nil {
-		k.Logger(ctx).Error(err.Error())
+		return err
 	}
 
 	totalSharedToken := k.bankKeeper.GetSupply(ctx, stAsset)
 	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, amt.Denom)
 	if err != nil {
-		k.Logger(ctx).Error(err.Error())
+		return err
 	}
 
 	mintAmt := k.CalculateAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
 
 	err = k.MintShareTokens(ctx, claimerAddr, sdk.NewCoin(stAsset, sdk.NewIntFromBigInt(mintAmt)))
 	if err != nil {
-		k.Logger(ctx).Error(err.Error())
+		return err
 	}
+
+	return nil
 }
 
 func (k Keeper) GetShareTokenMintingAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
