@@ -77,9 +77,9 @@ func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, amt sdk.C
 	}
 
 	// check record if user can withdraw asset
-	enable, err := k.isAbleToWithdraw(ctx, amt)
+	enable, err := k.IsAbleToWithdraw(ctx, amt)
 	if !enable {
-		return fmt.Errorf("")
+		return err
 	}
 
 	err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, withdrawerAddr, sdk.NewCoins(amt))
@@ -90,18 +90,20 @@ func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, amt sdk.C
 	return nil
 }
 
-func (k Keeper) isAbleToWithdraw(ctx sdk.Context, amt sdk.Coin) (bool, error) {
+func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, amt sdk.Coin) (bool, error) {
 	goCtx := sdk.WrapSDKContext(ctx)
+	moduleAddr := k.accountKeeper.GetModuleAddress(types.ModuleName)
 	balance, err := k.bankKeeper.Balance(goCtx, &types2.QueryBalanceRequest{
-		Address: types.ModuleName,
+		Address: moduleAddr.String(),
 		Denom:   amt.Denom,
 	})
 
 	if err != nil {
-		return false, err
+		return false, fmt.Errorf("can't withdraw asset. Module have : %s, user request: %s",
+			balance.Balance.Amount.String(), amt.Amount.String())
 	}
 
-	return balance.Balance.Amount.Int64() > amt.Amount.Int64(), nil
+	return balance.Balance.Amount.Int64() >= amt.Amount.Int64(), nil
 }
 
 // IterateWithdrawdRecords iterate
