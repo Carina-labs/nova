@@ -1,5 +1,5 @@
 name: Tests & Code Coverage
-h
+
 on:
   pull_request:
     branches:
@@ -30,7 +30,7 @@ jobs:
         run: echo Should I skip tests? ${{ steps.skip_check.outputs.should_skip }}
 
   unit_test:
-    needs: should_run_go_test
+    needs: unit_test
     if: ${{ needs.should_run_test.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
