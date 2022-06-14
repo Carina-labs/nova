@@ -23,7 +23,7 @@ func (k *Keeper) HandleMsgData(ctx sdk.Context, packet channeltypes.Packet, msgD
 		if err := proto.Unmarshal(msgData.Data, msgResponse); err != nil {
 			return "", sdkerrors.Wrapf(sdkerrors.ErrJSONUnmarshal, "cannot unmarshal send response message: %s", err.Error())
 		}
-		k.AfterUndelegateEnd(ctx, packet, "")
+		k.AfterUndelegateEnd(ctx, packet, msgResponse)
 		return msgResponse.String(), nil
 	case sdk.MsgTypeURL(&transfertypes.MsgTransfer{}): // withdraw(transfer)
 		msgResponse := &transfertypes.MsgTransferResponse{}

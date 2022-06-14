@@ -50,8 +50,8 @@ func (k Keeper) GetUndelegateRecordsForZoneId(ctx sdk.Context, zoneId string, st
 	return undelegateInfo
 }
 
-func (k Keeper) GetUndelegateAmount(ctx sdk.Context, denom string, zoneId string, state int64) *sdk.Coin {
-	amt := &sdk.Coin{
+func (k Keeper) GetUndelegateAmount(ctx sdk.Context, denom string, zoneId string, state int64) sdk.Coin {
+	amt := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
 		Denom:  denom,
 	}
@@ -62,7 +62,7 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, denom string, zoneId string
 		if undelegateInfo.ZoneId == zoneId && undelegateInfo.State == state {
 			result = amt.Add(*undelegateInfo.Amount)
 			if !result.IsZero() {
-				amt = &result
+				amt = result
 			}
 		}
 		return false

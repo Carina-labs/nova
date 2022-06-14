@@ -2,10 +2,17 @@ package keeper
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types2 "github.com/cosmos/cosmos-sdk/x/bank/types"
+)
+
+const (
+	WITHDRAW_REGISTER     = iota + 1
+	WITHDRAW_REQUEST_USER = iota + 1
 )
 
 func (k Keeper) GetWithdrawRecord(ctx sdk.Context) {
@@ -20,6 +27,35 @@ func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) 
 
 func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context) {
 
+}
+
+func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state int64) {
+	var withdrawRecords types.WithdrawRecord
+
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
+		if undelegateInfo.ZoneId == zoneId && undelegateInfo.State == state {
+			withdrawRecords.ZoneId = zoneId
+			withdrawRecords.Withdrawer = undelegateInfo.Delegator
+			amt, err := k.GetWithdrawAmt(ctx, *undelegateInfo.Amount)
+			if err != nil {
+				return true
+			}
+			withdrawRecords.Amount = &amt
+			withdrawRecords.State = WITHDRAW_REGISTER
+		}
+		return false
+	})
+
+}
+
+func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state int64, time time.Time) {
+	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == state {
+			withdrawInfo.CompletionTime = time
+			k.SetWithdrawRecord(ctx, withdrawInfo)
+		}
+		return false
+	})
 }
 
 func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, amt sdk.Coin) error {
@@ -54,4 +90,24 @@ func (k Keeper) isAbleToWithdraw(ctx sdk.Context, amt sdk.Coin) (bool, error) {
 	}
 
 	return balance.Balance.Amount.Int64() > amt.Amount.Int64(), nil
+}
+
+// IterateWithdrawdRecords iterate
+func (k Keeper) IterateWithdrawdRecords(ctx sdk.Context, fn func(index int64, withdrawInfo types.WithdrawRecord) (stop bool)) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
+	iterator := sdk.KVStorePrefixIterator(store, nil)
+	defer iterator.Close()
+	i := int64(0)
+
+	for ; iterator.Valid(); iterator.Next() {
+
+		res := types.WithdrawRecord{}
+
+		k.cdc.MustUnmarshal(iterator.Value(), &res)
+		stop := fn(i, res)
+		if stop {
+			break
+		}
+		i++
+	}
 }

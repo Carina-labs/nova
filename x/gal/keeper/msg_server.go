@@ -50,10 +50,12 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 	// snAtom -> [GAL] -> wAtom
 	// change undelegate State
 	zoneInfo, found := m.keeper.interTxKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
-
 	if !found {
 		return nil, errors.New("zone not found")
 	}
+
+	//send stAsset to GAL moduleAccount
+	m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, sdk.AccAddress(undelegate.Depositor), types.ModuleName, sdk.Coins{undelegate.Amount})
 
 	undelegateInfo, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId+undelegate.Depositor)
 	if found {
@@ -80,24 +82,27 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, msg.ZoneId)
-
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, errors.New("zone is not found")
 	}
+
 	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
 
-	amt := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+	totalStAsset.Denom = zoneInfo.StDenom
 
-	// GetShareTokenMintingAmt(amt)
-	// burn stAsset
+	// burn stAsset, wAsset withdraw record에 저장 : 요청 할때 stAsset burn, wAsset 계산
 	// if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
-	// 	sdk.Coins{sdk.Coin{Denom: undelegate.Amount.Denom, Amount: undelegate.Amount.Amount}}); err != nil {
+	// 	sdk.Coins{sdk.Coin{Denom: totalStAsset.Denom, Amount: totalStAsset.Amount}}); err != nil {
 	// 	return nil, err
 	// }
 
+	// wAsset계산 + withdraw record 생성
+	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
+
 	var msgs []sdk.Msg
 
-	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: *amt})
+	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: totalStAsset})
 	err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {

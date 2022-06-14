@@ -51,5 +51,6 @@ message WithdrawRecord {
   string withdrawer = 2;
   string recipient = 3;
   cosmos.base.v1beta1.Coin amount = 4;
-  google.protobuf.Timestamp completion_time = 5[(gogoproto.nullable) = false, (gogoproto.stdtime)= true];
+  int64 state = 5;
+  google.protobuf.Timestamp completion_time = 6[(gogoproto.nullable) = false, (gogoproto.stdtime)= true];
 }

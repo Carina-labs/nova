@@ -5,6 +5,7 @@ import (
 
 	icatypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 )
@@ -54,17 +55,18 @@ func (h IHooks) AfterDelegateEnd() {
 func (h IHooks) AfterWithdrawEnd() {
 }
 
-func (h IHooks) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, txHash string) {
+func (h IHooks) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, response *stakingtypes.MsgUndelegateResponse) {
+
+	h.k.Logger(ctx).Info("AfterUndelgateEnd", "msgData", response)
+
 	// portId로 zone 정보 조회
-	// zone := h.k.interTxKeeper.GetRegisteredZoneForPortId(ctx, packet.SourcePort)
+	zone := h.k.interTxKeeper.GetRegisteredZoneForPortId(ctx, packet.SourcePort)
 
-	// getStatusForUndelegateRecords : status가 REQUEST_ICA인 UndelegateRecord 조회
-	// undelegateRecords := h.k.GetUndelegateRecordsForZoneId(ctx, zone.ZoneName, UNDELEGATE_REQUEST_ICA)
+	// hook에서 withdraw record에 time 기록
+	h.k.SetWithdrawTime(ctx, zone.ZoneName, WITHDRAW_REGISTER, response.CompletionTime)
 
-	// setUndelegateReceipt : (Record의 주소, amount, zoneId)와 txHash 저장
-	// h.k.SetUndelegateReceipt(ctx, txhash)
-	// deleteUndelegateRecords : Receipt에 저장된 record삭제
-	// h.k.DeleteUndelegateRecords(ctx, zone.ZoneName, UNDELEGATE_REQUEST_ICA)
+	// undelegate record 삭제
+	h.k.DeleteUndelegateRecords(ctx, zone.ZoneName, UNDELEGATE_REQUEST_ICA)
 }
 func (h IHooks) AfterAutoStakingEnd() {
 }
