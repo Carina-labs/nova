@@ -102,7 +102,12 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	var msgs []sdk.Msg
 
-	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: totalStAsset})
+	totalRequestAmt := sdk.Coin{
+		Amount: totalStAsset.Amount,
+		Denom:  zoneInfo.BaseDenom,
+	}
+
+	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: totalRequestAmt})
 	err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
