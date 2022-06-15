@@ -2,6 +2,8 @@ package keeper
 
 import (
 	"context"
+	"time"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
@@ -26,10 +28,10 @@ func (k Keeper) DepositCoin(ctx sdk.Context,
 			Sender:        depositor.String(),
 			Receiver:      receiver.String(),
 			TimeoutHeight: ibcclienttypes.Height{
-				RevisionHeight: 500000,
+				RevisionHeight: 0,
 				RevisionNumber: 0,
 			},
-			TimeoutTimestamp: 0,
+			TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
 		},
 	)
 	if err != nil {

@@ -3,10 +3,13 @@ package keeper
 import (
 	"context"
 	"errors"
+	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
+	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 )
 
 var _ types.MsgServer = msgServer{}
@@ -117,10 +120,69 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	return &types.MsgUndelegateResponse{}, nil
 }
 
+// 사용자가 withdraw 요청
 func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWithdrawRecord) (*types.MsgWithdrawRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	// TODO
 
+	//withdraw record 조회
+	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, withdraw.ZoneId+withdraw.Withdrawer)
+	if !found {
+		return nil, errors.New("withdraw record is not found")
+	}
+
+	withdrawState := &types.WithdrawRecord{
+		ZoneId:         withdrawRecord.ZoneId,
+		Withdrawer:     withdrawRecord.Withdrawer,
+		Recipient:      withdrawRecord.Recipient,
+		Amount:         withdrawRecord.Amount,
+		State:          WITHDRAW_REQUEST_USER,
+		CompletionTime: withdrawRecord.CompletionTime,
+	}
+
+	// state 변경
+	m.keeper.SetWithdrawRecord(ctx, *withdrawState)
+
+	//zone 정보 조회
+	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
+	if !ok {
+		return nil, errors.New("zone is not found")
+	}
+
+	// module account의 상태 조회
+	ok, err := m.keeper.IsAbleToWithdraw(ctx, *withdrawRecord.Amount)
+	if err != nil {
+		return nil, err
+	}
+
+	if !ok {
+		//ICA transfer 요청
+		//transfer msg
+		var msgs []sdk.Msg
+
+		msgs = append(msgs, &ibctransfertypes.MsgTransfer{
+			SourcePort:    zoneInfo.TransferConnectionInfo.PortId,
+			SourceChannel: zoneInfo.TransferConnectionInfo.ChannelId,
+			Token:         *withdrawRecord.Amount,
+			Sender:        zoneInfo.IcaConnectionInfo.OwnerAddress,
+			Receiver:      string(m.keeper.accountKeeper.GetModuleAddress(types.ModuleName)),
+			TimeoutHeight: ibcclienttypes.Height{
+				RevisionHeight: 0,
+				RevisionNumber: 0,
+			},
+			TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+		})
+
+		err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+		if err != nil {
+			return &types.MsgWithdrawRecordResponse{}, errors.New("IcaWithdraw transaction failed to send")
+		}
+	}
+
+	// moduleAccountToAccount
+	m.keeper.ClaimWithdrawAsset(ctx, withdraw.Recipient, withdraw.Amount)
+
+	// withdrawRecord 삭제
+	m.keeper.DeleteWithdrawRecord(ctx, *withdrawState)
 	record := &types.WithdrawRecord{
 		ZoneId:         withdraw.ZoneId,
 		Withdrawer:     withdraw.Withdrawer,

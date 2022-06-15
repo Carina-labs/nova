@@ -14,8 +14,19 @@ const (
 	WITHDRAW_REQUEST_USER = iota + 1
 )
 
-func (k Keeper) GetWithdrawRecord(ctx sdk.Context) {
+func (k Keeper) GetWithdrawRecord(ctx sdk.Context, key string) (types.WithdrawRecord, bool) {
 
+	withdrawInfo := types.WithdrawRecord{}
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
+	bz := store.Get([]byte(key))
+
+	if len(bz) == 0 {
+		return withdrawInfo, false
+	}
+
+	k.cdc.MustUnmarshal(bz, &withdrawInfo)
+
+	return withdrawInfo, true
 }
 
 func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) {
@@ -24,8 +35,9 @@ func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) 
 	store.Set([]byte(record.ZoneId+record.Withdrawer), bz)
 }
 
-func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context) {
-
+func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw types.WithdrawRecord) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
+	store.Delete([]byte(withdraw.ZoneId + withdraw.Withdrawer))
 }
 
 func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state int64) {

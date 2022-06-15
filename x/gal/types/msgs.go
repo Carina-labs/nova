@@ -180,3 +180,4 @@ func (msg MsgWithdrawRecord) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.Withdrawer)
 	return []sdk.AccAddress{withdrawer}
 }
+
