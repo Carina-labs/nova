@@ -38,8 +38,7 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 			Amount:  &amt,
 		}
 		// Test RecordDepositAmt
-		err := suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, depositMsg)
-		suite.NoError(err)
+		suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, depositMsg)
 
 		// Test GetRecordDepositAmt
 		res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, tc.userAddr)
