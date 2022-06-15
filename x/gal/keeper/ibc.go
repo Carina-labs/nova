@@ -1,10 +1,11 @@
 package keeper
 
 import (
+	"time"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
-	"time"
 )
 
 func (k Keeper) TransferToTargetZone(ctx sdk.Context,
@@ -35,9 +36,5 @@ func (k Keeper) TransferToTargetZone(ctx sdk.Context,
 		},
 	)
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }

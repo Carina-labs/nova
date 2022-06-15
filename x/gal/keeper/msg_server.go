@@ -74,18 +74,12 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 		undelegate.Amount = undelegate.Amount.Add(*undelegateInfo.Amount)
 	}
 
-	amt := &sdk.Coin{
-		Denom:  zoneInfo.BaseDenom,
-		Amount: undelegate.Amount.Amount,
-	}
-
-	record := &types.UndelegateRecord{
+	amt := sdk.NewCoin(zoneInfo.BaseDenom, undelegate.Amount.Amount)
+	m.keeper.SetUndelegateRecord(ctx, types.UndelegateRecord{
 		ZoneId:    undelegate.ZoneId,
 		Delegator: undelegate.Depositor,
-		Amount:    amt,
-	}
-
-	m.keeper.SetUndelegateRecord(ctx, *record)
+		Amount:    &amt,
+	})
 
 	return &types.MsgUndelegateRecordResponse{}, nil
 }
@@ -106,6 +100,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
 	totalStAsset.Denom = zoneInfo.StDenom
+
+	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {
+		// TODO: should handle if no coins to undelegate
+		return nil, errors.New("no coins to undelegate")
+	}
 
 	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
 		sdk.Coins{sdk.Coin{Denom: totalStAsset.Denom, Amount: totalStAsset.Amount}}); err != nil {
