@@ -4,15 +4,12 @@ import (
 	"context"
 
 	"github.com/Carina-labs/nova/x/oracle/types"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 func (suite *KeeperTestSuite) TestGRPCState() {
 	queryClient := suite.queryClient
 	oracleKeeper := suite.App.OracleKeeper
-	pk := ed25519.GenPrivKey().PubKey()
-	operator := sdk.AccAddress(pk.Address())
 
 	tests := []struct {
 		name       string
@@ -23,10 +20,10 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 		{
 			name: "should get state",
 			chainInfo: types.ChainInfo{
-				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-				OperatorAddress:    operator.String(),
-				LastBlockHeight:    10,
-				Decimal:            6,
+				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
+				OperatorAddress: fooOperator.String(),
+				LastBlockHeight: 10,
+				Decimal:         6,
 			},
 			queryDenom: fooDenom,
 			wantErr:    false,
@@ -34,10 +31,10 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 		{
 			name: "should get error",
 			chainInfo: types.ChainInfo{
-				Coin:               sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-				OperatorAddress:    operator.String(),
-				LastBlockHeight:    10,
-				Decimal:            6,
+				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
+				OperatorAddress: fooOperator.String(),
+				LastBlockHeight: 10,
+				Decimal:         6,
 			},
 			queryDenom: invalidDenom,
 			wantErr:    true,
@@ -45,7 +42,7 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 	}
 
 	oracleKeeper.SetParams(suite.Ctx, types.Params{
-		OracleOperators: []string{operator.String()},
+		OracleOperators: []string{fooOperator.String()},
 	})
 
 	for _, tt := range tests {
@@ -66,6 +63,31 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 			suite.Require().Equal(val.LastBlockHeight, tt.chainInfo.LastBlockHeight)
 			suite.Require().Equal(val.Coin, tt.chainInfo.Coin)
 			suite.Require().Equal(val.Decimal, tt.chainInfo.Decimal)
+		})
+	}
+}
+
+func (suite *KeeperTestSuite) TestQueryParam() {
+	queryClient := suite.queryClient
+	tests := []struct {
+		name      string
+		operators []string
+		expect    []string
+	}{
+		// grpc query replace empty value to nil
+		{"empty operator", []string{}, nil},
+		{"got operator", []string{fooOperator.String()}, []string{fooOperator.String()}},
+	}
+
+	for _, tt := range tests {
+		suite.Run(tt.name, func() {
+			suite.App.OracleKeeper.SetParams(suite.Ctx, types.Params{
+				OracleOperators: tt.operators,
+			})
+
+			params, err := queryClient.Params(context.Background(), &types.QueryParamsRequest{})
+			suite.Require().NoError(err)
+			suite.Require().Equal(params.Params.OracleOperators, tt.expect)
 		})
 	}
 }

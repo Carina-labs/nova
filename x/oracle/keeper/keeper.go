@@ -33,16 +33,7 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 }
 
 func (k Keeper) UpdateChainState(ctx sdk.Context, updateInfo *types.ChainInfo) error {
-	params := k.GetParams(ctx)
-	isValid := false
-	for i := range params.OracleOperators {
-		if params.OracleOperators[i] == updateInfo.OperatorAddress {
-			isValid = true
-			break
-		}
-	}
-
-	if !isValid {
+	if !k.IsValidOperator(ctx, updateInfo.OperatorAddress) {
 		return fmt.Errorf("you are not valid oracle operator: %s", updateInfo.OperatorAddress)
 	}
 
@@ -69,4 +60,16 @@ func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.ChainI
 	}
 
 	return &chainInfo, nil
+}
+
+func (k Keeper) IsValidOperator(ctx sdk.Context, operatorAddress string) bool {
+	params := k.GetParams(ctx)
+
+	for i := range params.OracleOperators {
+		if params.OracleOperators[i] == operatorAddress {
+			return true
+		}
+	}
+
+	return false
 }
