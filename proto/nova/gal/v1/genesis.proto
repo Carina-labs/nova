@@ -32,6 +32,11 @@ message DepositInfo {
   int64 debt = 3;
 }
 
+message DepositRecord {
+  string address = 1;
+  cosmos.base.v1beta1.Coin amount = 2;
+}
+
 message WithdrawInfo {
   string address = 1;
   string denom = 2;

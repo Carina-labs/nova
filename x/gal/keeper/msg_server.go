@@ -26,33 +26,33 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 
 // Deposit handles deposit action.
 // 1. User submits deposit tx.
-// 2. GAL module write it to "record" store.
-// 3. User's asset is transferred to the module(gal) account.
+// 2. User's asset is transferred to the module(gal) account.
+// 3. After IBC transfer, GAL records deposit info.
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	err := m.keeper.RecordDepositAmt(ctx, *deposit)
-	if err != nil {
-		return nil, err
-	}
 
 	// IBC transfer
 	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
 	if !ok {
-		return nil, err
+		return nil, fmt.Errorf("")
 	}
 
-	err = m.keeper.TransferToTargetZone(ctx,
+	err := m.keeper.TransferToTargetZone(ctx,
 		zoneInfo.TransferConnectionInfo.PortId,
 		zoneInfo.TransferConnectionInfo.ChannelId,
 		deposit.Depositor,
 		zoneInfo.IcaConnectionInfo.OwnerAddress,
 		deposit.Amount[0])
+	if err != nil {
+		return nil, err
+	}
 
 	return &types.MsgDepositResponse{}, nil
 }
 
-//denom : stAsset
+// UndelegateRecord is used when user requests undelegate their staked asset.
+// 1. User sends their st-token to module account.
+// 2. And GAL records step 1 to the store.
 func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.MsgUndelegateRecord) (*types.MsgUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -64,7 +64,10 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 	}
 
 	//send stAsset to GAL moduleAccount
-	m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, sdk.AccAddress(undelegate.Depositor), types.ModuleName, sdk.Coins{undelegate.Amount})
+	err := m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, sdk.AccAddress(undelegate.Depositor), types.ModuleName, sdk.Coins{undelegate.Amount})
+	if err != nil {
+		return nil, err
+	}
 
 	undelegateInfo, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId+undelegate.Depositor)
 	if found {
@@ -87,6 +90,10 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 	return &types.MsgUndelegateRecordResponse{}, nil
 }
 
+// Undelegate used when protocol requests undelegate to the host chain.
+// 1. Protocol refers the store that contains user's undelegate request history.
+// 2. Using it, controller chain requests undelegate staked asset using ICA.
+// 3. And burn share token Module account have.
 func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -100,13 +107,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
 	totalStAsset.Denom = zoneInfo.StDenom
 
-	// burn stAsset, wAsset withdraw record에 저장 : 요청 할때 stAsset burn, wAsset 계산
-	// if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
-	// 	sdk.Coins{sdk.Coin{Denom: totalStAsset.Denom, Amount: totalStAsset.Amount}}); err != nil {
-	// 	return nil, err
-	// }
+	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
+		sdk.Coins{sdk.Coin{Denom: totalStAsset.Denom, Amount: totalStAsset.Amount}}); err != nil {
+		return nil, err
+	}
 
-	// wAsset계산 + withdraw record 생성
 	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
 
 	var msgs []sdk.Msg
