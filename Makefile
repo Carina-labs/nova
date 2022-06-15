@@ -87,6 +87,8 @@ endif
 
 #$(info $$BUILD_FLAGS is [$(BUILD_FLAGS)])
 
+PACKAGES_UNIT=$(shell go list ./...)
+
 all: build lint test
 
 install: go.sum
@@ -101,6 +103,12 @@ build:
 
 test:
 	@go test -v ./x/...
+
+test-cover:
+	@go test -mod=readonly -timeout 30m -coverprofile=coverage.txt -tags='norace' -covermode=atomic $(PACKAGES_UNIT)
+
+cover-report:
+	@go tool cover -html=coverage.txt -o coverage.html
 
 lint:
 	@echo "--> Running linter"
