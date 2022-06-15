@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -149,9 +150,9 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	// module account의 상태 조회
-	ok, err := m.keeper.IsAbleToWithdraw(ctx, *withdrawRecord.Amount)
-	if err != nil {
-		return nil, err
+	ok = m.keeper.IsAbleToWithdraw(ctx, *withdrawRecord.Amount)
+	if !ok {
+		return nil, fmt.Errorf("user cannot withdraw funds : insufficient fund")
 	}
 
 	if !ok {
