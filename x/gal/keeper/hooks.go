@@ -26,16 +26,14 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	amt, ok := sdk.NewIntFromString(data.Amount)
 	if !ok {
 		h.k.Logger(ctx).Error("can't cast int to string, str: %s", data.Amount)
+		return
 	}
 
 	coin := sdk.NewInt64Coin(data.Denom, amt.Int64())
-	err := h.k.RecordDepositAmt(ctx, types.DepositRecord{
+	h.k.RecordDepositAmt(ctx, types.DepositRecord{
 		Address: data.Sender,
 		Amount:  &coin,
 	})
-	if err != nil {
-		h.k.Logger(ctx).Error(err.Error())
-	}
 }
 
 // Hooks wrapper struct for gal keeper

@@ -12,11 +12,10 @@ func (k Keeper) getDepositCache(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
 }
 
-func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg types.DepositRecord) error {
+func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg types.DepositRecord) {
 	store := k.getDepositCache(ctx)
 	bz := k.cdc.MustMarshal(&msg)
 	store.Set([]byte(msg.Address), bz)
-	return nil
 }
 
 func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (*types.DepositRecord, error) {
