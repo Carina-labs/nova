@@ -5,17 +5,25 @@ import (
 
 	types3 "github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/Carina-labs/nova/x/oracle/types"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	types2 "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+)
+
+var (
+	fooOracleOperator = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 )
 
 func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 	suite.SetupTestOracle([]*types.ChainInfo{
 		{
+			OperatorAddress: fooOracleOperator.String(),
 			Coin:            sdk.NewInt64Coin("osmo", 1000000000),
 			Decimal:         6,
 			LastBlockHeight: 10000,
 		},
+	}, []string{
+		fooOracleOperator.String(),
 	})
 
 	suite.App.IntertxKeeper.SetRegesterZone(suite.Ctx,

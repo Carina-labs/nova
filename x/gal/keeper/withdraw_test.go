@@ -41,7 +41,7 @@ func (suite *KeeperTestSuite) TestIsAbleToWithdraw() {
 			sdk.NewCoins(sdk.NewInt64Coin(tc.denom, tc.initialAmt)))
 		suite.NoError(err)
 
-		res, err := suite.App.GalKeeper.IsAbleToWithdraw(suite.Ctx, sdk.NewInt64Coin(tc.denom, tc.withdrawAmt))
+		res := suite.App.GalKeeper.IsAbleToWithdraw(suite.Ctx, sdk.NewInt64Coin(tc.denom, tc.withdrawAmt))
 		suite.Equal(tc.expected, res)
 	}
 }
@@ -86,15 +86,15 @@ func (suite *KeeperTestSuite) TestClaimWithdrawAsset() {
 		err := suite.App.BankKeeper.MintCoins(suite.Ctx,
 			types.ModuleName,
 			sdk.NewCoins(sdk.NewInt64Coin(tc.denom, tc.initialAmt)))
-		suite.NoError(err)
+		suite.Require().NoError(err)
 
 		err = suite.App.GalKeeper.ClaimWithdrawAsset(suite.Ctx,
 			acc.Address, sdk.NewInt64Coin(tc.denom, tc.withdrawAmt))
 
 		if tc.shouldError {
-			suite.Error(err)
+			suite.Require().Error(err)
 		} else {
-			suite.NoError(err)
+			suite.Require().NoError(err)
 		}
 
 		goCtx := sdk.WrapSDKContext(suite.Ctx)
@@ -102,7 +102,7 @@ func (suite *KeeperTestSuite) TestClaimWithdrawAsset() {
 			Address: acc.Address,
 			Denom:   tc.denom,
 		})
-		suite.NoError(err)
-		suite.Equal(tc.postUserBalance, balance.Balance.Amount.Int64())
+		suite.Require().NoError(err)
+		suite.Require().Equal(tc.postUserBalance, balance.Balance.Amount.Int64())
 	}
 }

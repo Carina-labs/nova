@@ -6,7 +6,7 @@ import (
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/types"
-	types2 "github.com/Carina-labs/nova/x/oracle/types"
+	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
@@ -46,7 +46,9 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.path = path
 }
 
-func (suite *KeeperTestSuite) SetupTestOracle(msgs []*types2.ChainInfo) {
+func (suite *KeeperTestSuite) SetupTestOracle(msgs []*oracletypes.ChainInfo, oracleOperator []string) {
+	suite.App.OracleKeeper.SetParams(suite.Ctx, oracletypes.Params{OracleOperators: oracleOperator})
+	
 	for _, msg := range msgs {
 		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, msg)
 		if err != nil {
