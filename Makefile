@@ -88,6 +88,8 @@ endif
 #$(info $$BUILD_FLAGS is [$(BUILD_FLAGS)])
 
 PACKAGES_UNIT=$(shell go list ./...)
+COVERAGE_TXT=coverage.txt
+COVERAGE_HTML=coverage.html
 
 all: build lint test
 
@@ -105,10 +107,10 @@ test:
 	@go test -v ./x/...
 
 test-cover:
-	@go test -mod=readonly -timeout 30m -coverprofile=coverage.txt -tags='norace' -covermode=atomic $(PACKAGES_UNIT)
+	@go test -mod=readonly -timeout 30m -coverprofile=$(COVERAGE_TXT) -tags='norace' -covermode=atomic $(PACKAGES_UNIT) && go tool cover -html=$(COVERAGE_TXT) -o $(COVERAGE_HTML)
 
 cover-report:
-	@go tool cover -html=coverage.txt -o coverage.html
+	@go tool cover -html=$(COVERAGE_TXT) -o $(COVERAGE_HTML)
 
 lint:
 	@echo "--> Running linter"
