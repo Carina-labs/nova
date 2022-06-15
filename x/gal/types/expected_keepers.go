@@ -18,6 +18,7 @@ type BankKeeper interface {
 	MintCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) error
 	BurnCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) error
 	Balance(ctx context.Context, request *types2.QueryBalanceRequest) (*types2.QueryBalanceResponse, error)
+	GetBalance(ctx sdk.Context, addr sdk.AccAddress, denom string) sdk.Coin
 }
 
 // AccountKeeper defines the account contract that must be fulfilled when

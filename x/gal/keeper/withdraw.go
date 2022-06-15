@@ -7,7 +7,6 @@ import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	types2 "github.com/cosmos/cosmos-sdk/x/bank/types"
 )
 
 const (
@@ -65,9 +64,9 @@ func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, amt sdk.C
 	}
 
 	// check record if user can withdraw asset
-	enable, err := k.IsAbleToWithdraw(ctx, amt)
+	enable := k.IsAbleToWithdraw(ctx, amt)
 	if !enable {
-		return err
+		return fmt.Errorf("not enough balance to withdraw")
 	}
 
 	err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, withdrawerAddr, sdk.NewCoins(amt))
@@ -78,20 +77,10 @@ func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, amt sdk.C
 	return nil
 }
 
-func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, amt sdk.Coin) (bool, error) {
-	goCtx := sdk.WrapSDKContext(ctx)
+func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, amt sdk.Coin) bool {
 	moduleAddr := k.accountKeeper.GetModuleAddress(types.ModuleName)
-	balance, err := k.bankKeeper.Balance(goCtx, &types2.QueryBalanceRequest{
-		Address: moduleAddr.String(),
-		Denom:   amt.Denom,
-	})
-
-	if err != nil {
-		return false, fmt.Errorf("can't withdraw asset. Module have : %s, user request: %s",
-			balance.Balance.Amount.String(), amt.Amount.String())
-	}
-
-	return balance.Balance.Amount.Int64() >= amt.Amount.Int64(), nil
+	balance := k.bankKeeper.GetBalance(ctx, moduleAddr, amt.Denom)
+	return balance.Amount.BigInt().Cmp(amt.Amount.BigInt()) >= 0
 }
 
 // IterateWithdrawdRecords iterate
