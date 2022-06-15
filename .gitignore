@@ -8,3 +8,7 @@ release/
 
 # ignore logs
 *.log
+
+# ignore coverage report
+coverage.txt
+coverage.html
