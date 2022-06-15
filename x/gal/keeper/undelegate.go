@@ -11,6 +11,7 @@ const (
 	UNDELEGATE_REQUEST_ICA  int64 = iota + 1
 )
 
+// GetUndelegateRecord returns undelegate record by key.
 func (k Keeper) GetUndelegateRecord(ctx sdk.Context, key string) (types.UndelegateRecord, bool) {
 	undelegateInfo := types.UndelegateRecord{}
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
@@ -24,7 +25,7 @@ func (k Keeper) GetUndelegateRecord(ctx sdk.Context, key string) (types.Undelega
 	return undelegateInfo, true
 }
 
-// undelegate 조회
+// GetAllUndelegateRecord returns all undelegate record.
 func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []types.UndelegateRecord {
 	var undelegateInfo = []types.UndelegateRecord{}
 
@@ -38,6 +39,7 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []types.U
 	return undelegateInfo
 }
 
+// GetUndelegateRecordsForZoneId returns undelegate records by zone-id.
 func (k Keeper) GetUndelegateRecordsForZoneId(ctx sdk.Context, zoneId string, state int64) []types.UndelegateRecord {
 	var undelegateInfo = []types.UndelegateRecord{}
 
@@ -50,6 +52,7 @@ func (k Keeper) GetUndelegateRecordsForZoneId(ctx sdk.Context, zoneId string, st
 	return undelegateInfo
 }
 
+// GetUndelegateAmount returns the amount of undelegated coin.
 func (k Keeper) GetUndelegateAmount(ctx sdk.Context, denom string, zoneId string, state int64) sdk.Coin {
 	amt := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
@@ -71,7 +74,9 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, denom string, zoneId string
 	return amt
 }
 
-// change undelegate status
+// ChangeUndelegateState changes undelegate record.
+// UNDELEGATE_REQUEST_USER : Just requested undelegate by user. It is not in undelegate period.
+// UNDELEGATE_REQUEST_ICA  : Requested by ICA, It is in undelegate period.
 func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state int64) {
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
 		if undelegateInfo.ZoneId == zoneId {
@@ -83,6 +88,7 @@ func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state int6
 	})
 }
 
+// SetUndelegateRecord write undelegate record.
 func (k Keeper) SetUndelegateRecord(ctx sdk.Context, record types.UndelegateRecord) {
 	// key : zoneId + delegator
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
@@ -90,6 +96,7 @@ func (k Keeper) SetUndelegateRecord(ctx sdk.Context, record types.UndelegateReco
 	store.Set([]byte(record.ZoneId+record.Delegator), bz)
 }
 
+// DeleteUndelegateRecords removes undelegate record.
 func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state int64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
 

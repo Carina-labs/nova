@@ -6,7 +6,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// wrapped coin -> st coin
+// ClaimAndMintShareToken is used when user want to claim their share token.
+// It calculates user's share and the amount of claimable share token.
 func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.Coin) error {
 	stAsset := k.interTxKeeper.GetstDenomForBaseDenom(ctx, amt.Denom)
 
@@ -31,24 +32,17 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.
 	return nil
 }
 
-func (k Keeper) GetShareTokenMintingAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
-	stAsset := k.interTxKeeper.GetstDenomForBaseDenom(ctx, amt.Denom)
-	totalSharedToken := k.bankKeeper.GetSupply(ctx, stAsset)
-	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, amt.Denom)
-	if err != nil {
-		return sdk.Coin{}, err
-	}
-
-	mintAmt := k.CalculateAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
-	return sdk.NewInt64Coin(amt.Denom, mintAmt.Int64()), nil
-}
-
+// CalculateAlpha calculates alpha value.
+// Alpha = userDepositAmount / totalStakedAmount
+// Delta = Alpha * totalShareTokenSupply
 func (k Keeper) CalculateAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
 	res := new(big.Int)
 	return res.Mul(userDepositAmt, totalShareTokenSupply).Div(res, totalStakedAmount)
 }
 
-// st coin -> wrapped coin
+// GetWithdrawAmt is used for calculating the amount of coin user can withdraw
+// after un-delegate. This function is executed when ICA un-delegate call executed,
+// and calculate using the balance of user's share coin.
 func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
 	baseAsset := k.interTxKeeper.GetBaseDenomForStDenom(ctx, amt.Denom)
 	totalSharedToken := k.bankKeeper.GetSupply(ctx, amt.Denom)
@@ -62,6 +56,9 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 	return sdk.NewInt64Coin(baseAsset, withdrawAmt.Int64()), nil
 }
 
+// CalculateLambda calculates lambda value.
+// Lambda = userWithdrawAmount / totalStakedAmount
+// Delta = Lambda * totalShareTokenSupply
 func (k Keeper) CalculateLambda(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
 	res := new(big.Int)
 	return res.Mul(burnedStTokenAmt, totalStakedAmount).Div(res, totalShareTokenSupply)

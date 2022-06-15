@@ -130,7 +130,8 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	return &types.MsgUndelegateResponse{}, nil
 }
 
-// 사용자가 withdraw 요청
+// WithdrawRecord write user's withdraw requests to the "WithdrawRecord" store.
+// It will be used after undelegating, distribute native coin to the user.
 func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWithdrawRecord) (*types.MsgWithdrawRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 

@@ -8,6 +8,8 @@ import (
 	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 )
 
+// TransferToTargetZone transfers user's asset to target zone(Host chain)
+// using IBC transfer.
 func (k Keeper) TransferToTargetZone(ctx sdk.Context,
 	sourcePort, sourceChannel, depositor, receiver string, amt sdk.Coin) error {
 	goCtx := sdk.WrapSDKContext(ctx)

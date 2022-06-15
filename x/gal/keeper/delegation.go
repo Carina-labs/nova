@@ -24,6 +24,7 @@ func (k Keeper) MintShareTokens(ctx sdk.Context, depositor sdk.Address, amt sdk.
 	return nil
 }
 
+// BurnShareTokens burns share token.
 func (k Keeper) BurnShareTokens(ctx sdk.Context, burner sdk.Address, amt sdk.Coin) error {
 	burnerAddr, err := sdk.AccAddressFromBech32(burner.String())
 	if err != nil {
@@ -39,12 +40,6 @@ func (k Keeper) BurnShareTokens(ctx sdk.Context, burner sdk.Address, amt sdk.Coi
 	}
 
 	return nil
-}
-
-func (k Keeper) SetPairToken(ctx sdk.Context, denom string, shareTokenDenom string) {
-	data := make(map[string]string)
-	data[denom] = shareTokenDenom
-	k.paramSpace.Set(ctx, types.KeyWhiteListedTokenDenoms, data)
 }
 
 func (k Keeper) Share(context context.Context, rq *types.QueryCacheDepositAmountRequest) (*types.QueryCachedDepositAmountResponse, error) {
