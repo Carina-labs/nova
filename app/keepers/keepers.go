@@ -224,7 +224,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 
 	appKeepers.IntertxKeeper = intertxKeeper.SetHooks(
-		intertxtypes.NewMultiICAHooks(appKeepers.GalKeeper.IHooks()),
+		intertxtypes.NewMultiICAHooks(appKeepers.GalKeeper.Hooks()),
 	)
 
 	intertxIBCModule := intertx.NewIBCModule(*appKeepers.IntertxKeeper)

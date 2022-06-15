@@ -15,6 +15,7 @@ type Hooks struct {
 }
 
 var _ transfertypes.TransferHooks = Hooks{}
+var _ icatypes.ICAHooks = Hooks{}
 
 func (k Keeper) Hooks() Hooks {
 	return Hooks{k}
@@ -36,34 +37,23 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	})
 }
 
-// Hooks wrapper struct for gal keeper
-type IHooks struct {
-	k Keeper
+func (h Hooks) AfterDelegateEnd() {
 }
 
-var _ icatypes.ICAHooks = IHooks{}
-
-func (k Keeper) IHooks() IHooks {
-	return IHooks{k}
+func (h Hooks) AfterWithdrawEnd() {
 }
 
-func (h IHooks) AfterDelegateEnd() {
-}
-
-func (h IHooks) AfterWithdrawEnd() {
-}
-
-func (h IHooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
+func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
 }
 
 // AfterUndelegateEnd is executed when ICA undelegation request finished.
 // 1. It removes undelegation history in store.
 // 2. It saves undelegation finish time to store.
-func (h IHooks) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, msg *stakingtypes.MsgUndelegateResponse) {
+func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, msg *stakingtypes.MsgUndelegateResponse) {
 	zone := h.k.interTxKeeper.GetRegisteredZoneForPortId(ctx, packet.SourcePort)
 	h.k.DeleteUndelegateRecords(ctx, zone.ZoneName, UNDELEGATE_REQUEST_ICA)
 	h.k.SetWithdrawTime(ctx, zone.ZoneName, WITHDRAW_REQUEST_USER, msg.CompletionTime)
 }
 
-func (h IHooks) AfterAutoStakingEnd() {
+func (h Hooks) AfterAutoStakingEnd() {
 }
