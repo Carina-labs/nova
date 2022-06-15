@@ -8,7 +8,17 @@ import (
 )
 
 func (suite *KeeperTestSuite) TestRecordDepositAmt() {
+	randAddr := suite.GenRandomAddress()
+	type args struct {
+		coin sdk.Coin
+		addr sdk.AccAddress
+	}
 	tcs := []struct {
+		name    string
+		args    []args
+		expect  []args
+		wantErr bool
+
 		denom         string
 		amt           int64
 		userAddr      sdk.AccAddress
@@ -16,36 +26,52 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 		expectedAmt   int64
 	}{
 		{
-			denom:         "osmo",
-			amt:           10000,
-			userAddr:      suite.GenRandomAddress(),
-			expectedDenom: "osmo",
-			expectedAmt:   10000,
+			name: "should get recorded deposit amt",
+			args: []args{
+				{sdk.NewInt64Coin("osmo", 10000), randAddr},
+			},
+			expect: []args{
+				{sdk.NewInt64Coin("osmo", 10000), randAddr},
+			},
+			wantErr: false,
 		},
 		{
-			denom:         "atom",
-			amt:           5555,
-			userAddr:      suite.GenRandomAddress(),
-			expectedDenom: "atom",
-			expectedAmt:   5555,
+			name: "should not get deposit info",
+			args: []args{},
+			expect: []args{
+				{sdk.NewInt64Coin("osmo", 10000), randAddr},
+			},
+			wantErr: true,
 		},
 	}
 
 	for _, tc := range tcs {
-		amt := sdk.NewInt64Coin(tc.denom, tc.amt)
-		depositMsg := types.DepositRecord{
-			Address: tc.userAddr.String(),
-			Amount:  &amt,
-		}
-		// Test RecordDepositAmt
-		suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, depositMsg)
+		suite.Run(tc.name, func() {
+			for _, arg := range tc.args {
+				suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, types.DepositRecord{
+					Address: arg.addr.String(),
+					Amount:  &arg.coin,
+				})
+			}
 
-		// Test GetRecordDepositAmt
-		res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, tc.userAddr)
-		suite.NoError(err)
-		suite.Equal(tc.expectedAmt, res.Amount.Amount.Int64())
-		suite.Equal(tc.expectedDenom, res.Amount.Denom)
-		suite.Equal(tc.userAddr.String(), res.Address)
+			for _, query := range tc.expect {
+				res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, query.addr)
+				if tc.wantErr {
+					suite.Require().NotNil(err, "error expected but no error found")
+					continue
+				}
+
+				suite.Require().NoError(err)
+				suite.Require().Equal(res.Amount.Denom, query.coin.Denom)
+				suite.Require().Equal(res.Amount.Amount, query.coin.Amount)
+				suite.Require().Equal(res.Address, query.addr.String())
+			}
+
+			for _, arg := range tc.args {
+				err := suite.App.GalKeeper.ClearRecordedDepositAmt(suite.Ctx, arg.addr)
+				suite.Require().NoError(err)
+			}
+		})
 	}
 }
 
