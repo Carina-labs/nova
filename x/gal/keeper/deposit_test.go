@@ -1,54 +1,57 @@
 package keeper_test
 
-import sdk "github.com/cosmos/cosmos-sdk/types"
+import (
+	"github.com/Carina-labs/nova/x/gal/types"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+)
 
-func (suite *KeeperTestSuite) TestGetCachedDepositAmt() {
+func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 	tcs := []struct {
-		expected sdk.Coin
+		denom         string
+		amt           int64
+		userAddr      sdk.AccAddress
+		expectedDenom string
+		expectedAmt   int64
 	}{
 		{
-			expected: sdk.NewInt64Coin("uosmo", 2),
+			denom:         "osmo",
+			amt:           10000,
+			userAddr:      suite.GenRandomAddress(),
+			expectedDenom: "osmo",
+			expectedAmt:   10000,
 		},
 		{
-			expected: sdk.NewInt64Coin("uosmo", 2),
-		},
-		{
-			expected: sdk.NewInt64Coin("uosmo", 2),
-		},
-		{
-			expected: sdk.NewInt64Coin("uosmo", 2),
-		},
-		{
-			expected: sdk.NewInt64Coin("uosmo", 2),
+			denom:         "atom",
+			amt:           5555,
+			userAddr:      suite.GenRandomAddress(),
+			expectedDenom: "atom",
+			expectedAmt:   5555,
 		},
 	}
 
-	for i, tc := range tcs {
-		res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, suite.TestAccs[i])
+	for _, tc := range tcs {
+		amt := sdk.NewInt64Coin(tc.denom, tc.amt)
+		depositMsg := types.DepositRecord{
+			Address: tc.userAddr.String(),
+			Amount:  &amt,
+		}
+		// Test RecordDepositAmt
+		err := suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, depositMsg)
 		suite.NoError(err)
-		suite.Equal(tc.expected, res.Amount)
+
+		// Test GetRecordDepositAmt
+		res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, tc.userAddr)
+		suite.NoError(err)
+		suite.Equal(tc.expectedAmt, res.Amount.Amount.Int64())
+		suite.Equal(tc.expectedDenom, res.Amount.Denom)
+		suite.Equal(tc.userAddr.String(), res.Address)
 	}
 }
 
-//func (suite *KeeperTestSuite) TestCacheDepositAmt() {
-//	err := suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, sdk.NewInt64Coin("atom", 1000))
-//	suite.NoError(err)
-//
-//	res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, suite.TestAccs[0])
-//	suite.Equal(suite.TestAccs[0].String(), res.Address)
-//	suite.Equal("atom", res.Amount.Denom)
-//	suite.Equal(sdk.NewInt(1000), res.Amount.Amount)
-//}
-//
-//func (suite *KeeperTestSuite) TestClearCachedDepositAmt() {
-//	keeper := suite.App.GalKeeper
-//	err := keeper.RecordDepositAmt(suite.Ctx, sdk.NewInt64Coin("atom", 1000))
-//	suite.NoError(err)
-//
-//	err = keeper.ClearRecordedDepositAmt(suite.Ctx, suite.TestAccs[0])
-//	suite.NoError(err)
-//
-//	res, err := keeper.GetRecordedDepositAmt(suite.Ctx, suite.TestAccs[0])
-//	suite.Nil(res)
-//	suite.Error(err)
-//}
+func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
+	key := secp256k1.GenPrivKey()
+	acc := authtypes.NewBaseAccount(key.PubKey().Address().Bytes(), key.PubKey(), 0, 0)
+	return acc.GetAddress()
+}

@@ -1,62 +1,54 @@
 package keeper_test
 
 import (
-	"fmt"
-
-	types3 "github.com/Carina-labs/nova/x/inter-tx/types"
-	"github.com/Carina-labs/nova/x/oracle/types"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	types2 "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-)
-
-var (
-	fooOracleOperator = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	"github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 func (suite *KeeperTestSuite) TestAfterTransferEnd() {
-	suite.SetupTestOracle([]*types.ChainInfo{
+	tcs := []struct {
+		packet        types.FungibleTokenPacketData
+		denom         string
+		expectedDenom string
+		expectedAmt   int64
+		shouldErr     bool
+	}{
 		{
-			OperatorAddress: fooOracleOperator.String(),
-			Coin:            sdk.NewInt64Coin("osmo", 1000000000),
-			Decimal:         6,
-			LastBlockHeight: 10000,
+			packet: types.FungibleTokenPacketData{
+				Denom:    "osmo",
+				Amount:   "100000",
+				Sender:   suite.GenRandomAddress().String(),
+				Receiver: suite.GenRandomAddress().String(),
+			},
+			denom:         "osmo",
+			expectedDenom: "osmo",
+			expectedAmt:   100000,
+			shouldErr:     false,
 		},
-	}, []string{
-		fooOracleOperator.String(),
-	})
-
-	suite.App.IntertxKeeper.SetRegesterZone(suite.Ctx,
-		types3.RegisteredZone{
-			ZoneName:               "Osmosis",
-			IcaConnectionInfo:      nil,
-			TransferConnectionInfo: nil,
-			ValidatorAddress:       "test",
-			BaseDenom:              "osmo",
-			SnDenom:                "snOsmo",
-			StDenom:                "stOsmo",
+		{
+			packet: types.FungibleTokenPacketData{
+				Denom:    "atom",
+				Amount:   "55555",
+				Sender:   suite.GenRandomAddress().String(),
+				Receiver: suite.GenRandomAddress().String(),
+			},
+			denom:         "atom",
+			expectedDenom: "atom",
+			expectedAmt:   55555,
+			shouldErr:     false,
 		},
-	)
-
-	suite.App.GalKeeper.SetPairToken(suite.Ctx, "osmo", "stOsmo")
-
-	err := suite.App.BankKeeper.MintCoins(suite.Ctx, "gal", sdk.Coins{sdk.Coin{
-		Denom:  "stOsmo",
-		Amount: sdk.NewInt(10000),
-	}})
-	if err != nil {
-		print(err.Error())
 	}
 
-	suite.App.GalKeeper.Hooks().AfterTransferEnd(suite.Ctx,
-		types2.FungibleTokenPacketData{
-			Denom:    "osmo",
-			Amount:   "1000",
-			Sender:   suite.TestAccs[0].String(),
-			Receiver: suite.TestAccs[1].String(),
-		},
-		"osmo")
+	hooks := suite.App.GalKeeper.Hooks()
+	for _, tc := range tcs {
+		hooks.AfterTransferEnd(suite.Ctx, tc.packet, tc.denom)
 
-	minted := suite.App.BankKeeper.GetSupply(suite.Ctx, "stOsmo")
-	print(fmt.Sprintf("%s", minted.Amount.String()))
+		senderAddr, err := sdk.AccAddressFromBech32(tc.packet.Sender)
+		suite.NoError(err)
+		record, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, senderAddr)
+		suite.Equal(tc.expectedDenom, record.Amount.Denom)
+		suite.Equal(tc.expectedAmt, record.Amount.Amount.Int64())
+		suite.Equal(tc.packet.Sender, record.Address)
+	}
+
 }
