@@ -22,12 +22,16 @@ func (q Querier) State(ctx context.Context, request *types.QueryStateRequest) (*
 	}
 
 	return &types.QueryStateResponse{
-		Coin:               res.Coin,
-		Decimal:            res.Decimal,
-		LastBlockHeight:    res.LastBlockHeight,
+		Coin:            res.Coin,
+		Decimal:         res.Decimal,
+		LastBlockHeight: res.LastBlockHeight,
 	}, nil
 }
 
 func (q Querier) Params(ctx context.Context, request *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {
-	return nil, nil
+	params := q.Keeper.GetParams(sdk.UnwrapSDKContext(ctx))
+
+	return &types.QueryParamsResponse{
+		Params: params,
+	}, nil
 }
