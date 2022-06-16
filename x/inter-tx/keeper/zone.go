@@ -40,7 +40,12 @@ func (k Keeper) DeleteRegisterZone(ctx sdk.Context, zone_name string) {
 func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zoneInfo types.RegisteredZone) (stop bool)) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
-	defer iterator.Close()
+	defer func(iterator sdk.Iterator) {
+		err := iterator.Close()
+		if err != nil {
+			panic(fmt.Errorf("unexpectedly iterator closed: %v", err))
+		}
+	}(iterator)
 	i := int64(0)
 
 	for ; iterator.Valid(); iterator.Next() {

@@ -107,7 +107,12 @@ func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, amt sdk.Coin) bool {
 func (k Keeper) IterateWithdrawdRecords(ctx sdk.Context, fn func(index int64, withdrawInfo types.WithdrawRecord) (stop bool)) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
-	defer iterator.Close()
+	defer func(iterator sdk.Iterator) {
+		err := iterator.Close()
+		if err != nil {
+			panic(fmt.Errorf("unexpectedly iterator closed: %v", err))
+		}
+	}(iterator)
 	i := int64(0)
 
 	for ; iterator.Valid(); iterator.Next() {
