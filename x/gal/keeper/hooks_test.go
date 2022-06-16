@@ -66,5 +66,4 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 		suite.Equal(tc.expectedAmt, record.Amount.Amount.Int64())
 		suite.Equal(tc.packet.Sender, record.Address)
 	}
-
 }
