@@ -6,6 +6,7 @@ import (
 	galtypes "github.com/Carina-labs/nova/x/gal/types"
 	intertx "github.com/Carina-labs/nova/x/inter-tx"
 	intertxkeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
+	mintkeeper "github.com/Carina-labs/nova/x/mint/keeper"
 	"github.com/Carina-labs/nova/x/oracle"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
@@ -26,7 +27,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/feegrant"
 	feegrantkeeper "github.com/cosmos/cosmos-sdk/x/feegrant/keeper"
 	govkeeper "github.com/cosmos/cosmos-sdk/x/gov/keeper"
-	mintkeeper "github.com/cosmos/cosmos-sdk/x/mint/keeper"
 	"github.com/cosmos/cosmos-sdk/x/params"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	paramproposal "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
@@ -47,13 +47,13 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
 
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	minttypes "github.com/Carina-labs/nova/x/mint/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	crisistypes "github.com/cosmos/cosmos-sdk/x/crisis/types"
 	distrtypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 	paramskeeper "github.com/cosmos/cosmos-sdk/x/params/keeper"
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -137,7 +137,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 
 	mintKeeper := mintkeeper.NewKeeper(
 		appCodec, appKeepers.keys[minttypes.StoreKey], appKeepers.GetSubspace(minttypes.ModuleName), &stakingKeeper,
-		appKeepers.AccountKeeper, appKeepers.BankKeeper, authtypes.FeeCollectorName,
+		appKeepers.AccountKeeper, appKeepers.BankKeeper, appKeepers.DistrKeeper, authtypes.FeeCollectorName,
 	)
 	appKeepers.MintKeeper = &mintKeeper
 
