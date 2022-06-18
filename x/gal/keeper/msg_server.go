@@ -16,11 +16,11 @@ import (
 var _ types.MsgServer = msgServer{}
 
 type msgServer struct {
-	keeper Keeper
+	keeper *Keeper
 }
 
 // NewMsgServerImpl creates and returns a new types.MsgServer, fulfilling the intertx Msg service interface
-func NewMsgServerImpl(keeper Keeper) types.MsgServer {
+func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 	return &msgServer{keeper: keeper}
 }
 
@@ -153,7 +153,7 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	// state 변경
 	m.keeper.SetWithdrawRecord(ctx, *withdrawState)
 
-	//zone 정보 조회
+	// zone 정보 조회
 	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
 	if !ok {
 		return nil, errors.New("zone is not found")
