@@ -44,6 +44,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	// Delegate events
 	ctx.EventManager().EmitTypedEvent(zoneInfo)
 	ctx.EventManager().EmitTypedEvent(record)
+
 }
 
 func (h Hooks) AfterDelegateEnd() {
