@@ -37,7 +37,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		Address: data.Sender,
 		Amount:  &coin,
 	})
-
+	
 	// Delegate events
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
