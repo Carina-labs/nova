@@ -135,17 +135,17 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appCodec, appKeepers.keys[stakingtypes.StoreKey], appKeepers.AccountKeeper, appKeepers.BankKeeper, appKeepers.GetSubspace(stakingtypes.ModuleName),
 	)
 
-	mintKeeper := mintkeeper.NewKeeper(
-		appCodec, appKeepers.keys[minttypes.StoreKey], appKeepers.GetSubspace(minttypes.ModuleName), &stakingKeeper,
-		appKeepers.AccountKeeper, appKeepers.BankKeeper, appKeepers.DistrKeeper, authtypes.FeeCollectorName,
-	)
-	appKeepers.MintKeeper = &mintKeeper
-
 	distrKeeper := distrkeeper.NewKeeper(
 		appCodec, appKeepers.keys[distrtypes.StoreKey], appKeepers.GetSubspace(distrtypes.ModuleName), appKeepers.AccountKeeper, appKeepers.BankKeeper,
 		&stakingKeeper, authtypes.FeeCollectorName, moduleAddrs,
 	)
 	appKeepers.DistrKeeper = &distrKeeper
+
+	mintKeeper := mintkeeper.NewKeeper(
+		appCodec, appKeepers.keys[minttypes.StoreKey], appKeepers.GetSubspace(minttypes.ModuleName), &stakingKeeper,
+		appKeepers.AccountKeeper, appKeepers.BankKeeper, appKeepers.DistrKeeper, authtypes.FeeCollectorName,
+	)
+	appKeepers.MintKeeper = &mintKeeper
 
 	slashingKeeper := slashingkeeper.NewKeeper(
 		appCodec, appKeepers.keys[slashingtypes.StoreKey], &stakingKeeper, appKeepers.GetSubspace(slashingtypes.ModuleName),

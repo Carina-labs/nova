@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
@@ -32,13 +31,12 @@ func (suite *KeeperTestSuite) TestMintCoinsToFeeCollectorAndGetProportions() {
 
 	// When coin is minted to the fee collector
 	fee := sdk.NewCoin("nova", sdk.NewInt(0))
-	fees := sdk.NewCoins(fee)
 	coin := mintKeeper.GetProportions(suite.Ctx, fee, sdk.NewDecWithPrec(2, 1))
 	suite.Equal("0nova", coin.String())
 
 	// When mint the 100K stake coin to the fee collector
 	fee = sdk.NewCoin("nova", sdk.NewInt(100000))
-	fees = sdk.NewCoins(fee)
+	fees := sdk.NewCoins(fee)
 
 	err := simapp.FundModuleAccount(suite.App.BankKeeper,
 		suite.Ctx,
@@ -60,7 +58,6 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 	mintCoins := sdk.Coins{mintCoin}
 	err := mintKeeper.MintCoins(suite.Ctx, mintCoins)
 	suite.NoError(err)
-	fmt.Println("ctx", suite.Ctx)
 	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
 	suite.NoError(err)
 
@@ -68,30 +65,11 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 
 	feePool := suite.App.DistrKeeper.GetFeePool(suite.Ctx)
 	feeCollector := suite.App.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName)
-	// PoolIncentives + DeveloperRewards + CommunityPool => CommunityPool
-	proportionToCommunity := params.DistributionProportions.LpIncentives.
-		Add(params.DistributionProportions.StableGuaranteeIncentives).
-		Add(params.DistributionProportions.CommunityPool)
+
 	suite.Equal(
 		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.Staking).TruncateInt(),
 		suite.App.BankKeeper.GetBalance(suite.Ctx, feeCollector, "nova").Amount)
 	suite.Equal(
-		mintCoins[0].Amount.ToDec().Mul(proportionToCommunity),
-		feePool.CommunityPool.AmountOf("nova"))
-
-	// Mint more and community pool should be increased
-	err = mintKeeper.MintCoins(suite.Ctx, mintCoins)
-	suite.NoError(err)
-	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
-	suite.NoError(err)
-
-	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, *suite.App.DistrKeeper)
-
-	feePool = suite.App.DistrKeeper.GetFeePool(suite.Ctx)
-	suite.Equal(
-		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.Staking).TruncateInt().Mul(sdk.NewInt(2)),
-		suite.App.BankKeeper.GetBalance(suite.Ctx, feeCollector, "nova").Amount)
-	suite.Equal(
-		mintCoins[0].Amount.ToDec().Mul(proportionToCommunity).Mul(sdk.NewDec(2)),
+		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.CommunityPool),
 		feePool.CommunityPool.AmountOf("nova"))
 }
