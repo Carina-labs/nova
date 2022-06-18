@@ -19,25 +19,28 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 	}
 }
 
-func (server msgServer) UpdateChainState(ctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
-	goCtx := sdk.UnwrapSDKContext(ctx)
+func (server msgServer) UpdateChainState(goctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goctx)
 
-	if err := server.keeper.UpdateChainState(goCtx, &types.ChainInfo{
+	newOracleState := &types.ChainInfo{
 		Coin:            state.Coin,
 		OperatorAddress: state.Operator,
 		LastBlockHeight: state.BlockHeight,
 		Decimal:         state.Decimal,
-	}); err != nil {
+	}
+	if err := server.keeper.UpdateChainState(ctx, newOracleState); err != nil {
 		return nil, err
 	}
+
+	ctx.EventManager().EmitTypedEvent(newOracleState)
 
 	return &types.MsgUpdateChainStateResponse{}, nil
 }
 
-func (server msgServer) GetChainState(ctx context.Context, request *types.QueryStateRequest) (*types.QueryStateResponse, error) {
-	goCtx := sdk.UnwrapSDKContext(ctx)
+func (server msgServer) GetChainState(goCtx context.Context, request *types.QueryStateRequest) (*types.QueryStateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	result, err := server.keeper.GetChainState(goCtx, request.ChainDenom)
+	result, err := server.keeper.GetChainState(ctx, request.ChainDenom)
 	if err != nil {
 		return nil, err
 	}
