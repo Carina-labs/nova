@@ -33,8 +33,9 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	if !ok {
 		return nil, fmt.Errorf("")
 	}
+	m.keeper.Logger(ctx).Info("ZoneInfo")
 
-	m.keeper.Logger(ctx).Info("ZoneInfo", "zoneInfo", zoneInfo)
+	ctx.EventManager().EmitTypedEvent(&zoneInfo)
 
 	err := m.keeper.TransferToTargetZone(ctx,
 		zoneInfo.TransferConnectionInfo.PortId,
