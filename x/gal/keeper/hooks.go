@@ -31,10 +31,13 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	}
 
 	coin := sdk.NewInt64Coin(data.Denom, amt.Int64())
-	h.k.RecordDepositAmt(ctx, types.DepositRecord{
+	err := h.k.RecordDepositAmt(ctx, types.DepositRecord{
 		Address: data.Sender,
 		Amount:  &coin,
 	})
+	if err != nil {
+		h.k.Logger(ctx).Error("error during recording deposit information, %s", err.Error())
+	}
 }
 
 func (h Hooks) AfterDelegateEnd() {

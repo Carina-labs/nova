@@ -8,6 +8,25 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+func (k Keeper) DepositCoin(ctx sdk.Context, deposit types.MsgDeposit) error {
+	zoneInfo, ok := k.interTxKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
+	if !ok {
+		return fmt.Errorf("can't find zone id: %s", deposit.ZoneId)
+	}
+
+	err := k.TransferToTargetZone(ctx,
+		zoneInfo.TransferConnectionInfo.PortId,
+		zoneInfo.TransferConnectionInfo.ChannelId,
+		deposit.Depositor,
+		zoneInfo.IcaConnectionInfo.OwnerAddress,
+		deposit.Amount[0])
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // getDepositRecordStore returns "DepositRecord" store.
 // It is used for finding the amount of coin user deposit.
 func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {

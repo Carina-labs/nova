@@ -2,12 +2,13 @@ package keeper_test
 
 import (
 	"fmt"
-	"github.com/Carina-labs/nova/x/gal/keeper"
 	types2 "github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	types3 "github.com/cosmos/cosmos-sdk/x/bank/types"
+	ibctesting "github.com/cosmos/ibc-go/v3/testing"
+	"github.com/stretchr/testify/require"
 	"testing"
 
 	"github.com/Carina-labs/nova/app/apptesting"
@@ -98,6 +99,8 @@ func (suite *KeeperTestSuite) TestDepositCoins() {
 		},
 	})
 
+	ctxA, ctxB := suite.chainA.GetContext(), suite.chainB.GetContext()
+
 	key1 := secp256k1.GenPrivKey()
 	acc1 := authtypes.NewBaseAccount(key1.PubKey().Address().Bytes(), key1.PubKey(), 0, 0)
 
@@ -107,15 +110,15 @@ func (suite *KeeperTestSuite) TestDepositCoins() {
 	key3 := secp256k1.GenPrivKey()
 	acc3 := authtypes.NewBaseAccount(key3.PubKey().Address().Bytes(), key3.PubKey(), 0, 0)
 
-	suite.chainA.App.AccountKeeper.SetAccount(suite.chainA.GetContext(), acc1)
-	suite.chainA.App.AccountKeeper.SetAccount(suite.chainA.GetContext(), acc2)
-	suite.chainA.App.AccountKeeper.SetAccount(suite.chainA.GetContext(), acc3)
+	suite.chainA.App.AccountKeeper.SetAccount(ctxA, acc1)
+	suite.chainA.App.AccountKeeper.SetAccount(ctxA, acc2)
+	suite.chainA.App.AccountKeeper.SetAccount(ctxA, acc3)
 
-	suite.chainB.App.AccountKeeper.SetAccount(suite.chainB.GetContext(), acc1)
-	suite.chainB.App.AccountKeeper.SetAccount(suite.chainB.GetContext(), acc2)
-	suite.chainB.App.AccountKeeper.SetAccount(suite.chainB.GetContext(), acc3)
+	suite.chainB.App.AccountKeeper.SetAccount(ctxB, acc1)
+	suite.chainB.App.AccountKeeper.SetAccount(ctxB, acc2)
+	suite.chainB.App.AccountKeeper.SetAccount(ctxB, acc3)
 
-	suite.chainA.App.BankKeeper.InitGenesis(suite.chainA.GetContext(),
+	suite.chainA.App.BankKeeper.InitGenesis(ctxA,
 		&types3.GenesisState{
 			Supply: sdk.Coins{sdk.NewInt64Coin("nova", 30000000)},
 			Balances: []types3.Balance{
@@ -134,7 +137,7 @@ func (suite *KeeperTestSuite) TestDepositCoins() {
 			},
 		})
 
-	suite.chainA.App.IntertxKeeper.SetRegesterZone(suite.chainA.GetContext(), types2.RegisteredZone{
+	suite.chainA.App.IntertxKeeper.SetRegesterZone(ctxA, types2.RegisteredZone{
 		ZoneName: suite.chainB.ChainID,
 		IcaConnectionInfo: &types2.IcaConnectionInfo{
 			ConnectionId: "connection-id",
@@ -154,21 +157,30 @@ func (suite *KeeperTestSuite) TestDepositCoins() {
 	senderPrivAddr, _ := sdk.AccAddressFromHex(suite.chainA.SenderPrivKey.PubKey().Address().String())
 	fmt.Printf("senderPrivAddr : %s\n", senderPrivAddr)
 
-	msgServer := keeper.NewMsgServerImpl(*suite.chainA.App.GalKeeper)
-	goCtx := sdk.WrapSDKContext(suite.chainA.GetContext())
-	res, err := msgServer.Deposit(goCtx, &types.MsgDeposit{
+	err := suite.chainA.App.GalKeeper.DepositCoin(ctxA, types.MsgDeposit{
 		Depositor: acc1.GetAddress().String(),
 		ZoneId:    suite.chainB.ChainID,
 		Amount:    sdk.NewCoins(sdk.NewInt64Coin("nova", 1000)),
 	})
 
-	fmt.Printf("res : %s", res.String())
 	if err != nil {
 		fmt.Printf("err : %s", err.Error())
 	}
 
-	// Using TX
+	suite.chainA.NextBlock()
 
-	//tx := tx2.GenerateTx(suite.chainA.GetContext())
-	//suite.chainA.App.BeginBlock()
+	packet, errPacket := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events()) //parse packet
+	require.NoError(suite.T(), errPacket)
+
+	packetErr := suite.path.RelayPacket(packet)
+	suite.Require().NoError(packetErr) // relay committed
+
+	record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(ctxA, acc1.GetAddress())
+	suite.NoError(err)
+	fmt.Printf(record.String())
+
+	suite.chainB.App.BankKeeper.IterateAllBalances(ctxB, func(address sdk.AccAddress, coin sdk.Coin) bool {
+		fmt.Printf("IterateAllBalances addr: %s, balance: %s\n", address.String(), coin.String())
+		return false
+	})
 }
