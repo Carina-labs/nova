@@ -19,9 +19,10 @@ var _ sdk.Msg = &MsgUndelegate{}
 var _ sdk.Msg = &MsgUndelegateRecord{}
 var _ sdk.Msg = &MsgWithdrawRecord{}
 
-func NewMsgDeposit(fromAddr sdk.AccAddress, amount sdk.Coins, zoneId string) *MsgDeposit {
+func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coins, zoneId string) *MsgDeposit {
 	return &MsgDeposit{
 		Depositor: fromAddr.String(),
+		HostAddr:  hostAddr,
 		ZoneId:    zoneId,
 		Amount:    amount,
 	}
