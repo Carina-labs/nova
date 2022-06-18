@@ -4,13 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
-	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 )
 
 var _ types.MsgServer = msgServer{}
@@ -135,7 +132,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWithdrawRecord) (*types.MsgWithdrawRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	//withdraw record 조회
+	// withdraw record 조회
 	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, withdraw.ZoneId+withdraw.Withdrawer)
 	if !found {
 		return nil, errors.New("withdraw record is not found")
@@ -166,27 +163,38 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	if !ok {
-		//ICA transfer 요청
+
+		ctx.EventManager().EmitEvent(
+			sdk.NewEvent(
+				types.TypeEvtWithdraw,
+				sdk.NewAttribute(types.AttributeKeyZoneId, zoneInfo.ZoneName),
+				sdk.NewAttribute(types.AttributeKeyOwnerAddr, zoneInfo.IcaConnectionInfo.OwnerAddress),
+				sdk.NewAttribute(types.AttributeKeySenderAddr, withdrawState.Withdrawer),
+				sdk.NewAttribute(types.AttributeKeyReceivAddr, withdrawState.Recipient),
+				sdk.NewAttribute(types.AttributeKeyAmount, withdrawState.Amount.String()),
+			),
+		)
+		//ICA transfer 요청(Bot)
 		//transfer msg
-		var msgs []sdk.Msg
+		// var msgs []sdk.Msg
 
-		msgs = append(msgs, &ibctransfertypes.MsgTransfer{
-			SourcePort:    zoneInfo.TransferConnectionInfo.PortId,
-			SourceChannel: zoneInfo.TransferConnectionInfo.ChannelId,
-			Token:         *withdrawRecord.Amount,
-			Sender:        zoneInfo.IcaConnectionInfo.OwnerAddress,
-			Receiver:      string(m.keeper.accountKeeper.GetModuleAddress(types.ModuleName)),
-			TimeoutHeight: ibcclienttypes.Height{
-				RevisionHeight: 0,
-				RevisionNumber: 0,
-			},
-			TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
-		})
+		// msgs = append(msgs, &ibctransfertypes.MsgTransfer{
+		// 	SourcePort:    zoneInfo.TransferConnectionInfo.PortId,
+		// 	SourceChannel: zoneInfo.TransferConnectionInfo.ChannelId,
+		// 	Token:         *withdrawRecord.Amount,
+		// 	Sender:        zoneInfo.IcaConnectionInfo.OwnerAddress,
+		// 	Receiver:      string(m.keeper.accountKeeper.GetModuleAddress(types.ModuleName)),
+		// 	TimeoutHeight: ibcclienttypes.Height{
+		// 		RevisionHeight: 0,
+		// 		RevisionNumber: 0,
+		// 	},
+		// 	TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+		// })
 
-		err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
-		if err != nil {
-			return &types.MsgWithdrawRecordResponse{}, errors.New("IcaWithdraw transaction failed to send")
-		}
+		// err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+		// if err != nil {
+		// 	return &types.MsgWithdrawRecordResponse{}, errors.New("IcaWithdraw transaction failed to send")
+		// }
 	}
 
 	// moduleAccountToAccount
