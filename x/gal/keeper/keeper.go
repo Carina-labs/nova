@@ -84,3 +84,17 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer sdk.Address, amt sdk.Co
 
 	return nil
 }
+
+func (k *Keeper) CreateDepositEvent(ctx sdk.Context, sender sdk.AccAddress, zoneId, ownerAddr, hostAddr string, amount sdk.Coins) {
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.TypeEvtDeposit,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
+			sdk.NewAttribute(sdk.AttributeKeySender, sender.String()),
+			sdk.NewAttribute(types.AttributeKeyZoneId, zoneId),
+			sdk.NewAttribute(types.AttributeKeyOwnerAddr, ownerAddr),
+			sdk.NewAttribute(types.AttributeKeyHostAddr, hostAddr),
+			sdk.NewAttribute(types.AttributeKeyAmount, amount.String()),
+		),
+	})
+}
