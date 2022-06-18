@@ -38,7 +38,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		zoneInfo.TransferConnectionInfo.PortId,
 		zoneInfo.TransferConnectionInfo.ChannelId,
 		deposit.Depositor,
-		zoneInfo.IcaConnectionInfo.OwnerAddress,
+		deposit.HostAddr,
 		deposit.Amount[0])
 	if err != nil {
 		return nil, err
