@@ -33,21 +33,17 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	zoneInfo := h.k.interTxKeeper.GetZoneForDenom(ctx, base_denom)
 	// zoneID
 	coin := sdk.NewInt64Coin(data.Denom, amt.Int64())
-	h.k.RecordDepositAmt(ctx, types.DepositRecord{
+
+	record := &types.DepositRecord{
+		ZoneId:  zoneInfo.ZoneName,
 		Address: data.Sender,
 		Amount:  &coin,
-	})
-	
+	}
+	h.k.RecordDepositAmt(ctx, *record)
+
 	// Delegate events
-	ctx.EventManager().EmitEvent(
-		sdk.NewEvent(
-			types.TypeEvtDeposit,
-			sdk.NewAttribute(types.AttributeKeyZoneId, zoneInfo.ZoneName),
-			sdk.NewAttribute(types.AttributeKeyOwnerAddr, zoneInfo.IcaConnectionInfo.OwnerAddress),
-			sdk.NewAttribute(types.AttributeKeyHostAddr, data.Receiver),
-			sdk.NewAttribute(types.AttributeKeyAmount, coin.String()),
-		),
-	)
+	ctx.EventManager().EmitTypedEvent(zoneInfo)
+	ctx.EventManager().EmitTypedEvent(record)
 }
 
 func (h Hooks) AfterDelegateEnd() {
