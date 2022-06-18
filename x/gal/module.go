@@ -122,7 +122,7 @@ func (am AppModule) RegisterInvariants(ir sdk.InvariantRegistry) {
 
 // Route returns the message routing key for the gal module.
 func (am AppModule) Route() sdk.Route {
-	return sdk.NewRoute(types.RouterKey, NewHandler(&am.keeper))
+	return sdk.NewRoute(types.RouterKey, nil)
 }
 
 // QuerierRoute returns the gal module's querier route name.

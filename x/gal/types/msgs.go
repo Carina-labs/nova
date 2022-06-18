@@ -140,9 +140,12 @@ func (msg MsgUndelegateRecord) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.Depositor)
 	return []sdk.AccAddress{withdrawer}
 }
-func NewMsgWithdrawRecord(toAddr sdk.AccAddress, amount sdk.Coin) *MsgWithdrawRecord {
+
+func NewMsgWithdrawRecord(zoneId string, toAddr sdk.AccAddress, amount sdk.Coin) *MsgWithdrawRecord {
 	return &MsgWithdrawRecord{
+		ZoneId:     zoneId,
 		Withdrawer: toAddr.String(),
+		Recipient:  "",
 		Amount:     amount,
 	}
 }
@@ -156,8 +159,12 @@ func (msg MsgWithdrawRecord) Type() string {
 }
 
 func (msg MsgWithdrawRecord) ValidateBasic() error {
-	if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
-		return err
+	// if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
+	// 	return err
+	// }
+
+	if msg.Withdrawer == "" {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Withdrawer)
 	}
 
 	if !msg.Amount.IsValid() {
@@ -179,4 +186,3 @@ func (msg MsgWithdrawRecord) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.Withdrawer)
 	return []sdk.AccAddress{withdrawer}
 }
-
