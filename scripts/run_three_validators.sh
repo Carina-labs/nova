@@ -16,23 +16,23 @@ mkdir $HOME/.novad/validator3
 ./build/novad keys add validator2 --keyring-backend=test --home=$HOME/.novad/validator2
 ./build/novad keys add validator3 --keyring-backend=test --home=$HOME/.novad/validator3
 
-# change staking denom to uatom
-cat $HOME/.novad/validator1/config/genesis.json | jq '.app_state["staking"]["params"]["bond_denom"]="uatom"' > $HOME/.novad/validator1/config/tmp_genesis.json && mv $HOME/.novad/validator1/config/tmp_genesis.json $HOME/.novad/validator1/config/genesis.json
+# change staking denom to unova
+cat $HOME/.novad/validator1/config/genesis.json | jq '.app_state["staking"]["params"]["bond_denom"]="unova"' > $HOME/.novad/validator1/config/tmp_genesis.json && mv $HOME/.novad/validator1/config/tmp_genesis.json $HOME/.novad/validator1/config/genesis.json
 
 # create validator node with tokens to transfer to the three other nodes
-./build/novad add-genesis-account $(./build/novad keys show validator1 -a --keyring-backend=test --home=$HOME/.novad/validator1) 100000000000uatom,100000000000stake --home=$HOME/.novad/validator1
-./build/novad gentx validator1 500000000uatom --keyring-backend=test --home=$HOME/.novad/validator1 --chain-id=testing
+./build/novad add-genesis-account $(./build/novad keys show validator1 -a --keyring-backend=test --home=$HOME/.novad/validator1) 100000000000unova,100000000000stake --home=$HOME/.novad/validator1
+./build/novad gentx validator1 500000000unova --keyring-backend=test --home=$HOME/.novad/validator1 --chain-id=testing
 ./build/novad collect-gentxs --home=$HOME/.novad/validator1
 
 # update staking genesis
 cat $HOME/.novad/validator1/config/genesis.json | jq '.app_state["staking"]["params"]["unbonding_time"]="240s"' > $HOME/.novad/validator1/config/tmp_genesis.json && mv $HOME/.novad/validator1/config/tmp_genesis.json $HOME/.novad/validator1/config/genesis.json
 
-# update crisis variable to uatom
-cat $HOME/.novad/validator1/config/genesis.json | jq '.app_state["crisis"]["constant_fee"]["denom"]="uatom"' > $HOME/.novad/validator1/config/tmp_genesis.json && mv $HOME/.novad/validator1/config/tmp_genesis.json $HOME/.novad/validator1/config/genesis.json
+# update crisis variable to unova
+cat $HOME/.novad/validator1/config/genesis.json | jq '.app_state["crisis"]["constant_fee"]["denom"]="unova"' > $HOME/.novad/validator1/config/tmp_genesis.json && mv $HOME/.novad/validator1/config/tmp_genesis.json $HOME/.novad/validator1/config/genesis.json
 
 # udpate gov genesis
 cat $HOME/.novad/validator1/config/genesis.json | jq '.app_state["gov"]["voting_params"]["voting_period"]="60s"' > $HOME/.novad/validator1/config/tmp_genesis.json && mv $HOME/.novad/validator1/config/tmp_genesis.json $HOME/.novad/validator1/config/genesis.json
-cat $HOME/.novad/validator1/config/genesis.json | jq '.app_state["gov"]["deposit_params"]["min_deposit"][0]["denom"]="uatom"' > $HOME/.novad/validator1/config/tmp_genesis.json && mv $HOME/.novad/validator1/config/tmp_genesis.json $HOME/.novad/validator1/config/genesis.json
+cat $HOME/.novad/validator1/config/genesis.json | jq '.app_state["gov"]["deposit_params"]["min_deposit"][0]["denom"]="unova"' > $HOME/.novad/validator1/config/tmp_genesis.json && mv $HOME/.novad/validator1/config/tmp_genesis.json $HOME/.novad/validator1/config/genesis.json
 
 # validator2
 sed -i -E 's|tcp://0.0.0.0:1317|tcp://0.0.0.0:1316|g' $HOME/.novad/validator2/config/app.toml
