@@ -1,8 +1,9 @@
 package keeper_test
 
 import (
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"testing"
+
+	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
@@ -45,7 +46,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []intertxtypes.RegisteredZone) {
 	for _, msg := range zoneMsgs {
-		suite.App.IntertxKeeper.SetRegesterZone(suite.Ctx, msg)
+		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, &msg)
 	}
 }
 
