@@ -15,20 +15,26 @@ import (
 )
 
 var (
-	md_MsgUpdateChainState              protoreflect.MessageDescriptor
-	fd_MsgUpdateChainState_coin         protoreflect.FieldDescriptor
-	fd_MsgUpdateChainState_operator     protoreflect.FieldDescriptor
-	fd_MsgUpdateChainState_decimal      protoreflect.FieldDescriptor
-	fd_MsgUpdateChainState_block_height protoreflect.FieldDescriptor
+	md_MsgUpdateChainState                protoreflect.MessageDescriptor
+	fd_MsgUpdateChainState_coin           protoreflect.FieldDescriptor
+	fd_MsgUpdateChainState_decimal        protoreflect.FieldDescriptor
+	fd_MsgUpdateChainState_operator       protoreflect.FieldDescriptor
+	fd_MsgUpdateChainState_block_height   protoreflect.FieldDescriptor
+	fd_MsgUpdateChainState_app_hash       protoreflect.FieldDescriptor
+	fd_MsgUpdateChainState_chain_id       protoreflect.FieldDescriptor
+	fd_MsgUpdateChainState_block_proposer protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_oracle_v1_tx_proto_init()
 	md_MsgUpdateChainState = File_nova_oracle_v1_tx_proto.Messages().ByName("MsgUpdateChainState")
 	fd_MsgUpdateChainState_coin = md_MsgUpdateChainState.Fields().ByName("coin")
-	fd_MsgUpdateChainState_operator = md_MsgUpdateChainState.Fields().ByName("operator")
 	fd_MsgUpdateChainState_decimal = md_MsgUpdateChainState.Fields().ByName("decimal")
+	fd_MsgUpdateChainState_operator = md_MsgUpdateChainState.Fields().ByName("operator")
 	fd_MsgUpdateChainState_block_height = md_MsgUpdateChainState.Fields().ByName("block_height")
+	fd_MsgUpdateChainState_app_hash = md_MsgUpdateChainState.Fields().ByName("app_hash")
+	fd_MsgUpdateChainState_chain_id = md_MsgUpdateChainState.Fields().ByName("chain_id")
+	fd_MsgUpdateChainState_block_proposer = md_MsgUpdateChainState.Fields().ByName("block_proposer")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgUpdateChainState)(nil)
@@ -102,21 +108,39 @@ func (x *fastReflection_MsgUpdateChainState) Range(f func(protoreflect.FieldDesc
 			return
 		}
 	}
-	if x.Operator != "" {
-		value := protoreflect.ValueOfString(x.Operator)
-		if !f(fd_MsgUpdateChainState_operator, value) {
-			return
-		}
-	}
 	if x.Decimal != uint64(0) {
 		value := protoreflect.ValueOfUint64(x.Decimal)
 		if !f(fd_MsgUpdateChainState_decimal, value) {
 			return
 		}
 	}
+	if x.Operator != "" {
+		value := protoreflect.ValueOfString(x.Operator)
+		if !f(fd_MsgUpdateChainState_operator, value) {
+			return
+		}
+	}
 	if x.BlockHeight != uint64(0) {
 		value := protoreflect.ValueOfUint64(x.BlockHeight)
 		if !f(fd_MsgUpdateChainState_block_height, value) {
+			return
+		}
+	}
+	if x.AppHash != "" {
+		value := protoreflect.ValueOfString(x.AppHash)
+		if !f(fd_MsgUpdateChainState_app_hash, value) {
+			return
+		}
+	}
+	if x.ChainId != "" {
+		value := protoreflect.ValueOfString(x.ChainId)
+		if !f(fd_MsgUpdateChainState_chain_id, value) {
+			return
+		}
+	}
+	if x.BlockProposer != "" {
+		value := protoreflect.ValueOfString(x.BlockProposer)
+		if !f(fd_MsgUpdateChainState_block_proposer, value) {
 			return
 		}
 	}
@@ -137,12 +161,18 @@ func (x *fastReflection_MsgUpdateChainState) Has(fd protoreflect.FieldDescriptor
 	switch fd.FullName() {
 	case "nova.oracle.v1.MsgUpdateChainState.coin":
 		return x.Coin != nil
-	case "nova.oracle.v1.MsgUpdateChainState.operator":
-		return x.Operator != ""
 	case "nova.oracle.v1.MsgUpdateChainState.decimal":
 		return x.Decimal != uint64(0)
+	case "nova.oracle.v1.MsgUpdateChainState.operator":
+		return x.Operator != ""
 	case "nova.oracle.v1.MsgUpdateChainState.block_height":
 		return x.BlockHeight != uint64(0)
+	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
+		return x.AppHash != ""
+	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
+		return x.ChainId != ""
+	case "nova.oracle.v1.MsgUpdateChainState.block_proposer":
+		return x.BlockProposer != ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -161,12 +191,18 @@ func (x *fastReflection_MsgUpdateChainState) Clear(fd protoreflect.FieldDescript
 	switch fd.FullName() {
 	case "nova.oracle.v1.MsgUpdateChainState.coin":
 		x.Coin = nil
-	case "nova.oracle.v1.MsgUpdateChainState.operator":
-		x.Operator = ""
 	case "nova.oracle.v1.MsgUpdateChainState.decimal":
 		x.Decimal = uint64(0)
+	case "nova.oracle.v1.MsgUpdateChainState.operator":
+		x.Operator = ""
 	case "nova.oracle.v1.MsgUpdateChainState.block_height":
 		x.BlockHeight = uint64(0)
+	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
+		x.AppHash = ""
+	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
+		x.ChainId = ""
+	case "nova.oracle.v1.MsgUpdateChainState.block_proposer":
+		x.BlockProposer = ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -186,15 +222,24 @@ func (x *fastReflection_MsgUpdateChainState) Get(descriptor protoreflect.FieldDe
 	case "nova.oracle.v1.MsgUpdateChainState.coin":
 		value := x.Coin
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.oracle.v1.MsgUpdateChainState.operator":
-		value := x.Operator
-		return protoreflect.ValueOfString(value)
 	case "nova.oracle.v1.MsgUpdateChainState.decimal":
 		value := x.Decimal
 		return protoreflect.ValueOfUint64(value)
+	case "nova.oracle.v1.MsgUpdateChainState.operator":
+		value := x.Operator
+		return protoreflect.ValueOfString(value)
 	case "nova.oracle.v1.MsgUpdateChainState.block_height":
 		value := x.BlockHeight
 		return protoreflect.ValueOfUint64(value)
+	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
+		value := x.AppHash
+		return protoreflect.ValueOfString(value)
+	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
+		value := x.ChainId
+		return protoreflect.ValueOfString(value)
+	case "nova.oracle.v1.MsgUpdateChainState.block_proposer":
+		value := x.BlockProposer
+		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -217,12 +262,18 @@ func (x *fastReflection_MsgUpdateChainState) Set(fd protoreflect.FieldDescriptor
 	switch fd.FullName() {
 	case "nova.oracle.v1.MsgUpdateChainState.coin":
 		x.Coin = value.Message().Interface().(*v1beta1.Coin)
-	case "nova.oracle.v1.MsgUpdateChainState.operator":
-		x.Operator = value.Interface().(string)
 	case "nova.oracle.v1.MsgUpdateChainState.decimal":
 		x.Decimal = value.Uint()
+	case "nova.oracle.v1.MsgUpdateChainState.operator":
+		x.Operator = value.Interface().(string)
 	case "nova.oracle.v1.MsgUpdateChainState.block_height":
 		x.BlockHeight = value.Uint()
+	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
+		x.AppHash = value.Interface().(string)
+	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
+		x.ChainId = value.Interface().(string)
+	case "nova.oracle.v1.MsgUpdateChainState.block_proposer":
+		x.BlockProposer = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -248,12 +299,18 @@ func (x *fastReflection_MsgUpdateChainState) Mutable(fd protoreflect.FieldDescri
 			x.Coin = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Coin.ProtoReflect())
-	case "nova.oracle.v1.MsgUpdateChainState.operator":
-		panic(fmt.Errorf("field operator of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
 	case "nova.oracle.v1.MsgUpdateChainState.decimal":
 		panic(fmt.Errorf("field decimal of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
+	case "nova.oracle.v1.MsgUpdateChainState.operator":
+		panic(fmt.Errorf("field operator of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
 	case "nova.oracle.v1.MsgUpdateChainState.block_height":
 		panic(fmt.Errorf("field block_height of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
+	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
+		panic(fmt.Errorf("field app_hash of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
+	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
+		panic(fmt.Errorf("field chain_id of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
+	case "nova.oracle.v1.MsgUpdateChainState.block_proposer":
+		panic(fmt.Errorf("field block_proposer of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -270,12 +327,18 @@ func (x *fastReflection_MsgUpdateChainState) NewField(fd protoreflect.FieldDescr
 	case "nova.oracle.v1.MsgUpdateChainState.coin":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.oracle.v1.MsgUpdateChainState.operator":
-		return protoreflect.ValueOfString("")
 	case "nova.oracle.v1.MsgUpdateChainState.decimal":
 		return protoreflect.ValueOfUint64(uint64(0))
+	case "nova.oracle.v1.MsgUpdateChainState.operator":
+		return protoreflect.ValueOfString("")
 	case "nova.oracle.v1.MsgUpdateChainState.block_height":
 		return protoreflect.ValueOfUint64(uint64(0))
+	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
+		return protoreflect.ValueOfString("")
+	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
+		return protoreflect.ValueOfString("")
+	case "nova.oracle.v1.MsgUpdateChainState.block_proposer":
+		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -349,15 +412,27 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 			l = options.Size(x.Coin)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
+		if x.Decimal != 0 {
+			n += 1 + runtime.Sov(uint64(x.Decimal))
+		}
 		l = len(x.Operator)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if x.Decimal != 0 {
-			n += 1 + runtime.Sov(uint64(x.Decimal))
-		}
 		if x.BlockHeight != 0 {
 			n += 1 + runtime.Sov(uint64(x.BlockHeight))
+		}
+		l = len(x.AppHash)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ChainId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.BlockProposer)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -388,22 +463,43 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
+		if len(x.BlockProposer) > 0 {
+			i -= len(x.BlockProposer)
+			copy(dAtA[i:], x.BlockProposer)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.BlockProposer)))
+			i--
+			dAtA[i] = 0x3a
+		}
+		if len(x.ChainId) > 0 {
+			i -= len(x.ChainId)
+			copy(dAtA[i:], x.ChainId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ChainId)))
+			i--
+			dAtA[i] = 0x32
+		}
+		if len(x.AppHash) > 0 {
+			i -= len(x.AppHash)
+			copy(dAtA[i:], x.AppHash)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.AppHash)))
+			i--
+			dAtA[i] = 0x2a
+		}
 		if x.BlockHeight != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.BlockHeight))
 			i--
 			dAtA[i] = 0x20
-		}
-		if x.Decimal != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.Decimal))
-			i--
-			dAtA[i] = 0x18
 		}
 		if len(x.Operator) > 0 {
 			i -= len(x.Operator)
 			copy(dAtA[i:], x.Operator)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Operator)))
 			i--
-			dAtA[i] = 0x12
+			dAtA[i] = 0x1a
+		}
+		if x.Decimal != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.Decimal))
+			i--
+			dAtA[i] = 0x10
 		}
 		if x.Coin != nil {
 			encoded, err := options.Marshal(x.Coin)
@@ -505,6 +601,25 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 				}
 				iNdEx = postIndex
 			case 2:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Decimal", wireType)
+				}
+				x.Decimal = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.Decimal |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 3:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Operator", wireType)
 				}
@@ -536,25 +651,6 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 				}
 				x.Operator = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
-			case 3:
-				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Decimal", wireType)
-				}
-				x.Decimal = 0
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					x.Decimal |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
 			case 4:
 				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field BlockHeight", wireType)
@@ -574,6 +670,102 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 						break
 					}
 				}
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AppHash", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.AppHash = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 6:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ChainId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 7:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field BlockProposer", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.BlockProposer = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -1037,10 +1229,20 @@ type MsgUpdateChainState struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Coin        *v1beta1.Coin `protobuf:"bytes,1,opt,name=coin,proto3" json:"coin,omitempty"`
-	Operator    string        `protobuf:"bytes,2,opt,name=operator,proto3" json:"operator,omitempty"`
-	Decimal     uint64        `protobuf:"varint,3,opt,name=decimal,proto3" json:"decimal,omitempty"`
-	BlockHeight uint64        `protobuf:"varint,4,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
+	// coin refers to the sum of owned, staked and claimable quantity of the coin
+	Coin *v1beta1.Coin `protobuf:"bytes,1,opt,name=coin,proto3" json:"coin,omitempty"`
+	// decimal of the native currency in host chain.
+	Decimal uint64 `protobuf:"varint,2,opt,name=decimal,proto3" json:"decimal,omitempty"`
+	// address of the oracle
+	Operator string `protobuf:"bytes,3,opt,name=operator,proto3" json:"operator,omitempty"`
+	// block_height of the block fetched by oracle from host_chain
+	BlockHeight uint64 `protobuf:"varint,4,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
+	// app_hash of the block fetched by oracle from host chain
+	AppHash string `protobuf:"bytes,5,opt,name=app_hash,json=appHash,proto3" json:"app_hash,omitempty"`
+	// chain_id of the host chain
+	ChainId string `protobuf:"bytes,6,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	// block_proposer of the block fetched by oracle from the host chain
+	BlockProposer string `protobuf:"bytes,7,opt,name=block_proposer,json=blockProposer,proto3" json:"block_proposer,omitempty"`
 }
 
 func (x *MsgUpdateChainState) Reset() {
@@ -1070,13 +1272,6 @@ func (x *MsgUpdateChainState) GetCoin() *v1beta1.Coin {
 	return nil
 }
 
-func (x *MsgUpdateChainState) GetOperator() string {
-	if x != nil {
-		return x.Operator
-	}
-	return ""
-}
-
 func (x *MsgUpdateChainState) GetDecimal() uint64 {
 	if x != nil {
 		return x.Decimal
@@ -1084,11 +1279,39 @@ func (x *MsgUpdateChainState) GetDecimal() uint64 {
 	return 0
 }
 
+func (x *MsgUpdateChainState) GetOperator() string {
+	if x != nil {
+		return x.Operator
+	}
+	return ""
+}
+
 func (x *MsgUpdateChainState) GetBlockHeight() uint64 {
 	if x != nil {
 		return x.BlockHeight
 	}
 	return 0
+}
+
+func (x *MsgUpdateChainState) GetAppHash() string {
+	if x != nil {
+		return x.AppHash
+	}
+	return ""
+}
+
+func (x *MsgUpdateChainState) GetChainId() string {
+	if x != nil {
+		return x.ChainId
+	}
+	return ""
+}
+
+func (x *MsgUpdateChainState) GetBlockProposer() string {
+	if x != nil {
+		return x.BlockProposer
+	}
+	return ""
 }
 
 type MsgUpdateChainStateResponse struct {
@@ -1135,7 +1358,7 @@ var file_nova_oracle_v1_tx_proto_rawDesc = []byte{
 	0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f, 0x63,
 	0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22,
-	0xa0, 0x02, 0x0a, 0x13, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61,
+	0xc2, 0x03, 0x0a, 0x13, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61,
 	0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x6e, 0x0a, 0x04, 0x63, 0x6f, 0x69, 0x6e, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62,
 	0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e,
@@ -1143,40 +1366,50 @@ var file_nova_oracle_v1_tx_proto_rawDesc = []byte{
 	0x63, 0x6f, 0x69, 0x6e, 0x22, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
 	0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
 	0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e,
-	0x73, 0x52, 0x04, 0x63, 0x6f, 0x69, 0x6e, 0x12, 0x2f, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61,
-	0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x13, 0xf2, 0xde, 0x1f, 0x0f, 0x79,
-	0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x52, 0x08,
-	0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x2c, 0x0a, 0x07, 0x64, 0x65, 0x63, 0x69,
-	0x6d, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x42, 0x12, 0xf2, 0xde, 0x1f, 0x0e, 0x79,
-	0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x64, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x22, 0x52, 0x07, 0x64,
-	0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x12, 0x3a, 0x0a, 0x0c, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f,
+	0x73, 0x52, 0x04, 0x63, 0x6f, 0x69, 0x6e, 0x12, 0x2c, 0x0a, 0x07, 0x64, 0x65, 0x63, 0x69, 0x6d,
+	0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x42, 0x12, 0xf2, 0xde, 0x1f, 0x0e, 0x79, 0x61,
+	0x6d, 0x6c, 0x3a, 0x22, 0x64, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x22, 0x52, 0x07, 0x64, 0x65,
+	0x63, 0x69, 0x6d, 0x61, 0x6c, 0x12, 0x2f, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f,
+	0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x42, 0x13, 0xf2, 0xde, 0x1f, 0x0f, 0x79, 0x61, 0x6d,
+	0x6c, 0x3a, 0x22, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x52, 0x08, 0x6f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x3a, 0x0a, 0x0c, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f,
 	0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x04, 0x42, 0x17, 0xf2, 0xde,
 	0x1f, 0x13, 0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x68, 0x65,
 	0x69, 0x67, 0x68, 0x74, 0x22, 0x52, 0x0b, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x48, 0x65, 0x69, 0x67,
-	0x68, 0x74, 0x22, 0x4b, 0x0a, 0x1b, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43,
-	0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x2c, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x08, 0x42, 0x12, 0xf2, 0xde, 0x1f, 0x0e, 0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x73, 0x75,
-	0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x32,
-	0x6b, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x64, 0x0a, 0x10, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
-	0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x23, 0x2e, 0x6e, 0x6f, 0x76,
-	0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55,
-	0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x1a,
-	0x2b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x76, 0x31,
-	0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53,
-	0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb0, 0x01, 0x0a,
-	0x12, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65,
-	0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x37,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e,
-	0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x76, 0x31, 0x3b, 0x6f,
-	0x72, 0x61, 0x63, 0x6c, 0x65, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x4f, 0x58, 0xaa, 0x02, 0x0e,
-	0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x56, 0x31, 0xca, 0x02,
-	0x0e, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x5c, 0x56, 0x31, 0xe2,
-	0x02, 0x1a, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x5c, 0x56, 0x31,
-	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4e,
-	0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x3a, 0x3a, 0x56, 0x31, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x68, 0x74, 0x12, 0x2e, 0x0a, 0x08, 0x61, 0x70, 0x70, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x42, 0x13, 0xf2, 0xde, 0x1f, 0x0f, 0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22,
+	0x61, 0x70, 0x70, 0x5f, 0x68, 0x61, 0x73, 0x68, 0x22, 0x52, 0x07, 0x61, 0x70, 0x70, 0x48, 0x61,
+	0x73, 0x68, 0x12, 0x2e, 0x0a, 0x08, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x09, 0x42, 0x13, 0xf2, 0xde, 0x1f, 0x0f, 0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22,
+	0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x22, 0x52, 0x07, 0x63, 0x68, 0x61, 0x69, 0x6e,
+	0x49, 0x64, 0x12, 0x40, 0x0a, 0x0e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x70, 0x72, 0x6f, 0x70,
+	0x6f, 0x73, 0x65, 0x72, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x42, 0x19, 0xf2, 0xde, 0x1f, 0x15,
+	0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x70, 0x72, 0x6f, 0x6f,
+	0x70, 0x73, 0x65, 0x72, 0x22, 0x52, 0x0d, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x50, 0x72, 0x6f, 0x70,
+	0x6f, 0x73, 0x65, 0x72, 0x22, 0x4b, 0x0a, 0x1b, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x2c, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x08, 0x42, 0x12, 0xf2, 0xde, 0x1f, 0x0e, 0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22,
+	0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73,
+	0x73, 0x32, 0x6b, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x64, 0x0a, 0x10, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x23, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
+	0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74,
+	0x65, 0x1a, 0x2b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e,
+	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69,
+	0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb0,
+	0x01, 0x0a, 0x12, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63,
+	0x6c, 0x65, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
+	0x5a, 0x37, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72,
+	0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x76, 0x31,
+	0x3b, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x4f, 0x58, 0xaa,
+	0x02, 0x0e, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x56, 0x31,
+	0xca, 0x02, 0x0e, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x5c, 0x56,
+	0x31, 0xe2, 0x02, 0x1a, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x5c,
+	0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
+	0x10, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x3a, 0x3a, 0x56,
+	0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
