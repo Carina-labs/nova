@@ -192,7 +192,9 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	// moduleAccountToAccount
-	m.keeper.ClaimWithdrawAsset(ctx, withdraw.Recipient, withdraw.Amount)
+	if err := m.keeper.ClaimWithdrawAsset(ctx, withdraw.Recipient, withdraw.Amount); err != nil {
+		return nil, err
+	}
 
 	// withdrawRecord 삭제
 	m.keeper.DeleteWithdrawRecord(ctx, *withdrawState)

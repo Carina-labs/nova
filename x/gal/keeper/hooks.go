@@ -40,12 +40,13 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		Amount:  &coin,
 	}
 
-	h.k.RecordDepositAmt(ctx, record)
+	if err := h.k.RecordDepositAmt(ctx, record); err != nil {
+		panic("failed to record deposit amount: %V", record)
+	}
 
 	// Delegate events
 	ctx.EventManager().EmitTypedEvent(zoneInfo)
 	ctx.EventManager().EmitTypedEvent(record)
-
 }
 
 func (h Hooks) AfterDelegateEnd() {

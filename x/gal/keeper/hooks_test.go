@@ -45,13 +45,13 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 	for _, tc := range tcs {
 		// register zone
 		zoneInfo := &intertxtypes.RegisteredZone{
-			ZoneName: tc.denom,
-			IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{},
+			ZoneName:               tc.denom,
+			IcaConnectionInfo:      &intertxtypes.IcaConnectionInfo{},
 			TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{},
-			ValidatorAddress: "",
-			BaseDenom:        tc.denom,
-			StDenom:          fmt.Sprintf("st%s", tc.denom),
-			SnDenom:          fmt.Sprintf("sn%s", tc.denom),
+			ValidatorAddress:       "",
+			BaseDenom:              tc.denom,
+			StDenom:                fmt.Sprintf("st%s", tc.denom),
+			SnDenom:                fmt.Sprintf("sn%s", tc.denom),
 		}
 
 		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, zoneInfo)
