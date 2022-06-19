@@ -27,12 +27,18 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 		OperatorAddress: state.Operator,
 		LastBlockHeight: state.BlockHeight,
 		Decimal:         state.Decimal,
+		AppHash:         state.AppHash,
+		ChainId:         state.ChainId,
+		BlockProposer:   state.BlockProposer,
 	}
+
 	if err := server.keeper.UpdateChainState(ctx, newOracleState); err != nil {
 		return nil, err
 	}
 
-	ctx.EventManager().EmitTypedEvent(newOracleState)
+	if err := ctx.EventManager().EmitTypedEvent(newOracleState); err != nil {
+		return nil, err
+	}
 
 	return &types.MsgUpdateChainStateResponse{}, nil
 }
@@ -49,5 +55,8 @@ func (server msgServer) GetChainState(goCtx context.Context, request *types.Quer
 		Coin:            result.Coin,
 		Decimal:         result.Decimal,
 		LastBlockHeight: result.LastBlockHeight,
+		AppHash:         result.AppHash,
+		ChainId:         result.ChainId,
+		BlockProposer:   result.BlockProposer,
 	}, nil
 }
