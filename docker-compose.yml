@@ -16,3 +16,10 @@ services:
       - 26656:26656
       - 26657:26657
       - 1317:1317
+  nova-explorer:
+    image: a41ventures/nova-explorer-pingpup:latest
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - novachain
