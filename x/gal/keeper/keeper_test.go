@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"testing"
 
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
