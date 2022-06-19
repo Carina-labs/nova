@@ -39,7 +39,8 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		Address: data.Sender,
 		Amount:  &coin,
 	}
-	h.k.RecordDepositAmt(ctx, *record)
+
+	h.k.RecordDepositAmt(ctx, record)
 
 	// Delegate events
 	ctx.EventManager().EmitTypedEvent(zoneInfo)

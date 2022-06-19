@@ -15,9 +15,9 @@ func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
 }
 
 // RecordDepositAmt write the amount of coin user deposit to the "DepositRecord" store.
-func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg types.DepositRecord) error {
+func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg *types.DepositRecord) error {
 	store := k.getDepositRecordStore(ctx)
-	bz := k.cdc.MustMarshal(&msg)
+	bz := k.cdc.MustMarshal(msg)
 	store.Set([]byte(msg.Address), bz)
 	return nil
 }

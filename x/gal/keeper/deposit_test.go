@@ -48,7 +48,7 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			for _, arg := range tc.args {
-				suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, types.DepositRecord{
+				suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, &types.DepositRecord{
 					Address: arg.addr.String(),
 					Amount:  &arg.coin,
 				})
