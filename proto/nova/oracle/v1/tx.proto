@@ -11,14 +11,30 @@ service Msg {
 }
 
 message MsgUpdateChainState {
+  // coin refers to the sum of owned, staked and claimable quantity of the coin
   cosmos.base.v1beta1.Coin coin = 1 [
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
     (gogoproto.moretags) = "yaml:\"coin\"",
     (gogoproto.nullable) = false
   ];
-  string operator = 2 [ (gogoproto.moretags) = "yaml:\"operator\"" ];
-  uint64 decimal = 3 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
+
+  // decimal of the native currency in host chain.
+  uint64 decimal = 2 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
+
+  // address of the oracle
+  string operator = 3 [ (gogoproto.moretags) = "yaml:\"operator\"" ];
+
+  // block_height of the block fetched by oracle from host_chain
   uint64 block_height = 4 [ (gogoproto.moretags) = "yaml:\"block_height\"" ];
+
+  // app_hash of the block fetched by oracle from host chain
+  string app_hash = 5 [ (gogoproto.moretags) = "yaml:\"app_hash\"" ];
+
+  // chain_id of the host chain
+  string chain_id = 6 [ (gogoproto.moretags) = "yaml:\"chain_id\"" ];
+
+  // block_proposer of the block fetched by oracle from the host chain
+  string block_proposer = 7 [ (gogoproto.moretags) = "yaml:\"block_proopser\"" ];
 }
 
 message MsgUpdateChainStateResponse {
