@@ -108,7 +108,7 @@ func (k Keeper) IterateWithdrawdRecords(ctx sdk.Context, fn func(index int64, wi
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
 	defer func(iterator sdk.Iterator) {
-		err := iterator.Close()
+		err := (iterator).Close()
 		if err != nil {
 			panic(fmt.Errorf("unexpectedly iterator closed: %v", err))
 		}
