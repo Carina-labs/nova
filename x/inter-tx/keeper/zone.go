@@ -110,3 +110,30 @@ func (k Keeper) GetBaseDenomForStDenom(ctx sdk.Context, stDenom string) string {
 
 	return zone.BaseDenom
 }
+
+func (k Keeper) RegisterZone(ctx sdk.Context, zone *types.MsgRegisterZone) error {
+	ZoneInfo := &types.RegisteredZone{
+		ZoneName: zone.ZoneName,
+		IcaConnectionInfo: &types.IcaConnectionInfo{
+			ConnectionId: zone.IcaInfo.ConnectionId,
+			OwnerAddress: zone.IcaInfo.OwnerAddress,
+		},
+		TransferConnectionInfo: &types.TransferConnectionInfo{
+			ConnectionId: zone.TransferInfo.ConnectionId,
+			PortId:       zone.TransferInfo.PortId,
+			ChannelId:    zone.TransferInfo.ChannelId,
+		},
+		ValidatorAddress: zone.ValidatorAddress,
+		BaseDenom:        zone.BaseDenom,
+		StDenom:          "st" + zone.BaseDenom,
+		SnDenom:          "sn" + zone.BaseDenom,
+	}
+
+	k.SetRegesterZone(ctx, *ZoneInfo)
+
+	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.OwnerAddress); err != nil {
+		return err
+	}
+
+	return nil
+}
