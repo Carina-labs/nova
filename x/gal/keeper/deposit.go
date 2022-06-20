@@ -27,10 +27,11 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 		return err
 	}
 
+	moduleAddr := k.accountKeeper.GetModuleAddress(types.ModuleName)
 	err = k.TransferToTargetZone(ctx,
 		zoneInfo.TransferConnectionInfo.PortId,
 		zoneInfo.TransferConnectionInfo.ChannelId,
-		deposit.Depositor,
+		moduleAddr.String(),
 		deposit.HostAddr,
 		deposit.Amount[0])
 	if err != nil {
