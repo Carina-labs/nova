@@ -1,12 +1,14 @@
 package keeper_test
 
 import (
+	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 )
 
 func (suite *KeeperTestSuite) TestRecordDepositAmt() {
@@ -134,62 +136,95 @@ func (suite *KeeperTestSuite) TestDeposit() {
 	}
 
 	ctxA := suite.chainA.GetContext()
-	// ctxB := suite.chainB.GetContext()
+	ctxB := suite.chainB.GetContext()
 
 	for _, tc := range tcs {
-		acc := authtypes.NewBaseAccount(tc.userPrivKey.PubKey().Address().Bytes(), tc.userPrivKey.PubKey(), 0, 0)
-		accAddr, err := sdk.AccAddressFromBech32(acc.Address)
-		suite.Require().NoError(err)
+		suite.Run(tc.name, func() {
+			suite.chainB.App.BankKeeper.IterateAllBalances(ctxB, func(address sdk.AccAddress, coin sdk.Coin) bool {
+				fmt.Printf("addr: %s, balance: %s\n", address.String(), coin.String())
+				return false
+			})
 
-		galAddr := suite.App.AccountKeeper.GetModuleAddress(types.ModuleName)
-		suite.chainA.App.BankKeeper.InitGenesis(ctxA, &banktypes.GenesisState{
-			Balances: []banktypes.Balance{
-				{
-					Address: accAddr.String(),
-					Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.preUserAmt)},
+			acc := authtypes.NewBaseAccount(tc.userPrivKey.PubKey().Address().Bytes(), tc.userPrivKey.PubKey(), 0, 0)
+			accAddr, err := sdk.AccAddressFromBech32(acc.Address)
+			suite.Require().NoError(err)
+
+			galAddr := suite.App.AccountKeeper.GetModuleAddress(types.ModuleName)
+			suite.chainA.App.BankKeeper.InitGenesis(ctxA, &banktypes.GenesisState{
+				Balances: []banktypes.Balance{
+					{
+						Address: accAddr.String(),
+						Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.preUserAmt)},
+					},
+					{
+						Address: galAddr.String(),
+						Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.preModuleAccountAmt)},
+					},
 				},
-				{
-					Address: galAddr.String(),
-					Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.preModuleAccountAmt)},
+			})
+
+			suite.chainB.App.BankKeeper.InitGenesis(ctxB, &banktypes.GenesisState{
+				Balances: []banktypes.Balance{
+					{
+						Address: accAddr.String(),
+						Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, 0)},
+					},
+					{
+						Address: galAddr.String(),
+						Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.preModuleAccountAmt)},
+					},
 				},
-			},
+			})
+
+			suite.chainA.App.IntertxKeeper.SetRegesterZone(ctxA, intertxtypes.RegisteredZone{
+				ZoneName: "osmo",
+				IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
+					ConnectionId: "connection-0",
+					OwnerAddress: accAddr.String(),
+				},
+				TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
+					ConnectionId: "connection-0",
+					PortId:       "transfer",
+					ChannelId:    "channel-0",
+				},
+				ValidatorAddress: "",
+				BaseDenom:        "osmo",
+				SnDenom:          "snOsmo",
+				StDenom:          "stOsmo",
+			})
+
+			err = suite.chainA.App.GalKeeper.Deposit(ctxA, &types.MsgDeposit{
+				Depositor: accAddr.String(),
+				Amount:    sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.depositAmt)},
+				HostAddr:  accAddr.String(),
+				ZoneId:    "osmo",
+			})
+
+			if tc.shouldErr {
+				suite.Require().Error(err)
+				return
+			}
+
+			// Events should be emitted.
+			isCoinSentToModuleAcc := ContainEvent(ctxA.EventManager(), "transfer", "recipient", galAddr.String())
+			isModuleAccReceivedCoin := ContainEvent(ctxA.EventManager(), "coin_received", "receiver", galAddr.String())
+			suite.Require().NoError(err)
+			suite.Require().True(isCoinSentToModuleAcc)
+			suite.Require().True(isModuleAccReceivedCoin)
+
+			suite.chainA.NextBlock()
+
+			p, err := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events())
+			suite.Require().NoError(err)
+
+			err = suite.path.RelayPacket(p)
+			suite.Require().NoError(err)
+			suite.chainB.NextBlock()
+
+			res := suite.chainB.App.BankKeeper.GetAllBalances(ctxB, accAddr)
+			suite.Require().Equal(res[0].Amount.Int64(), tc.depositAmt)
 		})
 
-		suite.chainA.App.IntertxKeeper.SetRegesterZone(ctxA, intertxtypes.RegisteredZone{
-			ZoneName: "osmo",
-			IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
-				ConnectionId: "connection-0",
-				OwnerAddress: "",
-			},
-			TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
-				ConnectionId: "connection-0",
-				PortId:       "transfer",
-				ChannelId:    "channel-0",
-			},
-			ValidatorAddress: "",
-			BaseDenom:        "osmo",
-			SnDenom:          "snOsmo",
-			StDenom:          "stOsmo",
-		})
-
-		err = suite.chainA.App.GalKeeper.Deposit(ctxA, &types.MsgDeposit{
-			Depositor: accAddr.String(),
-			Amount:    sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.depositAmt)},
-			HostAddr:  "",
-			ZoneId:    "osmo",
-		})
-
-		if tc.shouldErr {
-			suite.Require().Error(err)
-			continue
-		}
-
-		// Events should be emitted.
-		isCoinSentToModuleAcc := ContainEvent(ctxA.EventManager(), "transfer", "recipient", galAddr.String())
-		isModuleAccReceivedCoin := ContainEvent(ctxA.EventManager(), "coin_received", "receiver", galAddr.String())
-		suite.Require().NoError(err)
-		suite.Require().True(isCoinSentToModuleAcc)
-		suite.Require().True(isModuleAccReceivedCoin)
 	}
 }
 
@@ -222,4 +257,14 @@ func ContainEvent(em *sdk.EventManager, eventType, key, value string) bool {
 		}
 	}
 	return false
+}
+
+func PrintEvents(em *sdk.EventManager) {
+	for _, event := range em.Events() {
+		fmt.Printf("type: %s, ", event.Type)
+		for _, attr := range event.Attributes {
+			fmt.Printf("(key: %s, value: %s)", attr.Key, attr.Value)
+		}
+		fmt.Println()
+	}
 }
