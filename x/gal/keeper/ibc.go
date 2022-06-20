@@ -18,11 +18,6 @@ func (k Keeper) TransferToTargetZone(ctx sdk.Context,
 		return err
 	}
 
-	// receiverAddr, err := sdk.AccAddressFromBech32(receiver)
-	// if err != nil {
-	// 	return err
-	// }
-
 	_, err = k.ibcTransferKeeper.Transfer(goCtx,
 		&transfertypes.MsgTransfer{
 			SourcePort:    sourcePort,
