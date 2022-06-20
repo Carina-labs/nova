@@ -28,20 +28,7 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// IBC transfer
-	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
-	if !ok {
-		return nil, fmt.Errorf("")
-	}
-
-	m.keeper.Logger(ctx).Info("ZoneInfo", "zoneInfo", zoneInfo)
-
-	err := m.keeper.TransferToTargetZone(ctx,
-		zoneInfo.TransferConnectionInfo.PortId,
-		zoneInfo.TransferConnectionInfo.ChannelId,
-		deposit.Depositor,
-		deposit.HostAddr,
-		deposit.Amount[0])
+	err := m.keeper.Deposit(ctx, deposit)
 	if err != nil {
 		return nil, err
 	}
