@@ -1,8 +1,6 @@
 package keeper
 
 import (
-	"fmt"
-
 	"github.com/tendermint/tendermint/libs/log"
 
 	"github.com/Carina-labs/nova/x/mint/types"
@@ -162,10 +160,10 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 	if err != nil {
 		return err
 	}
-	fmt.Println("stakingInentivesCoins : ", stakingIncentivesCoins)
+	// fmt.Println("stakingInentivesCoins : ", stakingIncentivesCoins)
 
 	lpIncentivesCoin := k.GetProportions(ctx, mintedCoin, proportions.LpIncentives)
-	fmt.Println("lpIncentivesCoin : ", lpIncentivesCoin)
+	// fmt.Println("lpIncentivesCoin : ", lpIncentivesCoin)
 	lpIncentivesCoins := sdk.NewCoins(lpIncentivesCoin)
 	err = k.bankKeeper.SendCoinsFromModuleToModule(ctx, types.ModuleName, types.LpIncentiveModuleAccName, lpIncentivesCoins)
 	if err != nil {
@@ -174,14 +172,14 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 
 	stableGuaranteeCoin := k.GetProportions(ctx, mintedCoin, proportions.StableGuaranteeIncentives)
 	stableGuaranteeCoins := sdk.NewCoins(stableGuaranteeCoin)
-	fmt.Println("stableGuaranteeCoins", stableGuaranteeCoins)
+	// fmt.Println("stableGuaranteeCoins", stableGuaranteeCoins)
 	err = k.bankKeeper.SendCoinsFromModuleToModule(ctx, types.ModuleName, types.StableGuaranteeIncentiveModuleAccName, stableGuaranteeCoins)
 	if err != nil {
 		return err
 	}
 
 	communityPoolCoins := sdk.NewCoins(mintedCoin).Sub(stakingIncentivesCoins).Sub(lpIncentivesCoins).Sub(stableGuaranteeCoins)
-	fmt.Println("communityPoolCoins", communityPoolCoins)
+	// fmt.Println("communityPoolCoins", communityPoolCoins)
 	err = k.distrKeeper.FundCommunityPool(ctx, communityPoolCoins, k.accountKeeper.GetModuleAddress(types.ModuleName))
 	if err != nil {
 		return err
