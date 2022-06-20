@@ -108,29 +108,29 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			postModuleAccountAmt: 1000,
 			shouldErr:            false,
 		},
-		//{
-		//	name:                 "valid test case 2",
-		//	userPrivKey:          secp256k1.GenPrivKey(),
-		//	denom:                "osmo",
-		//	preUserAmt:           4000,
-		//	preModuleAccountAmt:  5000,
-		//	depositAmt:           3000,
-		//	postUserAmt:          1000,
-		//	postModuleAccountAmt: 5000,
-		//	shouldErr:            false,
-		//},
-		//{
-		//	// ERROR CASE
-		//	name:                 "error test case 1",
-		//	userPrivKey:          secp256k1.GenPrivKey(),
-		//	denom:                "osmo",
-		//	preUserAmt:           5000,
-		//	preModuleAccountAmt:  1000,
-		//	depositAmt:           6000,
-		//	postUserAmt:          5000,
-		//	postModuleAccountAmt: 1000,
-		//	shouldErr:            true,
-		//},
+		{
+			name:                 "valid test case 2",
+			userPrivKey:          secp256k1.GenPrivKey(),
+			denom:                "osmo",
+			preUserAmt:           4000,
+			preModuleAccountAmt:  5000,
+			depositAmt:           3000,
+			postUserAmt:          1000,
+			postModuleAccountAmt: 5000,
+			shouldErr:            false,
+		},
+		{
+			// ERROR CASE
+			name:                 "error test case 1",
+			userPrivKey:          secp256k1.GenPrivKey(),
+			denom:                "osmo",
+			preUserAmt:           5000,
+			preModuleAccountAmt:  1000,
+			depositAmt:           6000,
+			postUserAmt:          5000,
+			postModuleAccountAmt: 1000,
+			shouldErr:            true,
+		},
 	}
 
 	ctxA := suite.chainA.GetContext()
@@ -178,6 +178,11 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			HostAddr:  "",
 			ZoneId:    "osmo",
 		})
+
+		if tc.shouldErr {
+			suite.Require().Error(err)
+			continue
+		}
 
 		// Events should be emitted.
 		isCoinSentToModuleAcc := ContainEvent(ctxA.EventManager(), "transfer", "recipient", galAddr.String())
