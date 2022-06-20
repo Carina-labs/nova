@@ -31,8 +31,8 @@ var (
 	acc3    = authtypes.NewBaseAccount(key3.PubKey().Address().Bytes(), key3.PubKey(), 0, 0)
 	version = string(types5.ModuleCdc.MustMarshalJSON(&types5.Metadata{
 		Version:                "ics27-1",
-		ControllerConnectionId: "connection-0",
-		HostConnectionId:       "connection-0",
+		ControllerConnectionId: "connection-1",
+		HostConnectionId:       "connection-1",
 		Encoding:               "proto3",
 		TxType:                 "sdk_multi_msg",
 	}))
@@ -63,8 +63,6 @@ func NewICAPAth(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 	path.EndpointB.ChannelConfig.Order = types4.ORDERED
 	path.EndpointA.ChannelConfig.Version = version
 	path.EndpointB.ChannelConfig.Version = version
-	path.EndpointA.ConnectionID = "connection-0"
-	path.EndpointB.ConnectionID = "connection-0"
 	return path
 }
 
@@ -96,9 +94,9 @@ func (suite *KeeperTestSuite) RegisterInterchainAccount(endpoint *novatesting.En
 		return err
 	}
 
-	channelSequence := endpoint.Chain.App.IBCKeeper.ChannelKeeper.GetNextChannelSequence(suite.ctxA)
+	channelSequence := endpoint.Chain.App.IBCKeeper.ChannelKeeper.GetNextChannelSequence(endpoint.Chain.GetContext())
 
-	if err := endpoint.Chain.App.ICAControllerKeeper.RegisterInterchainAccount(suite.ctxA, endpoint.ConnectionID, owner); err != nil {
+	if err := endpoint.Chain.App.ICAControllerKeeper.RegisterInterchainAccount(endpoint.Chain.GetContext(), endpoint.ConnectionID, owner); err != nil {
 		return err
 	}
 
@@ -108,7 +106,6 @@ func (suite *KeeperTestSuite) RegisterInterchainAccount(endpoint *novatesting.En
 	// update port/channel ids
 	endpoint.ChannelID = types4.FormatChannelIdentifier(channelSequence)
 	endpoint.ChannelConfig.PortID = portID
-	endpoint.ChannelConfig.Version = version
 	return nil
 }
 
@@ -133,14 +130,12 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.path = path
 
 	suite.icaPath = NewICAPAth(suite.chainA, suite.chainB)
-	suite.coordinator.Setup(suite.icaPath)
+	suite.coordinator.SetupConnections(suite.icaPath)
 	err := suite.SetupICAPath(suite.icaPath, acc2.Address)
 	if err != nil {
 		fmt.Printf("err ica path : %s\n", err.Error())
 	}
-	// err := suite.SetupICAPath(suite.path, acc2.Address)
 	suite.NoError(err)
-	suite.coordinator.Setup(suite.icaPath)
 	println("Finish setup test")
 }
 
@@ -234,7 +229,7 @@ func (suite *KeeperTestSuite) TestSimulateDepositCoins() {
 		ZoneName: suite.chainB.ChainID,
 		ChainId:  suite.chainB.ChainID,
 		IcaInfo: &types2.IcaConnectionInfo{
-			ConnectionId: suite.path.EndpointB.ConnectionID,
+			ConnectionId: suite.icaPath.EndpointB.ConnectionID,
 			OwnerAddress: ownerAddr.Address,
 		},
 		TransferInfo: &types2.TransferConnectionInfo{
