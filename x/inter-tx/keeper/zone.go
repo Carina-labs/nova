@@ -12,7 +12,7 @@ import (
 func (k Keeper) RegisterZone(ctx sdk.Context, zone *types.RegisteredZone) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	bz := k.cdc.MustMarshal(zone)
-	store.Set([]byte(zone.ZoneName), bz)
+	store.Set([]byte(zone.ZoneId), bz)
 }
 
 // GetRegisteredZone

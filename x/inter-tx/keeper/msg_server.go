@@ -3,7 +3,6 @@ package keeper
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/Carina-labs/nova/x/inter-tx/types"
@@ -30,7 +29,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	zoneInfo := &types.RegisteredZone{
-		ZoneName: zone.ZoneName,
+		ZoneId: zone.ZoneName,
 		IcaConnectionInfo: &types.IcaConnectionInfo{
 			ConnectionId: zone.IcaInfo.ConnectionId,
 			PortId:       zone.IcaInfo.PortId,
@@ -81,7 +80,7 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	zoneInfo := &types.RegisteredZone{
-		ZoneName: zone.ZoneName,
+		ZoneId: zone.ZoneName,
 		IcaConnectionInfo: &types.IcaConnectionInfo{
 			ConnectionId: zone.IcaInfo.ConnectionId,
 			PortId:       zone.IcaInfo.PortId,
@@ -101,7 +100,7 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 
-	k.SetRegesterZone(ctx, *zoneInfo)
+	k.Keeper.RegisterZone(ctx, zoneInfo)
 	return &types.MsgChangeRegisteredZoneInfoResponse{}, nil
 }
 
@@ -203,16 +202,14 @@ func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgRegisterHostAccount) (*types.MsgRegisterHostAccountResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	fmt.Println("zoneInfo", "test")
-	zoneInfo := *k.GetRegisteredZoneForPortId(ctx, "icacontroller-"+msg.AccountInfo.OwnerAddress)
-	if zoneInfo.ZoneName == "" {
+	zoneInfo := k.GetRegisteredZoneForPortId(ctx, "icacontroller-"+msg.AccountInfo.OwnerAddress)
+	if zoneInfo.ZoneId == "" {
 		return &types.MsgRegisterHostAccountResponse{}, errors.New("zone is not found")
 	}
-	fmt.Println("zoneInfo", zoneInfo)
 
 	zoneInfo.IcaAccount.HostAddress = msg.AccountInfo.HostAddress
 
-	k.SetRegesterZone(ctx, zoneInfo)
+	k.Keeper.RegisterZone(ctx, zoneInfo)
 
 	return &types.MsgRegisterHostAccountResponse{}, nil
 }

@@ -29,7 +29,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	err := m.keeper.Deposit(ctx, deposit)
-  
+
 	if err != nil {
 		return nil, err
 	}
@@ -83,9 +83,9 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("zone is not found")
 	}
 
-	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 
-	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 	totalStAsset.Denom = zoneInfo.StDenom
 
 	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {

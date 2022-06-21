@@ -24,7 +24,7 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 
 	// record
 	record := &types.DepositRecord{
-		ZoneId:        zoneInfo.ZoneName,
+		ZoneId:        zoneInfo.ZoneId,
 		Address:       senderAddr.String(),
 		Amount:        &deposit.Amount[0],
 		IsTransferred: false,

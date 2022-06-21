@@ -8,7 +8,7 @@ import "cosmos/base/v1beta1/coin.proto";
 option go_package = "github.com/Carina-labs/nova/x/inter-tx/types";
 
 message RegisteredZone {
-  string zone_name = 1;
+  string zone_id = 1;
   IcaConnectionInfo ica_connection_info = 2;
   TransferConnectionInfo transfer_connection_info = 3;
   IcaAccount ica_account = 4;
