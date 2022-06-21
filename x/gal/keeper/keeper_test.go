@@ -1,7 +1,10 @@
 package keeper_test
 
 import (
+	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"testing"
+
+	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
@@ -40,6 +43,12 @@ func (suite *KeeperTestSuite) SetupTest() {
 	path.EndpointB.ChannelConfig.Version = "ics20-1"
 	suite.coordinator.Setup(path)
 	suite.path = path
+}
+
+func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []intertxtypes.RegisteredZone) {
+	for _, msg := range zoneMsgs {
+		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, &msg)
+	}
 }
 
 func (suite *KeeperTestSuite) SetupTestOracle(msgs []*types2.ChainInfo) {
