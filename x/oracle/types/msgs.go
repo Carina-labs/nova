@@ -9,10 +9,10 @@ func NewMsgUpdateChainState(coin sdk.Coin,
 	decimal uint64,
 	blockHeight uint64) *MsgUpdateChainState {
 	return &MsgUpdateChainState{
-		Coin: coin,
-		Operator:      signer.String(),
-		Decimal:       decimal,
-		BlockHeight:   blockHeight,
+		Coin:        coin,
+		Operator:    signer.String(),
+		Decimal:     decimal,
+		BlockHeight: blockHeight,
 	}
 }
 

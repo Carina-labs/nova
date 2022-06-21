@@ -29,6 +29,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	err := m.keeper.Deposit(ctx, deposit)
+  
 	if err != nil {
 		return nil, err
 	}
@@ -152,17 +153,9 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	if !ok {
+		ctx.EventManager().EmitTypedEvent(&zoneInfo)
+		ctx.EventManager().EmitTypedEvent(&withdrawRecord)
 
-		ctx.EventManager().EmitEvent(
-			sdk.NewEvent(
-				types.TypeEvtWithdraw,
-				sdk.NewAttribute(types.AttributeKeyZoneId, zoneInfo.ZoneName),
-				sdk.NewAttribute(types.AttributeKeyOwnerAddr, zoneInfo.IcaConnectionInfo.OwnerAddress),
-				sdk.NewAttribute(types.AttributeKeySenderAddr, withdrawState.Withdrawer),
-				sdk.NewAttribute(types.AttributeKeyReceivAddr, withdrawState.Recipient),
-				sdk.NewAttribute(types.AttributeKeyAmount, withdrawState.Amount.String()),
-			),
-		)
 		//ICA transfer 요청(Bot)
 		//transfer msg
 		// var msgs []sdk.Msg
@@ -187,7 +180,9 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	// moduleAccountToAccount
-	m.keeper.ClaimWithdrawAsset(ctx, withdraw.Recipient, withdraw.Amount)
+	if err := m.keeper.ClaimWithdrawAsset(ctx, withdraw.Recipient, withdraw.Amount); err != nil {
+		return nil, err
+	}
 
 	// withdrawRecord 삭제
 	m.keeper.DeleteWithdrawRecord(ctx, *withdrawState)
