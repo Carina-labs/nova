@@ -4,6 +4,7 @@ import (
 	proto "github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/inter-tx/keeper"
+	"github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
@@ -64,6 +65,17 @@ func (im IBCModule) OnChanOpenAck(
 	counterpartyChannelID string,
 	counterpartyVersion string,
 ) error {
+	// delege portID prefix (icacontroller-)
+	ownerAddress := portID[14:]
+
+	icaAccount := &types.MsgRegisterHostAccount{
+		AccountInfo: &types.IcaAccount{
+			OwnerAddress: ownerAddress,
+		},
+	}
+	icaAccount.AccountInfo.OwnerAddress = ownerAddress
+
+	ctx.EventManager().EmitTypedEvent(icaAccount)
 	return nil
 }
 

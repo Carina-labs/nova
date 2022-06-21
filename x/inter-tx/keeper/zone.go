@@ -64,7 +64,7 @@ func (k Keeper) GetRegisteredZoneForPortId(ctx sdk.Context, portId string) *type
 	var zone *types.RegisteredZone
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
-		portID := "icacontroller-" + zoneInfo.IcaConnectionInfo.OwnerAddress
+		portID := zoneInfo.IcaConnectionInfo.PortId
 		if portID == portId {
 			zone = &zoneInfo
 			return true

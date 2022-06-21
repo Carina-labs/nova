@@ -37,13 +37,13 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		Address: data.Sender,
 		Amount:  &coin,
 	})
-	
+
 	// Delegate events
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.TypeEvtDeposit,
 			sdk.NewAttribute(types.AttributeKeyZoneId, zoneInfo.ZoneName),
-			sdk.NewAttribute(types.AttributeKeyOwnerAddr, zoneInfo.IcaConnectionInfo.OwnerAddress),
+			sdk.NewAttribute(types.AttributeKeyOwnerAddr, zoneInfo.IcaAccount.OwnerAddress),
 			sdk.NewAttribute(types.AttributeKeyHostAddr, data.Receiver),
 			sdk.NewAttribute(types.AttributeKeyAmount, coin.String()),
 		),

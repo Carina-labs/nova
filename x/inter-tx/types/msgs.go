@@ -14,25 +14,29 @@ var (
 	_ sdk.Msg = &MsgIcaUndelegate{}
 	_ sdk.Msg = &MsgIcaWithdraw{}
 	_ sdk.Msg = &MsgIcaAutoStaking{}
+	_ sdk.Msg = &MsgRegisterHostAccount{}
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
-func NewMsgRegisterZone(zone_name, chain_id, ica_connection_id, ica_owner_address, transfer_channel_id, transfer_connection_id, transfer_port_id,
-	validator_address, base_denom string) *MsgRegisterZone {
+func NewMsgRegisterZone(zoneName, chainId, icaConnectionId, icaOwnerAddr, transferChannelId, transferConnectionId, transferPortId,
+	validatorAddress, baseDenom string) *MsgRegisterZone {
 	return &MsgRegisterZone{
-		ZoneName: zone_name,
-		ChainId:  chain_id,
+		ZoneName: zoneName,
+		ChainId:  chainId,
 		IcaInfo: &IcaConnectionInfo{
-			ConnectionId: ica_connection_id,
-			OwnerAddress: ica_owner_address,
+			ConnectionId: icaConnectionId,
+			PortId:       icaOwnerAddr,
 		},
 		TransferInfo: &TransferConnectionInfo{
-			ConnectionId: transfer_connection_id,
-			PortId:       transfer_port_id,
-			ChannelId:    transfer_channel_id,
+			ConnectionId: transferConnectionId,
+			PortId:       "icacontroller-" + icaOwnerAddr,
+			ChannelId:    transferChannelId,
 		},
-		ValidatorAddress: validator_address,
-		BaseDenom:        base_denom,
+		IcaAccount: &IcaAccount{
+			OwnerAddress: icaOwnerAddr,
+		},
+		ValidatorAddress: validatorAddress,
+		BaseDenom:        baseDenom,
 	}
 }
 
@@ -50,7 +54,7 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 		return errors.New("missing ICA connection ID")
 	}
 
-	if strings.TrimSpace(msg.IcaInfo.OwnerAddress) == "" {
+	if strings.TrimSpace(msg.IcaAccount.OwnerAddress) == "" {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing ICA owner address")
 	}
 
@@ -78,7 +82,7 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 
 // GetSigners implements sdk.Msg
 func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
-	accAddr, err := sdk.AccAddressFromBech32(msg.IcaInfo.OwnerAddress)
+	accAddr, err := sdk.AccAddressFromBech32(msg.IcaAccount.OwnerAddress)
 	if err != nil {
 		panic(err)
 	}
@@ -86,9 +90,9 @@ func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaDelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgIcaDelegate {
+func NewMsgIcaDelegate(zoneName, sender, owner string, amount sdk.Coin) *MsgIcaDelegate {
 	return &MsgIcaDelegate{
-		ZoneName:      zone_name,
+		ZoneName:      zoneName,
 		SenderAddress: sender,
 		OwnerAddress:  owner,
 		Amount:        amount,
@@ -123,9 +127,9 @@ func (msg MsgIcaDelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaUnDelegate(zone_name, sender, owner string, amount sdk.Coin) *MsgIcaUndelegate {
+func NewMsgIcaUnDelegate(zoneName, sender, owner string, amount sdk.Coin) *MsgIcaUndelegate {
 	return &MsgIcaUndelegate{
-		ZoneName:      zone_name,
+		ZoneName:      zoneName,
 		SenderAddress: sender,
 		OwnerAddress:  owner,
 		Amount:        amount,
@@ -161,9 +165,9 @@ func (msg MsgIcaUndelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaAutoStaking(zone_name, sender, owner string, amount sdk.Coin) *MsgIcaAutoStaking {
+func NewMsgIcaAutoStaking(zoneName, sender, owner string, amount sdk.Coin) *MsgIcaAutoStaking {
 	return &MsgIcaAutoStaking{
-		ZoneName:      zone_name,
+		ZoneName:      zoneName,
 		SenderAddress: sender,
 		OwnerAddress:  owner,
 		Amount:        amount,
@@ -198,9 +202,9 @@ func (msg MsgIcaAutoStaking) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaWithdraw(zone_name, sender, owner, receiver string, amount sdk.Coin) *MsgIcaWithdraw {
+func NewMsgIcaWithdraw(zoneName, sender, owner, receiver string, amount sdk.Coin) *MsgIcaWithdraw {
 	return &MsgIcaWithdraw{
-		ZoneName:        zone_name,
+		ZoneName:        zoneName,
 		SenderAddress:   sender,
 		OwnerAddress:    owner,
 		ReceiverAddress: receiver,
@@ -229,6 +233,39 @@ func (msg MsgIcaWithdraw) ValidateBasic() error {
 // GetSigners implements sdk.Msg
 func (msg MsgIcaWithdraw) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{accAddr}
+}
+
+func NewMsgRegisterHostAccount(ownerAddr, hostAddr string) *MsgRegisterHostAccount {
+	return &MsgRegisterHostAccount{
+		AccountInfo: &IcaAccount{
+			OwnerAddress: ownerAddr,
+			HostAddress:  hostAddr,
+		},
+	}
+}
+
+// ValidateBasic implements sdk.Msg
+func (msg MsgRegisterHostAccount) ValidateBasic() error {
+	if strings.TrimSpace(msg.AccountInfo.OwnerAddress) == "" {
+		return errors.New("missing owner address")
+	}
+
+	if strings.TrimSpace(msg.AccountInfo.HostAddress) == "" {
+		return errors.New("missing host address")
+	}
+
+	return nil
+}
+
+// GetSigners implements sdk.Msg
+func (msg MsgRegisterHostAccount) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.AccountInfo.OwnerAddress)
 
 	if err != nil {
 		panic(err)
