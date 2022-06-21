@@ -31,7 +31,7 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 	}
 
 	if err := k.RecordDepositAmt(ctx, record); err != nil {
-		panic(err)
+		return err
 	}
 
 	err = k.TransferToTargetZone(ctx,
