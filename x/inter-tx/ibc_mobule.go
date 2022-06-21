@@ -1,6 +1,7 @@
 package inter_tx
 
 import (
+	"fmt"
 	proto "github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/inter-tx/keeper"
@@ -66,7 +67,14 @@ func (im IBCModule) OnChanOpenAck(
 	counterpartyVersion string,
 ) error {
 	// delege portID prefix (icacontroller-)
+	if len(portID) < 14 {
+		return fmt.Errorf("invalid port id : %s", portID)
+	}
 	ownerAddress := portID[14:]
+	_, err := sdk.AccAddressFromBech32(ownerAddress)
+	if err != nil {
+		return err
+	}
 
 	icaAccount := &types.MsgRegisterHostAccount{
 		AccountInfo: &types.IcaAccount{
