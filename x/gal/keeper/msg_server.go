@@ -83,9 +83,9 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("zone is not found")
 	}
 
-	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 
-	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneName, UNDELEGATE_REQUEST_ICA)
+	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 	totalStAsset.Denom = zoneInfo.StDenom
 
 	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {
@@ -108,7 +108,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	}
 
 	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: totalRequestAmt})
-	err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")

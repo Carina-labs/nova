@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"fmt"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
@@ -177,15 +178,19 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			})
 
 			suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, &intertxtypes.RegisteredZone{
-				ZoneName: "osmo",
+				ZoneId: "osmo",
 				IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
 					ConnectionId: "connection-0",
-					OwnerAddress: accAddr.String(),
+					PortId:       "icacontroller-" + accAddr.String(),
 				},
 				TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
 					ConnectionId: "connection-0",
 					PortId:       "transfer",
 					ChannelId:    "channel-0",
+				},
+				IcaAccount: &intertxtypes.IcaAccount{
+					OwnerAddress: accAddr.String(),
+					HostAddress:  "",
 				},
 				ValidatorAddress: "",
 				BaseDenom:        "osmo",

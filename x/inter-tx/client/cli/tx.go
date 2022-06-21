@@ -28,6 +28,7 @@ func GetTxCmd() *cobra.Command {
 		getUndelegateTxCmd(),
 		getAutoStakingTxCmd(),
 		getWithdrawTxCmd(),
+		getHostAddressTxCmd(),
 	)
 
 	return cmd
@@ -189,6 +190,32 @@ func getWithdrawTxCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgIcaWithdraw(zoneName, sender, owner, receiver, amount)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func getHostAddressTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "hostaddress [owner-address] [host-address]",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[0]); err != nil {
+				return err
+			}
+			clientCtx, err := client.GetClientTxContext(cmd)
+
+			if err != nil {
+				return err
+			}
+
+			ownerAddr := args[0]
+			hostAddr := args[1]
+
+			msg := types.NewMsgRegisterHostAccount(ownerAddr, hostAddr)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

@@ -46,7 +46,7 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 	for _, tc := range tcs {
 		// register zone
 		zoneInfo := &intertxtypes.RegisteredZone{
-			ZoneName:               tc.denom,
+			ZoneId:                 tc.denom,
 			IcaConnectionInfo:      &intertxtypes.IcaConnectionInfo{},
 			TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{},
 			ValidatorAddress:       "",

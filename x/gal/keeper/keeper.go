@@ -84,39 +84,3 @@ func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer sdk.Address, amt sdk.Co
 
 	return nil
 }
-
-func (k *Keeper) CreateDepositEvent(ctx sdk.Context, sender sdk.AccAddress, zoneId, ownerAddr, hostAddr string, amount sdk.Coins) {
-	ctx.EventManager().EmitEvents(sdk.Events{
-		sdk.NewEvent(
-			types.TypeEvtDeposit,
-			sdk.NewAttribute(types.AttributeKeyZoneId, zoneId),
-			sdk.NewAttribute(types.AttributeKeyOwnerAddr, ownerAddr),
-			sdk.NewAttribute(types.AttributeKeyHostAddr, hostAddr),
-			sdk.NewAttribute(types.AttributeKeyAmount, amount.String()),
-		),
-	})
-}
-
-func (k *Keeper) CreateUndelegateEvent(ctx sdk.Context, sender sdk.AccAddress, zoneId, ownerAddr, hostAddr string, amount sdk.Coins) {
-	ctx.EventManager().EmitEvents(sdk.Events{
-		sdk.NewEvent(
-			types.TypeEvtUndelegate,
-			sdk.NewAttribute(types.AttributeKeyZoneId, zoneId),
-			sdk.NewAttribute(types.AttributeKeyOwnerAddr, ownerAddr),
-			sdk.NewAttribute(types.AttributeKeyHostAddr, hostAddr),
-			sdk.NewAttribute(types.AttributeKeyAmount, amount.String()),
-		),
-	})
-}
-
-func (k *Keeper) CreateWithdrawEvent(ctx sdk.Context, sender sdk.AccAddress, zoneId, ownerAddr, hostAddr string, amount sdk.Coins) {
-	ctx.EventManager().EmitEvents(sdk.Events{
-		sdk.NewEvent(
-			types.TypeEvtWithdraw,
-			sdk.NewAttribute(types.AttributeKeyZoneId, zoneId),
-			sdk.NewAttribute(types.AttributeKeyOwnerAddr, ownerAddr),
-			sdk.NewAttribute(types.AttributeKeyHostAddr, hostAddr),
-			sdk.NewAttribute(types.AttributeKeyAmount, amount.String()),
-		),
-	})
-}

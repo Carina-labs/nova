@@ -29,15 +29,19 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	zoneInfo := &types.RegisteredZone{
-		ZoneName: zone.ZoneName,
+		ZoneId: zone.ZoneName,
 		IcaConnectionInfo: &types.IcaConnectionInfo{
 			ConnectionId: zone.IcaInfo.ConnectionId,
-			OwnerAddress: zone.IcaInfo.OwnerAddress,
+			PortId:       zone.IcaInfo.PortId,
 		},
 		TransferConnectionInfo: &types.TransferConnectionInfo{
 			ConnectionId: zone.TransferInfo.ConnectionId,
 			PortId:       zone.TransferInfo.PortId,
 			ChannelId:    zone.TransferInfo.ChannelId,
+		},
+		IcaAccount: &types.IcaAccount{
+			OwnerAddress: zone.IcaAccount.OwnerAddress,
+			HostAddress:  zone.IcaAccount.HostAddress,
 		},
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
@@ -47,7 +51,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
 
-	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.OwnerAddress); err != nil {
+	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.PortId); err != nil {
 		return nil, err
 	}
 
@@ -57,13 +61,13 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDeleteRegisteredZone) (*types.MsgDeleteRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zone_info, ok := k.GetRegisteredZone(ctx, zone.ZoneName)
+	zoneInfo, ok := k.GetRegisteredZone(ctx, zone.ZoneName)
 
 	if !ok {
 		return &types.MsgDeleteRegisteredZoneResponse{}, errors.New("zone name is not found")
 	}
 
-	if zone_info.IcaConnectionInfo.OwnerAddress != zone.SenderAddress {
+	if zoneInfo.IcaAccount.OwnerAddress != zone.SenderAddress {
 		return &types.MsgDeleteRegisteredZoneResponse{}, errors.New("")
 	}
 
@@ -75,16 +79,20 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZoneInfo) (*types.MsgChangeRegisteredZoneInfoResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zone_info := &types.RegisteredZone{
-		ZoneName: zone.ZoneName,
+	zoneInfo := &types.RegisteredZone{
+		ZoneId: zone.ZoneName,
 		IcaConnectionInfo: &types.IcaConnectionInfo{
 			ConnectionId: zone.IcaInfo.ConnectionId,
-			OwnerAddress: zone.IcaInfo.OwnerAddress,
+			PortId:       zone.IcaInfo.PortId,
 		},
 		TransferConnectionInfo: &types.TransferConnectionInfo{
 			ConnectionId: zone.TransferInfo.ConnectionId,
 			PortId:       zone.TransferInfo.PortId,
 			ChannelId:    zone.TransferInfo.ChannelId,
+		},
+		IcaAccount: &types.IcaAccount{
+			OwnerAddress: zone.IcaAccount.OwnerAddress,
+			HostAddress:  zone.IcaAccount.HostAddress,
 		},
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
@@ -92,22 +100,22 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 
-	k.Keeper.RegisterZone(ctx, zone_info)
+	k.Keeper.RegisterZone(ctx, zoneInfo)
 	return &types.MsgChangeRegisteredZoneInfoResponse{}, nil
 }
 
 func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate) (*types.MsgIcaDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
 		return &types.MsgIcaDelegateResponse{}, errors.New("zone name is not found")
 	}
 
 	var msgs []sdk.Msg
 
-	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
-	err := k.SendIcaTx(ctx, zone_info.IcaConnectionInfo.OwnerAddress, zone_info.IcaConnectionInfo.ConnectionId, msgs)
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
+	err := k.SendIcaTx(ctx, zoneInfo.IcaAccount.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return &types.MsgIcaDelegateResponse{}, errors.New("IcaDelegate transaction failed to send")
@@ -119,7 +127,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndelegate) (*types.MsgIcaUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 
 	if !ok {
 		return &types.MsgIcaUndelegateResponse{}, errors.New("zone name is not found")
@@ -127,8 +135,8 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 
 	var msgs []sdk.Msg
 
-	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
-	err := k.SendIcaTx(ctx, zone_info.IcaConnectionInfo.OwnerAddress, zone_info.IcaConnectionInfo.ConnectionId, msgs)
+	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
+	err := k.SendIcaTx(ctx, zoneInfo.IcaAccount.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return &types.MsgIcaUndelegateResponse{}, errors.New("IcaUnDelegate transaction failed to send")
@@ -140,17 +148,17 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoStaking) (*types.MsgIcaAutoStakingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
 		return &types.MsgIcaAutoStakingResponse{}, errors.New("zone name is not found")
 	}
 
 	var msgs []sdk.Msg
 
-	msgs = append(msgs, &distributiontype.MsgWithdrawDelegatorReward{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress})
-	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zone_info.ValidatorAddress, Amount: msg.Amount})
+	msgs = append(msgs, &distributiontype.MsgWithdrawDelegatorReward{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zoneInfo.ValidatorAddress})
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.SenderAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
 
-	err := k.SendIcaTx(ctx, msg.OwnerAddress, zone_info.IcaConnectionInfo.ConnectionId, msgs)
+	err := k.SendIcaTx(ctx, msg.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return &types.MsgIcaAutoStakingResponse{}, errors.New("IcaAutoStaking transaction failed to send")
 	}
@@ -161,7 +169,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zone_info, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
+	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
 		return &types.MsgIcaWithdrawResponse{}, errors.New("zone name is not found")
 	}
@@ -171,8 +179,8 @@ func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	//transfer msg
 	//sourceport, Source channel, Token, Sender, receiver, TimeoutHeight, TimeoutTimestamp
 	msgs = append(msgs, &ibctransfertypes.MsgTransfer{
-		SourcePort:    zone_info.TransferConnectionInfo.PortId,
-		SourceChannel: zone_info.TransferConnectionInfo.ChannelId,
+		SourcePort:    zoneInfo.TransferConnectionInfo.PortId,
+		SourceChannel: zoneInfo.TransferConnectionInfo.ChannelId,
 		Token:         msg.Amount,
 		Sender:        msg.SenderAddress,
 		Receiver:      msg.ReceiverAddress,
@@ -183,10 +191,25 @@ func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
 	})
 
-	err := k.SendIcaTx(ctx, msg.OwnerAddress, zone_info.IcaConnectionInfo.ConnectionId, msgs)
+	err := k.SendIcaTx(ctx, msg.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return &types.MsgIcaWithdrawResponse{}, errors.New("IcaWithdraw transaction failed to send")
 	}
 
 	return &types.MsgIcaWithdrawResponse{}, nil
+}
+
+func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgRegisterHostAccount) (*types.MsgRegisterHostAccountResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zoneInfo := k.GetRegisteredZoneForPortId(ctx, "icacontroller-"+msg.AccountInfo.OwnerAddress)
+	if zoneInfo.ZoneId == "" {
+		return &types.MsgRegisterHostAccountResponse{}, errors.New("zone is not found")
+	}
+
+	zoneInfo.IcaAccount.HostAddress = msg.AccountInfo.HostAddress
+
+	k.Keeper.RegisterZone(ctx, zoneInfo)
+
+	return &types.MsgRegisterHostAccountResponse{}, nil
 }

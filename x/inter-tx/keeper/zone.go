@@ -12,7 +12,7 @@ import (
 func (k Keeper) RegisterZone(ctx sdk.Context, zone *types.RegisteredZone) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	bz := k.cdc.MustMarshal(zone)
-	store.Set([]byte(zone.ZoneName), bz)
+	store.Set([]byte(zone.ZoneId), bz)
 }
 
 // GetRegisteredZone
@@ -64,7 +64,7 @@ func (k Keeper) GetRegisteredZoneForPortId(ctx sdk.Context, portId string) *type
 	var zone *types.RegisteredZone
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
-		portID := "icacontroller-" + zoneInfo.IcaConnectionInfo.OwnerAddress
+		portID := zoneInfo.IcaConnectionInfo.PortId
 		if portID == portId {
 			zone = &zoneInfo
 			return true
