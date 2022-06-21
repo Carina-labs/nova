@@ -29,7 +29,7 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	ZoneInfo := &types.RegisteredZone{
+	zoneInfo := &types.RegisteredZone{
 		ZoneName: zone.ZoneName,
 		IcaConnectionInfo: &types.IcaConnectionInfo{
 			ConnectionId: zone.IcaInfo.ConnectionId,
@@ -50,7 +50,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 
-	k.SetRegesterZone(ctx, *ZoneInfo)
+	k.Keeper.RegisterZone(ctx, zoneInfo)
 
 	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.PortId); err != nil {
 		return nil, err

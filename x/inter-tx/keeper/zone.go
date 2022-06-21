@@ -8,14 +8,14 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-//setRegesterZone
-func (k Keeper) SetRegesterZone(ctx sdk.Context, zone types.RegisteredZone) {
+// RegisterZone
+func (k Keeper) RegisterZone(ctx sdk.Context, zone *types.RegisteredZone) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
-	bz := k.cdc.MustMarshal(&zone)
+	bz := k.cdc.MustMarshal(zone)
 	store.Set([]byte(zone.ZoneName), bz)
 }
 
-//GetRegisteredZone
+// GetRegisteredZone
 func (k Keeper) GetRegisteredZone(ctx sdk.Context, zone_name string) (types.RegisteredZone, bool) {
 	zone := types.RegisteredZone{}
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
