@@ -1,6 +1,8 @@
 package keeper
 
 import (
+	"strings"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	icatypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -27,6 +29,10 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	amt, ok := sdk.NewIntFromString(data.Amount)
 	if !ok {
 		h.k.Logger(ctx).Error("can't cast int to string, str: %s", data.Amount)
+		return
+	}
+
+	if data.Receiver != strings.TrimSpace(string(h.k.accountKeeper.GetModuleAddress(types.ModuleName))) {
 		return
 	}
 
