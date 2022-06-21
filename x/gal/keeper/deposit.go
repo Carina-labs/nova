@@ -22,16 +22,22 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 		return err
 	}
 
-	err = k.bankKeeper.SendCoinsFromAccountToModule(ctx, senderAddr, types.ModuleName, deposit.Amount)
-	if err != nil {
-		return err
+	// record
+	record := &types.DepositRecord{
+		ZoneId:        zoneInfo.ZoneName,
+		Address:       senderAddr.String(),
+		Amount:        &deposit.Amount[0],
+		IsTransferred: false,
 	}
 
-	moduleAddr := k.accountKeeper.GetModuleAddress(types.ModuleName)
+	if err := k.RecordDepositAmt(ctx, record); err != nil {
+		panic(err)
+	}
+
 	err = k.TransferToTargetZone(ctx,
 		zoneInfo.TransferConnectionInfo.PortId,
 		zoneInfo.TransferConnectionInfo.ChannelId,
-		moduleAddr.String(),
+		senderAddr.String(),
 		deposit.HostAddr,
 		deposit.Amount[0])
 	if err != nil {
