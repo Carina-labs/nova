@@ -4,8 +4,6 @@ import (
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"testing"
 
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
-
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/types"
