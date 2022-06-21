@@ -66,7 +66,7 @@ func (im IBCModule) OnChanOpenAck(
 	counterpartyChannelID string,
 	counterpartyVersion string,
 ) error {
-	// delege portID prefix (icacontroller-)
+	// delete portID prefix (icacontroller-)
 	if len(portID) < 14 {
 		return fmt.Errorf("invalid port id : %s", portID)
 	}
