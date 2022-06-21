@@ -221,6 +221,13 @@ func (suite *KeeperTestSuite) TestDeposit() {
 
 			res := suite.chainB.App.BankKeeper.GetAllBalances(ctxB, accAddr)
 			suite.Require().Equal(res[0].Amount.Int64(), tc.depositAmt)
+
+			// Check record
+			record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(ctxA, accAddr)
+			fmt.Printf("record: %s\n", record.String())
+			suite.Require().Equal(record.Address, accAddr.String())
+			suite.Require().Equal(record.Amount.Denom, tc.denom)
+			suite.Require().Equal(record.Amount.Amount.Int64(), tc.depositAmt)
 		})
 
 	}
