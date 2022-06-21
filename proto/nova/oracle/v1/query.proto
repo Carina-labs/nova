@@ -39,4 +39,7 @@ message QueryStateResponse {
   string operator = 2 [ (gogoproto.moretags) = "yaml:\"operator\"" ];
   uint64 decimal = 3 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
   uint64 last_block_height = 4 [ (gogoproto.moretags) = "yaml:\"last_block_height\"" ];
+  string app_hash = 5 [ (gogoproto.moretags) = "yaml:\"app_hash\"" ];
+  string chain_id = 6 [ (gogoproto.moretags) = "yaml:\"chain_id\"" ];
+  string block_proposer = 7 [ (gogoproto.moretags) = "yaml:\"block_proopser\"" ];
 }

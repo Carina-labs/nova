@@ -32,18 +32,18 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
-func (k Keeper) UpdateChainState(ctx sdk.Context, updateInfo *types.ChainInfo) error {
-	if !k.IsValidOperator(ctx, updateInfo.OperatorAddress) {
-		return fmt.Errorf("you are not valid oracle operator: %s", updateInfo.OperatorAddress)
+func (k Keeper) UpdateChainState(ctx sdk.Context, chainInfo *types.ChainInfo) error {
+	if !k.IsValidOperator(ctx, chainInfo.OperatorAddress) {
+		return fmt.Errorf("you are not valid oracle operator: %s", chainInfo.OperatorAddress)
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	bz, err := updateInfo.Marshal()
+	bz, err := chainInfo.Marshal()
 	if err != nil {
 		return err
 	}
 
-	store.Set([]byte(updateInfo.Coin.Denom), bz)
+	store.Set([]byte(chainInfo.Coin.Denom), bz)
 	return nil
 }
 
