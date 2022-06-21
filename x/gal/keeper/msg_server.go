@@ -29,7 +29,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	err := m.keeper.Deposit(ctx, deposit)
-
+  
 	if err != nil {
 		return nil, err
 	}
