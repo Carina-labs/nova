@@ -52,7 +52,7 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			for _, arg := range tc.args {
-				err := suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, types.DepositRecord{
+				err := suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, &types.DepositRecord{
 					Address: arg.addr.String(),
 					Amount:  &arg.coin,
 				})
@@ -176,7 +176,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 				},
 			})
 
-			suite.chainA.App.IntertxKeeper.SetRegesterZone(ctxA, intertxtypes.RegisteredZone{
+			suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, &intertxtypes.RegisteredZone{
 				ZoneName: "osmo",
 				IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
 					ConnectionId: "connection-0",
@@ -204,13 +204,6 @@ func (suite *KeeperTestSuite) TestDeposit() {
 				suite.Require().Error(err)
 				return
 			}
-
-			// Events should be emitted.
-			isCoinSentToModuleAcc := ContainEvent(ctxA.EventManager(), "transfer", "recipient", galAddr.String())
-			isModuleAccReceivedCoin := ContainEvent(ctxA.EventManager(), "coin_received", "receiver", galAddr.String())
-			suite.Require().NoError(err)
-			suite.Require().True(isCoinSentToModuleAcc)
-			suite.Require().True(isModuleAccReceivedCoin)
 
 			suite.chainA.NextBlock()
 
