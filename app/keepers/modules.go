@@ -3,6 +3,7 @@ package keepers
 import (
 	"github.com/Carina-labs/nova/x/gal"
 	intertx "github.com/Carina-labs/nova/x/inter-tx"
+	"github.com/Carina-labs/nova/x/mint"
 	"github.com/Carina-labs/nova/x/oracle"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
@@ -19,7 +20,6 @@ import (
 	feegrantmodule "github.com/cosmos/cosmos-sdk/x/feegrant/module"
 	"github.com/cosmos/cosmos-sdk/x/genutil"
 	"github.com/cosmos/cosmos-sdk/x/gov"
-	"github.com/cosmos/cosmos-sdk/x/mint"
 	"github.com/cosmos/cosmos-sdk/x/params"
 	paramsclient "github.com/cosmos/cosmos-sdk/x/params/client"
 	"github.com/cosmos/cosmos-sdk/x/slashing"

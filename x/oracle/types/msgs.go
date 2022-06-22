@@ -9,10 +9,10 @@ func NewMsgUpdateChainState(coin sdk.Coin,
 	decimal uint64,
 	blockHeight uint64) *MsgUpdateChainState {
 	return &MsgUpdateChainState{
-		Coin: coin,
-		Operator:      signer.String(),
-		Decimal:       decimal,
-		BlockHeight:   blockHeight,
+		Coin:        coin,
+		Operator:    signer.String(),
+		Decimal:     decimal,
+		BlockHeight: blockHeight,
 	}
 }
 
@@ -26,5 +26,6 @@ func (msg MsgUpdateChainState) GetSigners() []sdk.AccAddress {
 }
 
 func (msg MsgUpdateChainState) ValidateBasic() error {
-	return nil
+	_, err := sdk.AccAddressFromBech32(msg.Operator)
+	return err
 }

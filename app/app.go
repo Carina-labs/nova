@@ -9,6 +9,8 @@ import (
 	"github.com/Carina-labs/nova/app/keepers"
 	gal "github.com/Carina-labs/nova/x/gal"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	"github.com/Carina-labs/nova/x/mint"
+	minttypes "github.com/Carina-labs/nova/x/mint/types"
 	"github.com/Carina-labs/nova/x/oracle"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/cosmos/cosmos-sdk/baseapp"
@@ -40,8 +42,6 @@ import (
 	feegrantmodule "github.com/cosmos/cosmos-sdk/x/feegrant/module"
 	"github.com/cosmos/cosmos-sdk/x/gov"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	"github.com/cosmos/cosmos-sdk/x/mint"
-	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 	"github.com/cosmos/cosmos-sdk/x/params"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/cosmos/cosmos-sdk/x/slashing"
@@ -95,17 +95,19 @@ var (
 
 	// module account permissions
 	maccPerms = map[string][]string{
-		authtypes.FeeCollectorName:     nil,
-		distrtypes.ModuleName:          nil,
-		icatypes.ModuleName:            nil,
-		minttypes.ModuleName:           {authtypes.Minter},
-		stakingtypes.BondedPoolName:    {authtypes.Burner, authtypes.Staking},
-		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
-		govtypes.ModuleName:            {authtypes.Burner},
-		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
-		wasm.ModuleName:                {authtypes.Burner},
-		intertxtypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
-		gal.ModuleName:                 {authtypes.Minter, authtypes.Burner},
+		authtypes.FeeCollectorName:                      nil,
+		distrtypes.ModuleName:                           nil,
+		icatypes.ModuleName:                             nil,
+		minttypes.LpIncentiveModuleAccName:              nil,
+		minttypes.StableGuaranteeIncentiveModuleAccName: nil,
+		minttypes.ModuleName:                            {authtypes.Minter},
+		stakingtypes.BondedPoolName:                     {authtypes.Burner, authtypes.Staking},
+		stakingtypes.NotBondedPoolName:                  {authtypes.Burner, authtypes.Staking},
+		govtypes.ModuleName:                             {authtypes.Burner},
+		ibctransfertypes.ModuleName:                     {authtypes.Minter, authtypes.Burner},
+		wasm.ModuleName:                                 {authtypes.Burner},
+		intertxtypes.ModuleName:                         {authtypes.Minter, authtypes.Burner},
+		gal.ModuleName:                                  {authtypes.Minter, authtypes.Burner},
 	}
 )
 
@@ -270,7 +272,7 @@ func NewNovaApp(
 		capability.NewAppModule(appCodec, *app.CapabilityKeeper),
 		feegrantmodule.NewAppModule(appCodec, app.AccountKeeper, app.BankKeeper, *app.FeeGrantKeeper, app.interfaceRegistry),
 		gov.NewAppModule(appCodec, *app.GovKeeper, app.AccountKeeper, app.BankKeeper),
-		mint.NewAppModule(appCodec, *app.MintKeeper, app.AccountKeeper),
+		mint.NewAppModule(appCodec, *app.MintKeeper, app.AccountKeeper, app.BankKeeper),
 		staking.NewAppModule(appCodec, *app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
 		authzmodule.NewAppModule(appCodec, *app.AuthzKeeper, app.AccountKeeper, app.BankKeeper, app.interfaceRegistry),
 		distr.NewAppModule(appCodec, *app.DistrKeeper, app.AccountKeeper, app.BankKeeper, *app.StakingKeeper),

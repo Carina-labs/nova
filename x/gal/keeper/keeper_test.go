@@ -11,6 +11,7 @@ import (
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
+	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"testing"
 
 	"github.com/Carina-labs/nova/app/apptesting"
@@ -139,16 +140,6 @@ func (suite *KeeperTestSuite) SetupTest() {
 	println("Finish setup test")
 }
 
-//func (suite *KeeperTestSuite) TestChanOpenInit() {
-//	suite.icaPath = NewICAPAth(suite.chainA, suite.chainB)
-//	suite.coordinator.SetupConnections(suite.icaPath)
-//	msg := ibcchanneltypes.NewMsgChannelOpenInit(suite.path.EndpointB.ChannelConfig.PortID, icatypes.Version, ibcchanneltypes.ORDERED, []string{suite.path.EndpointB.ConnectionID}, suite.path.EndpointA.ChannelConfig.PortID, icatypes.ModuleName)
-//	handler := suite.chainB.App.MsgServiceRouter().Handler(msg)
-//	_, err := handler(suite.ctxB, msg)
-//
-//	suite.Require().Error(err)
-//}
-
 func (suite *KeeperTestSuite) SetupTestOracle(
 	operators []sdk.AccAddress,
 	msgs []*oracletypes.ChainInfo) {
@@ -158,11 +149,10 @@ func (suite *KeeperTestSuite) SetupTestOracle(
 		})
 	}
 
-	for _, msg := range msgs {
-		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, msg)
-		if err != nil {
-			panic(err)
-		}
+
+func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []intertxtypes.RegisteredZone) {
+	for _, msg := range zoneMsgs {
+		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, &msg)
 	}
 }
 

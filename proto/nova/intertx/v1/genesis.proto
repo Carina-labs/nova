@@ -8,18 +8,19 @@ import "cosmos/base/v1beta1/coin.proto";
 option go_package = "github.com/Carina-labs/nova/x/inter-tx/types";
 
 message RegisteredZone {
-  string zone_name = 1;
+  string zone_id = 1;
   IcaConnectionInfo ica_connection_info = 2;
   TransferConnectionInfo transfer_connection_info = 3;
-  string validator_address = 4;
-  string base_denom = 5;
-  string sn_denom = 6;
-  string st_denom = 7;
+  IcaAccount ica_account = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  string st_denom = 8;
 }
 
 message IcaAccount {
-  string zone_name = 1;
-  string owner_address = 2;
+  string owner_address = 1;
+  string host_address = 2;
   cosmos.base.v1beta1.Coin balance = 3 [
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
     (gogoproto.nullable) = false
@@ -29,7 +30,7 @@ message IcaAccount {
 //zone name, connection id, portID(owner address)
 message IcaConnectionInfo {
   string connection_id = 1;
-  string owner_address = 2;
+  string port_id = 2;
 }
 
 message TransferConnectionInfo {

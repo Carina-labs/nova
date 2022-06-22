@@ -11,10 +11,13 @@ import (
 )
 
 var (
-	fooDenom           = "uatom"
-	invalidDenom       = "invalid_denom"
-	fooOperator        = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-	fooBalance   int64 = 1000000000
+	fooDenom               = "uatom"
+	invalidDenom           = "invalid_denom"
+	fooChainId             = "testchain"
+	fooAppHash             = "apphash"
+	fooBlockProposer       = "cosmos-block-proposer"
+	fooOperator            = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	fooBalance       int64 = 1000000000
 )
 
 type KeeperTestSuite struct {
@@ -39,6 +42,9 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		OperatorAddress: fooOperator.String(),
 		LastBlockHeight: 10,
 		Decimal:         6,
+		AppHash:         fooAppHash,
+		ChainId:         fooChainId,
+		BlockProposer:   fooBlockProposer,
 	}
 
 	tests := []struct {
@@ -49,40 +55,16 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		wantErr    bool
 	}{
 		{
-			name: "no operator",
-			chainInfo: types.ChainInfo{
-				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-				OperatorAddress: fooOperator.String(),
-				LastBlockHeight: 10,
-				Decimal:         6,
-			},
-			queryDenom: fooDenom,
-			operator:   nil,
-			wantErr:    true,
+			"no operator",
+			chainInfo, fooDenom, nil, true,
 		},
 		{
-			name: "no data with incorrect query",
-			chainInfo: types.ChainInfo{
-				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-				OperatorAddress: fooOperator.String(),
-				LastBlockHeight: 10,
-				Decimal:         6,
-			},
-			queryDenom: invalidDenom,
-			operator:   &fooOperator,
-			wantErr:    true,
+			"no data with incorrect query",
+			chainInfo, invalidDenom, &fooOperator, true,
 		},
 		{
-			name: "should success",
-			chainInfo: types.ChainInfo{
-				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
-				OperatorAddress: fooOperator.String(),
-				LastBlockHeight: 10,
-				Decimal:         6,
-			},
-			queryDenom: fooDenom,
-			operator:   &fooOperator,
-			wantErr:    false,
+			"should success",
+			chainInfo, fooDenom, &fooOperator, false,
 		},
 	}
 

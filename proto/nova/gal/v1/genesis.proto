@@ -33,8 +33,10 @@ message DepositInfo {
 }
 
 message DepositRecord {
-  string address = 1;
-  cosmos.base.v1beta1.Coin amount = 2;
+  string zone_id = 1;
+  string address = 2;
+  cosmos.base.v1beta1.Coin amount = 3;
+  bool isTransferred = 4;
 }
 
 message WithdrawInfo {

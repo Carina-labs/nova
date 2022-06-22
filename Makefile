@@ -114,7 +114,7 @@ cover-report:
 
 lint:
 	@echo "--> Running linter"
-	@go run github.com/golangci/golangci-lint/cmd/golangci-lint run --timeout=10m
+	@docker run --rm -v $(CURDIR):/app -w /app golangci/golangci-lint:v1.46.2 golangci-lint run --out-format=tab --timeout=10m
 
 format:
 	@go run github.com/golangci/golangci-lint/cmd/golangci-lint run ./... --fix
@@ -143,4 +143,7 @@ protogen-api:
 	else docker run --name $(protogenApiConName) -v $(CURDIR):/workspace --workdir /workspace $(protoImgName) \
 	bash ./scripts/protogen-api.sh; fi
 
-.PHONY: protogen protogen-api protogen-all all install build
+.PHONY: protogen protogen-api protogen-all all install build test-local
+
+test-local:
+	bash ./scripts/run_single_node.sh

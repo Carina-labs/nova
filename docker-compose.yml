@@ -1,0 +1,25 @@
+version: '3'
+services:
+  novachain:
+    image: a41ventures/carina:sha-a35c8a0
+    restart: always
+    volumes:
+      - ./scripts/indocker:/app/scripts
+    command:
+      - /bin/sh
+      - -c
+      - |
+        echo "start run single node."
+        apk add jq
+        /app/scripts/run_single_node.sh
+    ports:
+      - 26656:26656
+      - 26657:26657
+      - 1317:1317
+  nova-explorer:
+    image: a41ventures/nova-explorer-pingpup:latest
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - novachain

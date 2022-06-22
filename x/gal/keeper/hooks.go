@@ -24,20 +24,43 @@ func (k Keeper) Hooks() Hooks {
 // AfterTransferEnd records user deposit information.
 // It will be used in share token minting process.
 func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, base_denom string) {
-	amt, ok := sdk.NewIntFromString(data.Amount)
-	if !ok {
-		h.k.Logger(ctx).Error("can't cast int to string, str: %s", data.Amount)
+	zoneInfo := h.k.interTxKeeper.GetZoneForDenom(ctx, base_denom)
+	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
 		return
 	}
+  
+	// change sender + zoneId
+	depositRecord, err := h.k.GetRecordedDepositAmt(ctx, sdk.AccAddress(data.Sender))
+	if err != nil {
+		return
+	}
+
+	record := &types.DepositRecord{
+		ZoneId:        depositRecord.ZoneId,
+		Address:       depositRecord.Address,
+		Amount:        depositRecord.Amount,
+		IsTransferred: true,
+	}
+
+	if err := h.k.RecordDepositAmt(ctx, record); err != nil {
+		panic(err)
+	}
+
 
 	coin := sdk.NewInt64Coin(data.Denom, amt.Int64())
 	err := h.k.RecordDepositAmt(ctx, types.DepositRecord{
 		Address: data.Sender,
 		Amount:  &coin,
 	})
+  
 	if err != nil {
 		h.k.Logger(ctx).Error("error during recording deposit information, %s", err.Error())
+    panic(err)
 	}
+
+	// Delegate events
+	ctx.EventManager().EmitTypedEvent(zoneInfo)
+	ctx.EventManager().EmitTypedEvent(record)
 }
 
 func (h Hooks) AfterDelegateEnd() {
@@ -54,8 +77,8 @@ func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
 // 2. It saves undelegation finish time to store.
 func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, msg *stakingtypes.MsgUndelegateResponse) {
 	zone := h.k.interTxKeeper.GetRegisteredZoneForPortId(ctx, packet.SourcePort)
-	h.k.DeleteUndelegateRecords(ctx, zone.ZoneName, UNDELEGATE_REQUEST_ICA)
-	h.k.SetWithdrawTime(ctx, zone.ZoneName, WITHDRAW_REQUEST_USER, msg.CompletionTime)
+	h.k.DeleteUndelegateRecords(ctx, zone.ZoneId, UNDELEGATE_REQUEST_ICA)
+	h.k.SetWithdrawTime(ctx, zone.ZoneId, WITHDRAW_REQUEST_USER, msg.CompletionTime)
 }
 
 func (h Hooks) AfterAutoStakingEnd() {

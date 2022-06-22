@@ -8,23 +8,40 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-func (k Keeper) DepositCoin(ctx sdk.Context, deposit types.MsgDeposit) error {
+func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
+	// IBC transfer
 	zoneInfo, ok := k.interTxKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
 	if !ok {
-		return fmt.Errorf("can't find zone id: %s", deposit.ZoneId)
+		return fmt.Errorf("can't find valid IBC zone, input zoneId: %s", deposit.ZoneId)
 	}
 
-	err := k.TransferToTargetZone(ctx,
-		zoneInfo.TransferConnectionInfo.PortId,
-		zoneInfo.TransferConnectionInfo.ChannelId,
-		deposit.Depositor,
-		zoneInfo.IcaConnectionInfo.OwnerAddress,
-		deposit.Amount[0])
+	k.Logger(ctx).Info("ZoneInfo", "zoneInfo", zoneInfo)
+
+	senderAddr, err := sdk.AccAddressFromBech32(deposit.Depositor)
 	if err != nil {
 		return err
 	}
 
-	return nil
+	// record
+	record := &types.DepositRecord{
+		ZoneId:        zoneInfo.ZoneId,
+		Address:       senderAddr.String(),
+		Amount:        &deposit.Amount[0],
+		IsTransferred: false,
+	}
+
+	if err := k.RecordDepositAmt(ctx, record); err != nil {
+		return err
+	}
+
+	err = k.TransferToTargetZone(ctx,
+		zoneInfo.TransferConnectionInfo.PortId,
+		zoneInfo.TransferConnectionInfo.ChannelId,
+		senderAddr.String(),
+		deposit.HostAddr,
+		deposit.Amount[0])
+
+  return err
 }
 
 // getDepositRecordStore returns "DepositRecord" store.
@@ -34,9 +51,9 @@ func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
 }
 
 // RecordDepositAmt write the amount of coin user deposit to the "DepositRecord" store.
-func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg types.DepositRecord) error {
+func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg *types.DepositRecord) error {
 	store := k.getDepositRecordStore(ctx)
-	bz := k.cdc.MustMarshal(&msg)
+	bz := k.cdc.MustMarshal(msg)
 	store.Set([]byte(msg.Address), bz)
 	return nil
 }

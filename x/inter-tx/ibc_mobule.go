@@ -1,9 +1,11 @@
 package inter_tx
 
 import (
+	"fmt"
 	proto "github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/inter-tx/keeper"
+	"github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
@@ -64,6 +66,24 @@ func (im IBCModule) OnChanOpenAck(
 	counterpartyChannelID string,
 	counterpartyVersion string,
 ) error {
+	// delete portID prefix (icacontroller-)
+	if len(portID) < 14 {
+		return fmt.Errorf("invalid port id : %s", portID)
+	}
+	ownerAddress := portID[14:]
+	_, err := sdk.AccAddressFromBech32(ownerAddress)
+	if err != nil {
+		return err
+	}
+
+	icaAccount := &types.MsgRegisterHostAccount{
+		AccountInfo: &types.IcaAccount{
+			OwnerAddress: ownerAddress,
+		},
+	}
+	icaAccount.AccountInfo.OwnerAddress = ownerAddress
+
+	ctx.EventManager().EmitTypedEvent(icaAccount)
 	return nil
 }
 
