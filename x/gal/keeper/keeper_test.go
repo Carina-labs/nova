@@ -2,6 +2,8 @@ package keeper_test
 
 import (
 	"fmt"
+	"testing"
+
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -12,7 +14,6 @@ import (
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
-	"testing"
 
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
@@ -239,7 +240,6 @@ func (suite *KeeperTestSuite) TestSimulateDepositCoins() {
 		ValidatorAddress: acc1.Address,
 		BaseDenom:        "osmo",
 		SnDenom:          "",
-		StDenom:          "",
 	})
 
 	_, err := sdk.AccAddressFromHex(suite.chainA.SenderPrivKey.PubKey().Address().String())

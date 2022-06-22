@@ -86,7 +86,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 
 	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
-	totalStAsset.Denom = zoneInfo.StDenom
+	totalStAsset.Denom = zoneInfo.SnDenom
 
 	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {
 		// TODO: should handle if no coins to undelegate

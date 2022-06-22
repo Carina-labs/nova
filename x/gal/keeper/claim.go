@@ -9,7 +9,7 @@ import (
 // ClaimAndMintShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
 func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.Coin) error {
-	stAsset := k.interTxKeeper.GetstDenomForBaseDenom(ctx, amt.Denom)
+	stAsset := k.interTxKeeper.GetsnDenomForBaseDenom(ctx, amt.Denom)
 
 	claimerAddr, err := sdk.AccAddressFromBech32(claimer)
 	if err != nil {
@@ -44,7 +44,7 @@ func (k Keeper) CalculateAlpha(userDepositAmt, totalShareTokenSupply, totalStake
 // after un-delegate. This function is executed when ICA un-delegate call executed,
 // and calculate using the balance of user's share coin.
 func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
-	baseAsset := k.interTxKeeper.GetBaseDenomForStDenom(ctx, amt.Denom)
+	baseAsset := k.interTxKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
 	totalSharedToken := k.bankKeeper.GetSupply(ctx, amt.Denom)
 	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, baseAsset)
 	if err != nil {

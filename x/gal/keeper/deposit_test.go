@@ -190,7 +190,6 @@ func (suite *KeeperTestSuite) TestDeposit() {
 				ValidatorAddress: "",
 				BaseDenom:        "osmo",
 				SnDenom:          "snOsmo",
-				StDenom:          "stOsmo",
 			})
 
 			err = suite.chainA.App.GalKeeper.Deposit(ctxA, &types.MsgDeposit{
