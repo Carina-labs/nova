@@ -6,9 +6,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-	types3 "github.com/cosmos/cosmos-sdk/x/bank/types"
-	types5 "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
-	types4 "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
+	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
 	"testing"
@@ -29,7 +29,7 @@ var (
 
 	key3    = secp256k1.GenPrivKey()
 	acc3    = authtypes.NewBaseAccount(key3.PubKey().Address().Bytes(), key3.PubKey(), 0, 0)
-	version = string(types5.ModuleCdc.MustMarshalJSON(&types5.Metadata{
+	version = string(icatypes.ModuleCdc.MustMarshalJSON(&icatypes.Metadata{
 		Version:                "ics27-1",
 		ControllerConnectionId: "connection-1",
 		HostConnectionId:       "connection-1",
@@ -57,10 +57,10 @@ func TestKeeperTestSuite(t *testing.T) {
 
 func NewICAPAth(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 	path := novatesting.NewPath(chainA, chainB)
-	path.EndpointA.ChannelConfig.PortID = types5.PortID
-	path.EndpointB.ChannelConfig.PortID = types5.PortID
-	path.EndpointA.ChannelConfig.Order = types4.ORDERED
-	path.EndpointB.ChannelConfig.Order = types4.ORDERED
+	path.EndpointA.ChannelConfig.PortID = icatypes.PortID
+	path.EndpointB.ChannelConfig.PortID = icatypes.PortID
+	path.EndpointA.ChannelConfig.Order = ibcchanneltypes.ORDERED
+	path.EndpointB.ChannelConfig.Order = ibcchanneltypes.ORDERED
 	path.EndpointA.ChannelConfig.Version = version
 	path.EndpointB.ChannelConfig.Version = version
 	return path
@@ -89,7 +89,7 @@ func (suite *KeeperTestSuite) SetupICAPath(path *novatesting.Path, owner string)
 
 // RegisterInterchainAccount is a helper function for starting the channel handshake
 func (suite *KeeperTestSuite) RegisterInterchainAccount(endpoint *novatesting.Endpoint, owner string) error {
-	portID, err := types5.NewControllerPortID(owner)
+	portID, err := icatypes.NewControllerPortID(owner)
 	if err != nil {
 		return err
 	}
@@ -104,7 +104,7 @@ func (suite *KeeperTestSuite) RegisterInterchainAccount(endpoint *novatesting.En
 	endpoint.Chain.NextBlock()
 
 	// update port/channel ids
-	endpoint.ChannelID = types4.FormatChannelIdentifier(channelSequence)
+	endpoint.ChannelID = ibcchanneltypes.FormatChannelIdentifier(channelSequence)
 	endpoint.ChannelConfig.PortID = portID
 	return nil
 }
@@ -142,7 +142,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 //func (suite *KeeperTestSuite) TestChanOpenInit() {
 //	suite.icaPath = NewICAPAth(suite.chainA, suite.chainB)
 //	suite.coordinator.SetupConnections(suite.icaPath)
-//	msg := types4.NewMsgChannelOpenInit(suite.path.EndpointB.ChannelConfig.PortID, types5.Version, types4.ORDERED, []string{suite.path.EndpointB.ConnectionID}, suite.path.EndpointA.ChannelConfig.PortID, types5.ModuleName)
+//	msg := ibcchanneltypes.NewMsgChannelOpenInit(suite.path.EndpointB.ChannelConfig.PortID, icatypes.Version, ibcchanneltypes.ORDERED, []string{suite.path.EndpointB.ConnectionID}, suite.path.EndpointA.ChannelConfig.PortID, icatypes.ModuleName)
 //	handler := suite.chainB.App.MsgServiceRouter().Handler(msg)
 //	_, err := handler(suite.ctxB, msg)
 //
@@ -206,9 +206,9 @@ func (suite *KeeperTestSuite) TestSimulateDepositCoins() {
 	suite.chainB.App.AccountKeeper.SetAccount(ctxB, acc3)
 
 	suite.chainA.App.BankKeeper.InitGenesis(ctxA,
-		&types3.GenesisState{
+		&banktypes.GenesisState{
 			Supply: sdk.Coins{sdk.NewInt64Coin("nova", 30000000)},
-			Balances: []types3.Balance{
+			Balances: []banktypes.Balance{
 				{
 					Address: acc1.GetAddress().String(),
 					Coins:   sdk.Coins{sdk.NewInt64Coin("nova", 10000000)},

@@ -37,9 +37,6 @@ func (k Keeper) TransferToTargetZone(ctx sdk.Context,
 			TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
 		},
 	)
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return err
 }
