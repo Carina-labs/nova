@@ -27,7 +27,6 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 // RegisterZone implements the Msg/RegisterZone interface
 func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
 	zoneInfo := &types.RegisteredZone{
 		ZoneId: zone.ZoneName,
 		IcaConnectionInfo: &types.IcaConnectionInfo{

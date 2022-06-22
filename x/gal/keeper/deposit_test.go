@@ -141,11 +141,6 @@ func (suite *KeeperTestSuite) TestDeposit() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.chainB.App.BankKeeper.IterateAllBalances(ctxB, func(address sdk.AccAddress, coin sdk.Coin) bool {
-				fmt.Printf("addr: %s, balance: %s\n", address.String(), coin.String())
-				return false
-			})
-
 			acc := authtypes.NewBaseAccount(tc.userPrivKey.PubKey().Address().Bytes(), tc.userPrivKey.PubKey(), 0, 0)
 			accAddr, err := sdk.AccAddressFromBech32(acc.Address)
 			suite.Require().NoError(err)
@@ -211,7 +206,6 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			}
 
 			suite.chainA.NextBlock()
-
 			p, err := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events())
 			suite.Require().NoError(err)
 

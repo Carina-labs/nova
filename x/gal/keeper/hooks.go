@@ -28,7 +28,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
 		return
 	}
-  
+
 	// change sender + zoneId
 	depositRecord, err := h.k.GetRecordedDepositAmt(ctx, sdk.AccAddress(data.Sender))
 	if err != nil {
@@ -43,6 +43,11 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	}
 
 	if err := h.k.RecordDepositAmt(ctx, record); err != nil {
+		panic(err)
+	}
+
+	if err != nil {
+		h.k.Logger(ctx).Error("error during recording deposit information, %s", err.Error())
 		panic(err)
 	}
 

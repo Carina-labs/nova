@@ -40,11 +40,8 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 		senderAddr.String(),
 		deposit.HostAddr,
 		deposit.Amount[0])
-	if err != nil {
-		return err
-	}
 
-	return nil
+  return err
 }
 
 // getDepositRecordStore returns "DepositRecord" store.
