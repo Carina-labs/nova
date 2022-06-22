@@ -2,6 +2,8 @@ package keeper_test
 
 import (
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
@@ -10,6 +12,12 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
+)
+
+var (
+	baseDenom   = "nova"
+	baseAcc     = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	baseHostAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 )
 
 func (suite *KeeperTestSuite) TestRecordDepositAmt() {
@@ -33,10 +41,10 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 		{
 			name: "should get recorded deposit amt",
 			args: []args{
-				{sdk.NewInt64Coin("osmo", 10000), randAddr},
+				{sdk.NewInt64Coin(baseDenom, 10000), randAddr},
 			},
 			expect: []args{
-				{sdk.NewInt64Coin("osmo", 10000), randAddr},
+				{sdk.NewInt64Coin(baseDenom, 10000), randAddr},
 			},
 			wantErr: false,
 		},
@@ -44,7 +52,7 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 			name: "should not get deposit info",
 			args: []args{},
 			expect: []args{
-				{sdk.NewInt64Coin("osmo", 10000), randAddr},
+				{sdk.NewInt64Coin(baseDenom, 10000), randAddr},
 			},
 			wantErr: true,
 		},
@@ -89,180 +97,89 @@ func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
 
 func (suite *KeeperTestSuite) TestDeposit() {
 	suite.SetupTest()
-	tcs := []struct {
-		name                 string
-		userPrivKey          *secp256k1.PrivKey
-		denom                string
-		preUserAmt           int64
-		preModuleAccountAmt  int64
-		depositAmt           int64
-		postUserAmt          int64
-		postModuleAccountAmt int64
-		shouldErr            bool
-	}{
-		{
-			name:                 "valid test case 1",
-			userPrivKey:          secp256k1.GenPrivKey(),
-			denom:                "osmo",
-			preUserAmt:           1000,
-			preModuleAccountAmt:  1000,
-			depositAmt:           500,
-			postUserAmt:          500,
-			postModuleAccountAmt: 1000,
-			shouldErr:            false,
-		},
-		{
-			name:                 "valid test case 2",
-			userPrivKey:          secp256k1.GenPrivKey(),
-			denom:                "osmo",
-			preUserAmt:           4000,
-			preModuleAccountAmt:  5000,
-			depositAmt:           3000,
-			postUserAmt:          1000,
-			postModuleAccountAmt: 5000,
-			shouldErr:            false,
-		},
-		{
-			// ERROR CASE
-			name:                 "error test case 1",
-			userPrivKey:          secp256k1.GenPrivKey(),
-			denom:                "osmo",
-			preUserAmt:           5000,
-			preModuleAccountAmt:  1000,
-			depositAmt:           6000,
-			postUserAmt:          5000,
-			postModuleAccountAmt: 1000,
-			shouldErr:            true,
-		},
-	}
+
+	userAcc := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	moduleAcc := suite.App.AccountKeeper.GetModuleAddress(types.ModuleName)
 
 	ctxA := suite.chainA.GetContext()
 	ctxB := suite.chainB.GetContext()
 
-	for _, tc := range tcs {
-		suite.Run(tc.name, func() {
-			acc := authtypes.NewBaseAccount(tc.userPrivKey.PubKey().Address().Bytes(), tc.userPrivKey.PubKey(), 0, 0)
-			accAddr, err := sdk.AccAddressFromBech32(acc.Address)
-			suite.Require().NoError(err)
+	// initialize chainA
+	suite.chainA.App.BankKeeper.InitGenesis(ctxA, &banktypes.GenesisState{
+		Balances: []banktypes.Balance{
+			{userAcc.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, 6000)}},
+			{moduleAcc.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, 1000)}},
+		},
+	})
 
-			galAddr := suite.App.AccountKeeper.GetModuleAddress(types.ModuleName)
-			suite.chainA.App.BankKeeper.InitGenesis(ctxA, &banktypes.GenesisState{
-				Balances: []banktypes.Balance{
-					{
-						Address: accAddr.String(),
-						Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.preUserAmt)},
-					},
-					{
-						Address: galAddr.String(),
-						Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.preModuleAccountAmt)},
-					},
-				},
-			})
+	// initialize chainB
+	suite.chainB.App.BankKeeper.InitGenesis(ctxB, &banktypes.GenesisState{
+		Balances: []banktypes.Balance{
+			{userAcc.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, 0)}},
+			{moduleAcc.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, 1000)}},
+		},
+	})
 
-			suite.chainB.App.BankKeeper.InitGenesis(ctxB, &banktypes.GenesisState{
-				Balances: []banktypes.Balance{
-					{
-						Address: accAddr.String(),
-						Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, 0)},
-					},
-					{
-						Address: galAddr.String(),
-						Coins:   sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.preModuleAccountAmt)},
-					},
-				},
-			})
+	// register zone
+	suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, newBaseRegisteredZone())
 
-			suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, &intertxtypes.RegisteredZone{
-				ZoneId: "osmo",
-				IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
-					ConnectionId: "connection-0",
-					PortId:       "icacontroller-" + accAddr.String(),
-				},
-				TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
-					ConnectionId: "connection-0",
-					PortId:       "transfer",
-					ChannelId:    "channel-0",
-				},
-				IcaAccount: &intertxtypes.IcaAccount{
-					OwnerAddress: accAddr.String(),
-					HostAddress:  "",
-				},
-				ValidatorAddress: "",
-				BaseDenom:        "osmo",
-				SnDenom:          "snOsmo",
-			})
+	// deposit to gal keeper
+	err := suite.chainA.App.GalKeeper.Deposit(ctxA, &types.MsgDeposit{
+		Depositor: userAcc.String(),
+		Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, 500)},
+		HostAddr:  userAcc.String(),
+		ZoneId:    baseDenom,
+	})
 
-			err = suite.chainA.App.GalKeeper.Deposit(ctxA, &types.MsgDeposit{
-				Depositor: accAddr.String(),
-				Amount:    sdk.Coins{sdk.NewInt64Coin(tc.denom, tc.depositAmt)},
-				HostAddr:  accAddr.String(),
-				ZoneId:    "osmo",
-			})
+	suite.Require().NoError(err)
 
-			if tc.shouldErr {
-				suite.Require().Error(err)
-				return
-			}
+	// reveal chain A block
+	suite.chainA.NextBlock()
 
-			suite.chainA.NextBlock()
-			p, err := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events())
-			suite.Require().NoError(err)
+	// relay packet to the chain B
+	p, err := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events())
+	suite.Require().NoError(err)
+	err = suite.path.RelayPacket(p)
+	suite.Require().NoError(err)
 
-			err = suite.path.RelayPacket(p)
-			suite.Require().NoError(err)
-			suite.chainB.NextBlock()
+	// reveal chain B block
+	suite.chainB.NextBlock()
 
-			res := suite.chainB.App.BankKeeper.GetAllBalances(ctxB, accAddr)
-			suite.Require().Equal(res[0].Amount.Int64(), tc.depositAmt)
+	// user of chain B should get 500 osmo
+	balance := suite.chainB.App.BankKeeper.GetAllBalances(ctxB, userAcc)
+	fmt.Println(balance[0].Denom)
+	fmt.Println(balance[0].Amount)
+	suite.Require().Equal(balance[0].Amount.Int64(), int64(500))
 
-			// Check record
-			record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(ctxA, accAddr)
-			fmt.Printf("record: %s\n", record.String())
-			suite.Require().Equal(record.Address, accAddr.String())
-			suite.Require().Equal(record.Amount.Denom, tc.denom)
-			suite.Require().Equal(record.Amount.Amount.Int64(), tc.depositAmt)
-		})
-
-	}
+	// check deposit record
+	record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(ctxA, userAcc)
+	suite.Require().NoError(err)
+	suite.Require().Equal(record.ZoneId, baseDenom)
+	suite.Require().Equal(record.Address, userAcc.String())
+	suite.Require().Equal(record.Amount.Amount.Int64(), int64(500))
 }
 
-/*
-Comment : TEST EVENT DATA
-event type: coin_spent attr: key:"spender" value:"cosmos10efa2srj3r5rf6eyzxdxuyj4ct2a8faf6e9fdp" attr: key:"amount" value:"500osmo"
-event type: coin_received attr: key:"receiver" value:"cosmos1qx63cevacrwd4wrqlfvmdy03vttgynz3gyd9yp" attr: key:"amount" value:"500osmo"
-event type: transfer attr: key:"recipient" value:"cosmos1qx63cevacrwd4wrqlfvmdy03vttgynz3gyd9yp" attr: key:"sender" value:"cosmos10efa2srj3r5rf6eyzxdxuyj4ct2a8faf6e9fdp" attr: key:"amount" value:"500osmo"
-event type: message attr: key:"sender" value:"cosmos10efa2srj3r5rf6eyzxdxuyj4ct2a8faf6e9fdp"
-event type: coin_spent attr: key:"spender" value:"cosmos10efa2srj3r5rf6eyzxdxuyj4ct2a8faf6e9fdp" attr: key:"amount" value:"500osmo"
-event type: coin_received attr: key:"receiver" value:"cosmos1a53udazy8ayufvy0s434pfwjcedzqv34kvz9tw" attr: key:"amount" value:"500osmo"
-event type: transfer attr: key:"recipient" value:"cosmos1a53udazy8ayufvy0s434pfwjcedzqv34kvz9tw" attr: key:"sender" value:"cosmos10efa2srj3r5rf6eyzxdxuyj4ct2a8faf6e9fdp" attr: key:"amount" value:"500osmo"
-event type: message attr: key:"sender" value:"cosmos10efa2srj3r5rf6eyzxdxuyj4ct2a8faf6e9fdp"
-event type: send_packet attr: key:"packet_data" value:"{\"amount\":\"500\",\"denom\":\"osmo\",\"receiver\":\"\",\"sender\":\"cosmos10efa2srj3r5rf6eyzxdxuyj4ct2a8faf6e9fdp\"}" attr: key:"packet_data_hex" value:"7b22616d6f756e74223a22353030222c2264656e6f6d223a226f736d6f222c227265636569766572223a22222c2273656e646572223a22636f736d6f7331306566613273726a33723572663665797a78647875796a346374326138666166366539666470227d" attr: key:"packet_timeout_height" value:"0-0" attr: key:"packet_timeout_timestamp" value:"1655715387013916000" attr: key:"packet_sequence" value:"1" attr: key:"packet_src_port" value:"transfer" attr: key:"packet_src_channel" value:"channel-0" attr: key:"packet_dst_port" value:"transfer" attr: key:"packet_dst_channel" value:"channel-0" attr: key:"packet_channel_ordering" value:"ORDER_UNORDERED" attr: key:"packet_connection" value:"connection-0"
-event type: message attr: key:"module" value:"ibc_channel"
-event type: ibc_transfer attr: key:"sender" value:"cosmos10efa2srj3r5rf6eyzxdxuyj4ct2a8faf6e9fdp" attr: key:"receiver"
-event type: message attr: key:"module" value:"transfer"
-*/
+// newBaseRegisteredZone returns a new zone info for testing purpose only
+func newBaseRegisteredZone() *intertxtypes.RegisteredZone {
+	icaControllerPort, _ := icatypes.NewControllerPortID(baseAcc.String())
 
-func ContainEvent(em *sdk.EventManager, eventType, key, value string) bool {
-	for _, event := range em.Events() {
-		if event.Type == eventType {
-			for _, attr := range event.Attributes {
-				k := string(attr.Key[:])
-				v := string(attr.Value[:])
-				if key == k && value == v {
-					return true
-				}
-			}
-		}
-	}
-	return false
-}
-
-func PrintEvents(em *sdk.EventManager) {
-	for _, event := range em.Events() {
-		fmt.Printf("type: %s, ", event.Type)
-		for _, attr := range event.Attributes {
-			fmt.Printf("(key: %s, value: %s)", attr.Key, attr.Value)
-		}
-		fmt.Println()
+	return &intertxtypes.RegisteredZone{
+		ZoneId: baseDenom,
+		IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
+			ConnectionId: "connection-0",
+			PortId:       icaControllerPort,
+		},
+		TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
+			ConnectionId: "connection-0",
+			PortId:       "transfer",
+			ChannelId:    "channel-0",
+		},
+		IcaAccount: &intertxtypes.IcaAccount{
+			OwnerAddress: baseAcc.String(),
+			HostAddress:  baseHostAcc.String(),
+		},
+		ValidatorAddress: "",
+		BaseDenom:        baseDenom,
+		SnDenom:          "snOsmo",
 	}
 }

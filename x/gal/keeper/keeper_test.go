@@ -112,14 +112,11 @@ func (suite *KeeperTestSuite) RegisterInterchainAccount(endpoint *novatesting.En
 
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
-	suite.setRandomState()
 
 	//Coordinator is a testing struct which contains N TestChain's
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
 	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
 	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))
-	suite.ctxA = suite.chainA.GetContext()
-	suite.ctxB = suite.chainB.GetContext()
 
 	//setup path (chainA <===>chainB)
 	path := novatesting.NewPath(suite.chainA, suite.chainB)
@@ -133,9 +130,6 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.icaPath = NewICAPAth(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
 	err := suite.SetupICAPath(suite.icaPath, acc2.Address)
-	if err != nil {
-		fmt.Printf("err ica path : %s\n", err.Error())
-	}
 	suite.NoError(err)
 	println("Finish setup test")
 }
@@ -263,17 +257,6 @@ func (suite *KeeperTestSuite) TestSimulateDepositCoins() {
 	record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(ctxA, acc1.GetAddress())
 	suite.NoError(err)
 	fmt.Printf("record : %s\n", record.String())
-
-	suite.chainB.App.BankKeeper.IterateAllBalances(ctxB, func(address sdk.AccAddress, coin sdk.Coin) bool {
-		fmt.Printf("IterateAllBalances addr: %s, balance: %s\n", address.String(), coin.String())
-		return false
-	})
-
-	//hostAddr := icatypes.GenerateAddress(suite.chainB.App.AccountKeeper.GetModuleAddress(icatypes.ModuleName), hostConnectionID, novatesting.TransferPort)
-	//fmt.Printf("host address : %s", hostAddr.String())
-
-	fmt.Printf("EndpointA connectionID : %s\n", suite.path.EndpointA.ConnectionID)
-	fmt.Printf("EndpointB connectionID : %s\n", suite.path.EndpointB.ConnectionID)
 
 	channels := suite.chainA.App.IBCKeeper.ChannelKeeper.GetAllChannels(ctxA)
 	for _, channel := range channels {

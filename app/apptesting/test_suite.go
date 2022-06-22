@@ -35,7 +35,6 @@ func (s *KeeperTestHelper) Setup() {
 	}
 	s.nTestAccs = 5
 	s.TestAccs = CreateRandomAccounts(s.nTestAccs)
-
 }
 
 func CreateRandomAccounts(n int) []sdk.AccAddress {

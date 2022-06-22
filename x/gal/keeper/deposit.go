@@ -17,7 +17,7 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 
 	k.Logger(ctx).Info("ZoneInfo", "zoneInfo", zoneInfo)
 
-	senderAddr, err := sdk.AccAddressFromBech32(deposit.Depositor)
+	_, err := sdk.AccAddressFromBech32(deposit.Depositor)
 	if err != nil {
 		return err
 	}
@@ -25,7 +25,7 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 	// record
 	record := &types.DepositRecord{
 		ZoneId:        zoneInfo.ZoneId,
-		Address:       senderAddr.String(),
+		Address:       deposit.Depositor,
 		Amount:        &deposit.Amount[0],
 		IsTransferred: false,
 	}
@@ -34,14 +34,12 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 		return err
 	}
 
-	err = k.TransferToTargetZone(ctx,
+	return k.TransferToTargetZone(ctx,
 		zoneInfo.TransferConnectionInfo.PortId,
 		zoneInfo.TransferConnectionInfo.ChannelId,
-		senderAddr.String(),
+		deposit.Depositor,
 		deposit.HostAddr,
 		deposit.Amount[0])
-
-	return err
 }
 
 // getDepositRecordStore returns "DepositRecord" store.

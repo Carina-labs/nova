@@ -30,7 +30,7 @@ func (k Keeper) GetRegisteredZone(ctx sdk.Context, zone_name string) (types.Regi
 }
 
 // DeleteRegisteredZone delete zone info
-func (k Keeper) DeleteRegisterZone(ctx sdk.Context, zone_name string) {
+func (k Keeper) DeleteRegisteredZone(ctx sdk.Context, zone_name string) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	ctx.Logger().Error(fmt.Sprintf("Removing chain: %s", zone_name))
 	store.Delete([]byte(zone_name))
