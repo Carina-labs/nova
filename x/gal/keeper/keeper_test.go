@@ -3,7 +3,7 @@ package keeper_test
 import (
 	"fmt"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
-	types2 "github.com/Carina-labs/nova/x/inter-tx/types"
+	"github.com/stretchr/testify/suite"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -18,7 +18,6 @@ import (
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
-	"github.com/stretchr/testify/suite"
 )
 
 var (
@@ -150,6 +149,23 @@ func (suite *KeeperTestSuite) SetupTestOracle(
 	}
 }
 
+func (suite *KeeperTestSuite) SetupTestOracle(
+	operators []sdk.AccAddress,
+	msgs []*oracletypes.ChainInfo) {
+	for _, operator := range operators {
+		suite.App.OracleKeeper.SetParams(suite.Ctx, oracletypes.Params{
+			OracleOperators: []string{operator.String()},
+		})
+	}
+
+	for _, msg := range msgs {
+		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, msg)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
 func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []intertxtypes.RegisteredZone) {
 	for _, msg := range zoneMsgs {
 		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, &msg)
@@ -215,17 +231,17 @@ func (suite *KeeperTestSuite) TestSimulateDepositCoins() {
 		})
 	ownerAddr := acc2
 
-	suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, &types2.RegisteredZone{
+	suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, &intertxtypes.RegisteredZone{
 		ZoneId: suite.chainB.ChainID,
-		IcaConnectionInfo: &types2.IcaConnectionInfo{
+		IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
 			ConnectionId: suite.icaPath.EndpointB.ConnectionID,
 		},
-		TransferConnectionInfo: &types2.TransferConnectionInfo{
+		TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
 			ConnectionId: suite.path.EndpointA.ConnectionID,
 			PortId:       novatesting.TransferPort,
 			ChannelId:    "channel-0",
 		},
-		IcaAccount: &types2.IcaAccount{
+		IcaAccount: &intertxtypes.IcaAccount{
 			OwnerAddress: ownerAddr.Address,
 			HostAddress:  "",
 			Balance:      sdk.Coin{},

@@ -2,26 +2,32 @@ package keeper_test
 
 import (
 	"fmt"
+	"github.com/Carina-labs/nova/x/gal/keeper"
+	"github.com/Carina-labs/nova/x/gal/types"
 
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 func (suite *KeeperTestSuite) TestAfterTransferEnd() {
+	sender := suite.GenRandomAddress().String()
+	receiver := suite.GenRandomAddress().String()
+	msgServer := keeper.NewMsgServerImpl(suite.App.GalKeeper)
+
 	tcs := []struct {
-		packet        types.FungibleTokenPacketData
+		packet        ibctransfertypes.FungibleTokenPacketData
 		denom         string
 		expectedDenom string
 		expectedAmt   int64
 		shouldErr     bool
 	}{
 		{
-			packet: types.FungibleTokenPacketData{
+			packet: ibctransfertypes.FungibleTokenPacketData{
 				Denom:    "osmo",
 				Amount:   "100000",
-				Sender:   suite.GenRandomAddress().String(),
-				Receiver: suite.GenRandomAddress().String(),
+				Sender:   sender,
+				Receiver: receiver,
 			},
 			denom:         "osmo",
 			expectedDenom: "osmo",
@@ -29,11 +35,11 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 			shouldErr:     false,
 		},
 		{
-			packet: types.FungibleTokenPacketData{
+			packet: ibctransfertypes.FungibleTokenPacketData{
 				Denom:    "atom",
 				Amount:   "55555",
-				Sender:   suite.GenRandomAddress().String(),
-				Receiver: suite.GenRandomAddress().String(),
+				Sender:   sender,
+				Receiver: receiver,
 			},
 			denom:         "atom",
 			expectedDenom: "atom",
@@ -49,22 +55,40 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 			ZoneId:                 tc.denom,
 			IcaConnectionInfo:      &intertxtypes.IcaConnectionInfo{},
 			TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{},
-			ValidatorAddress:       "",
-			BaseDenom:              tc.denom,
-			StDenom:                fmt.Sprintf("st%s", tc.denom),
-			SnDenom:                fmt.Sprintf("sn%s", tc.denom),
+			IcaAccount: &intertxtypes.IcaAccount{
+				OwnerAddress: suite.GenRandomAddress().String(),
+				HostAddress:  receiver,
+				Balance:      sdk.Coin{},
+			},
+			ValidatorAddress: "",
+			BaseDenom:        tc.denom,
+			SnDenom:          fmt.Sprintf("sn%s", tc.denom),
+			StDenom:          fmt.Sprintf("st%s", tc.denom),
 		}
-
 		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, zoneInfo)
 
+		// should send deposit message to msg server
+		amt, ok := sdk.NewIntFromString(tc.packet.Amount)
+		suite.Require().Equal(true, ok)
+
+		_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.Ctx), &types.MsgDeposit{
+			Depositor: sender,
+			Amount:    sdk.Coins{sdk.NewCoin(tc.packet.Denom, amt)},
+			HostAddr:  receiver,
+			ZoneId:    tc.denom,
+		})
+		suite.Require().NoError(err)
+
+		// after send deposit msg to msg_server hooks should execute.
 		hooks.AfterTransferEnd(suite.Ctx, tc.packet, tc.denom)
 
 		senderAddr, err := sdk.AccAddressFromBech32(tc.packet.Sender)
-		suite.NoError(err)
+		suite.Require().NoError(err)
 
 		record, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, senderAddr)
-		suite.Equal(tc.expectedDenom, record.Amount.Denom)
-		suite.Equal(tc.expectedAmt, record.Amount.Amount.Int64())
-		suite.Equal(tc.packet.Sender, record.Address)
+		suite.Require().NotNil(record, "record doesn't exists")
+		suite.Require().Equal(tc.expectedDenom, record.Amount.Denom)
+		suite.Require().Equal(tc.expectedAmt, record.Amount.Amount.Int64())
+		suite.Require().Equal(tc.packet.Sender, record.Address)
 	}
 }

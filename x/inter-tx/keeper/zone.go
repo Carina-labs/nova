@@ -46,13 +46,12 @@ func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zon
 			panic(fmt.Errorf("unexpectedly iterator closed: %v", err))
 		}
 	}(iterator)
+
 	i := int64(0)
-
 	for ; iterator.Valid(); iterator.Next() {
-
 		zone := types.RegisteredZone{}
-
 		k.cdc.MustUnmarshal(iterator.Value(), &zone)
+
 		stop := fn(i, zone)
 		if stop {
 			break
