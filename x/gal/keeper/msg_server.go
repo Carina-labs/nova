@@ -28,7 +28,7 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.Deposit(ctx, *deposit)
+	err := m.keeper.Deposit(ctx, deposit)
 
 	if err != nil {
 		return nil, err

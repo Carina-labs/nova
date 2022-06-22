@@ -28,7 +28,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
 		return
 	}
-  
+
 	// change sender + zoneId
 	depositRecord, err := h.k.GetRecordedDepositAmt(ctx, sdk.AccAddress(data.Sender))
 	if err != nil {
@@ -46,16 +46,9 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		panic(err)
 	}
 
-
-	coin := sdk.NewInt64Coin(data.Denom, amt.Int64())
-	err := h.k.RecordDepositAmt(ctx, types.DepositRecord{
-		Address: data.Sender,
-		Amount:  &coin,
-	})
-  
 	if err != nil {
 		h.k.Logger(ctx).Error("error during recording deposit information, %s", err.Error())
-    panic(err)
+		panic(err)
 	}
 
 	// Delegate events

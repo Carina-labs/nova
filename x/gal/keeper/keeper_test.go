@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"fmt"
+	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	types2 "github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -11,7 +12,6 @@ import (
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"testing"
 
 	"github.com/Carina-labs/nova/app/apptesting"
@@ -148,7 +148,7 @@ func (suite *KeeperTestSuite) SetupTestOracle(
 			OracleOperators: []string{operator.String()},
 		})
 	}
-
+}
 
 func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []intertxtypes.RegisteredZone) {
 	for _, msg := range zoneMsgs {
@@ -215,38 +215,37 @@ func (suite *KeeperTestSuite) TestSimulateDepositCoins() {
 		})
 	ownerAddr := acc2
 
-	err := suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, &types2.MsgRegisterZone{
-		ZoneName: suite.chainB.ChainID,
-		ChainId:  suite.chainB.ChainID,
-		IcaInfo: &types2.IcaConnectionInfo{
+	suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, &types2.RegisteredZone{
+		ZoneId: suite.chainB.ChainID,
+		IcaConnectionInfo: &types2.IcaConnectionInfo{
 			ConnectionId: suite.icaPath.EndpointB.ConnectionID,
-			OwnerAddress: ownerAddr.Address,
 		},
-		TransferInfo: &types2.TransferConnectionInfo{
+		TransferConnectionInfo: &types2.TransferConnectionInfo{
 			ConnectionId: suite.path.EndpointA.ConnectionID,
 			PortId:       novatesting.TransferPort,
 			ChannelId:    "channel-0",
 		},
+		IcaAccount: &types2.IcaAccount{
+			OwnerAddress: ownerAddr.Address,
+			HostAddress:  "",
+			Balance:      sdk.Coin{},
+		},
 		ValidatorAddress: acc1.Address,
 		BaseDenom:        "osmo",
+		SnDenom:          "",
+		StDenom:          "",
 	})
-	if err != nil {
-		fmt.Printf("err(ica) : %s\n", err.Error())
-	}
 
-	senderPrivAddr, _ := sdk.AccAddressFromHex(suite.chainA.SenderPrivKey.PubKey().Address().String())
-	fmt.Printf("senderPrivAddr : %s\n", senderPrivAddr)
+	_, err := sdk.AccAddressFromHex(suite.chainA.SenderPrivKey.PubKey().Address().String())
+	suite.Require().NoError(err)
 
-	err = suite.chainA.App.GalKeeper.DepositCoin(ctxA, types.MsgDeposit{
+	err = suite.chainA.App.GalKeeper.Deposit(ctxA, &types.MsgDeposit{
 		Depositor: acc1.GetAddress().String(),
 		ZoneId:    suite.chainB.ChainID,
 		Amount:    sdk.NewCoins(sdk.NewInt64Coin("nova", 1000)),
 	})
 
-	if err != nil {
-		fmt.Printf("err : %s\n", err.Error())
-	}
-
+	suite.Require().NoError(err)
 	suite.chainA.NextBlock()
 
 	packet, errPacket := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events()) //parse packet
