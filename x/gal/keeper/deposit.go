@@ -41,7 +41,7 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 		deposit.HostAddr,
 		deposit.Amount[0])
 
-  return err
+	return err
 }
 
 // getDepositRecordStore returns "DepositRecord" store.

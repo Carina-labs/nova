@@ -56,7 +56,7 @@ func NewUpdateStateCmd() *cobra.Command {
 			}
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), &types.MsgUpdateChainState{
-				Coin: sdk.NewCoin(chainDenom, sdk.NewIntFromBigInt(balance.BigInt())),
+				Coin:          sdk.NewCoin(chainDenom, sdk.NewIntFromBigInt(balance.BigInt())),
 				Operator:      clientCtx.GetFromAddress().String(),
 				Decimal:       decimal.Uint64(),
 				BlockHeight:   blockHeight.Uint64(),
