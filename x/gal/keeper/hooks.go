@@ -1,12 +1,14 @@
 package keeper
 
 import (
+	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	icatypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	"math/big"
 )
 
 // Hooks wrapper struct for gal keeper
@@ -24,14 +26,30 @@ func (k Keeper) Hooks() Hooks {
 // AfterTransferEnd records user deposit information.
 // It will be used in share token minting process.
 func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, base_denom string) {
+	packetAmount, ok := new(big.Int).SetString(data.Amount, 10)
+	if !ok {
+		panic(fmt.Sprintf("invalid ibc transfer packet: %v", data))
+	}
+
 	zoneInfo := h.k.interTxKeeper.GetZoneForDenom(ctx, base_denom)
+
 	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
 		return
 	}
 
 	// change sender + zoneId
-	depositRecord, err := h.k.GetRecordedDepositAmt(ctx, sdk.AccAddress(data.Sender))
+	sender, err := sdk.AccAddressFromBech32(data.Sender)
 	if err != nil {
+		return
+	}
+
+	depositRecord, err := h.k.GetRecordedDepositAmt(ctx, sender)
+	if err != nil {
+		return
+	}
+
+	// assert amount of record equals to the amount of ibc transfer packet.
+	if depositRecord.Amount.Amount.BigInt().Cmp(packetAmount) != 0 {
 		return
 	}
 

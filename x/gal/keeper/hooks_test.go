@@ -1,94 +1,120 @@
 package keeper_test
 
 import (
-	"fmt"
-
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"
-
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	"strconv"
 )
 
-func (suite *KeeperTestSuite) TestAfterTransferEnd() {
-	sender := suite.GenRandomAddress().String()
-	receiver := suite.GenRandomAddress().String()
-	msgServer := keeper.NewMsgServerImpl(suite.App.GalKeeper)
+func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
+	var (
+		sender     sdk.AccAddress
+		receiver   sdk.AccAddress
+		sentAmount int64
+	)
 
-	tcs := []struct {
-		packet        ibctransfertypes.FungibleTokenPacketData
-		denom         string
-		expectedDenom string
-		expectedAmt   int64
-		shouldErr     bool
+	testCases := []struct {
+		name     string
+		before   func()
+		malleate func()
+		exp      func()
 	}{
 		{
-			packet: ibctransfertypes.FungibleTokenPacketData{
-				Denom:    "osmo",
-				Amount:   "100000",
-				Sender:   sender,
-				Receiver: receiver,
+			"success",
+			func() {
+				sender = suite.GenRandomAddress()
+				receiver = baseHostAcc
+				sentAmount = 5000
+
+				suite.chainA.App.BankKeeper.InitGenesis(suite.chainA.GetContext(), &banktypes.GenesisState{
+					Balances: []banktypes.Balance{
+						{sender.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, sentAmount)}},
+					},
+				})
 			},
-			denom:         "osmo",
-			expectedDenom: "osmo",
-			expectedAmt:   100000,
-			shouldErr:     false,
+			func() {
+				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
+				suite.Require().NoError(err)
+				suite.Require().Equal(record.IsTransferred, false)
+			},
+			func() {
+				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
+				suite.Require().NoError(err)
+				suite.Require().NotNil(record, "record doesn't exists")
+				suite.Require().Equal(sentAmount, record.Amount.Amount.Int64())
+				suite.Require().Equal(sender.String(), record.Address)
+				suite.Require().Equal(record.IsTransferred, true)
+			},
 		},
 		{
-			packet: ibctransfertypes.FungibleTokenPacketData{
-				Denom:    "atom",
-				Amount:   "55555",
-				Sender:   sender,
-				Receiver: receiver,
+			"hooks should not do anything",
+			func() {
+				sender = suite.GenRandomAddress()
+
+				// receiver is an arbitrary address
+				receiver = suite.GenRandomAddress()
+				sentAmount = 5000
+
+				suite.chainA.App.BankKeeper.InitGenesis(suite.chainA.GetContext(), &banktypes.GenesisState{
+					Balances: []banktypes.Balance{
+						{sender.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, sentAmount)}},
+					},
+				})
 			},
-			denom:         "atom",
-			expectedDenom: "atom",
-			expectedAmt:   55555,
-			shouldErr:     false,
+			func() {
+				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
+				suite.Require().NoError(err)
+				suite.Require().Equal(record.IsTransferred, false)
+			},
+			func() {
+				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
+				suite.Require().NoError(err)
+				suite.Require().NotNil(record, "record doesn't exists")
+				suite.Require().Equal(sentAmount, record.Amount.Amount.Int64())
+				suite.Require().Equal(sender.String(), record.Address)
+				suite.Require().Equal(record.IsTransferred, false)
+			},
 		},
 	}
 
-	hooks := suite.App.GalKeeper.Hooks()
-	for _, tc := range tcs {
-		// register zone
-		zoneInfo := &intertxtypes.RegisteredZone{
-			ZoneId:                 tc.denom,
-			IcaConnectionInfo:      &intertxtypes.IcaConnectionInfo{},
-			TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{},
-			IcaAccount: &intertxtypes.IcaAccount{
-				OwnerAddress: suite.GenRandomAddress().String(),
-				HostAddress:  receiver,
-				Balance:      sdk.Coin{},
-			},
-			ValidatorAddress: "",
-			BaseDenom:        tc.denom,
-			SnDenom:          fmt.Sprintf("sn%s", tc.denom),
-		}
-		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, zoneInfo)
+	for _, tc := range testCases {
+		tc := tc
 
-		// should send deposit message to msg server
-		amt, ok := sdk.NewIntFromString(tc.packet.Amount)
-		suite.Require().Equal(true, ok)
+		suite.Run(tc.name, func() {
+			suite.SetupTest()
 
-		_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.Ctx), &types.MsgDeposit{
-			Depositor: sender,
-			Amount:    sdk.Coins{sdk.NewCoin(tc.packet.Denom, amt)},
-			HostAddr:  receiver,
-			ZoneId:    tc.denom,
+			hooks := suite.chainA.App.GalKeeper.Hooks()
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
+
+			tc.before()
+
+			// register zone
+			suite.chainA.App.IntertxKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+
+			// should send deposit message to msg server
+			_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgDeposit{
+				Depositor: sender.String(),
+				Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, sentAmount)},
+				HostAddr:  baseHostAcc.String(),
+				ZoneId:    baseDenom,
+			})
+			suite.Require().NoError(err)
+
+			tc.malleate()
+
+			// after send deposit msg to msg_server hooks should execute.
+			packet := ibctransfertypes.FungibleTokenPacketData{
+				Denom:    baseDenom,
+				Amount:   strconv.Itoa(int(sentAmount)),
+				Sender:   sender.String(),
+				Receiver: receiver.String(),
+			}
+			hooks.AfterTransferEnd(suite.chainA.GetContext(), packet, baseDenom)
+
+			tc.exp()
 		})
-		suite.Require().NoError(err)
-
-		// after send deposit msg to msg_server hooks should execute.
-		hooks.AfterTransferEnd(suite.Ctx, tc.packet, tc.denom)
-
-		senderAddr, err := sdk.AccAddressFromBech32(tc.packet.Sender)
-		suite.Require().NoError(err)
-
-		record, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, senderAddr)
-		suite.Require().NotNil(record, "record doesn't exists")
-		suite.Require().Equal(tc.expectedDenom, record.Amount.Denom)
-		suite.Require().Equal(tc.expectedAmt, record.Amount.Amount.Int64())
-		suite.Require().Equal(tc.packet.Sender, record.Address)
 	}
 }
