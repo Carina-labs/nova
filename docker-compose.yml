@@ -1,7 +1,7 @@
 version: '3'
 services:
   novachain:
-    image: a41ventures/carina:sha-a35c8a0
+    image: a41ventures/carina:sha-df66546
     restart: always
     volumes:
       - ./scripts/indocker:/app/scripts

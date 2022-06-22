@@ -3,7 +3,6 @@ package keeper_test
 import (
 	"fmt"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
-	"github.com/stretchr/testify/suite"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -12,6 +11,7 @@ import (
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/suite"
 	"testing"
 
 	"github.com/Carina-labs/nova/app/apptesting"
@@ -137,16 +137,6 @@ func (suite *KeeperTestSuite) SetupTest() {
 	}
 	suite.NoError(err)
 	println("Finish setup test")
-}
-
-func (suite *KeeperTestSuite) SetupTestOracle(
-	operators []sdk.AccAddress,
-	msgs []*oracletypes.ChainInfo) {
-	for _, operator := range operators {
-		suite.App.OracleKeeper.SetParams(suite.Ctx, oracletypes.Params{
-			OracleOperators: []string{operator.String()},
-		})
-	}
 }
 
 func (suite *KeeperTestSuite) SetupTestOracle(
