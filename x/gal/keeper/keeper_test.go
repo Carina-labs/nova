@@ -2,13 +2,13 @@ package keeper_test
 
 import (
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	"github.com/stretchr/testify/suite"
 	"testing"
 
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/types"
-	types2 "github.com/Carina-labs/nova/x/oracle/types"
-	"github.com/stretchr/testify/suite"
+	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 )
 
 type KeeperTestSuite struct {
@@ -33,6 +33,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
 	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
 	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))
+
 	//setup path (chainA <===>chainB)
 	path := novatesting.NewPath(suite.chainA, suite.chainB)
 	path.EndpointA.ChannelConfig.PortID = novatesting.TransferPort
@@ -49,7 +50,7 @@ func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []intertxtypes.Registere
 	}
 }
 
-func (suite *KeeperTestSuite) SetupTestOracle(msgs []*types2.ChainInfo) {
+func (suite *KeeperTestSuite) SetupTestOracle(msgs []*oracletypes.ChainInfo) {
 	for _, msg := range msgs {
 		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, msg)
 		if err != nil {
