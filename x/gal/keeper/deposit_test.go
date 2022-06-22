@@ -206,7 +206,6 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			}
 
 			suite.chainA.NextBlock()
-
 			p, err := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events())
 			suite.Require().NoError(err)
 
