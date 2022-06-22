@@ -87,7 +87,7 @@ func (k Keeper) GetZoneForDenom(ctx sdk.Context, denom string) *types.Registered
 	return zone
 }
 
-func (k Keeper) GetstDenomForBaseDenom(ctx sdk.Context, denom string) string {
+func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, denom string) string {
 	var zone *types.RegisteredZone
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
@@ -98,14 +98,14 @@ func (k Keeper) GetstDenomForBaseDenom(ctx sdk.Context, denom string) string {
 		return false
 	})
 
-	return zone.StDenom
+	return zone.SnDenom
 }
 
-func (k Keeper) GetBaseDenomForStDenom(ctx sdk.Context, stDenom string) string {
+func (k Keeper) GetBaseDenomForSnDenom(ctx sdk.Context, snDenom string) string {
 	var zone *types.RegisteredZone
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
-		if zoneInfo.StDenom == stDenom {
+		if zoneInfo.SnDenom == snDenom {
 			zone = &zoneInfo
 			return true
 		}

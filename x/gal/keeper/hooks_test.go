@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"fmt"
+
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"
 
@@ -63,7 +64,6 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 			ValidatorAddress: "",
 			BaseDenom:        tc.denom,
 			SnDenom:          fmt.Sprintf("sn%s", tc.denom),
-			StDenom:          fmt.Sprintf("st%s", tc.denom),
 		}
 		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, zoneInfo)
 

@@ -44,7 +44,6 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		},
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
-		StDenom:          "st" + zone.BaseDenom,
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 
@@ -95,7 +94,6 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 		},
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
-		StDenom:          "st" + zone.BaseDenom,
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 

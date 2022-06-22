@@ -15,7 +15,6 @@ message RegisteredZone {
   string validator_address = 5;
   string base_denom = 6;
   string sn_denom = 7;
-  string st_denom = 8;
 }
 
 message IcaAccount {
