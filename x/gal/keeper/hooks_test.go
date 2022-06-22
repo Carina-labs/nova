@@ -2,25 +2,28 @@ package keeper_test
 
 import (
 	"fmt"
+	"github.com/Carina-labs/nova/x/gal/keeper"
+	"github.com/Carina-labs/nova/x/gal/types"
 
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 	sender := suite.GenRandomAddress().String()
 	receiver := suite.GenRandomAddress().String()
+	msgServer := keeper.NewMsgServerImpl(suite.App.GalKeeper)
 
 	tcs := []struct {
-		packet        types.FungibleTokenPacketData
+		packet        ibctransfertypes.FungibleTokenPacketData
 		denom         string
 		expectedDenom string
 		expectedAmt   int64
 		shouldErr     bool
 	}{
 		{
-			packet: types.FungibleTokenPacketData{
+			packet: ibctransfertypes.FungibleTokenPacketData{
 				Denom:    "osmo",
 				Amount:   "100000",
 				Sender:   sender,
@@ -32,7 +35,7 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 			shouldErr:     false,
 		},
 		{
-			packet: types.FungibleTokenPacketData{
+			packet: ibctransfertypes.FungibleTokenPacketData{
 				Denom:    "atom",
 				Amount:   "55555",
 				Sender:   sender,
@@ -64,6 +67,19 @@ func (suite *KeeperTestSuite) TestAfterTransferEnd() {
 		}
 		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, zoneInfo)
 
+		// should send deposit message to msg server
+		amt, ok := sdk.NewIntFromString(tc.packet.Amount)
+		suite.Require().Equal(true, ok)
+
+		_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.Ctx), &types.MsgDeposit{
+			Depositor: sender,
+			Amount:    sdk.Coins{sdk.NewCoin(tc.packet.Denom, amt)},
+			HostAddr:  receiver,
+			ZoneId:    tc.denom,
+		})
+		suite.Require().NoError(err)
+
+		// after send deposit msg to msg_server hooks should execute.
 		hooks.AfterTransferEnd(suite.Ctx, tc.packet, tc.denom)
 
 		senderAddr, err := sdk.AccAddressFromBech32(tc.packet.Sender)
