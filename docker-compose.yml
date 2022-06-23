@@ -18,6 +18,8 @@ services:
       - 1317:1317
   nova-explorer:
     image: a41ventures/nova-explorer-pingpup:latest
+    environment:
+      - VUE_APP_CHAIN=nova
     restart: always
     ports:
       - 80:80
