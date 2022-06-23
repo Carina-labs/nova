@@ -139,7 +139,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 	// relay packet to the chain B
 	p, err := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events())
 	suite.Require().NoError(err)
-	err = suite.path.RelayPacket(p)
+	err = suite.transferPath.RelayPacket(p)
 	suite.Require().NoError(err)
 
 	// reveal chain B block
