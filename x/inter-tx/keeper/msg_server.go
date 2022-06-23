@@ -48,6 +48,11 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 
+	_, ok := k.Keeper.GetRegisteredZone(ctx, zoneInfo.ZoneId)
+	if ok {
+		return nil, errors.New(zoneInfo.ZoneId + "already registered")
+	}
+
 	k.Keeper.RegisterZone(ctx, zoneInfo)
 
 	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.PortId); err != nil {
