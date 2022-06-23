@@ -12,26 +12,6 @@ import (
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 )
 
-// func (k Keeper) SendUndelegateMsg(ctx sdk.Context, zoneId, controllerAddr, hostAddr string, amt sdk.Coin) error {
-// 	zoneInfo, ok := k.GetRegisteredZone(ctx, zoneId)
-
-// 	if !ok {
-// 		return errors.New("zone name is not found")
-// 	}
-
-// 	var msgs []sdk.Msg
-
-// 	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: hostAddr, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: amt})
-// 	err := k.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
-
-// 	if err != nil {
-// 		return errors.New("IcaUnDelegate transaction failed to send")
-// 	}
-
-// 	return nil
-// }
-
-// SubmitTx implements the Msg/SubmitTx interface
 func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg) error {
 
 	portID, err := icatypes.NewControllerPortID(controllerId)
