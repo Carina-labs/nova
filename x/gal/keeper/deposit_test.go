@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 
@@ -11,7 +10,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 )
 
 var (
@@ -61,10 +59,18 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			for _, arg := range tc.args {
-				err := suite.App.GalKeeper.RecordDepositAmt(suite.Ctx, &types.DepositRecord{
-					Address: arg.addr.String(),
-					Amount:  &arg.coin,
-				})
+				err := suite.App.GalKeeper.RecordDepositAmt(
+					suite.Ctx,
+					&types.DepositRecord{
+						Address: arg.addr.String(),
+						Records: []*types.DepositRecordContent{
+							{
+								ZoneId:        "test-zone-id",
+								Amount:        &arg.coin,
+								IsTransferred: false,
+							},
+						},
+					})
 				suite.Require().NoError(err)
 			}
 
@@ -72,13 +78,16 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 				res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, query.addr)
 				if tc.wantErr {
 					suite.Require().NotNil(err, "error expected but no error found")
+					suite.Require().Equal(err, types.ErrNoDepositRecord)
 					continue
 				}
 
 				suite.Require().NoError(err)
-				suite.Require().Equal(res.Amount.Denom, query.coin.Denom)
-				suite.Require().Equal(res.Amount.Amount, query.coin.Amount)
-				suite.Require().Equal(res.Address, query.addr.String())
+				for _, record := range res.Records {
+					suite.Require().Equal(record.Amount.Denom, query.coin.Denom)
+					suite.Require().Equal(record.Amount.Amount, query.coin.Amount)
+					suite.Require().Equal(res.Address, query.addr.String())
+				}
 			}
 
 			for _, arg := range tc.args {
@@ -96,67 +105,139 @@ func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
 }
 
 func (suite *KeeperTestSuite) TestDeposit() {
-	suite.SetupTest()
-
-	userAcc := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-	moduleAcc := suite.App.AccountKeeper.GetModuleAddress(types.ModuleName)
-
-	ctxA := suite.chainA.GetContext()
-	ctxB := suite.chainB.GetContext()
-
-	// initialize chainA
-	suite.chainA.App.BankKeeper.InitGenesis(ctxA, &banktypes.GenesisState{
-		Balances: []banktypes.Balance{
-			{userAcc.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, 6000)}},
-			{moduleAcc.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, 1000)}},
+	type tcConfig struct {
+		genesisStateMsgA banktypes.GenesisState
+		registerZoneMsgs []*intertxtypes.RegisteredZone
+	}
+	type doArg struct {
+		addr string
+		amt  sdk.Coin
+	}
+	type verifyArg struct {
+		addr string
+	}
+	tcs := []struct {
+		name      string
+		setting   tcConfig
+		doArg     doArg
+		do        func(doArg) error
+		verifyArg verifyArg
+		verify    func(verifyArg)
+		wantErr   bool
+	}{
+		{
+			name: "valid test case 1",
+			setting: tcConfig{
+				genesisStateMsgA: banktypes.GenesisState{
+					Balances: []banktypes.Balance{
+						{
+							Address: "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+							Coins: sdk.Coins{
+								sdk.NewInt64Coin(baseDenom, 1000),
+							},
+						},
+					},
+				},
+			},
+			doArg: doArg{
+				addr: "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+				amt:  sdk.NewInt64Coin(baseDenom, 500),
+			},
+			do: func(arg doArg) error {
+				return suite.chainA.App.GalKeeper.Deposit(
+					suite.chainA.GetContext(),
+					&types.MsgDeposit{
+						Depositor: arg.addr,
+						Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, 500)},
+						HostAddr:  arg.addr,
+						ZoneId:    baseDenom,
+					},
+				)
+			},
+			verifyArg: verifyArg{
+				addr: "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+			},
+			verify: func(arg verifyArg) {
+				acc, _ := sdk.AccAddressFromBech32(arg.addr)
+				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), acc)
+				suite.Require().NoError(err)
+				suite.Require().Equal(1, len(record.Records))
+				suite.Require().True(record.Records[0].Amount.IsEqual(sdk.NewInt64Coin(baseDenom, 500)))
+			},
 		},
-	})
+		{
+			name: "valid multiple deposit case",
+			setting: tcConfig{
+				genesisStateMsgA: banktypes.GenesisState{
+					Balances: []banktypes.Balance{
+						{
+							Address: "cosmos1a05qwsaeqgdp7pc3tsegw87w9c0j6xlhdk84f3",
+							Coins: sdk.Coins{
+								sdk.NewInt64Coin(baseDenom, 1000),
+							},
+						},
+					},
+				},
+			},
+			doArg: doArg{
+				addr: "cosmos1a05qwsaeqgdp7pc3tsegw87w9c0j6xlhdk84f3",
+				amt:  sdk.NewInt64Coin(baseDenom, 500),
+			},
+			do: func(arg doArg) error {
+				err := suite.chainA.App.GalKeeper.Deposit(
+					suite.chainA.GetContext(),
+					&types.MsgDeposit{
+						Depositor: arg.addr,
+						Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, 300)},
+						HostAddr:  arg.addr,
+						ZoneId:    baseDenom,
+					},
+				)
+				if err != nil {
+					return err
+				}
 
-	// initialize chainB
-	suite.chainB.App.BankKeeper.InitGenesis(ctxB, &banktypes.GenesisState{
-		Balances: []banktypes.Balance{
-			{userAcc.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, 0)}},
-			{moduleAcc.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, 1000)}},
+				return suite.chainA.App.GalKeeper.Deposit(
+					suite.chainA.GetContext(),
+					&types.MsgDeposit{
+						Depositor: arg.addr,
+						Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, 500)},
+						HostAddr:  arg.addr,
+						ZoneId:    baseDenom,
+					},
+				)
+			},
+			verifyArg: verifyArg{
+				addr: "cosmos1a05qwsaeqgdp7pc3tsegw87w9c0j6xlhdk84f3",
+			},
+			verify: func(arg verifyArg) {
+				acc, _ := sdk.AccAddressFromBech32(arg.addr)
+				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), acc)
+				suite.Require().NoError(err)
+				suite.Require().Equal(2, len(record.Records))
+				suite.Require().True(record.Records[0].Amount.IsEqual(sdk.NewInt64Coin(baseDenom, 300)))
+				suite.Require().True(record.Records[1].Amount.IsEqual(sdk.NewInt64Coin(baseDenom, 500)))
+
+				userBalance := suite.chainA.App.BankKeeper.GetBalance(suite.chainA.GetContext(), acc, baseDenom)
+				suite.Require().True(userBalance.IsEqual(sdk.NewInt64Coin(baseDenom, 200)))
+			},
 		},
-	})
+	}
 
-	// register zone
-	suite.chainA.App.IntertxKeeper.RegisterZone(ctxA, newBaseRegisteredZone())
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			// setup state
+			suite.chainA.App.BankKeeper.InitGenesis(suite.chainA.GetContext(), &tc.setting.genesisStateMsgA)
+			suite.chainA.App.IntertxKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
 
-	// deposit to gal keeper
-	err := suite.chainA.App.GalKeeper.Deposit(ctxA, &types.MsgDeposit{
-		Depositor: userAcc.String(),
-		Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, 500)},
-		HostAddr:  userAcc.String(),
-		ZoneId:    baseDenom,
-	})
+			// execute
+			err := tc.do(tc.doArg)
+			suite.Require().NoError(err)
 
-	suite.Require().NoError(err)
-
-	// reveal chain A block
-	suite.chainA.NextBlock()
-
-	// relay packet to the chain B
-	p, err := ibctesting.ParsePacketFromEvents(ctxA.EventManager().Events())
-	suite.Require().NoError(err)
-	err = suite.transferPath.RelayPacket(p)
-	suite.Require().NoError(err)
-
-	// reveal chain B block
-	suite.chainB.NextBlock()
-
-	// user of chain B should get 500 osmo
-	balance := suite.chainB.App.BankKeeper.GetAllBalances(ctxB, userAcc)
-	fmt.Println(balance[0].Denom)
-	fmt.Println(balance[0].Amount)
-	suite.Require().Equal(balance[0].Amount.Int64(), int64(500))
-
-	// check deposit record
-	record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(ctxA, userAcc)
-	suite.Require().NoError(err)
-	suite.Require().Equal(record.ZoneId, baseDenom)
-	suite.Require().Equal(record.Address, userAcc.String())
-	suite.Require().Equal(record.Amount.Amount.Int64(), int64(500))
+			// verify
+			tc.verify(tc.verifyArg)
+		})
+	}
 }
 
 // newBaseRegisteredZone returns a new zone info for testing purpose only

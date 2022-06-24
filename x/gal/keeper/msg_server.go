@@ -197,3 +197,30 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 
 	return &types.MsgWithdrawRecordResponse{}, nil
 }
+
+func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*types.MsgClaimResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	claimerAddr, err := sdk.AccAddressFromBech32(claimMsg.Claimer)
+	if err != nil {
+		return nil, err
+	}
+
+	record, err := m.keeper.GetRecordedDepositAmt(ctx, claimerAddr)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, record := range record.Records {
+		if record.IsTransferred && record.Amount.Equal(claimMsg.Amount) {
+			err = m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, *record.Amount)
+			if err != nil {
+				return nil, err
+			}
+
+			return &types.MsgClaimResponse{}, nil
+		}
+	}
+
+	return nil, fmt.Errorf("can't find deposit record. address: %s, amount: %s",
+		claimMsg.Amount, claimMsg.Amount.String())
+}

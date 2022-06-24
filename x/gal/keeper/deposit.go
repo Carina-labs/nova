@@ -17,21 +17,34 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 
 	k.Logger(ctx).Info("ZoneInfo", "zoneInfo", zoneInfo)
 
-	_, err := sdk.AccAddressFromBech32(deposit.Depositor)
+	depositorAddr, err := sdk.AccAddressFromBech32(deposit.Depositor)
 	if err != nil {
 		return err
 	}
 
-	// record
-	record := &types.DepositRecord{
-		ZoneId:        zoneInfo.ZoneId,
-		Address:       deposit.Depositor,
-		Amount:        &deposit.Amount[0],
-		IsTransferred: false,
-	}
-
-	if err := k.RecordDepositAmt(ctx, record); err != nil {
-		return err
+	record, err := k.GetRecordedDepositAmt(ctx, depositorAddr)
+	if err == types.ErrNoDepositRecord {
+		newRecord := &types.DepositRecordContent{
+			ZoneId:        zoneInfo.ZoneId,
+			Amount:        &deposit.Amount[0],
+			IsTransferred: false,
+		}
+		if err := k.RecordDepositAmt(ctx, &types.DepositRecord{
+			Address: deposit.Depositor,
+			Records: []*types.DepositRecordContent{newRecord},
+		}); err != nil {
+			return err
+		}
+	} else {
+		// append
+		record.Records = append(record.Records, &types.DepositRecordContent{
+			ZoneId:        zoneInfo.ZoneId,
+			Amount:        &deposit.Amount[0],
+			IsTransferred: false,
+		})
+		if err := k.RecordDepositAmt(ctx, record); err != nil {
+			return err
+		}
 	}
 
 	return k.TransferToTargetZone(ctx,
@@ -51,20 +64,48 @@ func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
 // RecordDepositAmt write the amount of coin user deposit to the "DepositRecord" store.
 func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg *types.DepositRecord) error {
 	store := k.getDepositRecordStore(ctx)
+
+	// If no data in record, just set.
+	if !store.Has([]byte(msg.Address)) {
+		bz := k.cdc.MustMarshal(msg)
+
+		store.Set([]byte(msg.Address), bz)
+		return nil
+	}
+
 	bz := k.cdc.MustMarshal(msg)
 	store.Set([]byte(msg.Address), bz)
+	return nil
+}
+
+func (k Keeper) ReplaceDepositRecord(ctx sdk.Context, addr string, i int) error {
+	store := k.getDepositRecordStore(ctx)
+
+	var record types.DepositRecord
+	k.cdc.MustUnmarshal(store.Get([]byte(addr)), &record)
+
+	if len(record.Records) <= i {
+		return fmt.Errorf("can't replace record")
+	}
+
+	record.Records = append(record.Records[:i], record.Records[i:]...)
+	err := k.RecordDepositAmt(ctx, &record)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 // GetRecordedDepositAmt returns the amount of coin user deposit by address.
 func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (*types.DepositRecord, error) {
 	store := k.getDepositRecordStore(ctx)
-	depositorStr := depositor.String()
-	if !store.Has([]byte(depositorStr)) {
-		return nil, fmt.Errorf("depositor %s is not in state", depositor)
+	key := []byte(depositor.String())
+	if !store.Has(key) {
+		return nil, types.ErrNoDepositRecord
 	}
 
-	res := store.Get([]byte(depositorStr))
+	res := store.Get(key)
 
 	var msg types.DepositRecord
 	k.cdc.MustUnmarshal(res, &msg)
