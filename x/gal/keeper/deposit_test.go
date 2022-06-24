@@ -269,112 +269,88 @@ func newBaseRegisteredZone() *intertxtypes.RegisteredZone {
 }
 
 func (suite *KeeperTestSuite) TestMarkRecordTransfer() {
-	// prepare
-	type tcConfig struct {
-		addr  string
-		coins []sdk.Coin
-	}
-	type arg struct {
-		addr      string
-		markIndex []int
-	}
+
 	tcs := []struct {
-		name    string
-		config  tcConfig
-		setup   func(tcConfig)
-		arg     arg
-		do      func(arg) error
-		verify  func()
-		wantErr bool
+		name        string
+		addr        string
+		markIndexes []int
+		records     []sdk.Coin
+		shouldErr   bool
 	}{
 		{
-			name: "single valid test case 1",
-			config: tcConfig{
-				addr:  "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
-				coins: sdk.NewCoins(sdk.NewInt64Coin(baseDenom, 100)),
+			name:        "execute once",
+			addr:        "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+			markIndexes: []int{1},
+			records: []sdk.Coin{
+				sdk.NewInt64Coin(baseDenom, 100),
+				sdk.NewInt64Coin(baseDenom, 200),
+				sdk.NewInt64Coin(baseDenom, 300),
 			},
-			setup: func(arg tcConfig) {
-				var records []*types.DepositRecordContent
-				for _, coin := range arg.coins {
-					records = append(records, &types.DepositRecordContent{
-						ZoneId:        baseDenom,
-						Amount:        &coin,
-						IsTransferred: false,
-					})
-				}
-				err := suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &types.DepositRecord{
-					Address: arg.addr,
-					Records: records,
-				})
-				suite.Require().NoError(err)
-			},
-			arg: arg{
-				addr:      "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
-				markIndex: []int{0},
-			},
-			do: func(arg arg) error {
-				return suite.App.GalKeeper.MarkRecordTransfer(suite.Ctx, arg.addr, arg.markIndex[0])
-			},
-			wantErr: false,
+			shouldErr: false,
 		},
 		{
-			name: "multiple execute, valid test case 2",
-			config: tcConfig{
-				addr: "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
-				coins: []sdk.Coin{
-					sdk.NewInt64Coin(baseDenom, 100),
-					sdk.NewInt64Coin(baseDenom, 200),
-					sdk.NewInt64Coin(baseDenom, 300),
-				},
+			name:        "execute multiple",
+			addr:        "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+			markIndexes: []int{1, 2},
+			records: []sdk.Coin{
+				sdk.NewInt64Coin(baseDenom, 100),
+				sdk.NewInt64Coin(baseDenom, 200),
+				sdk.NewInt64Coin(baseDenom, 300),
 			},
-			setup: func(arg tcConfig) {
-				var records []*types.DepositRecordContent
-				for _, coin := range arg.coins {
-					records = append(records, &types.DepositRecordContent{
-						ZoneId:        baseDenom,
-						Amount:        &coin,
-						IsTransferred: false,
-					})
-				}
-				err := suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &types.DepositRecord{
-					Address: arg.addr,
-					Records: records,
-				})
-				suite.Require().NoError(err)
+			shouldErr: false,
+		},
+		{
+			name:        "error case",
+			addr:        "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+			markIndexes: []int{4},
+			records: []sdk.Coin{
+				sdk.NewInt64Coin(baseDenom, 100),
+				sdk.NewInt64Coin(baseDenom, 200),
+				sdk.NewInt64Coin(baseDenom, 300),
 			},
-			arg: arg{
-				addr:      "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
-				markIndex: []int{0, 1, 2},
-			},
-			do: func(arg arg) error {
-				for _, index := range arg.markIndex {
-					err := suite.App.GalKeeper.MarkRecordTransfer(suite.Ctx, arg.addr, index)
-					if err != nil {
-						return err
-					}
-				}
-
-				return nil
-			},
-			wantErr: false,
+			shouldErr: true,
 		},
 	}
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.SetupTest()
-			tc.setup(tc.config)
-			if !tc.wantErr {
-				suite.Require().NoError(tc.do(tc.arg))
+			// setup
+			var contents []*types.DepositRecordContent
+			for _, record := range tc.records {
+				contents = append(contents, &types.DepositRecordContent{
+					ZoneId:        baseDenom,
+					Amount:        &record,
+					IsTransferred: false,
+				})
+			}
+			err := suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &types.DepositRecord{
+				Address: tc.addr,
+				Records: contents,
+			})
+			suite.Require().NoError(err)
+
+			// execute
+			if !tc.shouldErr {
+				for _, index := range tc.markIndexes {
+					suite.Require().NoError(
+						suite.App.GalKeeper.MarkRecordTransfer(suite.Ctx, tc.addr, index))
+				}
 			} else {
-				suite.Require().Error(tc.do(tc.arg))
+				isError := false
+				for _, index := range tc.markIndexes {
+					if suite.App.GalKeeper.MarkRecordTransfer(suite.Ctx, tc.addr, index) != nil {
+						isError = true
+					}
+				}
+				suite.Require().True(isError)
 				return
 			}
 
-			acc, _ := sdk.AccAddressFromBech32(tc.arg.addr)
-			res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, acc)
-			suite.Require().NoError(err)
-			for _, index := range tc.arg.markIndex {
+			// verify
+			acc, _ := sdk.AccAddressFromBech32(tc.addr)
+			for _, index := range tc.markIndexes {
+				res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, acc)
+				suite.Require().NoError(err)
 				suite.Require().True(res.Records[index].IsTransferred)
 			}
 		})
