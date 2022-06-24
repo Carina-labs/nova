@@ -379,33 +379,4 @@ func (suite *KeeperTestSuite) TestMarkRecordTransfer() {
 			}
 		})
 	}
-
-	//addr := "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a"
-	//coin1 := sdk.NewInt64Coin(baseDenom, 100)
-	//coin2 := sdk.NewInt64Coin(baseDenom, 200)
-	//suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &types.DepositRecord{
-	//	Address: addr,
-	//	Records: []*types.DepositRecordContent{
-	//		{
-	//			ZoneId:        baseDenom,
-	//			Amount:        &coin1,
-	//			IsTransferred: false,
-	//		},
-	//		{
-	//			ZoneId:        baseDenom,
-	//			Amount:        &coin2,
-	//			IsTransferred: false,
-	//		},
-	//	},
-	//})
-	//
-	//// execute
-	//err := suite.App.GalKeeper.MarkRecordTransfer(suite.Ctx, addr, 1)
-	//suite.Require().NoError(err)
-	//
-	//acc, _ := sdk.AccAddressFromBech32(addr)
-	//res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, acc)
-	//suite.Require().NoError(err)
-	//println(res.Records[0].IsTransferred)
-	//println(res.Records[1].IsTransferred)
 }
