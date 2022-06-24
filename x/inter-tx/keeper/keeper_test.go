@@ -73,6 +73,7 @@ func (suite *KeeperTestSuite) setZone(num int) []intertxtypes.RegisteredZone {
 			},
 			IcaAccount: &intertxtypes.IcaAccount{
 				OwnerAddress: addr[i].String(),
+				HostAddress:  addr[i].String(),
 			},
 			ValidatorAddress: sdk.ValAddress(addr[i]).String(),
 			BaseDenom:        "atom",

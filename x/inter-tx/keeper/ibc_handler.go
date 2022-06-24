@@ -1,6 +1,8 @@
 package keeper
 
 import (
+	"errors"
+
 	proto "github.com/gogo/protobuf/proto"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -23,6 +25,10 @@ func (k *Keeper) HandleMsgData(ctx sdk.Context, packet channeltypes.Packet, msgD
 		if err := proto.Unmarshal(msgData.Data, msgResponse); err != nil {
 			return "", sdkerrors.Wrapf(sdkerrors.ErrJSONUnmarshal, "cannot unmarshal send response message: %s", err.Error())
 		}
+		if msgResponse.String() == "" {
+			return "", errors.New("response cannot be nil")
+		}
+
 		k.AfterUndelegateEnd(ctx, packet, msgResponse)
 		return msgResponse.String(), nil
 	case sdk.MsgTypeURL(&transfertypes.MsgTransfer{}): // withdraw(transfer)
