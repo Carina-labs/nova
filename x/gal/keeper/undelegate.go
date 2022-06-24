@@ -40,7 +40,7 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []types.U
 	return undelegateInfo
 }
 
-// GetUndelegateRecordsForZoneId returns undelegate records by zone-id.
+// GetUndelegateRecordsForZoneId returns undelegate coins by zone-id.
 func (k Keeper) GetUndelegateRecordsForZoneId(ctx sdk.Context, zoneId string, state int64) []types.UndelegateRecord {
 	var undelegateInfo = []types.UndelegateRecord{}
 

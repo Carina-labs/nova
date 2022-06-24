@@ -29,7 +29,7 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 			Amount:        &deposit.Amount[0],
 			IsTransferred: false,
 		}
-		if err := k.RecordDepositAmt(ctx, &types.DepositRecord{
+		if err := k.SetDepositAmt(ctx, &types.DepositRecord{
 			Address: deposit.Depositor,
 			Records: []*types.DepositRecordContent{newRecord},
 		}); err != nil {
@@ -42,7 +42,7 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 			Amount:        &deposit.Amount[0],
 			IsTransferred: false,
 		})
-		if err := k.RecordDepositAmt(ctx, record); err != nil {
+		if err := k.SetDepositAmt(ctx, record); err != nil {
 			return err
 		}
 	}
@@ -61,24 +61,15 @@ func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
 }
 
-// RecordDepositAmt write the amount of coin user deposit to the "DepositRecord" store.
-func (k Keeper) RecordDepositAmt(ctx sdk.Context, msg *types.DepositRecord) error {
+// SetDepositAmt write the amount of coin user deposit to the "DepositRecord" store.
+func (k Keeper) SetDepositAmt(ctx sdk.Context, msg *types.DepositRecord) error {
 	store := k.getDepositRecordStore(ctx)
-
-	// If no data in record, just set.
-	if !store.Has([]byte(msg.Address)) {
-		bz := k.cdc.MustMarshal(msg)
-
-		store.Set([]byte(msg.Address), bz)
-		return nil
-	}
-
 	bz := k.cdc.MustMarshal(msg)
 	store.Set([]byte(msg.Address), bz)
 	return nil
 }
 
-func (k Keeper) ReplaceDepositRecord(ctx sdk.Context, addr string, i int) error {
+func (k Keeper) MarkRecordTransfer(ctx sdk.Context, addr string, i int) error {
 	store := k.getDepositRecordStore(ctx)
 
 	var record types.DepositRecord
@@ -88,8 +79,8 @@ func (k Keeper) ReplaceDepositRecord(ctx sdk.Context, addr string, i int) error 
 		return fmt.Errorf("can't replace record")
 	}
 
-	record.Records = append(record.Records[:i], record.Records[i:]...)
-	err := k.RecordDepositAmt(ctx, &record)
+	record.Records[i].IsTransferred = true
+	err := k.SetDepositAmt(ctx, &record)
 	if err != nil {
 		return err
 	}
