@@ -18,6 +18,7 @@ var _ sdk.Msg = &MsgDeposit{}
 var _ sdk.Msg = &MsgUndelegate{}
 var _ sdk.Msg = &MsgUndelegateRecord{}
 var _ sdk.Msg = &MsgWithdrawRecord{}
+var _ sdk.Msg = &MsgClaim{}
 
 func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coins, zoneId string) *MsgDeposit {
 	return &MsgDeposit{
@@ -186,4 +187,23 @@ func (msg MsgWithdrawRecord) GetSignBytes() []byte {
 func (msg MsgWithdrawRecord) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.Withdrawer)
 	return []sdk.AccAddress{withdrawer}
+}
+
+func NewMsgClaim(claimer sdk.AccAddress, amount sdk.Coin) *MsgClaim {
+	return &MsgClaim{
+		Claimer: claimer.String(),
+		Amount:  amount,
+	}
+}
+
+func (msg MsgClaim) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.Claimer); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (msg MsgClaim) GetSigners() []sdk.AccAddress {
+	return nil
 }

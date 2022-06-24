@@ -50,10 +50,19 @@ message MsgUndelegateRecordResponse {}
 message MsgWithdrawRecord {
   string zone_id = 1;
   string withdrawer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-   string recipient = 3;
+  string recipient = 3;
   cosmos.base.v1beta1.Coin amount = 4
       [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
   google.protobuf.Timestamp time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
 }
 
 message MsgWithdrawRecordResponse {}
+
+// MsgClaim defines claim msg used when user want to claim their st token.
+message MsgClaim {
+  string claimer = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  cosmos.base.v1beta1.Coin amount = 2
+      [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+}
+
+message MsgClaimResponse {}

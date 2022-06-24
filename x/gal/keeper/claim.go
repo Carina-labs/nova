@@ -8,13 +8,8 @@ import (
 
 // ClaimAndMintShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
-func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.Coin) error {
+func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, amt sdk.Coin) error {
 	stAsset := k.interTxKeeper.GetsnDenomForBaseDenom(ctx, amt.Denom)
-
-	claimerAddr, err := sdk.AccAddressFromBech32(claimer)
-	if err != nil {
-		return err
-	}
 
 	totalSharedToken := k.bankKeeper.GetSupply(ctx, stAsset)
 	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, amt.Denom)
@@ -24,7 +19,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer string, amt sdk.
 
 	mintAmt := k.CalculateAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
 
-	err = k.MintShareTokens(ctx, claimerAddr, sdk.NewCoin(stAsset, sdk.NewIntFromBigInt(mintAmt)))
+	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(stAsset, sdk.NewIntFromBigInt(mintAmt)))
 	if err != nil {
 		return err
 	}

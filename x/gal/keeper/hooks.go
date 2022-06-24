@@ -48,30 +48,35 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		return
 	}
 
-	// assert amount of record equals to the amount of ibc transfer packet.
-	if depositRecord.Amount.Amount.BigInt().Cmp(packetAmount) != 0 {
-		return
-	}
+	for i, record := range depositRecord.Records {
+		// assert amount of record equals to the amount of ibc transfer packet.
+		if record.Amount.Amount.BigInt().Cmp(packetAmount) == 0 && !record.IsTransferred {
+			record := &types.DepositRecord{
+				Address: depositRecord.Address,
+				Records: []*types.DepositRecordContent{
+					{
+						ZoneId:        record.ZoneId,
+						Amount:        record.Amount,
+						IsTransferred: true,
+					},
+				},
+			}
 
-	record := &types.DepositRecord{
-		ZoneId:        depositRecord.ZoneId,
-		Address:       depositRecord.Address,
-		Amount:        depositRecord.Amount,
-		IsTransferred: true,
-	}
+			if err := h.k.ReplaceDepositRecord(ctx, record.Address, i); err != nil {
+				h.k.Logger(ctx).Error("error during replacing deposit information, %s", err.Error())
+				panic(err)
+			}
 
-	if err := h.k.RecordDepositAmt(ctx, record); err != nil {
-		panic(err)
-	}
+			if err != nil {
+				h.k.Logger(ctx).Error("error during recording deposit information, %s", err.Error())
+				panic(err)
+			}
 
-	if err != nil {
-		h.k.Logger(ctx).Error("error during recording deposit information, %s", err.Error())
-		panic(err)
+			// Delegate events
+			ctx.EventManager().EmitTypedEvent(zoneInfo)
+			ctx.EventManager().EmitTypedEvent(record)
+		}
 	}
-
-	// Delegate events
-	ctx.EventManager().EmitTypedEvent(zoneInfo)
-	ctx.EventManager().EmitTypedEvent(record)
 }
 
 func (h Hooks) AfterDelegateEnd() {
