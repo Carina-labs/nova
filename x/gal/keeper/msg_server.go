@@ -24,7 +24,7 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 // Deposit handles deposit action.
 // 1. User submits deposit tx.
 // 2. User's asset is transferred to the module(gal) account.
-// 3. After IBC transfer, GAL records deposit info.
+// 3. After IBC transfer, GAL coins deposit info.
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -39,7 +39,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 
 // UndelegateRecord is used when user requests undelegate their staked asset.
 // 1. User sends their st-token to module account.
-// 2. And GAL records step 1 to the store.
+// 2. And GAL coins step 1 to the store.
 func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.MsgUndelegateRecord) (*types.MsgUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 

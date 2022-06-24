@@ -23,7 +23,7 @@ func (k Keeper) Hooks() Hooks {
 	return Hooks{k}
 }
 
-// AfterTransferEnd records user deposit information.
+// AfterTransferEnd coins user deposit information.
 // It will be used in share token minting process.
 func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, base_denom string) {
 	packetAmount, ok := new(big.Int).SetString(data.Amount, 10)
@@ -62,7 +62,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 				},
 			}
 
-			if err := h.k.ReplaceDepositRecord(ctx, record.Address, i); err != nil {
+			if err := h.k.MarkRecordTransfer(ctx, record.Address, i); err != nil {
 				h.k.Logger(ctx).Error("error during replacing deposit information, %s", err.Error())
 				panic(err)
 			}

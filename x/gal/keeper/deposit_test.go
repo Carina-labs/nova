@@ -59,7 +59,7 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			for _, arg := range tc.args {
-				err := suite.App.GalKeeper.RecordDepositAmt(
+				err := suite.App.GalKeeper.SetDepositAmt(
 					suite.Ctx,
 					&types.DepositRecord{
 						Address: arg.addr.String(),
@@ -226,6 +226,9 @@ func (suite *KeeperTestSuite) TestDeposit() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
+			// call SetupTest in each test case, for creating new keeper instance.
+			suite.SetupTest()
+
 			// setup state
 			suite.chainA.App.BankKeeper.InitGenesis(suite.chainA.GetContext(), &tc.setting.genesisStateMsgA)
 			suite.chainA.App.IntertxKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
@@ -263,4 +266,146 @@ func newBaseRegisteredZone() *intertxtypes.RegisteredZone {
 		BaseDenom:        baseDenom,
 		SnDenom:          "snOsmo",
 	}
+}
+
+func (suite *KeeperTestSuite) TestMarkRecordTransfer() {
+	// prepare
+	type tcConfig struct {
+		addr  string
+		coins []sdk.Coin
+	}
+	type arg struct {
+		addr      string
+		markIndex []int
+	}
+	tcs := []struct {
+		name    string
+		config  tcConfig
+		setup   func(tcConfig)
+		arg     arg
+		do      func(arg) error
+		verify  func()
+		wantErr bool
+	}{
+		{
+			name: "single valid test case 1",
+			config: tcConfig{
+				addr:  "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+				coins: sdk.NewCoins(sdk.NewInt64Coin(baseDenom, 100)),
+			},
+			setup: func(arg tcConfig) {
+				var records []*types.DepositRecordContent
+				for _, coin := range arg.coins {
+					records = append(records, &types.DepositRecordContent{
+						ZoneId:        baseDenom,
+						Amount:        &coin,
+						IsTransferred: false,
+					})
+				}
+				err := suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &types.DepositRecord{
+					Address: arg.addr,
+					Records: records,
+				})
+				suite.Require().NoError(err)
+			},
+			arg: arg{
+				addr:      "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+				markIndex: []int{0},
+			},
+			do: func(arg arg) error {
+				return suite.App.GalKeeper.MarkRecordTransfer(suite.Ctx, arg.addr, arg.markIndex[0])
+			},
+			wantErr: false,
+		},
+		{
+			name: "multiple execute, valid test case 2",
+			config: tcConfig{
+				addr: "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+				coins: []sdk.Coin{
+					sdk.NewInt64Coin(baseDenom, 100),
+					sdk.NewInt64Coin(baseDenom, 200),
+					sdk.NewInt64Coin(baseDenom, 300),
+				},
+			},
+			setup: func(arg tcConfig) {
+				var records []*types.DepositRecordContent
+				for _, coin := range arg.coins {
+					records = append(records, &types.DepositRecordContent{
+						ZoneId:        baseDenom,
+						Amount:        &coin,
+						IsTransferred: false,
+					})
+				}
+				err := suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &types.DepositRecord{
+					Address: arg.addr,
+					Records: records,
+				})
+				suite.Require().NoError(err)
+			},
+			arg: arg{
+				addr:      "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a",
+				markIndex: []int{0, 1, 2},
+			},
+			do: func(arg arg) error {
+				for _, index := range arg.markIndex {
+					err := suite.App.GalKeeper.MarkRecordTransfer(suite.Ctx, arg.addr, index)
+					if err != nil {
+						return err
+					}
+				}
+
+				return nil
+			},
+			wantErr: false,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			suite.SetupTest()
+			tc.setup(tc.config)
+			if !tc.wantErr {
+				suite.Require().NoError(tc.do(tc.arg))
+			} else {
+				suite.Require().Error(tc.do(tc.arg))
+				return
+			}
+
+			acc, _ := sdk.AccAddressFromBech32(tc.arg.addr)
+			res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, acc)
+			suite.Require().NoError(err)
+			for _, index := range tc.arg.markIndex {
+				suite.Require().True(res.Records[index].IsTransferred)
+			}
+		})
+	}
+
+	//addr := "cosmos1l2pqgjx6qgavg8x984s5jgc6u2ehqkfq3azx7a"
+	//coin1 := sdk.NewInt64Coin(baseDenom, 100)
+	//coin2 := sdk.NewInt64Coin(baseDenom, 200)
+	//suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &types.DepositRecord{
+	//	Address: addr,
+	//	Records: []*types.DepositRecordContent{
+	//		{
+	//			ZoneId:        baseDenom,
+	//			Amount:        &coin1,
+	//			IsTransferred: false,
+	//		},
+	//		{
+	//			ZoneId:        baseDenom,
+	//			Amount:        &coin2,
+	//			IsTransferred: false,
+	//		},
+	//	},
+	//})
+	//
+	//// execute
+	//err := suite.App.GalKeeper.MarkRecordTransfer(suite.Ctx, addr, 1)
+	//suite.Require().NoError(err)
+	//
+	//acc, _ := sdk.AccAddressFromBech32(addr)
+	//res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, acc)
+	//suite.Require().NoError(err)
+	//println(res.Records[0].IsTransferred)
+	//println(res.Records[1].IsTransferred)
 }
