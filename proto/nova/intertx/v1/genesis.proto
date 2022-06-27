@@ -4,8 +4,14 @@ package nova.intertx.v1;
 import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
+import "nova/intertx/v1/params.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/inter-tx/types";
+
+message GenesisState {
+  // params defines all the parameters of module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
 
 message RegisteredZone {
   string zone_id = 1;

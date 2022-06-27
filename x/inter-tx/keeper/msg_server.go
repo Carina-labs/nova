@@ -3,11 +3,13 @@ package keeper
 import (
 	"context"
 	"errors"
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	"time"
+
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 
 	"github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	distributiontype "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
@@ -48,6 +50,10 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 
+	if !k.IsValidZoneRegisterAddr(ctx, zone.IcaAccount.OwnerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.OwnerAddress)
+	}
+
 	_, ok := k.Keeper.GetRegisteredZone(ctx, zoneInfo.ZoneId)
 	if ok {
 		return nil, errors.New(zoneInfo.ZoneId + "already registered")
@@ -65,6 +71,10 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDeleteRegisteredZone) (*types.MsgDeleteRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	if !k.IsValidZoneRegisterAddr(ctx, zone.SenderAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.SenderAddress)
+	}
+
 	zoneInfo, ok := k.GetRegisteredZone(ctx, zone.ZoneName)
 
 	if !ok {
@@ -81,6 +91,10 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 
 func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZoneInfo) (*types.MsgChangeRegisteredZoneInfoResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidZoneRegisterAddr(ctx, zone.IcaAccount.OwnerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.OwnerAddress)
+	}
 
 	zoneInfo := &types.RegisteredZone{
 		ZoneId: zone.ZoneName,
@@ -109,6 +123,10 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate) (*types.MsgIcaDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	if !k.IsValidZoneRegisterAddr(ctx, msg.OwnerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.OwnerAddress)
+	}
+
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
 		return nil, errors.New("zone name is not found")
@@ -128,6 +146,10 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 
 func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndelegate) (*types.MsgIcaUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidZoneRegisterAddr(ctx, msg.OwnerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.OwnerAddress)
+	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
@@ -149,6 +171,10 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoStaking) (*types.MsgIcaAutoStakingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	if !k.IsValidZoneRegisterAddr(ctx, msg.OwnerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.OwnerAddress)
+	}
+
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
 		return nil, errors.New("zone name is not found")
@@ -169,6 +195,10 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidZoneRegisterAddr(ctx, msg.OwnerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.OwnerAddress)
+	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneName)
 	if !ok {
@@ -202,6 +232,10 @@ func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 
 func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgRegisterHostAccount) (*types.MsgRegisterHostAccountResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidZoneRegisterAddr(ctx, msg.AccountInfo.OwnerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.AccountInfo.OwnerAddress)
+	}
 
 	portId, err := icatypes.NewControllerPortID(msg.AccountInfo.OwnerAddress)
 	if err != nil {

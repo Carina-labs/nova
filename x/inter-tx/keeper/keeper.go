@@ -23,6 +23,7 @@ type Keeper struct {
 	scopedKeeper        capabilitykeeper.ScopedKeeper
 	icaControllerKeeper icacontrollerkeeper.Keeper
 	hooks               types.ICAHooks
+	paramSpace          paramtypes.Subspace
 }
 
 func NewKeeper(cdc codec.Codec, storeKey sdk.StoreKey, ak types.AccountKeeper, iaKeeper icacontrollerkeeper.Keeper, scopedKeeper capabilitykeeper.ScopedKeeper, paramStore paramtypes.Subspace) Keeper {
@@ -30,11 +31,16 @@ func NewKeeper(cdc codec.Codec, storeKey sdk.StoreKey, ak types.AccountKeeper, i
 		panic(fmt.Sprintf("%s module account has not been set", types.ModuleName))
 	}
 
+	if !paramStore.HasKeyTable() {
+		paramStore = paramStore.WithKeyTable(types.ParamKeyTable())
+	}
+
 	return Keeper{
 		cdc:                 cdc,
 		storeKey:            storeKey,
 		authKeeper:          ak,
 		scopedKeeper:        scopedKeeper,
+		paramSpace:          paramStore,
 		icaControllerKeeper: iaKeeper,
 	}
 }
@@ -58,4 +64,16 @@ func (k *Keeper) SetHooks(eh types.ICAHooks) *Keeper {
 	k.hooks = eh
 
 	return k
+}
+
+func (k Keeper) IsValidZoneRegisterAddr(ctx sdk.Context, zoneRegisterAddr string) bool {
+	params := k.GetParams(ctx)
+
+	for i := range params.ZoneRegisterAddress {
+		if params.ZoneRegisterAddress[i] == zoneRegisterAddr {
+			return true
+		}
+	}
+
+	return false
 }
