@@ -2,13 +2,14 @@ package keeper
 
 import (
 	"fmt"
+	"math/big"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	icatypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	"math/big"
 )
 
 // Hooks wrapper struct for gal keeper
@@ -25,13 +26,13 @@ func (k Keeper) Hooks() Hooks {
 
 // AfterTransferEnd coins user deposit information.
 // It will be used in share token minting process.
-func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, base_denom string) {
+func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, baseDenom string) {
 	packetAmount, ok := new(big.Int).SetString(data.Amount, 10)
 	if !ok {
 		panic(fmt.Sprintf("invalid ibc transfer packet: %v", data))
 	}
 
-	zoneInfo := h.k.interTxKeeper.GetZoneForDenom(ctx, base_denom)
+	zoneInfo := h.k.interTxKeeper.GetZoneForDenom(ctx, baseDenom)
 
 	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
 		return
@@ -51,7 +52,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	for i, record := range depositRecord.Records {
 		// assert amount of record equals to the amount of ibc transfer packet.
 		if record.Amount.Amount.BigInt().Cmp(packetAmount) == 0 && !record.IsTransferred {
-			record := &types.DepositRecord{
+			depositRecord := &types.DepositRecord{
 				Address: depositRecord.Address,
 				Records: []*types.DepositRecordContent{
 					{
@@ -62,7 +63,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 				},
 			}
 
-			if err := h.k.MarkRecordTransfer(ctx, record.Address, i); err != nil {
+			if err := h.k.MarkRecordTransfer(ctx, depositRecord.Address, i); err != nil {
 				h.k.Logger(ctx).Error("error during replacing deposit information, %s", err.Error())
 				panic(err)
 			}
@@ -73,8 +74,13 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 			}
 
 			// Delegate events
-			ctx.EventManager().EmitTypedEvent(zoneInfo)
-			ctx.EventManager().EmitTypedEvent(record)
+			if err := ctx.EventManager().EmitTypedEvent(zoneInfo); err != nil {
+				panic(err)
+
+			}
+			if err := ctx.EventManager().EmitTypedEvent(depositRecord); err != nil {
+				panic(err)
+			}
 		}
 	}
 }

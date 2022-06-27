@@ -22,13 +22,15 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 		return err
 	}
 
+	newRecord := &types.DepositRecordContent{
+		ZoneId:        zoneInfo.ZoneId,
+		Amount:        &deposit.Amount[0],
+		IsTransferred: false,
+	}
+
 	record, err := k.GetRecordedDepositAmt(ctx, depositorAddr)
 	if err == types.ErrNoDepositRecord {
-		newRecord := &types.DepositRecordContent{
-			ZoneId:        zoneInfo.ZoneId,
-			Amount:        &deposit.Amount[0],
-			IsTransferred: false,
-		}
+		// create a new record
 		if err := k.SetDepositAmt(ctx, &types.DepositRecord{
 			Address: deposit.Depositor,
 			Records: []*types.DepositRecordContent{newRecord},
@@ -36,12 +38,8 @@ func (k Keeper) Deposit(ctx sdk.Context, deposit *types.MsgDeposit) error {
 			return err
 		}
 	} else {
-		// append
-		record.Records = append(record.Records, &types.DepositRecordContent{
-			ZoneId:        zoneInfo.ZoneId,
-			Amount:        &deposit.Amount[0],
-			IsTransferred: false,
-		})
+		// append to existing records
+		record.Records = append(record.Records, newRecord)
 		if err := k.SetDepositAmt(ctx, record); err != nil {
 			return err
 		}

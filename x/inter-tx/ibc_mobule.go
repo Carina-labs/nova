@@ -2,6 +2,9 @@ package inter_tx
 
 import (
 	"fmt"
+	"strings"
+
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	proto "github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/inter-tx/keeper"
@@ -61,15 +64,16 @@ func (im IBCModule) OnChanOpenTry(
 // OnChanOpenAck implements the IBCModule interface
 func (im IBCModule) OnChanOpenAck(
 	ctx sdk.Context,
-	portID,
+	portID string,
 	channelID string,
 	counterpartyChannelID string,
 	counterpartyVersion string,
 ) error {
-	if len(portID) < 14 {
+	if !strings.HasPrefix(portID, icatypes.PortPrefix) {
 		return fmt.Errorf("invalid port id : %s", portID)
 	}
-	ownerAddress := portID[14:]
+
+	ownerAddress := portID[len(icatypes.PortPrefix)+1:]
 	_, err := sdk.AccAddressFromBech32(ownerAddress)
 	if err != nil {
 		return err
@@ -82,8 +86,8 @@ func (im IBCModule) OnChanOpenAck(
 	}
 	icaAccount.AccountInfo.OwnerAddress = ownerAddress
 
-	ctx.EventManager().EmitTypedEvent(icaAccount)
-	return nil
+	err = ctx.EventManager().EmitTypedEvent(icaAccount)
+	return err
 }
 
 // OnChanOpenConfirm implements the IBCModule interface
