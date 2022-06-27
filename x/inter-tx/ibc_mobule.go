@@ -73,7 +73,7 @@ func (im IBCModule) OnChanOpenAck(
 		return fmt.Errorf("invalid port id : %s", portID)
 	}
 
-	ownerAddress := portID[len(icatypes.PortPrefix)+1:]
+	ownerAddress := portID[len(icatypes.PortPrefix):]
 	_, err := sdk.AccAddressFromBech32(ownerAddress)
 	if err != nil {
 		return err
