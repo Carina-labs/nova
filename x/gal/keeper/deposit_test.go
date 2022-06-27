@@ -61,7 +61,7 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 
 		suite.Run(tc.name, func() {
 			suite.SetupTest()
-			
+
 			for _, arg := range tc.args {
 				err := suite.App.GalKeeper.SetDepositAmt(
 					suite.Ctx,
