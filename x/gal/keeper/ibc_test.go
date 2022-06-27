@@ -12,7 +12,7 @@ import (
 
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
-	println("Setup...")
+	
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
 	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
 	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))

@@ -43,11 +43,11 @@ func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw types.WithdrawRec
 }
 
 // SetWithdrawRecords write multiple withdraw record.
-func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state int64) {
+func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state UndelegatedState) {
 	var withdrawRecords types.WithdrawRecord
 
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
-		if undelegateInfo.ZoneId == zoneId && undelegateInfo.State == state {
+		if undelegateInfo.ZoneId == zoneId && undelegateInfo.State == int64(state) {
 			withdrawRecords.ZoneId = zoneId
 			withdrawRecords.Withdrawer = undelegateInfo.Delegator
 			amt, err := k.GetWithdrawAmt(ctx, *undelegateInfo.Amount)
@@ -63,9 +63,9 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state int64) 
 }
 
 // SetWithdrawTime writes the time undelegate finish.
-func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state int64, time time.Time) {
+func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state UndelegatedState, time time.Time) {
 	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
-		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == state {
+		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == int64(state) {
 			withdrawInfo.CompletionTime = time
 			k.SetWithdrawRecord(ctx, withdrawInfo)
 		}

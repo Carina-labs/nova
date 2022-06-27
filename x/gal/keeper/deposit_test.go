@@ -57,7 +57,11 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 	}
 
 	for _, tc := range tcs {
+		tc := tc
+
 		suite.Run(tc.name, func() {
+			suite.SetupTest()
+			
 			for _, arg := range tc.args {
 				err := suite.App.GalKeeper.SetDepositAmt(
 					suite.Ctx,
@@ -88,11 +92,6 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 					suite.Require().Equal(record.Amount.Amount, query.coin.Amount)
 					suite.Require().Equal(res.Address, query.addr.String())
 				}
-			}
-
-			for _, arg := range tc.args {
-				err := suite.App.GalKeeper.ClearRecordedDepositAmt(suite.Ctx, arg.addr)
-				suite.Require().NoError(err)
 			}
 		})
 	}
