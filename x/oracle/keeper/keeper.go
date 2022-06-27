@@ -8,6 +8,7 @@ import (
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"github.com/tendermint/tendermint/libs/log"
 )
@@ -34,7 +35,7 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 
 func (k Keeper) UpdateChainState(ctx sdk.Context, chainInfo *types.ChainInfo) error {
 	if !k.IsValidOperator(ctx, chainInfo.OperatorAddress) {
-		return fmt.Errorf("you are not valid oracle operator: %s", chainInfo.OperatorAddress)
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, chainInfo.OperatorAddress)
 	}
 
 	store := ctx.KVStore(k.storeKey)
