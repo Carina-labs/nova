@@ -66,21 +66,3 @@ func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 	k.paramSpace.GetParamSet(ctx, &params)
 	return params
 }
-
-func (k Keeper) WithdrawCoin(ctx sdk.Context, withdrawer sdk.Address, amt sdk.Coins) error {
-	// snAtom -> [GAL] -> wAtom
-	for _, coin := range amt {
-		// burn sn token
-		if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName,
-			sdk.Coins{sdk.Coin{Denom: coin.Denom, Amount: coin.Amount}}); err != nil {
-			return err
-		}
-
-		// mint new w token
-		if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{sdk.Coin{}}); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}

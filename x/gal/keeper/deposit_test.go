@@ -1,21 +1,12 @@
 package keeper_test
 
 import (
-	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-)
-
-var (
-	baseDenom   = "nova"
-	baseAcc     = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-	baseHostAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 )
 
 func (suite *KeeperTestSuite) TestRecordDepositAmt() {
@@ -239,31 +230,6 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			// verify
 			tc.verify(tc.verifyArg)
 		})
-	}
-}
-
-// newBaseRegisteredZone returns a new zone info for testing purpose only
-func newBaseRegisteredZone() *intertxtypes.RegisteredZone {
-	icaControllerPort, _ := icatypes.NewControllerPortID(baseAcc.String())
-
-	return &intertxtypes.RegisteredZone{
-		ZoneId: baseDenom,
-		IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
-			ConnectionId: "connection-0",
-			PortId:       icaControllerPort,
-		},
-		TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
-			ConnectionId: "connection-0",
-			PortId:       "transfer",
-			ChannelId:    "channel-0",
-		},
-		IcaAccount: &intertxtypes.IcaAccount{
-			OwnerAddress: baseAcc.String(),
-			HostAddress:  baseHostAcc.String(),
-		},
-		ValidatorAddress: "",
-		BaseDenom:        baseDenom,
-		SnDenom:          "snOsmo",
 	}
 }
 

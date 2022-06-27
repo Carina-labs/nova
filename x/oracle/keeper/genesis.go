@@ -9,13 +9,12 @@ import (
 )
 
 func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
+	k.SetParams(ctx, genState.Params)
 	for _, chainInfo := range genState.States {
 		if err := k.UpdateChainState(ctx, &chainInfo); err != nil {
 			panic(fmt.Errorf("failed to initialize genesis state at %s, err: %v", types.ModuleName, err))
 		}
 	}
-
-	k.SetParams(ctx, genState.Params)
 }
 
 func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {

@@ -1,13 +1,31 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
 	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	"github.com/tendermint/tendermint/crypto/ed25519"
+)
+
+var (
+	baseDenom    = "unova"
+	baseIbcDenom = ParseAddressToIbcAddress(transferPort, transferChannel, baseDenom)
+	baseAcc      = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	baseHostAcc  = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	baseOwnerAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	baseSnDenom  = "snstake"
+
+	hostId        = "cosmos-1"
+	hostBaseDenom = "stake"
+	hostIbcDenom  = ParseAddressToIbcAddress(transferPort, transferChannel, hostBaseDenom)
+
+	transferChannel    = "channel-0"
+	transferConnection = "connection-0"
+	transferPort       = "transfer"
+	icaConnection      = "connection-1"
 )
 
 func (suite *KeeperTestSuite) SetupTest() {
@@ -22,7 +40,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 	suite.icaPath = newIcaPath(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
-	suite.icaOwnerAddr = apptesting.CreateRandomAccounts(1)[0]
+	suite.icaOwnerAddr = baseOwnerAcc
 	err := setupIcaPath(suite.icaPath, suite.icaOwnerAddr.String())
 	suite.Require().NoError(err)
 }
@@ -111,4 +129,29 @@ func registerInterchainAccount(e *novatesting.Endpoint, owner string) error {
 	e.ChannelID = ibcchanneltypes.FormatChannelIdentifier(channelSeq)
 	e.ChannelConfig.PortID = portID
 	return nil
+}
+
+// newBaseRegisteredZone returns a new zone info for testing purpose only
+func newBaseRegisteredZone() *intertxtypes.RegisteredZone {
+	icaControllerPort, _ := icatypes.NewControllerPortID(baseOwnerAcc.String())
+
+	return &intertxtypes.RegisteredZone{
+		ZoneId: hostId,
+		IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
+			ConnectionId: icaConnection,
+			PortId:       icaControllerPort,
+		},
+		TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
+			ConnectionId: transferConnection,
+			PortId:       transferPort,
+			ChannelId:    transferChannel,
+		},
+		IcaAccount: &intertxtypes.IcaAccount{
+			OwnerAddress: baseOwnerAcc.String(),
+			HostAddress:  baseHostAcc.String(),
+		},
+		ValidatorAddress: "",
+		BaseDenom:        hostBaseDenom,
+		SnDenom:          baseSnDenom,
+	}
 }
