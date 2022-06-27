@@ -15,7 +15,6 @@ import (
 
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
-	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 )
 
 var (
@@ -167,25 +166,65 @@ func (suite *KeeperTestSuite) SetupTest() {
 	println("Finish setup test")
 }
 
-func (suite *KeeperTestSuite) SetupTestOracle(
-	operators []sdk.AccAddress,
-	msgs []*oracletypes.ChainInfo) {
-	for _, operator := range operators {
-		suite.App.OracleKeeper.SetParams(suite.Ctx, oracletypes.Params{
-			OracleOperators: []string{operator.String()},
-		})
-	}
-
-	for _, msg := range msgs {
-		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, msg)
-		if err != nil {
-			panic(err)
-		}
-	}
-}
-
 func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []intertxtypes.RegisteredZone) {
 	for _, msg := range zoneMsgs {
 		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, &msg)
+	}
+}
+
+func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
+	var addresses []string
+
+	addr1 := suite.GenRandomAddress().String()
+	addr2 := suite.GenRandomAddress().String()
+	addr3 := suite.GenRandomAddress().String()
+
+	addresses = append(addresses, addr1)
+	addresses = append(addresses, addr2)
+
+	params := intertxtypes.Params{
+		ZoneRegisterAddress: addresses,
+	}
+
+	suite.App.IntertxKeeper.SetParams(suite.Ctx, params)
+
+	tcs := []struct {
+		name   string
+		addr   string
+		expect bool
+	}{
+		{
+			name:   "success",
+			addr:   addr1,
+			expect: true,
+		},
+		{
+			name:   "success",
+			addr:   addr2,
+			expect: true,
+		},
+		{
+			name:   "nil address",
+			addr:   "",
+			expect: false,
+		},
+		{
+			name:   "random address",
+			addr:   addr3,
+			expect: false,
+		},
+		{
+			name:   "invalid address",
+			addr:   "test",
+			expect: false,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			ok := suite.App.IntertxKeeper.IsValidZoneRegisterAddr(suite.Ctx, tc.addr)
+
+			suite.Require().Equal(ok, tc.expect)
+		})
 	}
 }
