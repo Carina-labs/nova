@@ -21,6 +21,7 @@ func main() {
 		app.NewNovaApp,
 		cmdOptions...,
 	)
+
 	if err := svrcmd.Execute(rootCmd, app.DefaultNodeHome); err != nil {
 		os.Exit(1)
 	}
