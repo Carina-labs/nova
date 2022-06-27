@@ -133,7 +133,7 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 		Withdrawer:     withdrawRecord.Withdrawer,
 		Recipient:      withdrawRecord.Recipient,
 		Amount:         withdrawRecord.Amount,
-		State:          WITHDRAW_REQUEST_USER,
+		State:          int64(WITHDRAW_REQUEST_USER),
 		CompletionTime: withdrawRecord.CompletionTime,
 	}
 
