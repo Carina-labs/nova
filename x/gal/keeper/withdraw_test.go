@@ -88,8 +88,9 @@ func (suite *KeeperTestSuite) TestClaimWithdrawAsset() {
 			sdk.NewCoins(sdk.NewInt64Coin(tc.denom, tc.initialAmt)))
 		suite.Require().NoError(err)
 
+		accAddress, _ := sdk.AccAddressFromHex(acc.Address)
 		err = suite.App.GalKeeper.ClaimWithdrawAsset(suite.Ctx,
-			acc.Address, sdk.NewInt64Coin(tc.denom, tc.withdrawAmt))
+			accAddress, sdk.NewInt64Coin(tc.denom, tc.withdrawAmt))
 
 		if tc.shouldError {
 			suite.Require().Error(err)

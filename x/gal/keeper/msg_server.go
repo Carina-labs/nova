@@ -45,13 +45,21 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 
 	// snAtom -> [GAL] -> wAtom
 	// change undelegate State
-	zoneInfo, found := m.keeper.interTxKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
+	_, found := m.keeper.interTxKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
 	if !found {
 		return nil, errors.New("zone not found")
 	}
 
 	//send stAsset to GAL moduleAccount
-	err := m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, sdk.AccAddress(undelegate.Depositor), types.ModuleName, sdk.Coins{undelegate.Amount})
+	//snBalance := m.keeper.bankKeeper.GetBalance(
+	//	ctx, undelegate.Depositor, "snNova")
+	//fmt.Printf("sn balance : %s\n", snBalance.String())
+	depositorAcc, err := sdk.AccAddressFromBech32(undelegate.Depositor)
+	if err != nil {
+		return nil, err
+	}
+
+	err = m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, depositorAcc, types.ModuleName, sdk.Coins{undelegate.Amount})
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +69,7 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 		undelegate.Amount = undelegate.Amount.Add(*undelegateInfo.Amount)
 	}
 
-	amt := sdk.NewCoin(zoneInfo.BaseDenom, undelegate.Amount.Amount)
+	amt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
 	m.keeper.SetUndelegateRecord(ctx, types.UndelegateRecord{
 		ZoneId:    undelegate.ZoneId,
 		Delegator: undelegate.Depositor,
@@ -85,7 +93,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 
-	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.BaseDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
+	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 	totalStAsset.Denom = zoneInfo.SnDenom
 
 	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {
@@ -180,7 +188,11 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	// moduleAccountToAccount
-	if err := m.keeper.ClaimWithdrawAsset(ctx, withdraw.Recipient, withdraw.Amount); err != nil {
+	recipientAcc, err := sdk.AccAddressFromBech32(withdraw.Recipient)
+	if err != nil {
+		return nil, err
+	}
+	if err := m.keeper.ClaimWithdrawAsset(ctx, recipientAcc, withdraw.Amount); err != nil {
 		return nil, err
 	}
 

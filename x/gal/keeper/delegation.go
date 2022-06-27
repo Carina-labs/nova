@@ -7,17 +7,12 @@ import (
 )
 
 // MintShareTokens mints st-token(share token) regard with deposited token.
-func (k Keeper) MintShareTokens(ctx sdk.Context, depositor sdk.Address, amt sdk.Coin) error {
-	depositorAddr, err := sdk.AccAddressFromBech32(depositor.String())
-	if err != nil {
-		return err
-	}
-
+func (k Keeper) MintShareTokens(ctx sdk.Context, depositor sdk.AccAddress, amt sdk.Coin) error {
 	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(amt)); err != nil {
 		return err
 	}
 
-	if err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, depositorAddr, sdk.NewCoins(amt)); err != nil {
+	if err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, depositor, sdk.NewCoins(amt)); err != nil {
 		return err
 	}
 

@@ -12,7 +12,6 @@ import (
 )
 
 func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg) error {
-
 	portID, err := icatypes.NewControllerPortID(controllerId)
 	if err != nil {
 		return err
@@ -37,9 +36,9 @@ func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, ms
 		Data: data,
 	}
 
-	// timeoutTimestamp set to max value with the unsigned bit shifted to sastisfy hermes timestamp conversion
+	// timeoutTimestamp set to max value with the unsigned bit shifted to satisfy hermes timestamp conversion
 	// it is the responsibility of the auth module developer to ensure an appropriate timeout timestamp
-	timeoutTimestamp := time.Now().Add(time.Minute).UnixNano()
+	timeoutTimestamp := time.Now().Add(time.Minute * 10).UnixNano()
 	_, err = k.icaControllerKeeper.SendTx(ctx, chanCap, connectionId, portID, packetData, uint64(timeoutTimestamp))
 	if err != nil {
 		return err

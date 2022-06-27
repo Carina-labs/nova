@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 
 	"github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
@@ -93,7 +94,11 @@ func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, denom string) string {
 	var zone *types.RegisteredZone
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
-		if zoneInfo.BaseDenom == denom {
+		ibcDenom := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom(
+			zoneInfo.TransferConnectionInfo.PortId,
+			zoneInfo.TransferConnectionInfo.ChannelId,
+			zoneInfo.BaseDenom)).IBCDenom()
+		if ibcDenom == denom {
 			zone = &zoneInfo
 			return true
 		}
