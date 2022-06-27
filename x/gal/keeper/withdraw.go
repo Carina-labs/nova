@@ -9,9 +9,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+type WithdrawRegisterType int
+
 const (
-	WITHDRAW_REGISTER     = iota + 1
-	WITHDRAW_REQUEST_USER = iota + 1
+	WITHDRAW_REGISTER WithdrawRegisterType = iota + 1
+	WITHDRAW_REQUEST_USER
 )
 
 // GetWithdrawRecord returns withdraw record item by key.
@@ -55,7 +57,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state Undeleg
 				return true
 			}
 			withdrawRecords.Amount = &amt
-			withdrawRecords.State = WITHDRAW_REGISTER
+			withdrawRecords.State = int64(WITHDRAW_REGISTER)
 		}
 		return false
 	})
@@ -63,7 +65,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state Undeleg
 }
 
 // SetWithdrawTime writes the time undelegate finish.
-func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state UndelegatedState, time time.Time) {
+func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state WithdrawRegisterType, time time.Time) {
 	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
 		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == int64(state) {
 			withdrawInfo.CompletionTime = time
@@ -74,19 +76,19 @@ func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state Undelegate
 }
 
 // ClaimWithdrawAsset is used when user want to claim their asset which is after undeleagted.
-func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, amt sdk.Coin) error {
+func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, asset sdk.Coin) error {
 	withdrawerAddr, err := sdk.AccAddressFromBech32(withdrawer)
 	if err != nil {
 		return err
 	}
 
 	// check record if user can withdraw asset
-	enable := k.IsAbleToWithdraw(ctx, amt)
+	enable := k.IsAbleToWithdraw(ctx, asset)
 	if !enable {
 		return fmt.Errorf("not enough balance to withdraw")
 	}
 
-	err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, withdrawerAddr, sdk.NewCoins(amt))
+	err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, withdrawerAddr, sdk.NewCoins(asset))
 	if err != nil {
 		return err
 	}
