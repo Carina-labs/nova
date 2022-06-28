@@ -18,6 +18,8 @@ var (
 	baseOwnerAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 	baseSnDenom  = "snstake"
 
+	oracleOperatorAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+
 	hostId        = "cosmos-1"
 	hostBaseDenom = "stake"
 	hostIbcDenom  = ParseAddressToIbcAddress(transferPort, transferChannel, hostBaseDenom)
@@ -26,6 +28,8 @@ var (
 	transferConnection = "connection-0"
 	transferPort       = "transfer"
 	icaConnection      = "connection-1"
+
+	undelegateMsgName = "/cosmos.staking.v1beta1.MsgUndelegate"
 )
 
 func (suite *KeeperTestSuite) SetupTest() {
@@ -82,8 +86,8 @@ func newIcaPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 
 	version := string(icatypes.ModuleCdc.MustMarshalJSON(&icatypes.Metadata{
 		Version:                "ics27-1",
-		ControllerConnectionId: "connection-1",
-		HostConnectionId:       "connection-1",
+		ControllerConnectionId: icaConnection,
+		HostConnectionId:       icaConnection,
 		Encoding:               "proto3",
 		TxType:                 "sdk_multi_msg",
 	}))
@@ -134,7 +138,6 @@ func registerInterchainAccount(e *novatesting.Endpoint, owner string) error {
 // newBaseRegisteredZone returns a new zone info for testing purpose only
 func newBaseRegisteredZone() *intertxtypes.RegisteredZone {
 	icaControllerPort, _ := icatypes.NewControllerPortID(baseOwnerAcc.String())
-
 	return &intertxtypes.RegisteredZone{
 		ZoneId: hostId,
 		IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
