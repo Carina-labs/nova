@@ -227,7 +227,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			err := tc.do(tc.doArg)
 			suite.Require().NoError(err)
 
-			// verify
+			// verifyTransferCorrectlyExecuted
 			tc.verify(tc.verifyArg)
 		})
 	}
@@ -311,7 +311,7 @@ func (suite *KeeperTestSuite) TestMarkRecordTransfer() {
 				return
 			}
 
-			// verify
+			// verifyTransferCorrectlyExecuted
 			acc, _ := sdk.AccAddressFromBech32(tc.addr)
 			for _, index := range tc.markIndexes {
 				res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, acc)

@@ -109,14 +109,16 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
 
 	var msgs []sdk.Msg
-
-	totalRequestAmt := sdk.Coin{
-		Amount: totalStAsset.Amount,
-		Denom:  zoneInfo.BaseDenom,
+	undelegateAmount, err := m.keeper.GetWithdrawAmt(ctx, totalStAsset)
+	if err != nil {
+		return nil, err
 	}
 
-	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: totalRequestAmt})
-	err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	msgs = append(msgs, &stakingtype.MsgUndelegate{
+		DelegatorAddress: msg.HostAddress,
+		ValidatorAddress: zoneInfo.ValidatorAddress,
+		Amount:           undelegateAmount})
+	err = m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
