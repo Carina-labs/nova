@@ -5,6 +5,8 @@ import (
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"
+	intertxkeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
+	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
@@ -34,13 +36,16 @@ type initialSet struct {
 	depositAmount  int64
 	snTokenBalance int64
 	oracle         oracleSet
+	withdrawAmount int64
 }
 
 type expectedSet struct {
-	userBalance      int64
-	hostBalance      int64
-	snMinting        int64
-	validatorBalance int64
+	userBalance              int64
+	hostBalance              int64
+	snMinting                int64
+	validatorBalance         int64
+	withdrawAmount           int64
+	afterWithdrawUserBalance int64
 }
 
 func (suite *KeeperTestSuite) prepare(initSet initialSet) {
@@ -68,7 +73,7 @@ func (suite *KeeperTestSuite) prepare(initSet initialSet) {
 	// prepare icaHostKeeper
 	suite.chainB.App.ICAHostKeeper.SetParams(suite.chainB.GetContext(), icahosttypes.Params{
 		HostEnabled:   true,
-		AllowMessages: []string{undelegateMsgName},
+		AllowMessages: []string{undelegateMsgName, "/ibc.applications.transfer.v1.MsgTransfer"},
 	})
 
 	// prepare oracle
@@ -107,6 +112,7 @@ func (suite *KeeperTestSuite) TestGalAction() {
 				nativeDenom:    "stake",
 				depositAmount:  1000,
 				snTokenBalance: 10000_000000,
+				withdrawAmount: 1000,
 				oracle: oracleSet{
 					operators: []string{oracleOperatorAcc.String()},
 					state:     sdk.NewInt64Coin(hostBaseDenom, 100000_000000),
@@ -115,38 +121,24 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			initialUserBalance: 10000,
 			wantErr:            false,
 			expect: expectedSet{
-				userBalance:      9000,
-				hostBalance:      1000,
-				snMinting:        100,
-				validatorBalance: 1001000,
+				userBalance:              9000,
+				hostBalance:              1000,
+				snMinting:                100,
+				validatorBalance:         1001000,
+				withdrawAmount:           1000,
+				afterWithdrawUserBalance: 10000,
 			},
 		},
-		//{
-		//	name: "valid test case 2",
-		//	msg: types.MsgDeposit{
-		//		Depositor: "cosmos1a05qwsaeqgdp7pc3tsegw87w9c0j6xlhdk84f3",
-		//		ZoneId:    baseDenom,
-		//		HostAddr:  baseHostAcc.String(),
-		//		Amount:    sdk.NewCoins(sdk.NewInt64Coin(baseIbcDenom, 5000)),
-		//	},
-		//	initialUserBalance: 10000,
-		//	wantErr:     false,
-		//	expect: expectedSet{
-		//		initialUserBalance: 5000,
-		//		hostBalance: 5000,
-		//		snMinting:   500,
-		//	},
-		//},
 	}
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			suite.SetupTest()
 			suite.prepare(tc.initSet)
+			// setup
 			validator := suite.chainB.App.StakingKeeper.GetValidators(suite.chainB.GetContext(), 1)[0]
 			icaConf, err := setIbcZone(suite.chainA, suite.chainB, suite.icaOwnerAddr.String())
 			suite.Require().NoError(err)
-
 			userAcc, _ := sdk.AccAddressFromBech32(tc.initSet.userAddress)
 
 			// execute
@@ -201,6 +193,8 @@ func (suite *KeeperTestSuite) TestGalAction() {
 				Depositor: userAcc.String(),
 				Amount:    snBalance,
 			})
+
+			// execute : undelegate
 			executedCtx = suite.chainA.GetContext()
 			goCtx = sdk.WrapSDKContext(executedCtx)
 			_, err = msgServer.Undelegate(goCtx, &types.MsgUndelegate{
@@ -213,11 +207,15 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			// relay ica packet
 			em = executedCtx.EventManager()
 			p, err = ibctesting.ParsePacketFromEvents(em.Events())
+			suite.Require().NoError(suite.icaPath.EndpointA.UpdateClient())
+			suite.Require().NoError(suite.icaPath.EndpointB.UpdateClient())
+			res, err := suite.icaPath.EndpointB.RecvPacketWithResult(p)
 			suite.Require().NoError(err)
-			suite.chainA.NextBlock()
-			_, err = suite.chainB.App.ICAHostKeeper.OnRecvPacket(suite.chainB.GetContext(), p)
+			ack, err := ibctesting.ParseAckFromEvents(res.GetEvents())
 			suite.Require().NoError(err)
-			suite.chainB.NextBlock()
+			suite.Require().NotNil(ack)
+			err = suite.icaPath.EndpointA.AcknowledgePacket(p, ack)
+			suite.Require().NoError(err)
 
 			// verify undelegate amount
 			ubd := suite.chainB.App.StakingKeeper.GetUnbondingDelegationsFromValidator(suite.chainB.GetContext(), validator.GetOperator())
@@ -231,27 +229,59 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			suite.Require().NoError(err)
 			suite.Require().True(sdk.NewInt64Coin(hostBaseDenom, tc.initSet.depositAmount).IsEqual(unbondedCoins[0]))
 
-			// suite.chainB.App.StakingKeeper.RemoveUnbondingDelegation(suite.chainB.GetContext(), ubd[0])
-			// ubd = suite.chainB.App.StakingKeeper.GetUnbondingDelegationsFromValidator(suite.chainB.GetContext(), validator.GetOperator())
+			// verify withdraw record
+			rc, ok := suite.chainA.App.GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), hostId+tc.initSet.userAddress)
+			suite.Require().True(ok)
+			suite.Require().NotNil(rc)
+			suite.Require().Equal(tc.expect.withdrawAmount, rc.Amount.Amount.Int64())
 
-			// suite.Require().Equal(tc.initSet.depositAmount, ud[0].Entries[0].Balance.Int64())
-			//em = executedCtx.EventManager()
-			//
-			//suite.chainA.NextBlock()
+			// simulation : bot requests transfer from host -> controller's gal module account.
+			interTxMsgServer := intertxkeeper.NewMsgServerImpl(*suite.chainA.App.IntertxKeeper)
+			ctx := suite.chainA.GetContext()
+			_, err = interTxMsgServer.IcaWithdraw(
+				sdk.WrapSDKContext(ctx), &intertxtypes.MsgIcaWithdraw{
+					ZoneName:        hostId,
+					SenderAddress:   icaConf.icaHostAddress,
+					OwnerAddress:    suite.icaOwnerAddr.String(),
+					ReceiverAddress: suite.icaOwnerAddr.String(),
+					Amount:          sdk.NewInt64Coin(hostBaseDenom, tc.expect.withdrawAmount),
+				})
+			suite.Require().NoError(err)
+			p, e = ibctesting.ParsePacketFromEvents(ctx.EventManager().Events())
+			suite.Require().NoError(suite.icaPath.EndpointA.UpdateClient())
+			suite.Require().NoError(suite.icaPath.EndpointB.UpdateClient())
+			r, err := suite.icaPath.EndpointB.RecvPacketWithResult(p)
+			suite.Require().NotNil(r)
+			suite.Require().NoError(err)
 
-			// verifyTransferCorrectlyExecuted user withdraw amount
-			//executedCtx = suite.chainA.GetContext()
-			//goCtx = sdk.WrapSDKContext(executedCtx)
-			//_, err = msgServer.WithdrawRecord(goCtx, &types.MsgWithdrawRecord{
-			//	ZoneId:     baseDenom,
-			//	Withdrawer: userAcc.String(),
-			//})
+			p2, err := ibctesting.ParsePacketFromEvents(r.GetEvents())
+			suite.Require().NoError(err)
+			suite.Require().NotNil(p2)
+			suite.Require().NoError(suite.icaPath.EndpointA.UpdateClient())
+			suite.Require().NoError(suite.icaPath.EndpointB.UpdateClient())
+
+			err = suite.transferPath.RelayPacket(p2)
+			suite.chainA.NextBlock()
+			suite.chainB.NextBlock()
+			suite.Require().NoError(err)
+
+			// execute : withdraw
+			_, err = msgServer.WithdrawRecord(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgWithdrawRecord{
+				ZoneId:     hostId,
+				Withdrawer: tc.initSet.userAddress,
+				Recipient:  tc.initSet.userAddress,
+				Amount:     sdk.NewInt64Coin(hostBaseDenom, tc.initSet.withdrawAmount),
+			})
+			suite.Require().NoError(err)
+
+			// verify user balance after withdraw
+			afterUserBalance := suite.chainA.App.BankKeeper.GetBalance(suite.chainA.GetContext(), userAcc, hostIbcDenom)
+			suite.Require().Equal(tc.expect.afterWithdrawUserBalance, afterUserBalance.Amount.Int64())
 		})
 	}
 }
 
 func (suite *KeeperTestSuite) verifyTransferCorrectlyExecuted(initSet initialSet, icaInfo icaConfig, set expectedSet) {
-	// verifyTransferCorrectlyExecuted tranfer
 	userAcc, err := sdk.AccAddressFromBech32(initSet.userAddress)
 	suite.Require().NoError(err)
 	hostAcc, err := sdk.AccAddressFromBech32(icaInfo.icaHostAddress)

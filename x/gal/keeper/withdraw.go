@@ -46,22 +46,29 @@ func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw types.WithdrawRec
 
 // SetWithdrawRecords write multiple withdraw record.
 func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state UndelegatedState) {
-	var withdrawRecords types.WithdrawRecord
+	var withdrawRecords []types.WithdrawRecord
 
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
 		if undelegateInfo.ZoneId == zoneId && undelegateInfo.State == int64(state) {
-			withdrawRecords.ZoneId = zoneId
-			withdrawRecords.Withdrawer = undelegateInfo.Delegator
+			var withdrawRecord types.WithdrawRecord
+			withdrawRecord.ZoneId = zoneId
+			withdrawRecord.Withdrawer = undelegateInfo.Delegator
 			amt, err := k.GetWithdrawAmt(ctx, *undelegateInfo.Amount)
 			if err != nil {
 				return true
 			}
-			withdrawRecords.Amount = &amt
-			withdrawRecords.State = int64(WITHDRAW_REGISTER)
+			withdrawRecord.Amount = &amt
+			withdrawRecord.State = int64(WITHDRAW_REGISTER)
+			withdrawRecords = append(withdrawRecords, withdrawRecord)
 		}
 		return false
 	})
 
+	if len(withdrawRecords) > 0 {
+		for _, wr := range withdrawRecords {
+			k.SetWithdrawRecord(ctx, wr)
+		}
+	}
 }
 
 // SetWithdrawTime writes the time undelegate finish.
@@ -76,19 +83,8 @@ func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state WithdrawRe
 }
 
 // ClaimWithdrawAsset is used when user want to claim their asset which is after undeleagted.
-func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, asset sdk.Coin) error {
-	withdrawerAddr, err := sdk.AccAddressFromBech32(withdrawer)
-	if err != nil {
-		return err
-	}
-
-	// check record if user can withdraw asset
-	enable := k.IsAbleToWithdraw(ctx, asset)
-	if !enable {
-		return fmt.Errorf("not enough balance to withdraw")
-	}
-
-	err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, withdrawerAddr, sdk.NewCoins(asset))
+func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, from sdk.AccAddress, withdrawer sdk.AccAddress, amt sdk.Coin) error {
+	err := k.bankKeeper.SendCoins(ctx, from, withdrawer, sdk.NewCoins(amt))
 	if err != nil {
 		return err
 	}
@@ -99,9 +95,8 @@ func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer string, asset sdk
 // IsAbleToWithdraw returns if user can withdraw their asset.
 // It refers nova ICA account. If ICA account's balance is greater than
 // user withdraw request amount, this function returns true.
-func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, amt sdk.Coin) bool {
-	moduleAddr := k.accountKeeper.GetModuleAddress(types.ModuleName)
-	balance := k.bankKeeper.GetBalance(ctx, moduleAddr, amt.Denom)
+func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, from sdk.AccAddress, amt sdk.Coin) bool {
+	balance := k.bankKeeper.GetBalance(ctx, from, amt.Denom)
 	return balance.Amount.BigInt().Cmp(amt.Amount.BigInt()) >= 0
 }
 

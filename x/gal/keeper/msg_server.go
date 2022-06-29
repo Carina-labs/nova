@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -127,6 +128,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	return &types.MsgUndelegateResponse{}, nil
 }
 
+// TODO : FIX FUNCTION NAME!
 // WithdrawRecord write user's withdraw requests to the "WithdrawRecord" store.
 // It will be used after undelegating, distribute native coin to the user.
 func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWithdrawRecord) (*types.MsgWithdrawRecordResponse, error) {
@@ -157,7 +159,17 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	// module account의 상태 조회
-	ok = m.keeper.IsAbleToWithdraw(ctx, *withdrawRecord.Amount)
+	voucherDenomTrace := transfertypes.ParseDenomTrace(
+		transfertypes.GetPrefixedDenom(zoneInfo.TransferConnectionInfo.PortId,
+			zoneInfo.TransferConnectionInfo.ChannelId,
+			withdraw.Amount.Denom))
+	withdrawAmount := sdk.NewInt64Coin(voucherDenomTrace.IBCDenom(), withdrawState.Amount.Amount.Int64())
+	ownerAcc, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.OwnerAddress)
+	if err != nil {
+		return nil, err
+	}
+
+	ok = m.keeper.IsAbleToWithdraw(ctx, ownerAcc, withdrawAmount)
 	if !ok {
 		return nil, fmt.Errorf("user cannot withdraw funds : insufficient fund")
 	}
@@ -194,7 +206,7 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	if err != nil {
 		return nil, err
 	}
-	if err := m.keeper.ClaimWithdrawAsset(ctx, recipientAcc, withdraw.Amount); err != nil {
+	if err := m.keeper.ClaimWithdrawAsset(ctx, ownerAcc, recipientAcc, withdrawAmount); err != nil {
 		return nil, err
 	}
 
