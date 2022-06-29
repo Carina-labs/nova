@@ -33,6 +33,10 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	}
 
 	zoneInfo := h.k.interTxKeeper.GetZoneForDenom(ctx, baseDenom)
+	// if zoneInfo == nil, it may be a test situation.
+	if zoneInfo == nil {
+		return
+	}
 
 	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
 		return
