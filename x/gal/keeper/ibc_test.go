@@ -29,7 +29,8 @@ var (
 	transferPort       = "transfer"
 	icaConnection      = "connection-1"
 
-	undelegateMsgName = "/cosmos.staking.v1beta1.MsgUndelegate"
+	undelegateMsgName  = "/cosmos.staking.v1beta1.MsgUndelegate"
+	ibcTransferMsgName = "/ibc.applications.transfer.v1.MsgTransfer"
 )
 
 func (suite *KeeperTestSuite) SetupTest() {

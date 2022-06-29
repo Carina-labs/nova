@@ -73,7 +73,7 @@ func (suite *KeeperTestSuite) prepare(initSet initialSet) {
 	// prepare icaHostKeeper
 	suite.chainB.App.ICAHostKeeper.SetParams(suite.chainB.GetContext(), icahosttypes.Params{
 		HostEnabled:   true,
-		AllowMessages: []string{undelegateMsgName, "/ibc.applications.transfer.v1.MsgTransfer"},
+		AllowMessages: []string{undelegateMsgName, ibcTransferMsgName},
 	})
 
 	// prepare oracle
