@@ -218,8 +218,9 @@ func (suite *KeeperTestSuite) TestGetsnDenomForBaseDenom() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			suite.App.IntertxKeeper.RegisterZone(suite.Ctx, tc.zone)
+			ibcDenom := suite.App.IntertxKeeper.GetIBCHashForBaseDenom(suite.Ctx, tc.baseDenom)
 
-			res := suite.App.IntertxKeeper.GetsnDenomForBaseDenom(suite.Ctx, tc.baseDenom)
+			res := suite.App.IntertxKeeper.GetsnDenomForBaseDenom(suite.Ctx, ibcDenom)
 
 			suite.Require().Equal(res, tc.result.SnDenom)
 		})
