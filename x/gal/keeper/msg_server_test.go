@@ -237,8 +237,8 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			suite.Require().True(sdk.NewInt64Coin(hostBaseDenom, tc.initSet.depositAmount).IsEqual(unbondedCoins[0]))
 
 			// verify withdraw record
-			rc, ok := suite.chainA.App.GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), hostId+tc.initSet.userAddress)
-			suite.Require().True(ok)
+			rc, err := suite.chainA.App.GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), hostId+tc.initSet.userAddress)
+			suite.Require().NoError(err)
 			suite.Require().NotNil(rc)
 			suite.Require().Equal(tc.expect.withdrawAmount, rc.Amount.Amount.Int64())
 
