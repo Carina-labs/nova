@@ -34,10 +34,9 @@ func GetTxCmd() *cobra.Command {
 	return cmd
 }
 
-// TODO
 func getRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "register [zone-name] [chain-id] [owner-address] [connection-id] [transfer-channel-id] [transfer-connection-id] [transfer-port-id] [validator_address] [base-denom]",
+		Use:  "register [zone-name] [chain-id] [controller-address] [connection-id] [transfer-channel-id] [transfer-connection-id] [transfer-port-id] [validator_address] [base-denom]",
 		Args: cobra.ExactArgs(9),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -49,17 +48,17 @@ func getRegisterZoneCmd() *cobra.Command {
 				return err
 			}
 
-			zone_name := args[0]
-			chain_id := args[1]
-			ica_owner_address := clientCtx.GetFromAddress().String()
-			ica_connection_id := args[3]
-			transfer_channel_id := args[4]
-			transfer_connection_id := args[5]
-			transfer_port_id := args[6]
-			validator_address := args[7]
+			zoneName := args[0]
+			chainId := args[1]
+			icaControllerAddr := clientCtx.GetFromAddress().String()
+			icaConnId := args[3]
+			transferChanId := args[4]
+			transferConnId := args[5]
+			transferPortId := args[6]
+			validatorAddr := args[7]
 			denom := args[8]
 
-			msg := types.NewMsgRegisterZone(zone_name, chain_id, ica_connection_id, ica_owner_address, transfer_channel_id, transfer_connection_id, transfer_port_id, validator_address, denom)
+			msg := types.NewMsgRegisterZone(zoneName, chainId, icaConnId, icaControllerAddr, transferChanId, transferConnId, transferPortId, validatorAddr, denom)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -76,7 +75,7 @@ func getRegisterZoneCmd() *cobra.Command {
 
 func getDelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "delegate [zone-name] [sender(host-address)] [owner-address] [amount]",
+		Use:  "delegate [zone-name] [sender(host-address)] [controller-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -88,16 +87,16 @@ func getDelegateTxCmd() *cobra.Command {
 				return err
 			}
 
-			zone_name := args[0]
+			zoneName := args[0]
 			sender := args[1]
-			owner_address := clientCtx.GetFromAddress().String()
+			controllerAddr := clientCtx.GetFromAddress().String()
 			amount, err := sdk.ParseCoinNormalized(args[3])
 
 			if err != nil {
 				panic("coin error")
 			}
 
-			msg := types.NewMsgIcaDelegate(zone_name, sender, owner_address, amount)
+			msg := types.NewMsgIcaDelegate(zoneName, sender, controllerAddr, amount)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -109,7 +108,7 @@ func getDelegateTxCmd() *cobra.Command {
 
 func getUndelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegate [zone_name] [sender(host-address)] [owner-address] [amount]",
+		Use:  "undelegate [zone-name] [sender(host-address)] [controller-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -123,10 +122,10 @@ func getUndelegateTxCmd() *cobra.Command {
 
 			zoneName := args[0]
 			sender := args[1]
-			ownerAddress := clientCtx.GetFromAddress().String()
+			controllerAddr := clientCtx.GetFromAddress().String()
 			amount, _ := sdk.ParseCoinNormalized(args[3])
 
-			msg := types.NewMsgIcaUnDelegate(zoneName, sender, ownerAddress, amount)
+			msg := types.NewMsgIcaUnDelegate(zoneName, sender, controllerAddr, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -137,7 +136,7 @@ func getUndelegateTxCmd() *cobra.Command {
 
 func getAutoStakingTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "autostaking [zone-name] [sender(host-address)] [owner-address] [amount]",
+		Use:  "autostaking [zone-name] [sender(host-address)] [controller-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -151,13 +150,13 @@ func getAutoStakingTxCmd() *cobra.Command {
 
 			zoneName := args[0]
 			sender := args[1]
-			owner := clientCtx.GetFromAddress().String()
+			controllerAddr := clientCtx.GetFromAddress().String()
 			amount, err := sdk.ParseCoinNormalized(args[3])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgIcaAutoStaking(zoneName, sender, owner, amount)
+			msg := types.NewMsgIcaAutoStaking(zoneName, sender, controllerAddr, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -168,7 +167,7 @@ func getAutoStakingTxCmd() *cobra.Command {
 
 func getWithdrawTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "withdraw [zone-name] [sender-address(host-address)] [owner-address] [reveiver] [amount]",
+		Use:  "withdraw [zone-name] [sender-address(host-address)] [controller-address] [reveiver] [amount]",
 		Args: cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -182,14 +181,14 @@ func getWithdrawTxCmd() *cobra.Command {
 
 			zoneName := args[0]
 			sender := args[1]
-			owner := clientCtx.GetFromAddress().String()
+			controllerAddr := clientCtx.GetFromAddress().String()
 			receiver := args[3]
 			amount, err := sdk.ParseCoinNormalized(args[4])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgIcaWithdraw(zoneName, sender, owner, receiver, amount)
+			msg := types.NewMsgIcaWithdraw(zoneName, sender, controllerAddr, receiver, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -200,7 +199,7 @@ func getWithdrawTxCmd() *cobra.Command {
 
 func getHostAddressTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "hostaddress [owner-address] [host-address]",
+		Use:  "registerhostaddress [controller-address] [host-address]",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[0]); err != nil {
@@ -212,10 +211,10 @@ func getHostAddressTxCmd() *cobra.Command {
 				return err
 			}
 
-			ownerAddr := args[0]
+			controllerAddr := args[0]
 			hostAddr := args[1]
 
-			msg := types.NewMsgRegisterHostAccount(ownerAddr, hostAddr)
+			msg := types.NewMsgRegisterHostAccount(controllerAddr, hostAddr)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

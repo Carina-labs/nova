@@ -28,13 +28,12 @@ service Msg {
 message MsgRegisterZone {
   option (gogoproto.equal)           = false;
   
-  string zone_name = 1;
-  string chain_id = 2;
-  IcaConnectionInfo ica_info = 3;
-  IcaAccount ica_account = 4;
-  TransferConnectionInfo transfer_info = 5;
-  string validator_address = 6;
-  string base_denom = 7;
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
 }
 
 // MsgRegisterZoneResponse defines the response for Msg/RegisterZone

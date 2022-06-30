@@ -31,7 +31,7 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	zoneInfo := &types.RegisteredZone{
-		ZoneId: zone.ZoneName,
+		ZoneId: zone.ZoneId,
 		IcaConnectionInfo: &types.IcaConnectionInfo{
 			ConnectionId: zone.IcaInfo.ConnectionId,
 			PortId:       zone.IcaInfo.PortId,
@@ -68,6 +68,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 	return &types.MsgRegisterZoneResponse{}, nil
 }
 
+// DeleteRegisteredZone implements the Msg/MsgDeleteRegisteredZone interface
 func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDeleteRegisteredZone) (*types.MsgDeleteRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -89,6 +90,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 	return &types.MsgDeleteRegisteredZoneResponse{}, nil
 }
 
+// ChangeRegisteredZoneInfo implements the Msg/MsgChangeRegisteredZoneInfo interface
 func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZoneInfo) (*types.MsgChangeRegisteredZoneInfoResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -120,6 +122,7 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 	return &types.MsgChangeRegisteredZoneInfoResponse{}, nil
 }
 
+// IcaDelegate implements the Msg/MsgIcaDelegate interface
 func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate) (*types.MsgIcaDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -144,6 +147,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	return &types.MsgIcaDelegateResponse{}, nil
 }
 
+// IcaUndelegate implements the Msg/MsgIcaUndelegate interface
 func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndelegate) (*types.MsgIcaUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -168,6 +172,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	return &types.MsgIcaUndelegateResponse{}, nil
 }
 
+// IcaAutoStaking implements the Msg/MsgIcaAutoStaking interface
 func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoStaking) (*types.MsgIcaAutoStakingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -193,6 +198,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	return &types.MsgIcaAutoStakingResponse{}, nil
 }
 
+// IcaWithdraw implements the Msg/MsgIcaWithdrawResponse interface
 func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -230,6 +236,7 @@ func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	return &types.MsgIcaWithdrawResponse{}, nil
 }
 
+// IcaRegisterHostAccount implements the Msg/MsgRegisterHostAccount interface
 func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgRegisterHostAccount) (*types.MsgRegisterHostAccountResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 

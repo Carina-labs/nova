@@ -18,11 +18,10 @@ var (
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
-func NewMsgRegisterZone(zoneName, chainId, icaConnectionId, icaOwnerAddr, transferChannelId, transferConnectionId, transferPortId,
+func NewMsgRegisterZone(zoneId, chainId, icaConnectionId, icaOwnerAddr, transferChannelId, transferConnectionId, transferPortId,
 	validatorAddress, baseDenom string) *MsgRegisterZone {
 	return &MsgRegisterZone{
-		ZoneName: zoneName,
-		ChainId:  chainId,
+		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
 			ConnectionId: icaConnectionId,
 			PortId:       icaOwnerAddr,
@@ -42,20 +41,21 @@ func NewMsgRegisterZone(zoneName, chainId, icaConnectionId, icaOwnerAddr, transf
 
 // ValidateBasic implements sdk.Msg
 func (msg MsgRegisterZone) ValidateBasic() error {
-	if strings.TrimSpace(msg.ZoneName) == "" {
+	if strings.TrimSpace(msg.ZoneId) == "" {
 		return errors.New("missing zone name")
-	}
-
-	if strings.TrimSpace(msg.ChainId) == "" {
-		return errors.New("missing chain ID")
 	}
 
 	if strings.TrimSpace(msg.IcaInfo.ConnectionId) == "" {
 		return errors.New("missing ICA connection ID")
 	}
 
-	if strings.TrimSpace(msg.IcaAccount.OwnerAddress) == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "missing ICA owner address")
+	if strings.TrimSpace(msg.IcaInfo.PortId) == "" {
+		return errors.New("missing ICA port ID")
+	}
+
+	_, err := sdk.AccAddressFromBech32(msg.IcaAccount.OwnerAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address (%s)", err)
 	}
 
 	if strings.TrimSpace(msg.TransferInfo.ConnectionId) == "" {
@@ -103,7 +103,7 @@ func NewMsgIcaDelegate(zoneName, sender, owner string, amount sdk.Coin) *MsgIcaD
 func (msg MsgIcaDelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
 	if err != nil {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid owner address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address (%s)", err)
 	}
 
 	if !msg.Amount.IsValid() {
@@ -141,7 +141,7 @@ func NewMsgIcaUnDelegate(zoneName, sender, owner string, amount sdk.Coin) *MsgIc
 func (msg MsgIcaUndelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.OwnerAddress)
 	if err != nil {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid owner address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address (%s)", err)
 	}
 
 	if !msg.Amount.IsValid() {
@@ -219,7 +219,6 @@ func (msg MsgIcaWithdraw) ValidateBasic() error {
 		return errors.New("missing zone name")
 	}
 
-	//TODO: receiveAddress가 claim한 이력이 있는지 확인
 	if !msg.Amount.IsValid() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
@@ -253,12 +252,14 @@ func NewMsgRegisterHostAccount(ownerAddr, hostAddr string) *MsgRegisterHostAccou
 
 // ValidateBasic implements sdk.Msg
 func (msg MsgRegisterHostAccount) ValidateBasic() error {
-	if strings.TrimSpace(msg.AccountInfo.OwnerAddress) == "" {
-		return errors.New("missing owner address")
+	_, err := sdk.AccAddressFromBech32(msg.AccountInfo.OwnerAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address (%s)", err)
 	}
 
-	if strings.TrimSpace(msg.AccountInfo.HostAddress) == "" {
-		return errors.New("missing host address")
+	_, err = sdk.AccAddressFromBech32(msg.AccountInfo.HostAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid host address (%s)", err)
 	}
 
 	return nil
