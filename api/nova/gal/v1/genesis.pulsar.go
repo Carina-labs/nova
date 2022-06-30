@@ -4243,7 +4243,7 @@ var (
 
 func init() {
 	file_nova_gal_v1_genesis_proto_init()
-	md_WithdrawRecord = File_nova_gal_v1_genesis_proto.Messages().ByName("WithdrawRecord")
+	md_WithdrawRecord = File_nova_gal_v1_genesis_proto.Messages().ByName("Withdraw")
 	fd_WithdrawRecord_zone_id = md_WithdrawRecord.Fields().ByName("zone_id")
 	fd_WithdrawRecord_withdrawer = md_WithdrawRecord.Fields().ByName("withdrawer")
 	fd_WithdrawRecord_recipient = md_WithdrawRecord.Fields().ByName("recipient")
@@ -4368,23 +4368,23 @@ func (x *fastReflection_WithdrawRecord) Range(f func(protoreflect.FieldDescripto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_WithdrawRecord) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.WithdrawRecord.zone_id":
+	case "nova.gal.v1.Withdraw.zone_id":
 		return x.ZoneId != ""
-	case "nova.gal.v1.WithdrawRecord.withdrawer":
+	case "nova.gal.v1.Withdraw.withdrawer":
 		return x.Withdrawer != ""
-	case "nova.gal.v1.WithdrawRecord.recipient":
+	case "nova.gal.v1.Withdraw.recipient":
 		return x.Recipient != ""
-	case "nova.gal.v1.WithdrawRecord.amount":
+	case "nova.gal.v1.Withdraw.amount":
 		return x.Amount != nil
-	case "nova.gal.v1.WithdrawRecord.state":
+	case "nova.gal.v1.Withdraw.state":
 		return x.State != int64(0)
-	case "nova.gal.v1.WithdrawRecord.completion_time":
+	case "nova.gal.v1.Withdraw.completion_time":
 		return x.CompletionTime != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.WithdrawRecord"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.Withdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.WithdrawRecord does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.Withdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4396,23 +4396,23 @@ func (x *fastReflection_WithdrawRecord) Has(fd protoreflect.FieldDescriptor) boo
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_WithdrawRecord) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.WithdrawRecord.zone_id":
+	case "nova.gal.v1.Withdraw.zone_id":
 		x.ZoneId = ""
-	case "nova.gal.v1.WithdrawRecord.withdrawer":
+	case "nova.gal.v1.Withdraw.withdrawer":
 		x.Withdrawer = ""
-	case "nova.gal.v1.WithdrawRecord.recipient":
+	case "nova.gal.v1.Withdraw.recipient":
 		x.Recipient = ""
-	case "nova.gal.v1.WithdrawRecord.amount":
+	case "nova.gal.v1.Withdraw.amount":
 		x.Amount = nil
-	case "nova.gal.v1.WithdrawRecord.state":
+	case "nova.gal.v1.Withdraw.state":
 		x.State = int64(0)
-	case "nova.gal.v1.WithdrawRecord.completion_time":
+	case "nova.gal.v1.Withdraw.completion_time":
 		x.CompletionTime = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.WithdrawRecord"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.Withdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.WithdrawRecord does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.Withdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4424,29 +4424,29 @@ func (x *fastReflection_WithdrawRecord) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_WithdrawRecord) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.WithdrawRecord.zone_id":
+	case "nova.gal.v1.Withdraw.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.WithdrawRecord.withdrawer":
+	case "nova.gal.v1.Withdraw.withdrawer":
 		value := x.Withdrawer
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.WithdrawRecord.recipient":
+	case "nova.gal.v1.Withdraw.recipient":
 		value := x.Recipient
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.WithdrawRecord.amount":
+	case "nova.gal.v1.Withdraw.amount":
 		value := x.Amount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.gal.v1.WithdrawRecord.state":
+	case "nova.gal.v1.Withdraw.state":
 		value := x.State
 		return protoreflect.ValueOfInt64(value)
-	case "nova.gal.v1.WithdrawRecord.completion_time":
+	case "nova.gal.v1.Withdraw.completion_time":
 		value := x.CompletionTime
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.WithdrawRecord"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.Withdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.WithdrawRecord does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.Withdraw does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -4462,23 +4462,23 @@ func (x *fastReflection_WithdrawRecord) Get(descriptor protoreflect.FieldDescrip
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_WithdrawRecord) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.WithdrawRecord.zone_id":
+	case "nova.gal.v1.Withdraw.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.gal.v1.WithdrawRecord.withdrawer":
+	case "nova.gal.v1.Withdraw.withdrawer":
 		x.Withdrawer = value.Interface().(string)
-	case "nova.gal.v1.WithdrawRecord.recipient":
+	case "nova.gal.v1.Withdraw.recipient":
 		x.Recipient = value.Interface().(string)
-	case "nova.gal.v1.WithdrawRecord.amount":
+	case "nova.gal.v1.Withdraw.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
-	case "nova.gal.v1.WithdrawRecord.state":
+	case "nova.gal.v1.Withdraw.state":
 		x.State = value.Int()
-	case "nova.gal.v1.WithdrawRecord.completion_time":
+	case "nova.gal.v1.Withdraw.completion_time":
 		x.CompletionTime = value.Message().Interface().(*timestamppb.Timestamp)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.WithdrawRecord"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.Withdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.WithdrawRecord does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.Withdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4494,29 +4494,29 @@ func (x *fastReflection_WithdrawRecord) Set(fd protoreflect.FieldDescriptor, val
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_WithdrawRecord) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.WithdrawRecord.amount":
+	case "nova.gal.v1.Withdraw.amount":
 		if x.Amount == nil {
 			x.Amount = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.gal.v1.WithdrawRecord.completion_time":
+	case "nova.gal.v1.Withdraw.completion_time":
 		if x.CompletionTime == nil {
 			x.CompletionTime = new(timestamppb.Timestamp)
 		}
 		return protoreflect.ValueOfMessage(x.CompletionTime.ProtoReflect())
-	case "nova.gal.v1.WithdrawRecord.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.gal.v1.WithdrawRecord is not mutable"))
-	case "nova.gal.v1.WithdrawRecord.withdrawer":
-		panic(fmt.Errorf("field withdrawer of message nova.gal.v1.WithdrawRecord is not mutable"))
-	case "nova.gal.v1.WithdrawRecord.recipient":
-		panic(fmt.Errorf("field recipient of message nova.gal.v1.WithdrawRecord is not mutable"))
-	case "nova.gal.v1.WithdrawRecord.state":
-		panic(fmt.Errorf("field state of message nova.gal.v1.WithdrawRecord is not mutable"))
+	case "nova.gal.v1.Withdraw.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.Withdraw is not mutable"))
+	case "nova.gal.v1.Withdraw.withdrawer":
+		panic(fmt.Errorf("field withdrawer of message nova.gal.v1.Withdraw is not mutable"))
+	case "nova.gal.v1.Withdraw.recipient":
+		panic(fmt.Errorf("field recipient of message nova.gal.v1.Withdraw is not mutable"))
+	case "nova.gal.v1.Withdraw.state":
+		panic(fmt.Errorf("field state of message nova.gal.v1.Withdraw is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.WithdrawRecord"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.Withdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.WithdrawRecord does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.Withdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4525,25 +4525,25 @@ func (x *fastReflection_WithdrawRecord) Mutable(fd protoreflect.FieldDescriptor)
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_WithdrawRecord) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.WithdrawRecord.zone_id":
+	case "nova.gal.v1.Withdraw.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.WithdrawRecord.withdrawer":
+	case "nova.gal.v1.Withdraw.withdrawer":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.WithdrawRecord.recipient":
+	case "nova.gal.v1.Withdraw.recipient":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.WithdrawRecord.amount":
+	case "nova.gal.v1.Withdraw.amount":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.gal.v1.WithdrawRecord.state":
+	case "nova.gal.v1.Withdraw.state":
 		return protoreflect.ValueOfInt64(int64(0))
-	case "nova.gal.v1.WithdrawRecord.completion_time":
+	case "nova.gal.v1.Withdraw.completion_time":
 		m := new(timestamppb.Timestamp)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.WithdrawRecord"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.Withdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.WithdrawRecord does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.Withdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4553,7 +4553,7 @@ func (x *fastReflection_WithdrawRecord) NewField(fd protoreflect.FieldDescriptor
 func (x *fastReflection_WithdrawRecord) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.WithdrawRecord", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.Withdraw", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -4757,10 +4757,10 @@ func (x *fastReflection_WithdrawRecord) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: WithdrawRecord: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Withdraw: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: WithdrawRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Withdraw: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -5402,7 +5402,7 @@ func (x *WithdrawRecord) String() string {
 
 func (*WithdrawRecord) ProtoMessage() {}
 
-// Deprecated: Use WithdrawRecord.ProtoReflect.Descriptor instead.
+// Deprecated: Use Withdraw.ProtoReflect.Descriptor instead.
 func (*WithdrawRecord) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_genesis_proto_rawDescGZIP(), []int{7}
 }
@@ -5579,7 +5579,7 @@ var file_nova_gal_v1_genesis_proto_goTypes = []interface{}{
 	(*DepositRecordContent)(nil),  // 4: nova.gal.v1.DepositRecordContent
 	(*WithdrawInfo)(nil),          // 5: nova.gal.v1.WithdrawInfo
 	(*UndelegateRecord)(nil),      // 6: nova.gal.v1.UndelegateRecord
-	(*WithdrawRecord)(nil),        // 7: nova.gal.v1.WithdrawRecord
+	(*WithdrawRecord)(nil),        // 7: nova.gal.v1.Withdraw
 	(*Params)(nil),                // 8: nova.gal.v1.Params
 	(*v1beta1.Coin)(nil),          // 9: cosmos.base.v1beta1.Coin
 	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
@@ -5593,8 +5593,8 @@ var file_nova_gal_v1_genesis_proto_depIdxs = []int32{
 	9,  // 5: nova.gal.v1.DepositRecordContent.amount:type_name -> cosmos.base.v1beta1.Coin
 	10, // 6: nova.gal.v1.WithdrawInfo.completion_time:type_name -> google.protobuf.Timestamp
 	9,  // 7: nova.gal.v1.UndelegateRecord.amount:type_name -> cosmos.base.v1beta1.Coin
-	9,  // 8: nova.gal.v1.WithdrawRecord.amount:type_name -> cosmos.base.v1beta1.Coin
-	10, // 9: nova.gal.v1.WithdrawRecord.completion_time:type_name -> google.protobuf.Timestamp
+	9,  // 8: nova.gal.v1.Withdraw.amount:type_name -> cosmos.base.v1beta1.Coin
+	10, // 9: nova.gal.v1.Withdraw.completion_time:type_name -> google.protobuf.Timestamp
 	10, // [10:10] is the sub-list for method output_type
 	10, // [10:10] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name

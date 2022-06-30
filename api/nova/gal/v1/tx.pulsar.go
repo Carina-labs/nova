@@ -5373,11 +5373,11 @@ var file_nova_gal_v1_tx_proto_depIdxs = []int32{
 	0,  // 5: nova.gal.v1.Msg.Deposit:input_type -> nova.gal.v1.MsgDeposit
 	2,  // 6: nova.gal.v1.Msg.Undelegate:input_type -> nova.gal.v1.MsgUndelegate
 	4,  // 7: nova.gal.v1.Msg.UndelegateRecord:input_type -> nova.gal.v1.MsgUndelegateRecord
-	6,  // 8: nova.gal.v1.Msg.WithdrawRecord:input_type -> nova.gal.v1.MsgWithdrawRecord
+	6,  // 8: nova.gal.v1.Msg.Withdraw:input_type -> nova.gal.v1.MsgWithdrawRecord
 	1,  // 9: nova.gal.v1.Msg.Deposit:output_type -> nova.gal.v1.MsgDepositResponse
 	3,  // 10: nova.gal.v1.Msg.Undelegate:output_type -> nova.gal.v1.MsgUndelegateResponse
 	5,  // 11: nova.gal.v1.Msg.UndelegateRecord:output_type -> nova.gal.v1.MsgUndelegateRecordResponse
-	7,  // 12: nova.gal.v1.Msg.WithdrawRecord:output_type -> nova.gal.v1.MsgWithdrawRecordResponse
+	7,  // 12: nova.gal.v1.Msg.Withdraw:output_type -> nova.gal.v1.MsgWithdrawRecordResponse
 	9,  // [9:13] is the sub-list for method output_type
 	5,  // [5:9] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name

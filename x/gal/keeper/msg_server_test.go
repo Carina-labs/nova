@@ -185,7 +185,7 @@ func (suite *KeeperTestSuite) TestGalAction() {
 
 			// claim share token
 			record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), userAcc)
-			err = suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), userAcc, *record.Records[0].Amount)
+			_, err = suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), userAcc, *record.Records[0].Amount)
 			snBalance := suite.chainA.App.BankKeeper.GetBalance(
 				suite.chainA.GetContext(), userAcc, baseSnDenom)
 			suite.Require().True(sdk.NewInt64Coin(baseSnDenom, tc.expect.snMinting).IsEqual(snBalance))
@@ -273,7 +273,7 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			suite.Require().NoError(err)
 
 			// execute : withdraw
-			_, err = msgServer.WithdrawRecord(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgWithdrawRecord{
+			_, err = msgServer.Withdraw(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgWithdraw{
 				ZoneId:     hostId,
 				Withdrawer: tc.initSet.userAddress,
 				Recipient:  tc.initSet.userAddress,

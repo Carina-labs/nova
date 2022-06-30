@@ -159,7 +159,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			msg := types.NewMsgWithdrawRecord(zoneId, toAddr, coins)
+			msg := types.NewMsgWithdraw(zoneId, toAddr, coins)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},

@@ -72,7 +72,9 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
-	return &types.MsgDepositResponse{}, nil
+	return &types.MsgDepositResponse{
+		Receiver: deposit.Depositor,
+	}, nil
 }
 
 // UndelegateRecord is used when user requests undelegate their staked asset.
@@ -165,10 +167,9 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	return &types.MsgUndelegateResponse{}, nil
 }
 
-// TODO : FIX FUNCTION NAME!
-// WithdrawRecord write user's withdraw requests to the "WithdrawRecord" store.
+// WithdrawRecord write user's withdraw requests to the "Withdraw" store.
 // It will be used after undelegating, distribute native coin to the user.
-func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWithdrawRecord) (*types.MsgWithdrawRecordResponse, error) {
+func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// withdraw record 조회
@@ -212,30 +213,12 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 	}
 
 	if !ok {
-		ctx.EventManager().EmitTypedEvent(&zoneInfo)
-		ctx.EventManager().EmitTypedEvent(&withdrawRecord)
-
-		//ICA transfer 요청(Bot)
-		//transfer msg
-		// var msgs []sdk.Msg
-
-		// msgs = append(msgs, &ibctransfertypes.MsgTransfer{
-		// 	SourcePort:    zoneInfo.TransferConnectionInfo.PortId,
-		// 	SourceChannel: zoneInfo.TransferConnectionInfo.ChannelId,
-		// 	Token:         *withdrawRecord.Amount,
-		// 	Sender:        zoneInfo.IcaConnectionInfo.OwnerAddress,
-		// 	Receiver:      string(m.keeper.accountKeeper.GetModuleAddress(types.ModuleName)),
-		// 	TimeoutHeight: ibcclienttypes.Height{
-		// 		RevisionHeight: 0,
-		// 		RevisionNumber: 0,
-		// 	},
-		// 	TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
-		// })
-
-		// err := m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
-		// if err != nil {
-		// 	return &types.MsgWithdrawRecordResponse{}, errors.New("IcaWithdraw transaction failed to send")
-		// }
+		if err := ctx.EventManager().EmitTypedEvent(&zoneInfo); err != nil {
+			return nil, err
+		}
+		if err := ctx.EventManager().EmitTypedEvent(&withdrawRecord); err != nil {
+			return nil, err
+		}
 	}
 
 	// moduleAccountToAccount
@@ -258,7 +241,10 @@ func (m msgServer) WithdrawRecord(goCtx context.Context, withdraw *types.MsgWith
 
 	m.keeper.SetWithdrawRecord(ctx, *record)
 
-	return &types.MsgWithdrawRecordResponse{}, nil
+	return &types.MsgWithdrawResponse{
+		Withdrawer:     withdraw.Withdrawer,
+		WithdrawAmount: withdrawAmount,
+	}, nil
 }
 
 func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*types.MsgClaimResponse, error) {
@@ -275,12 +261,15 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 
 	for _, record := range record.Records {
 		if record.IsTransferred && record.Amount.Equal(claimMsg.Amount) {
-			err = m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, *record.Amount)
+			minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, *record.Amount)
 			if err != nil {
 				return nil, err
 			}
 
-			return &types.MsgClaimResponse{}, nil
+			return &types.MsgClaimResponse{
+				Claimer: claimMsg.Claimer,
+				Minted:  minted,
+			}, nil
 		}
 	}
 
