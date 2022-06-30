@@ -140,7 +140,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 						Depositor: arg.addr,
 						Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, 500)},
 						HostAddr:  arg.addr,
-						ZoneId:    baseDenom,
+						ZoneId:    hostId,
 					},
 				)
 			},
@@ -180,7 +180,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 						Depositor: arg.addr,
 						Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, 300)},
 						HostAddr:  arg.addr,
-						ZoneId:    baseDenom,
+						ZoneId:    hostId,
 					},
 				)
 				if err != nil {
@@ -193,7 +193,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 						Depositor: arg.addr,
 						Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, 500)},
 						HostAddr:  arg.addr,
-						ZoneId:    baseDenom,
+						ZoneId:    hostId,
 					},
 				)
 			},
