@@ -7,7 +7,6 @@ import (
 	"github.com/Carina-labs/nova/x/inter-tx/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 // RegisterZone
@@ -90,15 +89,15 @@ func (k Keeper) GetZoneForDenom(ctx sdk.Context, denom string) *types.Registered
 	return zone
 }
 
-func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, denom string) string {
+func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, ibcDenom string) string {
 	var zone *types.RegisteredZone
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
-		ibcDenom := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom(
+		zoneIbcDenom := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom(
 			zoneInfo.TransferConnectionInfo.PortId,
 			zoneInfo.TransferConnectionInfo.ChannelId,
 			zoneInfo.BaseDenom)).IBCDenom()
-		if ibcDenom == denom {
+		if ibcDenom == zoneIbcDenom {
 			zone = &zoneInfo
 			return true
 		}

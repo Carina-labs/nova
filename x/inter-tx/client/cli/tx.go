@@ -57,7 +57,16 @@ func getRegisterZoneCmd() *cobra.Command {
 			validatorAddr := args[6]
 			denom := args[7]
 
-			msg := types.NewMsgRegisterZone(zoneName, icaConnId, icaControllerAddr, transferChanId, transferConnId, transferPortId, validatorAddr, denom)
+			msg := types.NewMsgRegisterZone(
+				zoneName,
+				zoneName,
+				icaConnId,
+				icaControllerAddr,
+				transferChanId,
+				transferConnId,
+				transferPortId,
+				validatorAddr,
+				denom)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
