@@ -17,7 +17,7 @@ const (
 var _ sdk.Msg = &MsgDeposit{}
 var _ sdk.Msg = &MsgUndelegate{}
 var _ sdk.Msg = &MsgUndelegateRecord{}
-var _ sdk.Msg = &MsgWithdrawRecord{}
+var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaim{}
 
 func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coins, zoneId string) *MsgDeposit {
@@ -143,8 +143,8 @@ func (msg MsgUndelegateRecord) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgWithdrawRecord(zoneId string, toAddr sdk.AccAddress, amount sdk.Coin) *MsgWithdrawRecord {
-	return &MsgWithdrawRecord{
+func NewMsgWithdraw(zoneId string, toAddr sdk.AccAddress, amount sdk.Coin) *MsgWithdraw {
+	return &MsgWithdraw{
 		ZoneId:     zoneId,
 		Withdrawer: toAddr.String(),
 		Recipient:  "",
@@ -152,15 +152,15 @@ func NewMsgWithdrawRecord(zoneId string, toAddr sdk.AccAddress, amount sdk.Coin)
 	}
 }
 
-func (msg MsgWithdrawRecord) Route() string {
+func (msg MsgWithdraw) Route() string {
 	return RouterKey
 }
 
-func (msg MsgWithdrawRecord) Type() string {
+func (msg MsgWithdraw) Type() string {
 	return TypeMsgWithdrawRecord
 }
 
-func (msg MsgWithdrawRecord) ValidateBasic() error {
+func (msg MsgWithdraw) ValidateBasic() error {
 	// if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
 	// 	return err
 	// }
@@ -180,11 +180,11 @@ func (msg MsgWithdrawRecord) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgWithdrawRecord) GetSignBytes() []byte {
+func (msg MsgWithdraw) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgWithdrawRecord) GetSigners() []sdk.AccAddress {
+func (msg MsgWithdraw) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.Withdrawer)
 	return []sdk.AccAddress{withdrawer}
 }

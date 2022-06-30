@@ -8,23 +8,23 @@ import (
 
 // ClaimAndMintShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
-func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, asset sdk.Coin) error {
-	snAsset := k.interTxKeeper.GetsnDenomForBaseDenom(ctx, asset.Denom)
-	baseDenom := k.interTxKeeper.GetBaseDenomForSnDenom(ctx, snAsset)
-	totalSharedToken := k.bankKeeper.GetSupply(ctx, snAsset)
+func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, asset sdk.Coin) (sdk.Coin, error) {
+	snDenom := k.interTxKeeper.GetsnDenomForBaseDenom(ctx, asset.Denom)
+	baseDenom := k.interTxKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
+	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
 	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, baseDenom)
 	if err != nil {
-		return err
+		return sdk.Coin{}, err
 	}
 
-	mintAmt := k.CalculateAlpha(asset.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	mintAmt := k.CalculateAlpha(asset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
 
-	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(snAsset, sdk.NewIntFromBigInt(mintAmt)))
+	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)))
 	if err != nil {
-		return err
+		return sdk.Coin{}, err
 	}
 
-	return nil
+	return sdk.NewInt64Coin(snDenom, mintAmt.Int64()), nil
 }
 
 // CalculateAlpha calculates alpha value.
