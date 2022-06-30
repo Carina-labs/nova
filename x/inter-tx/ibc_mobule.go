@@ -2,9 +2,7 @@ package inter_tx
 
 import (
 	"fmt"
-	"strings"
 
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	proto "github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/inter-tx/keeper"
@@ -69,11 +67,11 @@ func (im IBCModule) OnChanOpenAck(
 	counterpartyChannelID string,
 	counterpartyVersion string,
 ) error {
-	if !strings.HasPrefix(portID, icatypes.PortPrefix) {
+	if len(portID) < 15 {
 		return fmt.Errorf("invalid port id : %s", portID)
 	}
 
-	ownerAddress := portID[len(icatypes.PortPrefix):]
+	ownerAddress := portID[14:]
 	_, err := sdk.AccAddressFromBech32(ownerAddress)
 	if err != nil {
 		return err
