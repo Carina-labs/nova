@@ -99,7 +99,7 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 				Depositor: sender.String(),
 				Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, sentAmount)},
 				HostAddr:  baseHostAcc.String(),
-				ZoneId:    baseDenom,
+				ZoneId:    hostId,
 			})
 			suite.Require().NoError(err)
 
