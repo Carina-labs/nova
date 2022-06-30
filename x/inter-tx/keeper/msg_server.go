@@ -50,7 +50,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 
-	if !k.IsValidZoneRegisterAddr(ctx, zone.IcaAccount.OwnerAddress) {
+	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.OwnerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.OwnerAddress)
 	}
 
@@ -72,7 +72,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDeleteRegisteredZone) (*types.MsgDeleteRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidZoneRegisterAddr(ctx, zone.SenderAddress) {
+	if !k.IsValidDaoModifier(ctx, zone.SenderAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.SenderAddress)
 	}
 
@@ -94,7 +94,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZoneInfo) (*types.MsgChangeRegisteredZoneInfoResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidZoneRegisterAddr(ctx, zone.IcaAccount.OwnerAddress) {
+	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.OwnerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.OwnerAddress)
 	}
 
@@ -126,7 +126,7 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate) (*types.MsgIcaDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidZoneRegisterAddr(ctx, msg.OwnerAddress) {
+	if !k.IsValidDaoModifier(ctx, msg.OwnerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.OwnerAddress)
 	}
 
@@ -151,7 +151,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndelegate) (*types.MsgIcaUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidZoneRegisterAddr(ctx, msg.OwnerAddress) {
+	if !k.IsValidDaoModifier(ctx, msg.OwnerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.OwnerAddress)
 	}
 
@@ -176,7 +176,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoStaking) (*types.MsgIcaAutoStakingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidZoneRegisterAddr(ctx, msg.OwnerAddress) {
+	if !k.IsValidDaoModifier(ctx, msg.OwnerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.OwnerAddress)
 	}
 
@@ -202,7 +202,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidZoneRegisterAddr(ctx, msg.OwnerAddress) {
+	if !k.IsValidDaoModifier(ctx, msg.OwnerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.OwnerAddress)
 	}
 
@@ -240,7 +240,7 @@ func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgRegisterHostAccount) (*types.MsgRegisterHostAccountResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidZoneRegisterAddr(ctx, msg.AccountInfo.OwnerAddress) {
+	if !k.IsValidDaoModifier(ctx, msg.AccountInfo.OwnerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.AccountInfo.OwnerAddress)
 	}
 

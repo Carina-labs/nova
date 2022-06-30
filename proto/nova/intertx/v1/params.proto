@@ -9,5 +9,5 @@ message Params {
   option (gogoproto.goproto_stringer) = false;
 
   // zone register address.
-  repeated string zone_register_address = 1 [ (gogoproto.moretags) = "yaml:\"address\"" ];
+  repeated string dao_modifiers = 1 [ (gogoproto.moretags) = "yaml:\"address\"" ];
 }

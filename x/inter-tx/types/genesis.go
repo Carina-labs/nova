@@ -19,7 +19,7 @@ func DefaultGenesisState() *GenesisState {
 // ValidateGenesis validates the provided genesis state to ensure the
 // expected invariants holds.
 func ValidateGenesis(gs GenesisState) error {
-	for _, zoneRegisterAddr := range gs.Params.ZoneRegisterAddress {
+	for _, zoneRegisterAddr := range gs.Params.DaoModifiers {
 		_, err := sdk.AccAddressFromBech32(zoneRegisterAddr)
 		if err != nil {
 			return err
