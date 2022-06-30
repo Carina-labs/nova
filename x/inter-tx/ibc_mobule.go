@@ -2,6 +2,7 @@ package inter_tx
 
 import (
 	"fmt"
+	"strings"
 
 	proto "github.com/gogo/protobuf/proto"
 
@@ -11,6 +12,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
 
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	porttypes "github.com/cosmos/ibc-go/v3/modules/core/05-port/types"
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
@@ -67,7 +69,8 @@ func (im IBCModule) OnChanOpenAck(
 	counterpartyChannelID string,
 	counterpartyVersion string,
 ) error {
-	if len(portID) < 15 {
+
+	if !strings.HasPrefix(portID, icatypes.PortPrefix) {
 		return fmt.Errorf("invalid port id : %s", portID)
 	}
 

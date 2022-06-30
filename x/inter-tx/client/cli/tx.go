@@ -36,10 +36,10 @@ func GetTxCmd() *cobra.Command {
 
 func getRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "register [zone-name] [chain-id] [controller-address] [connection-id] [transfer-channel-id] [transfer-connection-id] [transfer-port-id] [validator_address] [base-denom]",
-		Args: cobra.ExactArgs(9),
+		Use:  "register [zone-id] [controller-address] [connection-id] [transfer-channel-id] [transfer-connection-id] [transfer-port-id] [validator_address] [base-denom]",
+		Args: cobra.ExactArgs(8),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
 			}
 
@@ -49,16 +49,15 @@ func getRegisterZoneCmd() *cobra.Command {
 			}
 
 			zoneName := args[0]
-			chainId := args[1]
 			icaControllerAddr := clientCtx.GetFromAddress().String()
-			icaConnId := args[3]
-			transferChanId := args[4]
-			transferConnId := args[5]
-			transferPortId := args[6]
-			validatorAddr := args[7]
-			denom := args[8]
+			icaConnId := args[2]
+			transferChanId := args[3]
+			transferConnId := args[4]
+			transferPortId := args[5]
+			validatorAddr := args[6]
+			denom := args[7]
 
-			msg := types.NewMsgRegisterZone(zoneName, chainId, icaConnId, icaControllerAddr, transferChanId, transferConnId, transferPortId, validatorAddr, denom)
+			msg := types.NewMsgRegisterZone(zoneName, icaConnId, icaControllerAddr, transferChanId, transferConnId, transferPortId, validatorAddr, denom)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -75,7 +74,7 @@ func getRegisterZoneCmd() *cobra.Command {
 
 func getDelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "delegate [zone-name] [sender(host-address)] [controller-address] [amount]",
+		Use:  "delegate [zone-id] [sender(host-address)] [controller-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -108,7 +107,7 @@ func getDelegateTxCmd() *cobra.Command {
 
 func getUndelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegate [zone-name] [sender(host-address)] [controller-address] [amount]",
+		Use:  "undelegate [zone-id] [sender(host-address)] [controller-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -136,7 +135,7 @@ func getUndelegateTxCmd() *cobra.Command {
 
 func getAutoStakingTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "autostaking [zone-name] [sender(host-address)] [controller-address] [amount]",
+		Use:  "autostaking [zone-id] [sender(host-address)] [controller-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -167,7 +166,7 @@ func getAutoStakingTxCmd() *cobra.Command {
 
 func getWithdrawTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "withdraw [zone-name] [sender-address(host-address)] [controller-address] [reveiver] [amount]",
+		Use:  "withdraw [zone-id] [sender-address(host-address)] [controller-address] [reveiver] [amount]",
 		Args: cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
