@@ -29,8 +29,45 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := m.keeper.Deposit(ctx, deposit)
+	// err := m.keeper.Deposit(ctx, deposit)
 
+	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
+	if !ok {
+		return nil, fmt.Errorf("can't find valid IBC zone, input zoneId: %s", deposit.ZoneId)
+	}
+
+	depositorAcc, err := sdk.AccAddressFromBech32(deposit.Depositor)
+	if err != nil {
+		return nil, err
+	}
+
+	newRecord := &types.DepositRecordContent{
+		ZoneId:        zoneInfo.ZoneId,
+		Amount:        &deposit.Amount[0],
+		IsTransferred: false,
+	}
+
+	record, err := m.keeper.GetRecordedDepositAmt(ctx, depositorAcc)
+	if err == types.ErrNoDepositRecord {
+		if err := m.keeper.SetDepositAmt(ctx, &types.DepositRecord{
+			Address: deposit.Depositor,
+			Records: []*types.DepositRecordContent{newRecord},
+		}); err != nil {
+			return nil, err
+		}
+	} else {
+		record.Records = append(record.Records, newRecord)
+		if err := m.keeper.SetDepositAmt(ctx, record); err != nil {
+			return nil, err
+		}
+	}
+
+	err = m.keeper.TransferToTargetZone(ctx,
+		zoneInfo.TransferConnectionInfo.PortId,
+		zoneInfo.TransferConnectionInfo.ChannelId,
+		deposit.Depositor,
+		deposit.HostAddr,
+		deposit.Amount[0])
 	if err != nil {
 		return nil, err
 	}
