@@ -14,7 +14,7 @@ var (
 
 func NewParams(operators []string) Params {
 	return Params{
-		ZoneRegisterAddress: operators,
+		DaoModifiers: operators,
 	}
 }
 
@@ -24,7 +24,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 
 func DefaultParams() Params {
 	return Params{
-		ZoneRegisterAddress: []string{},
+		DaoModifiers: []string{},
 	}
 }
 
@@ -35,12 +35,12 @@ func (p *Params) String() string {
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
-		paramtypes.NewParamSetPair(KeyZoneRegisterAddress, &p.ZoneRegisterAddress, validateZoneRegisterAddress),
+		paramtypes.NewParamSetPair(KeyZoneRegisterAddress, &p.DaoModifiers, validateZoneRegisterAddress),
 	}
 }
 
 func (p *Params) Validate() error {
-	if err := validateZoneRegisterAddress(p.ZoneRegisterAddress); err != nil {
+	if err := validateZoneRegisterAddress(p.DaoModifiers); err != nil {
 		return err
 	}
 

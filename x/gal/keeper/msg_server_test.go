@@ -96,7 +96,7 @@ func (suite *KeeperTestSuite) prepare(initSet initialSet) {
 
 	// prepare inter-tx keeper
 	suite.chainA.App.IntertxKeeper.SetParams(suite.chainA.GetContext(), intertxtypes.Params{
-		ZoneRegisterAddress: []string{
+		DaoModifiers: []string{
 			suite.icaOwnerAddr.String(),
 		},
 	})

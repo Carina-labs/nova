@@ -183,7 +183,7 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 	addresses = append(addresses, addr2)
 
 	params := intertxtypes.Params{
-		ZoneRegisterAddress: addresses,
+		DaoModifiers: addresses,
 	}
 
 	suite.App.IntertxKeeper.SetParams(suite.Ctx, params)
@@ -222,7 +222,7 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			ok := suite.App.IntertxKeeper.IsValidZoneRegisterAddr(suite.Ctx, tc.addr)
+			ok := suite.App.IntertxKeeper.IsValidDaoModifier(suite.Ctx, tc.addr)
 
 			suite.Require().Equal(ok, tc.expect)
 		})

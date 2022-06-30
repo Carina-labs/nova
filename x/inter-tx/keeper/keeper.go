@@ -66,11 +66,11 @@ func (k *Keeper) SetHooks(eh types.ICAHooks) *Keeper {
 	return k
 }
 
-func (k Keeper) IsValidZoneRegisterAddr(ctx sdk.Context, zoneRegisterAddr string) bool {
+func (k Keeper) IsValidDaoModifier(ctx sdk.Context, daoModifier string) bool {
 	params := k.GetParams(ctx)
 
-	for i := range params.ZoneRegisterAddress {
-		if params.ZoneRegisterAddress[i] == zoneRegisterAddr {
+	for i := range params.DaoModifiers {
+		if params.DaoModifiers[i] == daoModifier {
 			return true
 		}
 	}
