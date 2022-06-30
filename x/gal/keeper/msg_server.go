@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -173,9 +174,9 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// withdraw record 조회
-	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, withdraw.ZoneId+withdraw.Withdrawer)
-	if !found {
-		return nil, errors.New("withdraw record is not found")
+	withdrawRecord, err := m.keeper.GetWithdrawRecord(ctx, withdraw.ZoneId+withdraw.Withdrawer)
+	if err != nil {
+		return nil, sdkerrors.Wrap(err, fmt.Sprintf("account: %s", withdrawRecord.Withdrawer))
 	}
 
 	withdrawState := &types.WithdrawRecord{
@@ -216,7 +217,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		if err := ctx.EventManager().EmitTypedEvent(&zoneInfo); err != nil {
 			return nil, err
 		}
-		if err := ctx.EventManager().EmitTypedEvent(&withdrawRecord); err != nil {
+		if err := ctx.EventManager().EmitTypedEvent(withdrawRecord); err != nil {
 			return nil, err
 		}
 	}

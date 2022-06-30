@@ -16,31 +16,36 @@ const (
 	WITHDRAW_REQUEST_USER
 )
 
-// GetWithdrawRecord returns withdraw record item by key.
-func (k Keeper) GetWithdrawRecord(ctx sdk.Context, key string) (types.WithdrawRecord, bool) {
-	withdrawInfo := types.WithdrawRecord{}
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
-	bz := store.Get([]byte(key))
+func (k Keeper) getWithdrawRecordStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
+}
 
-	if len(bz) == 0 {
-		return withdrawInfo, false
+// GetWithdrawRecord returns withdraw record item by key.
+func (k Keeper) GetWithdrawRecord(ctx sdk.Context, key string) (*types.WithdrawRecord, error) {
+	store := k.getWithdrawRecordStore(ctx)
+	keyBytes := []byte(key)
+	if !store.Has(keyBytes) {
+		return nil, types.ErrNoWithdrawRecord
 	}
 
-	k.cdc.MustUnmarshal(bz, &withdrawInfo)
+	res := store.Get(keyBytes)
 
-	return withdrawInfo, true
+	var withdrawRecord types.WithdrawRecord
+	k.cdc.MustUnmarshal(res, &withdrawRecord)
+
+	return &withdrawRecord, nil
 }
 
 // SetWithdrawRecord writes withdraw record.
 func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
+	store := k.getWithdrawRecordStore(ctx)
 	bz := k.cdc.MustMarshal(&record)
 	store.Set([]byte(record.ZoneId+record.Withdrawer), bz)
 }
 
 // DeleteWithdrawRecord removes withdraw record.
 func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw types.WithdrawRecord) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
+	store := k.getWithdrawRecordStore(ctx)
 	store.Delete([]byte(withdraw.ZoneId + withdraw.Withdrawer))
 }
 
@@ -102,7 +107,7 @@ func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, from sdk.AccAddress, amt sdk.C
 
 // IterateWithdrawdRecords iterate
 func (k Keeper) IterateWithdrawdRecords(ctx sdk.Context, fn func(index int64, withdrawInfo types.WithdrawRecord) (stop bool)) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
+	store := k.getWithdrawRecordStore(ctx)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
 	defer func(iterator sdk.Iterator) {
 		err := (iterator).Close()
