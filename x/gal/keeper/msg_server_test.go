@@ -93,6 +93,13 @@ func (suite *KeeperTestSuite) prepare(initSet initialSet) {
 			},
 		},
 	})
+
+	// prepare inter-tx keeper
+	suite.chainA.App.IntertxKeeper.SetParams(suite.chainA.GetContext(), intertxtypes.Params{
+		ZoneRegisterAddress: []string{
+			suite.icaOwnerAddr.String(),
+		},
+	})
 }
 
 func (suite *KeeperTestSuite) TestGalAction() {
