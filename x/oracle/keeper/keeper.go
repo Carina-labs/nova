@@ -52,7 +52,7 @@ func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.ChainI
 	chainInfo := types.ChainInfo{}
 	store := ctx.KVStore(k.storeKey)
 	if !store.Has([]byte(chainDenom)) {
-		return nil, fmt.Errorf("%s is not supported", chainDenom)
+		return nil, sdkerrors.Wrap(types.ErrNoSupportChain, fmt.Sprintf("chain %s", chainDenom))
 	}
 
 	data := store.Get([]byte(chainDenom))

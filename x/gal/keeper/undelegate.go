@@ -43,7 +43,7 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []types.U
 
 // GetUndelegateRecordsForZoneId returns undelegate coins by zone-id.
 func (k Keeper) GetUndelegateRecordsForZoneId(ctx sdk.Context, zoneId string, state UndelegatedState) []types.UndelegateRecord {
-	var undelegateInfo = []types.UndelegateRecord{}
+	var undelegateInfo []types.UndelegateRecord
 
 	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId && undelegateRecord.State == int64(state) {
@@ -92,7 +92,6 @@ func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state Unde
 
 // SetUndelegateRecord write undelegate record.
 func (k Keeper) SetUndelegateRecord(ctx sdk.Context, record types.UndelegateRecord) {
-	// key : zoneId + delegator
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
 	bz := k.cdc.MustMarshal(&record)
 	newStoreKey := record.ZoneId + record.Delegator
