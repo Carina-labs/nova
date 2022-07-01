@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
@@ -29,7 +30,7 @@ func (k Keeper) MarkRecordTransfer(ctx sdk.Context, addr string, i int) error {
 	k.cdc.MustUnmarshal(store.Get([]byte(addr)), &record)
 
 	if len(record.Records) <= i {
-		return fmt.Errorf("can't replace record")
+		return types.ErrCanNotReplaceRecord
 	}
 
 	record.Records[i].IsTransferred = true
@@ -44,9 +45,10 @@ func (k Keeper) MarkRecordTransfer(ctx sdk.Context, addr string, i int) error {
 // GetRecordedDepositAmt returns the amount of coin user deposit by address.
 func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress) (*types.DepositRecord, error) {
 	store := k.getDepositRecordStore(ctx)
-	key := []byte(depositor.String())
+	depositorStr := depositor.String()
+	key := []byte(depositorStr)
 	if !store.Has(key) {
-		return nil, types.ErrNoDepositRecord
+		return nil, sdkerrors.Wrap(types.ErrNoDepositRecord, fmt.Sprintf("account: %s", depositorStr))
 	}
 
 	res := store.Get(key)
@@ -62,7 +64,7 @@ func (k Keeper) ClearRecordedDepositAmt(ctx sdk.Context, depositor sdk.AccAddres
 	store := k.getDepositRecordStore(ctx)
 	depositorStr := depositor.String()
 	if !store.Has([]byte(depositorStr)) {
-		return fmt.Errorf("depositor %s is not in state", depositor.String())
+		return sdkerrors.Wrap(types.ErrNoDepositRecord, fmt.Sprintf("account: %s", depositorStr))
 	}
 
 	store.Delete([]byte(depositorStr))
