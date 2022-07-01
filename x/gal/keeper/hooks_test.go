@@ -97,7 +97,7 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 			// should send deposit message to msg server
 			_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgDeposit{
 				Depositor: sender.String(),
-				Amount:    sdk.Coins{sdk.NewInt64Coin(baseDenom, sentAmount)},
+				Amount:    sdk.NewInt64Coin(baseDenom, sentAmount),
 				HostAddr:  baseHostAcc.String(),
 				ZoneId:    hostId,
 			})

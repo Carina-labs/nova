@@ -20,7 +20,7 @@ var _ sdk.Msg = &MsgUndelegateRecord{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaim{}
 
-func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coins, zoneId string) *MsgDeposit {
+func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coin, zoneId string) *MsgDeposit {
 	return &MsgDeposit{
 		Depositor: fromAddr.String(),
 		HostAddr:  hostAddr,
@@ -46,7 +46,7 @@ func (msg MsgDeposit) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
-	if !msg.Amount.IsAllPositive() {
+	if !msg.Amount.IsPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 

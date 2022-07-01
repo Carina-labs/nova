@@ -4,11 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
@@ -42,23 +40,19 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 
 	newRecord := &types.DepositRecordContent{
 		ZoneId:        zoneInfo.ZoneId,
-		Amount:        &deposit.Amount[0],
+		Amount:        &deposit.Amount,
 		IsTransferred: false,
 	}
 
 	record, err := m.keeper.GetRecordedDepositAmt(ctx, depositorAcc)
 	if err == types.ErrNoDepositRecord {
-		if err := m.keeper.SetDepositAmt(ctx, &types.DepositRecord{
+		m.keeper.SetDepositAmt(ctx, &types.DepositRecord{
 			Address: deposit.Depositor,
 			Records: []*types.DepositRecordContent{newRecord},
-		}); err != nil {
-			return nil, err
-		}
+		})
 	} else {
 		record.Records = append(record.Records, newRecord)
-		if err := m.keeper.SetDepositAmt(ctx, record); err != nil {
-			return nil, err
-		}
+		m.keeper.SetDepositAmt(ctx, record)
 	}
 
 	err = m.keeper.TransferToTargetZone(ctx,
@@ -66,7 +60,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		zoneInfo.TransferConnectionInfo.ChannelId,
 		deposit.Depositor,
 		deposit.HostAddr,
-		deposit.Amount[0])
+		deposit.Amount)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +76,6 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.MsgUndelegateRecord) (*types.MsgUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// snAtom -> [GAL] -> wAtom
 	// change undelegate State
 	_, found := m.keeper.interTxKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
 	if !found {
@@ -90,9 +83,6 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 	}
 
 	//send stAsset to GAL moduleAccount
-	//snBalance := m.keeper.bankKeeper.GetBalance(
-	//	ctx, undelegate.Depositor, "snNova")
-	//fmt.Printf("sn balance : %s\n", snBalance.String())
 	depositorAcc, err := sdk.AccAddressFromBech32(undelegate.Depositor)
 	if err != nil {
 		return nil, err
@@ -115,7 +105,11 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 		Amount:    &amt,
 	})
 
-	return &types.MsgUndelegateRecordResponse{}, nil
+	return &types.MsgUndelegateRecordResponse{
+		ZoneId: undelegate.ZoneId,
+		User:   undelegate.Depositor,
+		Amount: amt,
+	}, nil
 }
 
 // Undelegate used when protocol requests undelegate to the host chain.
@@ -163,11 +157,14 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
 	}
 
-	return &types.MsgUndelegateResponse{}, nil
+	return &types.MsgUndelegateResponse{
+		ZoneId:            zoneInfo.ZoneId,
+		UndelegatedAmount: undelegateAmount,
+	}, nil
 }
 
-// WithdrawRecord write user's withdraw requests to the "Withdraw" store.
-// It will be used after undelegating, distribute native coin to the user.
+// Withdraw write user's withdraw requests to the "Withdraw" store.
+// It will be used after undelegate, distribute native coin to the user.
 func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -186,21 +183,15 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		CompletionTime: withdrawRecord.CompletionTime,
 	}
 
-	// state 변경
 	m.keeper.SetWithdrawRecord(ctx, *withdrawState)
 
-	// zone 정보 조회
 	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
 	if !ok {
 		return nil, errors.New("zone is not found")
 	}
 
-	// module account의 상태 조회
-	voucherDenomTrace := transfertypes.ParseDenomTrace(
-		transfertypes.GetPrefixedDenom(zoneInfo.TransferConnectionInfo.PortId,
-			zoneInfo.TransferConnectionInfo.ChannelId,
-			withdraw.Amount.Denom))
-	withdrawAmount := sdk.NewInt64Coin(voucherDenomTrace.IBCDenom(), withdrawState.Amount.Amount.Int64())
+	ibcDenom := m.keeper.interTxKeeper.GetIBCHashForBaseDenom(ctx, withdraw.Amount.Denom)
+	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawState.Amount.Amount.Int64())
 	ownerAcc, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.OwnerAddress)
 	if err != nil {
 		return nil, err
@@ -208,7 +199,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	ok = m.keeper.IsAbleToWithdraw(ctx, ownerAcc, withdrawAmount)
 	if !ok {
-		return nil, fmt.Errorf("user cannot withdraw funds : insufficient fund")
+		return nil, types.ErrInsufficientFunds
 	}
 
 	if !ok {
@@ -220,7 +211,6 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		}
 	}
 
-	// moduleAccountToAccount
 	recipientAcc, err := sdk.AccAddressFromBech32(withdraw.Recipient)
 	if err != nil {
 		return nil, err
@@ -229,15 +219,14 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, err
 	}
 
-	// withdrawRecord 삭제
 	m.keeper.DeleteWithdrawRecord(ctx, *withdrawState)
+
 	record := &types.WithdrawRecord{
 		ZoneId:         withdraw.ZoneId,
 		Withdrawer:     withdraw.Withdrawer,
 		Amount:         &withdraw.Amount,
 		CompletionTime: withdraw.Time,
 	}
-
 	m.keeper.SetWithdrawRecord(ctx, *record)
 
 	return &types.MsgWithdrawResponse{
@@ -272,6 +261,6 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 		}
 	}
 
-	return nil, fmt.Errorf("can't find deposit record. address: %s, amount: %s",
-		claimMsg.Amount, claimMsg.Amount.String())
+	return nil, sdkerrors.Wrap(types.ErrNoDepositRecord,
+		fmt.Sprintf("account: %s, amount: %s", claimMsg.Amount, claimMsg.Amount.String()))
 }
