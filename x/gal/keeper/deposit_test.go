@@ -52,7 +52,7 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 			suite.SetupTest()
 
 			for _, arg := range tc.args {
-				err := suite.App.GalKeeper.SetDepositAmt(
+				suite.App.GalKeeper.SetDepositAmt(
 					suite.Ctx,
 					&types.DepositRecord{
 						Address: arg.addr.String(),
@@ -64,7 +64,6 @@ func (suite *KeeperTestSuite) TestRecordDepositAmt() {
 							},
 						},
 					})
-				suite.Require().NoError(err)
 			}
 
 			for _, query := range tc.expect {

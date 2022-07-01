@@ -156,7 +156,7 @@ func (suite *KeeperTestSuite) TestGalAction() {
 				Depositor: tc.initSet.userAddress,
 				ZoneId:    hostId,
 				HostAddr:  icaConf.icaHostAddress,
-				Amount:    sdk.NewCoins(sdk.NewInt64Coin(hostIbcDenom, 1000)),
+				Amount:    sdk.NewInt64Coin(hostIbcDenom, 1000),
 			}
 			_, err = msgServer.Deposit(goCtx, &depositMsg)
 			suite.Require().NoError(err)

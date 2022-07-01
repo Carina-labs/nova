@@ -16,11 +16,10 @@ func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
 }
 
 // SetDepositAmt write the amount of coin user deposit to the "DepositRecord" store.
-func (k Keeper) SetDepositAmt(ctx sdk.Context, msg *types.DepositRecord) error {
+func (k Keeper) SetDepositAmt(ctx sdk.Context, msg *types.DepositRecord) {
 	store := k.getDepositRecordStore(ctx)
 	bz := k.cdc.MustMarshal(msg)
 	store.Set([]byte(msg.Address), bz)
-	return nil
 }
 
 func (k Keeper) MarkRecordTransfer(ctx sdk.Context, addr string, i int) error {
@@ -34,10 +33,7 @@ func (k Keeper) MarkRecordTransfer(ctx sdk.Context, addr string, i int) error {
 	}
 
 	record.Records[i].IsTransferred = true
-	err := k.SetDepositAmt(ctx, &record)
-	if err != nil {
-		return err
-	}
+	k.SetDepositAmt(ctx, &record)
 
 	return nil
 }
@@ -48,7 +44,7 @@ func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, depositor sdk.AccAddress)
 	depositorStr := depositor.String()
 	key := []byte(depositorStr)
 	if !store.Has(key) {
-		return nil, sdkerrors.Wrap(types.ErrNoDepositRecord, fmt.Sprintf("account: %s", depositorStr))
+		return nil, types.ErrNoDepositRecord
 	}
 
 	res := store.Get(key)
