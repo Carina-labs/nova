@@ -3,13 +3,26 @@ package types
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
 const (
-	QueryShares      = "shares"
-	QueryAllShares   = "all_shares"
-	QueryTotalShares = "total_shares"
+	QueryDepositHistory    = "depositHistory"
+	QueryUndelegateHistory = "undelegateHistory"
 )
 
 func NewQuerySharesRequest(addr sdk.AccAddress, denom string) *QueryCacheDepositAmountRequest {
 	return &QueryCacheDepositAmountRequest{
+		Address: addr.String(),
+		Denom:   denom,
+	}
+}
+
+func NewDepositHistoryRequest(addr sdk.AccAddress, denom string) *QueryDepositHistoryRequest {
+	return &QueryDepositHistoryRequest{
+		Address: addr.String(),
+		Denom:   denom,
+	}
+}
+
+func NewUndelegateHistoryRequest(addr sdk.AccAddress, denom string) *QueryUndelegateHistoryRequest {
+	return &QueryUndelegateHistoryRequest{
 		Address: addr.String(),
 		Denom:   denom,
 	}

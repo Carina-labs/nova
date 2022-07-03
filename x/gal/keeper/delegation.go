@@ -40,3 +40,7 @@ func (k Keeper) BurnShareTokens(ctx sdk.Context, burner sdk.Address, amt sdk.Coi
 func (k Keeper) Share(context context.Context, rq *types.QueryCacheDepositAmountRequest) (*types.QueryCachedDepositAmountResponse, error) {
 	return nil, nil
 }
+
+func (k Keeper) DepositHistory(context context.Context, rq *types.QueryDepositHistoryRequest) (*types.QueryDepositHistoryResponse, error) {
+	return nil, nil
+}

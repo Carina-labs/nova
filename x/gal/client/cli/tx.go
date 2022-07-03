@@ -80,17 +80,12 @@ func NewUndelegateRequestCmd() *cobra.Command {
 
 			zoneId := args[0]
 			depositor := args[1]
-			if err != nil {
-				return err
-			}
-
 			amount, err := sdk.ParseCoinNormalized(args[2])
 			if err != nil {
-				panic("coin error")
+				panic(fmt.Sprintf("can't parse coin: %s", err.Error()))
 			}
 
 			msg := types.NewMsgUndelegateRecord(zoneId, depositor, amount)
-
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
