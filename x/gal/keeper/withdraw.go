@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -128,4 +129,8 @@ func (k Keeper) IterateWithdrawdRecords(ctx sdk.Context, fn func(index int64, wi
 		}
 		i++
 	}
+}
+
+func (k Keeper) UndelegateHistory(context context.Context, rq *types.QueryUndelegateHistoryRequest) (*types.QueryUndelegateHistoryResponse, error) {
+	return nil, nil
 }

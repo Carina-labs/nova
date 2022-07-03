@@ -72,3 +72,81 @@ Example:
 
 	return cmd
 }
+
+func GetDepositHistory() *cobra.Command {
+	cmd := &cobra.Command{
+		Use: "deposit [address]",
+		Long: strings.TrimSpace(fmt.Sprintf(`Query deposit history of an account or of a specific denomination.
+Example:
+	$ %s query %s deposit [address]
+	$ %s query %s deposit [address] --denom=[denom]`, version.AppName, types.ModuleName, version.AppName, types.ModuleName)),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			denom, err := cmd.Flags().GetString(FlagDenom)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			addr, err := sdk.AccAddressFromBech32(args[0])
+			if err != nil {
+				return err
+			}
+
+			ctx := cmd.Context()
+			query := types.NewDepositHistoryRequest(addr, denom)
+			res, err := queryClient.DepositHistory(ctx, query)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func GetUndelegateHistory() *cobra.Command {
+	cmd := &cobra.Command{
+		Use: "undelegate [address]",
+		Long: strings.TrimSpace(fmt.Sprintf(`Query withdraw history of an account or of a specific denomination.
+Example:
+	$ %s query %s undelegate [address]
+	$ %s query %s undelegate [address] --denom=[denom]`, version.AppName, types.ModuleName, version.AppName, types.ModuleName)),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			denom, err := cmd.Flags().GetString(FlagDenom)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			addr, err := sdk.AccAddressFromBech32(args[0])
+			if err != nil {
+				return err
+			}
+
+			ctx := cmd.Context()
+			query := types.NewUndelegateHistoryRequest(addr, denom)
+			res, err := queryClient.UndelegateHistory(ctx, query)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
