@@ -131,6 +131,39 @@ func (k Keeper) IterateWithdrawdRecords(ctx sdk.Context, fn func(index int64, wi
 	}
 }
 
-func (k Keeper) UndelegateHistory(context context.Context, rq *types.QueryUndelegateHistoryRequest) (*types.QueryUndelegateHistoryResponse, error) {
-	return nil, nil
+func (k Keeper) UndelegateHistory(goCtx context.Context, rq *types.QueryUndelegateHistoryRequest) (*types.QueryUndelegateHistoryResponse, error) {
+	sdkCtx := sdk.UnwrapSDKContext(goCtx)
+	zoneInfo := k.interTxKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
+	if zoneInfo == nil {
+		return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
+	}
+
+	udInfo, ok := k.GetUndelegateRecord(sdkCtx, zoneInfo.ZoneId+rq.Address)
+	if !ok {
+		return nil, fmt.Errorf("there is no undelegate data for address: %s, denom: %s", rq.Address, rq.Denom)
+	}
+
+	return &types.QueryUndelegateHistoryResponse{
+		Address: rq.Address,
+		Amount:  sdk.NewCoins(*udInfo.Amount),
+	}, nil
+}
+
+func (k Keeper) WithdrawHistory(goCtx context.Context, rq *types.QueryWithdrawHistoryRequest) (*types.QueryWithdrawHistoryResponse, error) {
+	sdkCtx := sdk.UnwrapSDKContext(goCtx)
+	zoneInfo := k.interTxKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
+	if zoneInfo == nil {
+		return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
+	}
+
+	// TODO : why GetWithdrawRecord returns error, not bool?
+	wdInfo, err := k.GetWithdrawRecord(sdkCtx, zoneInfo.ZoneId+rq.Address)
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.QueryWithdrawHistoryResponse{
+		Address: rq.Address,
+		Amount:  sdk.NewCoins(*wdInfo.Amount),
+	}, nil
 }

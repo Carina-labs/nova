@@ -27,3 +27,10 @@ func NewUndelegateHistoryRequest(addr sdk.AccAddress, denom string) *QueryUndele
 		Denom:   denom,
 	}
 }
+
+func NewWithdrawHistoryRequest(addr sdk.AccAddress, denom string) *QueryWithdrawHistoryRequest {
+	return &QueryWithdrawHistoryRequest{
+		Address: addr.String(),
+		Denom:   denom,
+	}
+}
