@@ -2,6 +2,8 @@ package keeper_test
 
 import (
 	"fmt"
+	"time"
+
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -15,7 +17,6 @@ import (
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
-	"time"
 )
 
 type oracleSet struct {
@@ -153,10 +154,12 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			executedCtx := suite.chainA.GetContext()
 			goCtx := sdk.WrapSDKContext(executedCtx)
 			depositMsg := types.MsgDeposit{
-				Depositor: tc.initSet.userAddress,
-				ZoneId:    hostId,
-				HostAddr:  icaConf.icaHostAddress,
-				Amount:    sdk.NewInt64Coin(hostIbcDenom, 1000),
+				Depositor:         tc.initSet.userAddress,
+				ZoneId:            hostId,
+				HostAddr:          icaConf.icaHostAddress,
+				TransferPortId:    transferPort,
+				TransferChannelId: transferChannel,
+				Amount:            sdk.NewInt64Coin(hostIbcDenom, 1000),
 			}
 			_, err = msgServer.Deposit(goCtx, &depositMsg)
 			suite.Require().NoError(err)
@@ -247,11 +250,13 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			ctx := suite.chainA.GetContext()
 			_, err = interTxMsgServer.IcaWithdraw(
 				sdk.WrapSDKContext(ctx), &intertxtypes.MsgIcaWithdraw{
-					ZoneName:        hostId,
-					SenderAddress:   icaConf.icaHostAddress,
-					OwnerAddress:    suite.icaOwnerAddr.String(),
-					ReceiverAddress: suite.icaOwnerAddr.String(),
-					Amount:          sdk.NewInt64Coin(hostBaseDenom, tc.expect.withdrawAmount),
+					ZoneId:             hostId,
+					HostAddress:        icaConf.icaHostAddress,
+					DaomodifierAddress: suite.icaOwnerAddr.String(),
+					ReceiverAddress:    suite.icaOwnerAddr.String(),
+					TransferPortId:     transferPort,
+					TransferChannelId:  transferChannel,
+					Amount:             sdk.NewInt64Coin(hostBaseDenom, tc.expect.withdrawAmount),
 				})
 			suite.Require().NoError(err)
 			p, e = ibctesting.ParsePacketFromEvents(ctx.EventManager().Events())
@@ -274,10 +279,12 @@ func (suite *KeeperTestSuite) TestGalAction() {
 
 			// execute : withdraw
 			_, err = msgServer.Withdraw(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgWithdraw{
-				ZoneId:     hostId,
-				Withdrawer: tc.initSet.userAddress,
-				Recipient:  tc.initSet.userAddress,
-				Amount:     sdk.NewInt64Coin(hostBaseDenom, tc.initSet.withdrawAmount),
+				ZoneId:            hostId,
+				Withdrawer:        tc.initSet.userAddress,
+				Recipient:         tc.initSet.userAddress,
+				TransferPortId:    transferPort,
+				TransferChannelId: transferChannel,
+				Amount:            sdk.NewInt64Coin(hostBaseDenom, tc.initSet.withdrawAmount),
 			})
 			suite.Require().NoError(err)
 

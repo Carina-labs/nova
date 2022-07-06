@@ -15,6 +15,7 @@ service Msg {
   rpc Undelegate(MsgUndelegate) returns (MsgUndelegateResponse);
   rpc UndelegateRecord(MsgUndelegateRecord) returns (MsgUndelegateRecordResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
+  rpc Claim(MsgClaim) returns (MsgClaimResponse);
 }
 
 // MsgDeposit defines user who deposit and amount of coins.
@@ -23,6 +24,8 @@ message MsgDeposit {
   cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
   string host_addr = 3;
   string zone_id = 4;
+  string transfer_port_id = 5;
+  string transfer_channel_id = 6;
 }
 
 message MsgDepositResponse {
@@ -59,14 +62,16 @@ message MsgWithdraw {
   string zone_id = 1;
   string withdrawer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   string recipient = 3;
-  cosmos.base.v1beta1.Coin amount = 4
+  string transfer_port_id = 4;
+  string transfer_channel_id = 5;
+  cosmos.base.v1beta1.Coin amount = 6
       [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
-  google.protobuf.Timestamp time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp time = 7[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
 }
 
 message MsgWithdrawResponse {
   string withdrawer = 1;
-  cosmos.base.v1beta1.Coin withdrawAmount = 2
+  cosmos.base.v1beta1.Coin withdraw_amount = 2
   [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 

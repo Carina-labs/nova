@@ -20,12 +20,14 @@ var _ sdk.Msg = &MsgUndelegateRecord{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaim{}
 
-func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coin, zoneId string) *MsgDeposit {
+func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coin, zoneId, portId, chanId string) *MsgDeposit {
 	return &MsgDeposit{
-		Depositor: fromAddr.String(),
-		HostAddr:  hostAddr,
-		ZoneId:    zoneId,
-		Amount:    amount,
+		Depositor:         fromAddr.String(),
+		HostAddr:          hostAddr,
+		ZoneId:            zoneId,
+		Amount:            amount,
+		TransferPortId:    portId,
+		TransferChannelId: chanId,
 	}
 }
 
@@ -48,6 +50,14 @@ func (msg MsgDeposit) ValidateBasic() error {
 
 	if !msg.Amount.IsPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if msg.TransferChannelId == "" {
+		return errors.New("transfer channel id is not null")
+	}
+
+	if msg.TransferPortId == "" {
+		return errors.New("transfer port id is not null")
 	}
 
 	return nil
@@ -143,12 +153,14 @@ func (msg MsgUndelegateRecord) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgWithdraw(zoneId string, toAddr sdk.AccAddress, amount sdk.Coin) *MsgWithdraw {
+func NewMsgWithdraw(zoneId string, toAddr sdk.AccAddress, portId, chanId string, amount sdk.Coin) *MsgWithdraw {
 	return &MsgWithdraw{
-		ZoneId:     zoneId,
-		Withdrawer: toAddr.String(),
-		Recipient:  "",
-		Amount:     amount,
+		ZoneId:            zoneId,
+		Withdrawer:        toAddr.String(),
+		Recipient:         "",
+		TransferPortId:    portId,
+		TransferChannelId: chanId,
+		Amount:            amount,
 	}
 }
 
@@ -204,6 +216,11 @@ func (msg MsgClaim) ValidateBasic() error {
 	return nil
 }
 
+func (msg MsgClaim) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
 func (msg MsgClaim) GetSigners() []sdk.AccAddress {
-	return nil
+	claimer, _ := sdk.AccAddressFromBech32(msg.Claimer)
+	return []sdk.AccAddress{claimer}
 }

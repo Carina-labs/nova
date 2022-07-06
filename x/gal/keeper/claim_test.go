@@ -1,6 +1,8 @@
 package keeper_test
 
-import "math/big"
+import (
+	"math/big"
+)
 
 func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 	tcs := []struct {
@@ -81,3 +83,28 @@ func (suite *KeeperTestSuite) TestCalculateBurnAmount() {
 		suite.Equal(tc.expected, res.Int64())
 	}
 }
+
+// func (suite *KeeperTestSuite) TestGetsnDenomForIBCDenom() {
+// 	tcs := []struct {
+// 		ibcDenom string
+// 		snDenom  string
+// 	}{
+// 		{
+// 			ibcDenom: "ibc/C053D637CCA2A2BA030E2C5EE1B28A16F71CCB0E45E8BE52766DC1B241B77878",
+// 			snDenom:  "snstake",
+// 		},
+// 		{
+// 			ibcDenom: "ibc/ABCDEF",
+// 			snDenom:  "",
+// 		},
+// 	}
+// 	for _, tc := range tcs {
+// 		suite.SetupTest()
+
+// 		suite.chainA.App.IntertxKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+
+// 		res, err := suite.App.GalKeeper.GetsnDenomForIBCDenom(suite.Ctx, tc.ibcDenom)
+// 		suite.Require().NoError(err)
+// 		suite.Equal(tc.snDenom, res)
+// 	}
+// }

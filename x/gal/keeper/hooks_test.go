@@ -1,12 +1,13 @@
 package keeper_test
 
 import (
+	"strconv"
+
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	"strconv"
 )
 
 func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
@@ -96,10 +97,12 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 
 			// should send deposit message to msg server
 			_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgDeposit{
-				Depositor: sender.String(),
-				Amount:    sdk.NewInt64Coin(baseDenom, sentAmount),
-				HostAddr:  baseHostAcc.String(),
-				ZoneId:    hostId,
+				Depositor:         sender.String(),
+				Amount:            sdk.NewInt64Coin(baseDenom, sentAmount),
+				HostAddr:          baseHostAcc.String(),
+				TransferPortId:    transferPort,
+				TransferChannelId: transferChannel,
+				ZoneId:            hostId,
 			})
 			suite.Require().NoError(err)
 

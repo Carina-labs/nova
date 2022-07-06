@@ -79,11 +79,8 @@ func (suite *KeeperTestSuite) TestGetRegisterZoneInfo() {
 
 			if ok {
 				suite.Require().Equal(res.ZoneId, tc.zone.ZoneId)
-				suite.Require().Equal(res.TransferConnectionInfo.ChannelId, tc.zone.TransferConnectionInfo.ChannelId)
-				suite.Require().Equal(res.TransferConnectionInfo.ConnectionId, tc.zone.TransferConnectionInfo.ConnectionId)
-				suite.Require().Equal(res.TransferConnectionInfo.PortId, tc.zone.TransferConnectionInfo.PortId)
 				suite.Require().Equal(res.IcaConnectionInfo.ConnectionId, tc.zone.IcaConnectionInfo.ConnectionId)
-				suite.Require().Equal(res.IcaAccount.OwnerAddress, tc.zone.IcaAccount.OwnerAddress)
+				suite.Require().Equal(res.IcaAccount.DaomodifierAddress, tc.zone.IcaAccount.DaomodifierAddress)
 				suite.Require().Equal(res.ValidatorAddress, tc.zone.ValidatorAddress)
 				suite.Require().Equal(res.SnDenom, tc.zone.SnDenom)
 			}
@@ -200,29 +197,32 @@ func (suite *KeeperTestSuite) GetRegisteredZoneForPortId() {
 }
 
 func (suite *KeeperTestSuite) TestGetsnDenomForBaseDenom() {
-	zoneInfo := suite.setZone(1)
+	zoneInfo := suite.setZone(2)
 
 	tcs := []struct {
 		name      string
 		zone      *types.RegisteredZone
 		baseDenom string
-		result    *types.RegisteredZone
+		result    string
 	}{
 		{
 			name:      "should get snDenom for baseDenom",
 			zone:      &zoneInfo[0],
 			baseDenom: zoneInfo[0].BaseDenom,
-			result:    &zoneInfo[0],
+			result:    zoneInfo[0].SnDenom,
+		},
+		{
+			name:      "fail",
+			zone:      &zoneInfo[1],
+			baseDenom: "osmo",
+			result:    "",
 		},
 	}
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			suite.App.IntertxKeeper.RegisterZone(suite.Ctx, tc.zone)
-			ibcDenom := suite.App.IntertxKeeper.GetIBCHashForBaseDenom(suite.Ctx, tc.baseDenom)
-
-			res := suite.App.IntertxKeeper.GetsnDenomForBaseDenom(suite.Ctx, ibcDenom)
-
-			suite.Require().Equal(res, tc.result.SnDenom)
+			res := suite.App.IntertxKeeper.GetsnDenomForBaseDenom(suite.Ctx, tc.baseDenom)
+			suite.Require().Equal(res, tc.result)
 		})
 	}
 }
@@ -256,40 +256,34 @@ func (suite *KeeperTestSuite) TestGetBaseDenomForSnDenom() {
 
 func (suite *KeeperTestSuite) TestGetIBCDenomForBaseDenom() {
 	success := types.RegisteredZone{
-		ZoneId: "gaia",
-		TransferConnectionInfo: &types.TransferConnectionInfo{
-			ConnectionId: "connection-0",
-			PortId:       "transfer",
-			ChannelId:    "channel-56",
-		},
+		ZoneId:    "gaia",
 		BaseDenom: "uatom",
 	}
 
 	fail := types.RegisteredZone{
-		ZoneId: "gaia1",
-		TransferConnectionInfo: &types.TransferConnectionInfo{
-			ConnectionId: "connection-0",
-			PortId:       "",
-			ChannelId:    "",
-		},
+		ZoneId:    "gaia1",
 		BaseDenom: "osmo",
 	}
-
-	ibcDenom := "ibc/971DA0C006A97BEC98779132827466419FBD84A9897C2677AD9751813C72E68C"
 
 	tcs := []struct {
 		name     string
 		zoneInfo types.RegisteredZone
+		portId   string
+		chanId   string
 		expect   string
 	}{
 		{
 			name:     "success",
 			zoneInfo: success,
-			expect:   ibcDenom,
+			portId:   "transfer",
+			chanId:   "channel-0",
+			expect:   "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2",
 		},
 		{
 			name:     "path is nil",
 			zoneInfo: fail,
+			portId:   "",
+			chanId:   "",
 			expect:   "osmo",
 		},
 	}
@@ -297,7 +291,7 @@ func (suite *KeeperTestSuite) TestGetIBCDenomForBaseDenom() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			suite.App.IntertxKeeper.RegisterZone(suite.Ctx, &tc.zoneInfo)
-			res := suite.App.IntertxKeeper.GetIBCHashForBaseDenom(suite.Ctx, tc.zoneInfo.BaseDenom)
+			res := suite.App.IntertxKeeper.GetIBCHashDenom(suite.Ctx, tc.portId, tc.chanId, tc.zoneInfo.BaseDenom)
 
 			suite.Require().Equal(res, tc.expect)
 		})

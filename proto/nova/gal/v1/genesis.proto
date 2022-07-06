@@ -13,16 +13,16 @@ option go_package = "github.com/Carina-labs/nova/x/gal/types";
 // GenesisState defines the gal module's genesis state.
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
-  repeated DepositAccount depositAccounts = 2;
-  repeated WithdrawInfo withdrawInfo = 3;
+  repeated DepositAccount deposit_accounts = 2;
+  repeated WithdrawInfo withdraw_info = 3;
 }
 
 // DepositAccount defines snToken's total share and deposit information.
 message DepositAccount {
   string denom = 1;
-  repeated DepositInfo depositInfos = 2;
-  int64 totalShare = 3;
-  int64 lastBlockUpdate = 4;
+  repeated DepositInfo deposit_infos = 2;
+  int64 total_share = 3;
+  int64 last_block_update = 4;
 }
 
 // DepositInfo defines user address, share and debt.
@@ -40,7 +40,7 @@ message DepositRecord {
 message DepositRecordContent {
   string zone_id = 1;
   cosmos.base.v1beta1.Coin amount = 2;
-  bool isTransferred = 3;
+  bool is_transferred = 3;
 }
 
 message WithdrawInfo {

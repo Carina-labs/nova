@@ -63,7 +63,7 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 
 	packetData := channeltypes.Packet{
 		Sequence:           1,
-		SourcePort:         "icacontroller-" + zone[0].IcaAccount.OwnerAddress,
+		SourcePort:         "icacontroller-" + zone[0].IcaAccount.DaomodifierAddress,
 		SourceChannel:      "channel-0",
 		DestinationPort:    "icahost",
 		DestinationChannel: "channel-0",

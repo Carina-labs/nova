@@ -16,15 +16,14 @@ message GenesisState {
 message RegisteredZone {
   string zone_id = 1;
   IcaConnectionInfo ica_connection_info = 2;
-  TransferConnectionInfo transfer_connection_info = 3;
-  IcaAccount ica_account = 4;
-  string validator_address = 5;
-  string base_denom = 6;
-  string sn_denom = 7;
+  IcaAccount ica_account = 3;
+  string validator_address = 4;
+  string base_denom = 5;
+  string sn_denom = 6;
 }
 
 message IcaAccount {
-  string owner_address = 1;
+  string daomodifier_address = 1;
   string host_address = 2;
   cosmos.base.v1beta1.Coin balance = 3 [
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
@@ -36,10 +35,4 @@ message IcaAccount {
 message IcaConnectionInfo {
   string connection_id = 1;
   string port_id = 2;
-}
-
-message TransferConnectionInfo {
-  string connection_id = 1;
-  string port_id = 2;
-  string channel_id = 3;
 }
