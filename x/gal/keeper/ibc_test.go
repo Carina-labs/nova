@@ -145,14 +145,9 @@ func newBaseRegisteredZone() *intertxtypes.RegisteredZone {
 			ConnectionId: icaConnection,
 			PortId:       icaControllerPort,
 		},
-		TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
-			ConnectionId: transferConnection,
-			PortId:       transferPort,
-			ChannelId:    transferChannel,
-		},
 		IcaAccount: &intertxtypes.IcaAccount{
-			OwnerAddress: baseOwnerAcc.String(),
-			HostAddress:  baseHostAcc.String(),
+			DaomodifierAddress: baseOwnerAcc.String(),
+			HostAddress:        baseHostAcc.String(),
 		},
 		ValidatorAddress: "",
 		BaseDenom:        hostBaseDenom,

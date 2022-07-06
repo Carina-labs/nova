@@ -4,12 +4,18 @@ import (
 	"math/big"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 // ClaimAndMintShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
 func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, asset sdk.Coin) (sdk.Coin, error) {
-	snDenom := k.interTxKeeper.GetsnDenomForBaseDenom(ctx, asset.Denom)
+	snDenom, err := k.GetsnDenomForIBCDenom(ctx, asset.Denom)
+
+	if err != nil {
+		return sdk.Coin{}, err
+	}
+
 	baseDenom := k.interTxKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
 	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, baseDenom)
@@ -57,4 +63,17 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 func (k Keeper) CalculateLambda(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
 	res := new(big.Int)
 	return res.Mul(burnedStTokenAmt, totalStakedAmount).Div(res, totalShareTokenSupply)
+}
+
+func (k Keeper) GetsnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string, error) {
+	denom, err := k.ibcTransferKeeper.DenomPathFromHash(ctx, ibcDenom)
+	if err != nil {
+		return "", err
+	}
+
+	denomTrace := transfertypes.ParseDenomTrace(denom)
+
+	snDenom := k.interTxKeeper.GetsnDenomForBaseDenom(ctx, denomTrace.BaseDenom)
+
+	return snDenom, nil
 }

@@ -2,6 +2,8 @@ package keeper
 
 import (
 	"fmt"
+
+	// transferkeeper "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 
 	"github.com/Carina-labs/nova/x/inter-tx/types"
@@ -89,51 +91,45 @@ func (k Keeper) GetZoneForDenom(ctx sdk.Context, denom string) *types.Registered
 	return zone
 }
 
-func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, ibcDenom string) string {
-	var zone *types.RegisteredZone
+func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, baseDenom string) string {
+	var snDenom string
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
-		zoneIbcDenom := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom(
-			zoneInfo.TransferConnectionInfo.PortId,
-			zoneInfo.TransferConnectionInfo.ChannelId,
-			zoneInfo.BaseDenom)).IBCDenom()
-		if ibcDenom == zoneIbcDenom {
-			zone = &zoneInfo
+		if zoneInfo.BaseDenom == baseDenom {
+			snDenom = zoneInfo.SnDenom
 			return true
 		}
 		return false
 	})
 
-	return zone.SnDenom
+	return snDenom
 }
 
 func (k Keeper) GetBaseDenomForSnDenom(ctx sdk.Context, snDenom string) string {
-	var zone *types.RegisteredZone
+	var baseDenom string
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
 		if zoneInfo.SnDenom == snDenom {
-			zone = &zoneInfo
+			baseDenom = zoneInfo.BaseDenom
 			return true
 		}
 		return false
 	})
-
-	return zone.BaseDenom
+	return baseDenom
 }
 
-func (k Keeper) GetIBCHashForBaseDenom(ctx sdk.Context, baseDenom string) string {
+func (k Keeper) GetIBCHashDenom(ctx sdk.Context, portId, chanId, baseDenom string) string {
 	var path string
-	zoneInfo := k.GetZoneForDenom(ctx, baseDenom)
 
-	if zoneInfo.TransferConnectionInfo.PortId == "" || zoneInfo.TransferConnectionInfo.ChannelId == "" {
+	if portId == "" || chanId == "" {
 		path = ""
 	} else {
-		path = zoneInfo.TransferConnectionInfo.PortId + "/" + zoneInfo.TransferConnectionInfo.ChannelId
+		path = portId + "/" + chanId
 	}
 
 	denomTrace := transfertypes.DenomTrace{
 		Path:      path,
-		BaseDenom: zoneInfo.BaseDenom,
+		BaseDenom: baseDenom,
 	}
 
 	denomHash := denomTrace.IBCDenom()

@@ -71,13 +71,12 @@ func (m *GenesisState) GetParams() Params {
 }
 
 type RegisteredZone struct {
-	ZoneId                 string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	IcaConnectionInfo      *IcaConnectionInfo      `protobuf:"bytes,2,opt,name=ica_connection_info,json=icaConnectionInfo,proto3" json:"ica_connection_info,omitempty"`
-	TransferConnectionInfo *TransferConnectionInfo `protobuf:"bytes,3,opt,name=transfer_connection_info,json=transferConnectionInfo,proto3" json:"transfer_connection_info,omitempty"`
-	IcaAccount             *IcaAccount             `protobuf:"bytes,4,opt,name=ica_account,json=icaAccount,proto3" json:"ica_account,omitempty"`
-	ValidatorAddress       string                  `protobuf:"bytes,5,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
-	BaseDenom              string                  `protobuf:"bytes,6,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
-	SnDenom                string                  `protobuf:"bytes,7,opt,name=sn_denom,json=snDenom,proto3" json:"sn_denom,omitempty"`
+	ZoneId            string             `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	IcaConnectionInfo *IcaConnectionInfo `protobuf:"bytes,2,opt,name=ica_connection_info,json=icaConnectionInfo,proto3" json:"ica_connection_info,omitempty"`
+	IcaAccount        *IcaAccount        `protobuf:"bytes,3,opt,name=ica_account,json=icaAccount,proto3" json:"ica_account,omitempty"`
+	ValidatorAddress  string             `protobuf:"bytes,4,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
+	BaseDenom         string             `protobuf:"bytes,5,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
+	SnDenom           string             `protobuf:"bytes,6,opt,name=sn_denom,json=snDenom,proto3" json:"sn_denom,omitempty"`
 }
 
 func (m *RegisteredZone) Reset()         { *m = RegisteredZone{} }
@@ -127,13 +126,6 @@ func (m *RegisteredZone) GetIcaConnectionInfo() *IcaConnectionInfo {
 	return nil
 }
 
-func (m *RegisteredZone) GetTransferConnectionInfo() *TransferConnectionInfo {
-	if m != nil {
-		return m.TransferConnectionInfo
-	}
-	return nil
-}
-
 func (m *RegisteredZone) GetIcaAccount() *IcaAccount {
 	if m != nil {
 		return m.IcaAccount
@@ -163,9 +155,9 @@ func (m *RegisteredZone) GetSnDenom() string {
 }
 
 type IcaAccount struct {
-	OwnerAddress string     `protobuf:"bytes,1,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
-	HostAddress  string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
-	Balance      types.Coin `protobuf:"bytes,3,opt,name=balance,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"balance"`
+	DaomodifierAddress string     `protobuf:"bytes,1,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
+	HostAddress        string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
+	Balance            types.Coin `protobuf:"bytes,3,opt,name=balance,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"balance"`
 }
 
 func (m *IcaAccount) Reset()         { *m = IcaAccount{} }
@@ -201,9 +193,9 @@ func (m *IcaAccount) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_IcaAccount proto.InternalMessageInfo
 
-func (m *IcaAccount) GetOwnerAddress() string {
+func (m *IcaAccount) GetDaomodifierAddress() string {
 	if m != nil {
-		return m.OwnerAddress
+		return m.DaomodifierAddress
 	}
 	return ""
 }
@@ -275,114 +267,50 @@ func (m *IcaConnectionInfo) GetPortId() string {
 	return ""
 }
 
-type TransferConnectionInfo struct {
-	ConnectionId string `protobuf:"bytes,1,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
-	PortId       string `protobuf:"bytes,2,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
-	ChannelId    string `protobuf:"bytes,3,opt,name=channel_id,json=channelId,proto3" json:"channel_id,omitempty"`
-}
-
-func (m *TransferConnectionInfo) Reset()         { *m = TransferConnectionInfo{} }
-func (m *TransferConnectionInfo) String() string { return proto.CompactTextString(m) }
-func (*TransferConnectionInfo) ProtoMessage()    {}
-func (*TransferConnectionInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f37fac6afa23cfb3, []int{4}
-}
-func (m *TransferConnectionInfo) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *TransferConnectionInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_TransferConnectionInfo.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *TransferConnectionInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransferConnectionInfo.Merge(m, src)
-}
-func (m *TransferConnectionInfo) XXX_Size() int {
-	return m.Size()
-}
-func (m *TransferConnectionInfo) XXX_DiscardUnknown() {
-	xxx_messageInfo_TransferConnectionInfo.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_TransferConnectionInfo proto.InternalMessageInfo
-
-func (m *TransferConnectionInfo) GetConnectionId() string {
-	if m != nil {
-		return m.ConnectionId
-	}
-	return ""
-}
-
-func (m *TransferConnectionInfo) GetPortId() string {
-	if m != nil {
-		return m.PortId
-	}
-	return ""
-}
-
-func (m *TransferConnectionInfo) GetChannelId() string {
-	if m != nil {
-		return m.ChannelId
-	}
-	return ""
-}
-
 func init() {
 	proto.RegisterType((*GenesisState)(nil), "nova.intertx.v1.GenesisState")
 	proto.RegisterType((*RegisteredZone)(nil), "nova.intertx.v1.RegisteredZone")
 	proto.RegisterType((*IcaAccount)(nil), "nova.intertx.v1.IcaAccount")
 	proto.RegisterType((*IcaConnectionInfo)(nil), "nova.intertx.v1.IcaConnectionInfo")
-	proto.RegisterType((*TransferConnectionInfo)(nil), "nova.intertx.v1.TransferConnectionInfo")
 }
 
 func init() { proto.RegisterFile("nova/intertx/v1/genesis.proto", fileDescriptor_f37fac6afa23cfb3) }
 
 var fileDescriptor_f37fac6afa23cfb3 = []byte{
-	// 564 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x53, 0xcd, 0x72, 0x12, 0x4d,
-	0x14, 0x65, 0x92, 0x7c, 0xf0, 0xa5, 0xc1, 0x1f, 0x46, 0x2b, 0x19, 0xa2, 0x99, 0xe8, 0xb8, 0x30,
-	0x55, 0xca, 0x8c, 0x68, 0xb9, 0x73, 0x13, 0xf0, 0xa7, 0x66, 0xa7, 0xa3, 0xab, 0x6c, 0xa6, 0x7a,
-	0xa6, 0x1b, 0xe8, 0x12, 0xfa, 0x52, 0xd3, 0x0d, 0xa2, 0x7b, 0xf7, 0x3e, 0x87, 0xaf, 0xe0, 0x0b,
-	0x64, 0x99, 0xa5, 0x2b, 0xb5, 0xe0, 0x45, 0xac, 0xfe, 0x01, 0x52, 0xc0, 0xce, 0x15, 0xd3, 0xe7,
-	0x9c, 0x3e, 0xf7, 0x70, 0xef, 0x6d, 0x74, 0xcc, 0x61, 0x82, 0x23, 0xc6, 0x25, 0x2d, 0xe4, 0x34,
-	0x9a, 0xb4, 0xa2, 0x1e, 0xe5, 0x54, 0x30, 0x11, 0x8e, 0x0a, 0x90, 0xe0, 0xde, 0x50, 0x74, 0x68,
-	0xe9, 0x70, 0xd2, 0x3a, 0xba, 0xdd, 0x83, 0x1e, 0x68, 0x2e, 0x52, 0x5f, 0x46, 0x76, 0xd4, 0xc8,
-	0x41, 0x0c, 0x41, 0xa4, 0x86, 0x30, 0x07, 0x4b, 0xf9, 0xe6, 0x14, 0x65, 0x58, 0xd0, 0x68, 0xd2,
-	0xca, 0xa8, 0xc4, 0xad, 0x28, 0x07, 0xc6, 0x2d, 0x7f, 0x77, 0x3d, 0xc0, 0x08, 0x17, 0x78, 0x68,
-	0x6f, 0x07, 0xaf, 0x50, 0xed, 0x8d, 0x09, 0xf4, 0x5e, 0x62, 0x49, 0xdd, 0xe7, 0xa8, 0x6c, 0x78,
-	0xcf, 0xb9, 0xe7, 0x9c, 0x56, 0x9f, 0x1e, 0x86, 0x6b, 0x01, 0xc3, 0xb7, 0x9a, 0x6e, 0xef, 0x5d,
-	0xfc, 0x3a, 0x29, 0x25, 0x56, 0x1c, 0x7c, 0xdd, 0x45, 0xd7, 0x13, 0xda, 0x63, 0x42, 0xd2, 0x82,
-	0x92, 0x73, 0xe0, 0xd4, 0x3d, 0x44, 0x95, 0x2f, 0xc0, 0x69, 0xca, 0x88, 0xb6, 0xda, 0x4f, 0xca,
-	0xea, 0x18, 0x13, 0x37, 0x41, 0xb7, 0x58, 0x8e, 0xd3, 0x1c, 0x38, 0xa7, 0xb9, 0x64, 0xc0, 0x53,
-	0xc6, 0xbb, 0xe0, 0xed, 0xe8, 0x7a, 0xc1, 0x46, 0xbd, 0x38, 0xc7, 0x9d, 0xa5, 0x34, 0xe6, 0x5d,
-	0x48, 0xea, 0x6c, 0x1d, 0x72, 0x31, 0xf2, 0x64, 0x81, 0xb9, 0xe8, 0xd2, 0x62, 0xc3, 0x78, 0x57,
-	0x1b, 0x3f, 0xdc, 0x30, 0xfe, 0x60, 0x2f, 0xac, 0xb9, 0x1f, 0xc8, 0xad, 0xb8, 0xfb, 0x02, 0x55,
-	0x55, 0x6c, 0x9c, 0xe7, 0x30, 0xe6, 0xd2, 0xdb, 0xd3, 0xae, 0x77, 0xb6, 0xc5, 0x3d, 0x33, 0x92,
-	0x04, 0xb1, 0xe5, 0xb7, 0xfb, 0x08, 0xd5, 0x27, 0x78, 0xc0, 0x08, 0x96, 0x50, 0xa4, 0x98, 0x90,
-	0x82, 0x0a, 0xe1, 0xfd, 0xa7, 0xfb, 0x72, 0x73, 0x49, 0x9c, 0x19, 0xdc, 0x3d, 0x46, 0x48, 0x4d,
-	0x33, 0x25, 0x94, 0xc3, 0xd0, 0x2b, 0x6b, 0xd5, 0xbe, 0x42, 0x5e, 0x2a, 0xc0, 0x6d, 0xa0, 0xff,
-	0x05, 0xb7, 0x64, 0x45, 0x93, 0x15, 0xc1, 0x35, 0x15, 0xfc, 0x70, 0x10, 0x5a, 0x25, 0x70, 0x1f,
-	0xa0, 0x6b, 0xf0, 0x89, 0xd3, 0x55, 0x45, 0x33, 0x89, 0x9a, 0x06, 0x17, 0xd5, 0xee, 0xa3, 0x5a,
-	0x1f, 0x84, 0x5c, 0x6a, 0x76, 0xb4, 0xa6, 0xaa, 0xb0, 0x85, 0x84, 0xa2, 0x4a, 0x86, 0x07, 0x98,
-	0xe7, 0xd4, 0x76, 0xb3, 0x11, 0xda, 0x1d, 0x54, 0xa9, 0x42, 0xbb, 0x75, 0x61, 0x07, 0x18, 0x6f,
-	0x3f, 0x51, 0x8b, 0xf1, 0xfd, 0xf7, 0xc9, 0x69, 0x8f, 0xc9, 0xfe, 0x38, 0x0b, 0x73, 0x18, 0xda,
-	0x85, 0xb5, 0x3f, 0x4d, 0x41, 0x3e, 0x46, 0xf2, 0xf3, 0x88, 0x0a, 0x7d, 0x41, 0x24, 0x0b, 0xef,
-	0xe0, 0x1d, 0xaa, 0x6f, 0x4c, 0x5b, 0xfd, 0x87, 0xab, 0x13, 0x5d, 0x6c, 0x53, 0x6d, 0x05, 0xc6,
-	0x44, 0x2d, 0xdb, 0x08, 0x0a, 0xa9, 0x68, 0x13, 0xbf, 0xac, 0x8e, 0x31, 0x09, 0xc6, 0xe8, 0x60,
-	0xfb, 0x9c, 0xff, 0xcd, 0x57, 0x8d, 0x28, 0xef, 0x63, 0xce, 0xe9, 0x40, 0x71, 0xbb, 0x66, 0x44,
-	0x16, 0x89, 0x49, 0xfb, 0xf5, 0xc5, 0xcc, 0x77, 0x2e, 0x67, 0xbe, 0xf3, 0x67, 0xe6, 0x3b, 0xdf,
-	0xe6, 0x7e, 0xe9, 0x72, 0xee, 0x97, 0x7e, 0xce, 0xfd, 0xd2, 0xf9, 0xe3, 0x2b, 0x6d, 0xe9, 0xe0,
-	0x82, 0x71, 0xdc, 0x1c, 0xe0, 0x4c, 0x44, 0xfa, 0x95, 0x4e, 0xcd, 0x3b, 0x6d, 0xca, 0xa9, 0x69,
-	0x50, 0x56, 0xd6, 0xaf, 0xf4, 0xd9, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x46, 0xbf, 0xd6, 0xb7,
-	0x46, 0x04, 0x00, 0x00,
+	// 514 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x92, 0xcb, 0x6e, 0x13, 0x31,
+	0x14, 0x86, 0x33, 0xa5, 0x24, 0xd4, 0x09, 0x97, 0xb8, 0x48, 0x4d, 0x0a, 0x9d, 0x42, 0xd8, 0x54,
+	0x82, 0x8c, 0x09, 0x88, 0x1d, 0x9b, 0x26, 0x5c, 0x94, 0x1d, 0x0c, 0xbb, 0x6e, 0x46, 0x1e, 0xdb,
+	0x49, 0x2d, 0x12, 0x9f, 0x68, 0xec, 0x46, 0x81, 0xa7, 0xe0, 0x19, 0x58, 0xf2, 0x22, 0x74, 0xd9,
+	0x25, 0x2b, 0x40, 0xc9, 0x8b, 0x20, 0x5f, 0x72, 0x51, 0xca, 0x6a, 0xc6, 0xe7, 0xfb, 0x7d, 0xce,
+	0x2f, 0x9f, 0x1f, 0x1d, 0x29, 0x98, 0x52, 0x22, 0x95, 0x11, 0x85, 0x99, 0x91, 0x69, 0x87, 0x0c,
+	0x85, 0x12, 0x5a, 0xea, 0x64, 0x52, 0x80, 0x01, 0x7c, 0xd7, 0xe2, 0x24, 0xe0, 0x64, 0xda, 0x39,
+	0xbc, 0x3f, 0x84, 0x21, 0x38, 0x46, 0xec, 0x9f, 0x97, 0x1d, 0x36, 0x19, 0xe8, 0x31, 0xe8, 0xcc,
+	0x03, 0x7f, 0x08, 0x28, 0xf6, 0x27, 0x92, 0x53, 0x2d, 0xc8, 0xb4, 0x93, 0x0b, 0x43, 0x3b, 0x84,
+	0x81, 0x54, 0x81, 0x3f, 0xdc, 0x36, 0x30, 0xa1, 0x05, 0x1d, 0x87, 0xdb, 0xad, 0xb7, 0xa8, 0xf6,
+	0xde, 0x1b, 0xfa, 0x64, 0xa8, 0x11, 0xf8, 0x15, 0x2a, 0x7b, 0xde, 0x88, 0x1e, 0x45, 0x27, 0xd5,
+	0x17, 0x07, 0xc9, 0x96, 0xc1, 0xe4, 0x83, 0xc3, 0xdd, 0xdd, 0xcb, 0xdf, 0xc7, 0xa5, 0x34, 0x88,
+	0x5b, 0xdf, 0x77, 0xd0, 0x9d, 0x54, 0x0c, 0xa5, 0x36, 0xa2, 0x10, 0xfc, 0x0c, 0x94, 0xc0, 0x07,
+	0xa8, 0xf2, 0x15, 0x94, 0xc8, 0x24, 0x77, 0xad, 0xf6, 0xd2, 0xb2, 0x3d, 0xf6, 0x39, 0x4e, 0xd1,
+	0xbe, 0x64, 0x34, 0x63, 0xa0, 0x94, 0x60, 0x46, 0x82, 0xca, 0xa4, 0x1a, 0x40, 0x63, 0xc7, 0xcd,
+	0x6b, 0x5d, 0x9b, 0xd7, 0x67, 0xb4, 0xb7, 0x92, 0xf6, 0xd5, 0x00, 0xd2, 0xba, 0xdc, 0x2e, 0xe1,
+	0xd7, 0xa8, 0x6a, 0x7b, 0x52, 0xc6, 0xe0, 0x42, 0x99, 0xc6, 0x0d, 0xd7, 0xeb, 0xc1, 0xff, 0x7a,
+	0x9d, 0x7a, 0x49, 0x8a, 0xe4, 0xea, 0x1f, 0x3f, 0x45, 0xf5, 0x29, 0x1d, 0x49, 0x4e, 0x0d, 0x14,
+	0x19, 0xe5, 0xbc, 0x10, 0x5a, 0x37, 0x76, 0x9d, 0xe9, 0x7b, 0x2b, 0x70, 0xea, 0xeb, 0xf8, 0x08,
+	0x21, 0xfb, 0xd4, 0x19, 0x17, 0x0a, 0xc6, 0x8d, 0x9b, 0x4e, 0xb5, 0x67, 0x2b, 0x6f, 0x6c, 0x01,
+	0x37, 0xd1, 0x2d, 0xad, 0x02, 0x2c, 0x3b, 0x58, 0xd1, 0xca, 0xa1, 0xd6, 0xcf, 0x08, 0xa1, 0xb5,
+	0x03, 0x4c, 0xd0, 0x3e, 0xa7, 0x30, 0x06, 0x2e, 0x07, 0x52, 0xac, 0xe7, 0xfa, 0xc7, 0xc2, 0x1b,
+	0x68, 0x39, 0xf9, 0x31, 0xaa, 0x9d, 0x83, 0x36, 0x2b, 0xe5, 0x8e, 0x53, 0x56, 0x6d, 0x6d, 0x29,
+	0x11, 0xa8, 0x92, 0xd3, 0x11, 0x55, 0x4c, 0x84, 0x37, 0x68, 0x26, 0x21, 0x2c, 0xd6, 0x61, 0x12,
+	0xe2, 0x91, 0xf4, 0x40, 0xaa, 0xee, 0x73, 0xbb, 0xc1, 0x1f, 0x7f, 0x8e, 0x4f, 0x86, 0xd2, 0x9c,
+	0x5f, 0xe4, 0x09, 0x83, 0x71, 0x48, 0x56, 0xf8, 0xb4, 0x35, 0xff, 0x4c, 0xcc, 0x97, 0x89, 0xd0,
+	0xee, 0x82, 0x4e, 0x97, 0xbd, 0x5b, 0x1f, 0x51, 0xfd, 0xda, 0x5a, 0xf0, 0x13, 0x74, 0x7b, 0x73,
+	0xa7, 0xcb, 0xb5, 0xd7, 0xd6, 0xc5, 0x3e, 0xb7, 0xa9, 0x98, 0x40, 0x61, 0x2c, 0xf6, 0xf6, 0xcb,
+	0xf6, 0xd8, 0xe7, 0xdd, 0x77, 0x97, 0xf3, 0x38, 0xba, 0x9a, 0xc7, 0xd1, 0xdf, 0x79, 0x1c, 0x7d,
+	0x5b, 0xc4, 0xa5, 0xab, 0x45, 0x5c, 0xfa, 0xb5, 0x88, 0x4b, 0x67, 0xcf, 0x36, 0xfc, 0xf5, 0x68,
+	0x21, 0x15, 0x6d, 0x8f, 0x68, 0xae, 0x89, 0xcb, 0xf5, 0xcc, 0x27, 0xbb, 0x6d, 0x66, 0xde, 0x69,
+	0x5e, 0x76, 0xb9, 0x7e, 0xf9, 0x2f, 0x00, 0x00, 0xff, 0xff, 0x53, 0xb6, 0x30, 0xdc, 0x78, 0x03,
+	0x00, 0x00,
 }
 
 func (m *GenesisState) Marshal() (dAtA []byte, err error) {
@@ -443,37 +371,25 @@ func (m *RegisteredZone) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.SnDenom)
 		i = encodeVarintGenesis(dAtA, i, uint64(len(m.SnDenom)))
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x32
 	}
 	if len(m.BaseDenom) > 0 {
 		i -= len(m.BaseDenom)
 		copy(dAtA[i:], m.BaseDenom)
 		i = encodeVarintGenesis(dAtA, i, uint64(len(m.BaseDenom)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x2a
 	}
 	if len(m.ValidatorAddress) > 0 {
 		i -= len(m.ValidatorAddress)
 		copy(dAtA[i:], m.ValidatorAddress)
 		i = encodeVarintGenesis(dAtA, i, uint64(len(m.ValidatorAddress)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x22
 	}
 	if m.IcaAccount != nil {
 		{
 			size, err := m.IcaAccount.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGenesis(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x22
-	}
-	if m.TransferConnectionInfo != nil {
-		{
-			size, err := m.TransferConnectionInfo.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -542,10 +458,10 @@ func (m *IcaAccount) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.OwnerAddress) > 0 {
-		i -= len(m.OwnerAddress)
-		copy(dAtA[i:], m.OwnerAddress)
-		i = encodeVarintGenesis(dAtA, i, uint64(len(m.OwnerAddress)))
+	if len(m.DaomodifierAddress) > 0 {
+		i -= len(m.DaomodifierAddress)
+		copy(dAtA[i:], m.DaomodifierAddress)
+		i = encodeVarintGenesis(dAtA, i, uint64(len(m.DaomodifierAddress)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -572,50 +488,6 @@ func (m *IcaConnectionInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.PortId) > 0 {
-		i -= len(m.PortId)
-		copy(dAtA[i:], m.PortId)
-		i = encodeVarintGenesis(dAtA, i, uint64(len(m.PortId)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.ConnectionId) > 0 {
-		i -= len(m.ConnectionId)
-		copy(dAtA[i:], m.ConnectionId)
-		i = encodeVarintGenesis(dAtA, i, uint64(len(m.ConnectionId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *TransferConnectionInfo) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *TransferConnectionInfo) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *TransferConnectionInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.ChannelId) > 0 {
-		i -= len(m.ChannelId)
-		copy(dAtA[i:], m.ChannelId)
-		i = encodeVarintGenesis(dAtA, i, uint64(len(m.ChannelId)))
-		i--
-		dAtA[i] = 0x1a
-	}
 	if len(m.PortId) > 0 {
 		i -= len(m.PortId)
 		copy(dAtA[i:], m.PortId)
@@ -669,10 +541,6 @@ func (m *RegisteredZone) Size() (n int) {
 		l = m.IcaConnectionInfo.Size()
 		n += 1 + l + sovGenesis(uint64(l))
 	}
-	if m.TransferConnectionInfo != nil {
-		l = m.TransferConnectionInfo.Size()
-		n += 1 + l + sovGenesis(uint64(l))
-	}
 	if m.IcaAccount != nil {
 		l = m.IcaAccount.Size()
 		n += 1 + l + sovGenesis(uint64(l))
@@ -698,7 +566,7 @@ func (m *IcaAccount) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.OwnerAddress)
+	l = len(m.DaomodifierAddress)
 	if l > 0 {
 		n += 1 + l + sovGenesis(uint64(l))
 	}
@@ -722,27 +590,6 @@ func (m *IcaConnectionInfo) Size() (n int) {
 		n += 1 + l + sovGenesis(uint64(l))
 	}
 	l = len(m.PortId)
-	if l > 0 {
-		n += 1 + l + sovGenesis(uint64(l))
-	}
-	return n
-}
-
-func (m *TransferConnectionInfo) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.ConnectionId)
-	if l > 0 {
-		n += 1 + l + sovGenesis(uint64(l))
-	}
-	l = len(m.PortId)
-	if l > 0 {
-		n += 1 + l + sovGenesis(uint64(l))
-	}
-	l = len(m.ChannelId)
 	if l > 0 {
 		n += 1 + l + sovGenesis(uint64(l))
 	}
@@ -937,42 +784,6 @@ func (m *RegisteredZone) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TransferConnectionInfo", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.TransferConnectionInfo == nil {
-				m.TransferConnectionInfo = &TransferConnectionInfo{}
-			}
-			if err := m.TransferConnectionInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IcaAccount", wireType)
 			}
 			var msglen int
@@ -1007,7 +818,7 @@ func (m *RegisteredZone) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 5:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ValidatorAddress", wireType)
 			}
@@ -1039,7 +850,7 @@ func (m *RegisteredZone) Unmarshal(dAtA []byte) error {
 			}
 			m.ValidatorAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BaseDenom", wireType)
 			}
@@ -1071,7 +882,7 @@ func (m *RegisteredZone) Unmarshal(dAtA []byte) error {
 			}
 			m.BaseDenom = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SnDenom", wireType)
 			}
@@ -1155,7 +966,7 @@ func (m *IcaAccount) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1183,7 +994,7 @@ func (m *IcaAccount) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.OwnerAddress = string(dAtA[iNdEx:postIndex])
+			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1363,152 +1174,6 @@ func (m *IcaConnectionInfo) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.PortId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGenesis(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *TransferConnectionInfo) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGenesis
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: TransferConnectionInfo: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: TransferConnectionInfo: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ConnectionId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ConnectionId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PortId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.PortId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ChannelId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ChannelId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

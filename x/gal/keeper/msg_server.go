@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -56,8 +57,8 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	err = m.keeper.TransferToTargetZone(ctx,
-		zoneInfo.TransferConnectionInfo.PortId,
-		zoneInfo.TransferConnectionInfo.ChannelId,
+		deposit.TransferPortId,
+		deposit.TransferChannelId,
 		deposit.Depositor,
 		deposit.HostAddr,
 		deposit.Amount)
@@ -151,7 +152,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		DelegatorAddress: msg.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
 		Amount:           undelegateAmount})
-	err = m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.OwnerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err = m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
@@ -190,9 +191,9 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, errors.New("zone is not found")
 	}
 
-	ibcDenom := m.keeper.interTxKeeper.GetIBCHashForBaseDenom(ctx, withdraw.Amount.Denom)
+	ibcDenom := m.keeper.interTxKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, withdraw.Amount.Denom)
 	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawState.Amount.Amount.Int64())
-	ownerAcc, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.OwnerAddress)
+	ownerAcc, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
 	if err != nil {
 		return nil, err
 	}

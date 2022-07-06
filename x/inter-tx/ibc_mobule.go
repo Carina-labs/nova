@@ -74,18 +74,18 @@ func (im IBCModule) OnChanOpenAck(
 		return fmt.Errorf("invalid port id : %s", portID)
 	}
 
-	ownerAddress := portID[14:]
-	_, err := sdk.AccAddressFromBech32(ownerAddress)
+	daomodifierAddress := portID[14:]
+	_, err := sdk.AccAddressFromBech32(daomodifierAddress)
 	if err != nil {
 		return err
 	}
 
 	icaAccount := &types.MsgRegisterHostAccount{
 		AccountInfo: &types.IcaAccount{
-			OwnerAddress: ownerAddress,
+			DaomodifierAddress: daomodifierAddress,
 		},
 	}
-	icaAccount.AccountInfo.OwnerAddress = ownerAddress
+	icaAccount.AccountInfo.DaomodifierAddress = daomodifierAddress
 
 	err = ctx.EventManager().EmitTypedEvent(icaAccount)
 	return err

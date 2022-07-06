@@ -13,5 +13,5 @@ func (k Keeper) SetParams(ctx sdk.Context, params types.Params) {
 // GetParams gets the inter-tx module's parameters.
 func (k Keeper) GetParams(ctx sdk.Context) (params types.Params) {
 	k.paramSpace.GetParamSet(ctx, &params)
-	return
+	return params
 }

@@ -31,12 +31,11 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // MsgRegisterZone defines the payload for Msg/RegisterZone
 type MsgRegisterZone struct {
-	ZoneId           string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	IcaInfo          *IcaConnectionInfo      `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
-	IcaAccount       *IcaAccount             `protobuf:"bytes,3,opt,name=ica_account,json=icaAccount,proto3" json:"ica_account,omitempty"`
-	TransferInfo     *TransferConnectionInfo `protobuf:"bytes,4,opt,name=transfer_info,json=transferInfo,proto3" json:"transfer_info,omitempty"`
-	ValidatorAddress string                  `protobuf:"bytes,5,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
-	BaseDenom        string                  `protobuf:"bytes,6,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
+	ZoneId           string             `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	IcaInfo          *IcaConnectionInfo `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
+	IcaAccount       *IcaAccount        `protobuf:"bytes,3,opt,name=ica_account,json=icaAccount,proto3" json:"ica_account,omitempty"`
+	ValidatorAddress string             `protobuf:"bytes,4,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
+	BaseDenom        string             `protobuf:"bytes,5,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
 }
 
 func (m *MsgRegisterZone) Reset()         { *m = MsgRegisterZone{} }
@@ -110,13 +109,11 @@ func (m *MsgRegisterZoneResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgRegisterZoneResponse proto.InternalMessageInfo
 
 type MsgChangeRegisteredZoneInfo struct {
-	ZoneName         string                  `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
-	ChainId          string                  `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	IcaInfo          *IcaConnectionInfo      `protobuf:"bytes,3,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
-	IcaAccount       *IcaAccount             `protobuf:"bytes,4,opt,name=ica_account,json=icaAccount,proto3" json:"ica_account,omitempty"`
-	TransferInfo     *TransferConnectionInfo `protobuf:"bytes,5,opt,name=transfer_info,json=transferInfo,proto3" json:"transfer_info,omitempty"`
-	ValidatorAddress string                  `protobuf:"bytes,6,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
-	BaseDenom        string                  `protobuf:"bytes,7,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
+	ZoneId           string             `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	IcaInfo          *IcaConnectionInfo `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
+	IcaAccount       *IcaAccount        `protobuf:"bytes,3,opt,name=ica_account,json=icaAccount,proto3" json:"ica_account,omitempty"`
+	ValidatorAddress string             `protobuf:"bytes,4,opt,name=validator_address,json=validatorAddress,proto3" json:"validator_address,omitempty"`
+	BaseDenom        string             `protobuf:"bytes,5,opt,name=base_denom,json=baseDenom,proto3" json:"base_denom,omitempty"`
 }
 
 func (m *MsgChangeRegisteredZoneInfo) Reset()         { *m = MsgChangeRegisteredZoneInfo{} }
@@ -189,9 +186,8 @@ func (m *MsgChangeRegisteredZoneInfoResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgChangeRegisteredZoneInfoResponse proto.InternalMessageInfo
 
 type MsgDeleteRegisteredZone struct {
-	ZoneName      string `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
-	ChainId       string `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	SenderAddress string `protobuf:"bytes,3,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
+	ZoneId             string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	DaomodifierAddress string `protobuf:"bytes,2,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
 }
 
 func (m *MsgDeleteRegisteredZone) Reset()         { *m = MsgDeleteRegisteredZone{} }
@@ -264,10 +260,10 @@ func (m *MsgDeleteRegisteredZoneResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgDeleteRegisteredZoneResponse proto.InternalMessageInfo
 
 type MsgIcaDelegate struct {
-	ZoneName      string     `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
-	SenderAddress string     `protobuf:"bytes,2,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
-	OwnerAddress  string     `protobuf:"bytes,3,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
-	Amount        types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
+	ZoneId             string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	HostAddress        string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
+	DaomodifierAddress string     `protobuf:"bytes,3,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
+	Amount             types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
 }
 
 func (m *MsgIcaDelegate) Reset()         { *m = MsgIcaDelegate{} }
@@ -340,10 +336,10 @@ func (m *MsgIcaDelegateResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgIcaDelegateResponse proto.InternalMessageInfo
 
 type MsgIcaUndelegate struct {
-	ZoneName      string     `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
-	SenderAddress string     `protobuf:"bytes,2,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
-	OwnerAddress  string     `protobuf:"bytes,3,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
-	Amount        types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
+	ZoneId             string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	HostAddress        string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
+	DaomodifierAddress string     `protobuf:"bytes,3,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
+	Amount             types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
 }
 
 func (m *MsgIcaUndelegate) Reset()         { *m = MsgIcaUndelegate{} }
@@ -416,10 +412,10 @@ func (m *MsgIcaUndelegateResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgIcaUndelegateResponse proto.InternalMessageInfo
 
 type MsgIcaAutoStaking struct {
-	ZoneName      string     `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
-	SenderAddress string     `protobuf:"bytes,2,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
-	OwnerAddress  string     `protobuf:"bytes,3,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
-	Amount        types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
+	ZoneId             string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	HostAddress        string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
+	DaomodifierAddress string     `protobuf:"bytes,3,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
+	Amount             types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
 }
 
 func (m *MsgIcaAutoStaking) Reset()         { *m = MsgIcaAutoStaking{} }
@@ -492,11 +488,13 @@ func (m *MsgIcaAutoStakingResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgIcaAutoStakingResponse proto.InternalMessageInfo
 
 type MsgIcaWithdraw struct {
-	ZoneName        string     `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
-	SenderAddress   string     `protobuf:"bytes,2,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
-	OwnerAddress    string     `protobuf:"bytes,3,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
-	ReceiverAddress string     `protobuf:"bytes,4,opt,name=receiver_address,json=receiverAddress,proto3" json:"receiver_address,omitempty"`
-	Amount          types.Coin `protobuf:"bytes,5,opt,name=amount,proto3" json:"amount"`
+	ZoneId             string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	HostAddress        string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
+	DaomodifierAddress string     `protobuf:"bytes,3,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
+	ReceiverAddress    string     `protobuf:"bytes,4,opt,name=receiver_address,json=receiverAddress,proto3" json:"receiver_address,omitempty"`
+	TransferPortId     string     `protobuf:"bytes,5,opt,name=transfer_port_id,json=transferPortId,proto3" json:"transfer_port_id,omitempty"`
+	TransferChannelId  string     `protobuf:"bytes,6,opt,name=transfer_channel_id,json=transferChannelId,proto3" json:"transfer_channel_id,omitempty"`
+	Amount             types.Coin `protobuf:"bytes,7,opt,name=amount,proto3" json:"amount"`
 }
 
 func (m *MsgIcaWithdraw) Reset()         { *m = MsgIcaWithdraw{} }
@@ -663,58 +661,58 @@ func init() {
 func init() { proto.RegisterFile("nova/intertx/v1/tx.proto", fileDescriptor_31d57d38a4c57b9a) }
 
 var fileDescriptor_31d57d38a4c57b9a = []byte{
-	// 813 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x56, 0xcd, 0x6e, 0xeb, 0x44,
-	0x14, 0x8e, 0x93, 0x34, 0x69, 0x4f, 0x92, 0xb6, 0xd7, 0x42, 0xf7, 0x3a, 0x8e, 0xae, 0x93, 0xeb,
-	0xab, 0xab, 0xf6, 0x02, 0xb5, 0x95, 0xb2, 0x40, 0x42, 0x80, 0xd4, 0xa6, 0x0b, 0x82, 0x08, 0x8b,
-	0x00, 0x2a, 0xaa, 0x84, 0xc2, 0xc4, 0x9e, 0x3a, 0x23, 0x9a, 0x99, 0xca, 0x33, 0x4d, 0x03, 0x4f,
-	0xc1, 0x23, 0xf0, 0x0c, 0x08, 0x9e, 0x81, 0x2c, 0xbb, 0x64, 0x03, 0x82, 0x76, 0xc3, 0x9a, 0x27,
-	0x40, 0x1e, 0xff, 0x34, 0x75, 0x92, 0xa6, 0x6a, 0xd1, 0x95, 0xba, 0xb3, 0xcf, 0xf9, 0xce, 0x9c,
-	0xef, 0x9b, 0x6f, 0x7c, 0x3c, 0xa0, 0x51, 0x36, 0x42, 0x36, 0xa1, 0x02, 0xfb, 0x62, 0x6c, 0x8f,
-	0x9a, 0xb6, 0x18, 0x5b, 0xa7, 0x3e, 0x13, 0x4c, 0xdd, 0x08, 0x32, 0x56, 0x94, 0xb1, 0x46, 0x4d,
-	0xfd, 0x2d, 0x8f, 0x79, 0x4c, 0xe6, 0xec, 0xe0, 0x29, 0x84, 0xe9, 0xcf, 0xd3, 0x0b, 0x78, 0x98,
-	0x62, 0x4e, 0x78, 0x94, 0x36, 0x1c, 0xc6, 0x87, 0x8c, 0xdb, 0x7d, 0xc4, 0xb1, 0x3d, 0x6a, 0xf6,
-	0xb1, 0x40, 0x4d, 0xdb, 0x61, 0x84, 0x86, 0x79, 0xf3, 0xb7, 0x2c, 0x6c, 0x74, 0xb8, 0xd7, 0xc5,
-	0x1e, 0xe1, 0x02, 0xfb, 0x47, 0x8c, 0x62, 0xf5, 0x19, 0x14, 0x7f, 0x60, 0x14, 0xf7, 0x88, 0xab,
-	0x29, 0x0d, 0x65, 0x7b, 0xad, 0x5b, 0x08, 0x5e, 0xdb, 0xae, 0xfa, 0x11, 0xac, 0x12, 0x07, 0xf5,
-	0x08, 0x3d, 0x66, 0x5a, 0xb6, 0xa1, 0x6c, 0x97, 0x76, 0x4d, 0x2b, 0xc5, 0xd2, 0x6a, 0x3b, 0xa8,
-	0xc5, 0x28, 0xc5, 0x8e, 0x20, 0x8c, 0xb6, 0xe9, 0x31, 0xeb, 0x16, 0x89, 0x83, 0x82, 0x07, 0xf5,
-	0x43, 0x28, 0x05, 0xe5, 0xc8, 0x71, 0xd8, 0x19, 0x15, 0x5a, 0x4e, 0xae, 0x50, 0x9b, 0xb7, 0xc2,
-	0x5e, 0x08, 0xe9, 0x02, 0x49, 0x9e, 0xd5, 0xcf, 0xa0, 0x22, 0x7c, 0x44, 0xf9, 0x31, 0xf6, 0x43,
-	0x06, 0x79, 0x59, 0xbf, 0x35, 0x53, 0xff, 0x65, 0x84, 0x4a, 0xd1, 0x28, 0xc7, 0xd5, 0x92, 0xcb,
-	0x3b, 0xf0, 0x64, 0x84, 0x4e, 0x88, 0x8b, 0x04, 0xf3, 0x7b, 0xc8, 0x75, 0x7d, 0xcc, 0xb9, 0xb6,
-	0x22, 0xd5, 0x6e, 0x26, 0x89, 0xbd, 0x30, 0xae, 0x3e, 0x07, 0x08, 0xf6, 0xaf, 0xe7, 0x62, 0xca,
-	0x86, 0x5a, 0x41, 0xa2, 0xd6, 0x82, 0xc8, 0x41, 0x10, 0xf8, 0x20, 0xff, 0xcf, 0x4f, 0xf5, 0x8c,
-	0x59, 0x85, 0x67, 0xa9, 0x8d, 0xec, 0x62, 0x7e, 0xca, 0x28, 0xc7, 0xe6, 0xbf, 0x59, 0xa8, 0x75,
-	0xb8, 0xd7, 0x1a, 0x20, 0xea, 0xe1, 0x18, 0x81, 0xdd, 0x00, 0x23, 0xc9, 0xd4, 0x60, 0x4d, 0x6e,
-	0x38, 0x45, 0x43, 0x1c, 0x6d, 0xf9, 0x6a, 0x10, 0xf8, 0x1c, 0x0d, 0xb1, 0x5a, 0x85, 0x55, 0x67,
-	0x80, 0x08, 0x0d, 0xec, 0xc8, 0xca, 0x5c, 0x51, 0xbe, 0xa7, 0xfc, 0xc8, 0x3d, 0xd8, 0x8f, 0xfc,
-	0x03, 0xfd, 0x58, 0xf9, 0xdf, 0xfd, 0x28, 0xdc, 0xc9, 0x8f, 0xe2, 0x7c, 0x3f, 0x5e, 0xc1, 0xcb,
-	0x5b, 0xf6, 0x3c, 0xf1, 0x66, 0x2c, 0x6d, 0x3b, 0xc0, 0x27, 0x58, 0xa4, 0x60, 0xf7, 0xb6, 0xe5,
-	0x15, 0xac, 0x73, 0x4c, 0x5d, 0x7c, 0x2d, 0x24, 0x27, 0x01, 0x95, 0x30, 0x1a, 0xa9, 0x30, 0x5f,
-	0x40, 0x7d, 0x41, 0xe7, 0x84, 0xdc, 0xcf, 0x0a, 0xac, 0x77, 0xb8, 0xd7, 0x76, 0x50, 0x00, 0xf3,
-	0x90, 0x58, 0x42, 0x6a, 0xb6, 0x73, 0x76, 0x4e, 0x67, 0xf5, 0x25, 0x54, 0xd8, 0x39, 0x9d, 0xe1,
-	0x57, 0x96, 0xc1, 0x18, 0xf4, 0x3e, 0x14, 0xd0, 0x70, 0xea, 0x60, 0x54, 0xad, 0x70, 0x94, 0x58,
-	0xc1, 0x46, 0x5b, 0xd1, 0x28, 0xb1, 0x5a, 0x8c, 0xd0, 0xfd, 0xfc, 0xe4, 0xcf, 0x7a, 0xa6, 0x1b,
-	0xc1, 0x4d, 0x0d, 0x9e, 0xde, 0xe4, 0x9c, 0xc8, 0xf9, 0x45, 0x81, 0xcd, 0x30, 0xf5, 0x15, 0x75,
-	0x1f, 0x8f, 0x20, 0x1d, 0xb4, 0x34, 0xeb, 0x44, 0xd2, 0xaf, 0x0a, 0x3c, 0x09, 0x93, 0x7b, 0x67,
-	0x82, 0x7d, 0x21, 0xd0, 0x77, 0x84, 0x7a, 0x8f, 0x40, 0x53, 0x0d, 0xaa, 0x33, 0xb4, 0x13, 0x51,
-	0x7f, 0x24, 0xc7, 0xee, 0x90, 0x88, 0x81, 0xeb, 0xa3, 0xf3, 0x37, 0xa7, 0xe8, 0x35, 0x6c, 0xfa,
-	0xd8, 0xc1, 0x64, 0x34, 0x85, 0xcb, 0x4b, 0xdc, 0x46, 0x1c, 0x9f, 0x15, 0xbf, 0x72, 0xcf, 0x13,
-	0x1a, 0xcb, 0x4b, 0x94, 0x7f, 0x2d, 0x33, 0xf1, 0xd7, 0xf8, 0x09, 0xe3, 0x22, 0x1e, 0x77, 0x1f,
-	0x43, 0x39, 0x1a, 0x94, 0xe1, 0xb4, 0x53, 0x96, 0x4f, 0xcb, 0x52, 0x54, 0x10, 0xcc, 0x1b, 0xb3,
-	0x01, 0xc6, 0xfc, 0x95, 0xe3, 0xde, 0xbb, 0x93, 0x3c, 0xe4, 0x3a, 0xdc, 0x53, 0x8f, 0xa0, 0x7c,
-	0xe3, 0x77, 0xdc, 0x98, 0xe9, 0x91, 0xfa, 0xcf, 0xe8, 0xdb, 0xcb, 0x10, 0x71, 0x0f, 0xf5, 0x10,
-	0x4a, 0xd3, 0xc3, 0xa4, 0x3e, 0xaf, 0x70, 0x0a, 0xa0, 0x6f, 0x2d, 0x01, 0x24, 0x0b, 0x7f, 0x03,
-	0x95, 0x9b, 0x9f, 0xf5, 0x8b, 0x05, 0x95, 0xd7, 0x10, 0xfd, 0xf5, 0x52, 0x48, 0x8a, 0x77, 0x72,
-	0x1a, 0x17, 0xf1, 0x8e, 0x01, 0x0b, 0x79, 0xa7, 0x0d, 0x57, 0xbf, 0x85, 0xf5, 0xd4, 0xb7, 0x6b,
-	0x2e, 0x28, 0x9d, 0xc2, 0xe8, 0x6f, 0x2f, 0xc7, 0x24, 0x1d, 0x7c, 0x78, 0xda, 0x76, 0xd0, 0xbc,
-	0x23, 0xb5, 0x75, 0x9b, 0x6d, 0x53, 0x40, 0xdd, 0xbe, 0x23, 0x30, 0xee, 0xb9, 0xff, 0xe9, 0xe4,
-	0x6f, 0x23, 0x33, 0xb9, 0x34, 0x94, 0x8b, 0x4b, 0x43, 0xf9, 0xeb, 0xd2, 0x50, 0x7e, 0xbc, 0x32,
-	0x32, 0x17, 0x57, 0x46, 0xe6, 0xf7, 0x2b, 0x23, 0x73, 0xf4, 0xae, 0x47, 0xc4, 0xe0, 0xac, 0x6f,
-	0x39, 0x6c, 0x68, 0xb7, 0x90, 0x4f, 0x28, 0xda, 0x39, 0x41, 0x7d, 0x6e, 0xcb, 0x9b, 0xe4, 0x38,
-	0xbc, 0x4b, 0xee, 0x88, 0xb1, 0x2d, 0xbe, 0x3f, 0xc5, 0xbc, 0x5f, 0x90, 0x17, 0xc5, 0xf7, 0xfe,
-	0x0b, 0x00, 0x00, 0xff, 0xff, 0x83, 0x3f, 0x4d, 0x19, 0xaa, 0x0a, 0x00, 0x00,
+	// 808 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe4, 0x96, 0xcf, 0x6e, 0xeb, 0x44,
+	0x14, 0xc6, 0xe3, 0x34, 0x4d, 0xe9, 0x49, 0x69, 0x53, 0xb7, 0x6a, 0x5d, 0x57, 0x75, 0x52, 0x23,
+	0xd4, 0x14, 0xa8, 0x4d, 0xca, 0x02, 0x09, 0x01, 0x52, 0x9b, 0x2e, 0x08, 0x52, 0x24, 0x14, 0x84,
+	0x8a, 0x2a, 0xa1, 0x30, 0xb1, 0x27, 0xce, 0x88, 0x64, 0x26, 0xf2, 0x4c, 0x43, 0x60, 0xcf, 0x9e,
+	0x47, 0xe0, 0x29, 0x10, 0x08, 0x1e, 0xa0, 0xcb, 0x2e, 0x59, 0x21, 0x68, 0x37, 0xbc, 0x02, 0xbb,
+	0xab, 0xf1, 0xbf, 0xa6, 0x6e, 0xdc, 0x54, 0x77, 0x71, 0xa5, 0xea, 0xee, 0xec, 0xf9, 0x7e, 0x33,
+	0xe7, 0x3b, 0x67, 0x66, 0x8e, 0x0d, 0x1a, 0x65, 0x63, 0x64, 0x13, 0x2a, 0xb0, 0x2f, 0x26, 0xf6,
+	0xb8, 0x6e, 0x8b, 0x89, 0x35, 0xf2, 0x99, 0x60, 0xea, 0x9a, 0x54, 0xac, 0x48, 0xb1, 0xc6, 0x75,
+	0x7d, 0xd3, 0x63, 0x1e, 0x0b, 0x34, 0x5b, 0x3e, 0x85, 0x98, 0xbe, 0x97, 0x5e, 0xc0, 0xc3, 0x14,
+	0x73, 0xc2, 0x23, 0xd9, 0x70, 0x18, 0x1f, 0x32, 0x6e, 0x77, 0x11, 0xc7, 0xf6, 0xb8, 0xde, 0xc5,
+	0x02, 0xd5, 0x6d, 0x87, 0x11, 0x1a, 0xea, 0xe6, 0xff, 0x0a, 0xac, 0xb5, 0xb8, 0xd7, 0xc6, 0x1e,
+	0xe1, 0x02, 0xfb, 0x17, 0x8c, 0x62, 0x75, 0x1b, 0x96, 0x7e, 0x64, 0x14, 0x77, 0x88, 0xab, 0x29,
+	0x55, 0xa5, 0xb6, 0xdc, 0x2e, 0xca, 0xd7, 0xa6, 0xab, 0x7e, 0x02, 0x6f, 0x10, 0x07, 0x75, 0x08,
+	0xed, 0x31, 0x2d, 0x5f, 0x55, 0x6a, 0xa5, 0x63, 0xd3, 0x4a, 0xb9, 0xb4, 0x9a, 0x0e, 0x6a, 0x30,
+	0x4a, 0xb1, 0x23, 0x08, 0xa3, 0x4d, 0xda, 0x63, 0xed, 0x25, 0xe2, 0x20, 0xf9, 0xa0, 0x7e, 0x0c,
+	0x25, 0x39, 0x1d, 0x39, 0x0e, 0xbb, 0xa4, 0x42, 0x5b, 0x08, 0x56, 0xd8, 0x9d, 0xb5, 0xc2, 0x49,
+	0x88, 0xb4, 0x81, 0x24, 0xcf, 0xea, 0xbb, 0xb0, 0x3e, 0x46, 0x03, 0xe2, 0x22, 0xc1, 0xfc, 0x0e,
+	0x72, 0x5d, 0x1f, 0x73, 0xae, 0x15, 0x02, 0x7f, 0xe5, 0x44, 0x38, 0x09, 0xc7, 0xd5, 0x3d, 0x00,
+	0x99, 0x71, 0xc7, 0xc5, 0x94, 0x0d, 0xb5, 0xc5, 0x80, 0x5a, 0x96, 0x23, 0x67, 0x72, 0xe0, 0xa3,
+	0xc2, 0x7f, 0xbf, 0x54, 0x72, 0xe6, 0x0e, 0x6c, 0xa7, 0x52, 0x6f, 0x63, 0x3e, 0x62, 0x94, 0x63,
+	0xf3, 0xa7, 0x3c, 0xec, 0xb6, 0xb8, 0xd7, 0xe8, 0x23, 0xea, 0xe1, 0x98, 0xc0, 0xae, 0x64, 0x82,
+	0x54, 0x5e, 0x97, 0x12, 0xbd, 0x0d, 0x6f, 0x3d, 0x52, 0x86, 0xa4, 0x5c, 0x4e, 0x50, 0xc9, 0x33,
+	0x3c, 0xc0, 0x22, 0x85, 0x65, 0x57, 0xca, 0x86, 0x0d, 0x17, 0xb1, 0x21, 0x73, 0x49, 0x8f, 0xe0,
+	0x3b, 0xbb, 0xf9, 0x00, 0x52, 0xa7, 0xa4, 0xc8, 0xb0, 0xb9, 0x0f, 0x95, 0x8c, 0x20, 0x89, 0x8f,
+	0x5f, 0x15, 0x58, 0x6d, 0x71, 0xaf, 0xe9, 0x20, 0x89, 0x79, 0x48, 0x3c, 0x12, 0x7f, 0x1f, 0x56,
+	0xfa, 0x8c, 0x8b, 0x54, 0xe0, 0x92, 0x1c, 0x8b, 0x4b, 0x94, 0x61, 0x71, 0x21, 0xcb, 0xa2, 0xfa,
+	0x21, 0x14, 0xd1, 0x30, 0xd8, 0xb9, 0x42, 0xb0, 0x73, 0x3b, 0x56, 0x78, 0xfd, 0x2c, 0x59, 0x57,
+	0x2b, 0xba, 0x7e, 0x56, 0x83, 0x11, 0x7a, 0x5a, 0xb8, 0xfa, 0xbb, 0x92, 0x6b, 0x47, 0xb8, 0xa9,
+	0xc1, 0xd6, 0x7d, 0xdf, 0x49, 0x4a, 0xbf, 0x29, 0x50, 0x0e, 0xa5, 0xaf, 0xa8, 0xfb, 0xbc, 0x92,
+	0xd2, 0x41, 0x4b, 0x3b, 0x4f, 0xd2, 0xfa, 0x5d, 0x81, 0xf5, 0x50, 0x3c, 0xb9, 0x14, 0xec, 0x4b,
+	0x81, 0xbe, 0x23, 0xd4, 0x7b, 0x26, 0x79, 0xed, 0xc2, 0xce, 0x03, 0xeb, 0x49, 0x62, 0x7f, 0xe4,
+	0xe3, 0x23, 0x78, 0x4e, 0x44, 0xdf, 0xf5, 0xd1, 0xf7, 0xaf, 0x36, 0xab, 0x43, 0x28, 0xfb, 0xd8,
+	0xc1, 0x64, 0x8c, 0xd3, 0x2d, 0x60, 0x2d, 0x1e, 0x8f, 0xd1, 0x1a, 0x94, 0x85, 0x8f, 0x28, 0xef,
+	0x61, 0xbf, 0x33, 0x62, 0xbe, 0x90, 0x06, 0xc3, 0x3e, 0xb0, 0x1a, 0x8f, 0x7f, 0xc1, 0x7c, 0xd1,
+	0x74, 0x55, 0x0b, 0x36, 0x12, 0xd2, 0xe9, 0x23, 0x4a, 0xf1, 0x40, 0xc2, 0xc5, 0x00, 0x5e, 0x8f,
+	0xa5, 0x46, 0xa8, 0x34, 0xdd, 0xa9, 0xd2, 0x2e, 0xbd, 0xe4, 0x3d, 0x88, 0x8b, 0x97, 0xd4, 0xf5,
+	0xeb, 0x40, 0x89, 0xef, 0xfd, 0x67, 0xb2, 0x44, 0x51, 0xd7, 0xfb, 0x14, 0x56, 0xa2, 0x7e, 0x19,
+	0xb6, 0x5d, 0x65, 0x7e, 0xd3, 0x2c, 0x45, 0x13, 0x64, 0x13, 0x33, 0xab, 0x60, 0xcc, 0x5e, 0x39,
+	0x8e, 0x7d, 0xfc, 0xe7, 0x22, 0x2c, 0xb4, 0xb8, 0xa7, 0x5e, 0xc0, 0xca, 0xbd, 0x0f, 0x65, 0xf5,
+	0x41, 0x8c, 0xd4, 0xf7, 0x44, 0xaf, 0xcd, 0x23, 0xe2, 0x18, 0xea, 0x39, 0x94, 0xa6, 0xdb, 0x56,
+	0x65, 0xd6, 0xc4, 0x29, 0x40, 0x3f, 0x98, 0x03, 0x24, 0x0b, 0x7f, 0x03, 0x6f, 0xde, 0x6f, 0x1e,
+	0xfb, 0x19, 0x33, 0xef, 0x10, 0xfd, 0x70, 0x2e, 0x92, 0xf2, 0x9d, 0x9c, 0xf5, 0x2c, 0xdf, 0x31,
+	0x90, 0xe9, 0x3b, 0xbd, 0xe1, 0xea, 0xb7, 0xb0, 0x9a, 0xea, 0x0e, 0x66, 0xc6, 0xd4, 0x29, 0x46,
+	0x7f, 0x67, 0x3e, 0x93, 0x44, 0xf0, 0x61, 0xab, 0xe9, 0xa0, 0x59, 0x47, 0xea, 0xe0, 0xb1, 0x6d,
+	0x9b, 0x02, 0x75, 0xfb, 0x89, 0xe0, 0x54, 0xcc, 0xcd, 0x99, 0x9f, 0xc9, 0x99, 0x07, 0x65, 0x16,
+	0xa9, 0xbf, 0xff, 0x54, 0x32, 0x8e, 0x79, 0xfa, 0xf9, 0xd5, 0xbf, 0x46, 0xee, 0xea, 0xc6, 0x50,
+	0xae, 0x6f, 0x0c, 0xe5, 0x9f, 0x1b, 0x43, 0xf9, 0xf9, 0xd6, 0xc8, 0x5d, 0xdf, 0x1a, 0xb9, 0xbf,
+	0x6e, 0x8d, 0xdc, 0xc5, 0x7b, 0x1e, 0x11, 0xfd, 0xcb, 0xae, 0xe5, 0xb0, 0xa1, 0xdd, 0x40, 0x3e,
+	0xa1, 0xe8, 0x68, 0x80, 0xba, 0xdc, 0x0e, 0xfe, 0x2b, 0x27, 0xe1, 0x9f, 0xe5, 0x91, 0x98, 0xd8,
+	0xe2, 0x87, 0x11, 0xe6, 0xdd, 0x62, 0xf0, 0xdb, 0xf8, 0xc1, 0x8b, 0x00, 0x00, 0x00, 0xff, 0xff,
+	0x7d, 0xa6, 0x89, 0xbd, 0xb8, 0x0a, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -741,6 +739,8 @@ type MsgClient interface {
 	IcaAutoStaking(ctx context.Context, in *MsgIcaAutoStaking, opts ...grpc.CallOption) (*MsgIcaAutoStakingResponse, error)
 	// IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
 	IcaRegisterHostAccount(ctx context.Context, in *MsgRegisterHostAccount, opts ...grpc.CallOption) (*MsgRegisterHostAccountResponse, error)
+	// DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
+	DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error)
 }
 
 type msgClient struct {
@@ -805,6 +805,15 @@ func (c *msgClient) IcaRegisterHostAccount(ctx context.Context, in *MsgRegisterH
 	return out, nil
 }
 
+func (c *msgClient) DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error) {
+	out := new(MsgDeleteRegisteredZoneResponse)
+	err := c.cc.Invoke(ctx, "/nova.intertx.v1.Msg/DeleteRegisteredZone", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// RegisterZone defines a rpc handler for MsgRegisterZone
@@ -819,6 +828,8 @@ type MsgServer interface {
 	IcaAutoStaking(context.Context, *MsgIcaAutoStaking) (*MsgIcaAutoStakingResponse, error)
 	// IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
 	IcaRegisterHostAccount(context.Context, *MsgRegisterHostAccount) (*MsgRegisterHostAccountResponse, error)
+	// DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
+	DeleteRegisteredZone(context.Context, *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -842,6 +853,9 @@ func (*UnimplementedMsgServer) IcaAutoStaking(ctx context.Context, req *MsgIcaAu
 }
 func (*UnimplementedMsgServer) IcaRegisterHostAccount(ctx context.Context, req *MsgRegisterHostAccount) (*MsgRegisterHostAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IcaRegisterHostAccount not implemented")
+}
+func (*UnimplementedMsgServer) DeleteRegisteredZone(ctx context.Context, req *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRegisteredZone not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -956,6 +970,24 @@ func _Msg_IcaRegisterHostAccount_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_DeleteRegisteredZone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteRegisteredZone)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteRegisteredZone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.intertx.v1.Msg/DeleteRegisteredZone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteRegisteredZone(ctx, req.(*MsgDeleteRegisteredZone))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "nova.intertx.v1.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -983,6 +1015,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IcaRegisterHostAccount",
 			Handler:    _Msg_IcaRegisterHostAccount_Handler,
+		},
+		{
+			MethodName: "DeleteRegisteredZone",
+			Handler:    _Msg_DeleteRegisteredZone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1014,24 +1050,12 @@ func (m *MsgRegisterZone) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.BaseDenom)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.BaseDenom)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x2a
 	}
 	if len(m.ValidatorAddress) > 0 {
 		i -= len(m.ValidatorAddress)
 		copy(dAtA[i:], m.ValidatorAddress)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.ValidatorAddress)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if m.TransferInfo != nil {
-		{
-			size, err := m.TransferInfo.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTx(dAtA, i, uint64(size))
-		}
 		i--
 		dAtA[i] = 0x22
 	}
@@ -1117,26 +1141,14 @@ func (m *MsgChangeRegisteredZoneInfo) MarshalToSizedBuffer(dAtA []byte) (int, er
 		copy(dAtA[i:], m.BaseDenom)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.BaseDenom)))
 		i--
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x2a
 	}
 	if len(m.ValidatorAddress) > 0 {
 		i -= len(m.ValidatorAddress)
 		copy(dAtA[i:], m.ValidatorAddress)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.ValidatorAddress)))
 		i--
-		dAtA[i] = 0x32
-	}
-	if m.TransferInfo != nil {
-		{
-			size, err := m.TransferInfo.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTx(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x22
 	}
 	if m.IcaAccount != nil {
 		{
@@ -1148,7 +1160,7 @@ func (m *MsgChangeRegisteredZoneInfo) MarshalToSizedBuffer(dAtA []byte) (int, er
 			i = encodeVarintTx(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x1a
 	}
 	if m.IcaInfo != nil {
 		{
@@ -1160,19 +1172,12 @@ func (m *MsgChangeRegisteredZoneInfo) MarshalToSizedBuffer(dAtA []byte) (int, er
 			i = encodeVarintTx(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.ChainId) > 0 {
-		i -= len(m.ChainId)
-		copy(dAtA[i:], m.ChainId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ChainId)))
-		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.ZoneName) > 0 {
-		i -= len(m.ZoneName)
-		copy(dAtA[i:], m.ZoneName)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneName)))
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1222,24 +1227,17 @@ func (m *MsgDeleteRegisteredZone) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
-	if len(m.SenderAddress) > 0 {
-		i -= len(m.SenderAddress)
-		copy(dAtA[i:], m.SenderAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.SenderAddress)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.ChainId) > 0 {
-		i -= len(m.ChainId)
-		copy(dAtA[i:], m.ChainId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ChainId)))
+	if len(m.DaomodifierAddress) > 0 {
+		i -= len(m.DaomodifierAddress)
+		copy(dAtA[i:], m.DaomodifierAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.DaomodifierAddress)))
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.ZoneName) > 0 {
-		i -= len(m.ZoneName)
-		copy(dAtA[i:], m.ZoneName)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneName)))
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1299,24 +1297,24 @@ func (m *MsgIcaDelegate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0x22
-	if len(m.OwnerAddress) > 0 {
-		i -= len(m.OwnerAddress)
-		copy(dAtA[i:], m.OwnerAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.OwnerAddress)))
+	if len(m.DaomodifierAddress) > 0 {
+		i -= len(m.DaomodifierAddress)
+		copy(dAtA[i:], m.DaomodifierAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.DaomodifierAddress)))
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.SenderAddress) > 0 {
-		i -= len(m.SenderAddress)
-		copy(dAtA[i:], m.SenderAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.SenderAddress)))
+	if len(m.HostAddress) > 0 {
+		i -= len(m.HostAddress)
+		copy(dAtA[i:], m.HostAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.HostAddress)))
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.ZoneName) > 0 {
-		i -= len(m.ZoneName)
-		copy(dAtA[i:], m.ZoneName)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneName)))
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1376,24 +1374,24 @@ func (m *MsgIcaUndelegate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0x22
-	if len(m.OwnerAddress) > 0 {
-		i -= len(m.OwnerAddress)
-		copy(dAtA[i:], m.OwnerAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.OwnerAddress)))
+	if len(m.DaomodifierAddress) > 0 {
+		i -= len(m.DaomodifierAddress)
+		copy(dAtA[i:], m.DaomodifierAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.DaomodifierAddress)))
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.SenderAddress) > 0 {
-		i -= len(m.SenderAddress)
-		copy(dAtA[i:], m.SenderAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.SenderAddress)))
+	if len(m.HostAddress) > 0 {
+		i -= len(m.HostAddress)
+		copy(dAtA[i:], m.HostAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.HostAddress)))
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.ZoneName) > 0 {
-		i -= len(m.ZoneName)
-		copy(dAtA[i:], m.ZoneName)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneName)))
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1453,24 +1451,24 @@ func (m *MsgIcaAutoStaking) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0x22
-	if len(m.OwnerAddress) > 0 {
-		i -= len(m.OwnerAddress)
-		copy(dAtA[i:], m.OwnerAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.OwnerAddress)))
+	if len(m.DaomodifierAddress) > 0 {
+		i -= len(m.DaomodifierAddress)
+		copy(dAtA[i:], m.DaomodifierAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.DaomodifierAddress)))
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.SenderAddress) > 0 {
-		i -= len(m.SenderAddress)
-		copy(dAtA[i:], m.SenderAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.SenderAddress)))
+	if len(m.HostAddress) > 0 {
+		i -= len(m.HostAddress)
+		copy(dAtA[i:], m.HostAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.HostAddress)))
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.ZoneName) > 0 {
-		i -= len(m.ZoneName)
-		copy(dAtA[i:], m.ZoneName)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneName)))
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1529,7 +1527,21 @@ func (m *MsgIcaWithdraw) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x2a
+	dAtA[i] = 0x3a
+	if len(m.TransferChannelId) > 0 {
+		i -= len(m.TransferChannelId)
+		copy(dAtA[i:], m.TransferChannelId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TransferChannelId)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.TransferPortId) > 0 {
+		i -= len(m.TransferPortId)
+		copy(dAtA[i:], m.TransferPortId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TransferPortId)))
+		i--
+		dAtA[i] = 0x2a
+	}
 	if len(m.ReceiverAddress) > 0 {
 		i -= len(m.ReceiverAddress)
 		copy(dAtA[i:], m.ReceiverAddress)
@@ -1537,24 +1549,24 @@ func (m *MsgIcaWithdraw) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x22
 	}
-	if len(m.OwnerAddress) > 0 {
-		i -= len(m.OwnerAddress)
-		copy(dAtA[i:], m.OwnerAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.OwnerAddress)))
+	if len(m.DaomodifierAddress) > 0 {
+		i -= len(m.DaomodifierAddress)
+		copy(dAtA[i:], m.DaomodifierAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.DaomodifierAddress)))
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.SenderAddress) > 0 {
-		i -= len(m.SenderAddress)
-		copy(dAtA[i:], m.SenderAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.SenderAddress)))
+	if len(m.HostAddress) > 0 {
+		i -= len(m.HostAddress)
+		copy(dAtA[i:], m.HostAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.HostAddress)))
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.ZoneName) > 0 {
-		i -= len(m.ZoneName)
-		copy(dAtA[i:], m.ZoneName)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneName)))
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1671,10 +1683,6 @@ func (m *MsgRegisterZone) Size() (n int) {
 		l = m.IcaAccount.Size()
 		n += 1 + l + sovTx(uint64(l))
 	}
-	if m.TransferInfo != nil {
-		l = m.TransferInfo.Size()
-		n += 1 + l + sovTx(uint64(l))
-	}
 	l = len(m.ValidatorAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
@@ -1701,11 +1709,7 @@ func (m *MsgChangeRegisteredZoneInfo) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ZoneName)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.ChainId)
+	l = len(m.ZoneId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1715,10 +1719,6 @@ func (m *MsgChangeRegisteredZoneInfo) Size() (n int) {
 	}
 	if m.IcaAccount != nil {
 		l = m.IcaAccount.Size()
-		n += 1 + l + sovTx(uint64(l))
-	}
-	if m.TransferInfo != nil {
-		l = m.TransferInfo.Size()
 		n += 1 + l + sovTx(uint64(l))
 	}
 	l = len(m.ValidatorAddress)
@@ -1747,15 +1747,11 @@ func (m *MsgDeleteRegisteredZone) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ZoneName)
+	l = len(m.ZoneId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.ChainId)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.SenderAddress)
+	l = len(m.DaomodifierAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1777,15 +1773,15 @@ func (m *MsgIcaDelegate) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ZoneName)
+	l = len(m.ZoneId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.SenderAddress)
+	l = len(m.HostAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.OwnerAddress)
+	l = len(m.DaomodifierAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1809,15 +1805,15 @@ func (m *MsgIcaUndelegate) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ZoneName)
+	l = len(m.ZoneId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.SenderAddress)
+	l = len(m.HostAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.OwnerAddress)
+	l = len(m.DaomodifierAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1841,15 +1837,15 @@ func (m *MsgIcaAutoStaking) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ZoneName)
+	l = len(m.ZoneId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.SenderAddress)
+	l = len(m.HostAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.OwnerAddress)
+	l = len(m.DaomodifierAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1873,19 +1869,27 @@ func (m *MsgIcaWithdraw) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ZoneName)
+	l = len(m.ZoneId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.SenderAddress)
+	l = len(m.HostAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.OwnerAddress)
+	l = len(m.DaomodifierAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
 	l = len(m.ReceiverAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.TransferPortId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.TransferChannelId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -2066,42 +2070,6 @@ func (m *MsgRegisterZone) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TransferInfo", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.TransferInfo == nil {
-				m.TransferInfo = &TransferConnectionInfo{}
-			}
-			if err := m.TransferInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ValidatorAddress", wireType)
 			}
 			var stringLen uint64
@@ -2132,7 +2100,7 @@ func (m *MsgRegisterZone) Unmarshal(dAtA []byte) error {
 			}
 			m.ValidatorAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BaseDenom", wireType)
 			}
@@ -2266,7 +2234,7 @@ func (m *MsgChangeRegisteredZoneInfo) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2294,41 +2262,9 @@ func (m *MsgChangeRegisteredZoneInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ZoneName = string(dAtA[iNdEx:postIndex])
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ChainId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IcaInfo", wireType)
 			}
@@ -2364,7 +2300,7 @@ func (m *MsgChangeRegisteredZoneInfo) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 4:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field IcaAccount", wireType)
 			}
@@ -2400,43 +2336,7 @@ func (m *MsgChangeRegisteredZoneInfo) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TransferInfo", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.TransferInfo == nil {
-				m.TransferInfo = &TransferConnectionInfo{}
-			}
-			if err := m.TransferInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 6:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ValidatorAddress", wireType)
 			}
@@ -2468,7 +2368,7 @@ func (m *MsgChangeRegisteredZoneInfo) Unmarshal(dAtA []byte) error {
 			}
 			m.ValidatorAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BaseDenom", wireType)
 			}
@@ -2602,7 +2502,7 @@ func (m *MsgDeleteRegisteredZone) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2630,11 +2530,11 @@ func (m *MsgDeleteRegisteredZone) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ZoneName = string(dAtA[iNdEx:postIndex])
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2662,39 +2562,7 @@ func (m *MsgDeleteRegisteredZone) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ChainId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SenderAddress", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.SenderAddress = string(dAtA[iNdEx:postIndex])
+			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -2798,7 +2666,7 @@ func (m *MsgIcaDelegate) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2826,11 +2694,11 @@ func (m *MsgIcaDelegate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ZoneName = string(dAtA[iNdEx:postIndex])
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SenderAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field HostAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2858,11 +2726,11 @@ func (m *MsgIcaDelegate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SenderAddress = string(dAtA[iNdEx:postIndex])
+			m.HostAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -2890,7 +2758,7 @@ func (m *MsgIcaDelegate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.OwnerAddress = string(dAtA[iNdEx:postIndex])
+			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -3027,7 +2895,7 @@ func (m *MsgIcaUndelegate) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3055,11 +2923,11 @@ func (m *MsgIcaUndelegate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ZoneName = string(dAtA[iNdEx:postIndex])
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SenderAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field HostAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3087,11 +2955,11 @@ func (m *MsgIcaUndelegate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SenderAddress = string(dAtA[iNdEx:postIndex])
+			m.HostAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3119,7 +2987,7 @@ func (m *MsgIcaUndelegate) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.OwnerAddress = string(dAtA[iNdEx:postIndex])
+			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -3256,7 +3124,7 @@ func (m *MsgIcaAutoStaking) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3284,11 +3152,11 @@ func (m *MsgIcaAutoStaking) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ZoneName = string(dAtA[iNdEx:postIndex])
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SenderAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field HostAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3316,11 +3184,11 @@ func (m *MsgIcaAutoStaking) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SenderAddress = string(dAtA[iNdEx:postIndex])
+			m.HostAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3348,7 +3216,7 @@ func (m *MsgIcaAutoStaking) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.OwnerAddress = string(dAtA[iNdEx:postIndex])
+			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -3485,7 +3353,7 @@ func (m *MsgIcaWithdraw) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3513,11 +3381,11 @@ func (m *MsgIcaWithdraw) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ZoneName = string(dAtA[iNdEx:postIndex])
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SenderAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field HostAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3545,11 +3413,11 @@ func (m *MsgIcaWithdraw) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SenderAddress = string(dAtA[iNdEx:postIndex])
+			m.HostAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3577,7 +3445,7 @@ func (m *MsgIcaWithdraw) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.OwnerAddress = string(dAtA[iNdEx:postIndex])
+			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -3612,6 +3480,70 @@ func (m *MsgIcaWithdraw) Unmarshal(dAtA []byte) error {
 			m.ReceiverAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TransferPortId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TransferPortId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TransferChannelId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TransferChannelId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}

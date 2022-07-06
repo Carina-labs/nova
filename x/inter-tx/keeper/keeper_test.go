@@ -65,14 +65,9 @@ func (suite *KeeperTestSuite) setZone(num int) []intertxtypes.RegisteredZone {
 				ConnectionId: "connection-" + strconv.Itoa(i),
 				PortId:       "icacontroller-" + addr[i].String(),
 			},
-			TransferConnectionInfo: &intertxtypes.TransferConnectionInfo{
-				ConnectionId: "connection-0" + strconv.Itoa(i),
-				PortId:       "transfer",
-				ChannelId:    "channel-0",
-			},
 			IcaAccount: &intertxtypes.IcaAccount{
-				OwnerAddress: addr[i].String(),
-				HostAddress:  addr[i].String(),
+				DaomodifierAddress: addr[i].String(),
+				HostAddress:        addr[i].String(),
 			},
 			ValidatorAddress: sdk.ValAddress(addr[i]).String(),
 			BaseDenom:        "atom",
