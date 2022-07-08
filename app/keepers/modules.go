@@ -2,7 +2,7 @@ package keepers
 
 import (
 	"github.com/Carina-labs/nova/x/gal"
-	intertx "github.com/Carina-labs/nova/x/inter-tx"
+	ibcstaking "github.com/Carina-labs/nova/x/ibcstaking"
 	"github.com/Carina-labs/nova/x/mint"
 	"github.com/Carina-labs/nova/x/oracle"
 	"github.com/CosmWasm/wasmd/x/wasm"
@@ -64,7 +64,7 @@ var AppModuleBasic = []module.AppModuleBasic{
 	wasm.AppModuleBasic{},
 	ica.AppModuleBasic{},
 	gal.AppModuleBasic{},
-	intertx.AppModuleBasic{},
+	ibcstaking.AppModuleBasic{},
 	authzmodule.AppModuleBasic{},
 	gal.AppModuleBasic{},
 	oracle.AppModuleBasic{},

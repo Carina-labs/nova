@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
-	interTxKeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
+	ibcstakingKeeper "github.com/Carina-labs/nova/x/ibcstaking/keeper"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -21,7 +21,7 @@ type Keeper struct {
 	bankKeeper        types.BankKeeper
 	accountKeeper     types.AccountKeeper
 	scopedKeeper      capabilitykeeper.ScopedKeeper
-	interTxKeeper     interTxKeeper.Keeper
+	ibcstakingKeeper  ibcstakingKeeper.Keeper
 	ibcTransferKeeper transfer.Keeper
 	oracleKeeper      oraclekeeper.Keeper
 }
@@ -31,7 +31,7 @@ func NewKeeper(cdc codec.BinaryCodec,
 	paramSpace paramtypes.Subspace,
 	bankKeeper types.BankKeeper,
 	accountKeeper types.AccountKeeper,
-	interTxKeeper interTxKeeper.Keeper,
+	ibcstakingKeeper ibcstakingKeeper.Keeper,
 	ibcTransferKeeper transfer.Keeper,
 	oracleKeeper oraclekeeper.Keeper) Keeper {
 
@@ -45,7 +45,7 @@ func NewKeeper(cdc codec.BinaryCodec,
 		bankKeeper:        bankKeeper,
 		accountKeeper:     accountKeeper,
 		paramSpace:        paramSpace,
-		interTxKeeper:     interTxKeeper,
+		ibcstakingKeeper:  ibcstakingKeeper,
 		ibcTransferKeeper: ibcTransferKeeper,
 		oracleKeeper:      oracleKeeper,
 	}

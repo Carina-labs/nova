@@ -45,7 +45,7 @@ func (k Keeper) Share(context context.Context, rq *types.QueryCacheDepositAmount
 
 func (k Keeper) DepositHistory(goCtx context.Context, rq *types.QueryDepositHistoryRequest) (*types.QueryDepositHistoryResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	zoneInfo := k.interTxKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
 	if zoneInfo == nil {
 		return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
 	}

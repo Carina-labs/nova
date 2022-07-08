@@ -69,7 +69,6 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state Undeleg
 		}
 		return false
 	})
-
 	if len(withdrawRecords) > 0 {
 		for _, wr := range withdrawRecords {
 			k.SetWithdrawRecord(ctx, wr)
@@ -133,7 +132,7 @@ func (k Keeper) IterateWithdrawdRecords(ctx sdk.Context, fn func(index int64, wi
 
 func (k Keeper) UndelegateHistory(goCtx context.Context, rq *types.QueryUndelegateHistoryRequest) (*types.QueryUndelegateHistoryResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	zoneInfo := k.interTxKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
 	if zoneInfo == nil {
 		return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
 	}
@@ -151,7 +150,7 @@ func (k Keeper) UndelegateHistory(goCtx context.Context, rq *types.QueryUndelega
 
 func (k Keeper) WithdrawHistory(goCtx context.Context, rq *types.QueryWithdrawHistoryRequest) (*types.QueryWithdrawHistoryResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	zoneInfo := k.interTxKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
 	if zoneInfo == nil {
 		return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
 	}

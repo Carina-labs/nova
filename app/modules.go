@@ -2,8 +2,8 @@ package app
 
 import (
 	"github.com/Carina-labs/nova/x/gal"
-	intertx "github.com/Carina-labs/nova/x/inter-tx"
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	ibcstaking "github.com/Carina-labs/nova/x/ibcstaking"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	"github.com/Carina-labs/nova/x/mint"
 	minttypes "github.com/Carina-labs/nova/x/mint/types"
 	"github.com/Carina-labs/nova/x/oracle"
@@ -82,7 +82,7 @@ func (app *NovaApp) GetModuleManager(
 		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
 		ica.NewAppModule(app.ICAControllerKeeper, app.ICAHostKeeper),
-		intertx.NewAppModule(appCodec, *app.IntertxKeeper, app.AccountKeeper),
+		ibcstaking.NewAppModule(appCodec, *app.IbcstakingKeeper, app.AccountKeeper),
 	}
 }
 
@@ -110,7 +110,7 @@ func GetOrderInitGenesis() []string {
 		gal.ModuleName,
 		oracletypes.ModuleName,
 		icatypes.ModuleName,
-		intertxtypes.ModuleName,
+		ibcstakingtypes.ModuleName,
 		authz.ModuleName,
 	}
 }
@@ -139,7 +139,7 @@ func GetOrderBeginBlocker() []string {
 		gal.ModuleName,
 		oracletypes.ModuleName,
 		icatypes.ModuleName,
-		intertxtypes.ModuleName,
+		ibcstakingtypes.ModuleName,
 		authzkeeper.StoreKey,
 	}
 }
@@ -168,7 +168,7 @@ func GetOrderEndBlocker() []string {
 		gal.ModuleName,
 		oracletypes.ModuleName,
 		icatypes.ModuleName,
-		intertxtypes.ModuleName,
+		ibcstakingtypes.ModuleName,
 		authzkeeper.StoreKey,
 	}
 }

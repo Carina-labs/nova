@@ -17,7 +17,7 @@ type msgServer struct {
 	keeper *Keeper
 }
 
-// NewMsgServerImpl creates and returns a new types.MsgServer, fulfilling the intertx Msg service interface
+// NewMsgServerImpl creates and returns a new types.MsgServer, fulfilling the ibcstaking Msg service interface
 func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 	return &msgServer{keeper: keeper}
 }
@@ -29,7 +29,7 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
+	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
 	if !ok {
 		return nil, fmt.Errorf("can't find valid IBC zone, input zoneId: %s", deposit.ZoneId)
 	}
@@ -78,7 +78,7 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// change undelegate State
-	_, found := m.keeper.interTxKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
+	_, found := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
 	if !found {
 		return nil, errors.New("zone not found")
 	}
@@ -120,16 +120,14 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, msg.ZoneId)
+	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
 		return nil, errors.New("zone is not found")
 	}
-
 	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 
 	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 	totalStAsset.Denom = zoneInfo.SnDenom
-
 	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {
 		// TODO: should handle if no coins to undelegate
 		return nil, errors.New("no coins to undelegate")
@@ -152,7 +150,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		DelegatorAddress: msg.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
 		Amount:           undelegateAmount})
-	err = m.keeper.interTxKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err = m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
@@ -186,12 +184,12 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	m.keeper.SetWithdrawRecord(ctx, *withdrawState)
 
-	zoneInfo, ok := m.keeper.interTxKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
+	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
 	if !ok {
 		return nil, errors.New("zone is not found")
 	}
 
-	ibcDenom := m.keeper.interTxKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, withdraw.Amount.Denom)
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, withdraw.Amount.Denom)
 	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawState.Amount.Amount.Int64())
 	ownerAcc, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
 	if err != nil {
@@ -200,6 +198,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	ok = m.keeper.IsAbleToWithdraw(ctx, ownerAcc, withdrawAmount)
 	if !ok {
+		//request ibc-transfer
 		return nil, types.ErrInsufficientFunds
 	}
 
@@ -255,6 +254,7 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 				return nil, err
 			}
 
+			// TODO: Delete deposit record
 			return &types.MsgClaimResponse{
 				Claimer: claimMsg.Claimer,
 				Minted:  minted,

@@ -101,7 +101,7 @@ func (suite *KeeperTestSuite) TestCalculateBurnAmount() {
 // 	for _, tc := range tcs {
 // 		suite.SetupTest()
 
-// 		suite.chainA.App.IntertxKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+// 		suite.chainA.App.IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
 
 // 		res, err := suite.App.GalKeeper.GetsnDenomForIBCDenom(suite.Ctx, tc.ibcDenom)
 // 		suite.Require().NoError(err)

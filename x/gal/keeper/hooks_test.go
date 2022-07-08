@@ -93,7 +93,7 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 			tc.before()
 
 			// register zone
-			suite.chainA.App.IntertxKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+			suite.chainA.App.IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
 
 			// should send deposit message to msg server
 			_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgDeposit{
