@@ -2,7 +2,7 @@ package keeper_test
 
 import (
 	novatesting "github.com/Carina-labs/nova/testing"
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
@@ -50,9 +50,9 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.Require().NoError(err)
 }
 
-func (suite *KeeperTestSuite) SetIbcZone(zoneMsg []intertxtypes.RegisteredZone) {
+func (suite *KeeperTestSuite) SetIbcZone(zoneMsg []ibcstakingtypes.RegisteredZone) {
 	for _, msg := range zoneMsg {
-		suite.App.IntertxKeeper.RegisterZone(suite.Ctx, &msg)
+		suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &msg)
 	}
 }
 
@@ -137,15 +137,15 @@ func registerInterchainAccount(e *novatesting.Endpoint, owner string) error {
 }
 
 // newBaseRegisteredZone returns a new zone info for testing purpose only
-func newBaseRegisteredZone() *intertxtypes.RegisteredZone {
+func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
 	icaControllerPort, _ := icatypes.NewControllerPortID(baseOwnerAcc.String())
-	return &intertxtypes.RegisteredZone{
+	return &ibcstakingtypes.RegisteredZone{
 		ZoneId: hostId,
-		IcaConnectionInfo: &intertxtypes.IcaConnectionInfo{
+		IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
 			ConnectionId: icaConnection,
 			PortId:       icaControllerPort,
 		},
-		IcaAccount: &intertxtypes.IcaAccount{
+		IcaAccount: &ibcstakingtypes.IcaAccount{
 			DaomodifierAddress: baseOwnerAcc.String(),
 			HostAddress:        baseHostAcc.String(),
 		},

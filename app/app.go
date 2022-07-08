@@ -8,7 +8,7 @@ import (
 
 	"github.com/Carina-labs/nova/app/keepers"
 	gal "github.com/Carina-labs/nova/x/gal"
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	"github.com/Carina-labs/nova/x/mint"
 	minttypes "github.com/Carina-labs/nova/x/mint/types"
 	"github.com/Carina-labs/nova/x/oracle"
@@ -106,7 +106,7 @@ var (
 		govtypes.ModuleName:                             {authtypes.Burner},
 		ibctransfertypes.ModuleName:                     {authtypes.Minter, authtypes.Burner},
 		wasm.ModuleName:                                 {authtypes.Burner},
-		intertxtypes.ModuleName:                         {authtypes.Minter, authtypes.Burner},
+		ibcstakingtypes.ModuleName:                      {authtypes.Minter, authtypes.Burner},
 		gal.ModuleName:                                  {authtypes.Minter, authtypes.Burner},
 	}
 )

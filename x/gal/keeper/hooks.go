@@ -5,7 +5,7 @@ import (
 	"math/big"
 
 	"github.com/Carina-labs/nova/x/gal/types"
-	icatypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	icatypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
@@ -32,7 +32,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		panic(fmt.Sprintf("invalid ibc transfer packet: %v", data))
 	}
 
-	zoneInfo := h.k.interTxKeeper.GetZoneForDenom(ctx, baseDenom)
+	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 	// if zoneInfo == nil, it may be a test situation.
 	if zoneInfo == nil {
 		return
@@ -52,7 +52,6 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	if err != nil {
 		return
 	}
-
 	for i, record := range depositRecord.Records {
 		// assert amount of record equals to the amount of ibc transfer packet.
 		if record.Amount.Amount.BigInt().Cmp(packetAmount) == 0 && !record.IsTransferred {
@@ -102,7 +101,7 @@ func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
 // 1. It removes undelegation history in store.
 // 2. It saves undelegation finish time to store.
 func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, msg *stakingtypes.MsgUndelegateResponse) {
-	zone := h.k.interTxKeeper.GetRegisteredZoneForPortId(ctx, packet.SourcePort)
+	zone := h.k.ibcstakingKeeper.GetRegisteredZoneForPortId(ctx, packet.SourcePort)
 	h.k.DeleteUndelegateRecords(ctx, zone.ZoneId, UNDELEGATE_REQUEST_ICA)
 	h.k.SetWithdrawTime(ctx, zone.ZoneId, WITHDRAW_REQUEST_USER, msg.CompletionTime)
 }

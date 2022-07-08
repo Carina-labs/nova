@@ -4,8 +4,8 @@ import (
 	"github.com/Carina-labs/nova/x/gal"
 	galkeeper "github.com/Carina-labs/nova/x/gal/keeper"
 	galtypes "github.com/Carina-labs/nova/x/gal/types"
-	intertx "github.com/Carina-labs/nova/x/inter-tx"
-	intertxkeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
+	ibcstaking "github.com/Carina-labs/nova/x/ibcstaking"
+	ibcstakingkeeper "github.com/Carina-labs/nova/x/ibcstaking/keeper"
 	mintkeeper "github.com/Carina-labs/nova/x/mint/keeper"
 	"github.com/Carina-labs/nova/x/oracle"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
@@ -46,7 +46,7 @@ import (
 	ibcporttypes "github.com/cosmos/ibc-go/v3/modules/core/05-port/types"
 	ibckeeper "github.com/cosmos/ibc-go/v3/modules/core/keeper"
 
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	minttypes "github.com/Carina-labs/nova/x/mint/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -86,9 +86,9 @@ type AppKeepers struct {
 	AuthzKeeper         *authzkeeper.Keeper
 
 	// Supernova custom modules.
-	GalKeeper     *galkeeper.Keeper
-	IntertxKeeper *intertxkeeper.Keeper
-	OracleKeeper  *oraclekeeper.Keeper
+	GalKeeper        *galkeeper.Keeper
+	IbcstakingKeeper *ibcstakingkeeper.Keeper
+	OracleKeeper     *oraclekeeper.Keeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper           capabilitykeeper.ScopedKeeper
@@ -96,7 +96,7 @@ type AppKeepers struct {
 	ScopedWasmKeeper          capabilitykeeper.ScopedKeeper
 	ScopedICAControllerKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
-	ScopedintertxKeeper       capabilitykeeper.ScopedKeeper
+	ScopedIbcstakingKeeper    capabilitykeeper.ScopedKeeper
 
 	// keys to access the substores
 	keys    map[string]*sdk.KVStoreKey
@@ -190,7 +190,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 	appKeepers.ICAHostKeeper = &icaHostKeeper
 
-	intertxKeeper := intertxkeeper.NewKeeper(appCodec, appKeepers.keys[intertxtypes.StoreKey], appKeepers.AccountKeeper, *appKeepers.ICAControllerKeeper, appKeepers.ScopedintertxKeeper, appKeepers.GetSubspace(intertxtypes.ModuleName))
+	ibcstakingKeeper := ibcstakingkeeper.NewKeeper(appCodec, appKeepers.keys[ibcstakingtypes.StoreKey], appKeepers.AccountKeeper, *appKeepers.ICAControllerKeeper, appKeepers.ScopedIbcstakingKeeper, appKeepers.GetSubspace(ibcstakingtypes.ModuleName))
 
 	// Create Transfer Keepers
 	transferKeeper := ibctransferkeeper.NewKeeper(
@@ -213,7 +213,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appKeepers.keys[galtypes.StoreKey],
 		appKeepers.GetSubspace(galtypes.ModuleName),
 		appKeepers.BankKeeper, appKeepers.AccountKeeper,
-		intertxKeeper,
+		ibcstakingKeeper,
 		transferKeeper,
 		oracleKeeper,
 	)
@@ -223,13 +223,13 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		ibctransfertypes.NewMultiTransferHooks(appKeepers.GalKeeper.Hooks()),
 	)
 
-	appKeepers.IntertxKeeper = intertxKeeper.SetHooks(
-		intertxtypes.NewMultiICAHooks(appKeepers.GalKeeper.Hooks()),
+	appKeepers.IbcstakingKeeper = ibcstakingKeeper.SetHooks(
+		ibcstakingtypes.NewMultiICAHooks(appKeepers.GalKeeper.Hooks()),
 	)
 
-	intertxIBCModule := intertx.NewIBCModule(*appKeepers.IntertxKeeper)
+	ibcstakingIBCModule := ibcstaking.NewIBCModule(*appKeepers.IbcstakingKeeper)
 
-	icaControllerIBCModule := icacontroller.NewIBCModule(*appKeepers.ICAControllerKeeper, intertxIBCModule)
+	icaControllerIBCModule := icacontroller.NewIBCModule(*appKeepers.ICAControllerKeeper, ibcstakingIBCModule)
 	icaHostIBCModule := icahost.NewIBCModule(*appKeepers.ICAHostKeeper)
 
 	transferIBCModule := transfer.NewIBCModule(*appKeepers.TransferKeeper)
@@ -267,7 +267,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	ibcRouter.AddRoute(ibctransfertypes.ModuleName, transferIBCModule)
 	ibcRouter.AddRoute(icacontrollertypes.SubModuleName, icaControllerIBCModule)
 	ibcRouter.AddRoute(icahosttypes.SubModuleName, icaHostIBCModule)
-	ibcRouter.AddRoute(intertxtypes.ModuleName, icaControllerIBCModule)
+	ibcRouter.AddRoute(ibcstakingtypes.ModuleName, icaControllerIBCModule)
 	ibcRouter.AddRoute(wasm.ModuleName, wasm.NewIBCHandler(appKeepers.WasmKeeper, appKeepers.IBCKeeper.ChannelKeeper))
 	appKeepers.IBCKeeper.SetRouter(ibcRouter)
 }
@@ -296,7 +296,7 @@ func (appKeepers *AppKeepers) InitSpecialKeepers(
 	appKeepers.ScopedWasmKeeper = appKeepers.CapabilityKeeper.ScopeToModule(wasm.ModuleName)
 	appKeepers.ScopedICAControllerKeeper = appKeepers.CapabilityKeeper.ScopeToModule(icacontrollertypes.SubModuleName)
 	appKeepers.ScopedICAHostKeeper = appKeepers.CapabilityKeeper.ScopeToModule(icahosttypes.SubModuleName)
-	appKeepers.ScopedintertxKeeper = appKeepers.CapabilityKeeper.ScopeToModule(intertxtypes.ModuleName)
+	appKeepers.ScopedIbcstakingKeeper = appKeepers.CapabilityKeeper.ScopeToModule(ibcstakingtypes.ModuleName)
 
 	upgradeKeeper := upgradekeeper.NewKeeper(
 		skipUpgradeHeights,
@@ -330,7 +330,7 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 	paramsKeeper.Subspace(wasm.ModuleName)
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
-	paramsKeeper.Subspace(intertxtypes.ModuleName)
+	paramsKeeper.Subspace(ibcstakingtypes.ModuleName)
 	paramsKeeper.Subspace(oracle.ModuleName)
 	paramsKeeper.Subspace(gal.ModuleName)
 
@@ -357,7 +357,7 @@ func KVStoreKeys() []string {
 		gal.StoreKey,
 		icacontrollertypes.StoreKey,
 		icahosttypes.StoreKey,
-		intertxtypes.StoreKey,
+		ibcstakingtypes.StoreKey,
 		authzkeeper.StoreKey,
 		oracletypes.StoreKey,
 	}

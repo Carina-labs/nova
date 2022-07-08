@@ -7,8 +7,8 @@ import (
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"
-	intertxkeeper "github.com/Carina-labs/nova/x/inter-tx/keeper"
-	intertxtypes "github.com/Carina-labs/nova/x/inter-tx/types"
+	ibcstakingkeeper "github.com/Carina-labs/nova/x/ibcstaking/keeper"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
@@ -95,8 +95,8 @@ func (suite *KeeperTestSuite) prepare(initSet initialSet) {
 		},
 	})
 
-	// prepare inter-tx keeper
-	suite.chainA.App.IntertxKeeper.SetParams(suite.chainA.GetContext(), intertxtypes.Params{
+	// prepare ibcstaking keeper
+	suite.chainA.App.IbcstakingKeeper.SetParams(suite.chainA.GetContext(), ibcstakingtypes.Params{
 		DaoModifiers: []string{
 			suite.icaOwnerAddr.String(),
 		},
@@ -246,10 +246,10 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			suite.Require().Equal(tc.expect.withdrawAmount, rc.Amount.Amount.Int64())
 
 			// simulation : bot requests transfer from host -> controller's gal module account.
-			interTxMsgServer := intertxkeeper.NewMsgServerImpl(*suite.chainA.App.IntertxKeeper)
+			ibcStakingMsgServer := ibcstakingkeeper.NewMsgServerImpl(*suite.chainA.App.IbcstakingKeeper)
 			ctx := suite.chainA.GetContext()
-			_, err = interTxMsgServer.IcaWithdraw(
-				sdk.WrapSDKContext(ctx), &intertxtypes.MsgIcaWithdraw{
+			_, err = ibcStakingMsgServer.IcaWithdraw(
+				sdk.WrapSDKContext(ctx), &ibcstakingtypes.MsgIcaWithdraw{
 					ZoneId:             hostId,
 					HostAddress:        icaConf.icaHostAddress,
 					DaomodifierAddress: suite.icaOwnerAddr.String(),
@@ -346,7 +346,7 @@ func setIbcZone(chainA *novatesting.TestChain, chainB *novatesting.TestChain, ic
 	registerMsg := newBaseRegisteredZone()
 	registerMsg.ValidatorAddress = counterPartyValidator.OperatorAddress
 	registerMsg.IcaAccount.HostAddress = hostAddress
-	chainA.App.IntertxKeeper.RegisterZone(chainA.GetContext(), registerMsg)
+	chainA.App.IbcstakingKeeper.RegisterZone(chainA.GetContext(), registerMsg)
 
 	return &icaConfig{
 		icaHostAddress: hostAddress,

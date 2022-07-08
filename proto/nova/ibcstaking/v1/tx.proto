@@ -1,0 +1,105 @@
+syntax = "proto3";
+package nova.ibcstaking.v1;
+
+import "gogoproto/gogo.proto";
+import "nova/ibcstaking/v1/genesis.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/ibcstaking/types";
+option (gogoproto.goproto_getters_all) = false;
+
+// Msg defines the ibcstaking Msg service.
+service Msg {
+  // RegisterZone defines a rpc handler for MsgRegisterZone
+  rpc RegisterZone(MsgRegisterZone) returns (MsgRegisterZoneResponse);
+  // IcaDelegate defines a rpc handler for MsgIcaDelegate
+  rpc IcaDelegate(MsgIcaDelegate) returns (MsgIcaDelegateResponse);
+  // IcaUnDelegate defines a rpc handler for MsgIcaUnDelegate
+  rpc IcaUndelegate(MsgIcaUndelegate) returns (MsgIcaUndelegateResponse);
+  // IcaWithdraw defines a rpc handler for MsgIcaWithdraw
+  rpc IcaWithdraw(MsgIcaWithdraw) returns (MsgIcaWithdrawResponse);
+  // IcaAutoStaking defines a rpc handler for MsgIcaAutoStaking
+  rpc IcaAutoStaking(MsgIcaAutoStaking) returns (MsgIcaAutoStakingResponse);
+  // IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
+  rpc IcaRegisterHostAccount(MsgRegisterHostAccount) returns (MsgRegisterHostAccountResponse);
+  // DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
+  rpc DeleteRegisteredZone(MsgDeleteRegisteredZone) returns (MsgDeleteRegisteredZoneResponse);
+  rpc ChangeRegisteredZoneInfo(MsgChangeRegisteredZoneInfo) returns (MsgChangeRegisteredZoneInfoResponse);
+}
+
+// MsgRegisterZone defines the payload for Msg/RegisterZone
+message MsgRegisterZone {
+  option (gogoproto.equal) = false;
+  
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  string validator_address = 4;
+  string base_denom = 5;
+}
+
+message MsgRegisterZoneResponse {}
+
+message MsgChangeRegisteredZoneInfo{
+  option (gogoproto.equal)           = false;
+
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  string validator_address = 4;
+  string base_denom = 5;
+}
+message MsgChangeRegisteredZoneInfoResponse{}
+
+message MsgDeleteRegisteredZone{
+  string zone_id = 1;
+  string daomodifier_address = 2;
+}
+
+message MsgDeleteRegisteredZoneResponse{}
+
+message MsgIcaDelegate{
+  string zone_id = 1;
+  string host_address = 2;
+  string daomodifier_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+}
+
+message MsgIcaDelegateResponse{}
+
+message MsgIcaUndelegate{
+  string zone_id = 1;
+  string host_address = 2;
+  string daomodifier_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+}
+
+message MsgIcaUndelegateResponse{}
+
+message MsgIcaAutoStaking{
+  string zone_id = 1;
+  string host_address = 2;
+  string daomodifier_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+}
+
+message MsgIcaAutoStakingResponse{}
+
+message MsgIcaWithdraw{
+  string zone_id = 1;
+  string host_address = 2;
+  string daomodifier_address = 3;
+  string receiver_address = 4;
+  string transfer_port_id = 5;
+  string transfer_channel_id = 6;
+  cosmos.base.v1beta1.Coin amount = 7[(gogoproto.nullable) = false];
+}
+
+message MsgIcaWithdrawResponse{}
+
+message MsgRegisterHostAccount{
+   string zone_id = 1;
+   IcaAccount account_info = 2;
+}
+
+message MsgRegisterHostAccountResponse{}

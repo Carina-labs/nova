@@ -16,7 +16,7 @@ const (
 	FlagDenom = "denom"
 )
 
-// GetQueryCmd creates and returns the intertx query command
+// GetQueryCmd creates and returns the ibcstaking query command
 func GetQueryCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,

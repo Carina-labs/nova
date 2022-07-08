@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -66,7 +67,7 @@ func queryUndelegateHistory(ctx sdk.Context,
 		return nil, err
 	}
 
-	zoneInfo := k.interTxKeeper.GetZoneForDenom(ctx, params.Denom)
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, params.Denom)
 
 	withdrawHistory, ok := k.GetUndelegateRecord(ctx, zoneInfo.ZoneId+address.String())
 	if !ok {
