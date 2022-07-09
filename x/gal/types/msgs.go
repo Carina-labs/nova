@@ -153,11 +153,11 @@ func (msg MsgUndelegateRecord) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgWithdraw(zoneId string, toAddr sdk.AccAddress, portId, chanId string, amount sdk.Coin) *MsgWithdraw {
+func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgWithdraw {
 	return &MsgWithdraw{
 		ZoneId:            zoneId,
-		Withdrawer:        toAddr.String(),
-		Recipient:         "",
+		Withdrawer:        withdrawer.String(),
+		Recipient:         receiver,
 		TransferPortId:    portId,
 		TransferChannelId: chanId,
 		Amount:            amount,

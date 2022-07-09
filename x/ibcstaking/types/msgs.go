@@ -27,7 +27,7 @@ func NewMsgRegisterZone(zoneId, icaConnectionId string, daomodifierAddress sdk.A
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
 			ConnectionId: icaConnectionId,
-			PortId:       daomodifierAddress.String(),
+			PortId:       "icacontroller-" + daomodifierAddress.String(),
 		},
 		IcaAccount: &IcaAccount{
 			DaomodifierAddress: daomodifierAddress.String(),
@@ -324,7 +324,7 @@ func NewMsgChangeZoneInfo(zoneId, icaConnectionId string, daomodifierAddress sdk
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
 			ConnectionId: icaConnectionId,
-			PortId:       daomodifierAddress.String(),
+			PortId:       "icacontroller-" + daomodifierAddress.String(),
 		},
 		IcaAccount: &IcaAccount{
 			DaomodifierAddress: daomodifierAddress.String(),

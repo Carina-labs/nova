@@ -145,7 +145,6 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	if err != nil {
 		return nil, err
 	}
-
 	msgs = append(msgs, &stakingtype.MsgUndelegate{
 		DelegatorAddress: msg.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
@@ -167,7 +166,6 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// withdraw record 조회
 	withdrawRecord, err := m.keeper.GetWithdrawRecord(ctx, withdraw.ZoneId+withdraw.Withdrawer)
 	if err != nil {
 		return nil, sdkerrors.Wrap(err, fmt.Sprintf("account: %s", withdrawRecord.Withdrawer))

@@ -3,12 +3,11 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 )
 
 type ICAHooks interface {
 	AfterDelegateEnd()
-	AfterUndelegateEnd(sdk.Context, channeltypes.Packet, *stakingtypes.MsgUndelegateResponse)
+	AfterUndelegateEnd(sdk.Context, stakingtypes.MsgUndelegate, *stakingtypes.MsgUndelegateResponse)
 	AfterAutoStakingEnd()
 	AfterWithdrawEnd()
 }
@@ -27,9 +26,9 @@ func (h MultiICAHooks) AfterDelegateEnd() {
 	}
 }
 
-func (h MultiICAHooks) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, response *stakingtypes.MsgUndelegateResponse) {
+func (h MultiICAHooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate, response *stakingtypes.MsgUndelegateResponse) {
 	for i := range h {
-		h[i].AfterUndelegateEnd(ctx, packet, response)
+		h[i].AfterUndelegateEnd(ctx, undelegateMsg, response)
 	}
 }
 

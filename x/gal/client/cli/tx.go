@@ -132,12 +132,12 @@ func NewUndelegateCmd() *cobra.Command {
 
 func NewWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [zone-id] [to_key_or_address] [transfer-port-id] [transfer-channel-id] [amount]",
+		Use:   "withdraw [zone-id] [withrawer] [receiver] [transfer-port-id] [transfer-channel-id] [amount]",
 		Short: "Withdraw wrapped token to nova",
 		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(5),
+		Args: cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.Flags().Set(flags.FlagFrom, args[1])
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -147,20 +147,21 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 			zoneId := args[0]
 
-			toAddr, err := sdk.AccAddressFromBech32(args[1])
+			withrawer, err := sdk.AccAddressFromBech32(args[1])
 			if err != nil {
 				return err
 			}
 
-			portId := args[2]
-			chanId := args[3]
+			receiver := args[2]
+			portId := args[3]
+			chanId := args[4]
 
-			coins, err := sdk.ParseCoinNormalized(args[4])
+			coins, err := sdk.ParseCoinNormalized(args[5])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgWithdraw(zoneId, toAddr, portId, chanId, coins)
+			msg := types.NewMsgWithdraw(zoneId, withrawer, receiver, portId, chanId, coins)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
