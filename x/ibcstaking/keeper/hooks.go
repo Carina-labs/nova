@@ -4,7 +4,6 @@ import (
 	"github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 )
 
 // Implements ICAHooks interface
@@ -16,9 +15,9 @@ func (k Keeper) AfterDelegateEnd() {
 	}
 }
 
-func (k Keeper) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, response *stakingtypes.MsgUndelegateResponse) {
+func (k Keeper) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate, response *stakingtypes.MsgUndelegateResponse) {
 	if k.hooks != nil {
-		k.hooks.AfterUndelegateEnd(ctx, packet, response)
+		k.hooks.AfterUndelegateEnd(ctx, undelegateMsg, response)
 	}
 }
 

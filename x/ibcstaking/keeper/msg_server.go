@@ -54,7 +54,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
 
-	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.PortId); err != nil {
+	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaAccount.DaomodifierAddress); err != nil {
 		return nil, err
 	}
 

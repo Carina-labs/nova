@@ -63,12 +63,11 @@ func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zon
 	}
 }
 
-func (k Keeper) GetRegisteredZoneForPortId(ctx sdk.Context, portId string) *types.RegisteredZone {
+func (k Keeper) GetRegisteredZoneForValidatorAddr(ctx sdk.Context, validatorAddr string) *types.RegisteredZone {
 	var zone *types.RegisteredZone
 
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
-		portID := zoneInfo.IcaConnectionInfo.PortId
-		if portID == portId {
+		if zoneInfo.ValidatorAddress == validatorAddr {
 			zone = &zoneInfo
 			return true
 		}

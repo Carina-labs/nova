@@ -9,7 +9,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 )
 
 // Hooks wrapper struct for gal keeper
@@ -100,8 +99,13 @@ func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
 // AfterUndelegateEnd is executed when ICA undelegation request finished.
 // 1. It removes undelegation history in store.
 // 2. It saves undelegation finish time to store.
-func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, packet channeltypes.Packet, msg *stakingtypes.MsgUndelegateResponse) {
-	zone := h.k.ibcstakingKeeper.GetRegisteredZoneForPortId(ctx, packet.SourcePort)
+func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate, msg *stakingtypes.MsgUndelegateResponse) {
+	// get zone info from the validator address
+	zone := h.k.ibcstakingKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
+	if zone == nil {
+		return
+	}
+
 	h.k.DeleteUndelegateRecords(ctx, zone.ZoneId, UNDELEGATE_REQUEST_ICA)
 	h.k.SetWithdrawTime(ctx, zone.ZoneId, WITHDRAW_REQUEST_USER, msg.CompletionTime)
 }
