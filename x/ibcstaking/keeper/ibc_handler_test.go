@@ -7,6 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	ibcaccounttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
@@ -61,13 +62,30 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 	zone := suite.setZone(1)
 	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &zone[0])
 
+	var msgs []sdk.Msg
+	undelegateMsg := &stakingtypes.MsgUndelegate{
+		DelegatorAddress: "test",
+		ValidatorAddress: zone[0].ValidatorAddress,
+		Amount:           sdk.NewCoin("uatom", sdk.NewInt(1000)),
+	}
+
+	msgs = append(msgs, undelegateMsg)
+
+	data, err := ibcaccounttypes.SerializeCosmosTx(suite.App.AppCodec(), msgs)
+	suite.NoError(err)
+
+	icapacket := ibcaccounttypes.InterchainAccountPacketData{
+		Type: ibcaccounttypes.EXECUTE_TX,
+		Data: data,
+	}
+
 	packetData := channeltypes.Packet{
 		Sequence:           1,
 		SourcePort:         "icacontroller-" + zone[0].IcaAccount.DaomodifierAddress,
 		SourceChannel:      "channel-0",
 		DestinationPort:    "icahost",
 		DestinationChannel: "channel-0",
-		Data:               []byte(""),
+		Data:               icapacket.GetBytes(),
 		TimeoutHeight: ibcclienttypes.Height{
 			RevisionHeight: 0,
 			RevisionNumber: 0,
