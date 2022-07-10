@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"fmt"
 	"math/big"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -85,4 +86,23 @@ func (k Keeper) GetsnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string,
 	snDenom := k.ibcstakingKeeper.GetsnDenomForBaseDenom(ctx, denomTrace.BaseDenom)
 
 	return snDenom, nil
+}
+
+func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk.Coin, error) {
+	zone := k.ibcstakingKeeper.GetZoneForDenom(ctx, denom)
+	if zone == nil {
+		return sdk.Coin{}, fmt.Errorf("cannot find zone denom : %s", denom)
+	}
+
+	chainInfo, err := k.oracleKeeper.GetChainState(ctx, denom)
+	if err != nil {
+		return sdk.Coin{}, fmt.Errorf("cannot find zone denom in oracle : %s", denom)
+	}
+
+	notMintedAmount, err := k.GetAllAmountNotMintShareToken(ctx, zone.ZoneId)
+	if err != nil {
+		return sdk.Coin{}, err
+	}
+
+	return chainInfo.Coin.Sub(notMintedAmount), nil
 }
