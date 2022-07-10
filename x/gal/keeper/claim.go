@@ -29,6 +29,11 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 		return sdk.Coin{}, err
 	}
 
+	err = k.DeleteRecordedDepositItem(ctx, claimer, asset)
+	if err != nil {
+		return sdk.Coin{}, err
+	}
+
 	return sdk.NewInt64Coin(snDenom, mintAmt.Int64()), nil
 }
 

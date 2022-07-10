@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"fmt"
-
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -66,4 +65,32 @@ func (k Keeper) ClearRecordedDepositAmt(ctx sdk.Context, depositor sdk.AccAddres
 
 	store.Delete([]byte(depositorStr))
 	return nil
+}
+
+func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, depositor sdk.AccAddress, amount sdk.Coin) error {
+	record, err := k.GetRecordedDepositAmt(ctx, depositor)
+	if err != nil {
+		return err
+	}
+
+	recordItems := record.Records
+	isDeleted := false
+	for index, item := range record.Records {
+		if item.IsTransferred && item.Amount.IsEqual(amount) {
+			recordItems = removeIndex(recordItems, index)
+			record.Records = recordItems
+			isDeleted = true
+			break
+		}
+	}
+
+	if isDeleted {
+		k.SetDepositAmt(ctx, record)
+	}
+	
+	return nil
+}
+
+func removeIndex(s []*types.DepositRecordContent, index int) []*types.DepositRecordContent {
+	return append(s[:index], s[index+1:]...)
 }
