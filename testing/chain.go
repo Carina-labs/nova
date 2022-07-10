@@ -35,7 +35,7 @@ import (
 	"github.com/cosmos/ibc-go/v3/testing/mock"
 )
 
-var MaxAccounts = 2
+var MaxAccounts = 3
 
 type SenderAccount struct {
 	SenderPrivKey cryptotypes.PrivKey

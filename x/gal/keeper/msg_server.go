@@ -68,12 +68,14 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		deposit.Depositor,
 		deposit.HostAddr,
 		deposit.Amount)
+	
 	if err != nil {
 		return nil, err
 	}
 
 	return &types.MsgDepositResponse{
-		Receiver: deposit.Depositor,
+		Receiver:        deposit.Depositor,
+		DepositedAmount: deposit.Amount,
 	}, nil
 }
 

@@ -16,6 +16,9 @@ import (
 	icahosttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 )
 
@@ -293,6 +296,235 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			suite.Require().Equal(tc.expect.afterWithdrawUserBalance, afterUserBalance.Amount.Int64())
 		})
 	}
+}
+
+func (suite *KeeperTestSuite) TestMultiUserAction() {
+	// This is starting point.
+	// What I want to test?
+	suite.SetupTest()
+	suite.chainA.App.IbcstakingKeeper.SetParams(suite.chainA.GetContext(), ibcstakingtypes.Params{
+		DaoModifiers: []string{
+			suite.icaOwnerAddr.String(),
+		},
+	})
+
+	trace := transfertypes.ParseDenomTrace(transfertypes.GetPrefixedDenom(
+		transferPort,
+		transferChannel, "stake"))
+	suite.chainA.App.TransferKeeper.InitGenesis(suite.chainA.GetContext(), transfertypes.GenesisState{
+		PortId:      transferPort,
+		DenomTraces: []transfertypes.DenomTrace{trace},
+		Params:      transfertypes.Params{SendEnabled: true, ReceiveEnabled: true},
+	})
+
+	valAcc, err := sdk.ValAddressFromHex(suite.chainB.Vals.Validators[0].Address.String())
+	validatorInfo, _ := suite.chainB.App.StakingKeeper.GetValidator(suite.chainB.GetContext(), valAcc)
+	suite.chainA.App.OracleKeeper.InitGenesis(suite.chainA.GetContext(), &oracletypes.GenesisState{
+		Params: oracletypes.Params{
+			OracleOperators: []string{oracleOperatorAcc.String()},
+		},
+		States: []oracletypes.ChainInfo{
+			{
+				Coin:            sdk.NewInt64Coin("stake", validatorInfo.Tokens.Int64()),
+				Decimal:         8,
+				OperatorAddress: oracleOperatorAcc.String(),
+			},
+		},
+	})
+
+	// Mint sn tokens for test
+	suite.chainA.App.BankKeeper.MintCoins(suite.chainA.GetContext(),
+		types.ModuleName,
+		sdk.NewCoins(sdk.NewInt64Coin("snstake", validatorInfo.Tokens.Int64())))
+
+	user1 := suite.chainB.SenderAccounts[0].SenderAccount
+
+	receiver1 := suite.chainA.SenderAccounts[0].SenderAccount
+	receiver2 := suite.chainA.SenderAccounts[1].SenderAccount
+	receiver3 := suite.chainA.SenderAccounts[2].SenderAccount
+
+	// transfer stake B -> A
+	tMsg1 := transfertypes.NewMsgTransfer(transferPort, transferChannel, sdk.NewInt64Coin("stake", 1000000000), user1.GetAddress().String(), receiver1.GetAddress().String(), clienttypes.NewHeight(0, 10000000), 0)
+	tMsg2 := transfertypes.NewMsgTransfer(transferPort, transferChannel, sdk.NewInt64Coin("stake", 1000000000), user1.GetAddress().String(), receiver2.GetAddress().String(), clienttypes.NewHeight(0, 10000000), 0)
+	tMsg3 := transfertypes.NewMsgTransfer(transferPort, transferChannel, sdk.NewInt64Coin("stake", 1000000000), user1.GetAddress().String(), receiver3.GetAddress().String(), clienttypes.NewHeight(0, 10000000), 0)
+
+	res, err := suite.chainB.SendMsgs(tMsg1)
+	suite.Require().NoError(err)
+	packet, err := ibctesting.ParsePacketFromEvents(res.GetEvents())
+	suite.Require().NoError(err)
+	err = suite.transferPath.RelayPacket(packet)
+	suite.Require().NoError(err)
+
+	res, err = suite.chainB.SendMsgs(tMsg2)
+	suite.Require().NoError(err)
+	packet, err = ibctesting.ParsePacketFromEvents(res.GetEvents())
+	suite.Require().NoError(err)
+	err = suite.transferPath.RelayPacket(packet)
+	suite.Require().NoError(err)
+
+	res, err = suite.chainB.SendMsgs(tMsg3)
+	suite.Require().NoError(err)
+	packet, err = ibctesting.ParsePacketFromEvents(res.GetEvents())
+	suite.Require().NoError(err)
+	err = suite.transferPath.RelayPacket(packet)
+	suite.Require().NoError(err)
+
+	//
+	ibcDenom := trace.IBCDenom()
+
+	icaConfig, err := setIbcZone(suite.chainA, suite.chainB, suite.icaOwnerAddr.String())
+	suite.Require().NoError(err)
+
+	err = simulateDeposit(suite, icaConfig, receiver1.GetAddress().String(), sdk.NewInt64Coin(ibcDenom, 1000000))
+	suite.Require().NoError(err)
+	err = simulateDeposit(suite, icaConfig, receiver2.GetAddress().String(), sdk.NewInt64Coin(ibcDenom, 970000))
+	suite.Require().NoError(err)
+	err = simulateDeposit(suite, icaConfig, receiver3.GetAddress().String(), sdk.NewInt64Coin(ibcDenom, 850000))
+	suite.Require().NoError(err)
+
+	record1, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), receiver1.GetAddress())
+	record2, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), receiver2.GetAddress())
+	record3, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), receiver3.GetAddress())
+	fmt.Printf("record: %s\n", record1.String())
+	fmt.Printf("record: %s\n", record2.String())
+	fmt.Printf("record: %s\n", record3.String())
+
+	suite.Require().NoError(err)
+	hostAcc, err := sdk.AccAddressFromBech32(icaConfig.icaHostAddress)
+	suite.Require().NoError(err)
+	hostBalance := suite.chainB.App.BankKeeper.GetBalance(suite.chainB.GetContext(), hostAcc, "stake")
+	fmt.Printf("host balance: %s\n", hostBalance)
+	err = simulateIcaStaking(suite, icaConfig.icaHostAddress, valAcc.String(), hostBalance)
+	suite.Require().NoError(err)
+
+	err = suite.icaPath.EndpointB.UpdateClient()
+	suite.Require().NoError(err)
+	validatorInfo, ok := suite.chainB.App.StakingKeeper.GetValidator(suite.chainB.GetContext(), valAcc)
+	suite.Require().True(ok)
+
+	// update oracle
+	validatorInfo, ok = suite.chainB.App.StakingKeeper.GetValidator(suite.chainB.GetContext(), valAcc)
+	err = suite.chainA.App.OracleKeeper.UpdateChainState(suite.chainA.GetContext(), &oracletypes.ChainInfo{
+		Coin:            sdk.NewInt64Coin("stake", validatorInfo.Tokens.Int64()),
+		OperatorAddress: oracleOperatorAcc.String(),
+		Decimal:         8,
+	})
+
+	// claim share token
+	minted1, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver1.GetAddress(), *record1.Records[0].Amount)
+	shareTokenSupply := suite.chainA.App.BankKeeper.GetSupply(suite.chainA.GetContext(), "snstake")
+	fmt.Printf("minted1: %s (total: %s)\n", minted1.String(), shareTokenSupply.String())
+	suite.Require().NoError(err)
+	minted2, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver2.GetAddress(), *record2.Records[0].Amount)
+	shareTokenSupply = suite.chainA.App.BankKeeper.GetSupply(suite.chainA.GetContext(), "snstake")
+	fmt.Printf("minted2: %s (total: %s)\n", minted2.String(), shareTokenSupply.String())
+	suite.Require().NoError(err)
+	minted3, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver3.GetAddress(), *record3.Records[0].Amount)
+	shareTokenSupply = suite.chainA.App.BankKeeper.GetSupply(suite.chainA.GetContext(), "snstake")
+	fmt.Printf("minted3: %s (total: %s)\n", minted3.String(), shareTokenSupply.String())
+	suite.Require().NoError(err)
+
+	hostBalance = suite.chainB.App.BankKeeper.GetBalance(suite.chainB.GetContext(), hostAcc, "stake")
+	fmt.Printf("host balance: %s\n", hostBalance)
+
+	// simulate undelegate without reward
+	lambda := suite.chainA.App.GalKeeper.CalculateLambda(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(int64(1_000_000), lambda.Int64())
+	fmt.Printf("total sn token supply: %s\n", shareTokenSupply.String())
+	fmt.Printf("lambda(1): %s\n", lambda.String())
+
+	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(int64(970_000), lambda.Int64())
+	fmt.Printf("lambda(2): %s\n", lambda.String())
+
+	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(int64(850_000), lambda.Int64())
+	fmt.Printf("lambda(3): %s\n", lambda.String())
+
+	validatorInfo.Tokens = sdk.NewInt(3838555)
+	suite.chainB.App.StakingKeeper.SetValidator(suite.chainB.GetContext(), validatorInfo)
+	info, _ := suite.chainB.App.StakingKeeper.GetValidator(suite.chainB.GetContext(), valAcc)
+	fmt.Printf("vali: %s\n", info.Tokens)
+
+	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	fmt.Printf("lambda(1): %s\n", lambda.String())
+	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	fmt.Printf("lambda(2): %s\n", lambda.String())
+	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	fmt.Printf("lambda(3): %s\n", lambda.String())
+}
+
+func simulateDeposit(suite *KeeperTestSuite, icaConfig *icaConfig, sender string, amount sdk.Coin) error {
+	galServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
+	depositMsg := types.MsgDeposit{
+		Depositor:         sender,
+		ZoneId:            hostId,
+		HostAddr:          icaConfig.icaHostAddress,
+		Amount:            amount,
+		TransferPortId:    "transfer",
+		TransferChannelId: "channel-0",
+	}
+	ctx := suite.chainA.GetContext()
+	_, err := galServer.Deposit(sdk.WrapSDKContext(ctx), &depositMsg)
+	if err != nil {
+		return err
+	}
+
+	suite.chainA.NextBlock()
+	packet, err := ibctesting.ParsePacketFromEvents(ctx.EventManager().Events())
+	if err != nil {
+		return err
+	}
+
+	err = suite.transferPath.RelayPacket(packet)
+	return err
+}
+
+func simulateIcaStaking(suite *KeeperTestSuite,
+	delegator, validator string, amount sdk.Coin) error {
+	owner := suite.icaOwnerAddr
+	ctx := suite.chainA.GetContext()
+	// check owner balance
+	ownerBalance := suite.chainA.App.BankKeeper.GetBalance(ctx, owner, hostIbcDenom)
+	fmt.Printf("owner balance : %s\n", ownerBalance.String())
+
+	// check host balance
+	ctx = suite.chainB.GetContext()
+	delegateMsg := &stakingtypes.MsgDelegate{
+		DelegatorAddress: delegator,
+		ValidatorAddress: validator,
+		Amount:           amount,
+	}
+	data, err := icatypes.SerializeCosmosTx(suite.chainA.App.AppCodec(), []sdk.Msg{delegateMsg})
+	if err != nil {
+		return err
+	}
+
+	icaPacketData := icatypes.InterchainAccountPacketData{
+		Type: icatypes.EXECUTE_TX,
+		Data: data,
+	}
+
+	params := icahosttypes.NewParams(true, []string{sdk.MsgTypeURL(delegateMsg)})
+	suite.chainB.App.ICAHostKeeper.SetParams(suite.chainB.GetContext(), params)
+	if err != nil {
+		return err
+	}
+
+	chanCap, ok := suite.chainA.App.ScopedIBCKeeper.GetCapability(
+		suite.chainA.GetContext(), host.ChannelCapabilityPath(suite.icaPath.EndpointA.ChannelConfig.PortID, suite.icaPath.EndpointA.ChannelID))
+	suite.Require().True(ok)
+
+	_, err = suite.chainA.App.ICAControllerKeeper.SendTx(suite.chainA.GetContext(), chanCap, "connection-1", suite.icaPath.EndpointA.ChannelConfig.PortID, icaPacketData, ^uint64(0))
+	if err != nil {
+		return err
+	}
+
+	suite.chainA.NextBlock()
+
+	packetRelay := channeltypes.NewPacket(icaPacketData.GetBytes(), 1, suite.icaPath.EndpointA.ChannelConfig.PortID, suite.icaPath.EndpointA.ChannelID, suite.icaPath.EndpointB.ChannelConfig.PortID, suite.icaPath.EndpointB.ChannelID, clienttypes.ZeroHeight(), ^uint64(0))
+	err = suite.icaPath.RelayPacket(packetRelay)
+	return err
 }
 
 func (suite *KeeperTestSuite) verifyTransferCorrectlyExecuted(initSet initialSet, icaInfo icaConfig, set expectedSet) {
