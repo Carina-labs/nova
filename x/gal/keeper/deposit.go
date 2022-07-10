@@ -87,8 +87,47 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, depositor sdk.AccAddr
 	if isDeleted {
 		k.SetDepositAmt(ctx, record)
 	}
-	
+
 	return nil
+}
+
+func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zoneId string) (sdk.Coin, error) {
+	targetZoneInfo, ok := k.ibcstakingKeeper.GetRegisteredZone(ctx, zoneId)
+	if !ok {
+		return sdk.Coin{}, fmt.Errorf("cannot find zone id : %s", zoneId)
+	}
+
+	res := sdk.NewInt64Coin(targetZoneInfo.BaseDenom, 0)
+	k.IterateDepositRecord(ctx, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
+		for _, record := range depositRecord.Records {
+			if record.ZoneId == zoneId && record.IsTransferred == true {
+				res.Add(*record.Amount)
+			}
+		}
+		return false
+	})
+
+	return res, nil
+}
+
+func (k Keeper) IterateDepositRecord(ctx sdk.Context, fn func(index int64, depositRecord types.DepositRecord) (stop bool)) {
+	store := k.getDepositRecordStore(ctx)
+	iterator := sdk.KVStorePrefixIterator(store, nil)
+	defer func(iterator sdk.Iterator) {
+		iterator.Close()
+	}(iterator)
+	i := int64(0)
+
+	for ; iterator.Valid(); iterator.Next() {
+		res := types.DepositRecord{}
+
+		k.cdc.MustUnmarshal(iterator.Value(), &res)
+		stop := fn(i, res)
+		if stop {
+			break
+		}
+		i++
+	}
 }
 
 func removeIndex(s []*types.DepositRecordContent, index int) []*types.DepositRecordContent {
