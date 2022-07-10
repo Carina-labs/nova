@@ -1,6 +1,10 @@
 package keeper_test
 
 import (
+	"github.com/Carina-labs/nova/x/gal/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
+	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"math/big"
 )
 
@@ -84,27 +88,106 @@ func (suite *KeeperTestSuite) TestCalculateBurnAmount() {
 	}
 }
 
-// func (suite *KeeperTestSuite) TestGetsnDenomForIBCDenom() {
-// 	tcs := []struct {
-// 		ibcDenom string
-// 		snDenom  string
-// 	}{
-// 		{
-// 			ibcDenom: "ibc/C053D637CCA2A2BA030E2C5EE1B28A16F71CCB0E45E8BE52766DC1B241B77878",
-// 			snDenom:  "snstake",
-// 		},
-// 		{
-// 			ibcDenom: "ibc/ABCDEF",
-// 			snDenom:  "",
-// 		},
-// 	}
-// 	for _, tc := range tcs {
-// 		suite.SetupTest()
+func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
+	type depositInfo struct {
+		address string
+		amount  sdk.Coin
+	}
 
-// 		suite.chainA.App.IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+	tcs := []struct {
+		name         string
+		stakedAmount sdk.Coin
+		depositInfo  []depositInfo
+		expect       sdk.Coin
+	}{
+		{
+			name:         "test case 1",
+			stakedAmount: sdk.NewInt64Coin("stake", 1_000_000),
+			depositInfo: []depositInfo{
+				{
+					address: suite.GenRandomAddress().String(),
+					amount:  sdk.NewInt64Coin("stake", 100_000),
+				},
+				{
+					address: suite.GenRandomAddress().String(),
+					amount:  sdk.NewInt64Coin("stake", 100_000),
+				},
+				{
+					address: suite.GenRandomAddress().String(),
+					amount:  sdk.NewInt64Coin("stake", 100_000),
+				},
+			},
+			expect: sdk.NewInt64Coin("stake", 700_000),
+		},
+		{
+			name:         "test case 2",
+			stakedAmount: sdk.NewInt64Coin("stake", 1_500_000),
+			depositInfo: []depositInfo{
+				{
+					address: suite.GenRandomAddress().String(),
+					amount:  sdk.NewInt64Coin("stake", 100_000),
+				},
+				{
+					address: suite.GenRandomAddress().String(),
+					amount:  sdk.NewInt64Coin("stake", 200_000),
+				},
+				{
+					address: suite.GenRandomAddress().String(),
+					amount:  sdk.NewInt64Coin("stake", 300_000),
+				},
+			},
+			expect: sdk.NewInt64Coin("stake", 900_000),
+		},
+	}
 
-// 		res, err := suite.App.GalKeeper.GetsnDenomForIBCDenom(suite.Ctx, tc.ibcDenom)
-// 		suite.Require().NoError(err)
-// 		suite.Equal(tc.snDenom, res)
-// 	}
-// }
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			// setup
+			suite.Setup()
+			operator := suite.GenRandomAddress().String()
+			suite.App.OracleKeeper.InitGenesis(suite.Ctx, &oracletypes.GenesisState{
+				Params: oracletypes.Params{
+					OracleOperators: []string{
+						operator,
+					},
+				},
+				States: []oracletypes.ChainInfo{
+					{
+						Coin:            tc.stakedAmount,
+						ChainId:         "stake-1",
+						Decimal:         8,
+						OperatorAddress: operator,
+					},
+				},
+			})
+			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &ibcstakingtypes.RegisteredZone{
+				ZoneId:            "stake-1",
+				IcaConnectionInfo: nil,
+				IcaAccount:        nil,
+				ValidatorAddress:  "",
+				BaseDenom:         "stake",
+				SnDenom:           "snstake",
+			})
+			for _, item := range tc.depositInfo {
+				record := types.DepositRecord{
+					Address: item.address,
+					Records: []*types.DepositRecordContent{
+						{
+							ZoneId:        "stake-1",
+							Amount:        &item.amount,
+							IsTransferred: true,
+						},
+					},
+				}
+				suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &record)
+			}
+
+			// execute
+			res, err := suite.App.GalKeeper.GetTotalStakedForLazyMinting(suite.Ctx, "stake")
+
+			// verify
+			suite.Require().NoError(err)
+			suite.Require().True(tc.expect.IsEqual(res))
+		})
+	}
+}
