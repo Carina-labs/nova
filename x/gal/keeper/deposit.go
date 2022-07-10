@@ -97,7 +97,10 @@ func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zoneId string) (s
 		return sdk.Coin{}, fmt.Errorf("cannot find zone id : %s", zoneId)
 	}
 
-	res := sdk.NewInt64Coin(targetZoneInfo.BaseDenom, 0)
+	// TODO : channel information should be contained in zone.
+	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx,
+		"transfer", "channel-0", targetZoneInfo.BaseDenom)
+	res := sdk.NewInt64Coin(ibcDenom, 0)
 	k.IterateDepositRecord(ctx, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
 		for _, record := range depositRecord.Records {
 			if record.ZoneId == zoneId && record.IsTransferred == true {

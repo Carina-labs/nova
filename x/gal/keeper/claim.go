@@ -19,11 +19,11 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 
 	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
-	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, baseDenom)
+	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
-	mintAmt := k.CalculateAlpha(asset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	mintAmt := k.CalculateAlpha(asset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
 
 	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)))
 	if err != nil {
@@ -104,5 +104,11 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk
 		return sdk.Coin{}, err
 	}
 
-	return chainInfo.Coin.Sub(notMintedAmount), nil
+	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, "transfer", "channel-0", denom)
+	chainBalanceWithIbcDenom := sdk.Coin{
+		Denom:  ibcDenom,
+		Amount: chainInfo.Coin.Amount,
+	}
+
+	return chainBalanceWithIbcDenom.Sub(notMintedAmount), nil
 }

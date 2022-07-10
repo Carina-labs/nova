@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"fmt"
 	novatesting "github.com/Carina-labs/nova/testing"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
@@ -98,6 +99,7 @@ func newIcaPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 }
 
 func setupIcaPath(path *novatesting.Path, owner string) error {
+	fmt.Printf("owner address: %s\n", owner)
 	if err := registerInterchainAccount(path.EndpointA, owner); err != nil {
 		return err
 	}

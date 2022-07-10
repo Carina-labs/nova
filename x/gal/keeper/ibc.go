@@ -11,20 +11,20 @@ import (
 // TransferToTargetZone transfers user's asset to target zone(Host chain)
 // using IBC transfer.
 func (k Keeper) TransferToTargetZone(ctx sdk.Context,
-	sourcePort, sourceChannel, depositor, receiver string, amt sdk.Coin) error {
+	sourcePort, sourceChannel, depositor, icaController string, amt sdk.Coin) error {
 	goCtx := sdk.WrapSDKContext(ctx)
 	depositorAddr, err := sdk.AccAddressFromBech32(depositor)
 	if err != nil {
 		return err
 	}
-
+	
 	_, err = k.ibcTransferKeeper.Transfer(goCtx,
 		&transfertypes.MsgTransfer{
 			SourcePort:    sourcePort,
 			SourceChannel: sourceChannel,
 			Token:         amt,
 			Sender:        depositorAddr.String(),
-			Receiver:      receiver,
+			Receiver:      icaController,
 			TimeoutHeight: ibcclienttypes.Height{
 				RevisionHeight: 0,
 				RevisionNumber: 0,
