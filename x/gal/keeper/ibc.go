@@ -17,7 +17,7 @@ func (k Keeper) TransferToTargetZone(ctx sdk.Context,
 	if err != nil {
 		return err
 	}
-	
+
 	_, err = k.ibcTransferKeeper.Transfer(goCtx,
 		&transfertypes.MsgTransfer{
 			SourcePort:    sourcePort,
