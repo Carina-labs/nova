@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"strconv"
 
 	"github.com/Carina-labs/nova/x/gal/keeper"
@@ -32,22 +33,15 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 
 				suite.chainA.App.BankKeeper.InitGenesis(suite.chainA.GetContext(), &banktypes.GenesisState{
 					Balances: []banktypes.Balance{
-						{sender.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, sentAmount)}},
+						{sender.String(), sdk.Coins{sdk.NewInt64Coin("stake", sentAmount)}},
 					},
 				})
 			},
-			func() {
-				//record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
-				//suite.Require().NoError(err)
-				// suite.Require().Equal(record.IsTransferred, false)
-			},
+			func() {},
 			func() {
 				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
 				suite.Require().NoError(err)
 				suite.Require().NotNil(record, "record doesn't exists")
-				//suite.Require().Equal(sentAmount, record.Amount.Amount.Int64())
-				//suite.Require().Equal(sender.String(), record.Address)
-				//suite.Require().Equal(record.IsTransferred, true)
 			},
 		},
 		{
@@ -61,23 +55,12 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 
 				suite.chainA.App.BankKeeper.InitGenesis(suite.chainA.GetContext(), &banktypes.GenesisState{
 					Balances: []banktypes.Balance{
-						{sender.String(), sdk.Coins{sdk.NewInt64Coin(baseDenom, sentAmount)}},
+						{sender.String(), sdk.Coins{sdk.NewInt64Coin("stake", sentAmount)}},
 					},
 				})
 			},
-			func() {
-				//record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
-				//suite.Require().NoError(err)
-				//suite.Require().Equal(record.IsTransferred, false)
-			},
-			func() {
-				//record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
-				//suite.Require().NoError(err)
-				//suite.Require().NotNil(record, "record doesn't exists")
-				//suite.Require().Equal(sentAmount, record.Amount.Amount.Int64())
-				//suite.Require().Equal(sender.String(), record.Address)
-				//suite.Require().Equal(record.IsTransferred, false)
-			},
+			func() {},
+			func() {},
 		},
 	}
 
@@ -93,12 +76,27 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 			tc.before()
 
 			// register zone
-			suite.chainA.App.IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+			operator := suite.GenRandomAddress()
+			zone := newBaseRegisteredZone()
+			suite.chainA.App.IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), zone)
+			suite.chainA.App.OracleKeeper.InitGenesis(suite.chainA.GetContext(), &oracletypes.GenesisState{
+				Params: oracletypes.Params{
+					OracleOperators: []string{operator.String()},
+				},
+				States: []oracletypes.ChainInfo{
+					{
+						ChainId:         zone.ZoneId,
+						OperatorAddress: operator.String(),
+						LastBlockHeight: 1000,
+						Coin:            sdk.NewInt64Coin("stake", 1000000),
+					},
+				},
+			})
 
 			// should send deposit message to msg server
 			_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgDeposit{
 				Depositor:         sender.String(),
-				Amount:            sdk.NewInt64Coin(baseDenom, sentAmount),
+				Amount:            sdk.NewInt64Coin("stake", sentAmount),
 				HostAddr:          baseHostAcc.String(),
 				TransferPortId:    transferPort,
 				TransferChannelId: transferChannel,
@@ -110,12 +108,12 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 
 			// after send deposit msg to msg_server hooks should execute.
 			packet := ibctransfertypes.FungibleTokenPacketData{
-				Denom:    baseDenom,
+				Denom:    "stake",
 				Amount:   strconv.Itoa(int(sentAmount)),
 				Sender:   sender.String(),
 				Receiver: receiver.String(),
 			}
-			hooks.AfterTransferEnd(suite.chainA.GetContext(), packet, baseDenom)
+			hooks.AfterTransferEnd(suite.chainA.GetContext(), packet, "stake")
 
 			tc.exp()
 		})
