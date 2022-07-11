@@ -39,10 +39,13 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
+	oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
+
 	newRecord := &types.DepositRecordContent{
 		ZoneId:        zoneInfo.ZoneId,
 		Amount:        &deposit.Amount,
 		IsTransferred: false,
+		BlockHeight:   oracleVersion,
 	}
 
 	record, err := m.keeper.GetRecordedDepositAmt(ctx, depositorAcc)
@@ -246,6 +249,20 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 	}
 
 	for _, record := range record.Records {
+		zone, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, record.ZoneId)
+		if !ok {
+			return nil, fmt.Errorf("cannot find zone id : %s", record.ZoneId)
+		}
+
+		oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zone.BaseDenom)
+		if err != nil {
+			return nil, err
+		}
+
+		if record.BlockHeight >= oracleVersion {
+			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
+		}
+
 		if record.IsTransferred && record.Amount.Equal(claimMsg.Amount) {
 			minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, *record.Amount)
 			if err != nil {

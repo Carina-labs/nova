@@ -74,3 +74,12 @@ func (k Keeper) IsValidOperator(ctx sdk.Context, operatorAddress string) bool {
 
 	return false
 }
+
+func (k Keeper) GetOracleVersion(ctx sdk.Context, chainDenom string) (uint64, error) {
+	chainInfo, err := k.GetChainState(ctx, chainDenom)
+	if err != nil {
+		return 0, err
+	}
+
+	return chainInfo.LastBlockHeight, nil
+}

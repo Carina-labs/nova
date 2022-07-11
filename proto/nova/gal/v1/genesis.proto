@@ -41,6 +41,7 @@ message DepositRecordContent {
   string zone_id = 1;
   cosmos.base.v1beta1.Coin amount = 2;
   bool is_transferred = 3;
+  uint64 block_height = 4;
 }
 
 message WithdrawInfo {

@@ -87,7 +87,7 @@ func (suite *KeeperTestSuite) prepare(initSet initialSet) {
 				Coin:            initSet.oracle.state,
 				Decimal:         initSet.oracle.decimal,
 				OperatorAddress: initSet.oracle.operators[0],
-				LastBlockHeight: 0,
+				LastBlockHeight: 100,
 				AppHash:         "",
 				ChainId:         hostId,
 				BlockProposer:   "",
