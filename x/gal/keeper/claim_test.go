@@ -94,6 +94,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 		amount  sdk.Coin
 	}
 
+	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(suite.Ctx, "transfer", "channel-0", "stake")
 	tcs := []struct {
 		name         string
 		stakedAmount sdk.Coin
@@ -117,7 +118,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					amount:  sdk.NewInt64Coin("stake", 100_000),
 				},
 			},
-			expect: sdk.NewInt64Coin("stake", 700_000),
+			expect: sdk.NewInt64Coin(ibcDenom, 700_000),
 		},
 		{
 			name:         "test case 2",
@@ -136,7 +137,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					amount:  sdk.NewInt64Coin("stake", 300_000),
 				},
 			},
-			expect: sdk.NewInt64Coin("stake", 900_000),
+			expect: sdk.NewInt64Coin(ibcDenom, 900_000),
 		},
 	}
 
@@ -169,12 +170,13 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 				SnDenom:           "snstake",
 			})
 			for _, item := range tc.depositInfo {
+				ibcAmount := sdk.NewInt64Coin(ibcDenom, item.amount.Amount.Int64())
 				record := types.DepositRecord{
 					Address: item.address,
 					Records: []*types.DepositRecordContent{
 						{
 							ZoneId:        "stake-1",
-							Amount:        &item.amount,
+							Amount:        &ibcAmount,
 							IsTransferred: true,
 						},
 					},
