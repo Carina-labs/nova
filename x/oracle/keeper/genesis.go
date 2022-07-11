@@ -28,7 +28,8 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 	defer func() {
 		err := iterator.Close()
 		if err != nil {
-			panic(fmt.Errorf("unexpectedly iterator closed: %v", err))
+			ctx.Logger().Error(fmt.Sprintf("unexpected iterator closed: %s", err))
+			return
 		}
 	}()
 

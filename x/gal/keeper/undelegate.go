@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -117,6 +118,7 @@ func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, 
 	defer func(iterator sdk.Iterator) {
 		err := iterator.Close()
 		if err != nil {
+			ctx.Logger().Error(fmt.Sprintf("unexpected iterator closed: %s", err))
 			return
 		}
 	}(iterator)
