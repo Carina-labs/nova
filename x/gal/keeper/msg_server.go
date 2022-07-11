@@ -40,6 +40,9 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
+	if err != nil {
+		return nil, err
+	}
 
 	newRecord := &types.DepositRecordContent{
 		ZoneId:        zoneInfo.ZoneId,
