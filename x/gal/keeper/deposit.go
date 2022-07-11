@@ -103,7 +103,7 @@ func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zoneId string) (s
 	res := sdk.NewInt64Coin(ibcDenom, 0)
 	k.IterateDepositRecord(ctx, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
 		for _, record := range depositRecord.Records {
-			if record.ZoneId == zoneId && record.IsTransferred == true {
+			if record.ZoneId == zoneId && record.IsTransferred {
 				res = res.Add(*record.Amount)
 			}
 		}
