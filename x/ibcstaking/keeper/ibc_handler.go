@@ -33,7 +33,9 @@ func (k *Keeper) HandleMsgData(ctx sdk.Context, packet channeltypes.Packet, msgD
 		}
 
 		var data ibcaccounttypes.InterchainAccountPacketData
-		ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data)
+		if err := ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data); err != nil {
+			return "", sdkerrors.Wrapf(sdkerrors.ErrJSONUnmarshal, "cannot unmarshal packet data: %s", err.Error())
+		}
 		packetData, err := ibcaccounttypes.DeserializeCosmosTx(k.cdc, data.Data)
 		if err != nil {
 			return "", err
