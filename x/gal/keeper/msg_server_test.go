@@ -299,8 +299,6 @@ func (suite *KeeperTestSuite) TestGalAction() {
 }
 
 func (suite *KeeperTestSuite) TestMultiUserAction() {
-	// This is starting point.
-	// What I want to test?
 	suite.SetupTest()
 	suite.chainA.App.IbcstakingKeeper.SetParams(suite.chainA.GetContext(), ibcstakingtypes.Params{
 		DaoModifiers: []string{
@@ -441,16 +439,41 @@ func (suite *KeeperTestSuite) TestMultiUserAction() {
 	suite.Require().Equal(int64(850_000), lambda.Int64())
 	fmt.Printf("lambda(3): %s\n", lambda.String())
 
+	// Compound reward, new validator balance : 3838555
+	// Expected the value of sn-token for each user
+	// user 1 : 1,004,857
+	// user 2 : 974,711
+	// user 3 : 854,128
+	fmt.Printf("validator updatae\n")
 	validatorInfo.Tokens = sdk.NewInt(3838555)
 	suite.chainB.App.StakingKeeper.SetValidator(suite.chainB.GetContext(), validatorInfo)
-	info, _ := suite.chainB.App.StakingKeeper.GetValidator(suite.chainB.GetContext(), valAcc)
-	fmt.Printf("vali: %s\n", info.Tokens)
 
 	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(lambda.Int64(), int64(1004857))
 	fmt.Printf("lambda(1): %s\n", lambda.String())
 	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(lambda.Int64(), int64(974711))
 	fmt.Printf("lambda(2): %s\n", lambda.String())
 	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(lambda.Int64(), int64(854128))
+	fmt.Printf("lambda(3): %s\n", lambda.String())
+
+	// Compound reward, new validator balance : 3838555
+	// Expected the value of sn-token for each users
+	// user 1 : 2,617,800
+	// user 2 : 2,539,266
+	// user 3 : 2,225,130
+	fmt.Printf("validator updatae\n")
+	validatorInfo.Tokens = sdk.NewInt(9_999_999)
+	suite.chainB.App.StakingKeeper.SetValidator(suite.chainB.GetContext(), validatorInfo)
+	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(lambda.Int64(), int64(2_617_800))
+	fmt.Printf("lambda(1): %s\n", lambda.String())
+	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(lambda.Int64(), int64(2_539_266))
+	fmt.Printf("lambda(2): %s\n", lambda.String())
+	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	suite.Require().Equal(lambda.Int64(), int64(2_225_130))
 	fmt.Printf("lambda(3): %s\n", lambda.String())
 }
 
