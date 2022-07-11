@@ -115,7 +115,10 @@ func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, 
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
 	defer func(iterator sdk.Iterator) {
-		iterator.Close()
+		err := iterator.Close()
+		if err != nil {
+			return
+		}
 	}(iterator)
 	i := int64(0)
 

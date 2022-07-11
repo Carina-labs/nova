@@ -75,7 +75,11 @@ func NewUndelegateRequestCmd() *cobra.Command {
 		Use:  "undelegaterequest [zone-id] [depositor] [amount]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[1])
+			err := cmd.Flags().Set(flags.FlagFrom, args[1])
+			if err != nil {
+				return err
+			}
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -106,7 +110,11 @@ func NewUndelegateCmd() *cobra.Command {
 		Use:  "undelegate [zone-id] [controller-address] [host-address]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[1])
+			err := cmd.Flags().Set(flags.FlagFrom, args[1])
+			if err != nil {
+				return err
+			}
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -139,7 +147,11 @@ Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 		Args: cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[1])
+			err := cmd.Flags().Set(flags.FlagFrom, args[1])
+			if err != nil {
+				return err
+			}
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -176,7 +188,11 @@ func NewClaimCmd() *cobra.Command {
 		Short: "claim wrapped token to nova",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cmd.Flags().Set(flags.FlagFrom, args[0])
+			err := cmd.Flags().Set(flags.FlagFrom, args[0])
+			if err != nil {
+				return err
+			}
+			
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err

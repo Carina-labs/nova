@@ -117,7 +117,10 @@ func (k Keeper) IterateDepositRecord(ctx sdk.Context, fn func(index int64, depos
 	store := k.getDepositRecordStore(ctx)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
 	defer func(iterator sdk.Iterator) {
-		iterator.Close()
+		err := iterator.Close()
+		if err != nil {
+			return
+		}
 	}(iterator)
 	i := int64(0)
 
