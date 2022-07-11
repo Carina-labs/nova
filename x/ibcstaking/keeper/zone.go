@@ -46,7 +46,8 @@ func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zon
 	defer func(iterator sdk.Iterator) {
 		err := iterator.Close()
 		if err != nil {
-			panic(fmt.Errorf("unexpectedly iterator closed: %v", err))
+			ctx.Logger().Error(fmt.Sprintf("unexpected iterator closed: %s", err))
+			return
 		}
 	}(iterator)
 
