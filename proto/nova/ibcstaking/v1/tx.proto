@@ -16,8 +16,8 @@ service Msg {
   rpc IcaDelegate(MsgIcaDelegate) returns (MsgIcaDelegateResponse);
   // IcaUnDelegate defines a rpc handler for MsgIcaUnDelegate
   rpc IcaUndelegate(MsgIcaUndelegate) returns (MsgIcaUndelegateResponse);
-  // IcaWithdraw defines a rpc handler for MsgIcaWithdraw
-  rpc IcaWithdraw(MsgIcaWithdraw) returns (MsgIcaWithdrawResponse);
+  // IcaTransfer defines a rpc handler for MsgIcaTransfer
+  rpc IcaTransfer(MsgIcaTransfer) returns (MsgIcaTransferResponse);
   // IcaAutoStaking defines a rpc handler for MsgIcaAutoStaking
   rpc IcaAutoStaking(MsgIcaAutoStaking) returns (MsgIcaAutoStakingResponse);
   // IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
@@ -85,17 +85,17 @@ message MsgIcaAutoStaking{
 
 message MsgIcaAutoStakingResponse{}
 
-message MsgIcaWithdraw{
+message MsgIcaTransfer{
   string zone_id = 1;
   string host_address = 2;
   string daomodifier_address = 3;
   string receiver_address = 4;
-  string transfer_port_id = 5;
-  string transfer_channel_id = 6;
+  string ica_transfer_port_id = 5;
+  string ica_transfer_channel_id = 6;
   cosmos.base.v1beta1.Coin amount = 7[(gogoproto.nullable) = false];
 }
 
-message MsgIcaWithdrawResponse{}
+message MsgIcaTransferResponse{}
 
 message MsgRegisterHostAccount{
    string zone_id = 1;

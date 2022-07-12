@@ -17,7 +17,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(MsgRegisterZone{}, "ibcstaking/MsgRegisterZone", nil)
 	cdc.RegisterConcrete(MsgIcaDelegate{}, "ibcstaking/MsgIcaDelegate", nil)
 	cdc.RegisterConcrete(MsgIcaUndelegate{}, "ibcstaking/MsgIcaUndelegate", nil)
-	cdc.RegisterConcrete(MsgIcaWithdraw{}, "ibcstaking/MsgIcaWithdraw", nil)
+	cdc.RegisterConcrete(MsgIcaTransfer{}, "ibcstaking/MsgIcaTransfer", nil)
 	cdc.RegisterConcrete(MsgIcaAutoStaking{}, "ibcstaking/MsgIcaAutoStaking", nil)
 }
 
@@ -28,7 +28,7 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgRegisterZone{},
 		&MsgIcaDelegate{},
 		&MsgIcaUndelegate{},
-		&MsgIcaWithdraw{},
+		&MsgIcaTransfer{},
 		&MsgIcaAutoStaking{},
 	)
 }

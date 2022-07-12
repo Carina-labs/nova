@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"fmt"
 	"math/big"
 
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -28,25 +27,25 @@ func (k Keeper) Hooks() Hooks {
 func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, baseDenom string) {
 	packetAmount, ok := new(big.Int).SetString(data.Amount, 10)
 	if !ok {
-		panic(fmt.Sprintf("invalid ibc transfer packet: %v", data))
+		h.k.Logger(ctx).Error("Invalid ibc transfer packet", "data", data, "hook", "AfterTransferEnd")
+		return
 	}
 
 	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 	// if zoneInfo == nil, it may be a test situation.
 	if zoneInfo == nil {
+		h.k.Logger(ctx).Error("Zone id is not found", "Denom", data.Denom, "hook", "AfterTransferEnd")
 		return
 	}
 
 	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
 		return
 	}
-
-	// change sender + zoneId
 	sender, err := sdk.AccAddressFromBech32(data.Sender)
 	if err != nil {
 		return
 	}
-
+	// change sender + zoneId
 	depositRecord, err := h.k.GetRecordedDepositAmt(ctx, sender)
 	if err != nil {
 		return
@@ -66,23 +65,16 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 			}
 
 			if err := h.k.MarkRecordTransfer(ctx, depositRecord.Address, i); err != nil {
-				h.k.Logger(ctx).Error("error during replacing deposit information, %s", err.Error())
-				panic(err)
+				h.k.Logger(ctx).Error("Error during replacing deposit information", "err", err.Error(), "hook", "AfterTransferEnd")
+				return
 			}
 
 			if err != nil {
-				h.k.Logger(ctx).Error("error during recording deposit information, %s", err.Error())
-				panic(err)
+				h.k.Logger(ctx).Error("Error during recording deposit information", "err,", err.Error(), "hook", "AfterTransferEnd")
+				return
 			}
 
-			// Delegate events
-			if err := ctx.EventManager().EmitTypedEvent(zoneInfo); err != nil {
-				panic(err)
-
-			}
-			if err := ctx.EventManager().EmitTypedEvent(depositRecord); err != nil {
-				panic(err)
-			}
+			// TODO: Delegate events
 		}
 	}
 }
@@ -90,7 +82,22 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 func (h Hooks) AfterDelegateEnd() {
 }
 
-func (h Hooks) AfterWithdrawEnd() {
+// ica transfer
+func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+	asset := transferMsg.Token
+
+	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, asset.Denom)
+	if transferMsg.Receiver != zoneInfo.IcaAccount.DaomodifierAddress {
+		h.k.Logger(ctx).Error("Receiver is not found", "receiver", transferMsg.Receiver, "hook", "AfterWithdrawEnd")
+		return
+	}
+
+	if asset.Amount.IsZero() || asset.Amount.IsNil() {
+		// TODO: withdraw fail event
+		return
+	}
+
+	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, int64(ICA_WITHDRAW_REQUEST), int64(TRANSFER_SUCCESS))
 }
 
 func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
@@ -103,11 +110,12 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	// get zone info from the validator address
 	zone := h.k.ibcstakingKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
 	if zone == nil {
+		h.k.Logger(ctx).Error("Zone id is not found", "validatorAddress", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
 		return
 	}
 
 	h.k.DeleteUndelegateRecords(ctx, zone.ZoneId, UNDELEGATE_REQUEST_ICA)
-	h.k.SetWithdrawTime(ctx, zone.ZoneId, WITHDRAW_REQUEST_USER, msg.CompletionTime)
+	h.k.SetWithdrawTime(ctx, zone.ZoneId, WITHDRAW_REGISTER, msg.CompletionTime)
 }
 
 func (h Hooks) AfterAutoStakingEnd() {

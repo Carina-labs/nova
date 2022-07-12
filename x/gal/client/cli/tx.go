@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -27,6 +28,7 @@ func GetTxCmd() *cobra.Command {
 		NewUndelegateRequestCmd(),
 		NewUndelegateCmd(),
 		NewClaimCmd(),
+		NewGalWithdrawCmd(),
 	)
 
 	return cmd
@@ -214,5 +216,40 @@ func NewClaimCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
+	return cmd
+}
+func NewGalWithdrawCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "galwithdraw [zone-id] [conroller-address] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
+		Args: cobra.ExactArgs(7),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
+				return err
+			}
+
+			clientCtx, err := client.GetClientTxContext(cmd)
+
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			daomodifierAddr := clientCtx.GetFromAddress()
+			hostAddr := args[2]
+			receiver := args[3]
+			portId := args[4]
+			chanId := args[5]
+			blockTime := args[6]
+			t, err := time.Parse(time.RFC3339, blockTime)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgGalWithdraw(zoneId, hostAddr, daomodifierAddr, receiver, portId, chanId, t)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
 	return cmd
 }

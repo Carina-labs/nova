@@ -14,7 +14,8 @@ type WithdrawRegisterType int
 
 const (
 	WITHDRAW_REGISTER WithdrawRegisterType = iota + 1
-	WITHDRAW_REQUEST_USER
+	ICA_WITHDRAW_REQUEST
+	TRANSFER_SUCCESS
 )
 
 func (k Keeper) getWithdrawRecordStore(ctx sdk.Context) prefix.Store {
@@ -22,9 +23,9 @@ func (k Keeper) getWithdrawRecordStore(ctx sdk.Context) prefix.Store {
 }
 
 // GetWithdrawRecord returns withdraw record item by key.
-func (k Keeper) GetWithdrawRecord(ctx sdk.Context, key string) (*types.WithdrawRecord, error) {
+func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*types.WithdrawRecord, error) {
 	store := k.getWithdrawRecordStore(ctx)
-	keyBytes := []byte(key)
+	keyBytes := []byte(zoneId + withdrawer)
 	if !store.Has(keyBytes) {
 		return nil, types.ErrNoWithdrawRecord
 	}
@@ -157,7 +158,7 @@ func (k Keeper) WithdrawHistory(goCtx context.Context, rq *types.QueryWithdrawHi
 	}
 
 	// TODO : why GetWithdrawRecord returns error, not bool?
-	wdInfo, err := k.GetWithdrawRecord(sdkCtx, zoneInfo.ZoneId+rq.Address)
+	wdInfo, err := k.GetWithdrawRecord(sdkCtx, zoneInfo.ZoneId, rq.Address)
 	if err != nil {
 		return nil, err
 	}
@@ -166,4 +167,33 @@ func (k Keeper) WithdrawHistory(goCtx context.Context, rq *types.QueryWithdrawHi
 		Address: rq.Address,
 		Amount:  sdk.NewCoins(*wdInfo.Amount),
 	}, nil
+}
+
+func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId string, blockTime time.Time) sdk.Coin {
+	amount := sdk.Coin{
+		Amount: sdk.NewIntFromUint64(0),
+	}
+
+	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+		if amount.Denom == "" {
+			amount.Denom = withdrawInfo.Amount.Denom
+		}
+		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == int64(WITHDRAW_REGISTER) {
+			if withdrawInfo.CompletionTime.Before(blockTime) {
+				amount = amount.AddAmount(withdrawInfo.Amount.Amount)
+			}
+		}
+		return false
+	})
+	return amount
+}
+
+func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, beforeState, afterState int64) {
+	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == beforeState {
+			withdrawInfo.State = afterState
+			k.SetWithdrawRecord(ctx, withdrawInfo)
+		}
+		return false
+	})
 }

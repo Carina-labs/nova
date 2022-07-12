@@ -3,13 +3,14 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 type ICAHooks interface {
 	AfterDelegateEnd()
 	AfterUndelegateEnd(sdk.Context, stakingtypes.MsgUndelegate, *stakingtypes.MsgUndelegateResponse)
 	AfterAutoStakingEnd()
-	AfterWithdrawEnd()
+	AfterWithdrawEnd(sdk.Context, transfertypes.MsgTransfer)
 }
 
 var _ ICAHooks = MultiICAHooks{}
@@ -38,8 +39,8 @@ func (h MultiICAHooks) AfterAutoStakingEnd() {
 	}
 }
 
-func (h MultiICAHooks) AfterWithdrawEnd() {
+func (h MultiICAHooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	for i := range h {
-		h[i].AfterWithdrawEnd()
+		h[i].AfterWithdrawEnd(ctx, transferMsg)
 	}
 }

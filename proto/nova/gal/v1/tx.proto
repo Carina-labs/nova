@@ -12,10 +12,11 @@ option go_package = "github.com/Carina-labs/nova/x/gal/types";
 // Msg defines the gal Msg service.
 service Msg {
   rpc Deposit(MsgDeposit) returns (MsgDepositResponse);
-  rpc Undelegate(MsgUndelegate) returns (MsgUndelegateResponse);
+  rpc GalUndelegate(MsgGalUndelegate) returns (MsgGalUndelegateResponse);
   rpc UndelegateRecord(MsgUndelegateRecord) returns (MsgUndelegateRecordResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
   rpc Claim(MsgClaim) returns (MsgClaimResponse);
+  rpc GalWithdraw(MsgGalWithdraw) returns (MsgGalWithdrawResponse);
 }
 
 // MsgDeposit defines user who deposit and amount of coins.
@@ -33,13 +34,13 @@ message MsgDepositResponse {
   cosmos.base.v1beta1.Coin deposited_amount = 2 [(gogoproto.nullable) = false];
 }
 
-message MsgUndelegate {
+message MsgGalUndelegate {
   string zone_id = 1;
   string controller_address = 2;
   string host_address = 3;
 }
 
-message MsgUndelegateResponse{
+message MsgGalUndelegateResponse{
   string zone_id = 1;
   cosmos.base.v1beta1.Coin undelegated_amount = 2 [(gogoproto.nullable) = false];
 }
@@ -87,3 +88,15 @@ message MsgClaimResponse {
   cosmos.base.v1beta1.Coin minted = 2
       [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
+
+message MsgGalWithdraw{
+  string zone_id = 1;
+  string host_address = 2;
+  string daomodifier_address = 3;
+  string receiver_address = 4;
+  string transfer_port_id = 5;
+  string transfer_channel_id = 6;
+  google.protobuf.Timestamp chain_time = 7[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+}
+
+message MsgGalWithdrawResponse{}

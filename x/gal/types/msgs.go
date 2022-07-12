@@ -2,6 +2,7 @@ package types
 
 import (
 	"errors"
+	time "time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -15,10 +16,11 @@ const (
 )
 
 var _ sdk.Msg = &MsgDeposit{}
-var _ sdk.Msg = &MsgUndelegate{}
+var _ sdk.Msg = &MsgGalUndelegate{}
 var _ sdk.Msg = &MsgUndelegateRecord{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaim{}
+var _ sdk.Msg = &MsgGalWithdraw{}
 
 func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coin, zoneId, portId, chanId string) *MsgDeposit {
 	return &MsgDeposit{
@@ -72,23 +74,23 @@ func (msg MsgDeposit) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{depositor}
 }
 
-func NewMsgUndelegate(zoneId, controllerAddr, hostAddr string) *MsgUndelegate {
-	return &MsgUndelegate{
+func NewMsgUndelegate(zoneId, controllerAddr, hostAddr string) *MsgGalUndelegate {
+	return &MsgGalUndelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr,
 		HostAddress:       hostAddr,
 	}
 }
 
-func (msg MsgUndelegate) Route() string {
+func (msg MsgGalUndelegate) Route() string {
 	return RouterKey
 }
 
-func (msg MsgUndelegate) Type() string {
+func (msg MsgGalUndelegate) Type() string {
 	return TypeMsgDeposit
 }
 
-func (msg MsgUndelegate) ValidateBasic() error {
+func (msg MsgGalUndelegate) ValidateBasic() error {
 	if msg.ControllerAddress == "" {
 		return errors.New("controller address is not null")
 	}
@@ -103,11 +105,11 @@ func (msg MsgUndelegate) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgUndelegate) GetSignBytes() []byte {
+func (msg MsgGalUndelegate) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgUndelegate) GetSigners() []sdk.AccAddress {
+func (msg MsgGalUndelegate) GetSigners() []sdk.AccAddress {
 	depositor, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	return []sdk.AccAddress{depositor}
 }
@@ -223,4 +225,43 @@ func (msg MsgClaim) GetSignBytes() []byte {
 func (msg MsgClaim) GetSigners() []sdk.AccAddress {
 	claimer, _ := sdk.AccAddressFromBech32(msg.Claimer)
 	return []sdk.AccAddress{claimer}
+}
+
+func NewMsgGalWithdraw(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress, receiver, portId, chanId string, blockTime time.Time) *MsgGalWithdraw {
+	return &MsgGalWithdraw{
+		ZoneId:             zoneId,
+		HostAddress:        hostAddr,
+		DaomodifierAddress: daomodifierAddr.String(),
+		ReceiverAddress:    receiver,
+		TransferPortId:     portId,
+		TransferChannelId:  chanId,
+		ChainTime:          blockTime,
+	}
+}
+
+func (msg MsgGalWithdraw) Route() string {
+	return RouterKey
+}
+
+func (msg MsgGalWithdraw) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress); err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
+	}
+
+	if _, err := sdk.AccAddressFromBech32(msg.ReceiverAddress); err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ReceiverAddress)
+	}
+
+	// TODO
+
+	return nil
+}
+
+func (msg MsgGalWithdraw) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgGalWithdraw) GetSigners() []sdk.AccAddress {
+	withdrawer, _ := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
+	return []sdk.AccAddress{withdrawer}
 }

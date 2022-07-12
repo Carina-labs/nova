@@ -12,7 +12,7 @@ var (
 	_ sdk.Msg = &MsgRegisterZone{}
 	_ sdk.Msg = &MsgIcaDelegate{}
 	_ sdk.Msg = &MsgIcaUndelegate{}
-	_ sdk.Msg = &MsgIcaWithdraw{}
+	_ sdk.Msg = &MsgIcaTransfer{}
 	_ sdk.Msg = &MsgIcaAutoStaking{}
 	_ sdk.Msg = &MsgRegisterHostAccount{}
 
@@ -207,20 +207,20 @@ func (msg MsgIcaAutoStaking) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaWithdraw(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgIcaWithdraw {
-	return &MsgIcaWithdraw{
-		ZoneId:             zoneId,
-		HostAddress:        hostAddr,
-		DaomodifierAddress: daomodifierAddr.String(),
-		ReceiverAddress:    receiver,
-		TransferPortId:     portId,
-		TransferChannelId:  chanId,
-		Amount:             amount,
+func NewMsgIcaTransfer(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgIcaTransfer {
+	return &MsgIcaTransfer{
+		ZoneId:               zoneId,
+		HostAddress:          hostAddr,
+		DaomodifierAddress:   daomodifierAddr.String(),
+		ReceiverAddress:      receiver,
+		IcaTransferPortId:    portId,
+		IcaTransferChannelId: chanId,
+		Amount:               amount,
 	}
 }
 
 // ValidateBasic implements sdk.Msg
-func (msg MsgIcaWithdraw) ValidateBasic() error {
+func (msg MsgIcaTransfer) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
 		return errors.New("missing zone name")
 	}
@@ -246,7 +246,7 @@ func (msg MsgIcaWithdraw) ValidateBasic() error {
 }
 
 // GetSigners implements sdk.Msg
-func (msg MsgIcaWithdraw) GetSigners() []sdk.AccAddress {
+func (msg MsgIcaTransfer) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
 
 	if err != nil {

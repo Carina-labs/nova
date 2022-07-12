@@ -1,8 +1,9 @@
 package keeper_test
 
 import (
-	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"strconv"
+
+	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"

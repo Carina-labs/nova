@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -62,14 +63,9 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, denom string, zoneId string
 		Denom:  denom,
 	}
 
-	var result sdk.Coin
-
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
 		if undelegateInfo.ZoneId == zoneId && undelegateInfo.State == int64(state) {
-			result = amt.Add(*undelegateInfo.Amount)
-			if !result.IsZero() {
-				amt = result
-			}
+			amt = amt.Add(*undelegateInfo.Amount)
 		}
 		return false
 	})
