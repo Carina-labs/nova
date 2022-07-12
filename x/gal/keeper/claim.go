@@ -109,9 +109,9 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk
 		Amount: chainInfo.Coin.Amount,
 	}
 
-	if chainBalanceWithIbcDenom.Sub(notMintedAmount).IsZero() {
-		return notMintedAmount, nil
+	if chainBalanceWithIbcDenom.Sub(unMintedAmount).IsZero() {
+		return unMintedAmount, nil
 	}
 
-	return chainBalanceWithIbcDenom.Sub(notMintedAmount), nil
+	return chainBalanceWithIbcDenom.Sub(unMintedAmount), nil
 }
