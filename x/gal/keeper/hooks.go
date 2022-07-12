@@ -88,7 +88,7 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 
 	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, asset.Denom)
 	if transferMsg.Receiver != zoneInfo.IcaAccount.DaomodifierAddress {
-		h.k.Logger(ctx).Error("Receiver is not found", "receiver", transferMsg.Receiver, "hook", "AfterWithdrawEnd")
+		h.k.Logger(ctx).Error("Receiver is not daomodifier address", "receiver", transferMsg.Receiver, "daomodifier address", zoneInfo.IcaAccount.DaomodifierAddress, "hook", "AfterWithdrawEnd")
 		return
 	}
 
@@ -97,7 +97,7 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 		return
 	}
 
-	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, int64(ICA_WITHDRAW_REQUEST), int64(TRANSFER_SUCCESS))
+	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, ICA_WITHDRAW_REQUEST, TRANSFER_SUCCESS)
 }
 
 func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
