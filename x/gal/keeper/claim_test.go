@@ -52,7 +52,7 @@ func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 		totalShareTokenSupply := big.NewInt(tc.totalShareTokenSupply)
 		totalStakedAmount := big.NewInt(tc.totalStakedAmount)
 
-		res := suite.App.GalKeeper.CalculateAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount)
+		res := suite.App.GalKeeper.CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount)
 		suite.Equal(tc.expected, res.Int64())
 	}
 }
@@ -83,7 +83,7 @@ func (suite *KeeperTestSuite) TestCalculateBurnAmount() {
 		totalShareTokenSupply := big.NewInt(tc.totalShareTokenSupply)
 		totalStakedAmount := big.NewInt(tc.totalStakedAmount)
 
-		res := suite.App.GalKeeper.CalculateLambda(burnedAmount, totalShareTokenSupply, totalStakedAmount)
+		res := suite.App.GalKeeper.CalculateWithdrawAlpha(burnedAmount, totalShareTokenSupply, totalStakedAmount)
 		suite.Equal(tc.expected, res.Int64())
 	}
 }

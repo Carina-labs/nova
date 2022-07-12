@@ -23,7 +23,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	if err != nil {
 		return sdk.Coin{}, err
 	}
-	mintAmt := k.CalculateAlpha(asset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
+	mintAmt := k.CalculateDepositAlpha(asset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
 
 	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)))
 	if err != nil {
@@ -38,10 +38,10 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	return sdk.NewInt64Coin(snDenom, mintAmt.Int64()), nil
 }
 
-// CalculateAlpha calculates alpha value.
+// CalculateDepositAlpha calculates alpha value.
 // Alpha = userDepositAmount / totalStakedAmount
 // Delta = Alpha * totalShareTokenSupply
-func (k Keeper) CalculateAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
+func (k Keeper) CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
 	res := new(big.Int)
 	if totalShareTokenSupply.Cmp(big.NewInt(0)) == 0 {
 		totalShareTokenSupply = totalStakedAmount
@@ -60,14 +60,14 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 		return sdk.Coin{}, err
 	}
 
-	withdrawAmt := k.CalculateLambda(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
 	return sdk.NewInt64Coin(baseAsset, withdrawAmt.Int64()), nil
 }
 
-// CalculateLambda calculates lambda value.
+// CalculateWithdrawAlpha calculates lambda value.
 // Lambda = userWithdrawAmount / totalStakedAmount
 // Delta = Lambda * totalShareTokenSupply
-func (k Keeper) CalculateLambda(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
+func (k Keeper) CalculateWithdrawAlpha(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
 	res := new(big.Int)
 	if totalShareTokenSupply.Cmp(big.NewInt(0)) == 0 {
 		totalShareTokenSupply = totalStakedAmount
@@ -99,7 +99,7 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk
 		return sdk.Coin{}, fmt.Errorf("cannot find zone denom in oracle : %s", denom)
 	}
 
-	notMintedAmount, err := k.GetAllAmountNotMintShareToken(ctx, zone.ZoneId)
+	unMintedAmount, err := k.GetAllAmountNotMintShareToken(ctx, zone.ZoneId)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -110,5 +110,5 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk
 		Amount: chainInfo.Coin.Amount,
 	}
 
-	return chainBalanceWithIbcDenom.Sub(notMintedAmount), nil
+	return chainBalanceWithIbcDenom.Sub(unMintedAmount), nil
 }

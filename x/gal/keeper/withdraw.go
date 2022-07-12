@@ -78,7 +78,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state Undeleg
 
 // SetWithdrawTime writes the time undelegate finish.
 func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state WithdrawRegisterType, time time.Time) {
-	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
 		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == int64(state) {
 			withdrawInfo.CompletionTime = time
 			k.SetWithdrawRecord(ctx, withdrawInfo)
@@ -105,8 +105,8 @@ func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, from sdk.AccAddress, amt sdk.C
 	return balance.Amount.BigInt().Cmp(amt.Amount.BigInt()) >= 0
 }
 
-// IterateWithdrawdRecords iterate
-func (k Keeper) IterateWithdrawdRecords(ctx sdk.Context, fn func(index int64, withdrawInfo types.WithdrawRecord) (stop bool)) {
+// IterateWithdrawRecords iterate
+func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, withdrawInfo types.WithdrawRecord) (stop bool)) {
 	store := k.getWithdrawRecordStore(ctx)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
 	defer func(iterator sdk.Iterator) {
