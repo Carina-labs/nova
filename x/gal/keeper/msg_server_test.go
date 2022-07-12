@@ -426,16 +426,16 @@ func (suite *KeeperTestSuite) TestMultiUserAction() {
 	fmt.Printf("host balance: %s\n", hostBalance)
 
 	// simulate undelegate without reward
-	lambda := suite.chainA.App.GalKeeper.CalculateLambda(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda := suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(int64(1_000_000), lambda.Int64())
 	fmt.Printf("total sn token supply: %s\n", shareTokenSupply.String())
 	fmt.Printf("lambda(1): %s\n", lambda.String())
 
-	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda = suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(int64(970_000), lambda.Int64())
 	fmt.Printf("lambda(2): %s\n", lambda.String())
 
-	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda = suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(int64(850_000), lambda.Int64())
 	fmt.Printf("lambda(3): %s\n", lambda.String())
 
@@ -448,13 +448,13 @@ func (suite *KeeperTestSuite) TestMultiUserAction() {
 	validatorInfo.Tokens = sdk.NewInt(3838555)
 	suite.chainB.App.StakingKeeper.SetValidator(suite.chainB.GetContext(), validatorInfo)
 
-	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda = suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(lambda.Int64(), int64(1004857))
 	fmt.Printf("lambda(1): %s\n", lambda.String())
-	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda = suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(lambda.Int64(), int64(974711))
 	fmt.Printf("lambda(2): %s\n", lambda.String())
-	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda = suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(lambda.Int64(), int64(854128))
 	fmt.Printf("lambda(3): %s\n", lambda.String())
 
@@ -466,13 +466,13 @@ func (suite *KeeperTestSuite) TestMultiUserAction() {
 	fmt.Printf("validator updatae\n")
 	validatorInfo.Tokens = sdk.NewInt(9_999_999)
 	suite.chainB.App.StakingKeeper.SetValidator(suite.chainB.GetContext(), validatorInfo)
-	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda = suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted1.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(lambda.Int64(), int64(2_617_800))
 	fmt.Printf("lambda(1): %s\n", lambda.String())
-	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda = suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted2.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(lambda.Int64(), int64(2_539_266))
 	fmt.Printf("lambda(2): %s\n", lambda.String())
-	lambda = suite.chainA.App.GalKeeper.CalculateLambda(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
+	lambda = suite.chainA.App.GalKeeper.CalculateWithdrawAlpha(minted3.Amount.BigInt(), shareTokenSupply.Amount.BigInt(), validatorInfo.Tokens.BigInt())
 	suite.Require().Equal(lambda.Int64(), int64(2_225_130))
 	fmt.Printf("lambda(3): %s\n", lambda.String())
 }
