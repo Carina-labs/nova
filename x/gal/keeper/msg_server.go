@@ -4,11 +4,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
+	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 )
 
 var _ types.MsgServer = msgServer{}
@@ -125,8 +128,12 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 // 1. Protocol refers the store that contains user's undelegate request history.
 // 2. Using it, controller chain requests undelegate staked asset using ICA.
 // 3. And burn share token Module account have.
-func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
+func (m msgServer) GalUndelegate(goCtx context.Context, msg *types.MsgGalUndelegate) (*types.MsgGalUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
 
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
@@ -163,7 +170,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
 	}
 
-	return &types.MsgUndelegateResponse{
+	return &types.MsgGalUndelegateResponse{
 		ZoneId:            zoneInfo.ZoneId,
 		UndelegatedAmount: undelegateAmount,
 	}, nil
@@ -174,71 +181,84 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	withdrawRecord, err := m.keeper.GetWithdrawRecord(ctx, withdraw.ZoneId+withdraw.Withdrawer)
-	if err != nil {
-		return nil, sdkerrors.Wrap(err, fmt.Sprintf("account: %s", withdrawRecord.Withdrawer))
-	}
-
-	withdrawState := &types.WithdrawRecord{
-		ZoneId:         withdrawRecord.ZoneId,
-		Withdrawer:     withdrawRecord.Withdrawer,
-		Recipient:      withdrawRecord.Recipient,
-		Amount:         withdrawRecord.Amount,
-		State:          int64(WITHDRAW_REQUEST_USER),
-		CompletionTime: withdrawRecord.CompletionTime,
-	}
-
-	m.keeper.SetWithdrawRecord(ctx, *withdrawState)
-
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
 	if !ok {
-		return nil, errors.New("zone is not found")
+		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
+	}
+
+	withdrawRecord, err := m.keeper.GetWithdrawRecord(ctx, withdraw.ZoneId, withdraw.Withdrawer)
+	if err != nil {
+		return nil, sdkerrors.Wrapf(err, "account: %s", withdrawRecord.Withdrawer)
+	}
+
+	if withdrawRecord.State != int64(TRANSFER_SUCCESS) {
+		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "unbonding time has not passed %s", withdrawRecord.CompletionTime)
 	}
 
 	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, withdraw.Amount.Denom)
-	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawState.Amount.Amount.Int64())
-	ownerAcc, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
+	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdraw.Amount.Amount.Int64())
+	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
 	if err != nil {
 		return nil, err
-	}
-
-	ok = m.keeper.IsAbleToWithdraw(ctx, ownerAcc, withdrawAmount)
-	if !ok {
-		//request ibc-transfer
-		return nil, types.ErrInsufficientFunds
-	}
-
-	if !ok {
-		if err := ctx.EventManager().EmitTypedEvent(&zoneInfo); err != nil {
-			return nil, err
-		}
-		if err := ctx.EventManager().EmitTypedEvent(withdrawRecord); err != nil {
-			return nil, err
-		}
 	}
 
 	recipientAcc, err := sdk.AccAddressFromBech32(withdraw.Recipient)
 	if err != nil {
 		return nil, err
 	}
-	if err := m.keeper.ClaimWithdrawAsset(ctx, ownerAcc, recipientAcc, withdrawAmount); err != nil {
+
+	if err := m.keeper.ClaimWithdrawAsset(ctx, controllerAddr, recipientAcc, withdrawAmount); err != nil {
 		return nil, err
 	}
 
-	m.keeper.DeleteWithdrawRecord(ctx, *withdrawState)
-
-	record := &types.WithdrawRecord{
-		ZoneId:         withdraw.ZoneId,
-		Withdrawer:     withdraw.Withdrawer,
-		Amount:         &withdraw.Amount,
-		CompletionTime: withdraw.Time,
-	}
-	m.keeper.SetWithdrawRecord(ctx, *record)
+	m.keeper.DeleteWithdrawRecord(ctx, *withdrawRecord)
 
 	return &types.MsgWithdrawResponse{
 		Withdrawer:     withdraw.Withdrawer,
 		WithdrawAmount: withdrawAmount,
 	}, nil
+}
+
+func (m msgServer) GalWithdraw(goCtx context.Context, msg *types.MsgGalWithdraw) (*types.MsgGalWithdrawResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, msg.DaomodifierAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
+	}
+
+	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
+	if !ok {
+		return nil, errors.New("zone name is not found")
+	}
+
+	withdrawAmount := m.keeper.GetTotalWithdrawAmountForZoneId(ctx, msg.ZoneId, msg.ChainTime)
+	if withdrawAmount.IsZero() {
+		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "total widraw amount: %s", withdrawAmount)
+	}
+
+	var msgs []sdk.Msg
+
+	//transfer msg
+	//sourceport, Source channel, Token, Sender, receiver, TimeoutHeight, TimeoutTimestamp
+	msgs = append(msgs, &ibctransfertypes.MsgTransfer{
+		SourcePort:    msg.TransferPortId,
+		SourceChannel: msg.TransferChannelId,
+		Token:         withdrawAmount,
+		Sender:        msg.HostAddress,
+		Receiver:      msg.ReceiverAddress,
+		TimeoutHeight: ibcclienttypes.Height{
+			RevisionHeight: 0,
+			RevisionNumber: 0,
+		},
+		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+	})
+
+	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, msg.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		return nil, errors.New("GalWithdraw transaction failed to send")
+	}
+
+	return &types.MsgGalWithdrawResponse{}, nil
 }
 
 func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*types.MsgClaimResponse, error) {
@@ -282,6 +302,6 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 		}
 	}
 
-	return nil, sdkerrors.Wrap(types.ErrNoDepositRecord,
-		fmt.Sprintf("account: %s, amount: %s", claimMsg.Amount, claimMsg.Amount.String()))
+	return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
+		"account: %s, amount: %s", claimMsg.Amount, claimMsg.Amount.String())
 }

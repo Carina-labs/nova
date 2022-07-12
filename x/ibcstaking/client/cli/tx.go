@@ -27,7 +27,7 @@ func GetTxCmd() *cobra.Command {
 		getDelegateTxCmd(),
 		getUndelegateTxCmd(),
 		getAutoStakingTxCmd(),
-		getWithdrawTxCmd(),
+		getTransferTxCmd(),
 		getHostAddressTxCmd(),
 		getDeleteZoneTxCmd(),
 		getChangeZoneInfoTxCmd(),
@@ -163,9 +163,9 @@ func getAutoStakingTxCmd() *cobra.Command {
 	return cmd
 }
 
-func getWithdrawTxCmd() *cobra.Command {
+func getTransferTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "withdraw [zone-id] [daomodifier-address] [host-address] [reveiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
+		Use:  "icatransfer [zone-id] [daomodifier-address] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
 		Args: cobra.ExactArgs(7),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -189,7 +189,7 @@ func getWithdrawTxCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgIcaWithdraw(zoneId, hostAddr, daomodifierAddr, receiver, portId, chanId, amount)
+			msg := types.NewMsgIcaTransfer(zoneId, hostAddr, daomodifierAddr, receiver, portId, chanId, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -251,6 +251,7 @@ func getDeleteZoneTxCmd() *cobra.Command {
 	return cmd
 }
 
+//TODO: add host address
 func getChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "changezoneinfo [zone-id] [daomodifier-address] [connection-id] [validator_address] [base-denom]",

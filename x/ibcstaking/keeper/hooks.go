@@ -4,6 +4,7 @@ import (
 	"github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 // Implements ICAHooks interface
@@ -27,8 +28,8 @@ func (k Keeper) AfterAutoStakingEnd() {
 	}
 }
 
-func (k Keeper) AfterWithdrawEnd() {
+func (k Keeper) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	if k.hooks != nil {
-		k.hooks.AfterWithdrawEnd()
+		k.hooks.AfterWithdrawEnd(ctx, transferMsg)
 	}
 }

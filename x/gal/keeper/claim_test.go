@@ -1,11 +1,12 @@
 package keeper_test
 
 import (
+	"math/big"
+
 	"github.com/Carina-labs/nova/x/gal/types"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"math/big"
 )
 
 func (suite *KeeperTestSuite) TestCalculateMintAmount() {

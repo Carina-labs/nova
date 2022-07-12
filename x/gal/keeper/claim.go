@@ -12,7 +12,6 @@ import (
 // It calculates user's share and the amount of claimable share token.
 func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, asset sdk.Coin) (sdk.Coin, error) {
 	snDenom, err := k.GetsnDenomForIBCDenom(ctx, asset.Denom)
-
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -110,5 +109,9 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk
 		Amount: chainInfo.Coin.Amount,
 	}
 
-	return chainBalanceWithIbcDenom.Sub(unMintedAmount), nil
+	if chainBalanceWithIbcDenom.Sub(notMintedAmount).IsZero() {
+		return notMintedAmount, nil
+	}
+
+	return chainBalanceWithIbcDenom.Sub(notMintedAmount), nil
 }

@@ -186,8 +186,8 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	return &types.MsgIcaAutoStakingResponse{}, nil
 }
 
-// IcaWithdraw implements the Msg/MsgIcaWithdrawResponse interface
-func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
+// IcaTransfer implements the Msg/MsgIcaTransferResponse interface
+func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer) (*types.MsgIcaTransferResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidDaoModifier(ctx, msg.DaomodifierAddress) {
@@ -204,8 +204,8 @@ func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	//transfer msg
 	//sourceport, Source channel, Token, Sender, receiver, TimeoutHeight, TimeoutTimestamp
 	msgs = append(msgs, &ibctransfertypes.MsgTransfer{
-		SourcePort:    msg.TransferPortId,
-		SourceChannel: msg.TransferChannelId,
+		SourcePort:    msg.IcaTransferPortId,
+		SourceChannel: msg.IcaTransferChannelId,
 		Token:         msg.Amount,
 		Sender:        msg.HostAddress,
 		Receiver:      msg.ReceiverAddress,
@@ -218,10 +218,10 @@ func (k msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 
 	err := k.SendIcaTx(ctx, msg.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
-		return nil, errors.New("IcaWithdraw transaction failed to send")
+		return nil, errors.New("IcaTransfer transaction failed to send")
 	}
 
-	return &types.MsgIcaWithdrawResponse{}, nil
+	return &types.MsgIcaTransferResponse{}, nil
 }
 
 // IcaRegisterHostAccount implements the Msg/MsgRegisterHostAccount interface
