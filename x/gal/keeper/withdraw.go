@@ -189,7 +189,7 @@ func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId string, 
 }
 
 func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState WithdrawRegisterType) {
-	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
 		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == int64(preState) {
 			withdrawInfo.State = int64(postState)
 			k.SetWithdrawRecord(ctx, withdrawInfo)
