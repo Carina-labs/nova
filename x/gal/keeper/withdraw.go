@@ -174,7 +174,7 @@ func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId string, 
 		Amount: sdk.NewIntFromUint64(0),
 	}
 
-	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
 		if amount.Denom == "" {
 			amount.Denom = withdrawInfo.Amount.Denom
 		}
@@ -189,7 +189,7 @@ func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId string, 
 }
 
 func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, beforeState, afterState int64) {
-	k.IterateWithdrawdRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
 		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == beforeState {
 			withdrawInfo.State = afterState
 			k.SetWithdrawRecord(ctx, withdrawInfo)
