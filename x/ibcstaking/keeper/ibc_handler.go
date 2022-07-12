@@ -44,7 +44,11 @@ func (k *Keeper) HandleMsgData(ctx sdk.Context, packet channeltypes.Packet, msgD
 		return msgResponse.String(), nil
 	case sdk.MsgTypeURL(&transfertypes.MsgTransfer{}): // withdraw(transfer)
 		var data ibcaccounttypes.InterchainAccountPacketData
-		ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data)
+		err := ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data)
+		if err != nil {
+			return "", err
+		}
+
 		packetData, err := ibcaccounttypes.DeserializeCosmosTx(k.cdc, data.Data)
 		if err != nil {
 			return "", err
