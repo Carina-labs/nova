@@ -14,7 +14,6 @@ type WithdrawRegisterType int
 
 const (
 	WITHDRAW_REGISTER WithdrawRegisterType = iota + 1
-	ICA_WITHDRAW_REQUEST
 	TRANSFER_SUCCESS
 )
 
