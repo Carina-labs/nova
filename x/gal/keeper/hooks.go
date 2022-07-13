@@ -97,7 +97,7 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 		return
 	}
 
-	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, ICA_WITHDRAW_REQUEST, TRANSFER_SUCCESS)
+	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, WITHDRAW_REGISTER, TRANSFER_SUCCESS)
 }
 
 func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
