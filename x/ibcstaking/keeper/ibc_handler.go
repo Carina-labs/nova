@@ -39,7 +39,6 @@ func (k *Keeper) HandleMsgData(ctx sdk.Context, packet channeltypes.Packet, msgD
 		if !ok {
 			return "", err
 		}
-		ctx.Logger().Info("IBC handler", "undelegate completion time", msgResponse.CompletionTime)
 		k.AfterUndelegateEnd(ctx, *undelegateMsg, msgResponse)
 		return msgResponse.String(), nil
 	case sdk.MsgTypeURL(&transfertypes.MsgTransfer{}): // withdraw(transfer)

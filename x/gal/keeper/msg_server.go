@@ -42,6 +42,10 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
+	if deposit.HostAddr != zoneInfo.IcaAccount.HostAddress {
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "host address is not found: %s", deposit.HostAddr)
+	}
+
 	oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
 	if err != nil {
 		return nil, err
@@ -115,6 +119,7 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 		ZoneId:    undelegate.ZoneId,
 		Delegator: undelegate.Depositor,
 		Amount:    &amt,
+		State:     int64(UNDELEGATE_REQUEST_USER),
 	})
 
 	return &types.MsgUndelegateRecordResponse{
@@ -139,10 +144,11 @@ func (m msgServer) GalUndelegate(goCtx context.Context, msg *types.MsgGalUndeleg
 	if !ok {
 		return nil, errors.New("zone is not found")
 	}
-	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 	totalStAsset.Denom = zoneInfo.SnDenom
+
 	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {
 		// TODO: should handle if no coins to undelegate
 		return nil, errors.New("no coins to undelegate")
