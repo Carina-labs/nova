@@ -1,21 +1,23 @@
 # Usage:
 #   docker build . --build-arg TAG=v0.15.0 -t a41ventures/hermes:0.15.0 -f hermes.Dockerfile
 
-FROM rust:1.52-buster AS build-env
+FROM rust:1.58-slim as build
 
 ARG TAG
-WORKDIR /root
 
-RUN git clone https://github.com/informalsystems/ibc-rs
-RUN cd ibc-rs && git checkout $TAG && cargo build --release
+RUN apt update && apt install git -y
 
-FROM debian:buster-slim
+WORKDIR /app/src
 
-RUN useradd -m hermes -s /bin/bash
-WORKDIR /home/hermes
-USER hermes:hermes
+RUN git clone https://github.com/informalsystems/ibc-rs --branch $TAG
 
-COPY --chown=0:0 --from=build-env /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /usr/lib/x86_64-linux-gnu/libssl.so.1.1
-COPY --chown=0:0 --from=build-env /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1
-COPY --chown=0:0 --from=build-env /root/ibc-rs/target/release/hermes /usr/bin/hermes
-COPY --chown=0:0 --from=build-env /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+WORKDIR ibc-rs
+
+RUN cargo build --release
+
+FROM debian:bullseye-slim
+
+COPY --from=build /app/src/ibc-rs/target/release/hermes /usr/local/bin/hermes
+RUN adduser --system --home /hermes --disabled-password --disabled-login hermes -u 1000
+USER hermes
+
