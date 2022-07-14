@@ -9,12 +9,14 @@ import (
 )
 
 var (
-	KeyDaoModifierrAddress = []byte("DaoModifierAddress")
+	KeyDaoModifierAddress = []byte("DaoModifierAddress")
+	KeyCommissionInfo     = []byte("Commission")
 )
 
-func NewParams(operators []string) Params {
+func NewParams(daomodifierAddrs []string, commission []*CommissionInfo) Params {
 	return Params{
-		DaoModifiers: operators,
+		DaoModifiers: daomodifierAddrs,
+		Commission:   commission,
 	}
 }
 
@@ -25,6 +27,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 func DefaultParams() Params {
 	return Params{
 		DaoModifiers: []string{},
+		Commission:   []*CommissionInfo{},
 	}
 }
 
@@ -35,12 +38,17 @@ func (p *Params) String() string {
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
-		paramtypes.NewParamSetPair(KeyDaoModifierrAddress, &p.DaoModifiers, validateDaoModifierAddress),
+		paramtypes.NewParamSetPair(KeyDaoModifierAddress, &p.DaoModifiers, validateDaoModifierAddress),
+		paramtypes.NewParamSetPair(KeyCommissionInfo, &p.Commission, validateCommission),
 	}
 }
 
 func (p *Params) Validate() error {
 	if err := validateDaoModifierAddress(p.DaoModifiers); err != nil {
+		return err
+	}
+
+	if err := validateCommission(p.Commission); err != nil {
 		return err
 	}
 
@@ -50,7 +58,7 @@ func (p *Params) Validate() error {
 func validateDaoModifierAddress(i interface{}) error {
 	operators, ok := i.([]string)
 	if !ok {
-		return fmt.Errorf("invalid parameter: %T", i)
+		return fmt.Errorf("invalid parameter type: %T", i)
 	}
 
 	for i := range operators {
@@ -58,9 +66,48 @@ func validateDaoModifierAddress(i interface{}) error {
 		_, err := sdk.AccAddressFromBech32(val)
 
 		if err != nil {
-			return fmt.Errorf("invalid operator address: %v", err)
+			return fmt.Errorf("invalid daomodifier address: %v", err)
 		}
 	}
 
+	return nil
+}
+
+func validateCommission(i interface{}) error {
+	params, ok := i.([]*CommissionInfo)
+
+	if !ok {
+		return fmt.Errorf("invalid parameter type: %T", i)
+	}
+
+	// ensure each commission info is only registered one time.
+	registered := make(map[string]bool)
+	for _, p := range params {
+		if _, exists := registered[p.TreasuryAddress]; exists {
+			return fmt.Errorf("duplicate treasury address parameter found: '%s'", p.TreasuryAddress)
+		}
+
+		if err := validateCommissionInfo(*p); err != nil {
+			return err
+		}
+		registered[p.TreasuryAddress] = true
+	}
+
+	return nil
+}
+
+func validateCommissionInfo(i interface{}) error {
+	param, ok := i.(CommissionInfo)
+	if !ok {
+		return fmt.Errorf("invalid parameter type: %T", i)
+	}
+
+	if param.CommissionRate.IsNegative() {
+		return fmt.Errorf("commission rate cannot be negative: %s", param.CommissionRate)
+	}
+
+	if param.CommissionRate.GT(sdk.OneDec()) {
+		return fmt.Errorf("commission rate is too large: %s", param.CommissionRate)
+	}
 	return nil
 }
