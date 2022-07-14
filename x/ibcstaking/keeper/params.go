@@ -7,7 +7,6 @@ import (
 
 // SetParams sets the ibcstaking module's parameters.
 func (k Keeper) SetParams(ctx sdk.Context, params types.Params) {
-	ctx.Logger().Info("setparams", "setparams", params)
 	k.paramSpace.SetParamSet(ctx, &params)
 }
 
