@@ -481,6 +481,7 @@ func simulateDeposit(suite *KeeperTestSuite, icaConfig *icaConfig, sender string
 		Depositor:         sender,
 		ZoneId:            hostId,
 		Amount:            amount,
+		HostAddress:       icaConfig.icaHostAddress,
 		TransferPortId:    "transfer",
 		TransferChannelId: "channel-0",
 	}

@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"fmt"
+
 	novatesting "github.com/Carina-labs/nova/testing"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
