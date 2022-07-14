@@ -10,4 +10,10 @@ message Params {
 
   // zone register address.
   repeated string dao_modifiers = 1 [ (gogoproto.moretags) = "yaml:\"address\"" ];
+  repeated CommissionInfo commission = 2;
+}
+
+message CommissionInfo {
+  string treasury_address = 1 [ (gogoproto.moretags) = "yaml:\"address\""];
+  string commission_rate = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec", (gogoproto.nullable) = false];
 }
