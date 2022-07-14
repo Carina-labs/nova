@@ -159,7 +159,7 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			depositMsg := types.MsgDeposit{
 				Depositor:         tc.initSet.userAddress,
 				ZoneId:            hostId,
-				HostAddr:          icaConf.icaHostAddress,
+				HostAddress:       icaConf.icaHostAddress,
 				TransferPortId:    transferPort,
 				TransferChannelId: transferChannel,
 				Amount:            sdk.NewInt64Coin(hostIbcDenom, 1000),
@@ -213,7 +213,6 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			_, err = msgServer.GalUndelegate(goCtx, &types.MsgGalUndelegate{
 				ZoneId:            hostId,
 				ControllerAddress: baseOwnerAcc.String(),
-				HostAddress:       icaConf.icaHostAddress,
 			})
 			suite.Require().NoError(err)
 
@@ -482,8 +481,8 @@ func simulateDeposit(suite *KeeperTestSuite, icaConfig *icaConfig, sender string
 	depositMsg := types.MsgDeposit{
 		Depositor:         sender,
 		ZoneId:            hostId,
-		HostAddr:          icaConfig.icaHostAddress,
 		Amount:            amount,
+		HostAddress:       icaConfig.icaHostAddress,
 		TransferPortId:    "transfer",
 		TransferChannelId: "channel-0",
 	}

@@ -42,8 +42,8 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
-	if deposit.HostAddr != zoneInfo.IcaAccount.HostAddress {
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "host address is not found: %s", deposit.HostAddr)
+	if deposit.HostAddress != zoneInfo.IcaAccount.HostAddress {
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "host address is not found: %s", deposit.HostAddress)
 	}
 
 	oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
@@ -73,7 +73,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		deposit.TransferPortId,
 		deposit.TransferChannelId,
 		deposit.Depositor,
-		deposit.HostAddr,
+		deposit.HostAddress,
 		deposit.Amount)
 
 	if err != nil {
@@ -167,7 +167,7 @@ func (m msgServer) GalUndelegate(goCtx context.Context, msg *types.MsgGalUndeleg
 		return nil, err
 	}
 	msgs = append(msgs, &stakingtype.MsgUndelegate{
-		DelegatorAddress: msg.HostAddress,
+		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
 		Amount:           undelegateAmount})
 	err = m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
@@ -201,8 +201,8 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "unbonding time has not passed %s", withdrawRecord.CompletionTime)
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, withdraw.Amount.Denom)
-	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdraw.Amount.Amount.Int64())
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, zoneInfo.BaseDenom)
+	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawRecord.Amount.Amount.Int64())
 	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
 	if err != nil {
 		return nil, err
@@ -250,8 +250,8 @@ func (m msgServer) GalWithdraw(goCtx context.Context, msg *types.MsgGalWithdraw)
 		SourcePort:    msg.TransferPortId,
 		SourceChannel: msg.TransferChannelId,
 		Token:         withdrawAmount,
-		Sender:        msg.HostAddress,
-		Receiver:      msg.ReceiverAddress,
+		Sender:        zoneInfo.IcaAccount.HostAddress,
+		Receiver:      msg.DaomodifierAddress,
 		TimeoutHeight: ibcclienttypes.Height{
 			RevisionHeight: 0,
 			RevisionNumber: 0,
@@ -294,7 +294,7 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
 
-		if record.IsTransferred && record.Amount.Equal(claimMsg.Amount) {
+		if record.IsTransferred && record.Amount.Equal(record.Amount) {
 			minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, *record.Amount)
 			if err != nil {
 				return nil, err
@@ -309,5 +309,5 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 	}
 
 	return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
-		"account: %s, amount: %s", claimMsg.Amount, claimMsg.Amount.String())
+		"account: %s, amount: %s", claimMsg.Claimer, "")
 }

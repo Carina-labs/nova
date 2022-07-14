@@ -38,7 +38,7 @@ func GetTxCmd() *cobra.Command {
 
 func getRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "register [zone-id] [daomodifier-address] [connection-id] [validator_address] [base-denom]",
+		Use:  "registerzone [zone-id] [daomodifier-address] [connection-id] [validator_address] [base-denom]",
 		Args: cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -73,7 +73,7 @@ func getRegisterZoneCmd() *cobra.Command {
 
 func getDelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "delegate [zone-id] [daomodifier-address] [host-address] [amount]",
+		Use:  "icadelegate [zone-id] [daomodifier-address] [host-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -106,7 +106,7 @@ func getDelegateTxCmd() *cobra.Command {
 
 func getUndelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegate [zone-id] [daomodifier-address] [host-address] [amount]",
+		Use:  "icaundelegate [zone-id] [daomodifier-address] [host-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -134,7 +134,7 @@ func getUndelegateTxCmd() *cobra.Command {
 
 func getAutoStakingTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "autostaking [zone-id] [daomodifier-address] [host-address] [amount]",
+		Use:  "icaautostaking [zone-id] [daomodifier-address] [host-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -227,7 +227,7 @@ func getHostAddressTxCmd() *cobra.Command {
 
 func getDeleteZoneTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "deletezone [zone-id] [daomodifier-address]",
+		Use:  "icadeletezone [zone-id] [daomodifier-address]",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -254,7 +254,7 @@ func getDeleteZoneTxCmd() *cobra.Command {
 //TODO: add host address
 func getChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "changezoneinfo [zone-id] [daomodifier-address] [connection-id] [validator_address] [base-denom]",
+		Use:  "changezoneinfo [zone-id] [host-address] [daomodifier-address] [connection-id] [validator_address] [base-denom]",
 		Args: cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {

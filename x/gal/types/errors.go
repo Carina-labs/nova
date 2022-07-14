@@ -9,4 +9,5 @@ var (
 	ErrInsufficientFunds   = errors.Register(ModuleName, 3, "cannot withdraw funds : insufficient fund")
 	ErrNotFoundZoneInfo    = errors.Register(ModuleName, 4, "not found zone info")
 	ErrCanNotWithdrawAsset = errors.Register(ModuleName, 5, "cannot withdraw funds")
+	ErrInvalidTime         = errors.Register(ModuleName, 6, "time is not zero")
 )

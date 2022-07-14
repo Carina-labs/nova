@@ -22,11 +22,11 @@ var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaim{}
 var _ sdk.Msg = &MsgGalWithdraw{}
 
-func NewMsgDeposit(fromAddr sdk.AccAddress, hostAddr string, amount sdk.Coin, zoneId, portId, chanId string) *MsgDeposit {
+func NewMsgDeposit(zoneId string, depositor, hostAddr sdk.AccAddress, amount sdk.Coin, portId, chanId string) *MsgDeposit {
 	return &MsgDeposit{
-		Depositor:         fromAddr.String(),
-		HostAddr:          hostAddr,
 		ZoneId:            zoneId,
+		Depositor:         depositor.String(),
+		HostAddress:       hostAddr.String(),
 		Amount:            amount,
 		TransferPortId:    portId,
 		TransferChannelId: chanId,
@@ -74,11 +74,10 @@ func (msg MsgDeposit) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{depositor}
 }
 
-func NewMsgUndelegate(zoneId, controllerAddr, hostAddr string) *MsgGalUndelegate {
+func NewMsgUndelegate(zoneId, controllerAddr string) *MsgGalUndelegate {
 	return &MsgGalUndelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr,
-		HostAddress:       hostAddr,
 	}
 }
 
@@ -93,10 +92,6 @@ func (msg MsgGalUndelegate) Type() string {
 func (msg MsgGalUndelegate) ValidateBasic() error {
 	if msg.ControllerAddress == "" {
 		return errors.New("controller address is not null")
-	}
-
-	if msg.HostAddress == "" {
-		return errors.New("host address is not null")
 	}
 
 	if msg.ZoneId == "" {
@@ -155,14 +150,13 @@ func (msg MsgUndelegateRecord) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgWithdraw {
+func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress, receiver, portId, chanId string) *MsgWithdraw {
 	return &MsgWithdraw{
 		ZoneId:            zoneId,
 		Withdrawer:        withdrawer.String(),
 		Recipient:         receiver,
 		TransferPortId:    portId,
 		TransferChannelId: chanId,
-		Amount:            amount,
 	}
 }
 
@@ -175,20 +169,8 @@ func (msg MsgWithdraw) Type() string {
 }
 
 func (msg MsgWithdraw) ValidateBasic() error {
-	// if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
-	// 	return err
-	// }
-
-	if msg.Withdrawer == "" {
+	if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Withdrawer)
-	}
-
-	if !msg.Amount.IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
-	}
-
-	if !msg.Amount.IsPositive() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
 	return nil
@@ -203,10 +185,10 @@ func (msg MsgWithdraw) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgClaim(claimer sdk.AccAddress, amount sdk.Coin) *MsgClaim {
+func NewMsgClaim(zoneId string, claimer sdk.AccAddress) *MsgClaim {
 	return &MsgClaim{
+		ZoneId:  zoneId,
 		Claimer: claimer.String(),
-		Amount:  amount,
 	}
 }
 
@@ -227,12 +209,10 @@ func (msg MsgClaim) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{claimer}
 }
 
-func NewMsgGalWithdraw(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress, receiver, portId, chanId string, blockTime time.Time) *MsgGalWithdraw {
+func NewMsgGalWithdraw(zoneId string, daomodifierAddr sdk.AccAddress, portId, chanId string, blockTime time.Time) *MsgGalWithdraw {
 	return &MsgGalWithdraw{
 		ZoneId:             zoneId,
-		HostAddress:        hostAddr,
 		DaomodifierAddress: daomodifierAddr.String(),
-		ReceiverAddress:    receiver,
 		TransferPortId:     portId,
 		TransferChannelId:  chanId,
 		ChainTime:          blockTime,
@@ -248,11 +228,9 @@ func (msg MsgGalWithdraw) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
 	}
 
-	if _, err := sdk.AccAddressFromBech32(msg.ReceiverAddress); err != nil {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ReceiverAddress)
+	if msg.ChainTime.IsZero() {
+		return sdkerrors.Wrap(ErrInvalidTime, msg.DaomodifierAddress)
 	}
-
-	// TODO
 
 	return nil
 }
