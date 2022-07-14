@@ -141,7 +141,7 @@ func NewUndelegateCmd() *cobra.Command {
 
 func NewWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [zone-id] [withdrawer] [receiver] [transfer-port-id] [transfer-channel-id]",
+		Use:   "withdraw [zone-id] [withrawer] [receiver] [transfer-port-id] [transfer-channel-id]",
 		Short: "Withdraw wrapped token to nova",
 		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
@@ -182,7 +182,7 @@ func NewClaimSnTokenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "claimsntoken [zone-id] [claimer-address]",
 		Short: "claim wrapped token to nova",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
 			if err != nil {
@@ -195,7 +195,7 @@ func NewClaimSnTokenCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			claimer := clientCtx.GetFromAddress()
+			claimer, err := sdk.AccAddressFromBech32(args[0])
 			if err != nil {
 				return err
 			}
