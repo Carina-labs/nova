@@ -22,11 +22,11 @@ var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaim{}
 var _ sdk.Msg = &MsgGalWithdraw{}
 
-func NewMsgDeposit(zoneId string, depositor sdk.AccAddress, hostAddr string, amount sdk.Coin, portId, chanId string) *MsgDeposit {
+func NewMsgDeposit(zoneId string, depositor, hostAddr sdk.AccAddress, amount sdk.Coin, portId, chanId string) *MsgDeposit {
 	return &MsgDeposit{
 		ZoneId:            zoneId,
 		Depositor:         depositor.String(),
-		HostAddress:       hostAddr,
+		HostAddress:       hostAddr.String(),
 		Amount:            amount,
 		TransferPortId:    portId,
 		TransferChannelId: chanId,

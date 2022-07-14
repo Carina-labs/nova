@@ -54,7 +54,10 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			hostAddr := args[2]
+			hostAddr, err := sdk.AccAddressFromBech32(args[2])
+			if err != nil {
+				return err
+			}
 
 			coin, err := sdk.ParseCoinNormalized(args[3])
 			if err != nil {
@@ -143,7 +146,7 @@ func NewUndelegateCmd() *cobra.Command {
 
 func NewWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [zone-id] [withdrawer] [receiver] [transfer-port-id] [transfer-channel-id]",
+		Use:   "withdraw [zone-id] [withrawer] [receiver] [transfer-port-id] [transfer-channel-id]",
 		Short: "Withdraw wrapped token to nova",
 		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
@@ -184,7 +187,7 @@ func NewClaimCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "claim [zone-id] [claimer-address]",
 		Short: "claim wrapped token to nova",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
 			if err != nil {
@@ -197,7 +200,7 @@ func NewClaimCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			claimer := clientCtx.GetFromAddress()
+			claimer, err := sdk.AccAddressFromBech32(args[0])
 			if err != nil {
 				return err
 			}
