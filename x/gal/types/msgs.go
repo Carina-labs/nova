@@ -22,11 +22,11 @@ var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaim{}
 var _ sdk.Msg = &MsgGalWithdraw{}
 
-func NewMsgDeposit(zoneId string, depositor, hostAddr sdk.AccAddress, amount sdk.Coin, portId, chanId string) *MsgDeposit {
+func NewMsgDeposit(zoneId string, depositor sdk.AccAddress, hostAddr string, amount sdk.Coin, portId, chanId string) *MsgDeposit {
 	return &MsgDeposit{
 		ZoneId:            zoneId,
 		Depositor:         depositor.String(),
-		HostAddress:       hostAddr.String(),
+		HostAddress:       hostAddr,
 		Amount:            amount,
 		TransferPortId:    portId,
 		TransferChannelId: chanId,
@@ -45,7 +45,6 @@ func (msg MsgDeposit) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.Depositor); err != nil {
 		return err
 	}
-
 	if !msg.Amount.IsValid() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}

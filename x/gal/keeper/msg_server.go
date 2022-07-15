@@ -36,7 +36,6 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	if !ok {
 		return nil, fmt.Errorf("can't find valid IBC zone, input zoneId: %s", deposit.ZoneId)
 	}
-
 	depositorAcc, err := sdk.AccAddressFromBech32(deposit.Depositor)
 	if err != nil {
 		return nil, err
@@ -273,7 +272,7 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 	if err != nil {
 		return nil, err
 	}
-
+	// TODO : add key
 	record, err := m.keeper.GetRecordedDepositAmt(ctx, claimerAddr)
 	if err != nil {
 		return nil, err
@@ -289,7 +288,6 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 		if err != nil {
 			return nil, err
 		}
-
 		if record.BlockHeight >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
