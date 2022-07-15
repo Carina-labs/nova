@@ -142,7 +142,7 @@ func NewUndelegateCmd() *cobra.Command {
 
 func NewWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [zone-id] [withrawer] [receiver] [transfer-port-id] [transfer-channel-id] [amount]",
+		Use:   "withdraw [zone-id] [withdrawer] [receiver] [transfer-port-id] [transfer-channel-id] [amount]",
 		Short: "Withdraw wrapped token to nova",
 		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
@@ -220,7 +220,7 @@ func NewClaimCmd() *cobra.Command {
 }
 func NewGalWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "galwithdraw [zone-id] [conroller-address] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
+		Use:  "galwithdraw [zone-id] [controller-address] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
 		Args: cobra.ExactArgs(7),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -234,7 +234,7 @@ func NewGalWithdrawCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			daomodifierAddr := clientCtx.GetFromAddress()
+			daoModifierAddr := clientCtx.GetFromAddress()
 			hostAddr := args[2]
 			receiver := args[3]
 			portId := args[4]
@@ -245,7 +245,7 @@ func NewGalWithdrawCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgGalWithdraw(zoneId, hostAddr, daomodifierAddr, receiver, portId, chanId, t)
+			msg := types.NewMsgGalWithdraw(zoneId, hostAddr, daoModifierAddr, receiver, portId, chanId, t)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
