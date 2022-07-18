@@ -12,3 +12,6 @@ release/
 # ignore coverage report
 coverage.txt
 coverage.html
+
+# swagger tmp
+tmp-swagger-gen
