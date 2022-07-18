@@ -12,4 +12,3 @@ release/
 # ignore coverage report
 coverage.txt
 coverage.html
-scripts/
