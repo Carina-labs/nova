@@ -1,0 +1,611 @@
+swagger: '2.0'
+info:
+  title: Cosmos SDK - gRPC Gateway docs
+  description: A REST interface for state queries
+  version: 1.0.0
+paths:
+  /nova/gal/v1/deposit/{address}/by_denom/{denom}:
+    get:
+      operationId: DepositHistory
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+              amount:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+                  description: >-
+                    Coin defines a token with a denomination and an amount.
+
+
+                    NOTE: The amount field is an Int which implements the custom
+                    method
+
+                    signatures required by gogoproto.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type_url:
+                      type: string
+                    value:
+                      type: string
+                      format: byte
+      parameters:
+        - name: address
+          in: path
+          required: true
+          type: string
+        - name: denom
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /nova/gal/v1/params:
+    get:
+      operationId: GalParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params defines the parameters of the module.
+                type: object
+                properties:
+                  white_listed_token_denoms:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    title: white-listed tokens in nova
+                  blocks_per_year:
+                    type: string
+                    format: uint64
+                    title: expected blocks per year
+            description: >-
+              QueryParamsResponse is the response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type_url:
+                      type: string
+                    value:
+                      type: string
+                      format: byte
+      tags:
+        - Query
+  /nova/gal/v1/shares/{address}/by_denom:
+    get:
+      operationId: Share
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+              amount:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  amount:
+                    type: string
+                description: >-
+                  Coin defines a token with a denomination and an amount.
+
+
+                  NOTE: The amount field is an Int which implements the custom
+                  method
+
+                  signatures required by gogoproto.
+            description: QuerySharesResponse defines response of QueryBalanceRequest.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type_url:
+                      type: string
+                    value:
+                      type: string
+                      format: byte
+      parameters:
+        - name: address
+          in: path
+          required: true
+          type: string
+        - name: denom
+          in: query
+          required: false
+          type: string
+      tags:
+        - Query
+  /nova/get/v1/undelegate/{address}/by_denom/{denom}:
+    get:
+      operationId: UndelegateHistory
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+              amount:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+                  description: >-
+                    Coin defines a token with a denomination and an amount.
+
+
+                    NOTE: The amount field is an Int which implements the custom
+                    method
+
+                    signatures required by gogoproto.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type_url:
+                      type: string
+                    value:
+                      type: string
+                      format: byte
+      parameters:
+        - name: address
+          in: path
+          required: true
+          type: string
+        - name: denom
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /nova/get/v1/withdraw/{address}/by_denom/{denom}:
+    get:
+      operationId: WithdrawHistory
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              address:
+                type: string
+              amount:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+                  description: >-
+                    Coin defines a token with a denomination and an amount.
+
+
+                    NOTE: The amount field is an Int which implements the custom
+                    method
+
+                    signatures required by gogoproto.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type_url:
+                      type: string
+                    value:
+                      type: string
+                      format: byte
+      parameters:
+        - name: address
+          in: path
+          required: true
+          type: string
+        - name: denom
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /nova/oracle/v1/params:
+    get:
+      summary: Params returns the total set of minting parameters.
+      operationId: OracleParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params defines the parameters of the module.
+                type: object
+                properties:
+                  oracle_operators:
+                    type: array
+                    items:
+                      type: string
+                    description: oracle operator's address.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type_url:
+                      type: string
+                    value:
+                      type: string
+                      format: byte
+      tags:
+        - Query
+  /nova/oracle/v1/state:
+    get:
+      operationId: State
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              coin:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  amount:
+                    type: string
+                description: >-
+                  Coin defines a token with a denomination and an amount.
+
+
+                  NOTE: The amount field is an Int which implements the custom
+                  method
+
+                  signatures required by gogoproto.
+              operator:
+                type: string
+              decimal:
+                type: string
+                format: uint64
+              last_block_height:
+                type: string
+                format: uint64
+              app_hash:
+                type: string
+              chain_id:
+                type: string
+              block_proposer:
+                type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type_url:
+                      type: string
+                    value:
+                      type: string
+                      format: byte
+      parameters:
+        - name: chain_denom
+          in: query
+          required: false
+          type: string
+      tags:
+        - Query
+definitions:
+  cosmos.base.v1beta1.Coin:
+    type: object
+    properties:
+      denom:
+        type: string
+      amount:
+        type: string
+    description: |-
+      Coin defines a token with a denomination and an amount.
+
+      NOTE: The amount field is an Int which implements the custom method
+      signatures required by gogoproto.
+  google.protobuf.Any:
+    type: object
+    properties:
+      type_url:
+        type: string
+      value:
+        type: string
+        format: byte
+  grpc.gateway.runtime.Error:
+    type: object
+    properties:
+      error:
+        type: string
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            type_url:
+              type: string
+            value:
+              type: string
+              format: byte
+  nova.gal.v1.Params:
+    type: object
+    properties:
+      white_listed_token_denoms:
+        type: object
+        additionalProperties:
+          type: string
+        title: white-listed tokens in nova
+      blocks_per_year:
+        type: string
+        format: uint64
+        title: expected blocks per year
+    description: Params defines the parameters for the gal module.
+  nova.gal.v1.QueryCachedDepositAmountResponse:
+    type: object
+    properties:
+      address:
+        type: string
+      amount:
+        type: object
+        properties:
+          denom:
+            type: string
+          amount:
+            type: string
+        description: |-
+          Coin defines a token with a denomination and an amount.
+
+          NOTE: The amount field is an Int which implements the custom method
+          signatures required by gogoproto.
+    description: QuerySharesResponse defines response of QueryBalanceRequest.
+  nova.gal.v1.QueryDepositHistoryResponse:
+    type: object
+    properties:
+      address:
+        type: string
+      amount:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+          description: |-
+            Coin defines a token with a denomination and an amount.
+
+            NOTE: The amount field is an Int which implements the custom method
+            signatures required by gogoproto.
+  nova.gal.v1.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params defines the parameters of the module.
+        type: object
+        properties:
+          white_listed_token_denoms:
+            type: object
+            additionalProperties:
+              type: string
+            title: white-listed tokens in nova
+          blocks_per_year:
+            type: string
+            format: uint64
+            title: expected blocks per year
+    description: QueryParamsResponse is the response type for the Query/Params RPC method.
+  nova.gal.v1.QueryUndelegateHistoryResponse:
+    type: object
+    properties:
+      address:
+        type: string
+      amount:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+          description: |-
+            Coin defines a token with a denomination and an amount.
+
+            NOTE: The amount field is an Int which implements the custom method
+            signatures required by gogoproto.
+  nova.gal.v1.QueryWithdrawHistoryResponse:
+    type: object
+    properties:
+      address:
+        type: string
+      amount:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+          description: |-
+            Coin defines a token with a denomination and an amount.
+
+            NOTE: The amount field is an Int which implements the custom method
+            signatures required by gogoproto.
+  nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse:
+    type: object
+    properties:
+      interchain_account_address:
+        type: string
+    title: >-
+      QueryInterchainAccountFromZoneResponse the response type for the
+      Query/InterchainAccountFromZone RPC
+  nova.oracle.v1.Params:
+    type: object
+    properties:
+      oracle_operators:
+        type: array
+        items:
+          type: string
+        description: oracle operator's address.
+  nova.oracle.v1.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params defines the parameters of the module.
+        type: object
+        properties:
+          oracle_operators:
+            type: array
+            items:
+              type: string
+            description: oracle operator's address.
+  nova.oracle.v1.QueryStateResponse:
+    type: object
+    properties:
+      coin:
+        type: object
+        properties:
+          denom:
+            type: string
+          amount:
+            type: string
+        description: |-
+          Coin defines a token with a denomination and an amount.
+
+          NOTE: The amount field is an Int which implements the custom method
+          signatures required by gogoproto.
+      operator:
+        type: string
+      decimal:
+        type: string
+        format: uint64
+      last_block_height:
+        type: string
+        format: uint64
+      app_hash:
+        type: string
+      chain_id:
+        type: string
+      block_proposer:
+        type: string
