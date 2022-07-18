@@ -1,0 +1,34 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Cosmos SDK - gRPC Gateway docs",
+    "description": "A REST interface for state queries",
+    "version": "1.0.0"
+  },
+  "apis": [
+    {
+      "url": "./tmp-swagger-gen/nova/gal/v1/query.swagger.json",
+      "operationIds": {
+        "rename": {
+          "Params": "GalParams"
+        }
+      }
+    },
+    {
+      "url": "./tmp-swagger-gen/nova/ibcstaking/v1/query.swagger.json",
+      "operationIds": {
+        "rename": {
+          "Params": "IbcStakingParams"
+        }
+      }
+    },
+    {
+      "url": "./tmp-swagger-gen/nova/oracle/v1/query.swagger.json",
+      "operationIds": {
+        "rename": {
+          "Params": "OracleParams"
+        }
+      }
+    }
+  ]
+}

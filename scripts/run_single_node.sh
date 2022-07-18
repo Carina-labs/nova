@@ -36,6 +36,7 @@ cat $HOME/.novad/validator/config/genesis.json | jq '.app_state["oracle"]["param
 # enable rest api server & unsafe cors
 sed -i -E 's|enable = false|enable = true|g' $HOME/.novad/validator/config/app.toml
 sed -i -E 's|enabled-unsafe-cors = false|enabled-unsafe-cors = true|g' $HOME/.novad/validator/config/app.toml
+sed -i -E 's|swagger = false|swagger = true|g' $HOME/.novad/validator/config/app.toml
 
 # allow duplicate ip
 sed -i -E 's|allow_duplicate_ip = false|allow_duplicate_ip = true|g' $HOME/.novad/validator/config/config.toml
