@@ -17,5 +17,8 @@ cd ..
 # all the individual swagger files need to be configured in `config.json` for merging
 swagger-combine ./client/docs/config.json -o ./client/docs/swagger-ui/swagger.yaml -f yaml --continueOnConflictingPaths true --includeDefinitions true
 
+# move swagger.yaml to openapi.yml
+mv ./client/docs/swagger-ui/swagger.yaml ./client/docs/swagger-ui/openapi.yhml
+
 # clean swagger files
 rm -rf ./tmp-swagger-gen
