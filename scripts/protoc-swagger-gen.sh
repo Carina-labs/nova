@@ -18,7 +18,7 @@ cd ..
 swagger-combine ./client/docs/config.json -o ./client/docs/swagger-ui/swagger.yaml -f yaml --continueOnConflictingPaths true --includeDefinitions true
 
 # move swagger.yaml to openapi.yml
-mv ./client/docs/swagger-ui/swagger.yaml ./client/docs/swagger-ui/openapi.yhml
+mv ./client/docs/swagger-ui/swagger.yaml ./client/docs/swagger-ui/openapi.yml
 
 # clean swagger files
 rm -rf ./tmp-swagger-gen
