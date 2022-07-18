@@ -151,7 +151,9 @@ protogen-api:
 test-local:
 	bash ./scripts/run_single_node.sh
 
-# swagger
+########################################################################################################
+#####                                       Docs (Swagger)                                         #####
+########################################################################################################
 protoVer=v0.7
 protoImageName=tendermintdev/sdk-proto-gen:$(protoVer)
 containerProtoGen=$(PROJECT_NAME)-proto-gen-$(protoVer)
@@ -159,10 +161,10 @@ containerProtoGenAny=$(PROJECT_NAME)-proto-gen-any-$(protoVer)
 containerProtoGenSwagger=$(PROJECT_NAME)-proto-gen-swagger-$(protoVer)
 containerProtoFmt=$(PROJECT_NAME)-proto-fmt-$(protoVer)
 
-proto-swagger-gen:
+docs-gen:
 	@echo "Generating Protobuf Swagger"
 	@if docker ps -a --format '{{.Names}}' | grep -Eq "^${containerProtoGenSwagger}$$"; then docker start -a $(containerProtoGenSwagger); else docker run --name $(containerProtoGenSwagger) -v $(CURDIR):/workspace --workdir /workspace $(protoImageName) \
 		sh ./scripts/protoc-swagger-gen.sh; fi
 
-update-swagger:
+docs-update:
 	$(BINDIR)/statik -src=client/docs/swagger-ui -dest=client/docs -f -m
