@@ -1,12 +1,16 @@
 package app
 
 import (
+	"github.com/gorilla/mux"
+	"github.com/rakyll/statik/fs"
 	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/Carina-labs/nova/app/keepers"
+	_ "github.com/Carina-labs/nova/client/docs/statik"
 	gal "github.com/Carina-labs/nova/x/gal"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	"github.com/Carina-labs/nova/x/mint"
@@ -419,6 +423,11 @@ func (app *NovaApp) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APICo
 	// register app's OpenAPI routes.
 	// apiSvr.Router.Handle("/static/openapi.yml", http.FileServer(http.FS(docs.Docs)))
 	apiSvr.Router.HandleFunc("/", openapiconsole.Handler(Name, "/static/openapi.yml"))
+
+	if apiConfig.Swagger {
+		app.Logger().Info("swagger enabled")
+		RegisterSwaggerAPI(clientCtx, apiSvr.Router)
+	}
 }
 
 // RegisterTxService implements the Application.RegisterTxService method.
@@ -443,4 +452,16 @@ func GetMaccPerms() map[string][]string {
 // SimulationManager implements the SimulationApp interface
 func (app *NovaApp) SimulationManager() *module.SimulationManager {
 	return app.sm
+}
+
+// RegisterSwaggerAPI registers swagger route with API Server.
+func RegisterSwaggerAPI(ctx client.Context, rtr *mux.Router) {
+	statikFS, err := fs.New()
+	if err != nil {
+		panic(err)
+	}
+
+	staticServer := http.FileServer(statikFS)
+	rtr.PathPrefix("/static/").Handler(http.StripPrefix("/static/", staticServer))
+	rtr.PathPrefix("/swagger/").Handler(staticServer)
 }
