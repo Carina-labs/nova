@@ -1,4 +1,4 @@
-package inter_tx
+package ibcstaking
 
 import (
 	"fmt"
