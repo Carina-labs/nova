@@ -159,7 +159,6 @@ func (suite *KeeperTestSuite) TestGalAction() {
 			depositMsg := types.MsgDeposit{
 				Depositor:         tc.initSet.userAddress,
 				ZoneId:            hostId,
-				HostAddress:       icaConf.icaHostAddress,
 				TransferPortId:    transferPort,
 				TransferChannelId: transferChannel,
 				Amount:            sdk.NewInt64Coin(hostIbcDenom, 1000),
@@ -482,7 +481,6 @@ func simulateDeposit(suite *KeeperTestSuite, icaConfig *icaConfig, sender string
 		Depositor:         sender,
 		ZoneId:            hostId,
 		Amount:            amount,
-		HostAddress:       icaConfig.icaHostAddress,
 		TransferPortId:    "transfer",
 		TransferChannelId: "channel-0",
 	}

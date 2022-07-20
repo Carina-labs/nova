@@ -41,10 +41,6 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
-	if deposit.HostAddress != zoneInfo.IcaAccount.HostAddress {
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "host address is not found: %s", deposit.HostAddress)
-	}
-
 	oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
 	if err != nil {
 		return nil, err
@@ -72,7 +68,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		deposit.TransferPortId,
 		deposit.TransferChannelId,
 		deposit.Depositor,
-		deposit.HostAddress,
+		zoneInfo.IcaAccount.HostAddress,
 		deposit.Amount)
 
 	if err != nil {
@@ -224,7 +220,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 	}, nil
 }
 
-func (m msgServer) GalWithdraw(goCtx context.Context, msg *types.MsgGalWithdraw) (*types.MsgGalWithdrawResponse, error) {
+func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingWithdraw) (*types.MsgPendingWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, msg.DaomodifierAddress) {
@@ -260,13 +256,13 @@ func (m msgServer) GalWithdraw(goCtx context.Context, msg *types.MsgGalWithdraw)
 
 	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, msg.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
-		return nil, errors.New("GalWithdraw transaction failed to send")
+		return nil, errors.New("PendingWithdraw transaction failed to send")
 	}
 
-	return &types.MsgGalWithdrawResponse{}, nil
+	return &types.MsgPendingWithdrawResponse{}, nil
 }
 
-func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*types.MsgClaimResponse, error) {
+func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimSnAsset) (*types.MsgClaimSnAssetResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	claimerAddr, err := sdk.AccAddressFromBech32(claimMsg.Claimer)
 	if err != nil {
@@ -299,7 +295,7 @@ func (m msgServer) Claim(goCtx context.Context, claimMsg *types.MsgClaim) (*type
 			}
 
 			// TODO: Delete deposit record
-			return &types.MsgClaimResponse{
+			return &types.MsgClaimSnAssetResponse{
 				Claimer: claimMsg.Claimer,
 				Minted:  minted,
 			}, nil

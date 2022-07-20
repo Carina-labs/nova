@@ -15,18 +15,17 @@ service Msg {
   rpc GalUndelegate(MsgGalUndelegate) returns (MsgGalUndelegateResponse);
   rpc UndelegateRecord(MsgUndelegateRecord) returns (MsgUndelegateRecordResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
-  rpc Claim(MsgClaim) returns (MsgClaimResponse);
-  rpc GalWithdraw(MsgGalWithdraw) returns (MsgGalWithdrawResponse);
+  rpc ClaimSnAsset(MsgClaimSnAsset) returns (MsgClaimSnAssetResponse);
+  rpc PendingWithdraw(MsgPendingWithdraw) returns (MsgPendingWithdrawResponse);
 }
 
 // MsgDeposit defines user who deposit and amount of coins.
 message MsgDeposit {
   string depositor = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  string host_address = 2;
-  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
-  string zone_id = 4;
-  string transfer_port_id = 5;
-  string transfer_channel_id = 6;
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
+  string zone_id = 3;
+  string transfer_port_id = 4;
+  string transfer_channel_id = 5;
 }
 
 message MsgDepositResponse {
@@ -73,18 +72,18 @@ message MsgWithdrawResponse {
 }
 
 // MsgClaim defines claim msg used when user want to claim their st token.
-message MsgClaim {
+message MsgClaimSnAsset {
   string zone_id = 1;
   string claimer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
-message MsgClaimResponse {
+message MsgClaimSnAssetResponse {
   string claimer = 1;
   cosmos.base.v1beta1.Coin minted = 2
       [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
-message MsgGalWithdraw{
+message MsgPendingWithdraw{
   string zone_id = 1;
   string daomodifier_address = 2;
   string transfer_port_id = 3;
@@ -92,4 +91,4 @@ message MsgGalWithdraw{
   google.protobuf.Timestamp chain_time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
 }
 
-message MsgGalWithdrawResponse{}
+message MsgPendingWithdrawResponse{}
