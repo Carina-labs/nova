@@ -84,11 +84,11 @@ func (m *MsgDeposit) GetDepositor() string {
 	return ""
 }
 
-func (m *MsgDeposit) GetHostAddress() string {
+func (m *MsgDeposit) GetAmount() types.Coin {
 	if m != nil {
-		return m.HostAddress
+		return m.Amount
 	}
-	return ""
+	return types.Coin{}
 }
 
 func (m *MsgDeposit) GetZoneId() string {
@@ -1121,14 +1121,7 @@ func (m *MsgDeposit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x1a
-	if len(m.HostAddress) > 0 {
-		i -= len(m.HostAddress)
-		copy(dAtA[i:], m.HostAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.HostAddress)))
-		i--
-		dAtA[i] = 0x12
-	}
+	dAtA[i] = 0x12
 	if len(m.Depositor) > 0 {
 		i -= len(m.Depositor)
 		copy(dAtA[i:], m.Depositor)
@@ -1911,9 +1904,9 @@ func (m *MsgDeposit) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field HostAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTx
@@ -1923,23 +1916,24 @@ func (m *MsgDeposit) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthTx
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthTx
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.HostAddress = string(dAtA[iNdEx:postIndex])
+			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
