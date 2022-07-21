@@ -303,5 +303,5 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	}
 
 	return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
-		"account: %s, amount: %s", claimMsg.Claimer, "")
+		"account: %s", claimMsg.Claimer)
 }
