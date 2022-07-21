@@ -98,7 +98,6 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 			_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgDeposit{
 				Depositor:         sender.String(),
 				Amount:            sdk.NewInt64Coin("stake", sentAmount),
-				HostAddr:          baseHostAcc.String(),
 				TransferPortId:    transferPort,
 				TransferChannelId: transferChannel,
 				ZoneId:            hostId,
