@@ -17,6 +17,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
+
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
 	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom)
 	if err != nil {
@@ -29,7 +30,10 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 		return sdk.Coin{}, err
 	}
 
-	err = k.DeleteRecordedDepositItem(ctx, claimer, asset)
+	// GetZoneInfo
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
+
+	err = k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimer, DELEGATE_SUCCESS)
 	if err != nil {
 		return sdk.Coin{}, err
 	}

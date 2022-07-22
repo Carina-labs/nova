@@ -1,9 +1,6 @@
 package keeper
 
 import (
-	"math/big"
-
-	"github.com/Carina-labs/nova/x/gal/types"
 	icatypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -25,11 +22,6 @@ func (k Keeper) Hooks() Hooks {
 // AfterTransferEnd coins user deposit information.
 // It will be used in share token minting process.
 func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, baseDenom string) {
-	packetAmount, ok := new(big.Int).SetString(data.Amount, 10)
-	if !ok {
-		h.k.Logger(ctx).Error("Invalid ibc transfer packet", "data", data, "hook", "AfterTransferEnd")
-		return
-	}
 
 	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 	// if zoneInfo == nil, it may be a test situation.
@@ -41,45 +33,28 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
 		return
 	}
-	sender, err := sdk.AccAddressFromBech32(data.Sender)
-	if err != nil {
-		return
-	}
-	// change sender + zoneId
-	depositRecord, err := h.k.GetRecordedDepositAmt(ctx, sender)
-	if err != nil {
-		return
-	}
-	for i, record := range depositRecord.Records {
-		// assert amount of record equals to the amount of ibc transfer packet.
-		if record.Amount.Amount.BigInt().Cmp(packetAmount) == 0 && !record.IsTransferred {
-			depositRecord := &types.DepositRecord{
-				Address: depositRecord.Address,
-				Records: []*types.DepositRecordContent{
-					{
-						ZoneId:        record.ZoneId,
-						Amount:        record.Amount,
-						IsTransferred: true,
-					},
-				},
-			}
 
-			if err := h.k.MarkRecordTransfer(ctx, depositRecord.Address, i); err != nil {
-				h.k.Logger(ctx).Error("Error during replacing deposit information", "err", err.Error(), "hook", "AfterTransferEnd")
-				return
-			}
-
-			if err != nil {
-				h.k.Logger(ctx).Error("Error during recording deposit information", "err,", err.Error(), "hook", "AfterTransferEnd")
-				return
-			}
-
-			// TODO: Delegate events
-		}
-	}
+	// statechagne
+	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, DEPOSIT_REQUEST, DEPOSIT_SUCCESS)
 }
 
-func (h Hooks) AfterDelegateEnd() {
+// delegateAddr(controllerAddr), validatorAddr, delegateAmt
+func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
+
+	// getZoneInfoForValidatorAddr
+	zoneInfo := h.k.ibcstakingKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
+
+	// setOracleVersion
+	oracleVersion, err := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
+	if err != nil {
+		return
+	}
+
+	// setOracleVersion
+	h.k.SetBlockHeight(ctx, zoneInfo.ZoneId, DELEGATE_REQUEST, oracleVersion)
+
+	// change deposit state (DELEGATE_REQUEST > DELEGATE_SUCCESS)
+	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, DELEGATE_REQUEST, DELEGATE_SUCCESS)
 }
 
 // ica transfer
@@ -113,7 +88,6 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 		h.k.Logger(ctx).Error("Zone id is not found", "validatorAddress", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
 		return
 	}
-
 	h.k.DeleteUndelegateRecords(ctx, zone.ZoneId, UNDELEGATE_REQUEST_ICA)
 	h.k.SetWithdrawTime(ctx, zone.ZoneId, WITHDRAW_REGISTER, msg.CompletionTime)
 }

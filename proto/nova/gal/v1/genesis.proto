@@ -33,15 +33,16 @@ message DepositInfo {
 }
 
 message DepositRecord {
-  string address = 1;
-  repeated DepositRecordContent records = 2;
+  string zone_id = 1;
+  string address = 2;
+  repeated DepositRecordContent records = 3;
 }
 
 message DepositRecordContent {
-  string zone_id = 1;
-  cosmos.base.v1beta1.Coin amount = 2;
-  bool is_transferred = 3;
-  uint64 block_height = 4;
+  cosmos.base.v1beta1.Coin amount = 1;
+  bool is_transferred = 2;
+  uint64 block_height = 3;
+  int64 state = 4;
 }
 
 message WithdrawInfo {

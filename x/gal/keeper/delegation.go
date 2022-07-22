@@ -55,7 +55,7 @@ func (k Keeper) DepositHistory(goCtx context.Context, rq *types.QueryDepositHist
 		return nil, err
 	}
 
-	dpInfo, err := k.GetRecordedDepositAmt(sdkCtx, acc)
+	dpInfo, err := k.GetRecordedDepositAmt(sdkCtx, zoneInfo.ZoneId, acc)
 	if err != nil {
 		return nil, err
 	}

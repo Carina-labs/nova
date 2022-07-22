@@ -10,9 +10,9 @@ import (
 // Implements ICAHooks interface
 var _ types.ICAHooks = Keeper{}
 
-func (k Keeper) AfterDelegateEnd() {
+func (k Keeper) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	if k.hooks != nil {
-		k.hooks.AfterDelegateEnd()
+		k.hooks.AfterDelegateEnd(ctx, delegateMsg)
 	}
 }
 

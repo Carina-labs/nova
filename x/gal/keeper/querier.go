@@ -39,7 +39,9 @@ func queryDepositHistory(ctx sdk.Context,
 		return nil, err
 	}
 
-	depositHistory, err := k.GetRecordedDepositAmt(ctx, address)
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, params.Denom)
+
+	depositHistory, err := k.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, address)
 	if err != nil {
 		return nil, err
 	}

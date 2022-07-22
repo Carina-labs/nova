@@ -20,7 +20,6 @@ func (k Keeper) GetUndelegateRecord(ctx sdk.Context, key string) (types.Undelega
 	undelegateInfo := types.UndelegateRecord{}
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
 	bz := store.Get([]byte(key))
-
 	if len(bz) == 0 {
 		return undelegateInfo, false
 	}

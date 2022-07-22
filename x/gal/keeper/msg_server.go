@@ -41,21 +41,17 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
-	oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
-	if err != nil {
-		return nil, err
-	}
-
 	newRecord := &types.DepositRecordContent{
-		ZoneId:        zoneInfo.ZoneId,
 		Amount:        &deposit.Amount,
 		IsTransferred: false,
-		BlockHeight:   oracleVersion,
+		State:         int64(DEPOSIT_REQUEST),
 	}
 
-	record, err := m.keeper.GetRecordedDepositAmt(ctx, depositorAcc)
+	record, err := m.keeper.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, depositorAcc)
+
 	if err == types.ErrNoDepositRecord {
 		m.keeper.SetDepositAmt(ctx, &types.DepositRecord{
+			ZoneId:  deposit.ZoneId,
 			Address: deposit.Depositor,
 			Records: []*types.DepositRecordContent{newRecord},
 		})
@@ -70,7 +66,6 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		deposit.Depositor,
 		zoneInfo.IcaAccount.HostAddress,
 		deposit.Amount)
-
 	if err != nil {
 		return nil, err
 	}
@@ -79,6 +74,49 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		Receiver:        deposit.Depositor,
 		DepositedAmount: deposit.Amount,
 	}, nil
+}
+
+func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) (*types.MsgDelegateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	// 5~10분마다 delegate 요청
+	// zone 정보를 받아옴(denom)
+	// depositRecords에서 zoneId로 record 조회 - 각 계정의 totalAmout의 합 가져오기
+	// delegate 요청 및 deposit state (DELEGATE_REQUEST로 변경)
+	// ibc_handlr.go에서 ack받으면 state DELEGATE_SUCCESS로 변경
+	// oracleVersion 받아서 depositRecord에 저장
+
+	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, delegate.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
+	}
+
+	//get zone
+	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, delegate.ZoneId)
+	if !ok {
+		return nil, nil
+	}
+
+	ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, DEPOSIT_SUCCESS, DELEGATE_REQUEST)
+	if !ok {
+		// 상태 변경된게 없음
+		return nil, nil
+	}
+
+	// denom is ibcHash
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, delegate.TransferPortId, delegate.TransferChannelId, zoneInfo.BaseDenom)
+
+	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, DELEGATE_REQUEST)
+	delegateAmt.Denom = zoneInfo.BaseDenom
+	var msgs []sdk.Msg
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: delegateAmt})
+
+	// delegate msg 전송
+	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		// fail to send ica delelegate msg
+		return nil, nil
+	}
+
+	return nil, nil
 }
 
 // UndelegateRecord is used when user requests undelegate their staked asset.
@@ -149,15 +187,16 @@ func (m msgServer) GalUndelegate(goCtx context.Context, msg *types.MsgGalUndeleg
 		return nil, errors.New("no coins to undelegate")
 	}
 
+	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
+
+	var msgs []sdk.Msg
+	undelegateAmount, err := m.keeper.GetWithdrawAmt(ctx, totalStAsset)
+
 	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
 		sdk.Coins{sdk.Coin{Denom: totalStAsset.Denom, Amount: totalStAsset.Amount}}); err != nil {
 		return nil, err
 	}
 
-	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
-
-	var msgs []sdk.Msg
-	undelegateAmount, err := m.keeper.GetWithdrawAmt(ctx, totalStAsset)
 	if err != nil {
 		return nil, err
 	}
@@ -268,40 +307,45 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	if err != nil {
 		return nil, err
 	}
-	// TODO : add key
-	record, err := m.keeper.GetRecordedDepositAmt(ctx, claimerAddr)
+	records, err := m.keeper.GetRecordedDepositAmt(ctx, claimMsg.ZoneId, claimerAddr)
 	if err != nil {
 		return nil, err
 	}
 
-	for _, record := range record.Records {
-		zone, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, record.ZoneId)
-		if !ok {
-			return nil, fmt.Errorf("cannot find zone id : %s", record.ZoneId)
-		}
+	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, records.ZoneId)
+	if !ok {
+		return nil, fmt.Errorf("cannot find zone id : %s", records.ZoneId)
+	}
 
-		oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zone.BaseDenom)
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, claimMsg.TransferPortId, claimMsg.TransferChannelId, zoneInfo.BaseDenom)
+	totalClaimAsset := sdk.Coin{
+		Amount: sdk.NewIntFromUint64(0),
+		Denom:  ibcDenom,
+	}
+
+	for _, record := range records.Records {
+		oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
 		if err != nil {
 			return nil, err
 		}
 		if record.BlockHeight >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
-
-		if record.IsTransferred && record.Amount.Equal(record.Amount) {
-			minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, *record.Amount)
-			if err != nil {
-				return nil, err
-			}
-
-			// TODO: Delete deposit record
-			return &types.MsgClaimSnAssetResponse{
-				Claimer: claimMsg.Claimer,
-				Minted:  minted,
-			}, nil
+		if record.State == int64(DELEGATE_SUCCESS) {
+			totalClaimAsset = totalClaimAsset.Add(*record.Amount)
 		}
 	}
 
-	return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
-		"account: %s", claimMsg.Claimer)
+	minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, totalClaimAsset)
+	if err != nil {
+		return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
+			"account: %s", claimMsg.Claimer)
+	}
+
+	// Delete Deposit record
+
+	return &types.MsgClaimSnAssetResponse{
+		Claimer: claimMsg.Claimer,
+		Minted:  minted,
+	}, nil
 }

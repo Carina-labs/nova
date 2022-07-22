@@ -12,6 +12,7 @@ option go_package = "github.com/Carina-labs/nova/x/gal/types";
 // Msg defines the gal Msg service.
 service Msg {
   rpc Deposit(MsgDeposit) returns (MsgDepositResponse);
+  rpc Delegate(MsgDelegate) returns (MsgDelegateResponse);
   rpc GalUndelegate(MsgGalUndelegate) returns (MsgGalUndelegateResponse);
   rpc UndelegateRecord(MsgUndelegateRecord) returns (MsgUndelegateRecordResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
@@ -31,6 +32,16 @@ message MsgDeposit {
 message MsgDepositResponse {
   string receiver = 1;
   cosmos.base.v1beta1.Coin deposited_amount = 2 [(gogoproto.nullable) = false];
+}
+
+message MsgDelegate {
+  string zone_id = 1;
+  string controller_address = 2;
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
+}
+
+message MsgDelegateResponse {
 }
 
 message MsgGalUndelegate {
@@ -75,6 +86,8 @@ message MsgWithdrawResponse {
 message MsgClaimSnAsset {
   string zone_id = 1;
   string claimer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
 }
 
 message MsgClaimSnAssetResponse {

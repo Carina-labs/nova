@@ -29,7 +29,6 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 		Decimal:         state.Decimal,
 		AppHash:         state.AppHash,
 		ChainId:         state.ChainId,
-		BlockProposer:   state.BlockProposer,
 	}
 
 	if err := server.keeper.UpdateChainState(ctx, newOracleState); err != nil {
