@@ -42,9 +42,8 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	newRecord := &types.DepositRecordContent{
-		Amount:        &deposit.Amount,
-		IsTransferred: false,
-		State:         int64(DEPOSIT_REQUEST),
+		Amount: &deposit.Amount,
+		State:  int64(DEPOSIT_REQUEST),
 	}
 
 	record, err := m.keeper.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, depositorAcc)
