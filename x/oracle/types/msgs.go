@@ -4,15 +4,14 @@ import sdk "github.com/cosmos/cosmos-sdk/types"
 
 var _ sdk.Msg = &MsgUpdateChainState{}
 
-func NewMsgUpdateChainState(coin sdk.Coin,
-	signer sdk.AccAddress,
-	decimal uint64,
-	blockHeight uint64) *MsgUpdateChainState {
+func NewMsgUpdateChainState(signer sdk.AccAddress, chainId string, coin sdk.Coin, decimal, blockHeight uint64, appHash string) *MsgUpdateChainState {
 	return &MsgUpdateChainState{
 		Coin:        coin,
 		Operator:    signer.String(),
 		Decimal:     decimal,
 		BlockHeight: blockHeight,
+		AppHash:     appHash,
+		ChainId:     chainId,
 	}
 }
 

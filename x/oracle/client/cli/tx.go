@@ -25,10 +25,10 @@ func GetTxCmd() *cobra.Command {
 
 func NewUpdateStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update_state [from_key_or_address] [chain_denom] [balance] [decimal] [block_height] [app_hash] [chain_id]",
+		Use:   "update_state [from_key_or_address] [amount] [decimal] [block_height] [app_hash] [chain_id]",
 		Short: "",
 		Long:  "",
-		Args:  cobra.ExactArgs(7),
+		Args:  cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[0]); err != nil {
 				return err
@@ -39,30 +39,25 @@ func NewUpdateStateCmd() *cobra.Command {
 				return err
 			}
 
-			chainDenom := args[1]
-			balance, err := sdk.ParseUint(args[2])
+			amount, err := sdk.ParseCoinNormalized(args[1])
+			if err != nil {
+				return err
+			}
+			decimal, err := sdk.ParseUint(args[2])
 			if err != nil {
 				return err
 			}
 
-			decimal, err := sdk.ParseUint(args[3])
+			blockHeight, err := sdk.ParseUint(args[3])
 			if err != nil {
 				return err
 			}
 
-			blockHeight, err := sdk.ParseUint(args[4])
-			if err != nil {
-				return err
-			}
+			appHash := args[4]
+			chainId := args[5]
 
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), &types.MsgUpdateChainState{
-				Coin:        sdk.NewCoin(chainDenom, sdk.NewIntFromBigInt(balance.BigInt())),
-				Operator:    clientCtx.GetFromAddress().String(),
-				Decimal:     decimal.Uint64(),
-				BlockHeight: blockHeight.Uint64(),
-				AppHash:     args[5],
-				ChainId:     args[6],
-			})
+			msg := types.NewMsgUpdateChainState(clientCtx.GetFromAddress(), chainId, amount, decimal.Uint64(), blockHeight.Uint64(), appHash)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
 
