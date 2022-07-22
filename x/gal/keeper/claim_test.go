@@ -177,8 +177,8 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					Address: item.address,
 					Records: []*types.DepositRecordContent{
 						{
-							Amount:        &ibcAmount,
-							IsTransferred: true,
+							Amount: &ibcAmount,
+							State:  4,
 						},
 					},
 				}

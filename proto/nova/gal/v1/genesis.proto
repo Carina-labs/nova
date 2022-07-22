@@ -40,9 +40,8 @@ message DepositRecord {
 
 message DepositRecordContent {
   cosmos.base.v1beta1.Coin amount = 1;
-  bool is_transferred = 2;
-  uint64 block_height = 3;
-  int64 state = 4;
+  uint64 block_height = 2;
+  int64 state = 3;
 }
 
 message WithdrawInfo {
