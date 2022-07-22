@@ -16,6 +16,22 @@ import (
 func (k *Keeper) HandleMsgData(ctx sdk.Context, packet channeltypes.Packet, msgData *sdk.MsgData) (string, error) {
 	switch msgData.MsgType {
 	case sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}): // delegate
+		var data ibcaccounttypes.InterchainAccountPacketData
+		if err := ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data); err != nil {
+			return "", sdkerrors.Wrapf(sdkerrors.ErrJSONUnmarshal, "cannot unmarshal packet data: %s", err.Error())
+		}
+		packetData, err := ibcaccounttypes.DeserializeCosmosTx(k.cdc, data.Data)
+		if err != nil {
+			return "", err
+		}
+
+		delegateMsg, ok := packetData[0].(*stakingtypes.MsgDelegate)
+		if !ok {
+			return "", err
+		}
+
+		ctx.Logger().Info("DelegateHandler", "delegateMsg", delegateMsg)
+		k.AfterDelegateEnd(ctx, *delegateMsg)
 		return "", nil
 	case sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}): // undelegate
 		msgResponse := &stakingtypes.MsgUndelegateResponse{}

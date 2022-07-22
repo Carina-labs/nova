@@ -19,10 +19,10 @@ func (k Keeper) RegisterZone(ctx sdk.Context, zone *types.RegisteredZone) {
 }
 
 // GetRegisteredZone
-func (k Keeper) GetRegisteredZone(ctx sdk.Context, zoneName string) (types.RegisteredZone, bool) {
+func (k Keeper) GetRegisteredZone(ctx sdk.Context, zoneId string) (types.RegisteredZone, bool) {
 	zone := types.RegisteredZone{}
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
-	bz := store.Get([]byte(zoneName))
+	bz := store.Get([]byte(zoneId))
 
 	if len(bz) == 0 {
 		return zone, false
@@ -33,10 +33,10 @@ func (k Keeper) GetRegisteredZone(ctx sdk.Context, zoneName string) (types.Regis
 }
 
 // DeleteRegisteredZone delete zone info
-func (k Keeper) DeleteRegisteredZone(ctx sdk.Context, zoneName string) {
+func (k Keeper) DeleteRegisteredZone(ctx sdk.Context, zoneId string) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
-	ctx.Logger().Error(fmt.Sprintf("Removing chain: %s", zoneName))
-	store.Delete([]byte(zoneName))
+	ctx.Logger().Error(fmt.Sprintf("Removing chain: %s", zoneId))
+	store.Delete([]byte(zoneId))
 }
 
 // IterateRegisteredZones iterate through zones

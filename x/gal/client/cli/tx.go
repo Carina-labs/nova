@@ -24,6 +24,7 @@ func GetTxCmd() *cobra.Command {
 
 	cmd.AddCommand(
 		NewDepositCmd(),
+		NewDelegateCmd(),
 		NewWithdrawCmd(),
 		NewUndelegateRequestCmd(),
 		NewUndelegateCmd(),
@@ -180,9 +181,9 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 func NewClaimSnTokenCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "claimsntoken [zone-id] [claimer-address]",
+		Use:   "claimsntoken [zone-id] [claimer-address] [transfer-port-id] [transfer-channel-id]",
 		Short: "claim wrapped token to nova",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
 			if err != nil {
@@ -199,8 +200,10 @@ func NewClaimSnTokenCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+			transferPortId := args[2]
+			transferChanId := args[3]
 
-			msg := types.NewMsgClaimSnAsset(zoneId, claimer)
+			msg := types.NewMsgClaimSnAsset(zoneId, claimer, transferPortId, transferChanId)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -234,6 +237,34 @@ func NewPendingWithdrawCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgPendingWithdraw(zoneId, daomodifierAddr, portId, chanId, t)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+func NewDelegateCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "delegate [zone-id] [controller-address] [transfer-port-id] [transfer-channel-id]",
+		Args: cobra.ExactArgs(4),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
+				return err
+			}
+
+			clientCtx, err := client.GetClientTxContext(cmd)
+
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			controllerAddr := clientCtx.GetFromAddress()
+			transferPortId := args[2]
+			transferChanId := args[3]
+
+			msg := types.NewMsgDelegate(zoneId, controllerAddr, transferPortId, transferChanId)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

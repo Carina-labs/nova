@@ -173,10 +173,10 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 			for _, item := range tc.depositInfo {
 				ibcAmount := sdk.NewInt64Coin(ibcDenom, item.amount.Amount.Int64())
 				record := types.DepositRecord{
+					ZoneId:  "stake-1",
 					Address: item.address,
 					Records: []*types.DepositRecordContent{
 						{
-							ZoneId:        "stake-1",
 							Amount:        &ibcAmount,
 							IsTransferred: true,
 						},

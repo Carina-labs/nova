@@ -16,6 +16,8 @@ const (
 )
 
 var _ sdk.Msg = &MsgDeposit{}
+
+var _ sdk.Msg = &MsgDelegate{}
 var _ sdk.Msg = &MsgGalUndelegate{}
 var _ sdk.Msg = &MsgUndelegateRecord{}
 var _ sdk.Msg = &MsgWithdraw{}
@@ -70,6 +72,36 @@ func (msg MsgDeposit) GetSignBytes() []byte {
 func (msg MsgDeposit) GetSigners() []sdk.AccAddress {
 	depositor, _ := sdk.AccAddressFromBech32(msg.Depositor)
 	return []sdk.AccAddress{depositor}
+}
+
+func NewMsgDelegate(zoneId string, daomodifierAddr sdk.AccAddress, transferPortId, transferChanId string) *MsgDelegate {
+	return &MsgDelegate{
+		ZoneId:            zoneId,
+		ControllerAddress: daomodifierAddr.String(),
+		TransferPortId:    transferPortId,
+		TransferChannelId: transferChanId,
+	}
+}
+
+func (msg MsgDelegate) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
+		return err
+	}
+
+	if msg.ZoneId == "" {
+		return errors.New("zone id is not found")
+	}
+
+	return nil
+}
+
+func (msg MsgDelegate) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgDelegate) GetSigners() []sdk.AccAddress {
+	delegator, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
+	return []sdk.AccAddress{delegator}
 }
 
 func NewMsgUndelegate(zoneId, controllerAddr string) *MsgGalUndelegate {
@@ -183,10 +215,12 @@ func (msg MsgWithdraw) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgClaimSnAsset(zoneId string, claimer sdk.AccAddress) *MsgClaimSnAsset {
+func NewMsgClaimSnAsset(zoneId string, claimer sdk.AccAddress, transferPortId, transferChanId string) *MsgClaimSnAsset {
 	return &MsgClaimSnAsset{
-		ZoneId:  zoneId,
-		Claimer: claimer.String(),
+		ZoneId:            zoneId,
+		Claimer:           claimer.String(),
+		TransferPortId:    transferPortId,
+		TransferChannelId: transferChanId,
 	}
 }
 

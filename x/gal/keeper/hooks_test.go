@@ -17,6 +17,7 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 		sender     sdk.AccAddress
 		receiver   sdk.AccAddress
 		sentAmount int64
+		baseDenom  string
 	)
 
 	testCases := []struct {
@@ -31,6 +32,7 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 				sender = suite.GenRandomAddress()
 				receiver = baseHostAcc
 				sentAmount = 5000
+				baseDenom = "stake"
 
 				suite.chainA.App.BankKeeper.InitGenesis(suite.chainA.GetContext(), &banktypes.GenesisState{
 					Balances: []banktypes.Balance{
@@ -40,7 +42,9 @@ func (suite *KeeperTestSuite) TestHookAfterTransferEnd() {
 			},
 			func() {},
 			func() {
-				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), sender)
+				//baseDenom으로 zone search
+				zoneInfo := suite.chainA.App.IbcstakingKeeper.GetZoneForDenom(suite.chainA.GetContext(), baseDenom)
+				record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), zoneInfo.ZoneId, sender)
 				suite.Require().NoError(err)
 				suite.Require().NotNil(record, "record doesn't exists")
 			},

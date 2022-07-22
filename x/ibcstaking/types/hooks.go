@@ -7,7 +7,7 @@ import (
 )
 
 type ICAHooks interface {
-	AfterDelegateEnd()
+	AfterDelegateEnd(sdk.Context, stakingtypes.MsgDelegate)
 	AfterUndelegateEnd(sdk.Context, stakingtypes.MsgUndelegate, *stakingtypes.MsgUndelegateResponse)
 	AfterAutoStakingEnd()
 	AfterWithdrawEnd(sdk.Context, transfertypes.MsgTransfer)
@@ -21,9 +21,9 @@ func NewMultiICAHooks(hooks ...ICAHooks) MultiICAHooks {
 	return hooks
 }
 
-func (h MultiICAHooks) AfterDelegateEnd() {
+func (h MultiICAHooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	for i := range h {
-		h[i].AfterDelegateEnd()
+		h[i].AfterDelegateEnd(ctx, delegateMsg)
 	}
 }
 
