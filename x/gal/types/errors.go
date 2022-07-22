@@ -10,4 +10,6 @@ var (
 	ErrNotFoundZoneInfo    = errors.Register(ModuleName, 4, "not found zone info")
 	ErrCanNotWithdrawAsset = errors.Register(ModuleName, 5, "cannot withdraw funds")
 	ErrInvalidTime         = errors.Register(ModuleName, 6, "time is not zero")
+	ErrCanNotChangeState   = errors.Register(ModuleName, 7, "cannot change state")
+	ErrDelegateFail        = errors.Register(ModuleName, 8, "delegate fail")
 )

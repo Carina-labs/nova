@@ -77,30 +77,21 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 
 func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) (*types.MsgDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	// 5~10분마다 delegate 요청
-	// zone 정보를 받아옴(denom)
-	// depositRecords에서 zoneId로 record 조회 - 각 계정의 totalAmout의 합 가져오기
-	// delegate 요청 및 deposit state (DELEGATE_REQUEST로 변경)
-	// ibc_handlr.go에서 ack받으면 state DELEGATE_SUCCESS로 변경
-	// oracleVersion 받아서 depositRecord에 저장
 
 	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, delegate.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
 	}
 
-	//get zone
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, delegate.ZoneId)
 	if !ok {
-		return nil, nil
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, DEPOSIT_SUCCESS, DELEGATE_REQUEST)
 	if !ok {
-		// 상태 변경된게 없음
-		return nil, nil
+		return nil, types.ErrCanNotChangeState
 	}
 
-	// denom is ibcHash
 	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, delegate.TransferPortId, delegate.TransferChannelId, zoneInfo.BaseDenom)
 
 	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, DELEGATE_REQUEST)
@@ -108,14 +99,12 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: delegateAmt})
 
-	// delegate msg 전송
 	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
-		// fail to send ica delelegate msg
-		return nil, nil
+		return nil, types.ErrDelegateFail
 	}
 
-	return nil, nil
+	return &types.MsgDelegateResponse{}, nil
 }
 
 // UndelegateRecord is used when user requests undelegate their staked asset.

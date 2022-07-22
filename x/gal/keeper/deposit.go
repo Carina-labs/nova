@@ -33,23 +33,6 @@ func (k Keeper) SetDepositAmt(ctx sdk.Context, msg *types.DepositRecord) {
 	store.Set([]byte(key), bz)
 }
 
-// func (k Keeper) MarkRecordTransfer(ctx sdk.Context, zoneId, addr string, i int) error {
-// 	store := k.getDepositRecordStore(ctx)
-// 	key := zoneId + addr
-
-// 	var record types.DepositRecord
-// 	k.cdc.MustUnmarshal(store.Get([]byte(key)), &record)
-
-// 	if len(record.Records) <= i {
-// 		return types.ErrCanNotReplaceRecord
-// 	}
-
-// 	record.Records[i].IsTransferred = true
-// 	k.SetDepositAmt(ctx, &record)
-
-// 	return nil
-// }
-
 // GetRecordedDepositAmt returns the amount of coin user deposit by address.
 func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, zoneId string, depositor sdk.AccAddress) (*types.DepositRecord, error) {
 	store := k.getDepositRecordStore(ctx)
@@ -66,21 +49,13 @@ func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, zoneId string, depositor 
 	return &msg, nil
 }
 
-// Iterate로 depositRecord.content 반복하면서 해당 zone, state의 records 조회
-// func (k Keeper) GetAllRecordedDepositAmt() {
-
-// }
-
-// delegate를 위한 TotlaDepositAmt로, 해당 zone에서 deposit 완료된 금액을 받아서 반환하는 함수
+// GetTotalDepositAmtForZoneId : delegate를 위한 TotlaDepositAmt로, 해당 zone에서 deposit 완료된 금액을 받아서 반환하는 함수
 func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state DepositState) sdk.Coin {
-	// zoneId에 해당하면서 state가 transfer인 친구들의 합
 	totalDepositAmt := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
 		Denom:  denom,
 	}
-	// var check bool
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
-		// check = false
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
 				if record.State == int64(state) {
@@ -101,7 +76,6 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 func (k Keeper) SetBlockHeight(ctx sdk.Context, zoneId string, state DepositState, blockHeight uint64) {
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		isChanged := false
-		// check = false
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
 				if record.State == int64(state) {
@@ -120,7 +94,7 @@ func (k Keeper) SetBlockHeight(ctx sdk.Context, zoneId string, state DepositStat
 
 }
 
-// state 변경
+// ChangeDepositState : DepositRecords의 state를 preState에서 postState로 변경하는 함수
 func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, postState DepositState) bool {
 	isChanged := false
 
