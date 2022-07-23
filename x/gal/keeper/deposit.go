@@ -73,7 +73,7 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 	return totalDepositAmt
 }
 
-func (k Keeper) SetBlockHeight(ctx sdk.Context, zoneId string, state DepositState, blockHeight uint64) {
+func (k Keeper) SetBlockHeight(ctx sdk.Context, zoneId string, state DepositState, blockHeight int64) {
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		isChanged := false
 		if depositRecord.ZoneId == zoneId {

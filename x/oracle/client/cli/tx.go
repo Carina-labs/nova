@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"strconv"
+
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -43,20 +45,20 @@ func NewUpdateStateCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			decimal, err := sdk.ParseUint(args[2])
+			decimal, err := strconv.ParseUint(args[2], 10, 32)
 			if err != nil {
 				return err
 			}
 
-			blockHeight, err := sdk.ParseUint(args[3])
+			blockHeight, err := strconv.ParseInt(args[3], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			appHash := args[4]
+			appHash := []byte(args[4])
 			chainId := args[5]
 
-			msg := types.NewMsgUpdateChainState(clientCtx.GetFromAddress(), chainId, amount, decimal.Uint64(), blockHeight.Uint64(), appHash)
+			msg := types.NewMsgUpdateChainState(clientCtx.GetFromAddress(), chainId, amount, uint32(decimal), blockHeight, appHash)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

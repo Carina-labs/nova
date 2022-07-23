@@ -25,16 +25,16 @@ message ChainInfo {
   ];
 
   // decimal of the native currency in host chain.
-  uint64 decimal = 2 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
+  uint32 decimal = 2 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
 
   // operator_address is an oracle operator's address
   string operator_address = 3 [ (gogoproto.moretags) = "yaml:\"operator_address\"" ];
 
   // last_block_height is the block height observed by the operator on the host chain.
-  uint64 last_block_height = 4 [ (gogoproto.moretags) = "yaml:\"last_block_height\"" ];
+  int64 last_block_height = 4 [ (gogoproto.moretags) = "yaml:\"last_block_height\"" ];
 
   // app_hash of the block fetched by oracle from host chain
-  string app_hash = 5 [ (gogoproto.moretags) = "yaml:\"app_hash\"" ];
+  bytes app_hash = 5 [ (gogoproto.moretags) = "yaml:\"app_hash\"" ];
 
   // chain_id of the host chain
   string chain_id = 6 [ (gogoproto.moretags) = "yaml:\"chain_id\"" ];

@@ -42,7 +42,7 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		OperatorAddress: fooOperator.String(),
 		LastBlockHeight: 10,
 		Decimal:         6,
-		AppHash:         fooAppHash,
+		AppHash:         []byte(fooAppHash),
 		ChainId:         fooChainId,
 		BlockProposer:   fooBlockProposer,
 	}
