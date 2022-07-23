@@ -154,7 +154,7 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 // 1. Protocol refers the store that contains user's undelegate request history.
 // 2. Using it, controller chain requests undelegate staked asset using ICA.
 // 3. And burn share token Module account have.
-func (m msgServer) GalUndelegate(goCtx context.Context, msg *types.MsgGalUndelegate) (*types.MsgGalUndelegateResponse, error) {
+func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
@@ -198,7 +198,7 @@ func (m msgServer) GalUndelegate(goCtx context.Context, msg *types.MsgGalUndeleg
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
 	}
 
-	return &types.MsgGalUndelegateResponse{
+	return &types.MsgUndelegateResponse{
 		ZoneId:            zoneInfo.ZoneId,
 		UndelegatedAmount: undelegateAmount,
 	}, nil

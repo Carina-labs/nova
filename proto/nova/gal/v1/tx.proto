@@ -13,7 +13,7 @@ option go_package = "github.com/Carina-labs/nova/x/gal/types";
 service Msg {
   rpc Deposit(MsgDeposit) returns (MsgDepositResponse);
   rpc Delegate(MsgDelegate) returns (MsgDelegateResponse);
-  rpc GalUndelegate(MsgGalUndelegate) returns (MsgGalUndelegateResponse);
+  rpc Undelegate(MsgUndelegate) returns (MsgUndelegateResponse);
   rpc UndelegateRecord(MsgUndelegateRecord) returns (MsgUndelegateRecordResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
   rpc ClaimSnAsset(MsgClaimSnAsset) returns (MsgClaimSnAssetResponse);
@@ -44,12 +44,12 @@ message MsgDelegate {
 message MsgDelegateResponse {
 }
 
-message MsgGalUndelegate {
+message MsgUndelegate {
   string zone_id = 1;
   string controller_address = 2;
 }
 
-message MsgGalUndelegateResponse{
+message MsgUndelegateResponse{
   string zone_id = 1;
   cosmos.base.v1beta1.Coin undelegated_amount = 2 [(gogoproto.nullable) = false];
 }

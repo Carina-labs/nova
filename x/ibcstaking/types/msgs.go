@@ -77,10 +77,10 @@ func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaDelegate(zoneId, daomodifierAddr, hostAddr string, amount sdk.Coin) *MsgIcaDelegate {
+func NewMsgIcaDelegate(zoneId string, daomodifierAddr sdk.AccAddress, hostAddr string, amount sdk.Coin) *MsgIcaDelegate {
 	return &MsgIcaDelegate{
 		ZoneId:             zoneId,
-		DaomodifierAddress: daomodifierAddr,
+		DaomodifierAddress: daomodifierAddr.String(),
 		HostAddress:        hostAddr,
 		Amount:             amount,
 	}
@@ -161,11 +161,11 @@ func (msg MsgIcaUndelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaAutoStaking(zoneId, hostAddr, daomodifierAddr string, amount sdk.Coin) *MsgIcaAutoStaking {
+func NewMsgIcaAutoStaking(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaAutoStaking {
 	return &MsgIcaAutoStaking{
 		ZoneId:             zoneId,
 		HostAddress:        hostAddr,
-		DaomodifierAddress: daomodifierAddr,
+		DaomodifierAddress: daomodifierAddr.String(),
 		Amount:             amount,
 	}
 }
@@ -256,11 +256,11 @@ func (msg MsgIcaTransfer) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgRegisterHostAccount(zoneId, hostAddr, daomodifierAddr string) *MsgRegisterHostAccount {
+func NewMsgRegisterHostAccount(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress) *MsgRegisterHostAccount {
 	return &MsgRegisterHostAccount{
 		ZoneId: zoneId,
 		AccountInfo: &IcaAccount{
-			DaomodifierAddress: daomodifierAddr,
+			DaomodifierAddress: daomodifierAddr.String(),
 			HostAddress:        hostAddr,
 		},
 	}
@@ -291,10 +291,10 @@ func (msg MsgRegisterHostAccount) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgDeleteRegisteredZone(zoneId, daomodifierAddr string) *MsgDeleteRegisteredZone {
+func NewMsgDeleteRegisteredZone(zoneId string, daomodifierAddr sdk.AccAddress) *MsgDeleteRegisteredZone {
 	return &MsgDeleteRegisteredZone{
 		ZoneId:             zoneId,
-		DaomodifierAddress: daomodifierAddr,
+		DaomodifierAddress: daomodifierAddr.String(),
 	}
 }
 

@@ -18,7 +18,7 @@ const (
 var _ sdk.Msg = &MsgDeposit{}
 
 var _ sdk.Msg = &MsgDelegate{}
-var _ sdk.Msg = &MsgGalUndelegate{}
+var _ sdk.Msg = &MsgUndelegate{}
 var _ sdk.Msg = &MsgUndelegateRecord{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
@@ -104,22 +104,22 @@ func (msg MsgDelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{delegator}
 }
 
-func NewMsgUndelegate(zoneId, controllerAddr string) *MsgGalUndelegate {
-	return &MsgGalUndelegate{
+func NewMsgUndelegate(zoneId string, controllerAddr sdk.AccAddress) *MsgUndelegate {
+	return &MsgUndelegate{
 		ZoneId:            zoneId,
-		ControllerAddress: controllerAddr,
+		ControllerAddress: controllerAddr.String(),
 	}
 }
 
-func (msg MsgGalUndelegate) Route() string {
+func (msg MsgUndelegate) Route() string {
 	return RouterKey
 }
 
-func (msg MsgGalUndelegate) Type() string {
+func (msg MsgUndelegate) Type() string {
 	return TypeMsgDeposit
 }
 
-func (msg MsgGalUndelegate) ValidateBasic() error {
+func (msg MsgUndelegate) ValidateBasic() error {
 	if msg.ControllerAddress == "" {
 		return errors.New("controller address is not null")
 	}
@@ -130,11 +130,11 @@ func (msg MsgGalUndelegate) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgGalUndelegate) GetSignBytes() []byte {
+func (msg MsgUndelegate) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgGalUndelegate) GetSigners() []sdk.AccAddress {
+func (msg MsgUndelegate) GetSigners() []sdk.AccAddress {
 	depositor, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	return []sdk.AccAddress{depositor}
 }
