@@ -40,7 +40,7 @@ message DepositRecord {
 
 message DepositRecordContent {
   cosmos.base.v1beta1.Coin amount = 1;
-  uint64 block_height = 2;
+  int64 block_height = 2;
   int64 state = 3;
 }
 

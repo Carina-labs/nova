@@ -2606,8 +2606,8 @@ func (x *fastReflection_DepositRecordContent) Range(f func(protoreflect.FieldDes
 			return
 		}
 	}
-	if x.BlockHeight != uint64(0) {
-		value := protoreflect.ValueOfUint64(x.BlockHeight)
+	if x.BlockHeight != int64(0) {
+		value := protoreflect.ValueOfInt64(x.BlockHeight)
 		if !f(fd_DepositRecordContent_block_height, value) {
 			return
 		}
@@ -2636,7 +2636,7 @@ func (x *fastReflection_DepositRecordContent) Has(fd protoreflect.FieldDescripto
 	case "nova.gal.v1.DepositRecordContent.amount":
 		return x.Amount != nil
 	case "nova.gal.v1.DepositRecordContent.block_height":
-		return x.BlockHeight != uint64(0)
+		return x.BlockHeight != int64(0)
 	case "nova.gal.v1.DepositRecordContent.state":
 		return x.State != int64(0)
 	default:
@@ -2658,7 +2658,7 @@ func (x *fastReflection_DepositRecordContent) Clear(fd protoreflect.FieldDescrip
 	case "nova.gal.v1.DepositRecordContent.amount":
 		x.Amount = nil
 	case "nova.gal.v1.DepositRecordContent.block_height":
-		x.BlockHeight = uint64(0)
+		x.BlockHeight = int64(0)
 	case "nova.gal.v1.DepositRecordContent.state":
 		x.State = int64(0)
 	default:
@@ -2682,7 +2682,7 @@ func (x *fastReflection_DepositRecordContent) Get(descriptor protoreflect.FieldD
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	case "nova.gal.v1.DepositRecordContent.block_height":
 		value := x.BlockHeight
-		return protoreflect.ValueOfUint64(value)
+		return protoreflect.ValueOfInt64(value)
 	case "nova.gal.v1.DepositRecordContent.state":
 		value := x.State
 		return protoreflect.ValueOfInt64(value)
@@ -2709,7 +2709,7 @@ func (x *fastReflection_DepositRecordContent) Set(fd protoreflect.FieldDescripto
 	case "nova.gal.v1.DepositRecordContent.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
 	case "nova.gal.v1.DepositRecordContent.block_height":
-		x.BlockHeight = value.Uint()
+		x.BlockHeight = value.Int()
 	case "nova.gal.v1.DepositRecordContent.state":
 		x.State = value.Int()
 	default:
@@ -2758,7 +2758,7 @@ func (x *fastReflection_DepositRecordContent) NewField(fd protoreflect.FieldDesc
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	case "nova.gal.v1.DepositRecordContent.block_height":
-		return protoreflect.ValueOfUint64(uint64(0))
+		return protoreflect.ValueOfInt64(int64(0))
 	case "nova.gal.v1.DepositRecordContent.state":
 		return protoreflect.ValueOfInt64(int64(0))
 	default:
@@ -2992,7 +2992,7 @@ func (x *fastReflection_DepositRecordContent) ProtoMethods() *protoiface.Methods
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.BlockHeight |= uint64(b&0x7F) << shift
+					x.BlockHeight |= int64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
@@ -5261,7 +5261,7 @@ type DepositRecordContent struct {
 	unknownFields protoimpl.UnknownFields
 
 	Amount      *v1beta1.Coin `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
-	BlockHeight uint64        `protobuf:"varint,2,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
+	BlockHeight int64         `protobuf:"varint,2,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
 	State       int64         `protobuf:"varint,3,opt,name=state,proto3" json:"state,omitempty"`
 }
 
@@ -5292,7 +5292,7 @@ func (x *DepositRecordContent) GetAmount() *v1beta1.Coin {
 	return nil
 }
 
-func (x *DepositRecordContent) GetBlockHeight() uint64 {
+func (x *DepositRecordContent) GetBlockHeight() int64 {
 	if x != nil {
 		return x.BlockHeight
 	}
@@ -5558,7 +5558,7 @@ var file_nova_gal_v1_genesis_proto_rawDesc = []byte{
 	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65,
 	0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
 	0x12, 0x21, 0x0a, 0x0c, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0b, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x48, 0x65, 0x69,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x48, 0x65, 0x69,
 	0x67, 0x68, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01,
 	0x28, 0x03, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0xa5, 0x01, 0x0a, 0x0c, 0x57, 0x69,
 	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64,

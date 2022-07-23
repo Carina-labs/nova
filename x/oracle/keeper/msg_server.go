@@ -56,6 +56,5 @@ func (server msgServer) GetChainState(goCtx context.Context, request *types.Quer
 		LastBlockHeight: result.LastBlockHeight,
 		AppHash:         result.AppHash,
 		ChainId:         result.ChainId,
-		BlockProposer:   result.BlockProposer,
 	}, nil
 }

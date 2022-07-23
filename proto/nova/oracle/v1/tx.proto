@@ -19,16 +19,16 @@ message MsgUpdateChainState {
   ];
 
   // decimal of the native currency in host chain.
-  uint64 decimal = 2 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
+  uint32 decimal = 2 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
 
   // address of the oracle
   string operator = 3 [ (gogoproto.moretags) = "yaml:\"operator\"" ];
 
   // block_height of the block fetched by oracle from host_chain
-  uint64 block_height = 4 [ (gogoproto.moretags) = "yaml:\"block_height\"" ];
+  int64 block_height = 4 [ (gogoproto.moretags) = "yaml:\"block_height\"" ];
 
   // app_hash of the block fetched by oracle from host chain
-  string app_hash = 5 [ (gogoproto.moretags) = "yaml:\"app_hash\"" ];
+  bytes app_hash = 5 [ (gogoproto.moretags) = "yaml:\"app_hash\"" ];
 
   // chain_id of the host chain
   string chain_id = 6 [ (gogoproto.moretags) = "yaml:\"chain_id\"" ];
