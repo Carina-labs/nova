@@ -86,7 +86,7 @@ func getDelegateTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			daomodifierAddr := clientCtx.GetFromAddress().String()
+			daomodifierAddr := clientCtx.GetFromAddress()
 			hostAddr := args[2]
 			amount, err := sdk.ParseCoinNormalized(args[3])
 
@@ -147,7 +147,7 @@ func getAutoStakingTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			daomodifierAddr := clientCtx.GetFromAddress().String()
+			daomodifierAddr := clientCtx.GetFromAddress()
 			hostAddr := args[2]
 			amount, err := sdk.ParseCoinNormalized(args[3])
 			if err != nil {
@@ -214,7 +214,7 @@ func getHostAddressTxCmd() *cobra.Command {
 
 			zoneId := args[0]
 			hostAddr := args[1]
-			daomodifierAddr := args[2]
+			daomodifierAddr := clientCtx.GetFromAddress()
 
 			msg := types.NewMsgRegisterHostAccount(zoneId, hostAddr, daomodifierAddr)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
@@ -240,7 +240,7 @@ func getDeleteZoneTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			daomodifier := args[1]
+			daomodifier := clientCtx.GetFromAddress()
 
 			msg := types.NewMsgDeleteRegisteredZone(zoneId, daomodifier)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)

@@ -124,7 +124,7 @@ func NewUndelegateCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			controllerAddr := args[1]
+			controllerAddr := clientCtx.GetFromAddress()
 
 			msg := types.NewMsgUndelegate(zoneId, controllerAddr)
 

@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type MsgClient interface {
 	Deposit(ctx context.Context, in *MsgDeposit, opts ...grpc.CallOption) (*MsgDepositResponse, error)
 	Delegate(ctx context.Context, in *MsgDelegate, opts ...grpc.CallOption) (*MsgDelegateResponse, error)
-	GalUndelegate(ctx context.Context, in *MsgGalUndelegate, opts ...grpc.CallOption) (*MsgGalUndelegateResponse, error)
+	Undelegate(ctx context.Context, in *MsgUndelegate, opts ...grpc.CallOption) (*MsgUndelegateResponse, error)
 	UndelegateRecord(ctx context.Context, in *MsgUndelegateRecord, opts ...grpc.CallOption) (*MsgUndelegateRecordResponse, error)
 	Withdraw(ctx context.Context, in *MsgWithdraw, opts ...grpc.CallOption) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts ...grpc.CallOption) (*MsgClaimSnAssetResponse, error)
@@ -57,9 +57,9 @@ func (c *msgClient) Delegate(ctx context.Context, in *MsgDelegate, opts ...grpc.
 	return out, nil
 }
 
-func (c *msgClient) GalUndelegate(ctx context.Context, in *MsgGalUndelegate, opts ...grpc.CallOption) (*MsgGalUndelegateResponse, error) {
-	out := new(MsgGalUndelegateResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/GalUndelegate", in, out, opts...)
+func (c *msgClient) Undelegate(ctx context.Context, in *MsgUndelegate, opts ...grpc.CallOption) (*MsgUndelegateResponse, error) {
+	out := new(MsgUndelegateResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/Undelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (c *msgClient) PendingWithdraw(ctx context.Context, in *MsgPendingWithdraw,
 type MsgServer interface {
 	Deposit(context.Context, *MsgDeposit) (*MsgDepositResponse, error)
 	Delegate(context.Context, *MsgDelegate) (*MsgDelegateResponse, error)
-	GalUndelegate(context.Context, *MsgGalUndelegate) (*MsgGalUndelegateResponse, error)
+	Undelegate(context.Context, *MsgUndelegate) (*MsgUndelegateResponse, error)
 	UndelegateRecord(context.Context, *MsgUndelegateRecord) (*MsgUndelegateRecordResponse, error)
 	Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error)
@@ -126,8 +126,8 @@ func (UnimplementedMsgServer) Deposit(context.Context, *MsgDeposit) (*MsgDeposit
 func (UnimplementedMsgServer) Delegate(context.Context, *MsgDelegate) (*MsgDelegateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delegate not implemented")
 }
-func (UnimplementedMsgServer) GalUndelegate(context.Context, *MsgGalUndelegate) (*MsgGalUndelegateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GalUndelegate not implemented")
+func (UnimplementedMsgServer) Undelegate(context.Context, *MsgUndelegate) (*MsgUndelegateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Undelegate not implemented")
 }
 func (UnimplementedMsgServer) UndelegateRecord(context.Context, *MsgUndelegateRecord) (*MsgUndelegateRecordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UndelegateRecord not implemented")
@@ -190,20 +190,20 @@ func _Msg_Delegate_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_GalUndelegate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgGalUndelegate)
+func _Msg_Undelegate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUndelegate)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).GalUndelegate(ctx, in)
+		return srv.(MsgServer).Undelegate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Msg/GalUndelegate",
+		FullMethod: "/nova.gal.v1.Msg/Undelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).GalUndelegate(ctx, req.(*MsgGalUndelegate))
+		return srv.(MsgServer).Undelegate(ctx, req.(*MsgUndelegate))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -296,8 +296,8 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_Delegate_Handler,
 		},
 		{
-			MethodName: "GalUndelegate",
-			Handler:    _Msg_GalUndelegate_Handler,
+			MethodName: "Undelegate",
+			Handler:    _Msg_Undelegate_Handler,
 		},
 		{
 			MethodName: "UndelegateRecord",
