@@ -19,7 +19,7 @@ var _ sdk.Msg = &MsgDeposit{}
 
 var _ sdk.Msg = &MsgDelegate{}
 var _ sdk.Msg = &MsgUndelegate{}
-var _ sdk.Msg = &MsgUndelegateRecord{}
+var _ sdk.Msg = &MsgPendingUndelegateRecord{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
 var _ sdk.Msg = &MsgPendingWithdraw{}
@@ -139,23 +139,23 @@ func (msg MsgUndelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{depositor}
 }
 
-func NewMsgUndelegateRecord(zoneId, Depositor string, amount sdk.Coin) *MsgUndelegateRecord {
-	return &MsgUndelegateRecord{
+func NewMsgPendingUndelegateRecord(zoneId, Depositor string, amount sdk.Coin) *MsgPendingUndelegateRecord {
+	return &MsgPendingUndelegateRecord{
 		ZoneId:    zoneId,
 		Depositor: Depositor,
 		Amount:    amount,
 	}
 }
 
-func (msg MsgUndelegateRecord) Route() string {
+func (msg MsgPendingUndelegateRecord) Route() string {
 	return RouterKey
 }
 
-func (msg MsgUndelegateRecord) Type() string {
+func (msg MsgPendingUndelegateRecord) Type() string {
 	return TypeMsgUndelegateRecord
 }
 
-func (msg MsgUndelegateRecord) ValidateBasic() error {
+func (msg MsgPendingUndelegateRecord) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.Depositor); err != nil {
 		return err
 	}
@@ -171,22 +171,22 @@ func (msg MsgUndelegateRecord) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgUndelegateRecord) GetSignBytes() []byte {
+func (msg MsgPendingUndelegateRecord) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgUndelegateRecord) GetSigners() []sdk.AccAddress {
+func (msg MsgPendingUndelegateRecord) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.Depositor)
 	return []sdk.AccAddress{withdrawer}
 }
 
 func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress, receiver, portId, chanId string) *MsgWithdraw {
 	return &MsgWithdraw{
-		ZoneId:            zoneId,
-		Withdrawer:        withdrawer.String(),
-		Recipient:         receiver,
-		TransferPortId:    portId,
-		TransferChannelId: chanId,
+		ZoneId:               zoneId,
+		Withdrawer:           withdrawer.String(),
+		Recipient:            receiver,
+		IcaTransferPortId:    portId,
+		IcaTransferChannelId: chanId,
 	}
 }
 
