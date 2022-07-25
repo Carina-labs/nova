@@ -95,7 +95,7 @@ func NewUndelegateRequestCmd() *cobra.Command {
 				panic(fmt.Sprintf("can't parse coin: %s", err.Error()))
 			}
 
-			msg := types.NewMsgUndelegateRecord(zoneId, depositor, amount)
+			msg := types.NewMsgPendingUndelegateRecord(zoneId, depositor, amount)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

@@ -110,7 +110,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 // UndelegateRecord is used when user requests undelegate their staked asset.
 // 1. User sends their st-token to module account.
 // 2. And GAL coins step 1 to the store.
-func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.MsgUndelegateRecord) (*types.MsgUndelegateRecordResponse, error) {
+func (m msgServer) PendingUndelegateRecord(goCtx context.Context, undelegate *types.MsgPendingUndelegateRecord) (*types.MsgPendingUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// change undelegate State
@@ -143,7 +143,7 @@ func (m msgServer) UndelegateRecord(goCtx context.Context, undelegate *types.Msg
 		State:     int64(UNDELEGATE_REQUEST_USER),
 	})
 
-	return &types.MsgUndelegateRecordResponse{
+	return &types.MsgPendingUndelegateRecordResponse{
 		ZoneId: undelegate.ZoneId,
 		User:   undelegate.Depositor,
 		Amount: amt,
@@ -223,7 +223,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "unbonding time has not passed %s", withdrawRecord.CompletionTime)
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.IcaTransferPortId, withdraw.IcaTransferChannelId, zoneInfo.BaseDenom)
 	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawRecord.Amount.Amount.Int64())
 	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
 	if err != nil {
