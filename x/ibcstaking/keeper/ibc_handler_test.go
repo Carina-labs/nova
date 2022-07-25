@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -14,6 +15,77 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
+func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.RegisteredZone) ibcaccounttypes.InterchainAccountPacketData {
+	var msgs []sdk.Msg
+	switch msgType {
+	case "delegate":
+		delegateMsg := &stakingtypes.MsgDelegate{
+			DelegatorAddress: "test",
+			ValidatorAddress: zoneInfo[0].ValidatorAddress,
+			Amount:           sdk.NewCoin("uatom", sdk.NewInt(1000)),
+		}
+
+		msgs = append(msgs, delegateMsg)
+
+	case "undelegate":
+		undelegateMsg := &stakingtypes.MsgUndelegate{
+			DelegatorAddress: "test",
+			ValidatorAddress: zoneInfo[0].ValidatorAddress,
+			Amount:           sdk.NewCoin("uatom", sdk.NewInt(1000)),
+		}
+
+		msgs = append(msgs, undelegateMsg)
+	case "autostaking":
+		autostakingMsg := &stakingtypes.MsgDelegate{
+			DelegatorAddress: "test",
+			ValidatorAddress: zoneInfo[0].ValidatorAddress,
+			Amount:           sdk.NewCoin("uatom", sdk.NewInt(1000)),
+		}
+
+		msgs = append(msgs, autostakingMsg)
+	case "transfer":
+		transferMsg := &transfertypes.MsgTransfer{
+			SourcePort:    "transfer",
+			SourceChannel: "channel-0",
+			Token:         sdk.NewCoin("uatom", sdk.NewInt(1000)),
+			Sender:        "test",
+			Receiver:      "receiver",
+			TimeoutHeight: ibcclienttypes.Height{
+				RevisionHeight: 0,
+				RevisionNumber: 0,
+			},
+			TimeoutTimestamp: uint64(suite.Ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+		}
+
+		msgs = append(msgs, transferMsg)
+
+	case "unkowntype":
+		bankMsg := &banktypes.MsgSend{
+			FromAddress: "from_address",
+			ToAddress:   "to_address",
+			Amount: sdk.NewCoins(
+				sdk.NewCoin("uatom", sdk.NewInt(1000)),
+			),
+		}
+
+		msgs = append(msgs, bankMsg)
+	default:
+		return ibcaccounttypes.InterchainAccountPacketData{
+			Type: ibcaccounttypes.EXECUTE_TX,
+			Data: nil,
+		}
+	}
+
+	data, err := ibcaccounttypes.SerializeCosmosTx(suite.App.AppCodec(), msgs)
+	suite.NoError(err)
+
+	icapacket := ibcaccounttypes.InterchainAccountPacketData{
+		Type: ibcaccounttypes.EXECUTE_TX,
+		Data: data,
+	}
+
+	return icapacket
+}
 func (suite *KeeperTestSuite) GetMsgs(msg string) *sdk.MsgData {
 	var data sdk.MsgData
 	switch msg {
@@ -146,6 +218,80 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 				suite.Require().Equal(res, tc.expect)
 			} else {
 				suite.Require().Error(tc.err)
+			}
+		})
+	}
+}
+
+func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
+	zone := suite.setZone(1)
+	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &zone[0])
+
+	packetData := channeltypes.Packet{
+		Sequence:           1,
+		SourcePort:         "icacontroller-" + zone[0].IcaAccount.DaomodifierAddress,
+		SourceChannel:      "channel-0",
+		DestinationPort:    "icahost",
+		DestinationChannel: "channel-0",
+		TimeoutHeight: ibcclienttypes.Height{
+			RevisionHeight: 0,
+			RevisionNumber: 0,
+		},
+		TimeoutTimestamp: uint64(suite.Ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+	}
+
+	tcs := []struct {
+		name   string
+		args   ibcaccounttypes.InterchainAccountPacketData
+		expect error
+		err    bool
+	}{
+		{
+			name:   "delegate",
+			args:   suite.SetMsgs("delegate", zone),
+			expect: nil,
+			err:    false,
+		},
+		{
+			name:   "undelegate",
+			args:   suite.SetMsgs("undelegate", zone),
+			expect: nil,
+			err:    false,
+		},
+		{
+			name:   "autostaking",
+			args:   suite.SetMsgs("autostaking", zone),
+			expect: nil,
+			err:    false,
+		},
+		{
+			name:   "transfer",
+			args:   suite.SetMsgs("transfer", zone),
+			expect: nil,
+			err:    false,
+		},
+		{
+			name:   "unkowntype",
+			args:   suite.SetMsgs("unkowntype", zone),
+			expect: types.ErrMsgNotFound,
+			err:    true,
+		},
+		{
+			name:   "nil",
+			args:   suite.SetMsgs("nil", zone),
+			expect: types.ErrMsgNotNil,
+			err:    true,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			packetData.Data = tc.args.GetBytes()
+			err := suite.App.IbcstakingKeeper.HandleTimeoutPacket(suite.Ctx, packetData)
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.NoError(err)
 			}
 		})
 	}
