@@ -15,7 +15,7 @@ import (
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 )
 
-func (k *Keeper) HandleMsgData(ctx sdk.Context, packet channeltypes.Packet, msgData *sdk.MsgData) (string, error) {
+func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, msgData *sdk.MsgData) (string, error) {
 	switch msgData.MsgType {
 	case sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}): // delegate
 		var data ibcaccounttypes.InterchainAccountPacketData
@@ -99,66 +99,8 @@ func (k *Keeper) HandleTimeoutPacket(ctx sdk.Context, packet channeltypes.Packet
 		return err
 	}
 
-	msgType := CheckPacketType(packetData[0])
-	// switch true {
-	// case packetData[0].(*stakingtypes.MsgDelegate).Type() == (sdk.MsgTypeURL(&stakingtypes.MsgDelegate{})):
-	// 	data := packetData[0].(*stakingtypes.MsgDelegate)
-
-	// 	//delegate fail event
-	// 	event := types.EventDelegateFail{
-	// 		MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
-	// 		DelegatorAddress: data.DelegatorAddress,
-	// 		ValidatorAddress: data.ValidatorAddress,
-	// 		Amount:           &data.Amount,
-	// 	}
-	// 	ctx.EventManager().EmitTypedEvent(&event)
-	// case packetData[0].(*stakingtypes.MsgUndelegate).Type() == sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}):
-	// 	data := packetData[0].(*stakingtypes.MsgUndelegate)
-
-	// 	//undelegate fail event
-	// 	event := types.EventUndelegateFail{
-	// 		MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}),
-	// 		DelegatorAddress: data.DelegatorAddress,
-	// 		ValidatorAddress: data.ValidatorAddress,
-	// 		Amount:           &data.Amount,
-	// 	}
-	// 	ctx.EventManager().EmitTypedEvent(&event)
-	// case packetData[0].(*distributiontype.MsgWithdrawDelegatorReward).Type() == sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{}):
-	// 	if _, ok := packetData[0].(*stakingtypes.MsgDelegate); !ok {
-	// 		return ErrMsgNotFound
-	// 	}
-	// 	data := packetData[0].(*stakingtypes.MsgDelegate)
-
-	// 	//delegate fail event
-	// 	event := types.EventAutostakingFail{
-	// 		MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}),
-	// 		DelegatorAddress: data.DelegatorAddress,
-	// 		ValidatorAddress: data.ValidatorAddress,
-	// 		Amount:           &data.Amount,
-	// 	}
-	// 	ctx.EventManager().EmitTypedEvent(&event)
-	// case packetData[0].(*transfertypes.MsgTransfer).Type() == sdk.MsgTypeURL(&transfertypes.MsgTransfer{}):
-	// 	data := packetData[0].(*transfertypes.MsgTransfer)
-
-	// 	//delegate fail event
-	// 	event := types.EventTransferFail{
-	// 		MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}),
-	// 		SourcePort:       data.SourcePort,
-	// 		SourceChannel:    data.SourceChannel,
-	// 		Token:            &data.Token,
-	// 		Sender:           data.Sender,
-	// 		Receiver:         data.Receiver,
-	// 		TimeoutHeight:    data.TimeoutHeight.String(),
-	// 		TimeoutTimestamp: data.TimeoutTimestamp,
-	// 	}
-	// 	ctx.EventManager().EmitTypedEvent(&event)
-
-	// default:
-	// 	return types.ErrMsgNotFound
-	// }
-
-	switch msgType {
-	case sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}):
+	switch packetData[0].(type) {
+	case *stakingtypes.MsgDelegate:
 		data := packetData[0].(*stakingtypes.MsgDelegate)
 
 		//delegate fail event
@@ -168,9 +110,12 @@ func (k *Keeper) HandleTimeoutPacket(ctx sdk.Context, packet channeltypes.Packet
 			ValidatorAddress: data.ValidatorAddress,
 			Amount:           data.Amount,
 		}
-		ctx.EventManager().EmitTypedEvent(&event)
+		err = ctx.EventManager().EmitTypedEvent(&event)
+		if err != nil {
+			return err
+		}
 
-	case sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}):
+	case *stakingtypes.MsgUndelegate:
 		data := packetData[0].(*stakingtypes.MsgUndelegate)
 
 		//undelegate fail event
@@ -181,9 +126,12 @@ func (k *Keeper) HandleTimeoutPacket(ctx sdk.Context, packet channeltypes.Packet
 			Amount:           data.Amount,
 		}
 
-		ctx.EventManager().EmitTypedEvent(&event)
+		err = ctx.EventManager().EmitTypedEvent(&event)
+		if err != nil {
+			return err
+		}
 
-	case sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{}):
+	case *distributiontype.MsgWithdrawDelegatorReward:
 		if _, ok := packetData[1].(*stakingtypes.MsgDelegate); !ok {
 			return types.ErrMsgNotFound
 		}
@@ -196,9 +144,12 @@ func (k *Keeper) HandleTimeoutPacket(ctx sdk.Context, packet channeltypes.Packet
 			ValidatorAddress: data.ValidatorAddress,
 			Amount:           data.Amount,
 		}
-		ctx.EventManager().EmitTypedEvent(&event)
+		err = ctx.EventManager().EmitTypedEvent(&event)
+		if err != nil {
+			return err
+		}
 
-	case sdk.MsgTypeURL(&transfertypes.MsgTransfer{}):
+	case *transfertypes.MsgTransfer:
 		data := packetData[0].(*transfertypes.MsgTransfer)
 
 		//delegate fail event
@@ -212,35 +163,14 @@ func (k *Keeper) HandleTimeoutPacket(ctx sdk.Context, packet channeltypes.Packet
 			TimeoutHeight:    data.TimeoutHeight.String(),
 			TimeoutTimestamp: data.TimeoutTimestamp,
 		}
-		ctx.EventManager().EmitTypedEvent(&event)
+		err = ctx.EventManager().EmitTypedEvent(&event)
+		if err != nil {
+			return err
+		}
 
 	default:
 		return types.ErrMsgNotFound
 	}
 
 	return nil
-}
-
-func CheckPacketType(data sdk.Msg) string {
-	// delegate
-	if _, ok := data.(*stakingtypes.MsgDelegate); ok {
-		return sdk.MsgTypeURL(&stakingtypes.MsgDelegate{})
-	}
-
-	// undelegate
-	if _, ok := data.(*stakingtypes.MsgUndelegate); ok {
-		return sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{})
-	}
-
-	// autostaking
-	if _, ok := data.(*distributiontype.MsgWithdrawDelegatorReward); ok {
-		return sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{})
-	}
-
-	// withdraw
-	if _, ok := data.(*transfertypes.MsgTransfer); ok {
-		return sdk.MsgTypeURL(&transfertypes.MsgTransfer{})
-	}
-
-	return ""
 }

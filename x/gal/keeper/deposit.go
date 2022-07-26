@@ -66,10 +66,6 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 		return false
 	})
 
-	if totalDepositAmt.Amount.IsZero() {
-		return totalDepositAmt
-	}
-
 	return totalDepositAmt
 }
 

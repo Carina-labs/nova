@@ -152,7 +152,7 @@ func (im IBCModule) OnAcknowledgementPacket(
 		return nil
 	default:
 		for _, msgData := range txMsgData.Data {
-			response, err := im.keeper.HandleMsgData(ctx, packet, msgData)
+			response, err := im.keeper.HandleAckMsgData(ctx, packet, msgData)
 			if err != nil {
 				return err
 			}
