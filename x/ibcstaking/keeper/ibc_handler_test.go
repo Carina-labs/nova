@@ -211,7 +211,7 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			res, err := suite.App.IbcstakingKeeper.HandleMsgData(suite.Ctx, tc.packet, tc.args)
+			res, err := suite.App.IbcstakingKeeper.HandleAckMsgData(suite.Ctx, tc.packet, tc.args)
 			suite.NoError(err)
 
 			if tc.err == nil {
