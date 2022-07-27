@@ -141,17 +141,17 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 		return err
 	}
 
-	recordItems := record.Records
+	var recordItems []*types.DepositRecordContent
 
 	isDeleted := false
-	for index, item := range record.Records {
-		if item.State == int64(state) {
-			recordItems = removeIndex(recordItems, index)
-			record.Records = recordItems
+	for _, item := range record.Records {
+		if item.State != int64(state) {
+			recordItems = append(recordItems, item)
+		} else {
 			isDeleted = true
-			break
 		}
 	}
+	record.Records = recordItems
 
 	if isDeleted {
 		k.SetDepositAmt(ctx, record)
@@ -166,7 +166,6 @@ func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zoneId string) (s
 		return sdk.Coin{}, fmt.Errorf("cannot find zone id : %s", zoneId)
 	}
 
-	// TODO : channel information should be contained in zone.
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx,
 		"transfer", "channel-0", targetZoneInfo.BaseDenom)
 	res := sdk.NewInt64Coin(ibcDenom, 0)
