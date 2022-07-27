@@ -207,7 +207,3 @@ func (k Keeper) IterateDepositRecord(ctx sdk.Context, fn func(index int64, depos
 		i++
 	}
 }
-
-func removeIndex(s []*types.DepositRecordContent, index int) []*types.DepositRecordContent {
-	return append(s[:index], s[index+1:]...)
-}
