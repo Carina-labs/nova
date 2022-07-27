@@ -24,7 +24,6 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 		return sdk.Coin{}, err
 	}
 	mintAmt := k.CalculateDepositAlpha(asset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
-
 	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)))
 	if err != nil {
 		return sdk.Coin{}, err
@@ -32,7 +31,6 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 
 	// GetZoneInfo
 	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
-
 	err = k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimer, DELEGATE_SUCCESS)
 	if err != nil {
 		return sdk.Coin{}, err
@@ -56,15 +54,15 @@ func (k Keeper) CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, tot
 // after un-delegate. This function is executed when ICA un-delegate call executed,
 // and calculate using the balance of user's share coin.
 func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
-	baseAsset := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
+	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
 	totalSharedToken := k.bankKeeper.GetSupply(ctx, amt.Denom)
-	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, baseAsset)
+	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, baseDenom)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
 	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
-	return sdk.NewInt64Coin(baseAsset, withdrawAmt.Int64()), nil
+	return sdk.NewInt64Coin(baseDenom, withdrawAmt.Int64()), nil
 }
 
 // CalculateWithdrawAlpha calculates lambda value.
@@ -116,6 +114,5 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk
 	if chainBalanceWithIbcDenom.Sub(unMintedAmount).IsZero() {
 		return unMintedAmount, nil
 	}
-
 	return chainBalanceWithIbcDenom.Sub(unMintedAmount), nil
 }
