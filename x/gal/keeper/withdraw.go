@@ -59,11 +59,12 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state Undeleg
 			var withdrawRecord types.WithdrawRecord
 			withdrawRecord.ZoneId = zoneId
 			withdrawRecord.Withdrawer = undelegateInfo.Delegator
-			amt, err := k.GetWithdrawAmt(ctx, *undelegateInfo.Amount)
+			// 현재 오라클 버전으로 계산
+			withdrawAmount, err := k.GetWithdrawAmt(ctx, *undelegateInfo.Amount)
 			if err != nil {
 				return true
 			}
-			withdrawRecord.Amount = &amt
+			withdrawRecord.Amount = &withdrawAmount
 			withdrawRecord.State = int64(WITHDRAW_REGISTER)
 			withdrawRecords = append(withdrawRecords, withdrawRecord)
 		}

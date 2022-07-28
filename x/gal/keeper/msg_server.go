@@ -131,11 +131,13 @@ func (m msgServer) PendingUndelegateRecord(goCtx context.Context, undelegate *ty
 	}
 
 	undelegateInfo, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId+undelegate.Depositor)
+
 	if found {
 		undelegate.Amount = undelegate.Amount.Add(*undelegateInfo.Amount)
 	}
 
 	amt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
+
 	m.keeper.SetUndelegateRecord(ctx, types.UndelegateRecord{
 		ZoneId:    undelegate.ZoneId,
 		Delegator: undelegate.Depositor,
@@ -169,7 +171,6 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 	totalStAsset.Denom = zoneInfo.SnDenom
-
 	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {
 		// TODO: should handle if no coins to undelegate
 		return nil, errors.New("no coins to undelegate")
@@ -177,22 +178,24 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
 
+	// undelegate할때 oracle 버전에 맞춰서 출금 개수 저장
 	var msgs []sdk.Msg
-	undelegateAmount, err := m.keeper.GetWithdrawAmt(ctx, totalStAsset)
 
 	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
 		sdk.Coins{sdk.Coin{Denom: totalStAsset.Denom, Amount: totalStAsset.Amount}}); err != nil {
 		return nil, err
 	}
 
-	if err != nil {
-		return nil, err
+	undelegateAmount := sdk.Coin{
+		Amount: totalStAsset.Amount,
+		Denom:  zoneInfo.BaseDenom,
 	}
+
 	msgs = append(msgs, &stakingtype.MsgUndelegate{
 		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
 		Amount:           undelegateAmount})
-	err = m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
