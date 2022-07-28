@@ -160,14 +160,14 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	return nil
 }
 
-func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zoneId string) (sdk.Coin, error) {
+func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zoneId, transferPortId, transferChanId string) (sdk.Coin, error) {
 	targetZoneInfo, ok := k.ibcstakingKeeper.GetRegisteredZone(ctx, zoneId)
 	if !ok {
 		return sdk.Coin{}, fmt.Errorf("cannot find zone id : %s", zoneId)
 	}
 
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx,
-		"transfer", "channel-0", targetZoneInfo.BaseDenom)
+		transferPortId, transferChanId, targetZoneInfo.BaseDenom)
 	res := sdk.NewInt64Coin(ibcDenom, 0)
 	k.IterateDepositRecord(ctx, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
 		if depositRecord.ZoneId != zoneId {

@@ -10,7 +10,7 @@ import (
 
 // ClaimAndMintShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
-func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, asset sdk.Coin) (sdk.Coin, error) {
+func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, asset sdk.Coin, transferPortId, transferChanId string) (sdk.Coin, error) {
 	snDenom, err := k.GetsnDenomForIBCDenom(ctx, asset.Denom)
 	if err != nil {
 		return sdk.Coin{}, err
@@ -19,7 +19,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
 
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
-	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom)
+	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, transferPortId, transferChanId)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -89,7 +89,7 @@ func (k Keeper) GetsnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string,
 	return snDenom, nil
 }
 
-func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk.Coin, error) {
+func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPortId, transferChanId string) (sdk.Coin, error) {
 	zone := k.ibcstakingKeeper.GetZoneForDenom(ctx, denom)
 	if zone == nil {
 		return sdk.Coin{}, fmt.Errorf("cannot find zone denom : %s", denom)
@@ -100,12 +100,12 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom string) (sdk
 		return sdk.Coin{}, fmt.Errorf("cannot find zone denom in oracle : %s", denom)
 	}
 
-	unMintedAmount, err := k.GetAllAmountNotMintShareToken(ctx, zone.ZoneId)
+	unMintedAmount, err := k.GetAllAmountNotMintShareToken(ctx, zone.ZoneId, transferPortId, transferChanId)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
-	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, "transfer", "channel-0", denom)
+	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChanId, denom)
 	chainBalanceWithIbcDenom := sdk.Coin{
 		Denom:  ibcDenom,
 		Amount: chainInfo.Coin.Amount,

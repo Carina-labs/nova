@@ -178,7 +178,6 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
 
-	// undelegate할때 oracle 버전에 맞춰서 출금 개수 저장
 	var msgs []sdk.Msg
 
 	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
@@ -327,7 +326,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		}
 	}
 
-	minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, totalClaimAsset)
+	minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, totalClaimAsset, claimMsg.TransferPortId, claimMsg.TransferChannelId)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
 			"account: %s", claimMsg.Claimer)

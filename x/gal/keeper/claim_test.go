@@ -186,7 +186,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 			}
 
 			// execute
-			res, err := suite.App.GalKeeper.GetTotalStakedForLazyMinting(suite.Ctx, "stake")
+			res, err := suite.App.GalKeeper.GetTotalStakedForLazyMinting(suite.Ctx, "stake", "transfer", "channel-0")
 
 			// verify
 			suite.Require().NoError(err)
