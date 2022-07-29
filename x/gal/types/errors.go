@@ -12,4 +12,5 @@ var (
 	ErrInvalidTime         = errors.Register(ModuleName, 6, "time is not zero")
 	ErrCanNotChangeState   = errors.Register(ModuleName, 7, "cannot change state")
 	ErrDelegateFail        = errors.Register(ModuleName, 8, "delegate fail")
+	ErrInvalidDenom        = errors.Register(ModuleName, 9, "invalid denom")
 )

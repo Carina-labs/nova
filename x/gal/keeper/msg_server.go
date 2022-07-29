@@ -41,6 +41,10 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
+	if deposit.Amount.Denom != m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, deposit.TransferPortId, deposit.TransferChannelId, zoneInfo.BaseDenom) {
+		return nil, types.ErrInvalidDenom
+	}
+
 	newRecord := &types.DepositRecordContent{
 		Amount: &deposit.Amount,
 		State:  int64(DEPOSIT_REQUEST),
