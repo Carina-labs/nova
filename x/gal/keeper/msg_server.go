@@ -332,8 +332,6 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
-	// Delete Deposit record
-
 	return &types.MsgClaimSnAssetResponse{
 		Claimer: claimMsg.Claimer,
 		Minted:  minted,

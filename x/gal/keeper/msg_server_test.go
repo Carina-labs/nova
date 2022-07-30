@@ -1,25 +1,25 @@
 package keeper_test
 
 import (
-	// "fmt"
-	// "time"
+	// 	"fmt"
+	// 	"time"
 
-	// novatesting "github.com/Carina-labs/nova/testing"
-	// "github.com/Carina-labs/nova/x/gal/keeper"
-	// "github.com/Carina-labs/nova/x/gal/types"
-	// ibcstakingkeeper "github.com/Carina-labs/nova/x/ibcstaking/keeper"
-	// ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
-	// oracletypes "github.com/Carina-labs/nova/x/oracle/types"
-	// sdk "github.com/cosmos/cosmos-sdk/types"
-	// stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
-	// stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	// icahosttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
-	// icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
+	// 	novatesting "github.com/Carina-labs/nova/testing"
+	// 	"github.com/Carina-labs/nova/x/gal/keeper"
+	// 	"github.com/Carina-labs/nova/x/gal/types"
+	// 	ibcstakingkeeper "github.com/Carina-labs/nova/x/ibcstaking/keeper"
+	// 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
+	// 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
+	// 	sdk "github.com/cosmos/cosmos-sdk/types"
+	// 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
+	// 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	// 	icahosttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
+	// 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	// clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
-	// channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	// host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
-	// ibctesting "github.com/cosmos/ibc-go/v3/testing"
+	// 	clienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	// 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
+	// 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
+	// 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 )
 
 // type oracleSet struct {
@@ -312,6 +312,7 @@ import (
 // 	})
 
 // 	valAcc, err := sdk.ValAddressFromHex(suite.chainB.Vals.Validators[0].Address.String())
+// 	suite.NoError(err)
 // 	validatorInfo, _ := suite.chainB.App.StakingKeeper.GetValidator(suite.chainB.GetContext(), valAcc)
 // 	suite.chainA.App.OracleKeeper.InitGenesis(suite.chainA.GetContext(), &oracletypes.GenesisState{
 // 		Params: oracletypes.Params{
@@ -388,6 +389,7 @@ import (
 // 	hostBalance := suite.chainB.App.BankKeeper.GetBalance(suite.chainB.GetContext(), hostAcc, "stake")
 // 	fmt.Printf("host balance: %s\n", hostBalance)
 // 	err = simulateIcaStaking(suite, icaConfig.icaHostAddress, valAcc.String(), hostBalance)
+// 	fmt.Println()
 // 	suite.Require().NoError(err)
 
 // 	err = suite.icaPath.EndpointB.UpdateClient()
