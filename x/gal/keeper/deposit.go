@@ -142,18 +142,16 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	}
 
 	var recordItems []*types.DepositRecordContent
-
-	isDeleted := false
 	for _, item := range record.Records {
 		if item.State != int64(state) {
 			recordItems = append(recordItems, item)
-		} else {
-			isDeleted = true
 		}
 	}
 	record.Records = recordItems
 
+	isDeleted := len(record.Records) != len(recordItems)
 	if isDeleted {
+		record.Records = recordItems
 		k.SetDepositAmt(ctx, record)
 	}
 
