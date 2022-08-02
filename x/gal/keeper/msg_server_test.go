@@ -25,7 +25,7 @@ import (
 // type oracleSet struct {
 // 	operators []string
 // 	state     sdk.Coin
-// 	decimal   uint64
+// 	decimal   uint32
 // }
 
 // type icaConfig struct {
@@ -91,9 +91,8 @@ import (
 // 				Decimal:         initSet.oracle.decimal,
 // 				OperatorAddress: initSet.oracle.operators[0],
 // 				LastBlockHeight: 100,
-// 				AppHash:         "",
+// 				AppHash:         []byte(""),
 // 				ChainId:         hostId,
-// 				BlockProposer:   "",
 // 			},
 // 		},
 // 	})
@@ -190,7 +189,7 @@ import (
 
 // 			// claim share token
 // 			record, err := suite.chainA.App.GalKeeper.GetRecordedDepositAmt(suite.chainA.GetContext(), depositMsg.ZoneId, userAcc)
-// 			_, err = suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), userAcc, *record.Records[0].Amount)
+// 			_, err = suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), userAcc, *record.Records[0].Amount, "transfer", "channel-0")
 // 			snBalance := suite.chainA.App.BankKeeper.GetBalance(
 // 				suite.chainA.GetContext(), userAcc, baseSnDenom)
 // 			suite.Require().True(sdk.NewInt64Coin(baseSnDenom, tc.expect.snMinting).IsEqual(snBalance))
@@ -200,7 +199,7 @@ import (
 // 			suite.verifyStakingCorrectlyExecuted(validator.OperatorAddress, tc.expect.validatorBalance)
 
 // 			// simulate undelegate
-// 			_, err = msgServer.UndelegateRecord(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgUndelegateRecord{
+// 			_, err = msgServer.PendingUndelegateRecord(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgPendingUndelegateRecord{
 // 				ZoneId:    hostId,
 // 				Depositor: userAcc.String(),
 // 				Amount:    snBalance,
@@ -209,7 +208,7 @@ import (
 // 			// execute : undelegate
 // 			executedCtx = suite.chainA.GetContext()
 // 			goCtx = sdk.WrapSDKContext(executedCtx)
-// 			_, err = msgServer.GalUndelegate(goCtx, &types.MsgGalUndelegate{
+// 			_, err = msgServer.Undelegate(goCtx, &types.MsgUndelegate{
 // 				ZoneId:            hostId,
 // 				ControllerAddress: baseOwnerAcc.String(),
 // 			})
@@ -280,11 +279,11 @@ import (
 
 // 			// execute : withdraw
 // 			_, err = msgServer.Withdraw(sdk.WrapSDKContext(suite.chainA.GetContext()), &types.MsgWithdraw{
-// 				ZoneId:            hostId,
-// 				Withdrawer:        tc.initSet.userAddress,
-// 				Recipient:         tc.initSet.userAddress,
-// 				TransferPortId:    transferPort,
-// 				TransferChannelId: transferChannel,
+// 				ZoneId:               hostId,
+// 				Withdrawer:           tc.initSet.userAddress,
+// 				Recipient:            tc.initSet.userAddress,
+// 				IcaTransferPortId:    transferPort,
+// 				IcaTransferChannelId: transferChannel,
 // 			})
 // 			suite.Require().NoError(err)
 
@@ -313,6 +312,7 @@ import (
 // 	})
 
 // 	valAcc, err := sdk.ValAddressFromHex(suite.chainB.Vals.Validators[0].Address.String())
+// 	suite.NoError(err)
 // 	validatorInfo, _ := suite.chainB.App.StakingKeeper.GetValidator(suite.chainB.GetContext(), valAcc)
 // 	suite.chainA.App.OracleKeeper.InitGenesis(suite.chainA.GetContext(), &oracletypes.GenesisState{
 // 		Params: oracletypes.Params{
@@ -389,6 +389,7 @@ import (
 // 	hostBalance := suite.chainB.App.BankKeeper.GetBalance(suite.chainB.GetContext(), hostAcc, "stake")
 // 	fmt.Printf("host balance: %s\n", hostBalance)
 // 	err = simulateIcaStaking(suite, icaConfig.icaHostAddress, valAcc.String(), hostBalance)
+// 	fmt.Println()
 // 	suite.Require().NoError(err)
 
 // 	err = suite.icaPath.EndpointB.UpdateClient()
@@ -405,15 +406,15 @@ import (
 // 	})
 
 // 	// claim share token
-// 	minted1, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver1.GetAddress(), *record1.Records[0].Amount)
+// 	minted1, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver1.GetAddress(), *record1.Records[0].Amount, "transfer", "channel-0")
 // 	shareTokenSupply := suite.chainA.App.BankKeeper.GetSupply(suite.chainA.GetContext(), "snstake")
 // 	fmt.Printf("minted1: %s (total: %s)\n", minted1.String(), shareTokenSupply.String())
 // 	suite.Require().NoError(err)
-// 	minted2, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver2.GetAddress(), *record2.Records[0].Amount)
+// 	minted2, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver2.GetAddress(), *record2.Records[0].Amount, "transfer", "channel-0")
 // 	shareTokenSupply = suite.chainA.App.BankKeeper.GetSupply(suite.chainA.GetContext(), "snstake")
 // 	fmt.Printf("minted2: %s (total: %s)\n", minted2.String(), shareTokenSupply.String())
 // 	suite.Require().NoError(err)
-// 	minted3, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver3.GetAddress(), *record3.Records[0].Amount)
+// 	minted3, err := suite.chainA.App.GalKeeper.ClaimAndMintShareToken(suite.chainA.GetContext(), receiver3.GetAddress(), *record3.Records[0].Amount, "transfer", "channel-0")
 // 	shareTokenSupply = suite.chainA.App.BankKeeper.GetSupply(suite.chainA.GetContext(), "snstake")
 // 	fmt.Printf("minted3: %s (total: %s)\n", minted3.String(), shareTokenSupply.String())
 // 	suite.Require().NoError(err)

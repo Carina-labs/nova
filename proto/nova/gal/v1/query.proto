@@ -77,8 +77,10 @@ message QueryUndelegateHistoryRequest {
 
 message QueryUndelegateHistoryResponse {
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  repeated cosmos.base.v1beta1.Coin amount = 2
+  repeated cosmos.base.v1beta1.Coin burned_sn_asset = 2
     [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+  repeated cosmos.base.v1beta1.Coin minted_w_asset = 3
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
 message QueryWithdrawHistoryRequest {

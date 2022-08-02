@@ -30,7 +30,6 @@ func (k *Keeper) HandleMsgData(ctx sdk.Context, packet channeltypes.Packet, msgD
 			return "", err
 		}
 
-		ctx.Logger().Info("DelegateHandler", "delegateMsg", delegateMsg)
 		k.AfterDelegateEnd(ctx, *delegateMsg)
 		return "", nil
 	case sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}): // undelegate

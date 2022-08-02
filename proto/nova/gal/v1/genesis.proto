@@ -54,8 +54,9 @@ message WithdrawInfo {
 message UndelegateRecord {
   string zone_id = 1;
   string delegator = 2;
-  cosmos.base.v1beta1.Coin amount = 3;
-  int64 state = 4;
+  cosmos.base.v1beta1.Coin sn_asset_amount = 3;
+  cosmos.base.v1beta1.Coin withdraw_amount = 4;
+  int64 state = 5;
 }
 
 message WithdrawRecord {
