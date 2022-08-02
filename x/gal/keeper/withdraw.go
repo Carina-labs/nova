@@ -59,12 +59,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state Undeleg
 			var withdrawRecord types.WithdrawRecord
 			withdrawRecord.ZoneId = zoneId
 			withdrawRecord.Withdrawer = undelegateInfo.Delegator
-			// 현재 오라클 버전으로 계산
-			withdrawAmount, err := k.GetWithdrawAmt(ctx, *undelegateInfo.Amount)
-			if err != nil {
-				return true
-			}
-			withdrawRecord.Amount = &withdrawAmount
+			withdrawRecord.Amount = undelegateInfo.WithdrawAmount
 			withdrawRecord.State = int64(WITHDRAW_REGISTER)
 			withdrawRecords = append(withdrawRecords, withdrawRecord)
 		}
@@ -145,8 +140,9 @@ func (k Keeper) UndelegateHistory(goCtx context.Context, rq *types.QueryUndelega
 	}
 
 	return &types.QueryUndelegateHistoryResponse{
-		Address: rq.Address,
-		Amount:  sdk.NewCoins(*udInfo.Amount),
+		Address:       rq.Address,
+		BurnedSnAsset: sdk.NewCoins(*udInfo.SnAssetAmount),
+		MintedWAsset:  sdk.NewCoins(*udInfo.WithdrawAmount),
 	}, nil
 }
 

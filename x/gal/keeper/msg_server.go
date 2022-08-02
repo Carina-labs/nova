@@ -132,23 +132,32 @@ func (m msgServer) PendingUndelegateRecord(goCtx context.Context, undelegate *ty
 
 	undelegateInfo, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId+undelegate.Depositor)
 
+	// cal withdrawAmt
+	withdrawAmt, err := m.keeper.GetWithdrawAmt(ctx, undelegate.Amount)
+	if err != nil {
+		return nil, err
+	}
+
 	if found {
-		undelegate.Amount = undelegate.Amount.Add(*undelegateInfo.Amount)
+		undelegate.Amount = undelegate.Amount.Add(*undelegateInfo.SnAssetAmount)
+		withdrawAmt = undelegateInfo.WithdrawAmount.Add(withdrawAmt)
 	}
 
 	amt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
 
 	m.keeper.SetUndelegateRecord(ctx, types.UndelegateRecord{
-		ZoneId:    undelegate.ZoneId,
-		Delegator: undelegate.Depositor,
-		Amount:    &amt,
-		State:     int64(UNDELEGATE_REQUEST_USER),
+		ZoneId:         undelegate.ZoneId,
+		Delegator:      undelegate.Depositor,
+		WithdrawAmount: &withdrawAmt,
+		SnAssetAmount:  &amt,
+		State:          int64(UNDELEGATE_REQUEST_USER),
 	})
 
 	return &types.MsgPendingUndelegateRecordResponse{
-		ZoneId: undelegate.ZoneId,
-		User:   undelegate.Depositor,
-		Amount: amt,
+		ZoneId:          undelegate.ZoneId,
+		User:            undelegate.Depositor,
+		BurnAsset:       amt,
+		UndelegateAsset: withdrawAmt,
 	}, nil
 }
 
@@ -168,41 +177,36 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("zone is not found")
 	}
 
-	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
-	totalStAsset := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
-	totalStAsset.Denom = zoneInfo.SnDenom
-	if totalStAsset.Amount.Equal(sdk.NewInt(0)) {
+	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.BaseDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_USER)
+
+	if burnAssets.Amount.Equal(sdk.NewInt(0)) || undelegateAssets.Amount.Equal(sdk.NewInt(0)) {
 		// TODO: should handle if no coins to undelegate
 		return nil, errors.New("no coins to undelegate")
 	}
 
-	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_ICA)
+	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_USER)
 
 	var msgs []sdk.Msg
-
-	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
-		sdk.Coins{sdk.Coin{Denom: totalStAsset.Denom, Amount: totalStAsset.Amount}}); err != nil {
-		return nil, err
-	}
-
-	undelegateAmount := sdk.Coin{
-		Amount: totalStAsset.Amount,
-		Denom:  zoneInfo.BaseDenom,
-	}
 
 	msgs = append(msgs, &stakingtype.MsgUndelegate{
 		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
-		Amount:           undelegateAmount})
+		Amount:           undelegateAssets})
 	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
 	}
 
+	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
+		sdk.Coins{sdk.Coin{Denom: burnAssets.Denom, Amount: burnAssets.Amount}}); err != nil {
+		return nil, err
+	}
+
 	return &types.MsgUndelegateResponse{
-		ZoneId:            zoneInfo.ZoneId,
-		UndelegatedAmount: undelegateAmount,
+		ZoneId:               zoneInfo.ZoneId,
+		TotalBurnAsset:       burnAssets,
+		TotalUndelegateAsset: undelegateAssets,
 	}, nil
 }
 
