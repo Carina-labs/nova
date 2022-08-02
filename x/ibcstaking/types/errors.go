@@ -7,4 +7,6 @@ import (
 var (
 	ErrIBCAccountAlreadyExist = sdkerrors.Register(ModuleName, 2, "interchain account already registered")
 	ErrIBCAccountNotExist     = sdkerrors.Register(ModuleName, 3, "interchain account not exist")
+	ErrMsgNotFound            = sdkerrors.Register(ModuleName, 4, "message not found ")
+	ErrMsgNotNil              = sdkerrors.Register(ModuleName, 5, "message is not nil")
 )

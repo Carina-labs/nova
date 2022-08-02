@@ -1,0 +1,54 @@
+syntax = "proto3";
+package nova.ibcstaking.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "nova/ibcstaking/v1/params.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/ibcstaking/types";
+
+message EventDelegateFail {
+  string msg_type_url = 1;
+  string delegator_address = 2;
+  string validator_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4 [
+        (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+        (gogoproto.nullable) = false
+    ];
+}
+
+message EventUndelegateFail {
+  string msg_type_url = 1;
+  string delegator_address = 2;
+  string validator_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4 [
+        (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+        (gogoproto.nullable) = false
+    ];
+}
+
+message EventAutostakingFail {
+    string msg_type_url = 1;
+    string delegator_address = 2;
+    string validator_address = 3;
+    cosmos.base.v1beta1.Coin amount = 4 [
+        (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+        (gogoproto.nullable) = false
+    ];
+}
+
+message EventTransferFail {
+  option (gogoproto.equal)           = false;
+  option (gogoproto.goproto_getters) = false;
+
+  string msg_type_url = 1;
+  string source_port = 2;
+  string source_channel = 3;
+  cosmos.base.v1beta1.Coin token = 4 [(gogoproto.nullable) = false];
+  string sender = 5;
+  string receiver = 6;
+  string timeout_height = 7;
+  uint64 timeout_timestamp = 8;
+}
+
