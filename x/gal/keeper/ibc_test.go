@@ -13,6 +13,11 @@ import (
 )
 
 var (
+	transferChannel    = "channel-0"
+	transferConnection = "connection-0"
+	transferPort       = "transfer"
+	icaConnection      = "connection-1"
+
 	baseDenom    = "unova"
 	baseIbcDenom = ParseAddressToIbcAddress(transferPort, transferChannel, baseDenom)
 	baseAcc      = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
@@ -25,11 +30,6 @@ var (
 	hostId        = "cosmos-1"
 	hostBaseDenom = "stake"
 	hostIbcDenom  = ParseAddressToIbcAddress(transferPort, transferChannel, hostBaseDenom)
-
-	transferChannel    = "channel-0"
-	transferConnection = "connection-0"
-	transferPort       = "transfer"
-	icaConnection      = "connection-1"
 
 	undelegateMsgName  = "/cosmos.staking.v1beta1.MsgUndelegate"
 	ibcTransferMsgName = "/ibc.applications.transfer.v1.MsgTransfer"

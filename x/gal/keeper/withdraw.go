@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"time"
 
@@ -21,12 +22,19 @@ func (k Keeper) getWithdrawRecordStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
 }
 
+// SetWithdrawRecord writes withdraw record.
+func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) {
+	store := k.getWithdrawRecordStore(ctx)
+	bz := k.cdc.MustMarshal(&record)
+	store.Set([]byte(record.ZoneId+record.Withdrawer), bz)
+}
+
 // GetWithdrawRecord returns withdraw record item by key.
-func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*types.WithdrawRecord, error) {
+func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*types.WithdrawRecord, bool) {
 	store := k.getWithdrawRecordStore(ctx)
 	keyBytes := []byte(zoneId + withdrawer)
 	if !store.Has(keyBytes) {
-		return nil, types.ErrNoWithdrawRecord
+		return nil, false
 	}
 
 	res := store.Get(keyBytes)
@@ -34,14 +42,7 @@ func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*
 	var withdrawRecord types.WithdrawRecord
 	k.cdc.MustUnmarshal(res, &withdrawRecord)
 
-	return &withdrawRecord, nil
-}
-
-// SetWithdrawRecord writes withdraw record.
-func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) {
-	store := k.getWithdrawRecordStore(ctx)
-	bz := k.cdc.MustMarshal(&record)
-	store.Set([]byte(record.ZoneId+record.Withdrawer), bz)
+	return &withdrawRecord, true
 }
 
 // DeleteWithdrawRecord removes withdraw record.
@@ -50,37 +51,131 @@ func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw types.WithdrawRec
 	store.Delete([]byte(withdraw.ZoneId + withdraw.Withdrawer))
 }
 
-// SetWithdrawRecords write multiple withdraw record.
-func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, state UndelegatedState) {
-	var withdrawRecords []types.WithdrawRecord
-
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
-		if undelegateInfo.ZoneId == zoneId && undelegateInfo.State == int64(state) {
-			var withdrawRecord types.WithdrawRecord
-			withdrawRecord.ZoneId = zoneId
-			withdrawRecord.Withdrawer = undelegateInfo.Delegator
-			withdrawRecord.Amount = undelegateInfo.WithdrawAmount
-			withdrawRecord.State = int64(WITHDRAW_REGISTER)
-			withdrawRecords = append(withdrawRecords, withdrawRecord)
-		}
-		return false
-	})
-	if len(withdrawRecords) > 0 {
-		for _, wr := range withdrawRecords {
-			k.SetWithdrawRecord(ctx, wr)
-		}
-	}
+func (k Keeper) GetWithdrawVersionStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawVersion)
 }
 
-// SetWithdrawTime writes the time undelegate finish.
-func (k Keeper) SetWithdrawTime(ctx sdk.Context, zoneId string, state WithdrawRegisterType, time time.Time) {
-	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
-		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == int64(state) {
-			withdrawInfo.CompletionTime = time
-			k.SetWithdrawRecord(ctx, withdrawInfo)
+func (k Keeper) SetWithdrawVersion(ctx sdk.Context, zoneId string, version uint64) {
+	store := k.GetWithdrawVersionStore(ctx)
+	key := zoneId
+	bz := make([]byte, 8)
+	binary.BigEndian.PutUint64(bz, version)
+	store.Set([]byte(key), bz)
+}
+
+func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) uint64 {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawVersion)
+	key := []byte(zoneId)
+	bz := store.Get(key)
+
+	if bz == nil {
+		return 0
+	}
+
+	return binary.BigEndian.Uint64(bz)
+}
+
+func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state WithdrawRegisterType, version uint64) bool {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawRecord types.WithdrawRecord) (stop bool) {
+		if withdrawRecord.ZoneId == zoneId {
+			isChanged := false
+			for _, record := range withdrawRecord.Records {
+				if record.State == int64(state) {
+					isChanged = true
+					record.WithdrawVersion = version
+				}
+			}
+			if isChanged {
+				k.SetWithdrawRecord(ctx, withdrawRecord)
+			}
 		}
 		return false
 	})
+
+	return true
+}
+
+// SetWithdrawRecords write multiple withdraw record.
+func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Time) {
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
+		if undelegateInfo.ZoneId == zoneId {
+			for _, items := range undelegateInfo.Records {
+				if items.State == int64(UNDELEGATE_REQUEST_ICA) {
+					withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, items.Withdrawer)
+					if !found {
+						withdrawRecord = &types.WithdrawRecord{
+							ZoneId:     zoneId,
+							Withdrawer: items.Withdrawer,
+						}
+						withdrawRecord.Records = make(map[uint64]*types.WithdrawRecordContent)
+
+					}
+
+					withdrawRecordContent, found := withdrawRecord.Records[items.UndelegateVersion]
+
+					if !found {
+						withdrawRecordContent = &types.WithdrawRecordContent{
+							State:           int64(WITHDRAW_REGISTER),
+							WithdrawVersion: items.UndelegateVersion,
+							Amount: &sdk.Coin{
+								Amount: items.WithdrawAmount.Amount,
+								Denom:  items.WithdrawAmount.Denom,
+							},
+							CompletionTime: time,
+						}
+
+					} else {
+						*withdrawRecordContent.Amount = withdrawRecordContent.Amount.Add(*items.WithdrawAmount)
+					}
+					withdrawRecord.Records[items.UndelegateVersion] = withdrawRecordContent
+
+					k.SetWithdrawRecord(ctx, *withdrawRecord)
+				}
+
+			}
+
+		}
+		return false
+	})
+}
+
+func (k Keeper) GetWithdrawAmontForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
+	amount := sdk.Coin{
+		Amount: sdk.NewInt(0),
+		Denom:  denom,
+	}
+
+	withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, withdrawer)
+	if !found {
+		return amount
+	}
+
+	for _, record := range withdrawRecord.Records {
+		if record.State == int64(TRANSFER_SUCCESS) {
+			amount = amount.Add(*record.Amount)
+		}
+	}
+
+	return amount
+}
+
+func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {
+	amount := sdk.Coin{
+		Amount: sdk.NewInt(0),
+		Denom:  denom,
+	}
+
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+		if withdrawInfo.ZoneId == zoneId {
+			for _, record := range withdrawInfo.Records {
+				if record.CompletionTime.Before(blockTime) {
+					amount = amount.Add(*record.Amount)
+				}
+			}
+		}
+		return false
+	})
+	return amount
 }
 
 // ClaimWithdrawAsset is used when user want to claim their asset which is after undeleagted.
@@ -128,66 +223,41 @@ func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, wit
 }
 
 func (k Keeper) UndelegateHistory(goCtx context.Context, rq *types.QueryUndelegateHistoryRequest) (*types.QueryUndelegateHistoryResponse, error) {
-	sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
-	if zoneInfo == nil {
-		return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
-	}
+	// sdkCtx := sdk.UnwrapSDKContext(goCtx)
+	// zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
+	// if zoneInfo == nil {
+	// 	return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
+	// }
 
-	udInfo, ok := k.GetUndelegateRecord(sdkCtx, zoneInfo.ZoneId+rq.Address)
-	if !ok {
-		return nil, fmt.Errorf("there is no undelegate data for address: %s, denom: %s", rq.Address, rq.Denom)
-	}
+	// udInfo, ok := k.GetUndelegateRecord(sdkCtx, zoneInfo.ZoneId+rq.Address)
+	// if !ok {
+	// 	return nil, fmt.Errorf("there is no undelegate data for address: %s, denom: %s", rq.Address, rq.Denom)
+	// }
 
-	return &types.QueryUndelegateHistoryResponse{
-		Address:       rq.Address,
-		BurnedSnAsset: sdk.NewCoins(*udInfo.SnAssetAmount),
-		MintedWAsset:  sdk.NewCoins(*udInfo.WithdrawAmount),
-	}, nil
+	return &types.QueryUndelegateHistoryResponse{}, nil
 }
 
 func (k Keeper) WithdrawHistory(goCtx context.Context, rq *types.QueryWithdrawHistoryRequest) (*types.QueryWithdrawHistoryResponse, error) {
-	sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
-	if zoneInfo == nil {
-		return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
-	}
+	// sdkCtx := sdk.UnwrapSDKContext(goCtx)
+	// zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
+	// if zoneInfo == nil {
+	// 	return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
+	// }
 
-	// TODO : why GetWithdrawRecord returns error, not bool?
-	wdInfo, err := k.GetWithdrawRecord(sdkCtx, zoneInfo.ZoneId, rq.Address)
-	if err != nil {
-		return nil, err
-	}
+	// wdInfo, found := k.GetWithdrawRecord(sdkCtx, zoneInfo.ZoneId, rq.Address)
+	// if !found {
+	// 	return nil, types.ErrNoWithdrawRecord
+	// }
 
-	return &types.QueryWithdrawHistoryResponse{
-		Address: rq.Address,
-		Amount:  sdk.NewCoins(*wdInfo.Amount),
-	}, nil
-}
-
-func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId string, blockTime time.Time) sdk.Coin {
-	amount := sdk.Coin{
-		Amount: sdk.NewIntFromUint64(0),
-	}
-
-	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
-		if amount.Denom == "" {
-			amount.Denom = withdrawInfo.Amount.Denom
-		}
-		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == int64(WITHDRAW_REGISTER) {
-			if withdrawInfo.CompletionTime.Before(blockTime) {
-				amount = amount.AddAmount(withdrawInfo.Amount.Amount)
-			}
-		}
-		return false
-	})
-	return amount
+	return &types.QueryWithdrawHistoryResponse{}, nil
 }
 
 func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState WithdrawRegisterType) {
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
-		if withdrawInfo.ZoneId == zoneId && withdrawInfo.State == int64(preState) {
-			withdrawInfo.State = int64(postState)
+		for _, record := range withdrawInfo.Records {
+			if record.State == int64(preState) {
+				record.State = int64(postState)
+			}
 			k.SetWithdrawRecord(ctx, withdrawInfo)
 		}
 		return false

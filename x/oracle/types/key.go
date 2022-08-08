@@ -6,3 +6,7 @@ const (
 	RouterKey    = ModuleName
 	QuerierRoute = ModuleName
 )
+
+var (
+	KeyOracleVersion = []byte{0x00}
+)

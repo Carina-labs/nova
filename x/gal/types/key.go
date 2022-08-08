@@ -29,8 +29,7 @@ var (
 	// KeyWithdrawInfo defines key to store withdraw information of snTokens.
 	KeyWithdrawInfo = []byte{0x07}
 
-	KeyDepositor = "depositor"
-	KeyDenom     = "denom"
-	KeyAmount    = "amount"
-	KeyCoin      = "coin"
+	KeyDelegateVersion   = []byte{0x08}
+	KeyUndelegateVersion = []byte{0x09}
+	KeyWithdrawVersion   = []byte{0x1}
 )

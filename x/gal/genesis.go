@@ -9,6 +9,12 @@ import (
 // InitGenesis initializes the gal module's state from a given genesis state.
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState *types.GenesisState) {
 	k.SetParams(ctx, genState.Params)
+
+	for _, zone := range genState.RecordInfo {
+		k.SetDelegateVersion(ctx, zone.ZoneId, zone.DelegateVersion)
+		k.SetUndelegateVersion(ctx, zone.ZoneId, zone.UndelegateVersion)
+		k.SetWithdrawVersion(ctx, zone.ZoneId, zone.WithdrawVersion)
+	}
 }
 
 // ExportGenesis returns the gal module's genesis state.

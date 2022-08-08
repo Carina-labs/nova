@@ -25,7 +25,7 @@ type MsgClient interface {
 	Deposit(ctx context.Context, in *MsgDeposit, opts ...grpc.CallOption) (*MsgDepositResponse, error)
 	Delegate(ctx context.Context, in *MsgDelegate, opts ...grpc.CallOption) (*MsgDelegateResponse, error)
 	Undelegate(ctx context.Context, in *MsgUndelegate, opts ...grpc.CallOption) (*MsgUndelegateResponse, error)
-	PendingUndelegateRecord(ctx context.Context, in *MsgPendingUndelegateRecord, opts ...grpc.CallOption) (*MsgPendingUndelegateRecordResponse, error)
+	PendingUndelegate(ctx context.Context, in *MsgPendingUndelegate, opts ...grpc.CallOption) (*MsgPendingUndelegateResponse, error)
 	Withdraw(ctx context.Context, in *MsgWithdraw, opts ...grpc.CallOption) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts ...grpc.CallOption) (*MsgClaimSnAssetResponse, error)
 	PendingWithdraw(ctx context.Context, in *MsgPendingWithdraw, opts ...grpc.CallOption) (*MsgPendingWithdrawResponse, error)
@@ -66,9 +66,9 @@ func (c *msgClient) Undelegate(ctx context.Context, in *MsgUndelegate, opts ...g
 	return out, nil
 }
 
-func (c *msgClient) PendingUndelegateRecord(ctx context.Context, in *MsgPendingUndelegateRecord, opts ...grpc.CallOption) (*MsgPendingUndelegateRecordResponse, error) {
-	out := new(MsgPendingUndelegateRecordResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/PendingUndelegateRecord", in, out, opts...)
+func (c *msgClient) PendingUndelegate(ctx context.Context, in *MsgPendingUndelegate, opts ...grpc.CallOption) (*MsgPendingUndelegateResponse, error) {
+	out := new(MsgPendingUndelegateResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/PendingUndelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ type MsgServer interface {
 	Deposit(context.Context, *MsgDeposit) (*MsgDepositResponse, error)
 	Delegate(context.Context, *MsgDelegate) (*MsgDelegateResponse, error)
 	Undelegate(context.Context, *MsgUndelegate) (*MsgUndelegateResponse, error)
-	PendingUndelegateRecord(context.Context, *MsgPendingUndelegateRecord) (*MsgPendingUndelegateRecordResponse, error)
+	PendingUndelegate(context.Context, *MsgPendingUndelegate) (*MsgPendingUndelegateResponse, error)
 	Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error)
 	PendingWithdraw(context.Context, *MsgPendingWithdraw) (*MsgPendingWithdrawResponse, error)
@@ -129,8 +129,8 @@ func (UnimplementedMsgServer) Delegate(context.Context, *MsgDelegate) (*MsgDeleg
 func (UnimplementedMsgServer) Undelegate(context.Context, *MsgUndelegate) (*MsgUndelegateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Undelegate not implemented")
 }
-func (UnimplementedMsgServer) PendingUndelegateRecord(context.Context, *MsgPendingUndelegateRecord) (*MsgPendingUndelegateRecordResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PendingUndelegateRecord not implemented")
+func (UnimplementedMsgServer) PendingUndelegate(context.Context, *MsgPendingUndelegate) (*MsgPendingUndelegateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PendingUndelegate not implemented")
 }
 func (UnimplementedMsgServer) Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Withdraw not implemented")
@@ -208,20 +208,20 @@ func _Msg_Undelegate_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_PendingUndelegateRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgPendingUndelegateRecord)
+func _Msg_PendingUndelegate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgPendingUndelegate)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).PendingUndelegateRecord(ctx, in)
+		return srv.(MsgServer).PendingUndelegate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Msg/PendingUndelegateRecord",
+		FullMethod: "/nova.gal.v1.Msg/PendingUndelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).PendingUndelegateRecord(ctx, req.(*MsgPendingUndelegateRecord))
+		return srv.(MsgServer).PendingUndelegate(ctx, req.(*MsgPendingUndelegate))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -300,8 +300,8 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_Undelegate_Handler,
 		},
 		{
-			MethodName: "PendingUndelegateRecord",
-			Handler:    _Msg_PendingUndelegateRecord_Handler,
+			MethodName: "PendingUndelegate",
+			Handler:    _Msg_PendingUndelegate_Handler,
 		},
 		{
 			MethodName: "Withdraw",

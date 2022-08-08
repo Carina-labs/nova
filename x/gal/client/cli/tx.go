@@ -37,12 +37,12 @@ func GetTxCmd() *cobra.Command {
 
 func NewDepositCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "deposit [zone_id] [controller-address] [host-address] [amount] [transfer-port-id] [transfer-channel-id]",
+		Use:   "deposit [zone-id] [depositor] [claimer] [amount] [transfer-port-id] [transfer-channel-id]",
 		Short: "Deposit wrapped token to nova",
 		Long: `Deposit wrapped token to nova.
 Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(5),
+		Args: cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -50,22 +50,27 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 			zoneId := args[0]
 
-			controllerAddr, err := client.GetClientTxContext(cmd)
+			depositor, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			coin, err := sdk.ParseCoinNormalized(args[2])
+			claimer, err := sdk.AccAddressFromBech32(args[2])
 			if err != nil {
 				return err
 			}
 
-			portId := args[3]
-			chanId := args[4]
+			coin, err := sdk.ParseCoinNormalized(args[3])
+			if err != nil {
+				return err
+			}
 
-			msg := types.NewMsgDeposit(zoneId, controllerAddr.GetFromAddress(), coin, portId, chanId)
+			portId := args[4]
+			chanId := args[5]
 
-			return tx.GenerateOrBroadcastTxCLI(controllerAddr, cmd.Flags(), msg)
+			msg := types.NewMsgDeposit(zoneId, depositor.GetFromAddress(), claimer, coin, portId, chanId)
+
+			return tx.GenerateOrBroadcastTxCLI(depositor, cmd.Flags(), msg)
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
@@ -75,8 +80,8 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 func NewUndelegateRequestCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegaterequest [zone-id] [depositor] [amount]",
-		Args: cobra.ExactArgs(3),
+		Use:  "pendingundelegate [zone-id] [delegator] [withdrawer] [amount]",
+		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
 			if err != nil {
@@ -89,13 +94,22 @@ func NewUndelegateRequestCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			depositor := args[1]
-			amount, err := sdk.ParseCoinNormalized(args[2])
+			delegator, err := sdk.AccAddressFromBech32(args[1])
+			if err != nil {
+				return err
+			}
+
+			withdrawer, err := sdk.AccAddressFromBech32(args[2])
+			if err != nil {
+				return err
+			}
+
+			amount, err := sdk.ParseCoinNormalized(args[3])
 			if err != nil {
 				panic(fmt.Sprintf("can't parse coin: %s", err.Error()))
 			}
 
-			msg := types.NewMsgPendingUndelegateRecord(zoneId, depositor, amount)
+			msg := types.NewMsgPendingUndelegate(zoneId, delegator, withdrawer, amount)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -142,12 +156,12 @@ func NewUndelegateCmd() *cobra.Command {
 
 func NewWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [zone-id] [withdrawer] [receiver] [transfer-port-id] [transfer-channel-id]",
+		Use:   "withdraw [zone-id] [withdrawer] [transfer-port-id] [transfer-channel-id]",
 		Short: "Withdraw wrapped token to nova",
 		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(5),
+		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
 			if err != nil {
@@ -166,11 +180,10 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			receiver := args[2]
-			portId := args[3]
-			chanId := args[4]
+			portId := args[2]
+			chanId := args[3]
 
-			msg := types.NewMsgWithdraw(zoneId, withrawer, receiver, portId, chanId)
+			msg := types.NewMsgWithdraw(zoneId, withrawer, portId, chanId)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},

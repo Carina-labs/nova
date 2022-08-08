@@ -6,7 +6,6 @@ import (
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 	"github.com/tendermint/tendermint/libs/log"
@@ -20,7 +19,6 @@ type Keeper struct {
 
 	bankKeeper        types.BankKeeper
 	accountKeeper     types.AccountKeeper
-	scopedKeeper      capabilitykeeper.ScopedKeeper
 	ibcstakingKeeper  ibcstakingKeeper.Keeper
 	ibcTransferKeeper transfer.Keeper
 	oracleKeeper      oraclekeeper.Keeper

@@ -34,27 +34,24 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		return
 	}
 
-	// statechagne
 	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, DEPOSIT_REQUEST, DEPOSIT_SUCCESS)
 }
 
 // delegateAddr(controllerAddr), validatorAddr, delegateAmt
 func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
-
 	// getZoneInfoForValidatorAddr
 	zoneInfo := h.k.ibcstakingKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
 
-	// setOracleVersion
-	oracleVersion, err := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
-	if err != nil {
-		return
-	}
+	oracleVersion := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
 
-	// setOracleVersion
-	h.k.SetBlockHeight(ctx, zoneInfo.ZoneId, DELEGATE_REQUEST, oracleVersion)
+	// get delegateVersion
+	delegateVersion := h.k.GetDelegateVersion(ctx, zoneInfo.ZoneId)
+	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, delegateVersion+1)
 
-	// change deposit state (DELEGATE_REQUEST > DELEGATE_SUCCESS)
+	// change deposit state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
 	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, DELEGATE_REQUEST, DELEGATE_SUCCESS)
+	h.k.SetDepositOracleVersion(ctx, zoneInfo.ZoneId, DELEGATE_SUCCESS, oracleVersion)
+	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, DELEGATE_SUCCESS, delegateVersion+1)
 }
 
 // ica transfer
@@ -72,6 +69,10 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 		return
 	}
 
+	// get withdrawVersion
+	withdrawVersion := h.k.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
+
+	h.k.SetWithdrawVersion(ctx, zoneInfo.ZoneId, withdrawVersion+1)
 	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, WITHDRAW_REGISTER, TRANSFER_SUCCESS)
 }
 
@@ -83,13 +84,19 @@ func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
 // 2. It saves undelegation finish time to store.
 func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate, msg *stakingtypes.MsgUndelegateResponse) {
 	// get zone info from the validator address
-	zone := h.k.ibcstakingKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
-	if zone == nil {
+	zoneInfo := h.k.ibcstakingKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
+	if zoneInfo == nil {
 		h.k.Logger(ctx).Error("Zone id is not found", "validatorAddress", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
 		return
 	}
-	h.k.DeleteUndelegateRecords(ctx, zone.ZoneId, UNDELEGATE_REQUEST_ICA)
-	h.k.SetWithdrawTime(ctx, zone.ZoneId, WITHDRAW_REGISTER, msg.CompletionTime)
+
+	undelegateVersion := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
+	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA, undelegateVersion+1)
+
+	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
+	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, undelegateVersion+1)
+
+	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
 }
 
 func (h Hooks) AfterAutoStakingEnd() {

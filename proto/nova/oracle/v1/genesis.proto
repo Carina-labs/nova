@@ -39,6 +39,5 @@ message ChainInfo {
   // chain_id of the host chain
   string chain_id = 6 [ (gogoproto.moretags) = "yaml:\"chain_id\"" ];
 
-  // block_proposer of the block fetched by oracle from the host chain
-  string block_proposer = 7 [ (gogoproto.moretags) = "yaml:\"block_proopser\"" ];
+  uint64 oracle_version = 7;
 }
