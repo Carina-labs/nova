@@ -1,12 +1,14 @@
 package keeper
 
 import (
+	"encoding/binary"
 	"fmt"
 
 	"github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
@@ -75,11 +77,35 @@ func (k Keeper) IsValidOperator(ctx sdk.Context, operatorAddress string) bool {
 	return false
 }
 
-func (k Keeper) GetOracleVersion(ctx sdk.Context, chainDenom string) (int64, error) {
-	chainInfo, err := k.GetChainState(ctx, chainDenom)
-	if err != nil {
-		return 0, err
+func (k Keeper) GetOracleVersionStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyOracleVersion)
+}
+
+func (k Keeper) SetOracleVersion(ctx sdk.Context, zoneId string, version uint64) {
+	store := k.GetOracleVersionStore(ctx)
+	key := zoneId
+	bz := make([]byte, 8)
+	binary.BigEndian.PutUint64(bz, version)
+	store.Set([]byte(key), bz)
+}
+
+func (k Keeper) GetOracleVersion(ctx sdk.Context, zoneId string) uint64 {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyOracleVersion)
+	key := []byte(zoneId)
+	bz := store.Get(key)
+
+	if bz == nil {
+		return 0
 	}
 
-	return chainInfo.LastBlockHeight, nil
+	return binary.BigEndian.Uint64(bz)
 }
+
+// func (k Keeper) GetOracleVersion(ctx sdk.Context, chainDenom string) (uint64, error) {
+// 	chainInfo, err := k.GetChainState(ctx, chainDenom)
+// 	if err != nil {
+// 		return 0, err
+// 	}
+
+// 	return chainInfo.OracleVersion, nil
+// }

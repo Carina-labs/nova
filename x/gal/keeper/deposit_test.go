@@ -6,19 +6,17 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
-// import (
-// 	"github.com/Carina-labs/nova/x/gal/types"
-// 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
-// 	sdk "github.com/cosmos/cosmos-sdk/types"
-// 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
-// )
+// deposit content 생성
 
 // func (suite *KeeperTestSuite) TestRecordDepositAmt() {
-// 	randAddr := suite.GenRandomAddress()
+// 	depositor := suite.GenRandomAddress()
+// 	claimer := suite.GenRandomAddress()
 // 	type args struct {
-// 		coin sdk.Coin
-// 		addr sdk.AccAddress
+// 		coin      sdk.Coin
+// 		claimer   sdk.AccAddress
+// 		depositor sdk.AccAddress
 // 	}
+
 // 	tcs := []struct {
 // 		name    string
 // 		args    []args
@@ -34,10 +32,10 @@ import (
 // 		{
 // 			name: "should get recorded deposit amt",
 // 			args: []args{
-// 				{sdk.NewInt64Coin(baseDenom, 10000), randAddr},
+// 				{sdk.NewInt64Coin(baseDenom, 10000), depositor, claimer},
 // 			},
 // 			expect: []args{
-// 				{sdk.NewInt64Coin(baseDenom, 10000), randAddr},
+// 				{sdk.NewInt64Coin(baseDenom, 10000), depositor, claimer},
 // 			},
 // 			wantErr: false,
 // 		},
@@ -45,7 +43,7 @@ import (
 // 			name: "should not get deposit info",
 // 			args: []args{},
 // 			expect: []args{
-// 				{sdk.NewInt64Coin(baseDenom, 10000), randAddr},
+// 				{sdk.NewInt64Coin(baseDenom, 10000), claimer, claimer},
 // 			},
 // 			wantErr: true,
 // 		},
@@ -62,11 +60,12 @@ import (
 // 					suite.Ctx,
 // 					&types.DepositRecord{
 // 						ZoneId:  "test-zone-id",
-// 						Address: arg.addr.String(),
+// 						Claimer: string(arg.claimer),
 // 						Records: []*types.DepositRecordContent{
 // 							{
-// 								Amount:        &arg.coin,
-// 								IsTransferred: false,
+// 								Depositor: string(arg.depositor),
+// 								Amount:    &arg.coin,
+// 								State:     1,
 // 							},
 // 						},
 // 					})
@@ -74,7 +73,7 @@ import (
 
 // 			// totalAmt는 record.totalAmt에서 구할 수 있음
 // 			for _, query := range tc.expect {
-// 				res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, query.addr)
+// 				res, err := suite.App.GalKeeper.GetRecordedDepositAmt(suite.Ctx, "test-zone-id", query.claimer)
 // 				if tc.wantErr {
 // 					suite.Require().NotNil(err, "error expected but no error found")
 // 					suite.Require().Equal(err, types.ErrNoDepositRecord)
@@ -85,7 +84,7 @@ import (
 // 				for _, record := range res.Records {
 // 					suite.Require().Equal(record.Amount.Denom, query.coin.Denom)
 // 					suite.Require().Equal(record.Amount.Amount, query.coin.Amount)
-// 					suite.Require().Equal(res.Address, query.addr.String())
+// 					suite.Require().Equal(res.Claimer, query.claimer.String())
 // 				}
 // 			}
 // 		})
@@ -186,12 +185,12 @@ import (
 // 		suite.Run(tc.name, func() {
 // 			// setup
 // 			record := types.DepositRecord{}
-// 			record.Address = testAddress
+// 			record.Claimer = testAddress
 // 			for _, item := range tc.input {
 // 				coin := sdk.NewInt64Coin(item.amount.Denom, item.amount.Amount.Int64())
 // 				record.Records = append(record.Records, &types.DepositRecordContent{
-// 					IsTransferred: true,
-// 					Amount:        &coin,
+// 					State:  true,
+// 					Amount: &coin,
 // 				})
 // 			}
 // 			suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &record)

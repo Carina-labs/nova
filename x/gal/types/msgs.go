@@ -19,15 +19,16 @@ var _ sdk.Msg = &MsgDeposit{}
 
 var _ sdk.Msg = &MsgDelegate{}
 var _ sdk.Msg = &MsgUndelegate{}
-var _ sdk.Msg = &MsgPendingUndelegateRecord{}
+var _ sdk.Msg = &MsgPendingUndelegate{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
 var _ sdk.Msg = &MsgPendingWithdraw{}
 
-func NewMsgDeposit(zoneId string, depositor sdk.AccAddress, amount sdk.Coin, portId, chanId string) *MsgDeposit {
+func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin, portId, chanId string) *MsgDeposit {
 	return &MsgDeposit{
 		ZoneId:            zoneId,
 		Depositor:         depositor.String(),
+		Claimer:           claimer.String(),
 		Amount:            amount,
 		TransferPortId:    portId,
 		TransferChannelId: chanId,
@@ -139,24 +140,25 @@ func (msg MsgUndelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{depositor}
 }
 
-func NewMsgPendingUndelegateRecord(zoneId, Depositor string, amount sdk.Coin) *MsgPendingUndelegateRecord {
-	return &MsgPendingUndelegateRecord{
-		ZoneId:    zoneId,
-		Depositor: Depositor,
-		Amount:    amount,
+func NewMsgPendingUndelegate(zoneId string, delegator, withdrawAddr sdk.AccAddress, amount sdk.Coin) *MsgPendingUndelegate {
+	return &MsgPendingUndelegate{
+		ZoneId:     zoneId,
+		Delegator:  delegator.String(),
+		Withdrawer: withdrawAddr.String(),
+		Amount:     amount,
 	}
 }
 
-func (msg MsgPendingUndelegateRecord) Route() string {
+func (msg MsgPendingUndelegate) Route() string {
 	return RouterKey
 }
 
-func (msg MsgPendingUndelegateRecord) Type() string {
+func (msg MsgPendingUndelegate) Type() string {
 	return TypeMsgUndelegateRecord
 }
 
-func (msg MsgPendingUndelegateRecord) ValidateBasic() error {
-	if _, err := sdk.AccAddressFromBech32(msg.Depositor); err != nil {
+func (msg MsgPendingUndelegate) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.Delegator); err != nil {
 		return err
 	}
 
@@ -171,22 +173,21 @@ func (msg MsgPendingUndelegateRecord) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgPendingUndelegateRecord) GetSignBytes() []byte {
+func (msg MsgPendingUndelegate) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgPendingUndelegateRecord) GetSigners() []sdk.AccAddress {
-	withdrawer, _ := sdk.AccAddressFromBech32(msg.Depositor)
+func (msg MsgPendingUndelegate) GetSigners() []sdk.AccAddress {
+	withdrawer, _ := sdk.AccAddressFromBech32(msg.Delegator)
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress, receiver, portId, chanId string) *MsgWithdraw {
+func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress, portId, chanId string) *MsgWithdraw {
 	return &MsgWithdraw{
-		ZoneId:               zoneId,
-		Withdrawer:           withdrawer.String(),
-		Recipient:            receiver,
-		IcaTransferPortId:    portId,
-		IcaTransferChannelId: chanId,
+		ZoneId:            zoneId,
+		Withdrawer:        withdrawer.String(),
+		TransferPortId:    portId,
+		TransferChannelId: chanId,
 	}
 }
 
@@ -241,13 +242,13 @@ func (msg MsgClaimSnAsset) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{claimer}
 }
 
-func NewMsgPendingWithdraw(zoneId string, daomodifierAddr sdk.AccAddress, portId, chanId string, blockTime time.Time) *MsgPendingWithdraw {
+func NewMsgPendingWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId, chanId string, blockTime time.Time) *MsgPendingWithdraw {
 	return &MsgPendingWithdraw{
-		ZoneId:             zoneId,
-		DaomodifierAddress: daomodifierAddr.String(),
-		TransferPortId:     portId,
-		TransferChannelId:  chanId,
-		ChainTime:          blockTime,
+		ZoneId:               zoneId,
+		ControllerAddress:    controllerAddr.String(),
+		IcaTransferPortId:    portId,
+		IcaTransferChannelId: chanId,
+		ChainTime:            blockTime,
 	}
 }
 
@@ -256,12 +257,12 @@ func (msg MsgPendingWithdraw) Route() string {
 }
 
 func (msg MsgPendingWithdraw) ValidateBasic() error {
-	if _, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress); err != nil {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
+	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	if msg.ChainTime.IsZero() {
-		return sdkerrors.Wrap(ErrInvalidTime, msg.DaomodifierAddress)
+		return sdkerrors.Wrap(ErrInvalidTime, msg.ControllerAddress)
 	}
 
 	return nil
@@ -272,6 +273,6 @@ func (msg MsgPendingWithdraw) GetSignBytes() []byte {
 }
 
 func (msg MsgPendingWithdraw) GetSigners() []sdk.AccAddress {
-	withdrawer, _ := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
+	withdrawer, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	return []sdk.AccAddress{withdrawer}
 }

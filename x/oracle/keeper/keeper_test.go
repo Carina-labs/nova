@@ -44,7 +44,6 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		Decimal:         6,
 		AppHash:         []byte(fooAppHash),
 		ChainId:         fooChainId,
-		BlockProposer:   fooBlockProposer,
 	}
 
 	tests := []struct {

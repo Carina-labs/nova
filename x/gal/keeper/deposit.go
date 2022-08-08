@@ -3,8 +3,6 @@ package keeper
 import (
 	"fmt"
 
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -28,16 +26,15 @@ func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
 // SetDepositAmt write the amount of coin user deposit to the "DepositRecord" store.
 func (k Keeper) SetDepositAmt(ctx sdk.Context, msg *types.DepositRecord) {
 	store := k.getDepositRecordStore(ctx)
-	key := msg.ZoneId + msg.Address
+	key := msg.ZoneId + msg.Claimer
 	bz := k.cdc.MustMarshal(msg)
 	store.Set([]byte(key), bz)
 }
 
 // GetRecordedDepositAmt returns the amount of coin user deposit by address.
-func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, zoneId string, depositor sdk.AccAddress) (*types.DepositRecord, error) {
+func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, zoneId string, claimer sdk.AccAddress) (*types.DepositRecord, error) {
 	store := k.getDepositRecordStore(ctx)
-	depositorStr := depositor.String()
-	key := []byte(zoneId + depositorStr)
+	key := []byte(zoneId + claimer.String())
 	if !store.Has(key) {
 		return nil, types.ErrNoDepositRecord
 	}
@@ -49,12 +46,12 @@ func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, zoneId string, depositor 
 	return &msg, nil
 }
 
-// GetTotalDepositAmtForZoneId : delegate를 위한 TotlaDepositAmt로, 해당 zone에서 deposit 완료된 금액을 받아서 반환하는 함수
 func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state DepositState) sdk.Coin {
 	totalDepositAmt := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
 		Denom:  denom,
 	}
+
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
@@ -69,13 +66,13 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 	return totalDepositAmt
 }
 
-func (k Keeper) SetBlockHeight(ctx sdk.Context, zoneId string, state DepositState, blockHeight int64) {
+func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state DepositState, oracleVersion uint64) {
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		isChanged := false
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
-				if record.State == int64(state) {
-					record.BlockHeight = blockHeight
+				if record.State == int64(state) && record.OracleVersion == 0 {
+					record.OracleVersion = oracleVersion
 					isChanged = true
 				}
 			}
@@ -90,7 +87,6 @@ func (k Keeper) SetBlockHeight(ctx sdk.Context, zoneId string, state DepositStat
 
 }
 
-// ChangeDepositState : DepositRecords의 state를 preState에서 postState로 변경하는 함수
 func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, postState DepositState) bool {
 	isChanged := false
 
@@ -118,17 +114,24 @@ func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, pos
 	return true
 }
 
-// ClearRecordedDepositAmt remove all data in "DepositRecord".
-// It must be removed after staking in host chain.
-func (k Keeper) ClearRecordedDepositAmt(ctx sdk.Context, zoneId string, depositor sdk.AccAddress) error {
-	key := zoneId + depositor.String()
-	store := k.getDepositRecordStore(ctx)
-	if !store.Has([]byte(key)) {
-		return sdkerrors.Wrap(types.ErrNoDepositRecord, fmt.Sprintf("account: %s", depositor.String()))
-	}
+func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state DepositState, version uint64) bool {
+	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
+		if depositRecord.ZoneId == zoneId {
+			isChanged := false
+			for _, record := range depositRecord.Records {
+				if record.State == int64(state) {
+					isChanged = true
+					record.DelegateVersion = version
+				}
+			}
+			if isChanged {
+				k.SetDepositAmt(ctx, &depositRecord)
+			}
+		}
+		return false
+	})
 
-	store.Delete([]byte(key))
-	return nil
+	return true
 }
 
 func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, depositor sdk.AccAddress, state DepositState) error {

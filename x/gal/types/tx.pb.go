@@ -37,11 +37,12 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // MsgDeposit defines user who deposit and amount of coins.
 type MsgDeposit struct {
-	Depositor         string     `protobuf:"bytes,1,opt,name=depositor,proto3" json:"depositor,omitempty"`
-	Amount            types.Coin `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount"`
-	ZoneId            string     `protobuf:"bytes,3,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	TransferPortId    string     `protobuf:"bytes,4,opt,name=transfer_port_id,json=transferPortId,proto3" json:"transfer_port_id,omitempty"`
-	TransferChannelId string     `protobuf:"bytes,5,opt,name=transfer_channel_id,json=transferChannelId,proto3" json:"transfer_channel_id,omitempty"`
+	ZoneId            string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Depositor         string     `protobuf:"bytes,2,opt,name=depositor,proto3" json:"depositor,omitempty"`
+	Claimer           string     `protobuf:"bytes,3,opt,name=claimer,proto3" json:"claimer,omitempty"`
+	Amount            types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
+	TransferPortId    string     `protobuf:"bytes,5,opt,name=transfer_port_id,json=transferPortId,proto3" json:"transfer_port_id,omitempty"`
+	TransferChannelId string     `protobuf:"bytes,6,opt,name=transfer_channel_id,json=transferChannelId,proto3" json:"transfer_channel_id,omitempty"`
 }
 
 func (m *MsgDeposit) Reset()         { *m = MsgDeposit{} }
@@ -77,9 +78,23 @@ func (m *MsgDeposit) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeposit proto.InternalMessageInfo
 
+func (m *MsgDeposit) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
 func (m *MsgDeposit) GetDepositor() string {
 	if m != nil {
 		return m.Depositor
+	}
+	return ""
+}
+
+func (m *MsgDeposit) GetClaimer() string {
+	if m != nil {
+		return m.Claimer
 	}
 	return ""
 }
@@ -89,13 +104,6 @@ func (m *MsgDeposit) GetAmount() types.Coin {
 		return m.Amount
 	}
 	return types.Coin{}
-}
-
-func (m *MsgDeposit) GetZoneId() string {
-	if m != nil {
-		return m.ZoneId
-	}
-	return ""
 }
 
 func (m *MsgDeposit) GetTransferPortId() string {
@@ -114,7 +122,8 @@ func (m *MsgDeposit) GetTransferChannelId() string {
 
 type MsgDepositResponse struct {
 	Receiver        string     `protobuf:"bytes,1,opt,name=receiver,proto3" json:"receiver,omitempty"`
-	DepositedAmount types.Coin `protobuf:"bytes,2,opt,name=deposited_amount,json=depositedAmount,proto3" json:"deposited_amount"`
+	Depositor       string     `protobuf:"bytes,2,opt,name=depositor,proto3" json:"depositor,omitempty"`
+	DepositedAmount types.Coin `protobuf:"bytes,3,opt,name=deposited_amount,json=depositedAmount,proto3" json:"deposited_amount"`
 }
 
 func (m *MsgDepositResponse) Reset()         { *m = MsgDepositResponse{} }
@@ -153,6 +162,13 @@ var xxx_messageInfo_MsgDepositResponse proto.InternalMessageInfo
 func (m *MsgDepositResponse) GetReceiver() string {
 	if m != nil {
 		return m.Receiver
+	}
+	return ""
+}
+
+func (m *MsgDepositResponse) GetDepositor() string {
+	if m != nil {
+		return m.Depositor
 	}
 	return ""
 }
@@ -322,8 +338,8 @@ func (m *MsgUndelegate) GetControllerAddress() string {
 
 type MsgUndelegateResponse struct {
 	ZoneId               string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	TotalBurnAsset       types.Coin `protobuf:"bytes,3,opt,name=total_burn_asset,json=totalBurnAsset,proto3" json:"total_burn_asset"`
-	TotalUndelegateAsset types.Coin `protobuf:"bytes,4,opt,name=total_undelegate_asset,json=totalUndelegateAsset,proto3" json:"total_undelegate_asset"`
+	TotalBurnAsset       types.Coin `protobuf:"bytes,2,opt,name=total_burn_asset,json=totalBurnAsset,proto3" json:"total_burn_asset"`
+	TotalUndelegateAsset types.Coin `protobuf:"bytes,3,opt,name=total_undelegate_asset,json=totalUndelegateAsset,proto3" json:"total_undelegate_asset"`
 }
 
 func (m *MsgUndelegateResponse) Reset()         { *m = MsgUndelegateResponse{} }
@@ -381,24 +397,25 @@ func (m *MsgUndelegateResponse) GetTotalUndelegateAsset() types.Coin {
 }
 
 // MsgUnStaking defines user who want to un-stake his/her asset.
-type MsgPendingUndelegateRecord struct {
-	ZoneId    string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Depositor string     `protobuf:"bytes,2,opt,name=depositor,proto3" json:"depositor,omitempty"`
-	Amount    types.Coin `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount"`
+type MsgPendingUndelegate struct {
+	ZoneId     string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Delegator  string     `protobuf:"bytes,2,opt,name=delegator,proto3" json:"delegator,omitempty"`
+	Withdrawer string     `protobuf:"bytes,3,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
+	Amount     types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
 }
 
-func (m *MsgPendingUndelegateRecord) Reset()         { *m = MsgPendingUndelegateRecord{} }
-func (m *MsgPendingUndelegateRecord) String() string { return proto.CompactTextString(m) }
-func (*MsgPendingUndelegateRecord) ProtoMessage()    {}
-func (*MsgPendingUndelegateRecord) Descriptor() ([]byte, []int) {
+func (m *MsgPendingUndelegate) Reset()         { *m = MsgPendingUndelegate{} }
+func (m *MsgPendingUndelegate) String() string { return proto.CompactTextString(m) }
+func (*MsgPendingUndelegate) ProtoMessage()    {}
+func (*MsgPendingUndelegate) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8b1072e606aed7de, []int{6}
 }
-func (m *MsgPendingUndelegateRecord) XXX_Unmarshal(b []byte) error {
+func (m *MsgPendingUndelegate) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgPendingUndelegateRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgPendingUndelegate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgPendingUndelegateRecord.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgPendingUndelegate.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -408,58 +425,66 @@ func (m *MsgPendingUndelegateRecord) XXX_Marshal(b []byte, deterministic bool) (
 		return b[:n], nil
 	}
 }
-func (m *MsgPendingUndelegateRecord) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgPendingUndelegateRecord.Merge(m, src)
+func (m *MsgPendingUndelegate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgPendingUndelegate.Merge(m, src)
 }
-func (m *MsgPendingUndelegateRecord) XXX_Size() int {
+func (m *MsgPendingUndelegate) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgPendingUndelegateRecord) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgPendingUndelegateRecord.DiscardUnknown(m)
+func (m *MsgPendingUndelegate) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgPendingUndelegate.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgPendingUndelegateRecord proto.InternalMessageInfo
+var xxx_messageInfo_MsgPendingUndelegate proto.InternalMessageInfo
 
-func (m *MsgPendingUndelegateRecord) GetZoneId() string {
+func (m *MsgPendingUndelegate) GetZoneId() string {
 	if m != nil {
 		return m.ZoneId
 	}
 	return ""
 }
 
-func (m *MsgPendingUndelegateRecord) GetDepositor() string {
+func (m *MsgPendingUndelegate) GetDelegator() string {
 	if m != nil {
-		return m.Depositor
+		return m.Delegator
 	}
 	return ""
 }
 
-func (m *MsgPendingUndelegateRecord) GetAmount() types.Coin {
+func (m *MsgPendingUndelegate) GetWithdrawer() string {
+	if m != nil {
+		return m.Withdrawer
+	}
+	return ""
+}
+
+func (m *MsgPendingUndelegate) GetAmount() types.Coin {
 	if m != nil {
 		return m.Amount
 	}
 	return types.Coin{}
 }
 
-type MsgPendingUndelegateRecordResponse struct {
+type MsgPendingUndelegateResponse struct {
 	ZoneId          string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	User            string     `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	BurnAsset       types.Coin `protobuf:"bytes,3,opt,name=burn_asset,json=burnAsset,proto3" json:"burn_asset"`
-	UndelegateAsset types.Coin `protobuf:"bytes,4,opt,name=undelegate_asset,json=undelegateAsset,proto3" json:"undelegate_asset"`
+	Delegator       string     `protobuf:"bytes,2,opt,name=delegator,proto3" json:"delegator,omitempty"`
+	Withdrawer      string     `protobuf:"bytes,3,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
+	BurnAsset       types.Coin `protobuf:"bytes,4,opt,name=burn_asset,json=burnAsset,proto3" json:"burn_asset"`
+	UndelegateAsset types.Coin `protobuf:"bytes,5,opt,name=undelegate_asset,json=undelegateAsset,proto3" json:"undelegate_asset"`
 }
 
-func (m *MsgPendingUndelegateRecordResponse) Reset()         { *m = MsgPendingUndelegateRecordResponse{} }
-func (m *MsgPendingUndelegateRecordResponse) String() string { return proto.CompactTextString(m) }
-func (*MsgPendingUndelegateRecordResponse) ProtoMessage()    {}
-func (*MsgPendingUndelegateRecordResponse) Descriptor() ([]byte, []int) {
+func (m *MsgPendingUndelegateResponse) Reset()         { *m = MsgPendingUndelegateResponse{} }
+func (m *MsgPendingUndelegateResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgPendingUndelegateResponse) ProtoMessage()    {}
+func (*MsgPendingUndelegateResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8b1072e606aed7de, []int{7}
 }
-func (m *MsgPendingUndelegateRecordResponse) XXX_Unmarshal(b []byte) error {
+func (m *MsgPendingUndelegateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgPendingUndelegateRecordResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgPendingUndelegateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgPendingUndelegateRecordResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgPendingUndelegateResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -469,40 +494,47 @@ func (m *MsgPendingUndelegateRecordResponse) XXX_Marshal(b []byte, deterministic
 		return b[:n], nil
 	}
 }
-func (m *MsgPendingUndelegateRecordResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgPendingUndelegateRecordResponse.Merge(m, src)
+func (m *MsgPendingUndelegateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgPendingUndelegateResponse.Merge(m, src)
 }
-func (m *MsgPendingUndelegateRecordResponse) XXX_Size() int {
+func (m *MsgPendingUndelegateResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgPendingUndelegateRecordResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgPendingUndelegateRecordResponse.DiscardUnknown(m)
+func (m *MsgPendingUndelegateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgPendingUndelegateResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgPendingUndelegateRecordResponse proto.InternalMessageInfo
+var xxx_messageInfo_MsgPendingUndelegateResponse proto.InternalMessageInfo
 
-func (m *MsgPendingUndelegateRecordResponse) GetZoneId() string {
+func (m *MsgPendingUndelegateResponse) GetZoneId() string {
 	if m != nil {
 		return m.ZoneId
 	}
 	return ""
 }
 
-func (m *MsgPendingUndelegateRecordResponse) GetUser() string {
+func (m *MsgPendingUndelegateResponse) GetDelegator() string {
 	if m != nil {
-		return m.User
+		return m.Delegator
 	}
 	return ""
 }
 
-func (m *MsgPendingUndelegateRecordResponse) GetBurnAsset() types.Coin {
+func (m *MsgPendingUndelegateResponse) GetWithdrawer() string {
+	if m != nil {
+		return m.Withdrawer
+	}
+	return ""
+}
+
+func (m *MsgPendingUndelegateResponse) GetBurnAsset() types.Coin {
 	if m != nil {
 		return m.BurnAsset
 	}
 	return types.Coin{}
 }
 
-func (m *MsgPendingUndelegateRecordResponse) GetUndelegateAsset() types.Coin {
+func (m *MsgPendingUndelegateResponse) GetUndelegateAsset() types.Coin {
 	if m != nil {
 		return m.UndelegateAsset
 	}
@@ -511,11 +543,10 @@ func (m *MsgPendingUndelegateRecordResponse) GetUndelegateAsset() types.Coin {
 
 // MsgWithdraw defines user who withdraw and amount of coins.
 type MsgWithdraw struct {
-	ZoneId               string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Withdrawer           string `protobuf:"bytes,2,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
-	Recipient            string `protobuf:"bytes,3,opt,name=recipient,proto3" json:"recipient,omitempty"`
-	IcaTransferPortId    string `protobuf:"bytes,4,opt,name=ica_transfer_port_id,json=icaTransferPortId,proto3" json:"ica_transfer_port_id,omitempty"`
-	IcaTransferChannelId string `protobuf:"bytes,5,opt,name=ica_transfer_channel_id,json=icaTransferChannelId,proto3" json:"ica_transfer_channel_id,omitempty"`
+	ZoneId            string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Withdrawer        string `protobuf:"bytes,2,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
+	TransferPortId    string `protobuf:"bytes,3,opt,name=transfer_port_id,json=transferPortId,proto3" json:"transfer_port_id,omitempty"`
+	TransferChannelId string `protobuf:"bytes,4,opt,name=transfer_channel_id,json=transferChannelId,proto3" json:"transfer_channel_id,omitempty"`
 }
 
 func (m *MsgWithdraw) Reset()         { *m = MsgWithdraw{} }
@@ -565,23 +596,16 @@ func (m *MsgWithdraw) GetWithdrawer() string {
 	return ""
 }
 
-func (m *MsgWithdraw) GetRecipient() string {
+func (m *MsgWithdraw) GetTransferPortId() string {
 	if m != nil {
-		return m.Recipient
+		return m.TransferPortId
 	}
 	return ""
 }
 
-func (m *MsgWithdraw) GetIcaTransferPortId() string {
+func (m *MsgWithdraw) GetTransferChannelId() string {
 	if m != nil {
-		return m.IcaTransferPortId
-	}
-	return ""
-}
-
-func (m *MsgWithdraw) GetIcaTransferChannelId() string {
-	if m != nil {
-		return m.IcaTransferChannelId
+		return m.TransferChannelId
 	}
 	return ""
 }
@@ -760,11 +784,11 @@ func (m *MsgClaimSnAssetResponse) GetMinted() types.Coin {
 }
 
 type MsgPendingWithdraw struct {
-	ZoneId             string    `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	DaomodifierAddress string    `protobuf:"bytes,2,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
-	TransferPortId     string    `protobuf:"bytes,3,opt,name=transfer_port_id,json=transferPortId,proto3" json:"transfer_port_id,omitempty"`
-	TransferChannelId  string    `protobuf:"bytes,4,opt,name=transfer_channel_id,json=transferChannelId,proto3" json:"transfer_channel_id,omitempty"`
-	ChainTime          time.Time `protobuf:"bytes,5,opt,name=chain_time,json=chainTime,proto3,stdtime" json:"chain_time"`
+	ZoneId               string    `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ControllerAddress    string    `protobuf:"bytes,2,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	IcaTransferPortId    string    `protobuf:"bytes,3,opt,name=ica_transfer_port_id,json=icaTransferPortId,proto3" json:"ica_transfer_port_id,omitempty"`
+	IcaTransferChannelId string    `protobuf:"bytes,4,opt,name=ica_transfer_channel_id,json=icaTransferChannelId,proto3" json:"ica_transfer_channel_id,omitempty"`
+	ChainTime            time.Time `protobuf:"bytes,5,opt,name=chain_time,json=chainTime,proto3,stdtime" json:"chain_time"`
 }
 
 func (m *MsgPendingWithdraw) Reset()         { *m = MsgPendingWithdraw{} }
@@ -807,23 +831,23 @@ func (m *MsgPendingWithdraw) GetZoneId() string {
 	return ""
 }
 
-func (m *MsgPendingWithdraw) GetDaomodifierAddress() string {
+func (m *MsgPendingWithdraw) GetControllerAddress() string {
 	if m != nil {
-		return m.DaomodifierAddress
+		return m.ControllerAddress
 	}
 	return ""
 }
 
-func (m *MsgPendingWithdraw) GetTransferPortId() string {
+func (m *MsgPendingWithdraw) GetIcaTransferPortId() string {
 	if m != nil {
-		return m.TransferPortId
+		return m.IcaTransferPortId
 	}
 	return ""
 }
 
-func (m *MsgPendingWithdraw) GetTransferChannelId() string {
+func (m *MsgPendingWithdraw) GetIcaTransferChannelId() string {
 	if m != nil {
-		return m.TransferChannelId
+		return m.IcaTransferChannelId
 	}
 	return ""
 }
@@ -878,8 +902,8 @@ func init() {
 	proto.RegisterType((*MsgDelegateResponse)(nil), "nova.gal.v1.MsgDelegateResponse")
 	proto.RegisterType((*MsgUndelegate)(nil), "nova.gal.v1.MsgUndelegate")
 	proto.RegisterType((*MsgUndelegateResponse)(nil), "nova.gal.v1.MsgUndelegateResponse")
-	proto.RegisterType((*MsgPendingUndelegateRecord)(nil), "nova.gal.v1.MsgPendingUndelegateRecord")
-	proto.RegisterType((*MsgPendingUndelegateRecordResponse)(nil), "nova.gal.v1.MsgPendingUndelegateRecordResponse")
+	proto.RegisterType((*MsgPendingUndelegate)(nil), "nova.gal.v1.MsgPendingUndelegate")
+	proto.RegisterType((*MsgPendingUndelegateResponse)(nil), "nova.gal.v1.MsgPendingUndelegateResponse")
 	proto.RegisterType((*MsgWithdraw)(nil), "nova.gal.v1.MsgWithdraw")
 	proto.RegisterType((*MsgWithdrawResponse)(nil), "nova.gal.v1.MsgWithdrawResponse")
 	proto.RegisterType((*MsgClaimSnAsset)(nil), "nova.gal.v1.MsgClaimSnAsset")
@@ -891,69 +915,68 @@ func init() {
 func init() { proto.RegisterFile("nova/gal/v1/tx.proto", fileDescriptor_8b1072e606aed7de) }
 
 var fileDescriptor_8b1072e606aed7de = []byte{
-	// 984 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0x4f, 0x6f, 0xe3, 0x44,
-	0x14, 0xaf, 0xb7, 0xa1, 0x6d, 0x5e, 0xa1, 0x7f, 0xdc, 0x2c, 0xc9, 0x5a, 0x55, 0x52, 0x59, 0x48,
-	0xed, 0x81, 0xda, 0xb4, 0x88, 0x3f, 0x27, 0xa4, 0x26, 0x08, 0xa9, 0x2b, 0x22, 0xad, 0xbc, 0xbb,
-	0x5a, 0x09, 0x0e, 0xd6, 0xc4, 0x9e, 0xba, 0x23, 0x9c, 0x99, 0x68, 0x66, 0x92, 0xdd, 0x45, 0x7c,
-	0x88, 0x3d, 0xf2, 0x09, 0x38, 0xc0, 0x81, 0x0b, 0x07, 0x3e, 0xc2, 0x9e, 0xd0, 0x6a, 0x4f, 0x9c,
-	0x58, 0xd4, 0x4a, 0x9c, 0xb9, 0x71, 0x42, 0x42, 0x1e, 0x8f, 0xff, 0x24, 0xc1, 0x34, 0x5d, 0xd1,
-	0x53, 0x32, 0xfe, 0xfd, 0xde, 0x9b, 0xf7, 0x7b, 0xcf, 0xef, 0xcd, 0x18, 0x1a, 0x94, 0x4d, 0x90,
-	0x1b, 0xa1, 0xd8, 0x9d, 0x1c, 0xb9, 0xf2, 0x89, 0x33, 0xe2, 0x4c, 0x32, 0x73, 0x3d, 0x79, 0xea,
-	0x44, 0x28, 0x76, 0x26, 0x47, 0x56, 0x23, 0x62, 0x11, 0x53, 0xcf, 0xdd, 0xe4, 0x5f, 0x4a, 0xb1,
-	0xee, 0x44, 0x8c, 0x45, 0x31, 0x76, 0xd5, 0x6a, 0x30, 0x3e, 0x73, 0x11, 0x7d, 0xaa, 0xa1, 0x76,
-	0xc0, 0xc4, 0x90, 0x09, 0x77, 0x80, 0x04, 0x76, 0x27, 0x47, 0x03, 0x2c, 0xd1, 0x91, 0x1b, 0x30,
-	0x42, 0x33, 0xd3, 0x14, 0xf7, 0x53, 0x9f, 0xe9, 0x42, 0x43, 0x9d, 0x59, 0xaf, 0x92, 0x0c, 0xb1,
-	0x90, 0x68, 0x38, 0x4a, 0x09, 0xf6, 0x9f, 0x06, 0x40, 0x5f, 0x44, 0x9f, 0xe2, 0x11, 0x13, 0x44,
-	0x9a, 0x1f, 0x42, 0x3d, 0x4c, 0xff, 0x32, 0xde, 0x32, 0xf6, 0x8c, 0x83, 0x7a, 0xb7, 0xf5, 0xf2,
-	0xa7, 0xc3, 0x86, 0x76, 0x7a, 0x12, 0x86, 0x1c, 0x0b, 0x71, 0x5f, 0x72, 0x42, 0x23, 0xaf, 0xa0,
-	0x9a, 0x1f, 0xc1, 0x0a, 0x1a, 0xb2, 0x31, 0x95, 0xad, 0x5b, 0x7b, 0xc6, 0xc1, 0xfa, 0xf1, 0x1d,
-	0x47, 0x5b, 0x24, 0x31, 0x3b, 0x3a, 0x66, 0xa7, 0xc7, 0x08, 0xed, 0xd6, 0x9e, 0xff, 0xd6, 0x59,
-	0xf2, 0x34, 0xdd, 0x6c, 0xc2, 0xea, 0xd7, 0x8c, 0x62, 0x9f, 0x84, 0xad, 0xe5, 0x64, 0x3b, 0x6f,
-	0x25, 0x59, 0x9e, 0x86, 0xe6, 0x01, 0x6c, 0x49, 0x8e, 0xa8, 0x38, 0xc3, 0xdc, 0x1f, 0x31, 0x2e,
-	0x13, 0x46, 0x4d, 0x31, 0x36, 0xb2, 0xe7, 0xf7, 0x18, 0x97, 0xa7, 0xa1, 0xe9, 0xc0, 0x4e, 0xce,
-	0x0c, 0xce, 0x11, 0xa5, 0x38, 0x4e, 0xc8, 0x6f, 0x28, 0xf2, 0x76, 0x06, 0xf5, 0x52, 0xe4, 0x34,
-	0xb4, 0xbf, 0x01, 0xb3, 0x50, 0xec, 0x61, 0x31, 0x62, 0x54, 0x60, 0xd3, 0x82, 0x35, 0x8e, 0x03,
-	0x4c, 0x26, 0x58, 0x0b, 0xf7, 0xf2, 0xb5, 0x79, 0x17, 0xb6, 0xb4, 0x54, 0x1c, 0xfa, 0xd7, 0xd3,
-	0xb9, 0x99, 0x1b, 0x9e, 0x28, 0x3b, 0xfb, 0x47, 0x03, 0xd6, 0xd5, 0xf6, 0x31, 0x8e, 0x90, 0xc4,
-	0xe5, 0x04, 0x18, 0x53, 0x09, 0x38, 0x04, 0x33, 0x60, 0x54, 0x72, 0x16, 0xc7, 0x98, 0xfb, 0x28,
-	0xcd, 0xbc, 0xda, 0xb6, 0xee, 0x6d, 0x17, 0x88, 0x2e, 0xc9, 0xbf, 0xe6, 0x6b, 0xf9, 0x3a, 0xf9,
-	0xaa, 0x55, 0xe5, 0xeb, 0x36, 0xec, 0x94, 0x02, 0xce, 0x12, 0x66, 0x3f, 0x82, 0xb7, 0xfa, 0x22,
-	0x7a, 0x48, 0xc3, 0xff, 0x59, 0x89, 0xfd, 0xd2, 0x80, 0xdb, 0x53, 0x9e, 0xf3, 0x1a, 0x55, 0xee,
-	0x70, 0x0a, 0x5b, 0x92, 0x49, 0x14, 0xfb, 0x83, 0x31, 0xa7, 0x3e, 0x12, 0x02, 0x4b, 0x25, 0x7e,
-	0x81, 0x02, 0x6d, 0x28, 0xc3, 0xee, 0x98, 0xd3, 0x93, 0xc4, 0xcc, 0x7c, 0x08, 0x6f, 0xa7, 0xae,
-	0xc6, 0xf9, 0xfe, 0xda, 0x61, 0x6d, 0x31, 0x87, 0x0d, 0x65, 0x5e, 0x44, 0xaf, 0xdc, 0xda, 0xdf,
-	0x19, 0x60, 0xf5, 0x45, 0x74, 0x0f, 0xd3, 0x90, 0xd0, 0x29, 0x6d, 0x01, 0xe3, 0x61, 0xb5, 0xb2,
-	0xa9, 0x86, 0xbc, 0xf5, 0x3a, 0x0d, 0xb9, 0x7c, 0xad, 0x86, 0xb4, 0xff, 0x32, 0xc0, 0xae, 0x0e,
-	0xf4, 0xea, 0x52, 0xbc, 0x0b, 0xb5, 0xb1, 0xc0, 0x57, 0xc7, 0xaa, 0x58, 0xe6, 0x27, 0x00, 0xd7,
-	0x2f, 0x59, 0x7d, 0x90, 0x57, 0xeb, 0x2e, 0x6c, 0xbd, 0x6e, 0x9d, 0x36, 0xc7, 0x33, 0x25, 0xfa,
-	0x23, 0xed, 0xcc, 0x47, 0x44, 0x9e, 0x87, 0x1c, 0x3d, 0xae, 0x96, 0xf8, 0x31, 0xc0, 0x63, 0x4d,
-	0x5a, 0x40, 0x68, 0x89, 0x6b, 0xee, 0x42, 0x9d, 0xe3, 0x80, 0x8c, 0x08, 0xd6, 0x85, 0xa9, 0x7b,
-	0xc5, 0x03, 0xd3, 0x85, 0x06, 0x09, 0x90, 0x5f, 0x31, 0xf6, 0xb6, 0x49, 0x80, 0x1e, 0x4c, 0x77,
-	0xf2, 0x07, 0xd0, 0x9c, 0x32, 0x98, 0x9b, 0x7e, 0x8d, 0x92, 0x4d, 0xd1, 0xd0, 0x3f, 0x18, 0xaa,
-	0xa3, 0x33, 0xa1, 0x79, 0x4d, 0xdb, 0x53, 0xba, 0x52, 0xcd, 0xe5, 0xe8, 0x25, 0x6c, 0x66, 0xab,
-	0x85, 0xa7, 0xe0, 0x7b, 0x49, 0xae, 0xbf, 0x7f, 0xd5, 0x39, 0x88, 0x88, 0x3c, 0x1f, 0x0f, 0x9c,
-	0x80, 0x0d, 0xf5, 0x09, 0xa5, 0x7f, 0x0e, 0x45, 0xf8, 0x95, 0x2b, 0x9f, 0x8e, 0xb0, 0x50, 0x06,
-	0xc2, 0xdb, 0xc8, 0xf6, 0xd0, 0x03, 0xf3, 0x67, 0x03, 0x36, 0xfb, 0x22, 0xea, 0xc5, 0x88, 0x0c,
-	0xef, 0xeb, 0xb2, 0x57, 0x96, 0xe6, 0x18, 0x56, 0x83, 0x84, 0xb8, 0x40, 0x5d, 0x32, 0xe2, 0x0d,
-	0x4e, 0xce, 0x6f, 0x0d, 0x68, 0xce, 0x84, 0x9e, 0x27, 0xbb, 0x55, 0x44, 0x9a, 0x4a, 0xc8, 0xe3,
-	0x09, 0x60, 0x65, 0x48, 0xa8, 0xc4, 0xe1, 0x4d, 0x64, 0x57, 0xbb, 0xb6, 0xff, 0x36, 0xd4, 0x29,
-	0xa8, 0xdb, 0xfc, 0xea, 0x77, 0xde, 0x85, 0x9d, 0x10, 0xb1, 0x21, 0x0b, 0xc9, 0x19, 0x99, 0x1b,
-	0xe2, 0x66, 0x09, 0xba, 0xf1, 0xf3, 0xc8, 0xec, 0x01, 0x04, 0xe7, 0x88, 0x50, 0x3f, 0xb9, 0xcb,
-	0xa8, 0x17, 0x7d, 0xfd, 0xd8, 0x72, 0xd2, 0x8b, 0x8e, 0x93, 0x5d, 0x74, 0x9c, 0x07, 0xd9, 0x45,
-	0xa7, 0xbb, 0x96, 0x24, 0xe9, 0xd9, 0xab, 0x8e, 0xe1, 0xd5, 0x95, 0x5d, 0x82, 0xd8, 0xbb, 0xe5,
-	0x71, 0x3c, 0xdb, 0x09, 0xc7, 0xbf, 0xd4, 0x60, 0xb9, 0x2f, 0x22, 0xb3, 0x07, 0xab, 0xd9, 0xcd,
-	0xa8, 0xe9, 0x94, 0xee, 0x70, 0x4e, 0x71, 0x81, 0xb0, 0x3a, 0x15, 0x40, 0x5e, 0xe9, 0xcf, 0x60,
-	0x2d, 0x3f, 0xed, 0x5b, 0xf3, 0xe4, 0x14, 0xb1, 0xf6, 0xaa, 0x90, 0xdc, 0xcf, 0xe7, 0x00, 0xa5,
-	0xd3, 0xd6, 0x9a, 0xe5, 0x17, 0x98, 0x65, 0x57, 0x63, 0xb9, 0x37, 0x01, 0xcd, 0xaa, 0xc3, 0x68,
-	0x7f, 0xd6, 0xbc, 0x82, 0x68, 0xb9, 0x0b, 0x12, 0xcb, 0xa9, 0xc8, 0x5f, 0xb5, 0xb9, 0x54, 0x64,
-	0xc8, 0x7c, 0x2a, 0xe6, 0x26, 0x95, 0x07, 0x6f, 0x4e, 0xcd, 0x83, 0xdd, 0x59, 0x8b, 0x32, 0x6a,
-	0xbd, 0xf3, 0x5f, 0x68, 0xee, 0xf3, 0x4b, 0xd8, 0x9c, 0xed, 0x86, 0x4e, 0x85, 0xbe, 0x3c, 0xd2,
-	0xfd, 0x2b, 0x08, 0x99, 0xf3, 0xee, 0xc9, 0xf3, 0x8b, 0xb6, 0xf1, 0xe2, 0xa2, 0x6d, 0xfc, 0x7e,
-	0xd1, 0x36, 0x9e, 0x5d, 0xb6, 0x97, 0x5e, 0x5c, 0xb6, 0x97, 0x7e, 0xbd, 0x6c, 0x2f, 0x7d, 0xb1,
-	0x5f, 0x6a, 0xdd, 0x1e, 0xe2, 0x84, 0xa2, 0xc3, 0x18, 0x0d, 0x84, 0xab, 0xbe, 0x23, 0x9e, 0xa8,
-	0x2f, 0x09, 0xd5, 0xbf, 0x83, 0x15, 0xf5, 0x6a, 0xbf, 0xff, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff,
-	0x50, 0x50, 0x1d, 0x39, 0x62, 0x0c, 0x00, 0x00,
+	// 976 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x57, 0x4f, 0x6f, 0x1b, 0x45,
+	0x14, 0xcf, 0x3a, 0xa9, 0x93, 0xbc, 0x40, 0xfe, 0x6c, 0x5d, 0xe2, 0xae, 0x22, 0x3b, 0xac, 0x90,
+	0x1a, 0x0e, 0xd9, 0x25, 0x41, 0xfc, 0x39, 0x21, 0xc5, 0x46, 0x48, 0xa9, 0xb0, 0x54, 0xb9, 0xad,
+	0x2a, 0xc1, 0x61, 0x35, 0xbb, 0x3b, 0xdd, 0xac, 0x58, 0xcf, 0x58, 0x33, 0x63, 0xb7, 0xe5, 0x1b,
+	0xc0, 0xa9, 0x47, 0xc4, 0x47, 0x80, 0x03, 0x17, 0x90, 0x10, 0xe2, 0x03, 0xf4, 0x58, 0xf5, 0x84,
+	0x38, 0x50, 0x94, 0x7c, 0x11, 0xb4, 0xb3, 0xb3, 0xe3, 0xb5, 0xb7, 0x5b, 0x3b, 0x88, 0x70, 0x4a,
+	0x66, 0xdf, 0xef, 0xbd, 0x79, 0xbf, 0xdf, 0x9b, 0x37, 0x6f, 0x0c, 0x0d, 0x42, 0xc7, 0xc8, 0x8d,
+	0x50, 0xe2, 0x8e, 0x8f, 0x5c, 0xf1, 0xd8, 0x19, 0x32, 0x2a, 0xa8, 0xb9, 0x91, 0x7e, 0x75, 0x22,
+	0x94, 0x38, 0xe3, 0x23, 0xab, 0x11, 0xd1, 0x88, 0xca, 0xef, 0x6e, 0xfa, 0x5f, 0x06, 0xb1, 0x6e,
+	0x46, 0x94, 0x46, 0x09, 0x76, 0xe5, 0xca, 0x1f, 0x3d, 0x74, 0x11, 0x79, 0xa2, 0x4c, 0xad, 0x80,
+	0xf2, 0x01, 0xe5, 0xae, 0x8f, 0x38, 0x76, 0xc7, 0x47, 0x3e, 0x16, 0xe8, 0xc8, 0x0d, 0x68, 0x4c,
+	0x72, 0xd7, 0xcc, 0xee, 0x65, 0x31, 0xb3, 0x85, 0x32, 0xb5, 0x67, 0xa3, 0x8a, 0x78, 0x80, 0xb9,
+	0x40, 0x83, 0x61, 0x06, 0xb0, 0xbf, 0xad, 0x01, 0xf4, 0x78, 0xf4, 0x29, 0x1e, 0x52, 0x1e, 0x0b,
+	0x73, 0x17, 0x56, 0xbf, 0xa6, 0x04, 0x7b, 0x71, 0xd8, 0x34, 0xf6, 0x8d, 0x83, 0xf5, 0x7e, 0x3d,
+	0x5d, 0x9e, 0x86, 0xe6, 0x87, 0xb0, 0x1e, 0x66, 0x18, 0xca, 0x9a, 0xb5, 0xd4, 0xd4, 0x69, 0xbe,
+	0xf8, 0xf9, 0xb0, 0xa1, 0x76, 0x3b, 0x09, 0x43, 0x86, 0x39, 0xbf, 0x2b, 0x58, 0x4c, 0xa2, 0xfe,
+	0x04, 0x6a, 0x36, 0x61, 0x35, 0x48, 0x50, 0x3c, 0xc0, 0xac, 0xb9, 0x2c, 0x03, 0xe6, 0x4b, 0xf3,
+	0x23, 0xa8, 0xa3, 0x01, 0x1d, 0x11, 0xd1, 0x5c, 0xd9, 0x37, 0x0e, 0x36, 0x8e, 0x6f, 0x3a, 0x2a,
+	0x56, 0x4a, 0xd3, 0x51, 0x34, 0x9d, 0x2e, 0x8d, 0x49, 0x67, 0xe5, 0xd9, 0x5f, 0xed, 0xa5, 0xbe,
+	0x82, 0x9b, 0x07, 0xb0, 0x2d, 0x18, 0x22, 0xfc, 0x21, 0x66, 0xde, 0x90, 0x32, 0x91, 0x26, 0x7b,
+	0x4d, 0xc6, 0xde, 0xcc, 0xbf, 0xdf, 0xa1, 0x4c, 0x9c, 0x86, 0xa6, 0x03, 0xd7, 0x35, 0x32, 0x38,
+	0x43, 0x84, 0xe0, 0x24, 0x05, 0xd7, 0x25, 0x78, 0x27, 0x37, 0x75, 0x33, 0xcb, 0x69, 0x68, 0x7f,
+	0x6f, 0x80, 0x39, 0x11, 0xa3, 0x8f, 0xf9, 0x90, 0x12, 0x8e, 0x4d, 0x0b, 0xd6, 0x18, 0x0e, 0x70,
+	0x3c, 0xc6, 0x4c, 0xa9, 0xa2, 0xd7, 0xe6, 0x5e, 0x49, 0x97, 0x22, 0xfb, 0xdb, 0xb0, 0xad, 0x16,
+	0x38, 0xf4, 0x14, 0xdb, 0xe5, 0xc5, 0xd8, 0x6e, 0x69, 0xc7, 0x13, 0xe9, 0x67, 0xff, 0x64, 0xc0,
+	0x86, 0x4c, 0x2e, 0xc1, 0x11, 0x12, 0xb8, 0xba, 0x54, 0x87, 0x60, 0x06, 0x94, 0x08, 0x46, 0x93,
+	0x04, 0x33, 0x0f, 0x65, 0x95, 0x51, 0xb9, 0xed, 0x4c, 0x2c, 0xaa, 0x64, 0xaf, 0x94, 0x73, 0xf9,
+	0x32, 0x72, 0xae, 0x54, 0xc9, 0x79, 0x03, 0xae, 0x17, 0x12, 0xce, 0xe5, 0xb4, 0x1f, 0xc0, 0x9b,
+	0x3d, 0x1e, 0xdd, 0x27, 0xe1, 0x7f, 0xcc, 0xc4, 0x7e, 0x61, 0xc0, 0x8d, 0xa9, 0xc8, 0xba, 0x82,
+	0x95, 0x3b, 0x9c, 0xc2, 0xb6, 0xa0, 0x02, 0x25, 0x9e, 0x3f, 0x62, 0xc4, 0x43, 0x9c, 0x63, 0x21,
+	0xe3, 0x2f, 0x50, 0xa0, 0x4d, 0xe9, 0xd8, 0x19, 0x31, 0x72, 0x92, 0xba, 0x99, 0xf7, 0xe1, 0xad,
+	0x2c, 0xd4, 0x48, 0xef, 0xaf, 0x02, 0x2e, 0x58, 0xf1, 0x86, 0x74, 0x9f, 0x64, 0x2f, 0xc3, 0xda,
+	0x7f, 0x1a, 0xd0, 0xe8, 0xf1, 0xe8, 0x0e, 0x26, 0x61, 0x4c, 0x16, 0x52, 0x4d, 0xb6, 0xaa, 0x04,
+	0x2d, 0xd6, 0xaa, 0x0a, 0x6a, 0x7e, 0x0c, 0xf0, 0x28, 0x16, 0x67, 0x21, 0x43, 0x8f, 0xf2, 0x6e,
+	0x7d, 0x8d, 0x63, 0x01, 0xfb, 0xaf, 0x5b, 0xd9, 0xfe, 0xa5, 0x06, 0x7b, 0xaf, 0x22, 0x37, 0xbf,
+	0x70, 0xff, 0x3f, 0xc9, 0x4f, 0x00, 0x0a, 0x87, 0x64, 0x41, 0xa2, 0xeb, 0xbe, 0x3e, 0x1f, 0xb7,
+	0x61, 0xbb, 0x74, 0x32, 0xae, 0x2d, 0x78, 0x17, 0x8c, 0x66, 0x0e, 0xc5, 0x6f, 0xd9, 0x5d, 0xf0,
+	0x40, 0x65, 0x57, 0x2d, 0xd3, 0x34, 0xdd, 0xda, 0x25, 0xe8, 0x5e, 0xdd, 0xb5, 0xf0, 0xa3, 0x21,
+	0xef, 0x85, 0x3c, 0x79, 0x5d, 0xeb, 0xd6, 0x54, 0xae, 0x19, 0x8f, 0x62, 0x46, 0x02, 0xb6, 0xf2,
+	0x55, 0x7e, 0x97, 0xce, 0x6d, 0xd5, 0xf7, 0x52, 0xfd, 0x7e, 0x78, 0xd9, 0x3e, 0x88, 0x62, 0x71,
+	0x36, 0xf2, 0x9d, 0x80, 0x0e, 0xd4, 0x80, 0x54, 0x7f, 0x0e, 0x79, 0xf8, 0x95, 0x2b, 0x9e, 0x0c,
+	0x31, 0x97, 0x0e, 0xbc, 0xbf, 0x99, 0xef, 0xa1, 0xae, 0xdd, 0x5f, 0x0d, 0xd8, 0xea, 0xf1, 0xa8,
+	0x9b, 0x4e, 0xad, 0xbb, 0xaa, 0x94, 0x95, 0x72, 0x1f, 0x4f, 0xa6, 0xdd, 0x3c, 0xad, 0xf5, 0x1c,
+	0xbc, 0x3a, 0xa1, 0xbf, 0x33, 0x60, 0x77, 0x26, 0x75, 0x2d, 0x76, 0x61, 0x2e, 0x1b, 0xd3, 0x73,
+	0x39, 0x80, 0xfa, 0x20, 0x26, 0x02, 0x87, 0x57, 0xa1, 0xae, 0x0a, 0x6d, 0x7f, 0x53, 0x93, 0x93,
+	0x56, 0x35, 0xfe, 0xfc, 0x73, 0x7c, 0xc9, 0x99, 0xe6, 0x42, 0x23, 0x0e, 0x90, 0x57, 0xa1, 0xeb,
+	0x4e, 0x1c, 0xa0, 0x7b, 0xd3, 0xd2, 0x7e, 0x00, 0xbb, 0x53, 0x0e, 0x25, 0x79, 0x1b, 0x05, 0x1f,
+	0xad, 0xb0, 0xd9, 0x05, 0x08, 0xce, 0x50, 0x4c, 0xbc, 0xf4, 0x59, 0xa5, 0xba, 0xd9, 0x72, 0xb2,
+	0x37, 0x97, 0x93, 0xbf, 0xb9, 0x9c, 0x7b, 0xf9, 0x9b, 0xab, 0xb3, 0x96, 0x0a, 0xf6, 0xf4, 0x65,
+	0xdb, 0xe8, 0xaf, 0x4b, 0xbf, 0xd4, 0x62, 0xef, 0x81, 0x55, 0x96, 0x22, 0x2f, 0xd4, 0xf1, 0xef,
+	0x2b, 0xb0, 0xdc, 0xe3, 0x91, 0xd9, 0x85, 0x55, 0xfd, 0x48, 0x73, 0x0a, 0xcf, 0x49, 0x67, 0xf2,
+	0x60, 0xb1, 0xda, 0x15, 0x06, 0x5d, 0xf5, 0xcf, 0x60, 0x4d, 0xbf, 0x1f, 0x9a, 0x65, 0x70, 0x66,
+	0xb1, 0xf6, 0xab, 0x2c, 0x3a, 0xce, 0xe7, 0x00, 0x85, 0x49, 0x64, 0xcd, 0xe2, 0x27, 0x36, 0xcb,
+	0xae, 0xb6, 0xe9, 0x68, 0x08, 0x76, 0xca, 0xe3, 0xed, 0xed, 0x59, 0xc7, 0x12, 0xc4, 0x7a, 0x77,
+	0x2e, 0xa4, 0x48, 0x5c, 0x1f, 0xb2, 0x12, 0xf1, 0xdc, 0x52, 0x26, 0x5e, 0xba, 0xa3, 0xfa, 0xf0,
+	0xc6, 0xd4, 0x4d, 0xb0, 0x37, 0xeb, 0x51, 0xb4, 0x5a, 0xef, 0xbc, 0xce, 0xaa, 0x63, 0x7e, 0x09,
+	0x5b, 0xb3, 0x7d, 0xd0, 0xae, 0x60, 0xa6, 0x33, 0xbd, 0x35, 0x07, 0x90, 0x07, 0xef, 0x9c, 0x3c,
+	0x3b, 0x6f, 0x19, 0xcf, 0xcf, 0x5b, 0xc6, 0xdf, 0xe7, 0x2d, 0xe3, 0xe9, 0x45, 0x6b, 0xe9, 0xf9,
+	0x45, 0x6b, 0xe9, 0x8f, 0x8b, 0xd6, 0xd2, 0x17, 0xb7, 0x0a, 0x4d, 0xdb, 0x45, 0x2c, 0x26, 0xe8,
+	0x30, 0x41, 0x3e, 0x77, 0xe5, 0x0f, 0x98, 0xc7, 0xf2, 0x27, 0x8c, 0xec, 0x5c, 0xbf, 0x2e, 0x0f,
+	0xf2, 0xfb, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x56, 0xe3, 0xc3, 0xbc, 0xdb, 0x0c, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -971,7 +994,7 @@ type MsgClient interface {
 	Deposit(ctx context.Context, in *MsgDeposit, opts ...grpc.CallOption) (*MsgDepositResponse, error)
 	Delegate(ctx context.Context, in *MsgDelegate, opts ...grpc.CallOption) (*MsgDelegateResponse, error)
 	Undelegate(ctx context.Context, in *MsgUndelegate, opts ...grpc.CallOption) (*MsgUndelegateResponse, error)
-	PendingUndelegateRecord(ctx context.Context, in *MsgPendingUndelegateRecord, opts ...grpc.CallOption) (*MsgPendingUndelegateRecordResponse, error)
+	PendingUndelegate(ctx context.Context, in *MsgPendingUndelegate, opts ...grpc.CallOption) (*MsgPendingUndelegateResponse, error)
 	Withdraw(ctx context.Context, in *MsgWithdraw, opts ...grpc.CallOption) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts ...grpc.CallOption) (*MsgClaimSnAssetResponse, error)
 	PendingWithdraw(ctx context.Context, in *MsgPendingWithdraw, opts ...grpc.CallOption) (*MsgPendingWithdrawResponse, error)
@@ -1012,9 +1035,9 @@ func (c *msgClient) Undelegate(ctx context.Context, in *MsgUndelegate, opts ...g
 	return out, nil
 }
 
-func (c *msgClient) PendingUndelegateRecord(ctx context.Context, in *MsgPendingUndelegateRecord, opts ...grpc.CallOption) (*MsgPendingUndelegateRecordResponse, error) {
-	out := new(MsgPendingUndelegateRecordResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/PendingUndelegateRecord", in, out, opts...)
+func (c *msgClient) PendingUndelegate(ctx context.Context, in *MsgPendingUndelegate, opts ...grpc.CallOption) (*MsgPendingUndelegateResponse, error) {
+	out := new(MsgPendingUndelegateResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/PendingUndelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1053,7 +1076,7 @@ type MsgServer interface {
 	Deposit(context.Context, *MsgDeposit) (*MsgDepositResponse, error)
 	Delegate(context.Context, *MsgDelegate) (*MsgDelegateResponse, error)
 	Undelegate(context.Context, *MsgUndelegate) (*MsgUndelegateResponse, error)
-	PendingUndelegateRecord(context.Context, *MsgPendingUndelegateRecord) (*MsgPendingUndelegateRecordResponse, error)
+	PendingUndelegate(context.Context, *MsgPendingUndelegate) (*MsgPendingUndelegateResponse, error)
 	Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error)
 	PendingWithdraw(context.Context, *MsgPendingWithdraw) (*MsgPendingWithdrawResponse, error)
@@ -1072,8 +1095,8 @@ func (*UnimplementedMsgServer) Delegate(ctx context.Context, req *MsgDelegate) (
 func (*UnimplementedMsgServer) Undelegate(ctx context.Context, req *MsgUndelegate) (*MsgUndelegateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Undelegate not implemented")
 }
-func (*UnimplementedMsgServer) PendingUndelegateRecord(ctx context.Context, req *MsgPendingUndelegateRecord) (*MsgPendingUndelegateRecordResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PendingUndelegateRecord not implemented")
+func (*UnimplementedMsgServer) PendingUndelegate(ctx context.Context, req *MsgPendingUndelegate) (*MsgPendingUndelegateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PendingUndelegate not implemented")
 }
 func (*UnimplementedMsgServer) Withdraw(ctx context.Context, req *MsgWithdraw) (*MsgWithdrawResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Withdraw not implemented")
@@ -1143,20 +1166,20 @@ func _Msg_Undelegate_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_PendingUndelegateRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgPendingUndelegateRecord)
+func _Msg_PendingUndelegate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgPendingUndelegate)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).PendingUndelegateRecord(ctx, in)
+		return srv.(MsgServer).PendingUndelegate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Msg/PendingUndelegateRecord",
+		FullMethod: "/nova.gal.v1.Msg/PendingUndelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).PendingUndelegateRecord(ctx, req.(*MsgPendingUndelegateRecord))
+		return srv.(MsgServer).PendingUndelegate(ctx, req.(*MsgPendingUndelegate))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1232,8 +1255,8 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_Undelegate_Handler,
 		},
 		{
-			MethodName: "PendingUndelegateRecord",
-			Handler:    _Msg_PendingUndelegateRecord_Handler,
+			MethodName: "PendingUndelegate",
+			Handler:    _Msg_PendingUndelegate_Handler,
 		},
 		{
 			MethodName: "Withdraw",
@@ -1277,21 +1300,14 @@ func (m *MsgDeposit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.TransferChannelId)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.TransferChannelId)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x32
 	}
 	if len(m.TransferPortId) > 0 {
 		i -= len(m.TransferPortId)
 		copy(dAtA[i:], m.TransferPortId)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.TransferPortId)))
 		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.ZoneId) > 0 {
-		i -= len(m.ZoneId)
-		copy(dAtA[i:], m.ZoneId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
-		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x2a
 	}
 	{
 		size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
@@ -1302,11 +1318,25 @@ func (m *MsgDeposit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x12
+	dAtA[i] = 0x22
+	if len(m.Claimer) > 0 {
+		i -= len(m.Claimer)
+		copy(dAtA[i:], m.Claimer)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Claimer)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if len(m.Depositor) > 0 {
 		i -= len(m.Depositor)
 		copy(dAtA[i:], m.Depositor)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.Depositor)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1342,7 +1372,14 @@ func (m *MsgDepositResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x12
+	dAtA[i] = 0x1a
+	if len(m.Depositor) > 0 {
+		i -= len(m.Depositor)
+		copy(dAtA[i:], m.Depositor)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Depositor)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if len(m.Receiver) > 0 {
 		i -= len(m.Receiver)
 		copy(dAtA[i:], m.Receiver)
@@ -1493,7 +1530,7 @@ func (m *MsgUndelegateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x22
+	dAtA[i] = 0x1a
 	{
 		size, err := m.TotalBurnAsset.MarshalToSizedBuffer(dAtA[:i])
 		if err != nil {
@@ -1503,7 +1540,7 @@ func (m *MsgUndelegateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x1a
+	dAtA[i] = 0x12
 	if len(m.ZoneId) > 0 {
 		i -= len(m.ZoneId)
 		copy(dAtA[i:], m.ZoneId)
@@ -1514,7 +1551,7 @@ func (m *MsgUndelegateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgPendingUndelegateRecord) Marshal() (dAtA []byte, err error) {
+func (m *MsgPendingUndelegate) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1524,12 +1561,12 @@ func (m *MsgPendingUndelegateRecord) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgPendingUndelegateRecord) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgPendingUndelegate) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgPendingUndelegateRecord) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgPendingUndelegate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1543,11 +1580,18 @@ func (m *MsgPendingUndelegateRecord) MarshalToSizedBuffer(dAtA []byte) (int, err
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x1a
-	if len(m.Depositor) > 0 {
-		i -= len(m.Depositor)
-		copy(dAtA[i:], m.Depositor)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Depositor)))
+	dAtA[i] = 0x22
+	if len(m.Withdrawer) > 0 {
+		i -= len(m.Withdrawer)
+		copy(dAtA[i:], m.Withdrawer)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Withdrawer)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Delegator) > 0 {
+		i -= len(m.Delegator)
+		copy(dAtA[i:], m.Delegator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Delegator)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1561,7 +1605,7 @@ func (m *MsgPendingUndelegateRecord) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgPendingUndelegateRecordResponse) Marshal() (dAtA []byte, err error) {
+func (m *MsgPendingUndelegateResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1571,12 +1615,12 @@ func (m *MsgPendingUndelegateRecordResponse) Marshal() (dAtA []byte, err error) 
 	return dAtA[:n], nil
 }
 
-func (m *MsgPendingUndelegateRecordResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgPendingUndelegateResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgPendingUndelegateRecordResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgPendingUndelegateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1590,7 +1634,7 @@ func (m *MsgPendingUndelegateRecordResponse) MarshalToSizedBuffer(dAtA []byte) (
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x22
+	dAtA[i] = 0x2a
 	{
 		size, err := m.BurnAsset.MarshalToSizedBuffer(dAtA[:i])
 		if err != nil {
@@ -1600,11 +1644,18 @@ func (m *MsgPendingUndelegateRecordResponse) MarshalToSizedBuffer(dAtA []byte) (
 		i = encodeVarintTx(dAtA, i, uint64(size))
 	}
 	i--
-	dAtA[i] = 0x1a
-	if len(m.User) > 0 {
-		i -= len(m.User)
-		copy(dAtA[i:], m.User)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.User)))
+	dAtA[i] = 0x22
+	if len(m.Withdrawer) > 0 {
+		i -= len(m.Withdrawer)
+		copy(dAtA[i:], m.Withdrawer)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Withdrawer)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Delegator) > 0 {
+		i -= len(m.Delegator)
+		copy(dAtA[i:], m.Delegator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Delegator)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1638,24 +1689,17 @@ func (m *MsgWithdraw) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.IcaTransferChannelId) > 0 {
-		i -= len(m.IcaTransferChannelId)
-		copy(dAtA[i:], m.IcaTransferChannelId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.IcaTransferChannelId)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.IcaTransferPortId) > 0 {
-		i -= len(m.IcaTransferPortId)
-		copy(dAtA[i:], m.IcaTransferPortId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.IcaTransferPortId)))
+	if len(m.TransferChannelId) > 0 {
+		i -= len(m.TransferChannelId)
+		copy(dAtA[i:], m.TransferChannelId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TransferChannelId)))
 		i--
 		dAtA[i] = 0x22
 	}
-	if len(m.Recipient) > 0 {
-		i -= len(m.Recipient)
-		copy(dAtA[i:], m.Recipient)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Recipient)))
+	if len(m.TransferPortId) > 0 {
+		i -= len(m.TransferPortId)
+		copy(dAtA[i:], m.TransferPortId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TransferPortId)))
 		i--
 		dAtA[i] = 0x1a
 	}
@@ -1835,24 +1879,24 @@ func (m *MsgPendingWithdraw) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i = encodeVarintTx(dAtA, i, uint64(n10))
 	i--
 	dAtA[i] = 0x2a
-	if len(m.TransferChannelId) > 0 {
-		i -= len(m.TransferChannelId)
-		copy(dAtA[i:], m.TransferChannelId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.TransferChannelId)))
+	if len(m.IcaTransferChannelId) > 0 {
+		i -= len(m.IcaTransferChannelId)
+		copy(dAtA[i:], m.IcaTransferChannelId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.IcaTransferChannelId)))
 		i--
 		dAtA[i] = 0x22
 	}
-	if len(m.TransferPortId) > 0 {
-		i -= len(m.TransferPortId)
-		copy(dAtA[i:], m.TransferPortId)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.TransferPortId)))
+	if len(m.IcaTransferPortId) > 0 {
+		i -= len(m.IcaTransferPortId)
+		copy(dAtA[i:], m.IcaTransferPortId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.IcaTransferPortId)))
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.DaomodifierAddress) > 0 {
-		i -= len(m.DaomodifierAddress)
-		copy(dAtA[i:], m.DaomodifierAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.DaomodifierAddress)))
+	if len(m.ControllerAddress) > 0 {
+		i -= len(m.ControllerAddress)
+		copy(dAtA[i:], m.ControllerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ControllerAddress)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -1906,16 +1950,20 @@ func (m *MsgDeposit) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
 	l = len(m.Depositor)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Claimer)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
 	l = m.Amount.Size()
 	n += 1 + l + sovTx(uint64(l))
-	l = len(m.ZoneId)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
 	l = len(m.TransferPortId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
@@ -1934,6 +1982,10 @@ func (m *MsgDepositResponse) Size() (n int) {
 	var l int
 	_ = l
 	l = len(m.Receiver)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Depositor)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -2010,7 +2062,7 @@ func (m *MsgUndelegateResponse) Size() (n int) {
 	return n
 }
 
-func (m *MsgPendingUndelegateRecord) Size() (n int) {
+func (m *MsgPendingUndelegate) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2020,7 +2072,11 @@ func (m *MsgPendingUndelegateRecord) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.Depositor)
+	l = len(m.Delegator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Withdrawer)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -2029,7 +2085,7 @@ func (m *MsgPendingUndelegateRecord) Size() (n int) {
 	return n
 }
 
-func (m *MsgPendingUndelegateRecordResponse) Size() (n int) {
+func (m *MsgPendingUndelegateResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2039,7 +2095,11 @@ func (m *MsgPendingUndelegateRecordResponse) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.User)
+	l = len(m.Delegator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Withdrawer)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -2064,15 +2124,11 @@ func (m *MsgWithdraw) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.Recipient)
+	l = len(m.TransferPortId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.IcaTransferPortId)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.IcaTransferChannelId)
+	l = len(m.TransferChannelId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -2144,15 +2200,15 @@ func (m *MsgPendingWithdraw) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.DaomodifierAddress)
+	l = len(m.ControllerAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.TransferPortId)
+	l = len(m.IcaTransferPortId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.TransferChannelId)
+	l = len(m.IcaTransferChannelId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -2207,6 +2263,38 @@ func (m *MsgDeposit) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Depositor", wireType)
 			}
 			var stringLen uint64
@@ -2237,7 +2325,39 @@ func (m *MsgDeposit) Unmarshal(dAtA []byte) error {
 			}
 			m.Depositor = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 2:
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Claimer", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Claimer = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
@@ -2270,39 +2390,7 @@ func (m *MsgDeposit) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ZoneId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TransferPortId", wireType)
 			}
@@ -2334,7 +2422,7 @@ func (m *MsgDeposit) Unmarshal(dAtA []byte) error {
 			}
 			m.TransferPortId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TransferChannelId", wireType)
 			}
@@ -2449,6 +2537,38 @@ func (m *MsgDepositResponse) Unmarshal(dAtA []byte) error {
 			m.Receiver = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Depositor", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Depositor = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DepositedAmount", wireType)
 			}
@@ -2905,7 +3025,7 @@ func (m *MsgUndelegateResponse) Unmarshal(dAtA []byte) error {
 			}
 			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TotalBurnAsset", wireType)
 			}
@@ -2938,7 +3058,7 @@ func (m *MsgUndelegateResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 4:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TotalUndelegateAsset", wireType)
 			}
@@ -2992,7 +3112,7 @@ func (m *MsgUndelegateResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgPendingUndelegateRecord) Unmarshal(dAtA []byte) error {
+func (m *MsgPendingUndelegate) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3015,10 +3135,10 @@ func (m *MsgPendingUndelegateRecord) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgPendingUndelegateRecord: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgPendingUndelegate: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgPendingUndelegateRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgPendingUndelegate: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3055,7 +3175,7 @@ func (m *MsgPendingUndelegateRecord) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Depositor", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Delegator", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3083,9 +3203,41 @@ func (m *MsgPendingUndelegateRecord) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Depositor = string(dAtA[iNdEx:postIndex])
+			m.Delegator = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Withdrawer", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Withdrawer = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
@@ -3139,7 +3291,7 @@ func (m *MsgPendingUndelegateRecord) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgPendingUndelegateRecordResponse) Unmarshal(dAtA []byte) error {
+func (m *MsgPendingUndelegateResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3162,10 +3314,10 @@ func (m *MsgPendingUndelegateRecordResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgPendingUndelegateRecordResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgPendingUndelegateResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgPendingUndelegateRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgPendingUndelegateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3202,7 +3354,7 @@ func (m *MsgPendingUndelegateRecordResponse) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field User", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Delegator", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3230,9 +3382,41 @@ func (m *MsgPendingUndelegateRecordResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.User = string(dAtA[iNdEx:postIndex])
+			m.Delegator = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Withdrawer", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Withdrawer = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field BurnAsset", wireType)
 			}
@@ -3265,7 +3449,7 @@ func (m *MsgPendingUndelegateRecordResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field UndelegateAsset", wireType)
 			}
@@ -3414,7 +3598,7 @@ func (m *MsgWithdraw) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Recipient", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field TransferPortId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3442,11 +3626,11 @@ func (m *MsgWithdraw) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Recipient = string(dAtA[iNdEx:postIndex])
+			m.TransferPortId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IcaTransferPortId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field TransferChannelId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3474,39 +3658,7 @@ func (m *MsgWithdraw) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.IcaTransferPortId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field IcaTransferChannelId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.IcaTransferChannelId = string(dAtA[iNdEx:postIndex])
+			m.TransferChannelId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4000,7 +4152,7 @@ func (m *MsgPendingWithdraw) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -4028,11 +4180,11 @@ func (m *MsgPendingWithdraw) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
+			m.ControllerAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TransferPortId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field IcaTransferPortId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -4060,11 +4212,11 @@ func (m *MsgPendingWithdraw) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.TransferPortId = string(dAtA[iNdEx:postIndex])
+			m.IcaTransferPortId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TransferChannelId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field IcaTransferChannelId", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -4092,7 +4244,7 @@ func (m *MsgPendingWithdraw) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.TransferChannelId = string(dAtA[iNdEx:postIndex])
+			m.IcaTransferChannelId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {

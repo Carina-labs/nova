@@ -14,7 +14,7 @@ service Msg {
   rpc Deposit(MsgDeposit) returns (MsgDepositResponse);
   rpc Delegate(MsgDelegate) returns (MsgDelegateResponse);
   rpc Undelegate(MsgUndelegate) returns (MsgUndelegateResponse);
-  rpc PendingUndelegateRecord(MsgPendingUndelegateRecord) returns (MsgPendingUndelegateRecordResponse);
+  rpc PendingUndelegate(MsgPendingUndelegate) returns (MsgPendingUndelegateResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
   rpc ClaimSnAsset(MsgClaimSnAsset) returns (MsgClaimSnAssetResponse);
   rpc PendingWithdraw(MsgPendingWithdraw) returns (MsgPendingWithdrawResponse);
@@ -22,16 +22,18 @@ service Msg {
 
 // MsgDeposit defines user who deposit and amount of coins.
 message MsgDeposit {
-  string depositor = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
-  string zone_id = 3;
-  string transfer_port_id = 4;
-  string transfer_channel_id = 5;
+  string zone_id = 1;
+  string depositor = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string claimer = 3;
+  cosmos.base.v1beta1.Coin amount = 4 [(gogoproto.nullable) = false];
+  string transfer_port_id = 5;
+  string transfer_channel_id = 6;
 }
 
 message MsgDepositResponse {
   string receiver = 1;
-  cosmos.base.v1beta1.Coin deposited_amount = 2 [(gogoproto.nullable) = false];
+  string depositor = 2;
+  cosmos.base.v1beta1.Coin deposited_amount = 3 [(gogoproto.nullable) = false];
 }
 
 message MsgDelegate {
@@ -51,31 +53,32 @@ message MsgUndelegate {
 
 message MsgUndelegateResponse{
   string zone_id = 1;
-  cosmos.base.v1beta1.Coin total_burn_asset = 3 [(gogoproto.nullable) = false];
-  cosmos.base.v1beta1.Coin total_undelegate_asset = 4 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin total_burn_asset = 2 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin total_undelegate_asset = 3 [(gogoproto.nullable) = false];
 }
 
 // MsgUnStaking defines user who want to un-stake his/her asset.
-message MsgPendingUndelegateRecord {
+message MsgPendingUndelegate {
   string zone_id = 1;
-  string depositor = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
+  string delegator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string withdrawer = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  cosmos.base.v1beta1.Coin amount = 4 [(gogoproto.nullable) = false];
 }
 
-message MsgPendingUndelegateRecordResponse {
+message MsgPendingUndelegateResponse {
   string zone_id = 1;
-  string user = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  cosmos.base.v1beta1.Coin burn_asset = 3 [(gogoproto.nullable) = false];
-  cosmos.base.v1beta1.Coin undelegate_asset = 4 [(gogoproto.nullable) = false];
+  string delegator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string withdrawer = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  cosmos.base.v1beta1.Coin burn_asset = 4 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin undelegate_asset = 5 [(gogoproto.nullable) = false];
 }
 
 // MsgWithdraw defines user who withdraw and amount of coins.
 message MsgWithdraw {
   string zone_id = 1;
-  string withdrawer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  string recipient = 3;
-  string ica_transfer_port_id = 4;
-  string ica_transfer_channel_id = 5;
+  string withdrawer = 2[(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
 }
 
 message MsgWithdrawResponse {
@@ -100,9 +103,9 @@ message MsgClaimSnAssetResponse {
 
 message MsgPendingWithdraw{
   string zone_id = 1;
-  string daomodifier_address = 2;
-  string transfer_port_id = 3;
-  string transfer_channel_id = 4;
+  string controller_address = 2;
+  string ica_transfer_port_id = 3;
+  string ica_transfer_channel_id = 4;
   google.protobuf.Timestamp chain_time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
 }
 

@@ -36,7 +36,13 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	if !ok {
 		return nil, fmt.Errorf("can't find valid IBC zone, input zoneId: %s", deposit.ZoneId)
 	}
+
 	depositorAcc, err := sdk.AccAddressFromBech32(deposit.Depositor)
+	if err != nil {
+		return nil, err
+	}
+
+	claimAcc, err := sdk.AccAddressFromBech32(deposit.Claimer)
 	if err != nil {
 		return nil, err
 	}
@@ -46,16 +52,17 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	newRecord := &types.DepositRecordContent{
-		Amount: &deposit.Amount,
-		State:  int64(DEPOSIT_REQUEST),
+		Depositor: depositorAcc.String(),
+		Amount:    &deposit.Amount,
+		State:     int64(DEPOSIT_REQUEST),
 	}
 
-	record, err := m.keeper.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, depositorAcc)
+	record, err := m.keeper.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, claimAcc)
 
 	if err == types.ErrNoDepositRecord {
 		m.keeper.SetDepositAmt(ctx, &types.DepositRecord{
 			ZoneId:  deposit.ZoneId,
-			Address: deposit.Depositor,
+			Claimer: deposit.Claimer,
 			Records: []*types.DepositRecordContent{newRecord},
 		})
 	} else {
@@ -74,7 +81,8 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	return &types.MsgDepositResponse{
-		Receiver:        deposit.Depositor,
+		Depositor:       deposit.Depositor,
+		Receiver:        deposit.Claimer,
 		DepositedAmount: deposit.Amount,
 	}, nil
 }
@@ -100,6 +108,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 
 	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, DELEGATE_REQUEST)
 	delegateAmt.Denom = zoneInfo.BaseDenom
+
 	var msgs []sdk.Msg
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: delegateAmt})
 
@@ -111,57 +120,59 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	return &types.MsgDelegateResponse{}, nil
 }
 
-// UndelegateRecord is used when user requests undelegate their staked asset.
+// Undelegate is used when user requests undelegate their staked asset.
 // 1. User sends their st-token to module account.
 // 2. And GAL coins step 1 to the store.
-func (m msgServer) PendingUndelegateRecord(goCtx context.Context, undelegate *types.MsgPendingUndelegateRecord) (*types.MsgPendingUndelegateRecordResponse, error) {
+func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.MsgPendingUndelegate) (*types.MsgPendingUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// change undelegate State
-	_, found := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
+	zoneInfo, found := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
 	if !found {
 		return nil, errors.New("zone not found")
 	}
 
 	//send stAsset to GAL moduleAccount
-	depositorAcc, err := sdk.AccAddressFromBech32(undelegate.Depositor)
+	delegatorAcc, err := sdk.AccAddressFromBech32(undelegate.Delegator)
 	if err != nil {
 		return nil, err
 	}
 
-	err = m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, depositorAcc, types.ModuleName, sdk.Coins{undelegate.Amount})
-	if err != nil {
-		return nil, err
+	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
+
+	newRecord := types.UndelegateRecordContent{
+		Withdrawer:    undelegate.Withdrawer,
+		SnAssetAmount: &undelegate.Amount,
+		State:         int64(UNDELEGATE_REQUEST_USER),
+		OracleVersion: oracleVersion,
 	}
 
-	undelegateInfo, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId+undelegate.Depositor)
+	snAssetAmt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
 
-	// cal withdrawAmt
-	withdrawAmt, err := m.keeper.GetWithdrawAmt(ctx, undelegate.Amount)
-	if err != nil {
-		return nil, err
-	}
+	undelegateRecord, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
 
 	if found {
-		undelegate.Amount = undelegate.Amount.Add(*undelegateInfo.SnAssetAmount)
-		withdrawAmt = undelegateInfo.WithdrawAmount.Add(withdrawAmt)
+		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
+	} else {
+		undelegateRecord = types.UndelegateRecord{
+			ZoneId:    undelegate.ZoneId,
+			Delegator: undelegate.Delegator,
+			Records:   []*types.UndelegateRecordContent{&newRecord},
+		}
 	}
 
-	amt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
+	m.keeper.SetUndelegateRecord(ctx, undelegateRecord)
 
-	m.keeper.SetUndelegateRecord(ctx, types.UndelegateRecord{
-		ZoneId:         undelegate.ZoneId,
-		Delegator:      undelegate.Depositor,
-		WithdrawAmount: &withdrawAmt,
-		SnAssetAmount:  &amt,
-		State:          int64(UNDELEGATE_REQUEST_USER),
-	})
+	err = m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, delegatorAcc, types.ModuleName, sdk.Coins{undelegate.Amount})
+	if err != nil {
+		return nil, err
+	}
 
-	return &types.MsgPendingUndelegateRecordResponse{
-		ZoneId:          undelegate.ZoneId,
-		User:            undelegate.Depositor,
-		BurnAsset:       amt,
-		UndelegateAsset: withdrawAmt,
+	return &types.MsgPendingUndelegateResponse{
+		ZoneId:     undelegate.ZoneId,
+		Delegator:  undelegate.Delegator,
+		Withdrawer: undelegate.Withdrawer,
+		BurnAsset:  snAssetAmt,
 	}, nil
 }
 
@@ -181,14 +192,16 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("zone is not found")
 	}
 
-	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.BaseDenom, zoneInfo.ZoneId, UNDELEGATE_REQUEST_USER)
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
+
+	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
+
+	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.BaseDenom, zoneInfo.ZoneId, oracleVersion, UNDELEGATE_REQUEST_ICA)
 
 	if burnAssets.Amount.Equal(sdk.NewInt(0)) || undelegateAssets.Amount.Equal(sdk.NewInt(0)) {
 		// TODO: should handle if no coins to undelegate
 		return nil, errors.New("no coins to undelegate")
 	}
-
-	m.keeper.SetWithdrawRecords(ctx, msg.ZoneId, UNDELEGATE_REQUEST_USER)
 
 	var msgs []sdk.Msg
 
@@ -224,28 +237,31 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
 	}
 
-	withdrawRecord, err := m.keeper.GetWithdrawRecord(ctx, withdraw.ZoneId, withdraw.Withdrawer)
-	if err != nil {
-		return nil, sdkerrors.Wrapf(err, "account: %s", withdrawRecord.Withdrawer)
+	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, zoneInfo.ZoneId, withdraw.Withdrawer)
+	if !found {
+		return nil, types.ErrNoWithdrawRecord
 	}
 
-	if withdrawRecord.State != int64(TRANSFER_SUCCESS) {
-		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "unbonding time has not passed %s", withdrawRecord.CompletionTime)
+	// get withdrawAmount : withdraw기록들 중에서 time이 지난 금액들 전부 합해서 반환
+	withdrawAmt := m.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
+	if withdrawAmt.IsZero() {
+		return nil, nil
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.IcaTransferPortId, withdraw.IcaTransferChannelId, zoneInfo.BaseDenom)
-	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawRecord.Amount.Amount.Int64())
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, zoneInfo.BaseDenom)
+
+	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
 	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
 	if err != nil {
 		return nil, err
 	}
 
-	recipientAcc, err := sdk.AccAddressFromBech32(withdraw.Recipient)
+	withdrawerAddr, err := sdk.AccAddressFromBech32(withdraw.Withdrawer)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := m.keeper.ClaimWithdrawAsset(ctx, controllerAddr, recipientAcc, withdrawAmount); err != nil {
+	if err := m.keeper.ClaimWithdrawAsset(ctx, controllerAddr, withdrawerAddr, withdrawAmount); err != nil {
 		return nil, err
 	}
 
@@ -260,8 +276,8 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingWithdraw) (*types.MsgPendingWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, msg.DaomodifierAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
+	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
@@ -269,7 +285,7 @@ func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingW
 		return nil, errors.New("zone name is not found")
 	}
 
-	withdrawAmount := m.keeper.GetTotalWithdrawAmountForZoneId(ctx, msg.ZoneId, msg.ChainTime)
+	withdrawAmount := m.keeper.GetTotalWithdrawAmountForZoneId(ctx, msg.ZoneId, zoneInfo.BaseDenom, msg.ChainTime)
 	if withdrawAmount.IsZero() {
 		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "total widraw amount: %s", withdrawAmount)
 	}
@@ -279,11 +295,11 @@ func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingW
 	//transfer msg
 	//sourceport, Source channel, Token, Sender, receiver, TimeoutHeight, TimeoutTimestamp
 	msgs = append(msgs, &ibctransfertypes.MsgTransfer{
-		SourcePort:    msg.TransferPortId,
-		SourceChannel: msg.TransferChannelId,
+		SourcePort:    msg.IcaTransferPortId,
+		SourceChannel: msg.IcaTransferChannelId,
 		Token:         withdrawAmount,
 		Sender:        zoneInfo.IcaAccount.HostAddress,
-		Receiver:      msg.DaomodifierAddress,
+		Receiver:      msg.ControllerAddress,
 		TimeoutHeight: ibcclienttypes.Height{
 			RevisionHeight: 0,
 			RevisionNumber: 0,
@@ -291,7 +307,7 @@ func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingW
 		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
 	})
 
-	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, msg.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, errors.New("PendingWithdraw transaction failed to send")
 	}
@@ -322,11 +338,9 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	}
 
 	for _, record := range records.Records {
-		oracleVersion, err := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
-		if err != nil {
-			return nil, err
-		}
-		if record.BlockHeight >= oracleVersion {
+		oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
+
+		if uint64(record.OracleVersion) >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
 		if record.State == int64(DELEGATE_SUCCESS) {

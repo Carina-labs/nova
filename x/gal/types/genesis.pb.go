@@ -35,6 +35,7 @@ type GenesisState struct {
 	Params          Params            `protobuf:"bytes,1,opt,name=params,proto3" json:"params"`
 	DepositAccounts []*DepositAccount `protobuf:"bytes,2,rep,name=deposit_accounts,json=depositAccounts,proto3" json:"deposit_accounts,omitempty"`
 	WithdrawInfo    []*WithdrawInfo   `protobuf:"bytes,3,rep,name=withdraw_info,json=withdrawInfo,proto3" json:"withdraw_info,omitempty"`
+	RecordInfo      []*RecordInfo     `protobuf:"bytes,4,rep,name=record_info,json=recordInfo,proto3" json:"record_info,omitempty"`
 }
 
 func (m *GenesisState) Reset()         { *m = GenesisState{} }
@@ -87,6 +88,13 @@ func (m *GenesisState) GetDepositAccounts() []*DepositAccount {
 func (m *GenesisState) GetWithdrawInfo() []*WithdrawInfo {
 	if m != nil {
 		return m.WithdrawInfo
+	}
+	return nil
+}
+
+func (m *GenesisState) GetRecordInfo() []*RecordInfo {
+	if m != nil {
+		return m.RecordInfo
 	}
 	return nil
 }
@@ -221,126 +229,6 @@ func (m *DepositInfo) GetDebt() int64 {
 	return 0
 }
 
-type DepositRecord struct {
-	ZoneId  string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Address string                  `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
-	Records []*DepositRecordContent `protobuf:"bytes,3,rep,name=records,proto3" json:"records,omitempty"`
-}
-
-func (m *DepositRecord) Reset()         { *m = DepositRecord{} }
-func (m *DepositRecord) String() string { return proto.CompactTextString(m) }
-func (*DepositRecord) ProtoMessage()    {}
-func (*DepositRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_44fc8782bb5a532a, []int{3}
-}
-func (m *DepositRecord) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *DepositRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_DepositRecord.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *DepositRecord) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DepositRecord.Merge(m, src)
-}
-func (m *DepositRecord) XXX_Size() int {
-	return m.Size()
-}
-func (m *DepositRecord) XXX_DiscardUnknown() {
-	xxx_messageInfo_DepositRecord.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DepositRecord proto.InternalMessageInfo
-
-func (m *DepositRecord) GetZoneId() string {
-	if m != nil {
-		return m.ZoneId
-	}
-	return ""
-}
-
-func (m *DepositRecord) GetAddress() string {
-	if m != nil {
-		return m.Address
-	}
-	return ""
-}
-
-func (m *DepositRecord) GetRecords() []*DepositRecordContent {
-	if m != nil {
-		return m.Records
-	}
-	return nil
-}
-
-type DepositRecordContent struct {
-	Amount      *types.Coin `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
-	BlockHeight int64       `protobuf:"varint,2,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
-	State       int64       `protobuf:"varint,3,opt,name=state,proto3" json:"state,omitempty"`
-}
-
-func (m *DepositRecordContent) Reset()         { *m = DepositRecordContent{} }
-func (m *DepositRecordContent) String() string { return proto.CompactTextString(m) }
-func (*DepositRecordContent) ProtoMessage()    {}
-func (*DepositRecordContent) Descriptor() ([]byte, []int) {
-	return fileDescriptor_44fc8782bb5a532a, []int{4}
-}
-func (m *DepositRecordContent) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *DepositRecordContent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_DepositRecordContent.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *DepositRecordContent) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DepositRecordContent.Merge(m, src)
-}
-func (m *DepositRecordContent) XXX_Size() int {
-	return m.Size()
-}
-func (m *DepositRecordContent) XXX_DiscardUnknown() {
-	xxx_messageInfo_DepositRecordContent.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DepositRecordContent proto.InternalMessageInfo
-
-func (m *DepositRecordContent) GetAmount() *types.Coin {
-	if m != nil {
-		return m.Amount
-	}
-	return nil
-}
-
-func (m *DepositRecordContent) GetBlockHeight() int64 {
-	if m != nil {
-		return m.BlockHeight
-	}
-	return 0
-}
-
-func (m *DepositRecordContent) GetState() int64 {
-	if m != nil {
-		return m.State
-	}
-	return 0
-}
-
 type WithdrawInfo struct {
 	Address        string    `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
 	Denom          string    `protobuf:"bytes,2,opt,name=denom,proto3" json:"denom,omitempty"`
@@ -352,7 +240,7 @@ func (m *WithdrawInfo) Reset()         { *m = WithdrawInfo{} }
 func (m *WithdrawInfo) String() string { return proto.CompactTextString(m) }
 func (*WithdrawInfo) ProtoMessage()    {}
 func (*WithdrawInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_44fc8782bb5a532a, []int{5}
+	return fileDescriptor_44fc8782bb5a532a, []int{3}
 }
 func (m *WithdrawInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -409,19 +297,221 @@ func (m *WithdrawInfo) GetCompletionTime() time.Time {
 	return time.Time{}
 }
 
+type RecordInfo struct {
+	ZoneId            string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	DelegateVersion   uint64 `protobuf:"varint,2,opt,name=delegate_version,json=delegateVersion,proto3" json:"delegate_version,omitempty"`
+	UndelegateVersion uint64 `protobuf:"varint,3,opt,name=undelegate_version,json=undelegateVersion,proto3" json:"undelegate_version,omitempty"`
+	WithdrawVersion   uint64 `protobuf:"varint,4,opt,name=withdraw_version,json=withdrawVersion,proto3" json:"withdraw_version,omitempty"`
+}
+
+func (m *RecordInfo) Reset()         { *m = RecordInfo{} }
+func (m *RecordInfo) String() string { return proto.CompactTextString(m) }
+func (*RecordInfo) ProtoMessage()    {}
+func (*RecordInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_44fc8782bb5a532a, []int{4}
+}
+func (m *RecordInfo) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RecordInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RecordInfo.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RecordInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RecordInfo.Merge(m, src)
+}
+func (m *RecordInfo) XXX_Size() int {
+	return m.Size()
+}
+func (m *RecordInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_RecordInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RecordInfo proto.InternalMessageInfo
+
+func (m *RecordInfo) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+func (m *RecordInfo) GetDelegateVersion() uint64 {
+	if m != nil {
+		return m.DelegateVersion
+	}
+	return 0
+}
+
+func (m *RecordInfo) GetUndelegateVersion() uint64 {
+	if m != nil {
+		return m.UndelegateVersion
+	}
+	return 0
+}
+
+func (m *RecordInfo) GetWithdrawVersion() uint64 {
+	if m != nil {
+		return m.WithdrawVersion
+	}
+	return 0
+}
+
+type DepositRecord struct {
+	ZoneId  string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Claimer string                  `protobuf:"bytes,2,opt,name=claimer,proto3" json:"claimer,omitempty"`
+	Records []*DepositRecordContent `protobuf:"bytes,3,rep,name=records,proto3" json:"records,omitempty"`
+}
+
+func (m *DepositRecord) Reset()         { *m = DepositRecord{} }
+func (m *DepositRecord) String() string { return proto.CompactTextString(m) }
+func (*DepositRecord) ProtoMessage()    {}
+func (*DepositRecord) Descriptor() ([]byte, []int) {
+	return fileDescriptor_44fc8782bb5a532a, []int{5}
+}
+func (m *DepositRecord) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DepositRecord) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DepositRecord.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DepositRecord) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DepositRecord.Merge(m, src)
+}
+func (m *DepositRecord) XXX_Size() int {
+	return m.Size()
+}
+func (m *DepositRecord) XXX_DiscardUnknown() {
+	xxx_messageInfo_DepositRecord.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DepositRecord proto.InternalMessageInfo
+
+func (m *DepositRecord) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+func (m *DepositRecord) GetClaimer() string {
+	if m != nil {
+		return m.Claimer
+	}
+	return ""
+}
+
+func (m *DepositRecord) GetRecords() []*DepositRecordContent {
+	if m != nil {
+		return m.Records
+	}
+	return nil
+}
+
+type DepositRecordContent struct {
+	Depositor       string      `protobuf:"bytes,1,opt,name=depositor,proto3" json:"depositor,omitempty"`
+	Amount          *types.Coin `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	State           int64       `protobuf:"varint,3,opt,name=state,proto3" json:"state,omitempty"`
+	OracleVersion   uint64      `protobuf:"varint,4,opt,name=oracle_version,json=oracleVersion,proto3" json:"oracle_version,omitempty"`
+	DelegateVersion uint64      `protobuf:"varint,5,opt,name=delegate_version,json=delegateVersion,proto3" json:"delegate_version,omitempty"`
+}
+
+func (m *DepositRecordContent) Reset()         { *m = DepositRecordContent{} }
+func (m *DepositRecordContent) String() string { return proto.CompactTextString(m) }
+func (*DepositRecordContent) ProtoMessage()    {}
+func (*DepositRecordContent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_44fc8782bb5a532a, []int{6}
+}
+func (m *DepositRecordContent) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DepositRecordContent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DepositRecordContent.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *DepositRecordContent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DepositRecordContent.Merge(m, src)
+}
+func (m *DepositRecordContent) XXX_Size() int {
+	return m.Size()
+}
+func (m *DepositRecordContent) XXX_DiscardUnknown() {
+	xxx_messageInfo_DepositRecordContent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DepositRecordContent proto.InternalMessageInfo
+
+func (m *DepositRecordContent) GetDepositor() string {
+	if m != nil {
+		return m.Depositor
+	}
+	return ""
+}
+
+func (m *DepositRecordContent) GetAmount() *types.Coin {
+	if m != nil {
+		return m.Amount
+	}
+	return nil
+}
+
+func (m *DepositRecordContent) GetState() int64 {
+	if m != nil {
+		return m.State
+	}
+	return 0
+}
+
+func (m *DepositRecordContent) GetOracleVersion() uint64 {
+	if m != nil {
+		return m.OracleVersion
+	}
+	return 0
+}
+
+func (m *DepositRecordContent) GetDelegateVersion() uint64 {
+	if m != nil {
+		return m.DelegateVersion
+	}
+	return 0
+}
+
 type UndelegateRecord struct {
-	ZoneId         string      `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Delegator      string      `protobuf:"bytes,2,opt,name=delegator,proto3" json:"delegator,omitempty"`
-	SnAssetAmount  *types.Coin `protobuf:"bytes,3,opt,name=sn_asset_amount,json=snAssetAmount,proto3" json:"sn_asset_amount,omitempty"`
-	WithdrawAmount *types.Coin `protobuf:"bytes,4,opt,name=withdraw_amount,json=withdrawAmount,proto3" json:"withdraw_amount,omitempty"`
-	State          int64       `protobuf:"varint,5,opt,name=state,proto3" json:"state,omitempty"`
+	ZoneId    string                     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Delegator string                     `protobuf:"bytes,2,opt,name=delegator,proto3" json:"delegator,omitempty"`
+	Records   []*UndelegateRecordContent `protobuf:"bytes,3,rep,name=records,proto3" json:"records,omitempty"`
 }
 
 func (m *UndelegateRecord) Reset()         { *m = UndelegateRecord{} }
 func (m *UndelegateRecord) String() string { return proto.CompactTextString(m) }
 func (*UndelegateRecord) ProtoMessage()    {}
 func (*UndelegateRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_44fc8782bb5a532a, []int{6}
+	return fileDescriptor_44fc8782bb5a532a, []int{7}
 }
 func (m *UndelegateRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -464,41 +554,108 @@ func (m *UndelegateRecord) GetDelegator() string {
 	return ""
 }
 
-func (m *UndelegateRecord) GetSnAssetAmount() *types.Coin {
+func (m *UndelegateRecord) GetRecords() []*UndelegateRecordContent {
+	if m != nil {
+		return m.Records
+	}
+	return nil
+}
+
+type UndelegateRecordContent struct {
+	Withdrawer        string      `protobuf:"bytes,1,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
+	SnAssetAmount     *types.Coin `protobuf:"bytes,2,opt,name=sn_asset_amount,json=snAssetAmount,proto3" json:"sn_asset_amount,omitempty"`
+	WithdrawAmount    *types.Coin `protobuf:"bytes,3,opt,name=withdraw_amount,json=withdrawAmount,proto3" json:"withdraw_amount,omitempty"`
+	State             int64       `protobuf:"varint,4,opt,name=state,proto3" json:"state,omitempty"`
+	OracleVersion     uint64      `protobuf:"varint,5,opt,name=oracle_version,json=oracleVersion,proto3" json:"oracle_version,omitempty"`
+	UndelegateVersion uint64      `protobuf:"varint,6,opt,name=undelegate_version,json=undelegateVersion,proto3" json:"undelegate_version,omitempty"`
+}
+
+func (m *UndelegateRecordContent) Reset()         { *m = UndelegateRecordContent{} }
+func (m *UndelegateRecordContent) String() string { return proto.CompactTextString(m) }
+func (*UndelegateRecordContent) ProtoMessage()    {}
+func (*UndelegateRecordContent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_44fc8782bb5a532a, []int{8}
+}
+func (m *UndelegateRecordContent) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UndelegateRecordContent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UndelegateRecordContent.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UndelegateRecordContent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UndelegateRecordContent.Merge(m, src)
+}
+func (m *UndelegateRecordContent) XXX_Size() int {
+	return m.Size()
+}
+func (m *UndelegateRecordContent) XXX_DiscardUnknown() {
+	xxx_messageInfo_UndelegateRecordContent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UndelegateRecordContent proto.InternalMessageInfo
+
+func (m *UndelegateRecordContent) GetWithdrawer() string {
+	if m != nil {
+		return m.Withdrawer
+	}
+	return ""
+}
+
+func (m *UndelegateRecordContent) GetSnAssetAmount() *types.Coin {
 	if m != nil {
 		return m.SnAssetAmount
 	}
 	return nil
 }
 
-func (m *UndelegateRecord) GetWithdrawAmount() *types.Coin {
+func (m *UndelegateRecordContent) GetWithdrawAmount() *types.Coin {
 	if m != nil {
 		return m.WithdrawAmount
 	}
 	return nil
 }
 
-func (m *UndelegateRecord) GetState() int64 {
+func (m *UndelegateRecordContent) GetState() int64 {
 	if m != nil {
 		return m.State
 	}
 	return 0
 }
 
+func (m *UndelegateRecordContent) GetOracleVersion() uint64 {
+	if m != nil {
+		return m.OracleVersion
+	}
+	return 0
+}
+
+func (m *UndelegateRecordContent) GetUndelegateVersion() uint64 {
+	if m != nil {
+		return m.UndelegateVersion
+	}
+	return 0
+}
+
 type WithdrawRecord struct {
-	ZoneId         string      `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Withdrawer     string      `protobuf:"bytes,2,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
-	Recipient      string      `protobuf:"bytes,3,opt,name=recipient,proto3" json:"recipient,omitempty"`
-	Amount         *types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`
-	State          int64       `protobuf:"varint,5,opt,name=state,proto3" json:"state,omitempty"`
-	CompletionTime time.Time   `protobuf:"bytes,6,opt,name=completion_time,json=completionTime,proto3,stdtime" json:"completion_time"`
+	ZoneId     string                            `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Withdrawer string                            `protobuf:"bytes,2,opt,name=withdrawer,proto3" json:"withdrawer,omitempty"`
+	Records    map[uint64]*WithdrawRecordContent `protobuf:"bytes,3,rep,name=records,proto3" json:"records,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
 func (m *WithdrawRecord) Reset()         { *m = WithdrawRecord{} }
 func (m *WithdrawRecord) String() string { return proto.CompactTextString(m) }
 func (*WithdrawRecord) ProtoMessage()    {}
 func (*WithdrawRecord) Descriptor() ([]byte, []int) {
-	return fileDescriptor_44fc8782bb5a532a, []int{7}
+	return fileDescriptor_44fc8782bb5a532a, []int{9}
 }
 func (m *WithdrawRecord) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -541,28 +698,83 @@ func (m *WithdrawRecord) GetWithdrawer() string {
 	return ""
 }
 
-func (m *WithdrawRecord) GetRecipient() string {
+func (m *WithdrawRecord) GetRecords() map[uint64]*WithdrawRecordContent {
 	if m != nil {
-		return m.Recipient
+		return m.Records
 	}
-	return ""
+	return nil
 }
 
-func (m *WithdrawRecord) GetAmount() *types.Coin {
+type WithdrawRecordContent struct {
+	Amount          *types.Coin `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
+	State           int64       `protobuf:"varint,2,opt,name=state,proto3" json:"state,omitempty"`
+	OracleVersion   int64       `protobuf:"varint,3,opt,name=oracle_version,json=oracleVersion,proto3" json:"oracle_version,omitempty"`
+	WithdrawVersion uint64      `protobuf:"varint,4,opt,name=withdraw_version,json=withdrawVersion,proto3" json:"withdraw_version,omitempty"`
+	CompletionTime  time.Time   `protobuf:"bytes,5,opt,name=completion_time,json=completionTime,proto3,stdtime" json:"completion_time"`
+}
+
+func (m *WithdrawRecordContent) Reset()         { *m = WithdrawRecordContent{} }
+func (m *WithdrawRecordContent) String() string { return proto.CompactTextString(m) }
+func (*WithdrawRecordContent) ProtoMessage()    {}
+func (*WithdrawRecordContent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_44fc8782bb5a532a, []int{10}
+}
+func (m *WithdrawRecordContent) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *WithdrawRecordContent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_WithdrawRecordContent.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *WithdrawRecordContent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WithdrawRecordContent.Merge(m, src)
+}
+func (m *WithdrawRecordContent) XXX_Size() int {
+	return m.Size()
+}
+func (m *WithdrawRecordContent) XXX_DiscardUnknown() {
+	xxx_messageInfo_WithdrawRecordContent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_WithdrawRecordContent proto.InternalMessageInfo
+
+func (m *WithdrawRecordContent) GetAmount() *types.Coin {
 	if m != nil {
 		return m.Amount
 	}
 	return nil
 }
 
-func (m *WithdrawRecord) GetState() int64 {
+func (m *WithdrawRecordContent) GetState() int64 {
 	if m != nil {
 		return m.State
 	}
 	return 0
 }
 
-func (m *WithdrawRecord) GetCompletionTime() time.Time {
+func (m *WithdrawRecordContent) GetOracleVersion() int64 {
+	if m != nil {
+		return m.OracleVersion
+	}
+	return 0
+}
+
+func (m *WithdrawRecordContent) GetWithdrawVersion() uint64 {
+	if m != nil {
+		return m.WithdrawVersion
+	}
+	return 0
+}
+
+func (m *WithdrawRecordContent) GetCompletionTime() time.Time {
 	if m != nil {
 		return m.CompletionTime
 	}
@@ -573,64 +785,81 @@ func init() {
 	proto.RegisterType((*GenesisState)(nil), "nova.gal.v1.GenesisState")
 	proto.RegisterType((*DepositAccount)(nil), "nova.gal.v1.DepositAccount")
 	proto.RegisterType((*DepositInfo)(nil), "nova.gal.v1.DepositInfo")
+	proto.RegisterType((*WithdrawInfo)(nil), "nova.gal.v1.WithdrawInfo")
+	proto.RegisterType((*RecordInfo)(nil), "nova.gal.v1.RecordInfo")
 	proto.RegisterType((*DepositRecord)(nil), "nova.gal.v1.DepositRecord")
 	proto.RegisterType((*DepositRecordContent)(nil), "nova.gal.v1.DepositRecordContent")
-	proto.RegisterType((*WithdrawInfo)(nil), "nova.gal.v1.WithdrawInfo")
 	proto.RegisterType((*UndelegateRecord)(nil), "nova.gal.v1.UndelegateRecord")
+	proto.RegisterType((*UndelegateRecordContent)(nil), "nova.gal.v1.UndelegateRecordContent")
 	proto.RegisterType((*WithdrawRecord)(nil), "nova.gal.v1.WithdrawRecord")
+	proto.RegisterMapType((map[uint64]*WithdrawRecordContent)(nil), "nova.gal.v1.WithdrawRecord.RecordsEntry")
+	proto.RegisterType((*WithdrawRecordContent)(nil), "nova.gal.v1.WithdrawRecordContent")
 }
 
 func init() { proto.RegisterFile("nova/gal/v1/genesis.proto", fileDescriptor_44fc8782bb5a532a) }
 
 var fileDescriptor_44fc8782bb5a532a = []byte{
-	// 744 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x55, 0xcb, 0x6e, 0xd3, 0x40,
-	0x14, 0x8d, 0x93, 0x34, 0xa5, 0x93, 0x57, 0x31, 0x15, 0x38, 0x05, 0x39, 0xad, 0x37, 0x54, 0x48,
-	0xd8, 0x4a, 0x59, 0x22, 0x90, 0x92, 0x22, 0xa0, 0x0b, 0x24, 0x70, 0xa9, 0x90, 0xd8, 0x58, 0x63,
-	0x7b, 0xea, 0x58, 0xd8, 0x33, 0x96, 0x67, 0x92, 0x52, 0x36, 0x48, 0x7c, 0x41, 0x7f, 0x82, 0x1f,
-	0xe0, 0x2b, 0xca, 0xae, 0x4b, 0x56, 0x80, 0x5a, 0x89, 0xdf, 0x00, 0xcd, 0xc3, 0x8d, 0x83, 0xa2,
-	0x16, 0xb1, 0xf3, 0x7d, 0x9d, 0x7b, 0xee, 0xbd, 0x67, 0x64, 0xd0, 0xc3, 0x64, 0x0a, 0x9d, 0x08,
-	0x26, 0xce, 0x74, 0xe0, 0x44, 0x08, 0x23, 0x1a, 0x53, 0x3b, 0xcb, 0x09, 0x23, 0x7a, 0x93, 0x87,
-	0xec, 0x08, 0x26, 0xf6, 0x74, 0xb0, 0x6e, 0x94, 0xf3, 0x32, 0x98, 0xc3, 0x54, 0xa5, 0xad, 0xaf,
-	0x45, 0x24, 0x22, 0xe2, 0xd3, 0xe1, 0x5f, 0xca, 0xdb, 0x8b, 0x08, 0x89, 0x12, 0xe4, 0x08, 0xcb,
-	0x9f, 0x1c, 0x38, 0x10, 0x1f, 0xa9, 0x50, 0xff, 0xef, 0x10, 0x8b, 0x53, 0x44, 0x19, 0x4c, 0xb3,
-	0xa2, 0x36, 0x20, 0x34, 0x25, 0xd4, 0x93, 0xa0, 0xd2, 0x50, 0x21, 0x53, 0x5a, 0x8e, 0x0f, 0x29,
-	0x72, 0xa6, 0x03, 0x1f, 0x31, 0x38, 0x70, 0x02, 0x12, 0x63, 0x19, 0xb7, 0xbe, 0x6a, 0xa0, 0xf5,
-	0x4c, 0x4e, 0xb1, 0xc7, 0x20, 0x43, 0xfa, 0x00, 0x34, 0x24, 0x5b, 0x43, 0xdb, 0xd0, 0xb6, 0x9a,
-	0xdb, 0x37, 0xec, 0xd2, 0x54, 0xf6, 0x4b, 0x11, 0x1a, 0xd5, 0x4f, 0xbe, 0xf7, 0x2b, 0xae, 0x4a,
-	0xd4, 0x9f, 0x82, 0xd5, 0x10, 0x65, 0x84, 0xc6, 0xcc, 0x83, 0x41, 0x40, 0x26, 0x98, 0x51, 0xa3,
-	0xba, 0x51, 0xdb, 0x6a, 0x6e, 0xdf, 0x9e, 0x2b, 0x7e, 0x22, 0x93, 0x86, 0x32, 0xc7, 0xed, 0x86,
-	0x73, 0x36, 0xd5, 0x1f, 0x83, 0xf6, 0x61, 0xcc, 0xc6, 0x61, 0x0e, 0x0f, 0xbd, 0x18, 0x1f, 0x10,
-	0xa3, 0x26, 0x40, 0x7a, 0x73, 0x20, 0x6f, 0x54, 0xc6, 0x2e, 0x3e, 0x20, 0x6e, 0xeb, 0xb0, 0x64,
-	0x59, 0x5f, 0x34, 0xd0, 0x99, 0xef, 0xa1, 0xaf, 0x81, 0xa5, 0x10, 0x61, 0x92, 0x8a, 0x61, 0x56,
-	0x5c, 0x69, 0xe8, 0x8f, 0x40, 0xbb, 0x20, 0xcc, 0xfb, 0x14, 0x6c, 0x8d, 0x45, 0x6c, 0x65, 0x9f,
-	0x70, 0x66, 0x50, 0xbd, 0x0f, 0x9a, 0x8c, 0x30, 0x98, 0x78, 0x74, 0x0c, 0x73, 0x64, 0xd4, 0x36,
-	0xb4, 0xad, 0x9a, 0x0b, 0x84, 0x6b, 0x8f, 0x7b, 0xf4, 0x7b, 0xe0, 0x7a, 0x02, 0x29, 0xf3, 0xfc,
-	0x84, 0x04, 0xef, 0xbc, 0x49, 0x16, 0x42, 0x86, 0x8c, 0xba, 0x48, 0xeb, 0xf2, 0xc0, 0x88, 0xfb,
-	0xf7, 0x85, 0xdb, 0x7a, 0x05, 0x9a, 0xa5, 0x4e, 0xba, 0x01, 0x96, 0x61, 0x18, 0xe6, 0x88, 0x52,
-	0x45, 0xb9, 0x30, 0xf9, 0x28, 0xb2, 0x5f, 0x55, 0x00, 0x49, 0x43, 0xd7, 0x41, 0x3d, 0x44, 0x3e,
-	0x53, 0x24, 0xc4, 0xb7, 0xf5, 0x11, 0xb4, 0x15, 0xa4, 0x8b, 0x02, 0x92, 0x87, 0xfa, 0x2d, 0xb0,
-	0xfc, 0x81, 0x60, 0xe4, 0xc5, 0xa1, 0x02, 0x6d, 0x70, 0x73, 0x37, 0x2c, 0x77, 0xab, 0xce, 0x77,
-	0x7b, 0x08, 0x96, 0x73, 0x51, 0x4c, 0xd5, 0x15, 0x36, 0x17, 0x2d, 0x47, 0xe2, 0xef, 0x10, 0xcc,
-	0x10, 0x66, 0x6e, 0x51, 0x61, 0x7d, 0xd2, 0xc0, 0xda, 0xa2, 0x0c, 0x2e, 0x2e, 0x98, 0xf2, 0xc3,
-	0x28, 0x71, 0xf5, 0x6c, 0x25, 0x56, 0x2e, 0x4f, 0x5b, 0xc9, 0xd3, 0xde, 0x21, 0x31, 0x76, 0x55,
-	0xa2, 0xbe, 0x09, 0x5a, 0x72, 0x8d, 0x63, 0x14, 0x47, 0x63, 0xa6, 0xa6, 0x6f, 0x0a, 0xdf, 0x73,
-	0xe1, 0x12, 0x9b, 0xe1, 0xda, 0x55, 0x4b, 0x90, 0x86, 0xf5, 0x59, 0x03, 0xad, 0xb2, 0x58, 0x2e,
-	0x5f, 0xad, 0x54, 0x49, 0xb5, 0xac, 0x92, 0x9b, 0x17, 0x64, 0x25, 0x6e, 0xc1, 0xe8, 0x05, 0xe8,
-	0x06, 0x24, 0xcd, 0x12, 0xc4, 0x62, 0x82, 0x3d, 0xfe, 0x16, 0xc5, 0x6d, 0x9b, 0xdb, 0xeb, 0xb6,
-	0x7c, 0xa8, 0x76, 0xf1, 0x50, 0xed, 0xd7, 0xc5, 0x43, 0x1d, 0x5d, 0xe3, 0x2f, 0xe6, 0xf8, 0x47,
-	0x5f, 0x73, 0x3b, 0xb3, 0x62, 0x1e, 0xb6, 0x7e, 0x69, 0x60, 0x75, 0x1f, 0x87, 0x28, 0x41, 0x11,
-	0x64, 0xe8, 0xaa, 0x8b, 0xdd, 0x01, 0x2b, 0x2a, 0x95, 0xe4, 0x8a, 0xee, 0xcc, 0xa1, 0x0f, 0x41,
-	0x97, 0x62, 0x0f, 0x52, 0x8a, 0x98, 0x57, 0xe2, 0x7e, 0xe9, 0xa2, 0xdb, 0x14, 0x0f, 0x79, 0xc1,
-	0x50, 0x4e, 0x37, 0x02, 0xdd, 0x8b, 0x47, 0xa8, 0x20, 0xea, 0x57, 0x41, 0x74, 0x8a, 0x0a, 0x85,
-	0x71, 0x71, 0x90, 0xa5, 0xf2, 0x41, 0x7e, 0x6b, 0xa0, 0x53, 0x1c, 0xe4, 0xaa, 0x31, 0x4d, 0x00,
-	0x0a, 0x4c, 0x54, 0xcc, 0x59, 0xf2, 0xf0, 0x35, 0xe4, 0x28, 0x88, 0xb3, 0x18, 0xa9, 0x11, 0x57,
-	0xdc, 0x99, 0xa3, 0x24, 0xb3, 0xfa, 0xbf, 0xca, 0x6c, 0x21, 0xe5, 0x45, 0xa7, 0x6e, 0xfc, 0xff,
-	0xa9, 0x47, 0xc3, 0x93, 0x33, 0x53, 0x3b, 0x3d, 0x33, 0xb5, 0x9f, 0x67, 0xa6, 0x76, 0x7c, 0x6e,
-	0x56, 0x4e, 0xcf, 0xcd, 0xca, 0xb7, 0x73, 0xb3, 0xf2, 0xf6, 0x6e, 0x14, 0xb3, 0xf1, 0xc4, 0xb7,
-	0x03, 0x92, 0x3a, 0x3b, 0x30, 0x8f, 0x31, 0xbc, 0x9f, 0x40, 0x9f, 0x3a, 0xe2, 0x27, 0xf2, 0x5e,
-	0xfc, 0x46, 0xd8, 0x51, 0x86, 0xa8, 0xdf, 0x10, 0x0d, 0x1f, 0xfc, 0x09, 0x00, 0x00, 0xff, 0xff,
-	0x83, 0x86, 0x59, 0x76, 0x87, 0x06, 0x00, 0x00,
+	// 945 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x56, 0x4f, 0x6f, 0xe3, 0x44,
+	0x14, 0xaf, 0x9d, 0x3f, 0x65, 0x5f, 0x9a, 0xb4, 0x3b, 0x2c, 0x34, 0x2d, 0x28, 0x2d, 0x16, 0x88,
+	0x2e, 0xd2, 0xda, 0x4a, 0xb9, 0x54, 0x20, 0x56, 0x4a, 0xca, 0x1f, 0xed, 0x01, 0x09, 0xbc, 0x2c,
+	0x48, 0x1c, 0xb0, 0x26, 0xf6, 0xd4, 0xb5, 0xd6, 0x9e, 0x89, 0x3c, 0x93, 0x94, 0x72, 0x41, 0x88,
+	0x13, 0xb7, 0xfd, 0x12, 0x5c, 0x10, 0x27, 0x3e, 0xc5, 0xde, 0xd8, 0x23, 0x27, 0x40, 0xed, 0x99,
+	0xef, 0x80, 0xe6, 0x8f, 0x13, 0x27, 0x71, 0xb3, 0x0b, 0x37, 0xbf, 0xf7, 0x7e, 0xef, 0xcd, 0x9b,
+	0xdf, 0xef, 0xcd, 0x4b, 0x60, 0x8f, 0xb2, 0x29, 0xf6, 0x62, 0x9c, 0x7a, 0xd3, 0xbe, 0x17, 0x13,
+	0x4a, 0x78, 0xc2, 0xdd, 0x71, 0xce, 0x04, 0x43, 0x2d, 0x19, 0x72, 0x63, 0x9c, 0xba, 0xd3, 0xfe,
+	0x7e, 0xb7, 0x8c, 0x1b, 0xe3, 0x1c, 0x67, 0x06, 0xb6, 0x7f, 0x27, 0x66, 0x31, 0x53, 0x9f, 0x9e,
+	0xfc, 0x32, 0xde, 0xbd, 0x98, 0xb1, 0x38, 0x25, 0x9e, 0xb2, 0x46, 0x93, 0x33, 0x0f, 0xd3, 0x4b,
+	0x13, 0x3a, 0x58, 0x0e, 0x89, 0x24, 0x23, 0x5c, 0xe0, 0x6c, 0x5c, 0xe4, 0x86, 0x8c, 0x67, 0x8c,
+	0x07, 0xba, 0xa8, 0x36, 0x4c, 0xa8, 0xa7, 0x2d, 0x6f, 0x84, 0x39, 0xf1, 0xa6, 0xfd, 0x11, 0x11,
+	0xb8, 0xef, 0x85, 0x2c, 0xa1, 0x3a, 0xee, 0xfc, 0x68, 0xc3, 0xd6, 0x27, 0xfa, 0x16, 0x0f, 0x05,
+	0x16, 0x04, 0xf5, 0xa1, 0xa9, 0xbb, 0xed, 0x5a, 0x87, 0xd6, 0x51, 0xeb, 0xf8, 0x65, 0xb7, 0x74,
+	0x2b, 0xf7, 0x33, 0x15, 0x1a, 0xd6, 0x9f, 0xfe, 0x79, 0xb0, 0xe1, 0x1b, 0x20, 0xfa, 0x18, 0x76,
+	0x22, 0x32, 0x66, 0x3c, 0x11, 0x01, 0x0e, 0x43, 0x36, 0xa1, 0x82, 0x77, 0xed, 0xc3, 0xda, 0x51,
+	0xeb, 0xf8, 0xb5, 0x85, 0xe4, 0x0f, 0x35, 0x68, 0xa0, 0x31, 0xfe, 0x76, 0xb4, 0x60, 0x73, 0x74,
+	0x1f, 0xda, 0x17, 0x89, 0x38, 0x8f, 0x72, 0x7c, 0x11, 0x24, 0xf4, 0x8c, 0x75, 0x6b, 0xaa, 0xc8,
+	0xde, 0x42, 0x91, 0xaf, 0x0c, 0xe2, 0x01, 0x3d, 0x63, 0xfe, 0xd6, 0x45, 0xc9, 0x42, 0x27, 0xd0,
+	0xca, 0x49, 0xc8, 0xf2, 0x48, 0x67, 0xd7, 0x55, 0xf6, 0xee, 0x42, 0xb6, 0xaf, 0xe2, 0x2a, 0x17,
+	0xf2, 0xd9, 0xb7, 0xf3, 0x9b, 0x05, 0x9d, 0xc5, 0xee, 0xd0, 0x1d, 0x68, 0x44, 0x84, 0xb2, 0x4c,
+	0xd1, 0x70, 0xcb, 0xd7, 0x06, 0xfa, 0x00, 0xda, 0xc5, 0x55, 0xe5, 0x19, 0xc5, 0x3d, 0xbb, 0x55,
+	0xf7, 0xd4, 0x1d, 0x46, 0x73, 0x83, 0xa3, 0x03, 0x68, 0x09, 0x26, 0x70, 0x1a, 0xf0, 0x73, 0x9c,
+	0x93, 0x6e, 0xed, 0xd0, 0x3a, 0xaa, 0xf9, 0xa0, 0x5c, 0x0f, 0xa5, 0x07, 0xbd, 0x03, 0xb7, 0x53,
+	0xcc, 0x45, 0x30, 0x4a, 0x59, 0xf8, 0x38, 0x98, 0x8c, 0x23, 0x2c, 0x48, 0xb7, 0xae, 0x60, 0xdb,
+	0x32, 0x30, 0x94, 0xfe, 0x47, 0xca, 0xed, 0x7c, 0x0e, 0xad, 0xd2, 0x49, 0xa8, 0x0b, 0x9b, 0x38,
+	0x8a, 0x72, 0xc2, 0xb9, 0x69, 0xb9, 0x30, 0xe5, 0x55, 0xf4, 0x79, 0xb6, 0x2a, 0xa4, 0x0d, 0x84,
+	0xa0, 0x1e, 0x91, 0x91, 0x30, 0x4d, 0xa8, 0x6f, 0xe7, 0x67, 0x0b, 0xb6, 0xca, 0x04, 0xaf, 0x2f,
+	0xaa, 0xf9, 0xb1, 0xcb, 0xfc, 0xbc, 0x0a, 0x4d, 0x9c, 0x49, 0xfe, 0x4c, 0x59, 0x63, 0xa1, 0x4f,
+	0x61, 0x3b, 0x64, 0xd9, 0x38, 0x25, 0x22, 0x61, 0x34, 0x90, 0xf3, 0xab, 0x6e, 0xd5, 0x3a, 0xde,
+	0x77, 0xf5, 0x70, 0xbb, 0xc5, 0x70, 0xbb, 0x5f, 0x14, 0xc3, 0x3d, 0x7c, 0x49, 0x4e, 0xd9, 0x93,
+	0xbf, 0x0e, 0x2c, 0xbf, 0x33, 0x4f, 0x96, 0x61, 0xe7, 0x17, 0x0b, 0x60, 0x2e, 0x25, 0xda, 0x85,
+	0xcd, 0xef, 0x18, 0x25, 0x41, 0x12, 0x99, 0x2e, 0x9b, 0xd2, 0x7c, 0x10, 0xa1, 0xbb, 0x72, 0x32,
+	0x53, 0x12, 0x63, 0x41, 0x82, 0x29, 0xc9, 0x79, 0xc2, 0xa8, 0xea, 0xb7, 0x2e, 0x87, 0x4f, 0xfb,
+	0xbf, 0xd4, 0x6e, 0x74, 0x0f, 0xd0, 0x84, 0xae, 0x80, 0x6b, 0x0a, 0x7c, 0x7b, 0x1e, 0x29, 0xe0,
+	0x77, 0x61, 0x67, 0x36, 0xab, 0x05, 0xb8, 0xae, 0x2b, 0x17, 0x7e, 0x03, 0x75, 0xbe, 0x87, 0xb6,
+	0xd1, 0x49, 0xb7, 0x7c, 0x73, 0xbb, 0x5d, 0xd8, 0x0c, 0x53, 0x9c, 0x64, 0x24, 0x37, 0xac, 0x16,
+	0x26, 0x7a, 0x1f, 0x36, 0xf5, 0xb8, 0x72, 0xf3, 0x28, 0xde, 0xa8, 0x9a, 0x38, 0x5d, 0xff, 0x94,
+	0x51, 0x41, 0xa8, 0xf0, 0x8b, 0x0c, 0xe7, 0x77, 0x0b, 0xee, 0x54, 0x21, 0xd0, 0xeb, 0x70, 0xcb,
+	0x8c, 0x27, 0xcb, 0x4d, 0x2b, 0x73, 0x87, 0xdc, 0x04, 0x46, 0x4b, 0x5b, 0x49, 0xb5, 0xe7, 0x9a,
+	0xcd, 0x22, 0x77, 0x89, 0x6b, 0x76, 0x89, 0x7b, 0xca, 0x12, 0x3a, 0x93, 0x59, 0x4e, 0x9a, 0xdc,
+	0x22, 0x46, 0x7d, 0x6d, 0xa0, 0xb7, 0xa0, 0xc3, 0x72, 0x1c, 0xa6, 0x64, 0x89, 0xa9, 0xb6, 0xf6,
+	0x96, 0x28, 0x5d, 0xe1, 0xbf, 0x51, 0x29, 0x96, 0xf3, 0x93, 0x05, 0x3b, 0x8f, 0x66, 0x9a, 0x3c,
+	0x8f, 0x56, 0x75, 0x4d, 0x05, 0x65, 0x05, 0xb1, 0x73, 0x07, 0xba, 0xbf, 0x4c, 0xed, 0x9b, 0x0b,
+	0xd4, 0x2e, 0x1f, 0xb3, 0xc2, 0xee, 0xaf, 0x36, 0xec, 0xde, 0x00, 0x42, 0x3d, 0x80, 0x62, 0x1a,
+	0x48, 0xc1, 0x70, 0xc9, 0x83, 0x06, 0xb0, 0xcd, 0x69, 0x80, 0x39, 0x27, 0x22, 0x78, 0x51, 0xae,
+	0xdb, 0x9c, 0x0e, 0x64, 0xc2, 0x40, 0x53, 0x3e, 0x84, 0xd9, 0xc0, 0x05, 0xa5, 0xa7, 0xb7, 0xb6,
+	0x44, 0xa7, 0xc8, 0x18, 0x2c, 0xc9, 0x56, 0x5f, 0x2f, 0x5b, 0xa3, 0x4a, 0xb6, 0xea, 0x87, 0xd3,
+	0xbc, 0xe1, 0xe1, 0x38, 0xff, 0x58, 0xd0, 0x29, 0x56, 0xcc, 0xf3, 0x84, 0x5b, 0xa4, 0xcf, 0x5e,
+	0xa1, 0x6f, 0xb8, 0x2c, 0xdd, 0x51, 0xe5, 0x4f, 0x85, 0x3e, 0xc6, 0xec, 0x7e, 0xfe, 0x11, 0x15,
+	0xf9, 0xe5, 0x4c, 0xbe, 0xfd, 0x6f, 0x60, 0xab, 0x1c, 0x40, 0x3b, 0x50, 0x7b, 0x4c, 0x2e, 0x55,
+	0x23, 0x75, 0x5f, 0x7e, 0xa2, 0x13, 0x68, 0x4c, 0x71, 0x3a, 0x21, 0x46, 0x1a, 0x67, 0xcd, 0x19,
+	0xc5, 0x70, 0xe8, 0x84, 0xf7, 0xec, 0x13, 0xcb, 0xf9, 0xc1, 0x86, 0x57, 0x2a, 0x41, 0xa5, 0xf7,
+	0x65, 0xfd, 0xe7, 0xf7, 0x65, 0xaf, 0x17, 0x4a, 0x3f, 0xbf, 0xd5, 0xf7, 0xf5, 0x82, 0x2b, 0xab,
+	0x6a, 0x5d, 0x37, 0xfe, 0xff, 0xba, 0x1e, 0x0e, 0x9e, 0x5e, 0xf5, 0xac, 0x67, 0x57, 0x3d, 0xeb,
+	0xef, 0xab, 0x9e, 0xf5, 0xe4, 0xba, 0xb7, 0xf1, 0xec, 0xba, 0xb7, 0xf1, 0xc7, 0x75, 0x6f, 0xe3,
+	0xeb, 0xb7, 0xe3, 0x44, 0x9c, 0x4f, 0x46, 0x6e, 0xc8, 0x32, 0xef, 0x14, 0xe7, 0x09, 0xc5, 0xf7,
+	0x52, 0x3c, 0xe2, 0x9e, 0xfa, 0xf3, 0xf4, 0xad, 0xfa, 0xfb, 0x24, 0x2e, 0xc7, 0x84, 0x8f, 0x9a,
+	0xea, 0xc0, 0x77, 0xff, 0x0d, 0x00, 0x00, 0xff, 0xff, 0xbd, 0xe6, 0x84, 0xfe, 0x7f, 0x09, 0x00,
+	0x00,
 }
 
 func (m *GenesisState) Marshal() (dAtA []byte, err error) {
@@ -653,6 +882,20 @@ func (m *GenesisState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.RecordInfo) > 0 {
+		for iNdEx := len(m.RecordInfo) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.RecordInfo[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
 	if len(m.WithdrawInfo) > 0 {
 		for iNdEx := len(m.WithdrawInfo) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -788,6 +1031,101 @@ func (m *DepositInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *WithdrawInfo) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *WithdrawInfo) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WithdrawInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	n2, err2 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.CompletionTime, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.CompletionTime):])
+	if err2 != nil {
+		return 0, err2
+	}
+	i -= n2
+	i = encodeVarintGenesis(dAtA, i, uint64(n2))
+	i--
+	dAtA[i] = 0x22
+	if m.Amount != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.Amount))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Denom) > 0 {
+		i -= len(m.Denom)
+		copy(dAtA[i:], m.Denom)
+		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Denom)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Address) > 0 {
+		i -= len(m.Address)
+		copy(dAtA[i:], m.Address)
+		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Address)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *RecordInfo) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RecordInfo) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RecordInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.WithdrawVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.WithdrawVersion))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.UndelegateVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.UndelegateVersion))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.DelegateVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.DelegateVersion))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintGenesis(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *DepositRecord) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -822,10 +1160,10 @@ func (m *DepositRecord) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x1a
 		}
 	}
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Address)))
+	if len(m.Claimer) > 0 {
+		i -= len(m.Claimer)
+		copy(dAtA[i:], m.Claimer)
+		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Claimer)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -859,15 +1197,20 @@ func (m *DepositRecordContent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.DelegateVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.DelegateVersion))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.OracleVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.OracleVersion))
+		i--
+		dAtA[i] = 0x20
+	}
 	if m.State != 0 {
 		i = encodeVarintGenesis(dAtA, i, uint64(m.State))
 		i--
 		dAtA[i] = 0x18
-	}
-	if m.BlockHeight != 0 {
-		i = encodeVarintGenesis(dAtA, i, uint64(m.BlockHeight))
-		i--
-		dAtA[i] = 0x10
 	}
 	if m.Amount != nil {
 		{
@@ -879,55 +1222,12 @@ func (m *DepositRecordContent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintGenesis(dAtA, i, uint64(size))
 		}
 		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *WithdrawInfo) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *WithdrawInfo) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *WithdrawInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	n3, err3 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.CompletionTime, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.CompletionTime):])
-	if err3 != nil {
-		return 0, err3
-	}
-	i -= n3
-	i = encodeVarintGenesis(dAtA, i, uint64(n3))
-	i--
-	dAtA[i] = 0x22
-	if m.Amount != 0 {
-		i = encodeVarintGenesis(dAtA, i, uint64(m.Amount))
-		i--
-		dAtA[i] = 0x18
-	}
-	if len(m.Denom) > 0 {
-		i -= len(m.Denom)
-		copy(dAtA[i:], m.Denom)
-		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Denom)))
-		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Address)))
+	if len(m.Depositor) > 0 {
+		i -= len(m.Depositor)
+		copy(dAtA[i:], m.Depositor)
+		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Depositor)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -954,34 +1254,19 @@ func (m *UndelegateRecord) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.State != 0 {
-		i = encodeVarintGenesis(dAtA, i, uint64(m.State))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.WithdrawAmount != nil {
-		{
-			size, err := m.WithdrawAmount.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
+	if len(m.Records) > 0 {
+		for iNdEx := len(m.Records) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Records[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
 			}
-			i -= size
-			i = encodeVarintGenesis(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x1a
 		}
-		i--
-		dAtA[i] = 0x22
-	}
-	if m.SnAssetAmount != nil {
-		{
-			size, err := m.SnAssetAmount.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintGenesis(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
 	}
 	if len(m.Delegator) > 0 {
 		i -= len(m.Delegator)
@@ -994,6 +1279,75 @@ func (m *UndelegateRecord) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.ZoneId)
 		copy(dAtA[i:], m.ZoneId)
 		i = encodeVarintGenesis(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UndelegateRecordContent) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UndelegateRecordContent) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UndelegateRecordContent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.UndelegateVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.UndelegateVersion))
+		i--
+		dAtA[i] = 0x30
+	}
+	if m.OracleVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.OracleVersion))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.State != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.WithdrawAmount != nil {
+		{
+			size, err := m.WithdrawAmount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintGenesis(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.SnAssetAmount != nil {
+		{
+			size, err := m.SnAssetAmount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintGenesis(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Withdrawer) > 0 {
+		i -= len(m.Withdrawer)
+		copy(dAtA[i:], m.Withdrawer)
+		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Withdrawer)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1020,37 +1374,29 @@ func (m *WithdrawRecord) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	n6, err6 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.CompletionTime, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.CompletionTime):])
-	if err6 != nil {
-		return 0, err6
-	}
-	i -= n6
-	i = encodeVarintGenesis(dAtA, i, uint64(n6))
-	i--
-	dAtA[i] = 0x32
-	if m.State != 0 {
-		i = encodeVarintGenesis(dAtA, i, uint64(m.State))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.Amount != nil {
-		{
-			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
+	if len(m.Records) > 0 {
+		for k := range m.Records {
+			v := m.Records[k]
+			baseI := i
+			if v != nil {
+				{
+					size, err := v.MarshalToSizedBuffer(dAtA[:i])
+					if err != nil {
+						return 0, err
+					}
+					i -= size
+					i = encodeVarintGenesis(dAtA, i, uint64(size))
+				}
+				i--
+				dAtA[i] = 0x12
 			}
-			i -= size
-			i = encodeVarintGenesis(dAtA, i, uint64(size))
+			i = encodeVarintGenesis(dAtA, i, uint64(k))
+			i--
+			dAtA[i] = 0x8
+			i = encodeVarintGenesis(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x1a
 		}
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.Recipient) > 0 {
-		i -= len(m.Recipient)
-		copy(dAtA[i:], m.Recipient)
-		i = encodeVarintGenesis(dAtA, i, uint64(len(m.Recipient)))
-		i--
-		dAtA[i] = 0x1a
 	}
 	if len(m.Withdrawer) > 0 {
 		i -= len(m.Withdrawer)
@@ -1063,6 +1409,64 @@ func (m *WithdrawRecord) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.ZoneId)
 		copy(dAtA[i:], m.ZoneId)
 		i = encodeVarintGenesis(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *WithdrawRecordContent) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *WithdrawRecordContent) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *WithdrawRecordContent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	n7, err7 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.CompletionTime, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.CompletionTime):])
+	if err7 != nil {
+		return 0, err7
+	}
+	i -= n7
+	i = encodeVarintGenesis(dAtA, i, uint64(n7))
+	i--
+	dAtA[i] = 0x2a
+	if m.WithdrawVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.WithdrawVersion))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.OracleVersion != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.OracleVersion))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.State != 0 {
+		i = encodeVarintGenesis(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Amount != nil {
+		{
+			size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintGenesis(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1096,6 +1500,12 @@ func (m *GenesisState) Size() (n int) {
 	}
 	if len(m.WithdrawInfo) > 0 {
 		for _, e := range m.WithdrawInfo {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	if len(m.RecordInfo) > 0 {
+		for _, e := range m.RecordInfo {
 			l = e.Size()
 			n += 1 + l + sovGenesis(uint64(l))
 		}
@@ -1147,48 +1557,6 @@ func (m *DepositInfo) Size() (n int) {
 	return n
 }
 
-func (m *DepositRecord) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.ZoneId)
-	if l > 0 {
-		n += 1 + l + sovGenesis(uint64(l))
-	}
-	l = len(m.Address)
-	if l > 0 {
-		n += 1 + l + sovGenesis(uint64(l))
-	}
-	if len(m.Records) > 0 {
-		for _, e := range m.Records {
-			l = e.Size()
-			n += 1 + l + sovGenesis(uint64(l))
-		}
-	}
-	return n
-}
-
-func (m *DepositRecordContent) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Amount != nil {
-		l = m.Amount.Size()
-		n += 1 + l + sovGenesis(uint64(l))
-	}
-	if m.BlockHeight != 0 {
-		n += 1 + sovGenesis(uint64(m.BlockHeight))
-	}
-	if m.State != 0 {
-		n += 1 + sovGenesis(uint64(m.State))
-	}
-	return n
-}
-
 func (m *WithdrawInfo) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1211,6 +1579,77 @@ func (m *WithdrawInfo) Size() (n int) {
 	return n
 }
 
+func (m *RecordInfo) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovGenesis(uint64(l))
+	}
+	if m.DelegateVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.DelegateVersion))
+	}
+	if m.UndelegateVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.UndelegateVersion))
+	}
+	if m.WithdrawVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.WithdrawVersion))
+	}
+	return n
+}
+
+func (m *DepositRecord) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovGenesis(uint64(l))
+	}
+	l = len(m.Claimer)
+	if l > 0 {
+		n += 1 + l + sovGenesis(uint64(l))
+	}
+	if len(m.Records) > 0 {
+		for _, e := range m.Records {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *DepositRecordContent) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Depositor)
+	if l > 0 {
+		n += 1 + l + sovGenesis(uint64(l))
+	}
+	if m.Amount != nil {
+		l = m.Amount.Size()
+		n += 1 + l + sovGenesis(uint64(l))
+	}
+	if m.State != 0 {
+		n += 1 + sovGenesis(uint64(m.State))
+	}
+	if m.OracleVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.OracleVersion))
+	}
+	if m.DelegateVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.DelegateVersion))
+	}
+	return n
+}
+
 func (m *UndelegateRecord) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1225,6 +1664,25 @@ func (m *UndelegateRecord) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovGenesis(uint64(l))
 	}
+	if len(m.Records) > 0 {
+		for _, e := range m.Records {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *UndelegateRecordContent) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Withdrawer)
+	if l > 0 {
+		n += 1 + l + sovGenesis(uint64(l))
+	}
 	if m.SnAssetAmount != nil {
 		l = m.SnAssetAmount.Size()
 		n += 1 + l + sovGenesis(uint64(l))
@@ -1235,6 +1693,12 @@ func (m *UndelegateRecord) Size() (n int) {
 	}
 	if m.State != 0 {
 		n += 1 + sovGenesis(uint64(m.State))
+	}
+	if m.OracleVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.OracleVersion))
+	}
+	if m.UndelegateVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.UndelegateVersion))
 	}
 	return n
 }
@@ -1253,16 +1717,40 @@ func (m *WithdrawRecord) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovGenesis(uint64(l))
 	}
-	l = len(m.Recipient)
-	if l > 0 {
-		n += 1 + l + sovGenesis(uint64(l))
+	if len(m.Records) > 0 {
+		for k, v := range m.Records {
+			_ = k
+			_ = v
+			l = 0
+			if v != nil {
+				l = v.Size()
+				l += 1 + sovGenesis(uint64(l))
+			}
+			mapEntrySize := 1 + sovGenesis(uint64(k)) + l
+			n += mapEntrySize + 1 + sovGenesis(uint64(mapEntrySize))
+		}
 	}
+	return n
+}
+
+func (m *WithdrawRecordContent) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	if m.Amount != nil {
 		l = m.Amount.Size()
 		n += 1 + l + sovGenesis(uint64(l))
 	}
 	if m.State != 0 {
 		n += 1 + sovGenesis(uint64(m.State))
+	}
+	if m.OracleVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.OracleVersion))
+	}
+	if m.WithdrawVersion != 0 {
+		n += 1 + sovGenesis(uint64(m.WithdrawVersion))
 	}
 	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.CompletionTime)
 	n += 1 + l + sovGenesis(uint64(l))
@@ -1402,6 +1890,40 @@ func (m *GenesisState) Unmarshal(dAtA []byte) error {
 			}
 			m.WithdrawInfo = append(m.WithdrawInfo, &WithdrawInfo{})
 			if err := m.WithdrawInfo[len(m.WithdrawInfo)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RecordInfo", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RecordInfo = append(m.RecordInfo, &RecordInfo{})
+			if err := m.RecordInfo[len(m.RecordInfo)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -1700,278 +2222,6 @@ func (m *DepositInfo) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *DepositRecord) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGenesis
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: DepositRecord: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DepositRecord: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ZoneId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Address = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Records", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Records = append(m.Records, &DepositRecordContent{})
-			if err := m.Records[len(m.Records)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGenesis(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *DepositRecordContent) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowGenesis
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: DepositRecordContent: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: DepositRecordContent: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Amount == nil {
-				m.Amount = &types.Coin{}
-			}
-			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BlockHeight", wireType)
-			}
-			m.BlockHeight = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.BlockHeight |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
-			}
-			m.State = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGenesis
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.State |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipGenesis(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthGenesis
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
 func (m *WithdrawInfo) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2138,6 +2388,468 @@ func (m *WithdrawInfo) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *RecordInfo) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenesis
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RecordInfo: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RecordInfo: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelegateVersion", wireType)
+			}
+			m.DelegateVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelegateVersion |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UndelegateVersion", wireType)
+			}
+			m.UndelegateVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.UndelegateVersion |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WithdrawVersion", wireType)
+			}
+			m.WithdrawVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.WithdrawVersion |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenesis(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DepositRecord) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenesis
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DepositRecord: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DepositRecord: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Claimer", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Claimer = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Records", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Records = append(m.Records, &DepositRecordContent{})
+			if err := m.Records[len(m.Records)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenesis(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DepositRecordContent) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenesis
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DepositRecordContent: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DepositRecordContent: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Depositor", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Depositor = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Amount == nil {
+				m.Amount = &types.Coin{}
+			}
+			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OracleVersion", wireType)
+			}
+			m.OracleVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.OracleVersion |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DelegateVersion", wireType)
+			}
+			m.DelegateVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DelegateVersion |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenesis(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *UndelegateRecord) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2233,6 +2945,122 @@ func (m *UndelegateRecord) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Records", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Records = append(m.Records, &UndelegateRecordContent{})
+			if err := m.Records[len(m.Records)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenesis(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UndelegateRecordContent) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenesis
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UndelegateRecordContent: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UndelegateRecordContent: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Withdrawer", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Withdrawer = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SnAssetAmount", wireType)
 			}
 			var msglen int
@@ -2267,7 +3095,7 @@ func (m *UndelegateRecord) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 4:
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field WithdrawAmount", wireType)
 			}
@@ -2303,7 +3131,7 @@ func (m *UndelegateRecord) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 5:
+		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
 			}
@@ -2318,6 +3146,44 @@ func (m *UndelegateRecord) Unmarshal(dAtA []byte) error {
 				b := dAtA[iNdEx]
 				iNdEx++
 				m.State |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OracleVersion", wireType)
+			}
+			m.OracleVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.OracleVersion |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UndelegateVersion", wireType)
+			}
+			m.UndelegateVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.UndelegateVersion |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2438,9 +3304,9 @@ func (m *WithdrawRecord) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Recipient", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Records", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenesis
@@ -2450,25 +3316,158 @@ func (m *WithdrawRecord) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthGenesis
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthGenesis
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Recipient = string(dAtA[iNdEx:postIndex])
+			if m.Records == nil {
+				m.Records = make(map[uint64]*WithdrawRecordContent)
+			}
+			var mapkey uint64
+			var mapvalue *WithdrawRecordContent
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenesis
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowGenesis
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+				} else if fieldNum == 2 {
+					var mapmsglen int
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowGenesis
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapmsglen |= int(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					if mapmsglen < 0 {
+						return ErrInvalidLengthGenesis
+					}
+					postmsgIndex := iNdEx + mapmsglen
+					if postmsgIndex < 0 {
+						return ErrInvalidLengthGenesis
+					}
+					if postmsgIndex > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapvalue = &WithdrawRecordContent{}
+					if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
+						return err
+					}
+					iNdEx = postmsgIndex
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipGenesis(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthGenesis
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.Records[mapkey] = mapvalue
 			iNdEx = postIndex
-		case 4:
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenesis(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *WithdrawRecordContent) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenesis
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: WithdrawRecordContent: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: WithdrawRecordContent: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 			}
@@ -2504,7 +3503,7 @@ func (m *WithdrawRecord) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 5:
+		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
 			}
@@ -2523,7 +3522,45 @@ func (m *WithdrawRecord) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 6:
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OracleVersion", wireType)
+			}
+			m.OracleVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.OracleVersion |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field WithdrawVersion", wireType)
+			}
+			m.WithdrawVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.WithdrawVersion |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CompletionTime", wireType)
 			}

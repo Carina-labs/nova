@@ -31,6 +31,9 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 		ChainId:         state.ChainId,
 	}
 
+	oracleVersion := server.keeper.GetOracleVersion(ctx, state.ChainId)
+	server.keeper.SetOracleVersion(ctx, state.ChainId, oracleVersion+1)
+
 	if err := server.keeper.UpdateChainState(ctx, newOracleState); err != nil {
 		return nil, err
 	}
