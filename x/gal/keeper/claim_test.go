@@ -1,8 +1,6 @@
 package keeper_test
 
 import (
-	"math/big"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
@@ -11,81 +9,81 @@ import (
 
 func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 	tcs := []struct {
-		userDepositAmt        int64
-		totalShareTokenSupply int64
-		totalStakedAmount     int64
-		expected              int64
+		userDepositAmt        sdk.Dec
+		totalShareTokenSupply sdk.Dec
+		totalStakedAmount     sdk.Dec
+		expected              sdk.Int
 	}{
 		{
-			userDepositAmt:        1000_000000,
-			totalShareTokenSupply: 40000_000000,
-			totalStakedAmount:     40000_000000,
-			expected:              1000_000000,
+			userDepositAmt:        sdk.NewDec(1000_000000),
+			totalShareTokenSupply: sdk.NewDec(40000_000000),
+			totalStakedAmount:     sdk.NewDec(40000_000000),
+			expected:              sdk.NewInt(1000_000000),
 		},
 		{
-			userDepositAmt:        1000_000000,
-			totalShareTokenSupply: 40000_000000,
-			totalStakedAmount:     40000_000000,
-			expected:              1000_000000,
+			userDepositAmt:        sdk.NewDec(1000_000000),
+			totalShareTokenSupply: sdk.NewDec(40000_000000),
+			totalStakedAmount:     sdk.NewDec(40000_000000),
+			expected:              sdk.NewInt(1000_000000),
 		},
 		{
-			userDepositAmt:        1000_000000,
-			totalShareTokenSupply: 41000_000000,
-			totalStakedAmount:     42000_000000,
-			expected:              976_190476,
+			userDepositAmt:        sdk.NewDec(1000_000000),
+			totalShareTokenSupply: sdk.NewDec(41000_000000),
+			totalStakedAmount:     sdk.NewDec(42000_000000),
+			expected:              sdk.NewInt(976_190476),
 		},
 		{
-			userDepositAmt:        1000_000000,
-			totalShareTokenSupply: 41976190480,
-			totalStakedAmount:     44500_000000,
-			expected:              943_285179,
+			userDepositAmt:        sdk.NewDec(1000_000000),
+			totalShareTokenSupply: sdk.NewDec(41976190480),
+			totalStakedAmount:     sdk.NewDec(44500_000000),
+			expected:              sdk.NewInt(943_285179),
 		},
 		{
-			userDepositAmt:        1000_000000,
-			totalShareTokenSupply: 42919_475660,
-			totalStakedAmount:     47500_000000,
-			expected:              903_567908,
+			userDepositAmt:        sdk.NewDec(1000_000000),
+			totalShareTokenSupply: sdk.NewDec(42919_475660),
+			totalStakedAmount:     sdk.NewDec(47500_000000),
+			expected:              sdk.NewInt(903_567908),
 		},
 	}
 
 	for _, tc := range tcs {
-		userDepositAmt := big.NewInt(tc.userDepositAmt)
-		totalShareTokenSupply := big.NewInt(tc.totalShareTokenSupply)
-		totalStakedAmount := big.NewInt(tc.totalStakedAmount)
+		userDepositAmt := tc.userDepositAmt
+		totalShareTokenSupply := tc.totalShareTokenSupply
+		totalStakedAmount := tc.totalStakedAmount
 
 		res := suite.App.GalKeeper.CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount)
-		suite.Equal(tc.expected, res.Int64())
+		suite.Equal(tc.expected, res)
 	}
 }
 
 func (suite *KeeperTestSuite) TestCalculateBurnAmount() {
 	tcs := []struct {
-		userBurnStTokenAmt    int64
-		totalShareTokenSupply int64
-		totalStakedAmount     int64
-		expected              int64
+		userBurnStTokenAmt    sdk.Dec
+		totalShareTokenSupply sdk.Dec
+		totalStakedAmount     sdk.Dec
+		expected              sdk.Int
 	}{
 		{
-			userBurnStTokenAmt:    5000_000000,
-			totalShareTokenSupply: 40000_000000,
-			totalStakedAmount:     40000_000000,
-			expected:              5000_000000,
+			userBurnStTokenAmt:    sdk.NewDec(5000_000000),
+			totalShareTokenSupply: sdk.NewDec(40000_000000),
+			totalStakedAmount:     sdk.NewDec(40000_000000),
+			expected:              sdk.NewInt(5000_000000),
 		},
 		{
-			userBurnStTokenAmt:    943_285180,
-			totalShareTokenSupply: 41976_190480,
-			totalStakedAmount:     44500_000000,
-			expected:              1000_000000,
+			userBurnStTokenAmt:    sdk.NewDec(943_285180),
+			totalShareTokenSupply: sdk.NewDec(41976_190480),
+			totalStakedAmount:     sdk.NewDec(44500_000000),
+			expected:              sdk.NewInt(1000_000000),
 		},
 	}
 
 	for _, tc := range tcs {
-		burnedAmount := big.NewInt(tc.userBurnStTokenAmt)
-		totalShareTokenSupply := big.NewInt(tc.totalShareTokenSupply)
-		totalStakedAmount := big.NewInt(tc.totalStakedAmount)
+		burnedAmount := tc.userBurnStTokenAmt
+		totalShareTokenSupply := tc.totalShareTokenSupply
+		totalStakedAmount := tc.totalStakedAmount
 
 		res := suite.App.GalKeeper.CalculateWithdrawAlpha(burnedAmount, totalShareTokenSupply, totalStakedAmount)
-		suite.Equal(tc.expected, res.Int64())
+		suite.Equal(tc.expected, res)
 	}
 }
 
@@ -157,7 +155,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					{
 						Coin:            tc.stakedAmount,
 						ChainId:         "stake-1",
-						Decimal:         8,
+						Decimal:         6,
 						OperatorAddress: operator,
 					},
 				},

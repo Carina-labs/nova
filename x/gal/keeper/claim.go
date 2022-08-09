@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"fmt"
-	"math/big"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
@@ -23,8 +22,9 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	if err != nil {
 		return sdk.Coin{}, err
 	}
-	mintAmt := k.CalculateDepositAlpha(asset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
-	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)))
+
+	mintAmt := k.CalculateDepositAlpha(asset.Amount.ToDec(), totalSnSupply.Amount.ToDec(), totalStakedAmount.Amount.ToDec())
+	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(snDenom, mintAmt))
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -42,12 +42,12 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 // CalculateDepositAlpha calculates alpha value.
 // Alpha = userDepositAmount / totalStakedAmount
 // Delta = Alpha * totalShareTokenSupply
-func (k Keeper) CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
-	res := new(big.Int)
-	if totalShareTokenSupply.Cmp(big.NewInt(0)) == 0 {
+func (k Keeper) CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount sdk.Dec) sdk.Int {
+	if totalShareTokenSupply.Equal(sdk.NewDec(0)) {
 		totalShareTokenSupply = totalStakedAmount
 	}
-	return res.Mul(userDepositAmt, totalShareTokenSupply).Div(res, totalStakedAmount)
+
+	return userDepositAmt.Mul(totalShareTokenSupply).Quo(totalStakedAmount).TruncateInt()
 }
 
 // GetWithdrawAmt is used for calculating the amount of coin user can withdraw
@@ -61,19 +61,18 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 		return sdk.Coin{}, err
 	}
 
-	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.ToDec(), totalSharedToken.Amount.ToDec(), totalStakedAmount.Coin.Amount.ToDec())
 	return sdk.NewInt64Coin(baseDenom, withdrawAmt.Int64()), nil
 }
 
 // CalculateWithdrawAlpha calculates lambda value.
 // Lambda = userWithdrawAmount / totalStakedAmount
 // Delta = Lambda * totalShareTokenSupply
-func (k Keeper) CalculateWithdrawAlpha(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
-	res := new(big.Int)
-	if totalShareTokenSupply.Cmp(big.NewInt(0)) == 0 {
+func (k Keeper) CalculateWithdrawAlpha(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount sdk.Dec) sdk.Int {
+	if totalShareTokenSupply.Equal(sdk.NewDec(0)) {
 		totalShareTokenSupply = totalStakedAmount
 	}
-	return res.Mul(burnedStTokenAmt, totalStakedAmount).Div(res, totalShareTokenSupply)
+	return burnedStTokenAmt.Mul(totalStakedAmount).Quo(totalShareTokenSupply).TruncateInt()
 }
 
 func (k Keeper) GetsnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string, error) {
