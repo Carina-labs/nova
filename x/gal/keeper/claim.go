@@ -116,7 +116,3 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPor
 	}
 	return chainBalanceWithIbcDenom.Sub(unMintedAmount), nil
 }
-
-//현재 유저가 Claim 가능한 수량 -> Deposit 이후 클레임
-//현재 유저의 Unstaking 진행 중인 수량과, 남은 기간
-//현재 유저의 Unstaking 기간이 종료되어 Withdraw 가능한 수량
