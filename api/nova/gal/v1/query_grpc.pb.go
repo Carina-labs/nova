@@ -23,7 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
-	Share(ctx context.Context, in *QueryCacheDepositAmountRequest, opts ...grpc.CallOption) (*QueryCachedDepositAmountResponse, error)
+	ClaimableAmount(ctx context.Context, in *ClaimableAmountRequest, opts ...grpc.CallOption) (*ClaimableAmountResponse, error)
+	PendingWithdrawals(ctx context.Context, in *PendingWithdrawalsRequest, opts ...grpc.CallOption) (*PendingWithdrawalsResponse, error)
+	ActiveWithdrawals(ctx context.Context, in *ActiveWithdrawalsRequest, opts ...grpc.CallOption) (*ActiveWithdrawalsResponse, error)
+	Share(ctx context.Context, in *QueryMyShareRequest, opts ...grpc.CallOption) (*QueryMyShareResponse, error)
 	DepositHistory(ctx context.Context, in *QueryDepositHistoryRequest, opts ...grpc.CallOption) (*QueryDepositHistoryResponse, error)
 	UndelegateHistory(ctx context.Context, in *QueryUndelegateHistoryRequest, opts ...grpc.CallOption) (*QueryUndelegateHistoryResponse, error)
 	WithdrawHistory(ctx context.Context, in *QueryWithdrawHistoryRequest, opts ...grpc.CallOption) (*QueryWithdrawHistoryResponse, error)
@@ -46,8 +49,35 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
-func (c *queryClient) Share(ctx context.Context, in *QueryCacheDepositAmountRequest, opts ...grpc.CallOption) (*QueryCachedDepositAmountResponse, error) {
-	out := new(QueryCachedDepositAmountResponse)
+func (c *queryClient) ClaimableAmount(ctx context.Context, in *ClaimableAmountRequest, opts ...grpc.CallOption) (*ClaimableAmountResponse, error) {
+	out := new(ClaimableAmountResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/ClaimableAmount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) PendingWithdrawals(ctx context.Context, in *PendingWithdrawalsRequest, opts ...grpc.CallOption) (*PendingWithdrawalsResponse, error) {
+	out := new(PendingWithdrawalsResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/PendingWithdrawals", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ActiveWithdrawals(ctx context.Context, in *ActiveWithdrawalsRequest, opts ...grpc.CallOption) (*ActiveWithdrawalsResponse, error) {
+	out := new(ActiveWithdrawalsResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/ActiveWithdrawals", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) Share(ctx context.Context, in *QueryMyShareRequest, opts ...grpc.CallOption) (*QueryMyShareResponse, error) {
+	out := new(QueryMyShareResponse)
 	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/Share", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -87,7 +117,10 @@ func (c *queryClient) WithdrawHistory(ctx context.Context, in *QueryWithdrawHist
 // for forward compatibility
 type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
-	Share(context.Context, *QueryCacheDepositAmountRequest) (*QueryCachedDepositAmountResponse, error)
+	ClaimableAmount(context.Context, *ClaimableAmountRequest) (*ClaimableAmountResponse, error)
+	PendingWithdrawals(context.Context, *PendingWithdrawalsRequest) (*PendingWithdrawalsResponse, error)
+	ActiveWithdrawals(context.Context, *ActiveWithdrawalsRequest) (*ActiveWithdrawalsResponse, error)
+	Share(context.Context, *QueryMyShareRequest) (*QueryMyShareResponse, error)
 	DepositHistory(context.Context, *QueryDepositHistoryRequest) (*QueryDepositHistoryResponse, error)
 	UndelegateHistory(context.Context, *QueryUndelegateHistoryRequest) (*QueryUndelegateHistoryResponse, error)
 	WithdrawHistory(context.Context, *QueryWithdrawHistoryRequest) (*QueryWithdrawHistoryResponse, error)
@@ -101,7 +134,16 @@ type UnimplementedQueryServer struct {
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
-func (UnimplementedQueryServer) Share(context.Context, *QueryCacheDepositAmountRequest) (*QueryCachedDepositAmountResponse, error) {
+func (UnimplementedQueryServer) ClaimableAmount(context.Context, *ClaimableAmountRequest) (*ClaimableAmountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClaimableAmount not implemented")
+}
+func (UnimplementedQueryServer) PendingWithdrawals(context.Context, *PendingWithdrawalsRequest) (*PendingWithdrawalsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PendingWithdrawals not implemented")
+}
+func (UnimplementedQueryServer) ActiveWithdrawals(context.Context, *ActiveWithdrawalsRequest) (*ActiveWithdrawalsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ActiveWithdrawals not implemented")
+}
+func (UnimplementedQueryServer) Share(context.Context, *QueryMyShareRequest) (*QueryMyShareResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Share not implemented")
 }
 func (UnimplementedQueryServer) DepositHistory(context.Context, *QueryDepositHistoryRequest) (*QueryDepositHistoryResponse, error) {
@@ -144,8 +186,62 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_ClaimableAmount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClaimableAmountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ClaimableAmount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/ClaimableAmount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ClaimableAmount(ctx, req.(*ClaimableAmountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_PendingWithdrawals_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PendingWithdrawalsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).PendingWithdrawals(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/PendingWithdrawals",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).PendingWithdrawals(ctx, req.(*PendingWithdrawalsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_ActiveWithdrawals_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ActiveWithdrawalsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ActiveWithdrawals(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/ActiveWithdrawals",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ActiveWithdrawals(ctx, req.(*ActiveWithdrawalsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Query_Share_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryCacheDepositAmountRequest)
+	in := new(QueryMyShareRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -157,7 +253,7 @@ func _Query_Share_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		FullMethod: "/nova.gal.v1.Query/Share",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Share(ctx, req.(*QueryCacheDepositAmountRequest))
+		return srv.(QueryServer).Share(ctx, req.(*QueryMyShareRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -226,6 +322,18 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "ClaimableAmount",
+			Handler:    _Query_ClaimableAmount_Handler,
+		},
+		{
+			MethodName: "PendingWithdrawals",
+			Handler:    _Query_PendingWithdrawals_Handler,
+		},
+		{
+			MethodName: "ActiveWithdrawals",
+			Handler:    _Query_ActiveWithdrawals_Handler,
 		},
 		{
 			MethodName: "Share",

@@ -22,8 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QueryClient interface {
-	// QueryInterchainAccountFromZone returns the interchain account for given owner address on a given connection pair
-	InterchainAccountFromZone(ctx context.Context, in *QueryInterchainAccountFromZoneRequest, opts ...grpc.CallOption) (*QueryInterchainAccountFromZoneResponse, error)
+	// AllZones returns all the zones registered.
+	AllZones(ctx context.Context, in *QueryAllZonesRequest, opts ...grpc.CallOption) (*QueryAllZonesResponse, error)
 }
 
 type queryClient struct {
@@ -34,9 +34,9 @@ func NewQueryClient(cc grpc.ClientConnInterface) QueryClient {
 	return &queryClient{cc}
 }
 
-func (c *queryClient) InterchainAccountFromZone(ctx context.Context, in *QueryInterchainAccountFromZoneRequest, opts ...grpc.CallOption) (*QueryInterchainAccountFromZoneResponse, error) {
-	out := new(QueryInterchainAccountFromZoneResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Query/InterchainAccountFromZone", in, out, opts...)
+func (c *queryClient) AllZones(ctx context.Context, in *QueryAllZonesRequest, opts ...grpc.CallOption) (*QueryAllZonesResponse, error) {
+	out := new(QueryAllZonesResponse)
+	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Query/AllZones", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,8 +47,8 @@ func (c *queryClient) InterchainAccountFromZone(ctx context.Context, in *QueryIn
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
-	// QueryInterchainAccountFromZone returns the interchain account for given owner address on a given connection pair
-	InterchainAccountFromZone(context.Context, *QueryInterchainAccountFromZoneRequest) (*QueryInterchainAccountFromZoneResponse, error)
+	// AllZones returns all the zones registered.
+	AllZones(context.Context, *QueryAllZonesRequest) (*QueryAllZonesResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -56,8 +56,8 @@ type QueryServer interface {
 type UnimplementedQueryServer struct {
 }
 
-func (UnimplementedQueryServer) InterchainAccountFromZone(context.Context, *QueryInterchainAccountFromZoneRequest) (*QueryInterchainAccountFromZoneResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method InterchainAccountFromZone not implemented")
+func (UnimplementedQueryServer) AllZones(context.Context, *QueryAllZonesRequest) (*QueryAllZonesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AllZones not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -72,20 +72,20 @@ func RegisterQueryServer(s grpc.ServiceRegistrar, srv QueryServer) {
 	s.RegisterService(&Query_ServiceDesc, srv)
 }
 
-func _Query_InterchainAccountFromZone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryInterchainAccountFromZoneRequest)
+func _Query_AllZones_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllZonesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).InterchainAccountFromZone(ctx, in)
+		return srv.(QueryServer).AllZones(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Query/InterchainAccountFromZone",
+		FullMethod: "/nova.ibcstaking.v1.Query/AllZones",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).InterchainAccountFromZone(ctx, req.(*QueryInterchainAccountFromZoneRequest))
+		return srv.(QueryServer).AllZones(ctx, req.(*QueryAllZonesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -98,8 +98,8 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "InterchainAccountFromZone",
-			Handler:    _Query_InterchainAccountFromZone_Handler,
+			MethodName: "AllZones",
+			Handler:    _Query_AllZones_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
