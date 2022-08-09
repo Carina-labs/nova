@@ -8,21 +8,7 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 )
 
-// NewQuerier returns a new sdk.Keeper instance.
-func NewQuerier(k Keeper, legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
-	return func(ctx sdk.Context, path []string, req abci.RequestQuery) ([]byte, error) {
-		switch path[0] {
-		case types.QueryDepositHistory:
-			return queryDepositHistory(ctx, req, k, legacyQuerierCdc)
-		// case types.QueryUndelegateHistory:
-		// 	return queryUndelegateHistory(ctx, req, k, legacyQuerierCdc)
-		default:
-			return nil, sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "unknown %s query endpoint: %s", types.ModuleName, path[0])
-		}
-	}
-}
-
-func queryDepositHistory(ctx sdk.Context,
+func QueryDepositHistory(ctx sdk.Context,
 	req abci.RequestQuery,
 	k Keeper,
 	legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {

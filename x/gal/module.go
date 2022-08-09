@@ -97,7 +97,7 @@ type AppModule struct {
 // RegisterServices reigsters mopdule services.
 func (am AppModule) RegisterServices(cfg module.Configurator) {
 	types.RegisterMsgServer(cfg.MsgServer(), keeper.NewMsgServerImpl(&am.keeper))
-	types.RegisterQueryServer(cfg.QueryServer(), am.keeper)
+	types.RegisterQueryServer(cfg.QueryServer(), keeper.NewQueryServer(&am.keeper))
 }
 
 // NewAppModule creates a new AppModule object
@@ -132,7 +132,9 @@ func (AppModule) QuerierRoute() string {
 
 // LegacyQuerierHandler returns the gal module sdk.Querier.
 func (am AppModule) LegacyQuerierHandler(legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
-	return keeper.NewQuerier(am.keeper, legacyQuerierCdc)
+	return func(sdk.Context, []string, abci.RequestQuery) ([]byte, error) {
+		return nil, fmt.Errorf("legacy querier not supported for the x/%s module", types.ModuleName)
+	}
 }
 
 // InitGenesis performs genesis initialization for the gal module. It returns

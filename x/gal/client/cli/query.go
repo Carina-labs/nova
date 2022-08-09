@@ -27,6 +27,9 @@ func GetQueryCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(GetSharesCmd())
+	cmd.AddCommand(GetDepositHistory())
+	cmd.AddCommand(GetUndelegateHistory())
+	cmd.AddCommand(GetWithdrawHistory())
 
 	return cmd
 }
