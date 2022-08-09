@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"strconv"
 	"testing"
 
@@ -154,11 +153,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.icaPath = NewICAPAth(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
 	err := suite.SetupICAPath(suite.icaPath, acc1.Address)
-	if err != nil {
-		fmt.Printf("err ica path : %s\n", err.Error())
-	}
 	suite.NoError(err)
-	println("Finish setup test")
 }
 
 func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []ibcstakingtypes.RegisteredZone) {

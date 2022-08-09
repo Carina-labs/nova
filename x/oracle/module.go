@@ -59,7 +59,7 @@ func (a AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, config client.TxEnc
 	return data.Validate()
 }
 
-func (a AppModuleBasic) RegisterRESTRoutes(context client.Context, router *mux.Router) {
+func (a AppModuleBasic) RegisterRESTRoutes(ctx client.Context, router *mux.Router) {
 
 }
 

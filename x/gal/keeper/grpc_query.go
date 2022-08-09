@@ -2,9 +2,9 @@ package keeper
 
 import (
 	"context"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/Carina-labs/nova/x/gal/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 type QueryServer struct {
@@ -25,7 +25,22 @@ func (q QueryServer) Params(c context.Context, request *types.QueryParamsRequest
 	return &types.QueryParamsResponse{Params: params}, nil
 }
 
-func (q QueryServer) Share(ctx context.Context, request *types.QueryCacheDepositAmountRequest) (*types.QueryCachedDepositAmountResponse, error) {
+func (q QueryServer) ClaimableAmount(ctx context.Context, request *types.ClaimableAmountRequest) (*types.ClaimableAmountResponse, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (q QueryServer) PendingWithdrawals(ctx context.Context, request *types.PendingWithdrawalsRequest) (*types.PendingWithdrawalsResponse, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (q QueryServer) ActiveWithdrawals(ctx context.Context, request *types.ActiveWithdrawalsRequest) (*types.ActiveWithdrawalsResponse, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (q QueryServer) Share(ctx context.Context, request *types.QueryMyShareRequest) (*types.QueryMyShareResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }

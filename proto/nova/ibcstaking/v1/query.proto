@@ -9,11 +9,6 @@ option go_package = "github.com/Carina-labs/nova/x/ibcstaking/types";
 
 // Query defines the gRPC querier service.
 service Query {
-  // QueryInterchainAccountFromZone returns the interchain account for given owner address on a given connection pair
-  rpc InterchainAccountFromZone(QueryInterchainAccountFromZoneRequest) returns (QueryInterchainAccountFromZoneResponse) {
-    option (google.api.http).get = "/nova/ibcstaking/v1/ica/{port_id}/{connection_id}";
-  }
-
   // AllZones returns all the zones registered.
   rpc AllZones(QueryAllZonesRequest) returns (QueryAllZonesResponse) {
     option (google.api.http).get = "/nova/ibcstaking/v1/zones/all";
@@ -26,15 +21,4 @@ message QueryAllZonesRequest { };
 // QueryAllZonesResponse is the response type for Query/AllZones.
 message QueryAllZonesResponse {
   repeated RegisteredZone zones = 1;
-}
-
-// QueryInterchainAccountFromZoneRequest is the request type for the Query/InterchainAccountFromZone RPC
-message QueryInterchainAccountFromZoneRequest {
-  string port_id = 1;
-  string connection_id = 2 [(gogoproto.moretags) = "yaml:\"connection_id\""];
-}
-
-// QueryInterchainAccountFromZoneResponse the response type for the Query/InterchainAccountFromZone RPC
-message QueryInterchainAccountFromZoneResponse {
-  string interchain_account_address = 1 [(gogoproto.moretags) = "yaml:\"interchain_account_address\""];
 }
