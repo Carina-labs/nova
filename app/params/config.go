@@ -7,7 +7,7 @@ import (
 const (
 	HumanCoinUnit = "nova"
 	BaseCoinUnit  = "unova"
-	OsmoExponent  = 6
+	NovaExponent  = 6
 
 	DefaultBondDenom = BaseCoinUnit
 )
@@ -21,7 +21,7 @@ func RegisterDenoms() {
 	if err != nil {
 		panic(err)
 	}
-	err = sdk.RegisterDenom(BaseCoinUnit, sdk.NewDecWithPrec(1, OsmoExponent))
+	err = sdk.RegisterDenom(BaseCoinUnit, sdk.NewDecWithPrec(1, NovaExponent))
 	if err != nil {
 		panic(err)
 	}
