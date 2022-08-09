@@ -15,8 +15,20 @@ service Query {
     option (google.api.http).get = "/nova/gal/v1/params";
   }
 
-  rpc Share(QueryCacheDepositAmountRequest) returns (QueryCachedDepositAmountResponse) {
-    option (google.api.http).get = "/nova/gal/v1/shares/{address}/by_denom";
+  rpc ClaimableAmount(ClaimableAmountRequest) returns (ClaimableAmountResponse) {
+    option (google.api.http).get = "/nova/gal/v1/claimable_amount/{address}/by_denom/{denom}";
+  }
+
+  rpc PendingWithdrawals(PendingWithdrawalsRequest) returns (PendingWithdrawalsResponse) {
+    option (google.api.http).get = "/nova/gal/v1/pending_withdrawals/{address}/by_denom/{denom}";
+  }
+
+  rpc ActiveWithdrawals(ActiveWithdrawalsRequest) returns (ActiveWithdrawalsResponse) {
+    option (google.api.http).get = "/nova/gal/v1/active_withdrawals/{address}/by_denom/{denom}";
+  }
+
+  rpc Share(QueryMyShareRequest) returns (QueryMyShareResponse) {
+    option (google.api.http).get = "/nova/gal/v1/shares/{address}/by_denom/{denom}";
   }
 
   rpc DepositHistory(QueryDepositHistoryRequest) returns (QueryDepositHistoryResponse) {
@@ -43,14 +55,47 @@ message QueryParamsResponse {
   Params params = 1 [ (gogoproto.nullable) = false ];
 }
 
-// QuerySharesRequest defines request form to query balance of snToken with address.
-message QueryCacheDepositAmountRequest {
+// ClaimableAmountRequest is the request type for the Query/ClaimableAmount RPC method.
+message ClaimableAmountRequest {
+  string denom = 1;
+  string address = 2;
+}
+
+// ClaimableAmountResponse is the response type for the Query/ClaimableAmount RPC method.
+message ClaimableAmountResponse {
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
+}
+
+// PendingWithdrawalsRequest is the request type for the Query/PendingWithdrawals RPC method.
+message PendingWithdrawalsRequest {
+  string denom = 1;
+  string address = 2;
+}
+
+// PendingWithdrawalsResponse is the response type for the Query/PendingWithdrawals RPC method.
+message PendingWithdrawalsResponse {
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
+}
+
+// ActiveWithdrawalsRequest is the request type for the Query/ActiveWithdrawals RPC method.
+message ActiveWithdrawalsRequest {
+  string denom = 1;
+  string address = 2;
+}
+
+// ActiveWithdrawalsResponse is the response type for the Query/ActiveWithdrawals RPC method.
+message ActiveWithdrawalsResponse {
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
+}
+
+// QueryMyShareRequest defines request form to query balance of snToken with address.
+message QueryMyShareRequest {
   string denom = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 // QuerySharesResponse defines response of QueryBalanceRequest.
-message QueryCachedDepositAmountResponse {
+message QueryMyShareResponse{
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
 }
