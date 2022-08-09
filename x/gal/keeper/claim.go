@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
@@ -37,6 +38,29 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	return sdk.NewInt64Coin(snDenom, mintAmt.Int64()), nil
+}
+
+// TotalClaimableAssets returns the total amount of claimable snAsset.
+func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, transferPortId string, transferChannelId string, claimer sdk.AccAddress) (*sdk.Coin, error) {
+	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChannelId, zone.BaseDenom)
+	result := sdk.Coin{
+		Amount: sdk.NewIntFromUint64(0),
+		Denom:  ibcDenom,
+	}
+
+	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
+	records, err := k.GetRecordedDepositAmt(ctx, zone.ZoneId, claimer)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, record := range records.Records {
+		if record.State == int64(DELEGATE_SUCCESS) && record.OracleVersion < oracleVersion {
+			result = result.Add(*record.Amount)
+		}
+	}
+
+	return &result, nil
 }
 
 // CalculateDepositAlpha calculates alpha value.

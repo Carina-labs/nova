@@ -59,6 +59,8 @@ message QueryParamsResponse {
 message ClaimableAmountRequest {
   string zone_id = 1;
   string address = 2;
+  string ica_transfer_port_id = 3;
+  string ica_transfer_channel_id = 4;
 }
 
 // ClaimableAmountResponse is the response type for the Query/ClaimableAmount RPC method.

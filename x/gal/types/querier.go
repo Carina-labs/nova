@@ -2,11 +2,6 @@ package types
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
-const (
-	QueryDepositHistory    = "depositHistory"
-	QueryUndelegateHistory = "undelegateHistory"
-)
-
 func NewQuerySharesRequest(addr sdk.AccAddress, zoneId string) *QueryMyShareRequest {
 	return &QueryMyShareRequest{
 		Address: addr.String(),

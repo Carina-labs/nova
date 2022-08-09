@@ -162,8 +162,8 @@ func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zoneId, transferP
 		return sdk.Coin{}, fmt.Errorf("cannot find zone id : %s", zoneId)
 	}
 
-	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx,
-		transferPortId, transferChanId, targetZoneInfo.BaseDenom)
+	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChanId, targetZoneInfo.BaseDenom)
+
 	res := sdk.NewInt64Coin(ibcDenom, 0)
 	k.IterateDepositRecord(ctx, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
 		if depositRecord.ZoneId != zoneId {
