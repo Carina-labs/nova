@@ -340,7 +340,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	for _, record := range records.Records {
 		oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 
-		if uint64(record.OracleVersion) >= oracleVersion {
+		if record.OracleVersion >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
 		if record.State == int64(DELEGATE_SUCCESS) {
