@@ -155,7 +155,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					{
 						Coin:            tc.stakedAmount,
 						ChainId:         "stake-1",
-						Decimal:         6,
+						Decimal:         8,
 						OperatorAddress: operator,
 					},
 				},
