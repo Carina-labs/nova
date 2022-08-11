@@ -24,7 +24,6 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	mintAmt := k.CalculateDepositAlpha(asset.Amount.ToDec(), totalSnSupply.Amount.ToDec(), totalStakedAmount.Amount.ToDec())
-  
 	coinStr := mintAmt.String() + snDenom
 
 	mintCoin, err := sdk.ParseCoinNormalized(coinStr)
@@ -33,7 +32,6 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	err = k.MintShareTokens(ctx, claimer, mintCoin)
-
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -93,7 +91,6 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 	}
 
 	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.ToDec(), totalSharedToken.Amount.ToDec(), totalStakedAmount.Coin.Amount.ToDec())
-
 	coinStr := withdrawAmt.String() + baseDenom
 	withdrawCoin, err := sdk.ParseCoinNormalized(coinStr)
 	if err != nil {
@@ -101,7 +98,6 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 	}
 
 	return withdrawCoin, nil
-
 }
 
 // CalculateWithdrawAlpha calculates lambda value.
