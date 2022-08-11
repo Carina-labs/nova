@@ -65,18 +65,14 @@ func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
 
-func (k Keeper) Share(context context.Context, rq *types.QueryCacheDepositAmountRequest) (*types.QueryCachedDepositAmountResponse, error) {
-	return nil, nil
-}
-
-func (k Keeper) DepositHistory(goCtx context.Context, rq *types.QueryDepositHistoryRequest) (*types.QueryDepositHistoryResponse, error) {
+func (k Keeper) DepositHistory(goCtx context.Context, request *types.QueryDepositHistoryRequest) (*types.QueryDepositHistoryResponse, error) {
 	sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
-	if zoneInfo == nil {
-		return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
+	zoneInfo, ok := k.ibcstakingKeeper.GetRegisteredZone(sdkCtx, request.ZoneId)
+	if !ok {
+		return nil, fmt.Errorf("can't find registered zone for denom : %s", request.ZoneId)
 	}
 
-	acc, err := sdk.AccAddressFromBech32(rq.Address)
+	acc, err := sdk.AccAddressFromBech32(request.Address)
 	if err != nil {
 		return nil, err
 	}

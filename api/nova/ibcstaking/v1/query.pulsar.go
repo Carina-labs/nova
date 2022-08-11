@@ -5,6 +5,7 @@ import (
 	fmt "fmt"
 	runtime "github.com/cosmos/cosmos-proto/runtime"
 	_ "github.com/gogo/protobuf/gogoproto"
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoiface "google.golang.org/protobuf/runtime/protoiface"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -14,27 +15,23 @@ import (
 )
 
 var (
-	md_QueryInterchainAccountFromZoneRequest               protoreflect.MessageDescriptor
-	fd_QueryInterchainAccountFromZoneRequest_port_id       protoreflect.FieldDescriptor
-	fd_QueryInterchainAccountFromZoneRequest_connection_id protoreflect.FieldDescriptor
+	md_QueryAllZonesRequest protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_nova_ibcstaking_v1_query_proto_init()
-	md_QueryInterchainAccountFromZoneRequest = File_nova_ibcstaking_v1_query_proto.Messages().ByName("QueryInterchainAccountFromZoneRequest")
-	fd_QueryInterchainAccountFromZoneRequest_port_id = md_QueryInterchainAccountFromZoneRequest.Fields().ByName("port_id")
-	fd_QueryInterchainAccountFromZoneRequest_connection_id = md_QueryInterchainAccountFromZoneRequest.Fields().ByName("connection_id")
+	md_QueryAllZonesRequest = File_nova_ibcstaking_v1_query_proto.Messages().ByName("QueryAllZonesRequest")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryInterchainAccountFromZoneRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryAllZonesRequest)(nil)
 
-type fastReflection_QueryInterchainAccountFromZoneRequest QueryInterchainAccountFromZoneRequest
+type fastReflection_QueryAllZonesRequest QueryAllZonesRequest
 
-func (x *QueryInterchainAccountFromZoneRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryInterchainAccountFromZoneRequest)(x)
+func (x *QueryAllZonesRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryAllZonesRequest)(x)
 }
 
-func (x *QueryInterchainAccountFromZoneRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryAllZonesRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_ibcstaking_v1_query_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -46,43 +43,43 @@ func (x *QueryInterchainAccountFromZoneRequest) slowProtoReflect() protoreflect.
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryInterchainAccountFromZoneRequest_messageType fastReflection_QueryInterchainAccountFromZoneRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryInterchainAccountFromZoneRequest_messageType{}
+var _fastReflection_QueryAllZonesRequest_messageType fastReflection_QueryAllZonesRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryAllZonesRequest_messageType{}
 
-type fastReflection_QueryInterchainAccountFromZoneRequest_messageType struct{}
+type fastReflection_QueryAllZonesRequest_messageType struct{}
 
-func (x fastReflection_QueryInterchainAccountFromZoneRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryInterchainAccountFromZoneRequest)(nil)
+func (x fastReflection_QueryAllZonesRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryAllZonesRequest)(nil)
 }
-func (x fastReflection_QueryInterchainAccountFromZoneRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryInterchainAccountFromZoneRequest)
+func (x fastReflection_QueryAllZonesRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryAllZonesRequest)
 }
-func (x fastReflection_QueryInterchainAccountFromZoneRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryInterchainAccountFromZoneRequest
+func (x fastReflection_QueryAllZonesRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryAllZonesRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryInterchainAccountFromZoneRequest
+func (x *fastReflection_QueryAllZonesRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryAllZonesRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryInterchainAccountFromZoneRequest_messageType
+func (x *fastReflection_QueryAllZonesRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryAllZonesRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryInterchainAccountFromZoneRequest)
+func (x *fastReflection_QueryAllZonesRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryAllZonesRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryInterchainAccountFromZoneRequest)(x)
+func (x *fastReflection_QueryAllZonesRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryAllZonesRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -90,19 +87,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Interface() proto
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.PortId != "" {
-		value := protoreflect.ValueOfString(x.PortId)
-		if !f(fd_QueryInterchainAccountFromZoneRequest_port_id, value) {
-			return
-		}
-	}
-	if x.ConnectionId != "" {
-		value := protoreflect.ValueOfString(x.ConnectionId)
-		if !f(fd_QueryInterchainAccountFromZoneRequest_connection_id, value) {
-			return
-		}
-	}
+func (x *fastReflection_QueryAllZonesRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 }
 
 // Has reports whether a field is populated.
@@ -116,17 +101,13 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Range(f func(prot
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryAllZonesRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.port_id":
-		return x.PortId != ""
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.connection_id":
-		return x.ConnectionId != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -136,17 +117,13 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Has(fd protorefle
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryAllZonesRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.port_id":
-		x.PortId = ""
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.connection_id":
-		x.ConnectionId = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -156,19 +133,13 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Clear(fd protoref
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllZonesRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.port_id":
-		value := x.PortId
-		return protoreflect.ValueOfString(value)
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.connection_id":
-		value := x.ConnectionId
-		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -182,17 +153,13 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Get(descriptor pr
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryAllZonesRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.port_id":
-		x.PortId = value.Interface().(string)
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.connection_id":
-		x.ConnectionId = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -206,44 +173,36 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Set(fd protorefle
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllZonesRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.port_id":
-		panic(fmt.Errorf("field port_id of message nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest is not mutable"))
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.connection_id":
-		panic(fmt.Errorf("field connection_id of message nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllZonesRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.port_id":
-		return protoreflect.ValueOfString("")
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest.connection_id":
-		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryAllZonesRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.QueryAllZonesRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -251,7 +210,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) WhichOneof(d prot
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryAllZonesRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -262,7 +221,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) GetUnknown() prot
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryAllZonesRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -274,7 +233,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) SetUnknown(fields
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) IsValid() bool {
+func (x *fastReflection_QueryAllZonesRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -284,9 +243,9 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryInterchainAccountFromZoneRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryAllZonesRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryInterchainAccountFromZoneRequest)
+		x := input.Message.Interface().(*QueryAllZonesRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -298,14 +257,6 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) ProtoMethods() *p
 		var n int
 		var l int
 		_ = l
-		l = len(x.PortId)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.ConnectionId)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -316,7 +267,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) ProtoMethods() *p
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryInterchainAccountFromZoneRequest)
+		x := input.Message.Interface().(*QueryAllZonesRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -335,20 +286,6 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) ProtoMethods() *p
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.ConnectionId) > 0 {
-			i -= len(x.ConnectionId)
-			copy(dAtA[i:], x.ConnectionId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ConnectionId)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.PortId) > 0 {
-			i -= len(x.PortId)
-			copy(dAtA[i:], x.PortId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.PortId)))
-			i--
-			dAtA[i] = 0xa
-		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
 		} else {
@@ -360,7 +297,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) ProtoMethods() *p
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryInterchainAccountFromZoneRequest)
+		x := input.Message.Interface().(*QueryAllZonesRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -392,76 +329,12 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) ProtoMethods() *p
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryInterchainAccountFromZoneRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllZonesRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryInterchainAccountFromZoneRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllZonesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field PortId", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.PortId = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ConnectionId", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.ConnectionId = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -497,26 +370,77 @@ func (x *fastReflection_QueryInterchainAccountFromZoneRequest) ProtoMethods() *p
 	}
 }
 
+var _ protoreflect.List = (*_QueryAllZonesResponse_1_list)(nil)
+
+type _QueryAllZonesResponse_1_list struct {
+	list *[]*RegisteredZone
+}
+
+func (x *_QueryAllZonesResponse_1_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_QueryAllZonesResponse_1_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_QueryAllZonesResponse_1_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*RegisteredZone)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_QueryAllZonesResponse_1_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*RegisteredZone)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_QueryAllZonesResponse_1_list) AppendMutable() protoreflect.Value {
+	v := new(RegisteredZone)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_QueryAllZonesResponse_1_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_QueryAllZonesResponse_1_list) NewElement() protoreflect.Value {
+	v := new(RegisteredZone)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_QueryAllZonesResponse_1_list) IsValid() bool {
+	return x.list != nil
+}
+
 var (
-	md_QueryInterchainAccountFromZoneResponse                            protoreflect.MessageDescriptor
-	fd_QueryInterchainAccountFromZoneResponse_interchain_account_address protoreflect.FieldDescriptor
+	md_QueryAllZonesResponse       protoreflect.MessageDescriptor
+	fd_QueryAllZonesResponse_zones protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_ibcstaking_v1_query_proto_init()
-	md_QueryInterchainAccountFromZoneResponse = File_nova_ibcstaking_v1_query_proto.Messages().ByName("QueryInterchainAccountFromZoneResponse")
-	fd_QueryInterchainAccountFromZoneResponse_interchain_account_address = md_QueryInterchainAccountFromZoneResponse.Fields().ByName("interchain_account_address")
+	md_QueryAllZonesResponse = File_nova_ibcstaking_v1_query_proto.Messages().ByName("QueryAllZonesResponse")
+	fd_QueryAllZonesResponse_zones = md_QueryAllZonesResponse.Fields().ByName("zones")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryInterchainAccountFromZoneResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryAllZonesResponse)(nil)
 
-type fastReflection_QueryInterchainAccountFromZoneResponse QueryInterchainAccountFromZoneResponse
+type fastReflection_QueryAllZonesResponse QueryAllZonesResponse
 
-func (x *QueryInterchainAccountFromZoneResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryInterchainAccountFromZoneResponse)(x)
+func (x *QueryAllZonesResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryAllZonesResponse)(x)
 }
 
-func (x *QueryInterchainAccountFromZoneResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryAllZonesResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_ibcstaking_v1_query_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -528,43 +452,43 @@ func (x *QueryInterchainAccountFromZoneResponse) slowProtoReflect() protoreflect
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryInterchainAccountFromZoneResponse_messageType fastReflection_QueryInterchainAccountFromZoneResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryInterchainAccountFromZoneResponse_messageType{}
+var _fastReflection_QueryAllZonesResponse_messageType fastReflection_QueryAllZonesResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryAllZonesResponse_messageType{}
 
-type fastReflection_QueryInterchainAccountFromZoneResponse_messageType struct{}
+type fastReflection_QueryAllZonesResponse_messageType struct{}
 
-func (x fastReflection_QueryInterchainAccountFromZoneResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryInterchainAccountFromZoneResponse)(nil)
+func (x fastReflection_QueryAllZonesResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryAllZonesResponse)(nil)
 }
-func (x fastReflection_QueryInterchainAccountFromZoneResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryInterchainAccountFromZoneResponse)
+func (x fastReflection_QueryAllZonesResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryAllZonesResponse)
 }
-func (x fastReflection_QueryInterchainAccountFromZoneResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryInterchainAccountFromZoneResponse
+func (x fastReflection_QueryAllZonesResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryAllZonesResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryInterchainAccountFromZoneResponse
+func (x *fastReflection_QueryAllZonesResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryAllZonesResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryInterchainAccountFromZoneResponse_messageType
+func (x *fastReflection_QueryAllZonesResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryAllZonesResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryInterchainAccountFromZoneResponse)
+func (x *fastReflection_QueryAllZonesResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryAllZonesResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryInterchainAccountFromZoneResponse)(x)
+func (x *fastReflection_QueryAllZonesResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryAllZonesResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -572,10 +496,10 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Interface() prot
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.InterchainAccountAddress != "" {
-		value := protoreflect.ValueOfString(x.InterchainAccountAddress)
-		if !f(fd_QueryInterchainAccountFromZoneResponse_interchain_account_address, value) {
+func (x *fastReflection_QueryAllZonesResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if len(x.Zones) != 0 {
+		value := protoreflect.ValueOfList(&_QueryAllZonesResponse_1_list{list: &x.Zones})
+		if !f(fd_QueryAllZonesResponse_zones, value) {
 			return
 		}
 	}
@@ -592,15 +516,15 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Range(f func(pro
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryAllZonesResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse.interchain_account_address":
-		return x.InterchainAccountAddress != ""
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
+		return len(x.Zones) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -610,15 +534,15 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Has(fd protorefl
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryAllZonesResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse.interchain_account_address":
-		x.InterchainAccountAddress = ""
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
+		x.Zones = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -628,16 +552,19 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Clear(fd protore
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllZonesResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse.interchain_account_address":
-		value := x.InterchainAccountAddress
-		return protoreflect.ValueOfString(value)
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
+		if len(x.Zones) == 0 {
+			return protoreflect.ValueOfList(&_QueryAllZonesResponse_1_list{})
+		}
+		listValue := &_QueryAllZonesResponse_1_list{list: &x.Zones}
+		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -651,15 +578,17 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Get(descriptor p
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryAllZonesResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse.interchain_account_address":
-		x.InterchainAccountAddress = value.Interface().(string)
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
+		lv := value.List()
+		clv := lv.(*_QueryAllZonesResponse_1_list)
+		x.Zones = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -673,40 +602,45 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Set(fd protorefl
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllZonesResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse.interchain_account_address":
-		panic(fmt.Errorf("field interchain_account_address of message nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse is not mutable"))
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
+		if x.Zones == nil {
+			x.Zones = []*RegisteredZone{}
+		}
+		value := &_QueryAllZonesResponse_1_list{list: &x.Zones}
+		return protoreflect.ValueOfList(value)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllZonesResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse.interchain_account_address":
-		return protoreflect.ValueOfString("")
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
+		list := []*RegisteredZone{}
+		return protoreflect.ValueOfList(&_QueryAllZonesResponse_1_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryAllZonesResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.QueryAllZonesResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -714,7 +648,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) WhichOneof(d pro
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryAllZonesResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -725,7 +659,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) GetUnknown() pro
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryAllZonesResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -737,7 +671,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) SetUnknown(field
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) IsValid() bool {
+func (x *fastReflection_QueryAllZonesResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -747,9 +681,9 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryInterchainAccountFromZoneResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryAllZonesResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryInterchainAccountFromZoneResponse)
+		x := input.Message.Interface().(*QueryAllZonesResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -761,9 +695,11 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) ProtoMethods() *
 		var n int
 		var l int
 		_ = l
-		l = len(x.InterchainAccountAddress)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
+		if len(x.Zones) > 0 {
+			for _, e := range x.Zones {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -775,7 +711,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) ProtoMethods() *
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryInterchainAccountFromZoneResponse)
+		x := input.Message.Interface().(*QueryAllZonesResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -794,12 +730,21 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) ProtoMethods() *
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.InterchainAccountAddress) > 0 {
-			i -= len(x.InterchainAccountAddress)
-			copy(dAtA[i:], x.InterchainAccountAddress)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.InterchainAccountAddress)))
-			i--
-			dAtA[i] = 0xa
+		if len(x.Zones) > 0 {
+			for iNdEx := len(x.Zones) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.Zones[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0xa
+			}
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -812,7 +757,7 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) ProtoMethods() *
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryInterchainAccountFromZoneResponse)
+		x := input.Message.Interface().(*QueryAllZonesResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -844,17 +789,17 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) ProtoMethods() *
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryInterchainAccountFromZoneResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllZonesResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryInterchainAccountFromZoneResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllZonesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field InterchainAccountAddress", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Zones", wireType)
 				}
-				var stringLen uint64
+				var msglen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -864,23 +809,25 @@ func (x *fastReflection_QueryInterchainAccountFromZoneResponse) ProtoMethods() *
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					msglen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if msglen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + msglen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.InterchainAccountAddress = string(dAtA[iNdEx:postIndex])
+				x.Zones = append(x.Zones, &RegisteredZone{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Zones[len(x.Zones)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -930,18 +877,15 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// QueryInterchainAccountFromZoneRequest is the request type for the Query/InterchainAccountFromZone RPC
-type QueryInterchainAccountFromZoneRequest struct {
+// QueryAllZonesRequest is the request type for Query/AllZones.
+type QueryAllZonesRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	PortId       string `protobuf:"bytes,1,opt,name=port_id,json=portId,proto3" json:"port_id,omitempty"`
-	ConnectionId string `protobuf:"bytes,2,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
 }
 
-func (x *QueryInterchainAccountFromZoneRequest) Reset() {
-	*x = QueryInterchainAccountFromZoneRequest{}
+func (x *QueryAllZonesRequest) Reset() {
+	*x = QueryAllZonesRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_ibcstaking_v1_query_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -949,42 +893,28 @@ func (x *QueryInterchainAccountFromZoneRequest) Reset() {
 	}
 }
 
-func (x *QueryInterchainAccountFromZoneRequest) String() string {
+func (x *QueryAllZonesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryInterchainAccountFromZoneRequest) ProtoMessage() {}
+func (*QueryAllZonesRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryInterchainAccountFromZoneRequest.ProtoReflect.Descriptor instead.
-func (*QueryInterchainAccountFromZoneRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryAllZonesRequest.ProtoReflect.Descriptor instead.
+func (*QueryAllZonesRequest) Descriptor() ([]byte, []int) {
 	return file_nova_ibcstaking_v1_query_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *QueryInterchainAccountFromZoneRequest) GetPortId() string {
-	if x != nil {
-		return x.PortId
-	}
-	return ""
-}
-
-func (x *QueryInterchainAccountFromZoneRequest) GetConnectionId() string {
-	if x != nil {
-		return x.ConnectionId
-	}
-	return ""
-}
-
-// QueryInterchainAccountFromZoneResponse the response type for the Query/InterchainAccountFromZone RPC
-type QueryInterchainAccountFromZoneResponse struct {
+// QueryAllZonesResponse is the response type for Query/AllZones.
+type QueryAllZonesResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	InterchainAccountAddress string `protobuf:"bytes,1,opt,name=interchain_account_address,json=interchainAccountAddress,proto3" json:"interchain_account_address,omitempty"`
+	Zones []*RegisteredZone `protobuf:"bytes,1,rep,name=zones,proto3" json:"zones,omitempty"`
 }
 
-func (x *QueryInterchainAccountFromZoneResponse) Reset() {
-	*x = QueryInterchainAccountFromZoneResponse{}
+func (x *QueryAllZonesResponse) Reset() {
+	*x = QueryAllZonesResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_ibcstaking_v1_query_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -992,22 +922,22 @@ func (x *QueryInterchainAccountFromZoneResponse) Reset() {
 	}
 }
 
-func (x *QueryInterchainAccountFromZoneResponse) String() string {
+func (x *QueryAllZonesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryInterchainAccountFromZoneResponse) ProtoMessage() {}
+func (*QueryAllZonesResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryInterchainAccountFromZoneResponse.ProtoReflect.Descriptor instead.
-func (*QueryInterchainAccountFromZoneResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryAllZonesResponse.ProtoReflect.Descriptor instead.
+func (*QueryAllZonesResponse) Descriptor() ([]byte, []int) {
 	return file_nova_ibcstaking_v1_query_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *QueryInterchainAccountFromZoneResponse) GetInterchainAccountAddress() string {
+func (x *QueryAllZonesResponse) GetZones() []*RegisteredZone {
 	if x != nil {
-		return x.InterchainAccountAddress
+		return x.Zones
 	}
-	return ""
+	return nil
 }
 
 var File_nova_ibcstaking_v1_query_proto protoreflect.FileDescriptor
@@ -1017,48 +947,41 @@ var file_nova_ibcstaking_v1_query_proto_rawDesc = []byte{
 	0x67, 0x2f, 0x76, 0x31, 0x2f, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x12, 0x12, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
 	0x67, 0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f,
-	0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x7f, 0x0a, 0x25, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x41, 0x63, 0x63,
-	0x6f, 0x75, 0x6e, 0x74, 0x46, 0x72, 0x6f, 0x6d, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f, 0x72, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x72, 0x74, 0x49, 0x64, 0x12, 0x3d, 0x0a, 0x0d,
-	0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x42, 0x18, 0xf2, 0xde, 0x1f, 0x14, 0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x63,
-	0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x22, 0x52, 0x0c, 0x63,
-	0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x22, 0x8d, 0x01, 0x0a, 0x26,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x41,
-	0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x46, 0x72, 0x6f, 0x6d, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x63, 0x0a, 0x1a, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x63,
-	0x68, 0x61, 0x69, 0x6e, 0x5f, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x5f, 0x61, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x25, 0xf2, 0xde, 0x1f, 0x21,
-	0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x63, 0x68, 0x61, 0x69, 0x6e,
-	0x5f, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x22, 0x52, 0x18, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x41, 0x63, 0x63,
-	0x6f, 0x75, 0x6e, 0x74, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x32, 0x9c, 0x01, 0x0a, 0x05,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x92, 0x01, 0x0a, 0x19, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x63,
-	0x68, 0x61, 0x69, 0x6e, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x46, 0x72, 0x6f, 0x6d, 0x5a,
-	0x6f, 0x6e, 0x65, 0x12, 0x39, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74,
-	0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x49, 0x6e,
-	0x74, 0x65, 0x72, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x46,
-	0x72, 0x6f, 0x6d, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x3a,
+	0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x20, 0x6e, 0x6f, 0x76, 0x61,
+	0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x2f, 0x67,
+	0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x16, 0x0a, 0x14, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x5a, 0x6f, 0x6e, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x22, 0x51, 0x0a, 0x15, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x5a, 0x6f,
+	0x6e, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x38, 0x0a, 0x05, 0x7a,
+	0x6f, 0x6e, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e,
+	0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x05,
+	0x7a, 0x6f, 0x6e, 0x65, 0x73, 0x32, 0x90, 0x01, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12,
+	0x86, 0x01, 0x0a, 0x08, 0x41, 0x6c, 0x6c, 0x5a, 0x6f, 0x6e, 0x65, 0x73, 0x12, 0x28, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76,
+	0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x5a, 0x6f, 0x6e, 0x65, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62,
+	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x41, 0x6c, 0x6c, 0x5a, 0x6f, 0x6e, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x25, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1f, 0x12, 0x1d, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
+	0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x2f, 0x7a,
+	0x6f, 0x6e, 0x65, 0x73, 0x2f, 0x61, 0x6c, 0x6c, 0x42, 0xcf, 0x01, 0x0a, 0x16, 0x63, 0x6f, 0x6d,
 	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
-	0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x63, 0x68,
-	0x61, 0x69, 0x6e, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x46, 0x72, 0x6f, 0x6d, 0x5a, 0x6f,
-	0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xcf, 0x01, 0x0a, 0x16, 0x63,
-	0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69,
-	0x6e, 0x67, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74,
-	0x6f, 0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
-	0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
-	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61,
-	0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69,
-	0x6e, 0x67, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76,
-	0x61, 0x2e, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x56, 0x31, 0xca,
-	0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1e, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62, 0x63, 0x73,
-	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x14, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x49, 0x62,
-	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61,
+	0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61,
+	0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69,
+	0x6e, 0x67, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
+	0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x2e,
+	0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x12,
+	0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c,
+	0x56, 0x31, 0xe2, 0x02, 0x1e, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61,
+	0x6b, 0x69, 0x6e, 0x67, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0xea, 0x02, 0x14, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x49, 0x62, 0x63, 0x73,
+	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -1075,17 +998,19 @@ func file_nova_ibcstaking_v1_query_proto_rawDescGZIP() []byte {
 
 var file_nova_ibcstaking_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_nova_ibcstaking_v1_query_proto_goTypes = []interface{}{
-	(*QueryInterchainAccountFromZoneRequest)(nil),  // 0: nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest
-	(*QueryInterchainAccountFromZoneResponse)(nil), // 1: nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse
+	(*QueryAllZonesRequest)(nil),  // 0: nova.ibcstaking.v1.QueryAllZonesRequest
+	(*QueryAllZonesResponse)(nil), // 1: nova.ibcstaking.v1.QueryAllZonesResponse
+	(*RegisteredZone)(nil),        // 2: nova.ibcstaking.v1.RegisteredZone
 }
 var file_nova_ibcstaking_v1_query_proto_depIdxs = []int32{
-	0, // 0: nova.ibcstaking.v1.Query.InterchainAccountFromZone:input_type -> nova.ibcstaking.v1.QueryInterchainAccountFromZoneRequest
-	1, // 1: nova.ibcstaking.v1.Query.InterchainAccountFromZone:output_type -> nova.ibcstaking.v1.QueryInterchainAccountFromZoneResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: nova.ibcstaking.v1.QueryAllZonesResponse.zones:type_name -> nova.ibcstaking.v1.RegisteredZone
+	0, // 1: nova.ibcstaking.v1.Query.AllZones:input_type -> nova.ibcstaking.v1.QueryAllZonesRequest
+	1, // 2: nova.ibcstaking.v1.Query.AllZones:output_type -> nova.ibcstaking.v1.QueryAllZonesResponse
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_nova_ibcstaking_v1_query_proto_init() }
@@ -1093,9 +1018,10 @@ func file_nova_ibcstaking_v1_query_proto_init() {
 	if File_nova_ibcstaking_v1_query_proto != nil {
 		return
 	}
+	file_nova_ibcstaking_v1_genesis_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_nova_ibcstaking_v1_query_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryInterchainAccountFromZoneRequest); i {
+			switch v := v.(*QueryAllZonesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1107,7 +1033,7 @@ func file_nova_ibcstaking_v1_query_proto_init() {
 			}
 		}
 		file_nova_ibcstaking_v1_query_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryInterchainAccountFromZoneResponse); i {
+			switch v := v.(*QueryAllZonesResponse); i {
 			case 0:
 				return &v.state
 			case 1:

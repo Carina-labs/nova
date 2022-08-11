@@ -15,20 +15,32 @@ service Query {
     option (google.api.http).get = "/nova/gal/v1/params";
   }
 
-  rpc Share(QueryCacheDepositAmountRequest) returns (QueryCachedDepositAmountResponse) {
-    option (google.api.http).get = "/nova/gal/v1/shares/{address}/by_denom";
+  rpc ClaimableAmount(ClaimableAmountRequest) returns (ClaimableAmountResponse) {
+    option (google.api.http).get = "/nova/gal/v1/claimable_amount/{address}/{zone_id}";
+  }
+
+  rpc PendingWithdrawals(PendingWithdrawalsRequest) returns (PendingWithdrawalsResponse) {
+    option (google.api.http).get = "/nova/gal/v1/pending_withdrawals/{address}/{zone_id}";
+  }
+
+  rpc ActiveWithdrawals(ActiveWithdrawalsRequest) returns (ActiveWithdrawalsResponse) {
+    option (google.api.http).get = "/nova/gal/v1/active_withdrawals/{address}/{zone_id}";
+  }
+
+  rpc Share(QueryMyShareRequest) returns (QueryMyShareResponse) {
+    option (google.api.http).get = "/nova/gal/v1/shares/{address}/{zone_id}";
   }
 
   rpc DepositHistory(QueryDepositHistoryRequest) returns (QueryDepositHistoryResponse) {
-    option (google.api.http).get = "/nova/gal/v1/deposit/{address}/by_denom/{denom}";
+    option (google.api.http).get = "/nova/gal/v1/deposit/{address}/{zone_id}";
   }
 
   rpc UndelegateHistory(QueryUndelegateHistoryRequest) returns (QueryUndelegateHistoryResponse) {
-    option (google.api.http).get = "/nova/get/v1/undelegate/{address}/by_denom/{denom}";
+    option (google.api.http).get = "/nova/get/v1/undelegate/{address}/{zone_id}";
   }
 
   rpc WithdrawHistory(QueryWithdrawHistoryRequest) returns (QueryWithdrawHistoryResponse) {
-    option (google.api.http).get = "/nova/get/v1/withdraw/{address}/by_denom/{denom}";
+    option (google.api.http).get = "/nova/get/v1/withdraw/{address}/{zone_id}";
   }
 }
 
@@ -43,14 +55,49 @@ message QueryParamsResponse {
   Params params = 1 [ (gogoproto.nullable) = false ];
 }
 
-// QuerySharesRequest defines request form to query balance of snToken with address.
-message QueryCacheDepositAmountRequest {
-  string denom = 1;
+// ClaimableAmountRequest is the request type for the Query/ClaimableAmount RPC method.
+message ClaimableAmountRequest {
+  string zone_id = 1;
+  string address = 2;
+  string ica_transfer_port_id = 3;
+  string ica_transfer_channel_id = 4;
+}
+
+// ClaimableAmountResponse is the response type for the Query/ClaimableAmount RPC method.
+message ClaimableAmountResponse {
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
+}
+
+// PendingWithdrawalsRequest is the request type for the Query/PendingWithdrawals RPC method.
+message PendingWithdrawalsRequest {
+  string zone_id = 1;
+  string address = 2;
+}
+
+// PendingWithdrawalsResponse is the response type for the Query/PendingWithdrawals RPC method.
+message PendingWithdrawalsResponse {
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
+}
+
+// ActiveWithdrawalsRequest is the request type for the Query/ActiveWithdrawals RPC method.
+message ActiveWithdrawalsRequest {
+  string zone_id = 1;
+  string address = 2;
+}
+
+// ActiveWithdrawalsResponse is the response type for the Query/ActiveWithdrawals RPC method.
+message ActiveWithdrawalsResponse {
+  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
+}
+
+// QueryMyShareRequest defines request form to query balance of snToken with address.
+message QueryMyShareRequest {
+  string zone_id = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 // QuerySharesResponse defines response of QueryBalanceRequest.
-message QueryCachedDepositAmountResponse {
+message QueryMyShareResponse{
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
 }
@@ -60,7 +107,7 @@ message QueryAllSharesRequest {
 }
 
 message QueryDepositHistoryRequest {
-  string denom = 1;
+  string zone_id = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
@@ -71,7 +118,7 @@ message QueryDepositHistoryResponse {
 }
 
 message QueryUndelegateHistoryRequest {
-  string denom = 1;
+  string zone_id = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
@@ -84,7 +131,7 @@ message QueryUndelegateHistoryResponse {
 }
 
 message QueryWithdrawHistoryRequest {
-  string denom = 1;
+  string zone_id = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 

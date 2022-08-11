@@ -2,35 +2,30 @@ package types
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
-const (
-	QueryDepositHistory    = "depositHistory"
-	QueryUndelegateHistory = "undelegateHistory"
-)
-
-func NewQuerySharesRequest(addr sdk.AccAddress, denom string) *QueryCacheDepositAmountRequest {
-	return &QueryCacheDepositAmountRequest{
+func NewQuerySharesRequest(addr sdk.AccAddress, zoneId string) *QueryMyShareRequest {
+	return &QueryMyShareRequest{
 		Address: addr.String(),
-		Denom:   denom,
+		ZoneId:  zoneId,
 	}
 }
 
-func NewDepositHistoryRequest(addr sdk.AccAddress, denom string) *QueryDepositHistoryRequest {
+func NewDepositHistoryRequest(addr sdk.AccAddress, zoneId string) *QueryDepositHistoryRequest {
 	return &QueryDepositHistoryRequest{
 		Address: addr.String(),
-		Denom:   denom,
+		ZoneId:  zoneId,
 	}
 }
 
-func NewUndelegateHistoryRequest(addr sdk.AccAddress, denom string) *QueryUndelegateHistoryRequest {
+func NewUndelegateHistoryRequest(addr sdk.AccAddress, zoneId string) *QueryUndelegateHistoryRequest {
 	return &QueryUndelegateHistoryRequest{
 		Address: addr.String(),
-		Denom:   denom,
+		ZoneId:  zoneId,
 	}
 }
 
-func NewWithdrawHistoryRequest(addr sdk.AccAddress, denom string) *QueryWithdrawHistoryRequest {
+func NewWithdrawHistoryRequest(addr sdk.AccAddress, zoneId string) *QueryWithdrawHistoryRequest {
 	return &QueryWithdrawHistoryRequest{
 		Address: addr.String(),
-		Denom:   denom,
+		ZoneId:  zoneId,
 	}
 }

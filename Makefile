@@ -146,8 +146,6 @@ protogen-api:
 	else docker run --name $(protogenApiConName) -v $(CURDIR):/workspace --workdir /workspace $(protoImgName) \
 	bash ./scripts/protogen-api.sh; fi
 
-.PHONY: protogen protogen-api protogen-all all install build test-local
-
 test-local:
 	bash ./scripts/run_single_node.sh
 
@@ -168,3 +166,5 @@ docs-gen:
 
 docs-update:
 	$(BINDIR)/statik -src=client/docs/swagger-ui -dest=client/docs -f -m
+
+.PHONY: protogen protogen-api protogen-all all install build test-local docs-gen docs-update

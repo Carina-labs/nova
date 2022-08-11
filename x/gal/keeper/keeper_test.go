@@ -25,6 +25,28 @@ type KeeperTestSuite struct {
 	icaOwnerAddr sdk.AccAddress
 }
 
+func (suite *KeeperTestSuite) SetupTest() {
+	suite.Setup()
+
+	suite.queryClient = types.NewQueryClient(suite.QueryHelper)
+
+	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
+	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
+	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))
+
+	suite.transferPath = newIbcTransferPath(suite.chainA, suite.chainB)
+	suite.coordinator.Setup(suite.transferPath)
+
+	suite.icaPath = newIcaPath(suite.chainA, suite.chainB)
+	suite.coordinator.SetupConnections(suite.icaPath)
+	suite.icaOwnerAddr = baseOwnerAcc
+
+	err := setupIcaPath(suite.icaPath, suite.icaOwnerAddr.String())
+	suite.Require().NoError(err)
+
+	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, newBaseRegisteredZone())
+}
+
 func TestKeeperTestSuite(t *testing.T) {
 	suite.Run(t, new(KeeperTestSuite))
 }

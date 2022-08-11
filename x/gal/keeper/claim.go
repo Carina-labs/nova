@@ -24,6 +24,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	mintAmt := k.CalculateDepositAlpha(asset.Amount.ToDec(), totalSnSupply.Amount.ToDec(), totalStakedAmount.Amount.ToDec())
+  
 	coinStr := mintAmt.String() + snDenom
 
 	mintCoin, err := sdk.ParseCoinNormalized(coinStr)
@@ -32,6 +33,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	err = k.MintShareTokens(ctx, claimer, mintCoin)
+
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -43,6 +45,29 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	return mintCoin, nil
+}
+
+// TotalClaimableAssets returns the total amount of claimable snAsset.
+func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, transferPortId string, transferChannelId string, claimer sdk.AccAddress) (*sdk.Coin, error) {
+	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChannelId, zone.BaseDenom)
+	result := sdk.Coin{
+		Amount: sdk.NewIntFromUint64(0),
+		Denom:  ibcDenom,
+	}
+
+	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
+	records, err := k.GetRecordedDepositAmt(ctx, zone.ZoneId, claimer)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, record := range records.Records {
+		if record.State == int64(DELEGATE_SUCCESS) && record.OracleVersion < oracleVersion {
+			result = result.Add(*record.Amount)
+		}
+	}
+
+	return &result, nil
 }
 
 // CalculateDepositAlpha calculates alpha value.
@@ -68,6 +93,7 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 	}
 
 	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.ToDec(), totalSharedToken.Amount.ToDec(), totalStakedAmount.Coin.Amount.ToDec())
+
 	coinStr := withdrawAmt.String() + baseDenom
 	withdrawCoin, err := sdk.ParseCoinNormalized(coinStr)
 	if err != nil {
@@ -75,6 +101,7 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 	}
 
 	return withdrawCoin, nil
+
 }
 
 // CalculateWithdrawAlpha calculates lambda value.

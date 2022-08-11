@@ -1,30 +1,22 @@
 package keeper
 
 import (
-	"context"
-
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
-
+	context "context"
 	"github.com/Carina-labs/nova/x/ibcstaking/types"
 )
 
-// InterchainAccountFromAddress implements the Query/InterchainAccountFromAddress gRPC method
-func (k Keeper) InterchainAccountFromZone(goCtx context.Context, req *types.QueryInterchainAccountFromZoneRequest) (*types.QueryInterchainAccountFromZoneResponse, error) {
-	ctx := sdk.UnwrapSDKContext(goCtx)
+type QueryServer struct {
+	types.QueryServer
+	keeper Keeper
+}
 
-	portID, err := icatypes.NewControllerPortID(req.PortId)
-	if err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "could not find account: %s", err)
+func NewQueryServer(keeper Keeper) *QueryServer {
+	return &QueryServer{
+		keeper: keeper,
 	}
+}
 
-	addr, found := k.icaControllerKeeper.GetInterchainAccountAddress(ctx, req.ConnectionId, portID)
-	if !found {
-		return nil, status.Errorf(codes.NotFound, "no account found for portID %s", portID)
-	}
-
-	return types.NewQueryInterchainAccountResponse(addr), nil
+func (q *QueryServer) AllZones(ctx context.Context, request *types.QueryAllZonesRequest) (*types.QueryAllZonesResponse, error) {
+	//TODO implement me
+	panic("implement me")
 }

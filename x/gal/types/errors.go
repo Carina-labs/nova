@@ -14,4 +14,6 @@ var (
 	ErrCanNotChangeState   = errors.Register(ModuleName, 8, "cannot change state")
 	ErrDelegateFail        = errors.Register(ModuleName, 9, "delegate fail")
 	ErrInvalidDenom        = errors.Register(ModuleName, 10, "invalid denom")
+	ErrInvalidAddress      = errors.Register(ModuleName, 11, "invalid address")
+	ErrUnknown             = errors.Register(ModuleName, 12, "unknown error occurred")
 )

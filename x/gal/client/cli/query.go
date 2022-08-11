@@ -26,15 +26,16 @@ func GetQueryCmd() *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
-	cmd.AddCommand(GetSharesCmd())
-	cmd.AddCommand(GetDepositHistory())
-	cmd.AddCommand(GetUndelegateHistory())
-	cmd.AddCommand(GetWithdrawHistory())
+	cmd.AddCommand(cmdShares())
+	cmd.AddCommand(cmdClaimableAsset())
+	cmd.AddCommand(cmdDepositHistory())
+	cmd.AddCommand(cmdUndelegateHistory())
+	cmd.AddCommand(cmdWithdrawHistory())
 
 	return cmd
 }
 
-func GetSharesCmd() *cobra.Command {
+func cmdShares() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "shares [address]",
 		Short: "Query for account shares by address",
@@ -76,7 +77,39 @@ Example:
 	return cmd
 }
 
-func GetDepositHistory() *cobra.Command {
+func cmdClaimableAsset() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "claimable_asset [zone_id] [address] [transfer_port_id] [transfer_channel_id]",
+		Long: strings.TrimSpace("Query for claimable snAssets"),
+		Args: cobra.ExactArgs(4),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			ctx := cmd.Context()
+			query := &types.ClaimableAmountRequest{
+				ZoneId:               args[0],
+				Address:              args[1],
+				IcaTransferPortId:    args[2],
+				IcaTransferChannelId: args[3],
+			}
+			res, err := queryClient.ClaimableAmount(ctx, query)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func cmdDepositHistory() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "deposit [address]",
 		Long: strings.TrimSpace(fmt.Sprintf(`Query deposit history of an account or of a specific denomination.
@@ -115,7 +148,7 @@ Example:
 	return cmd
 }
 
-func GetUndelegateHistory() *cobra.Command {
+func cmdUndelegateHistory() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "undelegate [address]",
 		Long: strings.TrimSpace(fmt.Sprintf(`Query undelegate history of an account or of a specific denomination.
@@ -154,7 +187,7 @@ Example:
 	return cmd
 }
 
-func GetWithdrawHistory() *cobra.Command {
+func cmdWithdrawHistory() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "withdraw [address]",
 		Long: strings.TrimSpace(fmt.Sprintf(`Query withdraw history of an account or of a specific denomination.

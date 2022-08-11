@@ -1,42 +1,34 @@
 package keeper
 
-import (
-	"github.com/Carina-labs/nova/x/gal/types"
-	"github.com/cosmos/cosmos-sdk/codec"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	abci "github.com/tendermint/tendermint/abci/types"
-)
-
-func QueryDepositHistory(ctx sdk.Context,
-	req abci.RequestQuery,
-	k Keeper,
-	legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
-	var params types.QueryDepositHistoryRequest
-
-	if err := legacyQuerierCdc.UnmarshalJSON(req.Data, &params); err != nil {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONUnmarshal, err.Error())
-	}
-
-	address, err := sdk.AccAddressFromBech32(params.Address)
-	if err != nil {
-		return nil, err
-	}
-
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, params.Denom)
-
-	depositHistory, err := k.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, address)
-	if err != nil {
-		return nil, err
-	}
-
-	bz, err := codec.MarshalJSONIndent(legacyQuerierCdc, depositHistory)
-	if err != nil {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error())
-	}
-
-	return bz, nil
-}
+//func QueryDepositHistory(ctx sdk.Context,
+//	req abci.RequestQuery,
+//	k Keeper,
+//	legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
+//	var params types.QueryDepositHistoryRequest
+//
+//	if err := legacyQuerierCdc.UnmarshalJSON(req.Data, &params); err != nil {
+//		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONUnmarshal, err.Error())
+//	}
+//
+//	address, err := sdk.AccAddressFromBech32(params.Address)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, params.Denom)
+//
+//	depositHistory, err := k.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, address)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	bz, err := codec.MarshalJSONIndent(legacyQuerierCdc, depositHistory)
+//	if err != nil {
+//		return nil, sdkerrors.Wrap(sdkerrors.ErrJSONMarshal, err.Error())
+//	}
+//
+//	return bz, nil
+//}
 
 // func queryUndelegateHistory(ctx sdk.Context,
 // req abci.RequestQuery,

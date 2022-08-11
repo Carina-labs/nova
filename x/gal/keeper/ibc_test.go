@@ -1,8 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
-
 	novatesting "github.com/Carina-labs/nova/testing"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
@@ -13,9 +11,9 @@ import (
 )
 
 var (
+	transferPort       = "transfer"
 	transferChannel    = "channel-0"
 	transferConnection = "connection-0"
-	transferPort       = "transfer"
 	icaConnection      = "connection-1"
 
 	baseDenom    = "unova"
@@ -27,30 +25,13 @@ var (
 
 	oracleOperatorAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 
-	hostId        = "cosmos-1"
-	hostBaseDenom = "stake"
-	hostIbcDenom  = ParseAddressToIbcAddress(transferPort, transferChannel, hostBaseDenom)
+	zoneId        = "cosmos-1"
+	zoneBaseDenom = "stake"
+	zoneIbcDeno   = ParseAddressToIbcAddress(transferPort, transferChannel, zoneBaseDenom)
 
 	undelegateMsgName  = "/cosmos.staking.v1beta1.MsgUndelegate"
 	ibcTransferMsgName = "/ibc.applications.transfer.v1.MsgTransfer"
 )
-
-func (suite *KeeperTestSuite) SetupTest() {
-	suite.Setup()
-
-	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
-	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
-	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))
-
-	suite.transferPath = newIbcTransferPath(suite.chainA, suite.chainB)
-	suite.coordinator.Setup(suite.transferPath)
-
-	suite.icaPath = newIcaPath(suite.chainA, suite.chainB)
-	suite.coordinator.SetupConnections(suite.icaPath)
-	suite.icaOwnerAddr = baseOwnerAcc
-	err := setupIcaPath(suite.icaPath, suite.icaOwnerAddr.String())
-	suite.Require().NoError(err)
-}
 
 func (suite *KeeperTestSuite) SetIbcZone(zoneMsg []ibcstakingtypes.RegisteredZone) {
 	for _, msg := range zoneMsg {
@@ -100,7 +81,6 @@ func newIcaPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 }
 
 func setupIcaPath(path *novatesting.Path, owner string) error {
-	fmt.Printf("owner address: %s\n", owner)
 	if err := registerInterchainAccount(path.EndpointA, owner); err != nil {
 		return err
 	}
@@ -143,7 +123,7 @@ func registerInterchainAccount(e *novatesting.Endpoint, owner string) error {
 func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
 	icaControllerPort, _ := icatypes.NewControllerPortID(baseOwnerAcc.String())
 	return &ibcstakingtypes.RegisteredZone{
-		ZoneId: hostId,
+		ZoneId: zoneId,
 		IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
 			ConnectionId: icaConnection,
 			PortId:       icaControllerPort,
@@ -153,7 +133,7 @@ func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
 			HostAddress:        baseHostAcc.String(),
 		},
 		ValidatorAddress: "",
-		BaseDenom:        hostBaseDenom,
+		BaseDenom:        zoneBaseDenom,
 		SnDenom:          baseSnDenom,
 	}
 }
