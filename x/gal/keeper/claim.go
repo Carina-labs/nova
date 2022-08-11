@@ -24,19 +24,25 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	mintAmt := k.CalculateDepositAlpha(asset.Amount.ToDec(), totalSnSupply.Amount.ToDec(), totalStakedAmount.Amount.ToDec())
-	err = k.MintShareTokens(ctx, claimer, sdk.NewCoin(snDenom, mintAmt))
+	coinStr := mintAmt.String() + snDenom
+
+	mintCoin, err := sdk.ParseCoinNormalized(coinStr)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
-	// GetZoneInfo
+	err = k.MintShareTokens(ctx, claimer, mintCoin)
+	if err != nil {
+		return sdk.Coin{}, err
+	}
+
 	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 	err = k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimer, DELEGATE_SUCCESS)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
-	return sdk.NewInt64Coin(snDenom, mintAmt.Int64()), nil
+	return mintCoin, nil
 }
 
 // CalculateDepositAlpha calculates alpha value.
@@ -62,7 +68,13 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 	}
 
 	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.ToDec(), totalSharedToken.Amount.ToDec(), totalStakedAmount.Coin.Amount.ToDec())
-	return sdk.NewInt64Coin(baseDenom, withdrawAmt.Int64()), nil
+	coinStr := withdrawAmt.String() + baseDenom
+	withdrawCoin, err := sdk.ParseCoinNormalized(coinStr)
+	if err != nil {
+		return sdk.Coin{}, err
+	}
+
+	return withdrawCoin, nil
 }
 
 // CalculateWithdrawAlpha calculates lambda value.

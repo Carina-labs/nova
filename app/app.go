@@ -1,13 +1,14 @@
 package app
 
 import (
-	"github.com/gorilla/mux"
-	"github.com/rakyll/statik/fs"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/gorilla/mux"
+	"github.com/rakyll/statik/fs"
 
 	"github.com/Carina-labs/nova/app/keepers"
 	_ "github.com/Carina-labs/nova/client/docs/statik"
