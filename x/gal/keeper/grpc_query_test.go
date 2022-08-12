@@ -38,10 +38,10 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	})
 
 	amt, err := queryClient.ClaimableAmount(ctx.Context(), &types.ClaimableAmountRequest{
-		ZoneId:               zoneId,
-		Address:              fooUser.String(),
-		IcaTransferPortId:    transferPort,
-		IcaTransferChannelId: transferChannel,
+		ZoneId:            zoneId,
+		Address:           fooUser.String(),
+		TransferPortId:    transferPort,
+		TransferChannelId: transferChannel,
 	})
 
 	suite.NoError(err)
