@@ -70,12 +70,14 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		m.keeper.SetDepositRecord(ctx, record)
 	}
 
-	err = m.keeper.TransferToTargetZone(ctx,
-		deposit.TransferPortId,
-		deposit.TransferChannelId,
-		deposit.Depositor,
-		zoneInfo.IcaAccount.HostAddress,
-		deposit.Amount)
+	err = m.keeper.TransferToTargetZone(ctx, &IBCTransferOption{
+		SourcePort:    deposit.TransferPortId,
+		SourceChannel: deposit.TransferChannelId,
+		Token:         deposit.Amount,
+		Sender:        deposit.Depositor,
+		Receiver:      zoneInfo.IcaAccount.HostAddress,
+	})
+
 	if err != nil {
 		return nil, err
 	}
