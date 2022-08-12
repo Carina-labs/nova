@@ -242,10 +242,10 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, types.ErrNoWithdrawRecord
 	}
 
-	// get withdrawAmount : withdraw기록들 중에서 time이 지난 금액들 전부 합해서 반환
+	// sum of all withdraw records for user
 	withdrawAmt := m.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
 	if withdrawAmt.IsZero() {
-		return nil, nil
+		return nil, types.ErrNoWithdrawRecord
 	}
 
 	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, zoneInfo.BaseDenom)
