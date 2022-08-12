@@ -49,13 +49,54 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Claim
 }
 
 func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.PendingWithdrawalsRequest) (*types.PendingWithdrawalsResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		ctx.Logger().Error("zone_id not found", "zone_id", request.ZoneId, "module", types.ModuleName)
+		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
+	}
+
+	// sum of all withdraw-able assets
+	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
+	withdrawAmt := q.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, request.Address)
+	ibcDenom := q.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, request.TransferPortId, request.TransferChannelId, zoneInfo.BaseDenom)
+	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
+
+	return &types.PendingWithdrawalsResponse{
+		Amount: withdrawAmount,
+	}, nil
 }
 
 func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.ActiveWithdrawalsRequest) (*types.ActiveWithdrawalsResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	// return all withdrawable assets with WITHDRAW_REGISTER status
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
+	}
+
+	ibcDenom := q.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, request.TransferPortId, request.TransferChannelId, zoneInfo.BaseDenom)
+	amount := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
+
+	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
+	withdrawRecord, found := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
+
+	// if found is false, withdrawRecord variable is nil
+	if !found {
+		return &types.ActiveWithdrawalsResponse{
+			Amount: amount,
+		}, nil
+	}
+
+	for _, record := range withdrawRecord.Records {
+		if record.State == int64(WITHDRAW_REGISTER) {
+			amount = amount.Add(*record.Amount)
+		}
+	}
+
+	return &types.ActiveWithdrawalsResponse{
+		Amount: amount,
+	}, nil
 }
 
 func (q QueryServer) Share(goCtx context.Context, request *types.QueryMyShareRequest) (*types.QueryMyShareResponse, error) {

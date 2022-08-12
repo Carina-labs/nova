@@ -140,10 +140,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 }
 
 func (k Keeper) GetWithdrawAmontForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
-	amount := sdk.Coin{
-		Amount: sdk.NewInt(0),
-		Denom:  denom,
-	}
+	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
 	withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, withdrawer)
 	if !found {
@@ -160,10 +157,7 @@ func (k Keeper) GetWithdrawAmontForUser(ctx sdk.Context, zoneId, denom string, w
 }
 
 func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {
-	amount := sdk.Coin{
-		Amount: sdk.NewInt(0),
-		Denom:  denom,
-	}
+	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
 		if withdrawInfo.ZoneId == zoneId {
