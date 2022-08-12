@@ -12,29 +12,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetTxCmd creates and returns the gal tx command
-func GetTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:                        types.ModuleName,
-		Short:                      fmt.Sprintf("%s transactions subcommands", types.ModuleName),
-		DisableFlagParsing:         true,
-		SuggestionsMinimumDistance: 2,
-		RunE:                       client.ValidateCmd,
-	}
-
-	cmd.AddCommand(
-		NewDepositCmd(),
-		NewDelegateCmd(),
-		NewWithdrawCmd(),
-		NewUndelegateRequestCmd(),
-		NewUndelegateCmd(),
-		NewClaimSnTokenCmd(),
-		NewPendingWithdrawCmd(),
-	)
-
-	return cmd
-}
-
 func NewDepositCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "deposit [zone-id] [depositor] [claimer] [amount] [transfer-port-id] [transfer-channel-id]",

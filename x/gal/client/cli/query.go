@@ -16,25 +16,6 @@ const (
 	FlagDenom = "denom"
 )
 
-// GetQueryCmd creates and returns the ibcstaking query command
-func GetQueryCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:                        types.ModuleName,
-		Short:                      "Querying commands for the gal module",
-		DisableFlagParsing:         true,
-		SuggestionsMinimumDistance: 2,
-		RunE:                       client.ValidateCmd,
-	}
-
-	cmd.AddCommand(cmdShares())
-	cmd.AddCommand(cmdClaimableAsset())
-	cmd.AddCommand(cmdDepositHistory())
-	cmd.AddCommand(cmdUndelegateHistory())
-	cmd.AddCommand(cmdWithdrawHistory())
-
-	return cmd
-}
-
 func cmdShares() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "shares [address]",
@@ -92,10 +73,10 @@ func cmdClaimableAsset() *cobra.Command {
 
 			ctx := cmd.Context()
 			query := &types.ClaimableAmountRequest{
-				ZoneId:               args[0],
-				Address:              args[1],
-				IcaTransferPortId:    args[2],
-				IcaTransferChannelId: args[3],
+				ZoneId:            args[0],
+				Address:           args[1],
+				TransferPortId:    args[2],
+				TransferChannelId: args[3],
 			}
 			res, err := queryClient.ClaimableAmount(ctx, query)
 			if err != nil {

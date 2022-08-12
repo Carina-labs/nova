@@ -59,8 +59,8 @@ message QueryParamsResponse {
 message ClaimableAmountRequest {
   string zone_id = 1;
   string address = 2;
-  string ica_transfer_port_id = 3;
-  string ica_transfer_channel_id = 4;
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
 }
 
 // ClaimableAmountResponse is the response type for the Query/ClaimableAmount RPC method.
@@ -72,6 +72,8 @@ message ClaimableAmountResponse {
 message PendingWithdrawalsRequest {
   string zone_id = 1;
   string address = 2;
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
 }
 
 // PendingWithdrawalsResponse is the response type for the Query/PendingWithdrawals RPC method.
@@ -83,6 +85,8 @@ message PendingWithdrawalsResponse {
 message ActiveWithdrawalsRequest {
   string zone_id = 1;
   string address = 2;
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
 }
 
 // ActiveWithdrawalsResponse is the response type for the Query/ActiveWithdrawals RPC method.
