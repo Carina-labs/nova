@@ -49,26 +49,7 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Claim
 }
 
 func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.PendingWithdrawalsRequest) (*types.PendingWithdrawalsResponse, error) {
-	ctx := sdk.UnwrapSDKContext(goCtx)
-	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
-	if !ok {
-		ctx.Logger().Error("zone_id not found", "zone_id", request.ZoneId, "module", types.ModuleName)
-		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
-	}
-
-	// sum of all withdraw-able assets
-	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
-	withdrawAmt := q.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, request.Address)
-	ibcDenom := q.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, request.TransferPortId, request.TransferChannelId, zoneInfo.BaseDenom)
-	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
-
-	return &types.PendingWithdrawalsResponse{
-		Amount: withdrawAmount,
-	}, nil
-}
-
-func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.ActiveWithdrawalsRequest) (*types.ActiveWithdrawalsResponse, error) {
-	// return all withdrawable assets with WITHDRAW_REGISTER status
+	// return sum of all withdraw-able assets with WITHDRAW_REGISTER status
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
@@ -83,7 +64,7 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Act
 
 	// if found is false, withdrawRecord variable is nil
 	if !found {
-		return &types.ActiveWithdrawalsResponse{
+		return &types.PendingWithdrawalsResponse{
 			Amount: amount,
 		}, nil
 	}
@@ -94,8 +75,27 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Act
 		}
 	}
 
-	return &types.ActiveWithdrawalsResponse{
+	return &types.PendingWithdrawalsResponse{
 		Amount: amount,
+	}, nil
+}
+
+func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.ActiveWithdrawalsRequest) (*types.ActiveWithdrawalsResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		ctx.Logger().Error("zone_id not found", "zone_id", request.ZoneId, "module", types.ModuleName)
+		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
+	}
+
+	// sum of all pending withdrawals
+	// if the user has no pending withdrawals (when transfer success record doesn't exist), return 0
+	withdrawAmt := q.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, request.Address)
+	ibcDenom := q.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, request.TransferPortId, request.TransferChannelId, zoneInfo.BaseDenom)
+	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
+
+	return &types.ActiveWithdrawalsResponse{
+		Amount: withdrawAmount,
 	}, nil
 }
 
