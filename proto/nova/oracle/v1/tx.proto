@@ -17,20 +17,17 @@ message MsgUpdateChainState {
     (gogoproto.nullable) = false
   ];
 
-  // decimal of the native currency in host chain.
-  uint32 decimal = 2;
-
   // address of the oracle
-  string operator = 3;
+  string operator = 2;
 
   // block_height of the block fetched by oracle from host_chain
-  int64 block_height = 4;
+  int64 block_height = 3;
 
   // app_hash of the block fetched by oracle from host chain
-  bytes app_hash = 5;
+  bytes app_hash = 4;
 
   // chain_id of the host chain
-  string chain_id = 6;
+  string chain_id = 5;
 }
 
 message MsgUpdateChainStateResponse {

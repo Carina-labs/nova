@@ -2,11 +2,42 @@ package keeper
 
 import (
 	"fmt"
+	"math/big"
 
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
+
+const snAssetDecimal = 18
+
+var (
+	precisionMultipliers []*big.Int
+	precisionReuse       = new(big.Int).Exp(big.NewInt(10), big.NewInt(snAssetDecimal), nil)
+)
+
+func init (){
+	precisionMultipliers = make([]*big.Int, snAssetDecimal+1)
+	for i := 0; i <= snAssetDecimal; i++ {
+		precisionMultipliers[i] = calcPrecisionMultiplier(int64(i))
+	}
+}
+
+func precisionMultiplier(prec int64) *big.Int {
+	if prec > snAssetDecimal {
+		panic(fmt.Sprintf("too much precision, maximum %v, provided %v", snAssetDecimal, prec))
+	}
+	return precisionMultipliers[prec]
+}
+
+func calcPrecisionMultiplier(prec int64) *big.Int {
+	if prec > snAssetDecimal {
+		panic(fmt.Sprintf("too much precision, maximum %v, provided %v", snAssetDecimal, prec))
+	}
+	zerosToAdd := snAssetDecimal - prec
+	multiplier := new(big.Int).Exp(big.NewInt(10), big.NewInt(zerosToAdd), nil)
+	return multiplier
+}
 
 // ClaimAndMintShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
@@ -24,20 +55,18 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 		return sdk.Coin{}, err
 	}
 
-	mintAmt := k.CalculateDepositAlpha(asset.Amount.ToDec(), totalSnSupply.Amount.ToDec(), totalStakedAmount.Amount.ToDec())
-	coinStr := mintAmt.String() + snDenom
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 
-	mintCoin, err := sdk.ParseCoinNormalized(coinStr)
-	if err != nil {
-		return sdk.Coin{}, err
-	}
+	// convert decimal
+	snAsset := k.ConvertWAssetToSnAssetDecimal(asset.Amount.BigInt(), zoneInfo.Decimal, snDenom)
+	mintAmt := k.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
+	mintCoin := sdk.NewCoin(zoneInfo.SnDenom, sdk.NewIntFromBigInt(mintAmt))
 
 	err = k.MintShareTokens(ctx, claimer, mintCoin)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 	err = k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimer, DELEGATE_SUCCESS)
 	if err != nil {
 		return sdk.Coin{}, err
@@ -49,10 +78,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 // TotalClaimableAssets returns the total amount of claimable snAsset.
 func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, transferPortId string, transferChannelId string, claimer sdk.AccAddress) (*sdk.Coin, error) {
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChannelId, zone.BaseDenom)
-	result := sdk.Coin{
-		Amount: sdk.NewIntFromUint64(0),
-		Denom:  ibcDenom,
-	}
+	result :=  sdk.NewCoin(ibcDenom, sdk.NewIntFromUint64(0))
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
 	records, err := k.GetRecordedDepositAmt(ctx, zone.ZoneId, claimer)
@@ -72,12 +98,12 @@ func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.Regis
 // CalculateDepositAlpha calculates alpha value.
 // Alpha = userDepositAmount / totalStakedAmount
 // Delta = Alpha * totalShareTokenSupply
-func (k Keeper) CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount sdk.Dec) sdk.Int {
-	if totalShareTokenSupply.Equal(sdk.NewDec(0)) {
+func (k Keeper) CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
+	res := new(big.Int)
+	if totalShareTokenSupply.Cmp(big.NewInt(0)) == 0 {
 		totalShareTokenSupply = totalStakedAmount
 	}
-
-	return userDepositAmt.Mul(totalShareTokenSupply).Quo(totalStakedAmount).TruncateInt()
+	return res.Mul(userDepositAmt, totalShareTokenSupply).Div(res, totalStakedAmount)
 }
 
 // GetWithdrawAmt is used for calculating the amount of coin user can withdraw
@@ -91,24 +117,24 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 		return sdk.Coin{}, err
 	}
 
-	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.ToDec(), totalSharedToken.Amount.ToDec(), totalStakedAmount.Coin.Amount.ToDec())
-	coinStr := withdrawAmt.String() + baseDenom
-	withdrawCoin, err := sdk.ParseCoinNormalized(coinStr)
-	if err != nil {
-		return sdk.Coin{}, err
-	}
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 
-	return withdrawCoin, nil
+	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	wAsset := k.ConvertSnAssetToWAssetDecimal(withdrawAmt, zoneInfo.Decimal, baseDenom)
+
+	return wAsset, nil
 }
 
 // CalculateWithdrawAlpha calculates lambda value.
 // Lambda = userWithdrawAmount / totalStakedAmount
 // Delta = Lambda * totalShareTokenSupply
-func (k Keeper) CalculateWithdrawAlpha(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount sdk.Dec) sdk.Int {
-	if totalShareTokenSupply.Equal(sdk.NewDec(0)) {
+
+func (k Keeper) CalculateWithdrawAlpha(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
+	res := new(big.Int)
+	if totalShareTokenSupply.Cmp(big.NewInt(0)) == 0{
 		totalShareTokenSupply = totalStakedAmount
 	}
-	return burnedStTokenAmt.Mul(totalStakedAmount).Quo(totalShareTokenSupply).TruncateInt()
+	return res.Mul(burnedStTokenAmt, totalStakedAmount).Div(res, totalShareTokenSupply)
 }
 
 func (k Keeper) GetsnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string, error) {
@@ -141,13 +167,22 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPor
 	}
 
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChanId, denom)
-	chainBalanceWithIbcDenom := sdk.Coin{
-		Denom:  ibcDenom,
-		Amount: chainInfo.Coin.Amount,
-	}
+	chainBalanceWithIbcDenom := sdk.NewCoin(ibcDenom, chainInfo.Coin.Amount)
 
 	if chainBalanceWithIbcDenom.Sub(unMintedAmount).IsZero() {
 		return unMintedAmount, nil
 	}
 	return chainBalanceWithIbcDenom.Sub(unMintedAmount), nil
+}
+
+func (k Keeper) ConvertWAssetToSnAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin{
+	convertDecimal := snAssetDecimal - decimal
+	snAsset := new(big.Int).Mul(amount, precisionMultiplier(convertDecimal))
+	return  sdk.NewCoin(denom, sdk.NewIntFromBigInt(snAsset))
+}
+
+func (k Keeper) ConvertSnAssetToWAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin{
+	convertDecimal := snAssetDecimal - decimal
+	wAsset := new(big.Int).Quo(amount, precisionMultiplier(convertDecimal)).Int64()
+	return  sdk.NewInt64Coin(denom, wAsset)
 }
