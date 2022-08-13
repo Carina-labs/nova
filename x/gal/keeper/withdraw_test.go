@@ -20,7 +20,7 @@ func (suite *KeeperTestSuite) SetWithdrawRecords(zoneId, withdrawer, delegator, 
 		Records:    records,
 	}
 
-	suite.App.GalKeeper.SetWithdrawRecord(suite.Ctx, record)
+	suite.App.GalKeeper.SetWithdrawRecord(suite.Ctx, &record)
 }
 
 func (suite *KeeperTestSuite) TestIsAbleToWithdraw() {
