@@ -11,11 +11,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-type WithdrawRegisterType int
+type WithdrawStatusType int
 
 const (
-	WITHDRAW_REGISTER WithdrawRegisterType = iota + 1
-	TRANSFER_SUCCESS
+	WithdrawStatus_Registerred WithdrawStatusType = iota + 1
+	WithdrawStatus_Transferred
 )
 
 func (k Keeper) getWithdrawRecordStore(ctx sdk.Context) prefix.Store {
@@ -75,7 +75,7 @@ func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
 
-func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state WithdrawRegisterType, version uint64) bool {
+func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state WithdrawStatusType, version uint64) bool {
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawRecord types.WithdrawRecord) (stop bool) {
 		if withdrawRecord.ZoneId == zoneId {
 			isChanged := false
@@ -115,7 +115,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 
 					if !found {
 						withdrawRecordContent = &types.WithdrawRecordContent{
-							State:           int64(WITHDRAW_REGISTER),
+							State:           int64(WithdrawStatus_Registerred),
 							WithdrawVersion: items.UndelegateVersion,
 							Amount: &sdk.Coin{
 								Amount: items.WithdrawAmount.Amount,
@@ -148,7 +148,7 @@ func (k Keeper) GetWithdrawAmontForUser(ctx sdk.Context, zoneId, denom string, w
 	}
 
 	for _, record := range withdrawRecord.Records {
-		if record.State == int64(TRANSFER_SUCCESS) {
+		if record.State == int64(WithdrawStatus_Transferred) {
 			amount = amount.Add(*record.Amount)
 		}
 	}
@@ -246,7 +246,7 @@ func (k Keeper) WithdrawHistory(goCtx context.Context, rq *types.QueryWithdrawHi
 	return &types.QueryWithdrawHistoryResponse{}, nil
 }
 
-func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState WithdrawRegisterType) {
+func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState WithdrawStatusType) {
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
 		for _, record := range withdrawInfo.Records {
 			if record.State == int64(preState) {
