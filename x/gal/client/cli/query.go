@@ -1,20 +1,36 @@
 package cli
 
 import (
-	"fmt"
-
-	"strings"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/spf13/cobra"
 )
 
-const (
-	FlagDenom = "denom"
-)
+func queryParams() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "params",
+		Long: "Query for parameter",
+		Args: cobra.ExactArgs(4),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			res, err := queryClient.Params(cmd.Context(), &types.QueryParamsRequest{})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
 
 func queryClaimableAsset() *cobra.Command {
 	cmd := &cobra.Command{
@@ -180,11 +196,8 @@ func queryUndelegateRecords() *cobra.Command {
 
 func queryWithdrawRecords() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "withdraw_records [zone_id] [address]",
-		Long: strings.TrimSpace(fmt.Sprintf(`Query withdraw history of an account or of a specific denomination.
-Example:
-	$ %s query %s withdraw [address]
-	$ %s query %s withdraw [address] --denom=[denom]`, version.AppName, types.ModuleName, version.AppName, types.ModuleName)),
+		Use:  "withdraw_records [zone_id] [address]",
+		Long: "Query for withdraw records",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
