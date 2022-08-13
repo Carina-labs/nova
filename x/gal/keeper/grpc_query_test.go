@@ -115,7 +115,57 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 }
 
 func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+	galKeeper := suite.App.GalKeeper
+	denom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
 
+	// query with invalid zone
+	_, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.ActiveWithdrawalsRequest{
+		ZoneId: "invalid",
+	})
+	suite.Require().Error(err)
+
+	// fill the fake content
+	records := make(map[uint64]*types.WithdrawRecordContent)
+
+	pendingAmount := sdk.NewCoin(zoneBaseDenom, sdk.NewInt(150))
+	activeAmount := sdk.NewCoin(zoneBaseDenom, sdk.NewInt(80))
+
+	records[1] = &types.WithdrawRecordContent{
+		Amount:          &activeAmount,
+		State:           int64(galkeeper.WithdrawStatus_Transferred),
+		OracleVersion:   1,
+		WithdrawVersion: 1,
+		CompletionTime:  time.Time{},
+	}
+
+	records[2] = &types.WithdrawRecordContent{
+		Amount:          &pendingAmount,
+		State:           int64(galkeeper.WithdrawStatus_Registered),
+		OracleVersion:   1,
+		WithdrawVersion: 1,
+		CompletionTime:  time.Time{},
+	}
+
+	galKeeper.SetWithdrawRecord(ctx, &types.WithdrawRecord{
+		ZoneId:     zoneId,
+		Withdrawer: fooUser.String(),
+		Records:    records,
+	})
+
+	// query the pending withdrawal amount and check if the amount is correct
+	result, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.ActiveWithdrawalsRequest{
+		ZoneId:            zoneId,
+		Address:           fooUser.String(),
+		TransferPortId:    transferPort,
+		TransferChannelId: transferChannel,
+	})
+
+	// only transferred amount should be returned
+	suite.Require().NoError(err)
+	suite.Require().Equal(result.Amount.Denom, denom)
+	suite.Require().Equal(result.Amount.Amount, activeAmount.Amount)
 }
 
 func (suite *KeeperTestSuite) TestQueryDepositRecord() {
