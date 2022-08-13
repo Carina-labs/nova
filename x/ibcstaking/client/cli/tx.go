@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/Carina-labs/nova/x/ibcstaking/types"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -38,8 +39,8 @@ func GetTxCmd() *cobra.Command {
 
 func getRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "registerzone [zone-id] [daomodifier-address] [connection-id] [validator_address] [base-denom]",
-		Args: cobra.ExactArgs(5),
+		Use:  "registerzone [zone-id] [daomodifier-address] [connection-id] [validator_address] [base-denom] [decimal]",
+		Args: cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -55,8 +56,11 @@ func getRegisterZoneCmd() *cobra.Command {
 			icaConnId := args[2]
 			validatorAddr := args[3]
 			denom := args[4]
-
-			msg := types.NewMsgRegisterZone(zoneId, icaConnId, daomodifierAddr, validatorAddr, denom)
+			decimal, err := strconv.ParseInt(args[5],10, 64)
+			if err != nil {
+				return err
+			}
+			msg := types.NewMsgRegisterZone(zoneId, icaConnId, daomodifierAddr, validatorAddr, denom, decimal)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -254,8 +258,8 @@ func getDeleteZoneTxCmd() *cobra.Command {
 //TODO: add host address
 func getChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "changezoneinfo [zone-id] [host-address] [daomodifier-address] [connection-id] [validator_address] [base-denom]",
-		Args: cobra.ExactArgs(5),
+		Use:  "changezoneinfo [zone-id] [host-address] [daomodifier-address] [connection-id] [validator_address] [base-denom] [decimal]",
+		Args: cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -271,8 +275,12 @@ func getChangeZoneInfoTxCmd() *cobra.Command {
 			icaConnId := args[2]
 			validatorAddr := args[3]
 			denom := args[4]
+			decimal, err := strconv.ParseInt(args[5], 10, 64)
+			if err != nil {
+				return err
+			}
 
-			msg := types.NewMsgChangeZoneInfo(zoneId, icaConnId, daomodifierAddr, validatorAddr, denom)
+			msg := types.NewMsgChangeZoneInfo(zoneId, icaConnId, daomodifierAddr, validatorAddr, denom, decimal)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err

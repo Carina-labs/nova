@@ -23,7 +23,6 @@ func (q Querier) State(ctx context.Context, request *types.QueryStateRequest) (*
 
 	return &types.QueryStateResponse{
 		Coin:            res.Coin,
-		Decimal:         res.Decimal,
 		LastBlockHeight: res.LastBlockHeight,
 	}, nil
 }
