@@ -23,7 +23,7 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	coin := sdk.NewCoin(denom, amount)
 
 	oracleKeeper.SetOracleVersion(ctx, zoneId, 2)
-	keeper.SetDepositAmt(ctx, &types.DepositRecord{
+	keeper.SetDepositRecord(ctx, &types.DepositRecord{
 		ZoneId:  zoneId,
 		Claimer: fooUser.String(),
 		Records: []*types.DepositRecordContent{
