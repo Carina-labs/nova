@@ -57,17 +57,17 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		State:     int64(DEPOSIT_REQUEST),
 	}
 
-	record, err := m.keeper.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, claimAcc)
+	record, err := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, claimAcc)
 
 	if err == types.ErrNoDepositRecord {
-		m.keeper.SetDepositAmt(ctx, &types.DepositRecord{
+		m.keeper.SetDepositRecord(ctx, &types.DepositRecord{
 			ZoneId:  deposit.ZoneId,
 			Claimer: deposit.Claimer,
 			Records: []*types.DepositRecordContent{newRecord},
 		})
 	} else {
 		record.Records = append(record.Records, newRecord)
-		m.keeper.SetDepositAmt(ctx, record)
+		m.keeper.SetDepositRecord(ctx, record)
 	}
 
 	err = m.keeper.TransferToTargetZone(ctx,
@@ -149,16 +149,17 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 
 	snAssetAmt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
 
-	undelegateRecord, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
-
-	if found {
-		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
-	} else {
-		undelegateRecord = types.UndelegateRecord{
-			ZoneId:    undelegate.ZoneId,
-			Delegator: undelegate.Delegator,
-			Records:   []*types.UndelegateRecordContent{&newRecord},
+	undelegateRecord, err := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
+	if err != nil {
+		if err == types.ErrNoUndelegateRecord {
+			undelegateRecord = &types.UndelegateRecord{
+				ZoneId:    undelegate.ZoneId,
+				Delegator: undelegate.Delegator,
+				Records:   []*types.UndelegateRecordContent{&newRecord},
+			}
 		}
+	} else {
+		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
 	}
 
 	m.keeper.SetUndelegateRecord(ctx, undelegateRecord)
@@ -321,7 +322,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	if err != nil {
 		return nil, err
 	}
-	records, err := m.keeper.GetRecordedDepositAmt(ctx, claimMsg.ZoneId, claimerAddr)
+	records, err := m.keeper.GetUserDepositRecord(ctx, claimMsg.ZoneId, claimerAddr)
 	if err != nil {
 		return nil, err
 	}

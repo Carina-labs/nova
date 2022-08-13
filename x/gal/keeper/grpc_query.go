@@ -99,17 +99,29 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Act
 	}, nil
 }
 
-func (q QueryServer) DepositRecords(ctx context.Context, request *types.QueryDepositRecordRequest) (*types.QueryDepositRecordResponse, error) {
-	//TODO implement me
-	panic("implement me")
+func (q QueryServer) DepositRecords(goCtx context.Context, request *types.QueryDepositRecordRequest) (*types.QueryDepositRecordResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	user, err := sdk.AccAddressFromBech32(request.Address)
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
+	}
+
+	records, err := q.keeper.GetUserDepositRecord(ctx, request.ZoneId, user)
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.QueryDepositRecordResponse{
+		DepositRecord: records,
+	}, nil
 }
 
-func (q QueryServer) UndelegateRecords(ctx context.Context, request *types.QueryUndelegateRecordRequest) (*types.QueryUndelegateRecordResponse, error) {
-	//TODO implement me
-	panic("implement me")
+func (q QueryServer) UndelegateRecords(goCtx context.Context, request *types.QueryUndelegateRecordRequest) (*types.QueryUndelegateRecordResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
 }
 
-func (q QueryServer) WithdrawRecords(ctx context.Context, request *types.QueryWithdrawRecordRequest) (*types.QueryWithdrawRecordResponse, error) {
+func (q QueryServer) WithdrawRecords(goCtx context.Context, request *types.QueryWithdrawRecordRequest) (*types.QueryWithdrawRecordResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }

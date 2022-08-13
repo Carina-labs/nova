@@ -180,7 +180,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 						},
 					},
 				}
-				suite.App.GalKeeper.SetDepositAmt(suite.Ctx, &record)
+				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, &record)
 			}
 
 			// execute

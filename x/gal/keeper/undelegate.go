@@ -17,25 +17,25 @@ const (
 )
 
 // SetUndelegateRecord write undelegate record.
-func (k Keeper) SetUndelegateRecord(ctx sdk.Context, record types.UndelegateRecord) {
+func (k Keeper) SetUndelegateRecord(ctx sdk.Context, record *types.UndelegateRecord) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
-	bz := k.cdc.MustMarshal(&record)
+	bz := k.cdc.MustMarshal(record)
 	newStoreKey := record.ZoneId + record.Delegator
 	store.Set([]byte(newStoreKey), bz)
 }
 
 // GetUndelegateRecord returns undelegate record by key.
-func (k Keeper) GetUndelegateRecord(ctx sdk.Context, zoneId, delegator string) (types.UndelegateRecord, bool) {
+func (k Keeper) GetUndelegateRecord(ctx sdk.Context, zoneId, delegator string) (*types.UndelegateRecord, error) {
 	key := zoneId + delegator
-	undelegateInfo := types.UndelegateRecord{}
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
 	bz := store.Get([]byte(key))
 	if len(bz) == 0 {
-		return undelegateInfo, false
+		return nil, types.ErrNoUndelegateRecord
 	}
 
-	k.cdc.MustUnmarshal(bz, &undelegateInfo)
-	return undelegateInfo, true
+	var result types.UndelegateRecord
+	k.cdc.MustUnmarshal(bz, &result)
+	return &result, nil
 }
 
 // GetAllUndelegateRecord returns all undelegate record.
@@ -65,7 +65,7 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, 
 		Denom:  baseDenom,
 	}
 
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord types.UndelegateRecord) (stop bool) {
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			for _, record := range undelegateRecord.Records {
 				if record.OracleVersion < version {

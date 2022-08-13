@@ -49,7 +49,7 @@ func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.Regis
 	}
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
-	records, err := k.GetRecordedDepositAmt(ctx, zone.ZoneId, claimer)
+	records, err := k.GetUserDepositRecord(ctx, zone.ZoneId, claimer)
 	if err != nil {
 		return nil, err
 	}
