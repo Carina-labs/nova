@@ -3949,27 +3949,27 @@ func (x *fastReflection_ActiveWithdrawalsResponse) ProtoMethods() *protoiface.Me
 }
 
 var (
-	md_QueryMyShareRequest         protoreflect.MessageDescriptor
-	fd_QueryMyShareRequest_zone_id protoreflect.FieldDescriptor
-	fd_QueryMyShareRequest_address protoreflect.FieldDescriptor
+	md_QueryDepositRecordRequest         protoreflect.MessageDescriptor
+	fd_QueryDepositRecordRequest_zone_id protoreflect.FieldDescriptor
+	fd_QueryDepositRecordRequest_address protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_query_proto_init()
-	md_QueryMyShareRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryMyShareRequest")
-	fd_QueryMyShareRequest_zone_id = md_QueryMyShareRequest.Fields().ByName("zone_id")
-	fd_QueryMyShareRequest_address = md_QueryMyShareRequest.Fields().ByName("address")
+	md_QueryDepositRecordRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryDepositRecordRequest")
+	fd_QueryDepositRecordRequest_zone_id = md_QueryDepositRecordRequest.Fields().ByName("zone_id")
+	fd_QueryDepositRecordRequest_address = md_QueryDepositRecordRequest.Fields().ByName("address")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryMyShareRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryDepositRecordRequest)(nil)
 
-type fastReflection_QueryMyShareRequest QueryMyShareRequest
+type fastReflection_QueryDepositRecordRequest QueryDepositRecordRequest
 
-func (x *QueryMyShareRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryMyShareRequest)(x)
+func (x *QueryDepositRecordRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryDepositRecordRequest)(x)
 }
 
-func (x *QueryMyShareRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryDepositRecordRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_query_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3981,43 +3981,43 @@ func (x *QueryMyShareRequest) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryMyShareRequest_messageType fastReflection_QueryMyShareRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryMyShareRequest_messageType{}
+var _fastReflection_QueryDepositRecordRequest_messageType fastReflection_QueryDepositRecordRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryDepositRecordRequest_messageType{}
 
-type fastReflection_QueryMyShareRequest_messageType struct{}
+type fastReflection_QueryDepositRecordRequest_messageType struct{}
 
-func (x fastReflection_QueryMyShareRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryMyShareRequest)(nil)
+func (x fastReflection_QueryDepositRecordRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryDepositRecordRequest)(nil)
 }
-func (x fastReflection_QueryMyShareRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryMyShareRequest)
+func (x fastReflection_QueryDepositRecordRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryDepositRecordRequest)
 }
-func (x fastReflection_QueryMyShareRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryMyShareRequest
+func (x fastReflection_QueryDepositRecordRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryDepositRecordRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryMyShareRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryMyShareRequest
+func (x *fastReflection_QueryDepositRecordRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryDepositRecordRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryMyShareRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryMyShareRequest_messageType
+func (x *fastReflection_QueryDepositRecordRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryDepositRecordRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryMyShareRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryMyShareRequest)
+func (x *fastReflection_QueryDepositRecordRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryDepositRecordRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryMyShareRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryMyShareRequest)(x)
+func (x *fastReflection_QueryDepositRecordRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryDepositRecordRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -4025,16 +4025,16 @@ func (x *fastReflection_QueryMyShareRequest) Interface() protoreflect.ProtoMessa
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryMyShareRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryDepositRecordRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.ZoneId != "" {
 		value := protoreflect.ValueOfString(x.ZoneId)
-		if !f(fd_QueryMyShareRequest_zone_id, value) {
+		if !f(fd_QueryDepositRecordRequest_zone_id, value) {
 			return
 		}
 	}
 	if x.Address != "" {
 		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryMyShareRequest_address, value) {
+		if !f(fd_QueryDepositRecordRequest_address, value) {
 			return
 		}
 	}
@@ -4051,17 +4051,17 @@ func (x *fastReflection_QueryMyShareRequest) Range(f func(protoreflect.FieldDesc
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryMyShareRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryDepositRecordRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareRequest.zone_id":
+	case "nova.gal.v1.QueryDepositRecordRequest.zone_id":
 		return x.ZoneId != ""
-	case "nova.gal.v1.QueryMyShareRequest.address":
+	case "nova.gal.v1.QueryDepositRecordRequest.address":
 		return x.Address != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4071,17 +4071,17 @@ func (x *fastReflection_QueryMyShareRequest) Has(fd protoreflect.FieldDescriptor
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryMyShareRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryDepositRecordRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareRequest.zone_id":
+	case "nova.gal.v1.QueryDepositRecordRequest.zone_id":
 		x.ZoneId = ""
-	case "nova.gal.v1.QueryMyShareRequest.address":
+	case "nova.gal.v1.QueryDepositRecordRequest.address":
 		x.Address = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4091,19 +4091,19 @@ func (x *fastReflection_QueryMyShareRequest) Clear(fd protoreflect.FieldDescript
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryMyShareRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryDepositRecordRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryMyShareRequest.zone_id":
+	case "nova.gal.v1.QueryDepositRecordRequest.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.QueryMyShareRequest.address":
+	case "nova.gal.v1.QueryDepositRecordRequest.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -4117,17 +4117,17 @@ func (x *fastReflection_QueryMyShareRequest) Get(descriptor protoreflect.FieldDe
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryMyShareRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryDepositRecordRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareRequest.zone_id":
+	case "nova.gal.v1.QueryDepositRecordRequest.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.gal.v1.QueryMyShareRequest.address":
+	case "nova.gal.v1.QueryDepositRecordRequest.address":
 		x.Address = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4141,44 +4141,44 @@ func (x *fastReflection_QueryMyShareRequest) Set(fd protoreflect.FieldDescriptor
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryMyShareRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryDepositRecordRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareRequest.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.gal.v1.QueryMyShareRequest is not mutable"))
-	case "nova.gal.v1.QueryMyShareRequest.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryMyShareRequest is not mutable"))
+	case "nova.gal.v1.QueryDepositRecordRequest.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.QueryDepositRecordRequest is not mutable"))
+	case "nova.gal.v1.QueryDepositRecordRequest.address":
+		panic(fmt.Errorf("field address of message nova.gal.v1.QueryDepositRecordRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryMyShareRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryDepositRecordRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareRequest.zone_id":
+	case "nova.gal.v1.QueryDepositRecordRequest.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.QueryMyShareRequest.address":
+	case "nova.gal.v1.QueryDepositRecordRequest.address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryMyShareRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryDepositRecordRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryMyShareRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryDepositRecordRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -4186,7 +4186,7 @@ func (x *fastReflection_QueryMyShareRequest) WhichOneof(d protoreflect.OneofDesc
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryMyShareRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryDepositRecordRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -4197,7 +4197,7 @@ func (x *fastReflection_QueryMyShareRequest) GetUnknown() protoreflect.RawFields
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryMyShareRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryDepositRecordRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -4209,7 +4209,7 @@ func (x *fastReflection_QueryMyShareRequest) SetUnknown(fields protoreflect.RawF
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryMyShareRequest) IsValid() bool {
+func (x *fastReflection_QueryDepositRecordRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -4219,9 +4219,9 @@ func (x *fastReflection_QueryMyShareRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryMyShareRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryDepositRecordRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryMyShareRequest)
+		x := input.Message.Interface().(*QueryDepositRecordRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -4251,7 +4251,7 @@ func (x *fastReflection_QueryMyShareRequest) ProtoMethods() *protoiface.Methods 
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryMyShareRequest)
+		x := input.Message.Interface().(*QueryDepositRecordRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -4295,7 +4295,7 @@ func (x *fastReflection_QueryMyShareRequest) ProtoMethods() *protoiface.Methods 
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryMyShareRequest)
+		x := input.Message.Interface().(*QueryDepositRecordRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -4327,10 +4327,10 @@ func (x *fastReflection_QueryMyShareRequest) ProtoMethods() *protoiface.Methods 
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryMyShareRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryDepositRecordRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryMyShareRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryDepositRecordRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -4433,27 +4433,25 @@ func (x *fastReflection_QueryMyShareRequest) ProtoMethods() *protoiface.Methods 
 }
 
 var (
-	md_QueryMyShareResponse         protoreflect.MessageDescriptor
-	fd_QueryMyShareResponse_address protoreflect.FieldDescriptor
-	fd_QueryMyShareResponse_amount  protoreflect.FieldDescriptor
+	md_QueryDepositRecordResponse                protoreflect.MessageDescriptor
+	fd_QueryDepositRecordResponse_deposit_record protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_query_proto_init()
-	md_QueryMyShareResponse = File_nova_gal_v1_query_proto.Messages().ByName("QueryMyShareResponse")
-	fd_QueryMyShareResponse_address = md_QueryMyShareResponse.Fields().ByName("address")
-	fd_QueryMyShareResponse_amount = md_QueryMyShareResponse.Fields().ByName("amount")
+	md_QueryDepositRecordResponse = File_nova_gal_v1_query_proto.Messages().ByName("QueryDepositRecordResponse")
+	fd_QueryDepositRecordResponse_deposit_record = md_QueryDepositRecordResponse.Fields().ByName("deposit_record")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryMyShareResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryDepositRecordResponse)(nil)
 
-type fastReflection_QueryMyShareResponse QueryMyShareResponse
+type fastReflection_QueryDepositRecordResponse QueryDepositRecordResponse
 
-func (x *QueryMyShareResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryMyShareResponse)(x)
+func (x *QueryDepositRecordResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryDepositRecordResponse)(x)
 }
 
-func (x *QueryMyShareResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryDepositRecordResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_query_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4465,43 +4463,43 @@ func (x *QueryMyShareResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryMyShareResponse_messageType fastReflection_QueryMyShareResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryMyShareResponse_messageType{}
+var _fastReflection_QueryDepositRecordResponse_messageType fastReflection_QueryDepositRecordResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryDepositRecordResponse_messageType{}
 
-type fastReflection_QueryMyShareResponse_messageType struct{}
+type fastReflection_QueryDepositRecordResponse_messageType struct{}
 
-func (x fastReflection_QueryMyShareResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryMyShareResponse)(nil)
+func (x fastReflection_QueryDepositRecordResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryDepositRecordResponse)(nil)
 }
-func (x fastReflection_QueryMyShareResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryMyShareResponse)
+func (x fastReflection_QueryDepositRecordResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryDepositRecordResponse)
 }
-func (x fastReflection_QueryMyShareResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryMyShareResponse
+func (x fastReflection_QueryDepositRecordResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryDepositRecordResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryMyShareResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryMyShareResponse
+func (x *fastReflection_QueryDepositRecordResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryDepositRecordResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryMyShareResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryMyShareResponse_messageType
+func (x *fastReflection_QueryDepositRecordResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryDepositRecordResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryMyShareResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryMyShareResponse)
+func (x *fastReflection_QueryDepositRecordResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryDepositRecordResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryMyShareResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryMyShareResponse)(x)
+func (x *fastReflection_QueryDepositRecordResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryDepositRecordResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -4509,16 +4507,10 @@ func (x *fastReflection_QueryMyShareResponse) Interface() protoreflect.ProtoMess
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryMyShareResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryMyShareResponse_address, value) {
-			return
-		}
-	}
-	if x.Amount != nil {
-		value := protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-		if !f(fd_QueryMyShareResponse_amount, value) {
+func (x *fastReflection_QueryDepositRecordResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.DepositRecord != nil {
+		value := protoreflect.ValueOfMessage(x.DepositRecord.ProtoReflect())
+		if !f(fd_QueryDepositRecordResponse_deposit_record, value) {
 			return
 		}
 	}
@@ -4535,17 +4527,15 @@ func (x *fastReflection_QueryMyShareResponse) Range(f func(protoreflect.FieldDes
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryMyShareResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryDepositRecordResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareResponse.address":
-		return x.Address != ""
-	case "nova.gal.v1.QueryMyShareResponse.amount":
-		return x.Amount != nil
+	case "nova.gal.v1.QueryDepositRecordResponse.deposit_record":
+		return x.DepositRecord != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4555,17 +4545,15 @@ func (x *fastReflection_QueryMyShareResponse) Has(fd protoreflect.FieldDescripto
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryMyShareResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryDepositRecordResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareResponse.address":
-		x.Address = ""
-	case "nova.gal.v1.QueryMyShareResponse.amount":
-		x.Amount = nil
+	case "nova.gal.v1.QueryDepositRecordResponse.deposit_record":
+		x.DepositRecord = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4575,19 +4563,16 @@ func (x *fastReflection_QueryMyShareResponse) Clear(fd protoreflect.FieldDescrip
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryMyShareResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryDepositRecordResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryMyShareResponse.address":
-		value := x.Address
-		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.QueryMyShareResponse.amount":
-		value := x.Amount
+	case "nova.gal.v1.QueryDepositRecordResponse.deposit_record":
+		value := x.DepositRecord
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -4601,17 +4586,15 @@ func (x *fastReflection_QueryMyShareResponse) Get(descriptor protoreflect.FieldD
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryMyShareResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryDepositRecordResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareResponse.address":
-		x.Address = value.Interface().(string)
-	case "nova.gal.v1.QueryMyShareResponse.amount":
-		x.Amount = value.Message().Interface().(*v1beta1.Coin)
+	case "nova.gal.v1.QueryDepositRecordResponse.deposit_record":
+		x.DepositRecord = value.Message().Interface().(*DepositRecord)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4625,48 +4608,44 @@ func (x *fastReflection_QueryMyShareResponse) Set(fd protoreflect.FieldDescripto
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryMyShareResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryDepositRecordResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareResponse.amount":
-		if x.Amount == nil {
-			x.Amount = new(v1beta1.Coin)
+	case "nova.gal.v1.QueryDepositRecordResponse.deposit_record":
+		if x.DepositRecord == nil {
+			x.DepositRecord = new(DepositRecord)
 		}
-		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.gal.v1.QueryMyShareResponse.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryMyShareResponse is not mutable"))
+		return protoreflect.ValueOfMessage(x.DepositRecord.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryMyShareResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryDepositRecordResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryMyShareResponse.address":
-		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.QueryMyShareResponse.amount":
-		m := new(v1beta1.Coin)
+	case "nova.gal.v1.QueryDepositRecordResponse.deposit_record":
+		m := new(DepositRecord)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryMyShareResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryMyShareResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryDepositRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryMyShareResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryDepositRecordResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryMyShareResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryDepositRecordResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -4674,7 +4653,7 @@ func (x *fastReflection_QueryMyShareResponse) WhichOneof(d protoreflect.OneofDes
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryMyShareResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryDepositRecordResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -4685,7 +4664,7 @@ func (x *fastReflection_QueryMyShareResponse) GetUnknown() protoreflect.RawField
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryMyShareResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryDepositRecordResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -4697,7 +4676,7 @@ func (x *fastReflection_QueryMyShareResponse) SetUnknown(fields protoreflect.Raw
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryMyShareResponse) IsValid() bool {
+func (x *fastReflection_QueryDepositRecordResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -4707,9 +4686,9 @@ func (x *fastReflection_QueryMyShareResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryDepositRecordResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryMyShareResponse)
+		x := input.Message.Interface().(*QueryDepositRecordResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -4721,12 +4700,8 @@ func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods
 		var n int
 		var l int
 		_ = l
-		l = len(x.Address)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.Amount != nil {
-			l = options.Size(x.Amount)
+		if x.DepositRecord != nil {
+			l = options.Size(x.DepositRecord)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
@@ -4739,7 +4714,7 @@ func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryMyShareResponse)
+		x := input.Message.Interface().(*QueryDepositRecordResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -4758,8 +4733,8 @@ func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if x.Amount != nil {
-			encoded, err := options.Marshal(x.Amount)
+		if x.DepositRecord != nil {
+			encoded, err := options.Marshal(x.DepositRecord)
 			if err != nil {
 				return protoiface.MarshalOutput{
 					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -4769,13 +4744,6 @@ func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods
 			i -= len(encoded)
 			copy(dAtA[i:], encoded)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.Address) > 0 {
-			i -= len(x.Address)
-			copy(dAtA[i:], x.Address)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -4790,7 +4758,7 @@ func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryMyShareResponse)
+		x := input.Message.Interface().(*QueryDepositRecordResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -4822,47 +4790,15 @@ func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryMyShareResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryDepositRecordResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryMyShareResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryDepositRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Address = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field DepositRecord", wireType)
 				}
 				var msglen int
 				for shift := uint(0); ; shift += 7 {
@@ -4889,10 +4825,10 @@ func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				if x.Amount == nil {
-					x.Amount = &v1beta1.Coin{}
+				if x.DepositRecord == nil {
+					x.DepositRecord = &DepositRecord{}
 				}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount); err != nil {
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.DepositRecord); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
@@ -4932,25 +4868,27 @@ func (x *fastReflection_QueryMyShareResponse) ProtoMethods() *protoiface.Methods
 }
 
 var (
-	md_QueryAllSharesRequest         protoreflect.MessageDescriptor
-	fd_QueryAllSharesRequest_address protoreflect.FieldDescriptor
+	md_QueryUndelegateRecordRequest         protoreflect.MessageDescriptor
+	fd_QueryUndelegateRecordRequest_zone_id protoreflect.FieldDescriptor
+	fd_QueryUndelegateRecordRequest_address protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_query_proto_init()
-	md_QueryAllSharesRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryAllSharesRequest")
-	fd_QueryAllSharesRequest_address = md_QueryAllSharesRequest.Fields().ByName("address")
+	md_QueryUndelegateRecordRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryUndelegateRecordRequest")
+	fd_QueryUndelegateRecordRequest_zone_id = md_QueryUndelegateRecordRequest.Fields().ByName("zone_id")
+	fd_QueryUndelegateRecordRequest_address = md_QueryUndelegateRecordRequest.Fields().ByName("address")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryAllSharesRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryUndelegateRecordRequest)(nil)
 
-type fastReflection_QueryAllSharesRequest QueryAllSharesRequest
+type fastReflection_QueryUndelegateRecordRequest QueryUndelegateRecordRequest
 
-func (x *QueryAllSharesRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryAllSharesRequest)(x)
+func (x *QueryUndelegateRecordRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryUndelegateRecordRequest)(x)
 }
 
-func (x *QueryAllSharesRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryUndelegateRecordRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_query_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4962,43 +4900,43 @@ func (x *QueryAllSharesRequest) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryAllSharesRequest_messageType fastReflection_QueryAllSharesRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryAllSharesRequest_messageType{}
+var _fastReflection_QueryUndelegateRecordRequest_messageType fastReflection_QueryUndelegateRecordRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryUndelegateRecordRequest_messageType{}
 
-type fastReflection_QueryAllSharesRequest_messageType struct{}
+type fastReflection_QueryUndelegateRecordRequest_messageType struct{}
 
-func (x fastReflection_QueryAllSharesRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryAllSharesRequest)(nil)
+func (x fastReflection_QueryUndelegateRecordRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryUndelegateRecordRequest)(nil)
 }
-func (x fastReflection_QueryAllSharesRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryAllSharesRequest)
+func (x fastReflection_QueryUndelegateRecordRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryUndelegateRecordRequest)
 }
-func (x fastReflection_QueryAllSharesRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllSharesRequest
+func (x fastReflection_QueryUndelegateRecordRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryUndelegateRecordRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryAllSharesRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllSharesRequest
+func (x *fastReflection_QueryUndelegateRecordRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryUndelegateRecordRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryAllSharesRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryAllSharesRequest_messageType
+func (x *fastReflection_QueryUndelegateRecordRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryUndelegateRecordRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryAllSharesRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryAllSharesRequest)
+func (x *fastReflection_QueryUndelegateRecordRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryUndelegateRecordRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryAllSharesRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryAllSharesRequest)(x)
+func (x *fastReflection_QueryUndelegateRecordRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryUndelegateRecordRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -5006,10 +4944,16 @@ func (x *fastReflection_QueryAllSharesRequest) Interface() protoreflect.ProtoMes
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryAllSharesRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryUndelegateRecordRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_QueryUndelegateRecordRequest_zone_id, value) {
+			return
+		}
+	}
 	if x.Address != "" {
 		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryAllSharesRequest_address, value) {
+		if !f(fd_QueryUndelegateRecordRequest_address, value) {
 			return
 		}
 	}
@@ -5026,15 +4970,17 @@ func (x *fastReflection_QueryAllSharesRequest) Range(f func(protoreflect.FieldDe
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryAllSharesRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryUndelegateRecordRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryUndelegateRecordRequest.zone_id":
+		return x.ZoneId != ""
+	case "nova.gal.v1.QueryUndelegateRecordRequest.address":
 		return x.Address != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5044,15 +4990,17 @@ func (x *fastReflection_QueryAllSharesRequest) Has(fd protoreflect.FieldDescript
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllSharesRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryUndelegateRecordRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryUndelegateRecordRequest.zone_id":
+		x.ZoneId = ""
+	case "nova.gal.v1.QueryUndelegateRecordRequest.address":
 		x.Address = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5062,16 +5010,19 @@ func (x *fastReflection_QueryAllSharesRequest) Clear(fd protoreflect.FieldDescri
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryAllSharesRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryUndelegateRecordRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryUndelegateRecordRequest.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.QueryUndelegateRecordRequest.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -5085,15 +5036,17 @@ func (x *fastReflection_QueryAllSharesRequest) Get(descriptor protoreflect.Field
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllSharesRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryUndelegateRecordRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryUndelegateRecordRequest.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.gal.v1.QueryUndelegateRecordRequest.address":
 		x.Address = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5107,40 +5060,44 @@ func (x *fastReflection_QueryAllSharesRequest) Set(fd protoreflect.FieldDescript
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllSharesRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryUndelegateRecordRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryAllSharesRequest.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryAllSharesRequest is not mutable"))
+	case "nova.gal.v1.QueryUndelegateRecordRequest.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.QueryUndelegateRecordRequest is not mutable"))
+	case "nova.gal.v1.QueryUndelegateRecordRequest.address":
+		panic(fmt.Errorf("field address of message nova.gal.v1.QueryUndelegateRecordRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryAllSharesRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryUndelegateRecordRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryAllSharesRequest.address":
+	case "nova.gal.v1.QueryUndelegateRecordRequest.zone_id":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.QueryUndelegateRecordRequest.address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryAllSharesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryAllSharesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryAllSharesRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryUndelegateRecordRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryAllSharesRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryUndelegateRecordRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -5148,7 +5105,7 @@ func (x *fastReflection_QueryAllSharesRequest) WhichOneof(d protoreflect.OneofDe
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryAllSharesRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryUndelegateRecordRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -5159,7 +5116,7 @@ func (x *fastReflection_QueryAllSharesRequest) GetUnknown() protoreflect.RawFiel
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllSharesRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryUndelegateRecordRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -5171,7 +5128,7 @@ func (x *fastReflection_QueryAllSharesRequest) SetUnknown(fields protoreflect.Ra
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryAllSharesRequest) IsValid() bool {
+func (x *fastReflection_QueryUndelegateRecordRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -5181,9 +5138,9 @@ func (x *fastReflection_QueryAllSharesRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryAllSharesRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryUndelegateRecordRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryAllSharesRequest)
+		x := input.Message.Interface().(*QueryUndelegateRecordRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -5195,6 +5152,10 @@ func (x *fastReflection_QueryAllSharesRequest) ProtoMethods() *protoiface.Method
 		var n int
 		var l int
 		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		l = len(x.Address)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
@@ -5209,7 +5170,7 @@ func (x *fastReflection_QueryAllSharesRequest) ProtoMethods() *protoiface.Method
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllSharesRequest)
+		x := input.Message.Interface().(*QueryUndelegateRecordRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -5233,6 +5194,13 @@ func (x *fastReflection_QueryAllSharesRequest) ProtoMethods() *protoiface.Method
 			copy(dAtA[i:], x.Address)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
 			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+			i--
 			dAtA[i] = 0xa
 		}
 		if input.Buf != nil {
@@ -5246,7 +5214,7 @@ func (x *fastReflection_QueryAllSharesRequest) ProtoMethods() *protoiface.Method
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllSharesRequest)
+		x := input.Message.Interface().(*QueryUndelegateRecordRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -5278,13 +5246,45 @@ func (x *fastReflection_QueryAllSharesRequest) ProtoMethods() *protoiface.Method
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllSharesRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryUndelegateRecordRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllSharesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryUndelegateRecordRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
 				}
@@ -5352,27 +5352,25 @@ func (x *fastReflection_QueryAllSharesRequest) ProtoMethods() *protoiface.Method
 }
 
 var (
-	md_QueryDepositHistoryRequest         protoreflect.MessageDescriptor
-	fd_QueryDepositHistoryRequest_zone_id protoreflect.FieldDescriptor
-	fd_QueryDepositHistoryRequest_address protoreflect.FieldDescriptor
+	md_QueryUndelegateRecordResponse                   protoreflect.MessageDescriptor
+	fd_QueryUndelegateRecordResponse_undelegate_record protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_query_proto_init()
-	md_QueryDepositHistoryRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryDepositHistoryRequest")
-	fd_QueryDepositHistoryRequest_zone_id = md_QueryDepositHistoryRequest.Fields().ByName("zone_id")
-	fd_QueryDepositHistoryRequest_address = md_QueryDepositHistoryRequest.Fields().ByName("address")
+	md_QueryUndelegateRecordResponse = File_nova_gal_v1_query_proto.Messages().ByName("QueryUndelegateRecordResponse")
+	fd_QueryUndelegateRecordResponse_undelegate_record = md_QueryUndelegateRecordResponse.Fields().ByName("undelegate_record")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryDepositHistoryRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryUndelegateRecordResponse)(nil)
 
-type fastReflection_QueryDepositHistoryRequest QueryDepositHistoryRequest
+type fastReflection_QueryUndelegateRecordResponse QueryUndelegateRecordResponse
 
-func (x *QueryDepositHistoryRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryDepositHistoryRequest)(x)
+func (x *QueryUndelegateRecordResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryUndelegateRecordResponse)(x)
 }
 
-func (x *QueryDepositHistoryRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryUndelegateRecordResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_query_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -5384,43 +5382,43 @@ func (x *QueryDepositHistoryRequest) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryDepositHistoryRequest_messageType fastReflection_QueryDepositHistoryRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryDepositHistoryRequest_messageType{}
+var _fastReflection_QueryUndelegateRecordResponse_messageType fastReflection_QueryUndelegateRecordResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryUndelegateRecordResponse_messageType{}
 
-type fastReflection_QueryDepositHistoryRequest_messageType struct{}
+type fastReflection_QueryUndelegateRecordResponse_messageType struct{}
 
-func (x fastReflection_QueryDepositHistoryRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryDepositHistoryRequest)(nil)
+func (x fastReflection_QueryUndelegateRecordResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryUndelegateRecordResponse)(nil)
 }
-func (x fastReflection_QueryDepositHistoryRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryDepositHistoryRequest)
+func (x fastReflection_QueryUndelegateRecordResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryUndelegateRecordResponse)
 }
-func (x fastReflection_QueryDepositHistoryRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryDepositHistoryRequest
+func (x fastReflection_QueryUndelegateRecordResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryUndelegateRecordResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryDepositHistoryRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryDepositHistoryRequest
+func (x *fastReflection_QueryUndelegateRecordResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryUndelegateRecordResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryDepositHistoryRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryDepositHistoryRequest_messageType
+func (x *fastReflection_QueryUndelegateRecordResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryUndelegateRecordResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryDepositHistoryRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryDepositHistoryRequest)
+func (x *fastReflection_QueryUndelegateRecordResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryUndelegateRecordResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryDepositHistoryRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryDepositHistoryRequest)(x)
+func (x *fastReflection_QueryUndelegateRecordResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryUndelegateRecordResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -5428,16 +5426,10 @@ func (x *fastReflection_QueryDepositHistoryRequest) Interface() protoreflect.Pro
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryDepositHistoryRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.ZoneId != "" {
-		value := protoreflect.ValueOfString(x.ZoneId)
-		if !f(fd_QueryDepositHistoryRequest_zone_id, value) {
-			return
-		}
-	}
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryDepositHistoryRequest_address, value) {
+func (x *fastReflection_QueryUndelegateRecordResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.UndelegateRecord != nil {
+		value := protoreflect.ValueOfMessage(x.UndelegateRecord.ProtoReflect())
+		if !f(fd_QueryUndelegateRecordResponse_undelegate_record, value) {
 			return
 		}
 	}
@@ -5454,17 +5446,15 @@ func (x *fastReflection_QueryDepositHistoryRequest) Range(f func(protoreflect.Fi
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryDepositHistoryRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryUndelegateRecordResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryRequest.zone_id":
-		return x.ZoneId != ""
-	case "nova.gal.v1.QueryDepositHistoryRequest.address":
-		return x.Address != ""
+	case "nova.gal.v1.QueryUndelegateRecordResponse.undelegate_record":
+		return x.UndelegateRecord != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5474,17 +5464,15 @@ func (x *fastReflection_QueryDepositHistoryRequest) Has(fd protoreflect.FieldDes
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryDepositHistoryRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryUndelegateRecordResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryRequest.zone_id":
-		x.ZoneId = ""
-	case "nova.gal.v1.QueryDepositHistoryRequest.address":
-		x.Address = ""
+	case "nova.gal.v1.QueryUndelegateRecordResponse.undelegate_record":
+		x.UndelegateRecord = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5494,19 +5482,16 @@ func (x *fastReflection_QueryDepositHistoryRequest) Clear(fd protoreflect.FieldD
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryDepositHistoryRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryUndelegateRecordResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryRequest.zone_id":
-		value := x.ZoneId
-		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.QueryDepositHistoryRequest.address":
-		value := x.Address
-		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.QueryUndelegateRecordResponse.undelegate_record":
+		value := x.UndelegateRecord
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -5520,17 +5505,15 @@ func (x *fastReflection_QueryDepositHistoryRequest) Get(descriptor protoreflect.
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryDepositHistoryRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryUndelegateRecordResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryRequest.zone_id":
-		x.ZoneId = value.Interface().(string)
-	case "nova.gal.v1.QueryDepositHistoryRequest.address":
-		x.Address = value.Interface().(string)
+	case "nova.gal.v1.QueryUndelegateRecordResponse.undelegate_record":
+		x.UndelegateRecord = value.Message().Interface().(*UndelegateRecord)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5544,44 +5527,44 @@ func (x *fastReflection_QueryDepositHistoryRequest) Set(fd protoreflect.FieldDes
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryDepositHistoryRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryUndelegateRecordResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryRequest.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.gal.v1.QueryDepositHistoryRequest is not mutable"))
-	case "nova.gal.v1.QueryDepositHistoryRequest.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryDepositHistoryRequest is not mutable"))
+	case "nova.gal.v1.QueryUndelegateRecordResponse.undelegate_record":
+		if x.UndelegateRecord == nil {
+			x.UndelegateRecord = new(UndelegateRecord)
+		}
+		return protoreflect.ValueOfMessage(x.UndelegateRecord.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryDepositHistoryRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryUndelegateRecordResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryRequest.zone_id":
-		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.QueryDepositHistoryRequest.address":
-		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.QueryUndelegateRecordResponse.undelegate_record":
+		m := new(UndelegateRecord)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryDepositHistoryRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryUndelegateRecordResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryDepositHistoryRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryUndelegateRecordResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -5589,7 +5572,7 @@ func (x *fastReflection_QueryDepositHistoryRequest) WhichOneof(d protoreflect.On
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryDepositHistoryRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryUndelegateRecordResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -5600,7 +5583,7 @@ func (x *fastReflection_QueryDepositHistoryRequest) GetUnknown() protoreflect.Ra
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryDepositHistoryRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryUndelegateRecordResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -5612,7 +5595,7 @@ func (x *fastReflection_QueryDepositHistoryRequest) SetUnknown(fields protorefle
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryDepositHistoryRequest) IsValid() bool {
+func (x *fastReflection_QueryUndelegateRecordResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -5622,9 +5605,9 @@ func (x *fastReflection_QueryDepositHistoryRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryDepositHistoryRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryUndelegateRecordResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryDepositHistoryRequest)
+		x := input.Message.Interface().(*QueryUndelegateRecordResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -5636,12 +5619,8 @@ func (x *fastReflection_QueryDepositHistoryRequest) ProtoMethods() *protoiface.M
 		var n int
 		var l int
 		_ = l
-		l = len(x.ZoneId)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Address)
-		if l > 0 {
+		if x.UndelegateRecord != nil {
+			l = options.Size(x.UndelegateRecord)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
@@ -5654,7 +5633,7 @@ func (x *fastReflection_QueryDepositHistoryRequest) ProtoMethods() *protoiface.M
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryDepositHistoryRequest)
+		x := input.Message.Interface().(*QueryUndelegateRecordResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -5673,17 +5652,17 @@ func (x *fastReflection_QueryDepositHistoryRequest) ProtoMethods() *protoiface.M
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Address) > 0 {
-			i -= len(x.Address)
-			copy(dAtA[i:], x.Address)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.ZoneId) > 0 {
-			i -= len(x.ZoneId)
-			copy(dAtA[i:], x.ZoneId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+		if x.UndelegateRecord != nil {
+			encoded, err := options.Marshal(x.UndelegateRecord)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -5698,7 +5677,7 @@ func (x *fastReflection_QueryDepositHistoryRequest) ProtoMethods() *protoiface.M
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryDepositHistoryRequest)
+		x := input.Message.Interface().(*QueryUndelegateRecordResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -5730,17 +5709,17 @@ func (x *fastReflection_QueryDepositHistoryRequest) ProtoMethods() *protoiface.M
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryDepositHistoryRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryUndelegateRecordResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryDepositHistoryRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryUndelegateRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field UndelegateRecord", wireType)
 				}
-				var stringLen uint64
+				var msglen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -5750,55 +5729,27 @@ func (x *fastReflection_QueryDepositHistoryRequest) ProtoMethods() *protoiface.M
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					msglen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if msglen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + msglen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.ZoneId = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+				if x.UndelegateRecord == nil {
+					x.UndelegateRecord = &UndelegateRecord{}
 				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.UndelegateRecord); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Address = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -5835,79 +5786,28 @@ func (x *fastReflection_QueryDepositHistoryRequest) ProtoMethods() *protoiface.M
 	}
 }
 
-var _ protoreflect.List = (*_QueryDepositHistoryResponse_2_list)(nil)
-
-type _QueryDepositHistoryResponse_2_list struct {
-	list *[]*v1beta1.Coin
-}
-
-func (x *_QueryDepositHistoryResponse_2_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_QueryDepositHistoryResponse_2_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
-}
-
-func (x *_QueryDepositHistoryResponse_2_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_QueryDepositHistoryResponse_2_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_QueryDepositHistoryResponse_2_list) AppendMutable() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	*x.list = append(*x.list, v)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_QueryDepositHistoryResponse_2_list) Truncate(n int) {
-	for i := n; i < len(*x.list); i++ {
-		(*x.list)[i] = nil
-	}
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_QueryDepositHistoryResponse_2_list) NewElement() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_QueryDepositHistoryResponse_2_list) IsValid() bool {
-	return x.list != nil
-}
-
 var (
-	md_QueryDepositHistoryResponse         protoreflect.MessageDescriptor
-	fd_QueryDepositHistoryResponse_address protoreflect.FieldDescriptor
-	fd_QueryDepositHistoryResponse_amount  protoreflect.FieldDescriptor
+	md_QueryWithdrawRecordRequest         protoreflect.MessageDescriptor
+	fd_QueryWithdrawRecordRequest_zone_id protoreflect.FieldDescriptor
+	fd_QueryWithdrawRecordRequest_address protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_query_proto_init()
-	md_QueryDepositHistoryResponse = File_nova_gal_v1_query_proto.Messages().ByName("QueryDepositHistoryResponse")
-	fd_QueryDepositHistoryResponse_address = md_QueryDepositHistoryResponse.Fields().ByName("address")
-	fd_QueryDepositHistoryResponse_amount = md_QueryDepositHistoryResponse.Fields().ByName("amount")
+	md_QueryWithdrawRecordRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryWithdrawRecordRequest")
+	fd_QueryWithdrawRecordRequest_zone_id = md_QueryWithdrawRecordRequest.Fields().ByName("zone_id")
+	fd_QueryWithdrawRecordRequest_address = md_QueryWithdrawRecordRequest.Fields().ByName("address")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryDepositHistoryResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryWithdrawRecordRequest)(nil)
 
-type fastReflection_QueryDepositHistoryResponse QueryDepositHistoryResponse
+type fastReflection_QueryWithdrawRecordRequest QueryWithdrawRecordRequest
 
-func (x *QueryDepositHistoryResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryDepositHistoryResponse)(x)
+func (x *QueryWithdrawRecordRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryWithdrawRecordRequest)(x)
 }
 
-func (x *QueryDepositHistoryResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryWithdrawRecordRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_query_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -5919,43 +5819,43 @@ func (x *QueryDepositHistoryResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryDepositHistoryResponse_messageType fastReflection_QueryDepositHistoryResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryDepositHistoryResponse_messageType{}
+var _fastReflection_QueryWithdrawRecordRequest_messageType fastReflection_QueryWithdrawRecordRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryWithdrawRecordRequest_messageType{}
 
-type fastReflection_QueryDepositHistoryResponse_messageType struct{}
+type fastReflection_QueryWithdrawRecordRequest_messageType struct{}
 
-func (x fastReflection_QueryDepositHistoryResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryDepositHistoryResponse)(nil)
+func (x fastReflection_QueryWithdrawRecordRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryWithdrawRecordRequest)(nil)
 }
-func (x fastReflection_QueryDepositHistoryResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryDepositHistoryResponse)
+func (x fastReflection_QueryWithdrawRecordRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryWithdrawRecordRequest)
 }
-func (x fastReflection_QueryDepositHistoryResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryDepositHistoryResponse
+func (x fastReflection_QueryWithdrawRecordRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryWithdrawRecordRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryDepositHistoryResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryDepositHistoryResponse
+func (x *fastReflection_QueryWithdrawRecordRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryWithdrawRecordRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryDepositHistoryResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryDepositHistoryResponse_messageType
+func (x *fastReflection_QueryWithdrawRecordRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryWithdrawRecordRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryDepositHistoryResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryDepositHistoryResponse)
+func (x *fastReflection_QueryWithdrawRecordRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryWithdrawRecordRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryDepositHistoryResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryDepositHistoryResponse)(x)
+func (x *fastReflection_QueryWithdrawRecordRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryWithdrawRecordRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -5963,16 +5863,16 @@ func (x *fastReflection_QueryDepositHistoryResponse) Interface() protoreflect.Pr
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryDepositHistoryResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryDepositHistoryResponse_address, value) {
+func (x *fastReflection_QueryWithdrawRecordRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_QueryWithdrawRecordRequest_zone_id, value) {
 			return
 		}
 	}
-	if len(x.Amount) != 0 {
-		value := protoreflect.ValueOfList(&_QueryDepositHistoryResponse_2_list{list: &x.Amount})
-		if !f(fd_QueryDepositHistoryResponse_amount, value) {
+	if x.Address != "" {
+		value := protoreflect.ValueOfString(x.Address)
+		if !f(fd_QueryWithdrawRecordRequest_address, value) {
 			return
 		}
 	}
@@ -5989,17 +5889,17 @@ func (x *fastReflection_QueryDepositHistoryResponse) Range(f func(protoreflect.F
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryDepositHistoryResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryWithdrawRecordRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryResponse.address":
+	case "nova.gal.v1.QueryWithdrawRecordRequest.zone_id":
+		return x.ZoneId != ""
+	case "nova.gal.v1.QueryWithdrawRecordRequest.address":
 		return x.Address != ""
-	case "nova.gal.v1.QueryDepositHistoryResponse.amount":
-		return len(x.Amount) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6009,17 +5909,17 @@ func (x *fastReflection_QueryDepositHistoryResponse) Has(fd protoreflect.FieldDe
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryDepositHistoryResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryWithdrawRecordRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryResponse.address":
+	case "nova.gal.v1.QueryWithdrawRecordRequest.zone_id":
+		x.ZoneId = ""
+	case "nova.gal.v1.QueryWithdrawRecordRequest.address":
 		x.Address = ""
-	case "nova.gal.v1.QueryDepositHistoryResponse.amount":
-		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6029,22 +5929,19 @@ func (x *fastReflection_QueryDepositHistoryResponse) Clear(fd protoreflect.Field
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryDepositHistoryResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryWithdrawRecordRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryResponse.address":
+	case "nova.gal.v1.QueryWithdrawRecordRequest.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.QueryWithdrawRecordRequest.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.QueryDepositHistoryResponse.amount":
-		if len(x.Amount) == 0 {
-			return protoreflect.ValueOfList(&_QueryDepositHistoryResponse_2_list{})
-		}
-		listValue := &_QueryDepositHistoryResponse_2_list{list: &x.Amount}
-		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -6058,19 +5955,17 @@ func (x *fastReflection_QueryDepositHistoryResponse) Get(descriptor protoreflect
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryDepositHistoryResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryWithdrawRecordRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryResponse.address":
+	case "nova.gal.v1.QueryWithdrawRecordRequest.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.gal.v1.QueryWithdrawRecordRequest.address":
 		x.Address = value.Interface().(string)
-	case "nova.gal.v1.QueryDepositHistoryResponse.amount":
-		lv := value.List()
-		clv := lv.(*_QueryDepositHistoryResponse_2_list)
-		x.Amount = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6084,49 +5979,44 @@ func (x *fastReflection_QueryDepositHistoryResponse) Set(fd protoreflect.FieldDe
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryDepositHistoryResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryWithdrawRecordRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryResponse.amount":
-		if x.Amount == nil {
-			x.Amount = []*v1beta1.Coin{}
-		}
-		value := &_QueryDepositHistoryResponse_2_list{list: &x.Amount}
-		return protoreflect.ValueOfList(value)
-	case "nova.gal.v1.QueryDepositHistoryResponse.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryDepositHistoryResponse is not mutable"))
+	case "nova.gal.v1.QueryWithdrawRecordRequest.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.QueryWithdrawRecordRequest is not mutable"))
+	case "nova.gal.v1.QueryWithdrawRecordRequest.address":
+		panic(fmt.Errorf("field address of message nova.gal.v1.QueryWithdrawRecordRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryDepositHistoryResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryWithdrawRecordRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryDepositHistoryResponse.address":
+	case "nova.gal.v1.QueryWithdrawRecordRequest.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.QueryDepositHistoryResponse.amount":
-		list := []*v1beta1.Coin{}
-		return protoreflect.ValueOfList(&_QueryDepositHistoryResponse_2_list{list: &list})
+	case "nova.gal.v1.QueryWithdrawRecordRequest.address":
+		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryDepositHistoryResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordRequest"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryDepositHistoryResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryDepositHistoryResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryWithdrawRecordRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryDepositHistoryResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryWithdrawRecordRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -6134,7 +6024,7 @@ func (x *fastReflection_QueryDepositHistoryResponse) WhichOneof(d protoreflect.O
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryDepositHistoryResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryWithdrawRecordRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -6145,7 +6035,7 @@ func (x *fastReflection_QueryDepositHistoryResponse) GetUnknown() protoreflect.R
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryDepositHistoryResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryWithdrawRecordRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -6157,7 +6047,7 @@ func (x *fastReflection_QueryDepositHistoryResponse) SetUnknown(fields protorefl
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryDepositHistoryResponse) IsValid() bool {
+func (x *fastReflection_QueryWithdrawRecordRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -6167,9 +6057,9 @@ func (x *fastReflection_QueryDepositHistoryResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryDepositHistoryResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryWithdrawRecordRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryDepositHistoryResponse)
+		x := input.Message.Interface().(*QueryWithdrawRecordRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6181,15 +6071,13 @@ func (x *fastReflection_QueryDepositHistoryResponse) ProtoMethods() *protoiface.
 		var n int
 		var l int
 		_ = l
-		l = len(x.Address)
+		l = len(x.ZoneId)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if len(x.Amount) > 0 {
-			for _, e := range x.Amount {
-				l = options.Size(e)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
+		l = len(x.Address)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -6201,7 +6089,7 @@ func (x *fastReflection_QueryDepositHistoryResponse) ProtoMethods() *protoiface.
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryDepositHistoryResponse)
+		x := input.Message.Interface().(*QueryWithdrawRecordRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6220,26 +6108,17 @@ func (x *fastReflection_QueryDepositHistoryResponse) ProtoMethods() *protoiface.
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Amount) > 0 {
-			for iNdEx := len(x.Amount) - 1; iNdEx >= 0; iNdEx-- {
-				encoded, err := options.Marshal(x.Amount[iNdEx])
-				if err != nil {
-					return protoiface.MarshalOutput{
-						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-						Buf:               input.Buf,
-					}, err
-				}
-				i -= len(encoded)
-				copy(dAtA[i:], encoded)
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-				i--
-				dAtA[i] = 0x12
-			}
-		}
 		if len(x.Address) > 0 {
 			i -= len(x.Address)
 			copy(dAtA[i:], x.Address)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -6254,7 +6133,7 @@ func (x *fastReflection_QueryDepositHistoryResponse) ProtoMethods() *protoiface.
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryDepositHistoryResponse)
+		x := input.Message.Interface().(*QueryWithdrawRecordRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6286,13 +6165,45 @@ func (x *fastReflection_QueryDepositHistoryResponse) ProtoMethods() *protoiface.
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryDepositHistoryResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryWithdrawRecordRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryDepositHistoryResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryWithdrawRecordRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
 				}
@@ -6323,40 +6234,6 @@ func (x *fastReflection_QueryDepositHistoryResponse) ProtoMethods() *protoiface.
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
 				x.Address = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Amount = append(x.Amount, &v1beta1.Coin{})
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount[len(x.Amount)-1]); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -6394,27 +6271,25 @@ func (x *fastReflection_QueryDepositHistoryResponse) ProtoMethods() *protoiface.
 }
 
 var (
-	md_QueryUndelegateHistoryRequest         protoreflect.MessageDescriptor
-	fd_QueryUndelegateHistoryRequest_zone_id protoreflect.FieldDescriptor
-	fd_QueryUndelegateHistoryRequest_address protoreflect.FieldDescriptor
+	md_QueryWithdrawRecordResponse                 protoreflect.MessageDescriptor
+	fd_QueryWithdrawRecordResponse_withdraw_record protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_query_proto_init()
-	md_QueryUndelegateHistoryRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryUndelegateHistoryRequest")
-	fd_QueryUndelegateHistoryRequest_zone_id = md_QueryUndelegateHistoryRequest.Fields().ByName("zone_id")
-	fd_QueryUndelegateHistoryRequest_address = md_QueryUndelegateHistoryRequest.Fields().ByName("address")
+	md_QueryWithdrawRecordResponse = File_nova_gal_v1_query_proto.Messages().ByName("QueryWithdrawRecordResponse")
+	fd_QueryWithdrawRecordResponse_withdraw_record = md_QueryWithdrawRecordResponse.Fields().ByName("withdraw_record")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryUndelegateHistoryRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryWithdrawRecordResponse)(nil)
 
-type fastReflection_QueryUndelegateHistoryRequest QueryUndelegateHistoryRequest
+type fastReflection_QueryWithdrawRecordResponse QueryWithdrawRecordResponse
 
-func (x *QueryUndelegateHistoryRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryUndelegateHistoryRequest)(x)
+func (x *QueryWithdrawRecordResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryWithdrawRecordResponse)(x)
 }
 
-func (x *QueryUndelegateHistoryRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryWithdrawRecordResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_query_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -6426,43 +6301,43 @@ func (x *QueryUndelegateHistoryRequest) slowProtoReflect() protoreflect.Message 
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryUndelegateHistoryRequest_messageType fastReflection_QueryUndelegateHistoryRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryUndelegateHistoryRequest_messageType{}
+var _fastReflection_QueryWithdrawRecordResponse_messageType fastReflection_QueryWithdrawRecordResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryWithdrawRecordResponse_messageType{}
 
-type fastReflection_QueryUndelegateHistoryRequest_messageType struct{}
+type fastReflection_QueryWithdrawRecordResponse_messageType struct{}
 
-func (x fastReflection_QueryUndelegateHistoryRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryUndelegateHistoryRequest)(nil)
+func (x fastReflection_QueryWithdrawRecordResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryWithdrawRecordResponse)(nil)
 }
-func (x fastReflection_QueryUndelegateHistoryRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryUndelegateHistoryRequest)
+func (x fastReflection_QueryWithdrawRecordResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryWithdrawRecordResponse)
 }
-func (x fastReflection_QueryUndelegateHistoryRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryUndelegateHistoryRequest
+func (x fastReflection_QueryWithdrawRecordResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryWithdrawRecordResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryUndelegateHistoryRequest
+func (x *fastReflection_QueryWithdrawRecordResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryWithdrawRecordResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryUndelegateHistoryRequest_messageType
+func (x *fastReflection_QueryWithdrawRecordResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryWithdrawRecordResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryUndelegateHistoryRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryUndelegateHistoryRequest)
+func (x *fastReflection_QueryWithdrawRecordResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryWithdrawRecordResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryUndelegateHistoryRequest)(x)
+func (x *fastReflection_QueryWithdrawRecordResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryWithdrawRecordResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -6470,16 +6345,10 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) Interface() protoreflect.
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.ZoneId != "" {
-		value := protoreflect.ValueOfString(x.ZoneId)
-		if !f(fd_QueryUndelegateHistoryRequest_zone_id, value) {
-			return
-		}
-	}
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryUndelegateHistoryRequest_address, value) {
+func (x *fastReflection_QueryWithdrawRecordResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.WithdrawRecord != nil {
+		value := protoreflect.ValueOfMessage(x.WithdrawRecord.ProtoReflect())
+		if !f(fd_QueryWithdrawRecordResponse_withdraw_record, value) {
 			return
 		}
 	}
@@ -6496,17 +6365,15 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) Range(f func(protoreflect
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryWithdrawRecordResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.zone_id":
-		return x.ZoneId != ""
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.address":
-		return x.Address != ""
+	case "nova.gal.v1.QueryWithdrawRecordResponse.withdraw_record":
+		return x.WithdrawRecord != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6516,17 +6383,15 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) Has(fd protoreflect.Field
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryWithdrawRecordResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.zone_id":
-		x.ZoneId = ""
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.address":
-		x.Address = ""
+	case "nova.gal.v1.QueryWithdrawRecordResponse.withdraw_record":
+		x.WithdrawRecord = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6536,19 +6401,16 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) Clear(fd protoreflect.Fie
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryWithdrawRecordResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.zone_id":
-		value := x.ZoneId
-		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.address":
-		value := x.Address
-		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.QueryWithdrawRecordResponse.withdraw_record":
+		value := x.WithdrawRecord
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -6562,17 +6424,15 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) Get(descriptor protorefle
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryWithdrawRecordResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.zone_id":
-		x.ZoneId = value.Interface().(string)
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.address":
-		x.Address = value.Interface().(string)
+	case "nova.gal.v1.QueryWithdrawRecordResponse.withdraw_record":
+		x.WithdrawRecord = value.Message().Interface().(*WithdrawRecord)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6586,44 +6446,44 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) Set(fd protoreflect.Field
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryUndelegateHistoryRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryWithdrawRecordResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.gal.v1.QueryUndelegateHistoryRequest is not mutable"))
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryUndelegateHistoryRequest is not mutable"))
+	case "nova.gal.v1.QueryWithdrawRecordResponse.withdraw_record":
+		if x.WithdrawRecord == nil {
+			x.WithdrawRecord = new(WithdrawRecord)
+		}
+		return protoreflect.ValueOfMessage(x.WithdrawRecord.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryUndelegateHistoryRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryWithdrawRecordResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.zone_id":
-		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.QueryUndelegateHistoryRequest.address":
-		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.QueryWithdrawRecordResponse.withdraw_record":
+		m := new(WithdrawRecord)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawRecordResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawRecordResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryUndelegateHistoryRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryWithdrawRecordResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryUndelegateHistoryRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryWithdrawRecordResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -6631,7 +6491,7 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) WhichOneof(d protoreflect
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryUndelegateHistoryRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryWithdrawRecordResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -6642,7 +6502,7 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) GetUnknown() protoreflect
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryUndelegateHistoryRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryWithdrawRecordResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -6654,7 +6514,7 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) SetUnknown(fields protore
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryUndelegateHistoryRequest) IsValid() bool {
+func (x *fastReflection_QueryWithdrawRecordResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -6664,9 +6524,9 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryUndelegateHistoryRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryWithdrawRecordResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryUndelegateHistoryRequest)
+		x := input.Message.Interface().(*QueryWithdrawRecordResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6678,12 +6538,8 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) ProtoMethods() *protoifac
 		var n int
 		var l int
 		_ = l
-		l = len(x.ZoneId)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Address)
-		if l > 0 {
+		if x.WithdrawRecord != nil {
+			l = options.Size(x.WithdrawRecord)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
@@ -6696,7 +6552,7 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) ProtoMethods() *protoifac
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryUndelegateHistoryRequest)
+		x := input.Message.Interface().(*QueryWithdrawRecordResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6715,17 +6571,17 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) ProtoMethods() *protoifac
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Address) > 0 {
-			i -= len(x.Address)
-			copy(dAtA[i:], x.Address)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.ZoneId) > 0 {
-			i -= len(x.ZoneId)
-			copy(dAtA[i:], x.ZoneId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+		if x.WithdrawRecord != nil {
+			encoded, err := options.Marshal(x.WithdrawRecord)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -6740,7 +6596,7 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) ProtoMethods() *protoifac
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryUndelegateHistoryRequest)
+		x := input.Message.Interface().(*QueryWithdrawRecordResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6772,707 +6628,15 @@ func (x *fastReflection_QueryUndelegateHistoryRequest) ProtoMethods() *protoifac
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryUndelegateHistoryRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryWithdrawRecordResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryUndelegateHistoryRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryWithdrawRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.ZoneId = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Address = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			default:
-				iNdEx = preIndex
-				skippy, err := runtime.Skip(dAtA[iNdEx:])
-				if err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				if (skippy < 0) || (iNdEx+skippy) < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if (iNdEx + skippy) > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if !options.DiscardUnknown {
-					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-				}
-				iNdEx += skippy
-			}
-		}
-
-		if iNdEx > l {
-			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-		}
-		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
-	}
-	return &protoiface.Methods{
-		NoUnkeyedLiterals: struct{}{},
-		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
-		Size:              size,
-		Marshal:           marshal,
-		Unmarshal:         unmarshal,
-		Merge:             nil,
-		CheckInitialized:  nil,
-	}
-}
-
-var _ protoreflect.List = (*_QueryUndelegateHistoryResponse_2_list)(nil)
-
-type _QueryUndelegateHistoryResponse_2_list struct {
-	list *[]*v1beta1.Coin
-}
-
-func (x *_QueryUndelegateHistoryResponse_2_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_QueryUndelegateHistoryResponse_2_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
-}
-
-func (x *_QueryUndelegateHistoryResponse_2_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_QueryUndelegateHistoryResponse_2_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_QueryUndelegateHistoryResponse_2_list) AppendMutable() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	*x.list = append(*x.list, v)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_QueryUndelegateHistoryResponse_2_list) Truncate(n int) {
-	for i := n; i < len(*x.list); i++ {
-		(*x.list)[i] = nil
-	}
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_QueryUndelegateHistoryResponse_2_list) NewElement() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_QueryUndelegateHistoryResponse_2_list) IsValid() bool {
-	return x.list != nil
-}
-
-var _ protoreflect.List = (*_QueryUndelegateHistoryResponse_3_list)(nil)
-
-type _QueryUndelegateHistoryResponse_3_list struct {
-	list *[]*v1beta1.Coin
-}
-
-func (x *_QueryUndelegateHistoryResponse_3_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_QueryUndelegateHistoryResponse_3_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
-}
-
-func (x *_QueryUndelegateHistoryResponse_3_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_QueryUndelegateHistoryResponse_3_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_QueryUndelegateHistoryResponse_3_list) AppendMutable() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	*x.list = append(*x.list, v)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_QueryUndelegateHistoryResponse_3_list) Truncate(n int) {
-	for i := n; i < len(*x.list); i++ {
-		(*x.list)[i] = nil
-	}
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_QueryUndelegateHistoryResponse_3_list) NewElement() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_QueryUndelegateHistoryResponse_3_list) IsValid() bool {
-	return x.list != nil
-}
-
-var (
-	md_QueryUndelegateHistoryResponse                 protoreflect.MessageDescriptor
-	fd_QueryUndelegateHistoryResponse_address         protoreflect.FieldDescriptor
-	fd_QueryUndelegateHistoryResponse_burned_sn_asset protoreflect.FieldDescriptor
-	fd_QueryUndelegateHistoryResponse_minted_w_asset  protoreflect.FieldDescriptor
-)
-
-func init() {
-	file_nova_gal_v1_query_proto_init()
-	md_QueryUndelegateHistoryResponse = File_nova_gal_v1_query_proto.Messages().ByName("QueryUndelegateHistoryResponse")
-	fd_QueryUndelegateHistoryResponse_address = md_QueryUndelegateHistoryResponse.Fields().ByName("address")
-	fd_QueryUndelegateHistoryResponse_burned_sn_asset = md_QueryUndelegateHistoryResponse.Fields().ByName("burned_sn_asset")
-	fd_QueryUndelegateHistoryResponse_minted_w_asset = md_QueryUndelegateHistoryResponse.Fields().ByName("minted_w_asset")
-}
-
-var _ protoreflect.Message = (*fastReflection_QueryUndelegateHistoryResponse)(nil)
-
-type fastReflection_QueryUndelegateHistoryResponse QueryUndelegateHistoryResponse
-
-func (x *QueryUndelegateHistoryResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryUndelegateHistoryResponse)(x)
-}
-
-func (x *QueryUndelegateHistoryResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_gal_v1_query_proto_msgTypes[14]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-var _fastReflection_QueryUndelegateHistoryResponse_messageType fastReflection_QueryUndelegateHistoryResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryUndelegateHistoryResponse_messageType{}
-
-type fastReflection_QueryUndelegateHistoryResponse_messageType struct{}
-
-func (x fastReflection_QueryUndelegateHistoryResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryUndelegateHistoryResponse)(nil)
-}
-func (x fastReflection_QueryUndelegateHistoryResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryUndelegateHistoryResponse)
-}
-func (x fastReflection_QueryUndelegateHistoryResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryUndelegateHistoryResponse
-}
-
-// Descriptor returns message descriptor, which contains only the protobuf
-// type information for the message.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryUndelegateHistoryResponse
-}
-
-// Type returns the message type, which encapsulates both Go and protobuf
-// type information. If the Go type information is not needed,
-// it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryUndelegateHistoryResponse_messageType
-}
-
-// New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryUndelegateHistoryResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryUndelegateHistoryResponse)
-}
-
-// Interface unwraps the message reflection interface and
-// returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryUndelegateHistoryResponse)(x)
-}
-
-// Range iterates over every populated field in an undefined order,
-// calling f for each field descriptor and value encountered.
-// Range returns immediately if f returns false.
-// While iterating, mutating operations may only be performed
-// on the current field descriptor.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryUndelegateHistoryResponse_address, value) {
-			return
-		}
-	}
-	if len(x.BurnedSnAsset) != 0 {
-		value := protoreflect.ValueOfList(&_QueryUndelegateHistoryResponse_2_list{list: &x.BurnedSnAsset})
-		if !f(fd_QueryUndelegateHistoryResponse_burned_sn_asset, value) {
-			return
-		}
-	}
-	if len(x.MintedWAsset) != 0 {
-		value := protoreflect.ValueOfList(&_QueryUndelegateHistoryResponse_3_list{list: &x.MintedWAsset})
-		if !f(fd_QueryUndelegateHistoryResponse_minted_w_asset, value) {
-			return
-		}
-	}
-}
-
-// Has reports whether a field is populated.
-//
-// Some fields have the property of nullability where it is possible to
-// distinguish between the default value of a field and whether the field
-// was explicitly populated with the default value. Singular message fields,
-// member fields of a oneof, and proto2 scalar fields are nullable. Such
-// fields are populated only if explicitly set.
-//
-// In other cases (aside from the nullable cases above),
-// a proto3 scalar field is populated if it contains a non-zero value, and
-// a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Has(fd protoreflect.FieldDescriptor) bool {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.address":
-		return x.Address != ""
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.burned_sn_asset":
-		return len(x.BurnedSnAsset) != 0
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.minted_w_asset":
-		return len(x.MintedWAsset) != 0
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Clear clears the field such that a subsequent Has call reports false.
-//
-// Clearing an extension field clears both the extension type and value
-// associated with the given field number.
-//
-// Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Clear(fd protoreflect.FieldDescriptor) {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.address":
-		x.Address = ""
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.burned_sn_asset":
-		x.BurnedSnAsset = nil
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.minted_w_asset":
-		x.MintedWAsset = nil
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Get retrieves the value for a field.
-//
-// For unpopulated scalars, it returns the default value, where
-// the default value of a bytes scalar is guaranteed to be a copy.
-// For unpopulated composite types, it returns an empty, read-only view
-// of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
-	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.address":
-		value := x.Address
-		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.burned_sn_asset":
-		if len(x.BurnedSnAsset) == 0 {
-			return protoreflect.ValueOfList(&_QueryUndelegateHistoryResponse_2_list{})
-		}
-		listValue := &_QueryUndelegateHistoryResponse_2_list{list: &x.BurnedSnAsset}
-		return protoreflect.ValueOfList(listValue)
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.minted_w_asset":
-		if len(x.MintedWAsset) == 0 {
-			return protoreflect.ValueOfList(&_QueryUndelegateHistoryResponse_3_list{})
-		}
-		listValue := &_QueryUndelegateHistoryResponse_3_list{list: &x.MintedWAsset}
-		return protoreflect.ValueOfList(listValue)
-	default:
-		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryResponse does not contain field %s", descriptor.FullName()))
-	}
-}
-
-// Set stores the value for a field.
-//
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType.
-// When setting a composite type, it is unspecified whether the stored value
-// aliases the source's memory in any way. If the composite value is an
-// empty, read-only value, then it panics.
-//
-// Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.address":
-		x.Address = value.Interface().(string)
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.burned_sn_asset":
-		lv := value.List()
-		clv := lv.(*_QueryUndelegateHistoryResponse_2_list)
-		x.BurnedSnAsset = *clv.list
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.minted_w_asset":
-		lv := value.List()
-		clv := lv.(*_QueryUndelegateHistoryResponse_3_list)
-		x.MintedWAsset = *clv.list
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Mutable returns a mutable reference to a composite type.
-//
-// If the field is unpopulated, it may allocate a composite value.
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType
-// if not already stored.
-// It panics if the field does not contain a composite type.
-//
-// Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryUndelegateHistoryResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.burned_sn_asset":
-		if x.BurnedSnAsset == nil {
-			x.BurnedSnAsset = []*v1beta1.Coin{}
-		}
-		value := &_QueryUndelegateHistoryResponse_2_list{list: &x.BurnedSnAsset}
-		return protoreflect.ValueOfList(value)
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.minted_w_asset":
-		if x.MintedWAsset == nil {
-			x.MintedWAsset = []*v1beta1.Coin{}
-		}
-		value := &_QueryUndelegateHistoryResponse_3_list{list: &x.MintedWAsset}
-		return protoreflect.ValueOfList(value)
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryUndelegateHistoryResponse is not mutable"))
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// NewField returns a new value that is assignable to the field
-// for the given descriptor. For scalars, this returns the default value.
-// For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryUndelegateHistoryResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.address":
-		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.burned_sn_asset":
-		list := []*v1beta1.Coin{}
-		return protoreflect.ValueOfList(&_QueryUndelegateHistoryResponse_2_list{list: &list})
-	case "nova.gal.v1.QueryUndelegateHistoryResponse.minted_w_asset":
-		list := []*v1beta1.Coin{}
-		return protoreflect.ValueOfList(&_QueryUndelegateHistoryResponse_3_list{list: &list})
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryUndelegateHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryUndelegateHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// WhichOneof reports which field within the oneof is populated,
-// returning nil if none are populated.
-// It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryUndelegateHistoryResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
-	switch d.FullName() {
-	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryUndelegateHistoryResponse", d.FullName()))
-	}
-	panic("unreachable")
-}
-
-// GetUnknown retrieves the entire list of unknown fields.
-// The caller may only mutate the contents of the RawFields
-// if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryUndelegateHistoryResponse) GetUnknown() protoreflect.RawFields {
-	return x.unknownFields
-}
-
-// SetUnknown stores an entire list of unknown fields.
-// The raw fields must be syntactically valid according to the wire format.
-// An implementation may panic if this is not the case.
-// Once stored, the caller must not mutate the content of the RawFields.
-// An empty RawFields may be passed to clear the fields.
-//
-// SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryUndelegateHistoryResponse) SetUnknown(fields protoreflect.RawFields) {
-	x.unknownFields = fields
-}
-
-// IsValid reports whether the message is valid.
-//
-// An invalid message is an empty, read-only value.
-//
-// An invalid message often corresponds to a nil pointer of the concrete
-// message type, but the details are implementation dependent.
-// Validity is not part of the protobuf data model, and may not
-// be preserved in marshaling or other operations.
-func (x *fastReflection_QueryUndelegateHistoryResponse) IsValid() bool {
-	return x != nil
-}
-
-// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
-// This method may return nil.
-//
-// The returned methods type is identical to
-// "google.golang.org/protobuf/runtime/protoiface".Methods.
-// Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryUndelegateHistoryResponse) ProtoMethods() *protoiface.Methods {
-	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryUndelegateHistoryResponse)
-		if x == nil {
-			return protoiface.SizeOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Size:              0,
-			}
-		}
-		options := runtime.SizeInputToOptions(input)
-		_ = options
-		var n int
-		var l int
-		_ = l
-		l = len(x.Address)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if len(x.BurnedSnAsset) > 0 {
-			for _, e := range x.BurnedSnAsset {
-				l = options.Size(e)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
-		}
-		if len(x.MintedWAsset) > 0 {
-			for _, e := range x.MintedWAsset {
-				l = options.Size(e)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
-		}
-		if x.unknownFields != nil {
-			n += len(x.unknownFields)
-		}
-		return protoiface.SizeOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Size:              n,
-		}
-	}
-
-	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryUndelegateHistoryResponse)
-		if x == nil {
-			return protoiface.MarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Buf:               input.Buf,
-			}, nil
-		}
-		options := runtime.MarshalInputToOptions(input)
-		_ = options
-		size := options.Size(x)
-		dAtA := make([]byte, size)
-		i := len(dAtA)
-		_ = i
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			i -= len(x.unknownFields)
-			copy(dAtA[i:], x.unknownFields)
-		}
-		if len(x.MintedWAsset) > 0 {
-			for iNdEx := len(x.MintedWAsset) - 1; iNdEx >= 0; iNdEx-- {
-				encoded, err := options.Marshal(x.MintedWAsset[iNdEx])
-				if err != nil {
-					return protoiface.MarshalOutput{
-						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-						Buf:               input.Buf,
-					}, err
-				}
-				i -= len(encoded)
-				copy(dAtA[i:], encoded)
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-				i--
-				dAtA[i] = 0x1a
-			}
-		}
-		if len(x.BurnedSnAsset) > 0 {
-			for iNdEx := len(x.BurnedSnAsset) - 1; iNdEx >= 0; iNdEx-- {
-				encoded, err := options.Marshal(x.BurnedSnAsset[iNdEx])
-				if err != nil {
-					return protoiface.MarshalOutput{
-						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-						Buf:               input.Buf,
-					}, err
-				}
-				i -= len(encoded)
-				copy(dAtA[i:], encoded)
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-				i--
-				dAtA[i] = 0x12
-			}
-		}
-		if len(x.Address) > 0 {
-			i -= len(x.Address)
-			copy(dAtA[i:], x.Address)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
-			i--
-			dAtA[i] = 0xa
-		}
-		if input.Buf != nil {
-			input.Buf = append(input.Buf, dAtA...)
-		} else {
-			input.Buf = dAtA
-		}
-		return protoiface.MarshalOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Buf:               input.Buf,
-		}, nil
-	}
-	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryUndelegateHistoryResponse)
-		if x == nil {
-			return protoiface.UnmarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Flags:             input.Flags,
-			}, nil
-		}
-		options := runtime.UnmarshalInputToOptions(input)
-		_ = options
-		dAtA := input.Buf
-		l := len(dAtA)
-		iNdEx := 0
-		for iNdEx < l {
-			preIndex := iNdEx
-			var wire uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				wire |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			fieldNum := int32(wire >> 3)
-			wireType := int(wire & 0x7)
-			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryUndelegateHistoryResponse: wiretype end group for non-group")
-			}
-			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryUndelegateHistoryResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-			}
-			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Address = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field BurnedSnAsset", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field WithdrawRecord", wireType)
 				}
 				var msglen int
 				for shift := uint(0); ; shift += 7 {
@@ -7499,1084 +6663,10 @@ func (x *fastReflection_QueryUndelegateHistoryResponse) ProtoMethods() *protoifa
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.BurnedSnAsset = append(x.BurnedSnAsset, &v1beta1.Coin{})
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.BurnedSnAsset[len(x.BurnedSnAsset)-1]); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				if x.WithdrawRecord == nil {
+					x.WithdrawRecord = &WithdrawRecord{}
 				}
-				iNdEx = postIndex
-			case 3:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field MintedWAsset", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.MintedWAsset = append(x.MintedWAsset, &v1beta1.Coin{})
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.MintedWAsset[len(x.MintedWAsset)-1]); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				iNdEx = postIndex
-			default:
-				iNdEx = preIndex
-				skippy, err := runtime.Skip(dAtA[iNdEx:])
-				if err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				if (skippy < 0) || (iNdEx+skippy) < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if (iNdEx + skippy) > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if !options.DiscardUnknown {
-					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-				}
-				iNdEx += skippy
-			}
-		}
-
-		if iNdEx > l {
-			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-		}
-		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
-	}
-	return &protoiface.Methods{
-		NoUnkeyedLiterals: struct{}{},
-		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
-		Size:              size,
-		Marshal:           marshal,
-		Unmarshal:         unmarshal,
-		Merge:             nil,
-		CheckInitialized:  nil,
-	}
-}
-
-var (
-	md_QueryWithdrawHistoryRequest         protoreflect.MessageDescriptor
-	fd_QueryWithdrawHistoryRequest_zone_id protoreflect.FieldDescriptor
-	fd_QueryWithdrawHistoryRequest_address protoreflect.FieldDescriptor
-)
-
-func init() {
-	file_nova_gal_v1_query_proto_init()
-	md_QueryWithdrawHistoryRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryWithdrawHistoryRequest")
-	fd_QueryWithdrawHistoryRequest_zone_id = md_QueryWithdrawHistoryRequest.Fields().ByName("zone_id")
-	fd_QueryWithdrawHistoryRequest_address = md_QueryWithdrawHistoryRequest.Fields().ByName("address")
-}
-
-var _ protoreflect.Message = (*fastReflection_QueryWithdrawHistoryRequest)(nil)
-
-type fastReflection_QueryWithdrawHistoryRequest QueryWithdrawHistoryRequest
-
-func (x *QueryWithdrawHistoryRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryWithdrawHistoryRequest)(x)
-}
-
-func (x *QueryWithdrawHistoryRequest) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_gal_v1_query_proto_msgTypes[15]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-var _fastReflection_QueryWithdrawHistoryRequest_messageType fastReflection_QueryWithdrawHistoryRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryWithdrawHistoryRequest_messageType{}
-
-type fastReflection_QueryWithdrawHistoryRequest_messageType struct{}
-
-func (x fastReflection_QueryWithdrawHistoryRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryWithdrawHistoryRequest)(nil)
-}
-func (x fastReflection_QueryWithdrawHistoryRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryWithdrawHistoryRequest)
-}
-func (x fastReflection_QueryWithdrawHistoryRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryWithdrawHistoryRequest
-}
-
-// Descriptor returns message descriptor, which contains only the protobuf
-// type information for the message.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryWithdrawHistoryRequest
-}
-
-// Type returns the message type, which encapsulates both Go and protobuf
-// type information. If the Go type information is not needed,
-// it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryWithdrawHistoryRequest_messageType
-}
-
-// New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryWithdrawHistoryRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryWithdrawHistoryRequest)
-}
-
-// Interface unwraps the message reflection interface and
-// returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryWithdrawHistoryRequest)(x)
-}
-
-// Range iterates over every populated field in an undefined order,
-// calling f for each field descriptor and value encountered.
-// Range returns immediately if f returns false.
-// While iterating, mutating operations may only be performed
-// on the current field descriptor.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.ZoneId != "" {
-		value := protoreflect.ValueOfString(x.ZoneId)
-		if !f(fd_QueryWithdrawHistoryRequest_zone_id, value) {
-			return
-		}
-	}
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryWithdrawHistoryRequest_address, value) {
-			return
-		}
-	}
-}
-
-// Has reports whether a field is populated.
-//
-// Some fields have the property of nullability where it is possible to
-// distinguish between the default value of a field and whether the field
-// was explicitly populated with the default value. Singular message fields,
-// member fields of a oneof, and proto2 scalar fields are nullable. Such
-// fields are populated only if explicitly set.
-//
-// In other cases (aside from the nullable cases above),
-// a proto3 scalar field is populated if it contains a non-zero value, and
-// a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Has(fd protoreflect.FieldDescriptor) bool {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.zone_id":
-		return x.ZoneId != ""
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.address":
-		return x.Address != ""
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryRequest"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryRequest does not contain field %s", fd.FullName()))
-	}
-}
-
-// Clear clears the field such that a subsequent Has call reports false.
-//
-// Clearing an extension field clears both the extension type and value
-// associated with the given field number.
-//
-// Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Clear(fd protoreflect.FieldDescriptor) {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.zone_id":
-		x.ZoneId = ""
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.address":
-		x.Address = ""
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryRequest"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryRequest does not contain field %s", fd.FullName()))
-	}
-}
-
-// Get retrieves the value for a field.
-//
-// For unpopulated scalars, it returns the default value, where
-// the default value of a bytes scalar is guaranteed to be a copy.
-// For unpopulated composite types, it returns an empty, read-only view
-// of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
-	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.zone_id":
-		value := x.ZoneId
-		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.address":
-		value := x.Address
-		return protoreflect.ValueOfString(value)
-	default:
-		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryRequest"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryRequest does not contain field %s", descriptor.FullName()))
-	}
-}
-
-// Set stores the value for a field.
-//
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType.
-// When setting a composite type, it is unspecified whether the stored value
-// aliases the source's memory in any way. If the composite value is an
-// empty, read-only value, then it panics.
-//
-// Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.zone_id":
-		x.ZoneId = value.Interface().(string)
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.address":
-		x.Address = value.Interface().(string)
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryRequest"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryRequest does not contain field %s", fd.FullName()))
-	}
-}
-
-// Mutable returns a mutable reference to a composite type.
-//
-// If the field is unpopulated, it may allocate a composite value.
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType
-// if not already stored.
-// It panics if the field does not contain a composite type.
-//
-// Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryWithdrawHistoryRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.gal.v1.QueryWithdrawHistoryRequest is not mutable"))
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryWithdrawHistoryRequest is not mutable"))
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryRequest"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryRequest does not contain field %s", fd.FullName()))
-	}
-}
-
-// NewField returns a new value that is assignable to the field
-// for the given descriptor. For scalars, this returns the default value.
-// For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryWithdrawHistoryRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.zone_id":
-		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.QueryWithdrawHistoryRequest.address":
-		return protoreflect.ValueOfString("")
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryRequest"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryRequest does not contain field %s", fd.FullName()))
-	}
-}
-
-// WhichOneof reports which field within the oneof is populated,
-// returning nil if none are populated.
-// It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryWithdrawHistoryRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
-	switch d.FullName() {
-	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryWithdrawHistoryRequest", d.FullName()))
-	}
-	panic("unreachable")
-}
-
-// GetUnknown retrieves the entire list of unknown fields.
-// The caller may only mutate the contents of the RawFields
-// if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryWithdrawHistoryRequest) GetUnknown() protoreflect.RawFields {
-	return x.unknownFields
-}
-
-// SetUnknown stores an entire list of unknown fields.
-// The raw fields must be syntactically valid according to the wire format.
-// An implementation may panic if this is not the case.
-// Once stored, the caller must not mutate the content of the RawFields.
-// An empty RawFields may be passed to clear the fields.
-//
-// SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryWithdrawHistoryRequest) SetUnknown(fields protoreflect.RawFields) {
-	x.unknownFields = fields
-}
-
-// IsValid reports whether the message is valid.
-//
-// An invalid message is an empty, read-only value.
-//
-// An invalid message often corresponds to a nil pointer of the concrete
-// message type, but the details are implementation dependent.
-// Validity is not part of the protobuf data model, and may not
-// be preserved in marshaling or other operations.
-func (x *fastReflection_QueryWithdrawHistoryRequest) IsValid() bool {
-	return x != nil
-}
-
-// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
-// This method may return nil.
-//
-// The returned methods type is identical to
-// "google.golang.org/protobuf/runtime/protoiface".Methods.
-// Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryWithdrawHistoryRequest) ProtoMethods() *protoiface.Methods {
-	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryWithdrawHistoryRequest)
-		if x == nil {
-			return protoiface.SizeOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Size:              0,
-			}
-		}
-		options := runtime.SizeInputToOptions(input)
-		_ = options
-		var n int
-		var l int
-		_ = l
-		l = len(x.ZoneId)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Address)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.unknownFields != nil {
-			n += len(x.unknownFields)
-		}
-		return protoiface.SizeOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Size:              n,
-		}
-	}
-
-	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryWithdrawHistoryRequest)
-		if x == nil {
-			return protoiface.MarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Buf:               input.Buf,
-			}, nil
-		}
-		options := runtime.MarshalInputToOptions(input)
-		_ = options
-		size := options.Size(x)
-		dAtA := make([]byte, size)
-		i := len(dAtA)
-		_ = i
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			i -= len(x.unknownFields)
-			copy(dAtA[i:], x.unknownFields)
-		}
-		if len(x.Address) > 0 {
-			i -= len(x.Address)
-			copy(dAtA[i:], x.Address)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.ZoneId) > 0 {
-			i -= len(x.ZoneId)
-			copy(dAtA[i:], x.ZoneId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
-			i--
-			dAtA[i] = 0xa
-		}
-		if input.Buf != nil {
-			input.Buf = append(input.Buf, dAtA...)
-		} else {
-			input.Buf = dAtA
-		}
-		return protoiface.MarshalOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Buf:               input.Buf,
-		}, nil
-	}
-	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryWithdrawHistoryRequest)
-		if x == nil {
-			return protoiface.UnmarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Flags:             input.Flags,
-			}, nil
-		}
-		options := runtime.UnmarshalInputToOptions(input)
-		_ = options
-		dAtA := input.Buf
-		l := len(dAtA)
-		iNdEx := 0
-		for iNdEx < l {
-			preIndex := iNdEx
-			var wire uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				wire |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			fieldNum := int32(wire >> 3)
-			wireType := int(wire & 0x7)
-			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryWithdrawHistoryRequest: wiretype end group for non-group")
-			}
-			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryWithdrawHistoryRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-			}
-			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.ZoneId = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Address = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			default:
-				iNdEx = preIndex
-				skippy, err := runtime.Skip(dAtA[iNdEx:])
-				if err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				if (skippy < 0) || (iNdEx+skippy) < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if (iNdEx + skippy) > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if !options.DiscardUnknown {
-					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-				}
-				iNdEx += skippy
-			}
-		}
-
-		if iNdEx > l {
-			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-		}
-		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
-	}
-	return &protoiface.Methods{
-		NoUnkeyedLiterals: struct{}{},
-		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
-		Size:              size,
-		Marshal:           marshal,
-		Unmarshal:         unmarshal,
-		Merge:             nil,
-		CheckInitialized:  nil,
-	}
-}
-
-var _ protoreflect.List = (*_QueryWithdrawHistoryResponse_2_list)(nil)
-
-type _QueryWithdrawHistoryResponse_2_list struct {
-	list *[]*v1beta1.Coin
-}
-
-func (x *_QueryWithdrawHistoryResponse_2_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_QueryWithdrawHistoryResponse_2_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
-}
-
-func (x *_QueryWithdrawHistoryResponse_2_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_QueryWithdrawHistoryResponse_2_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_QueryWithdrawHistoryResponse_2_list) AppendMutable() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	*x.list = append(*x.list, v)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_QueryWithdrawHistoryResponse_2_list) Truncate(n int) {
-	for i := n; i < len(*x.list); i++ {
-		(*x.list)[i] = nil
-	}
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_QueryWithdrawHistoryResponse_2_list) NewElement() protoreflect.Value {
-	v := new(v1beta1.Coin)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_QueryWithdrawHistoryResponse_2_list) IsValid() bool {
-	return x.list != nil
-}
-
-var (
-	md_QueryWithdrawHistoryResponse         protoreflect.MessageDescriptor
-	fd_QueryWithdrawHistoryResponse_address protoreflect.FieldDescriptor
-	fd_QueryWithdrawHistoryResponse_amount  protoreflect.FieldDescriptor
-)
-
-func init() {
-	file_nova_gal_v1_query_proto_init()
-	md_QueryWithdrawHistoryResponse = File_nova_gal_v1_query_proto.Messages().ByName("QueryWithdrawHistoryResponse")
-	fd_QueryWithdrawHistoryResponse_address = md_QueryWithdrawHistoryResponse.Fields().ByName("address")
-	fd_QueryWithdrawHistoryResponse_amount = md_QueryWithdrawHistoryResponse.Fields().ByName("amount")
-}
-
-var _ protoreflect.Message = (*fastReflection_QueryWithdrawHistoryResponse)(nil)
-
-type fastReflection_QueryWithdrawHistoryResponse QueryWithdrawHistoryResponse
-
-func (x *QueryWithdrawHistoryResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryWithdrawHistoryResponse)(x)
-}
-
-func (x *QueryWithdrawHistoryResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_gal_v1_query_proto_msgTypes[16]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-var _fastReflection_QueryWithdrawHistoryResponse_messageType fastReflection_QueryWithdrawHistoryResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryWithdrawHistoryResponse_messageType{}
-
-type fastReflection_QueryWithdrawHistoryResponse_messageType struct{}
-
-func (x fastReflection_QueryWithdrawHistoryResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryWithdrawHistoryResponse)(nil)
-}
-func (x fastReflection_QueryWithdrawHistoryResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryWithdrawHistoryResponse)
-}
-func (x fastReflection_QueryWithdrawHistoryResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryWithdrawHistoryResponse
-}
-
-// Descriptor returns message descriptor, which contains only the protobuf
-// type information for the message.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryWithdrawHistoryResponse
-}
-
-// Type returns the message type, which encapsulates both Go and protobuf
-// type information. If the Go type information is not needed,
-// it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryWithdrawHistoryResponse_messageType
-}
-
-// New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryWithdrawHistoryResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryWithdrawHistoryResponse)
-}
-
-// Interface unwraps the message reflection interface and
-// returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryWithdrawHistoryResponse)(x)
-}
-
-// Range iterates over every populated field in an undefined order,
-// calling f for each field descriptor and value encountered.
-// Range returns immediately if f returns false.
-// While iterating, mutating operations may only be performed
-// on the current field descriptor.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryWithdrawHistoryResponse_address, value) {
-			return
-		}
-	}
-	if len(x.Amount) != 0 {
-		value := protoreflect.ValueOfList(&_QueryWithdrawHistoryResponse_2_list{list: &x.Amount})
-		if !f(fd_QueryWithdrawHistoryResponse_amount, value) {
-			return
-		}
-	}
-}
-
-// Has reports whether a field is populated.
-//
-// Some fields have the property of nullability where it is possible to
-// distinguish between the default value of a field and whether the field
-// was explicitly populated with the default value. Singular message fields,
-// member fields of a oneof, and proto2 scalar fields are nullable. Such
-// fields are populated only if explicitly set.
-//
-// In other cases (aside from the nullable cases above),
-// a proto3 scalar field is populated if it contains a non-zero value, and
-// a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Has(fd protoreflect.FieldDescriptor) bool {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.address":
-		return x.Address != ""
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.amount":
-		return len(x.Amount) != 0
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Clear clears the field such that a subsequent Has call reports false.
-//
-// Clearing an extension field clears both the extension type and value
-// associated with the given field number.
-//
-// Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Clear(fd protoreflect.FieldDescriptor) {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.address":
-		x.Address = ""
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.amount":
-		x.Amount = nil
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Get retrieves the value for a field.
-//
-// For unpopulated scalars, it returns the default value, where
-// the default value of a bytes scalar is guaranteed to be a copy.
-// For unpopulated composite types, it returns an empty, read-only view
-// of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
-	switch descriptor.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.address":
-		value := x.Address
-		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.amount":
-		if len(x.Amount) == 0 {
-			return protoreflect.ValueOfList(&_QueryWithdrawHistoryResponse_2_list{})
-		}
-		listValue := &_QueryWithdrawHistoryResponse_2_list{list: &x.Amount}
-		return protoreflect.ValueOfList(listValue)
-	default:
-		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryResponse does not contain field %s", descriptor.FullName()))
-	}
-}
-
-// Set stores the value for a field.
-//
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType.
-// When setting a composite type, it is unspecified whether the stored value
-// aliases the source's memory in any way. If the composite value is an
-// empty, read-only value, then it panics.
-//
-// Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.address":
-		x.Address = value.Interface().(string)
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.amount":
-		lv := value.List()
-		clv := lv.(*_QueryWithdrawHistoryResponse_2_list)
-		x.Amount = *clv.list
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Mutable returns a mutable reference to a composite type.
-//
-// If the field is unpopulated, it may allocate a composite value.
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType
-// if not already stored.
-// It panics if the field does not contain a composite type.
-//
-// Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryWithdrawHistoryResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.amount":
-		if x.Amount == nil {
-			x.Amount = []*v1beta1.Coin{}
-		}
-		value := &_QueryWithdrawHistoryResponse_2_list{list: &x.Amount}
-		return protoreflect.ValueOfList(value)
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryWithdrawHistoryResponse is not mutable"))
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// NewField returns a new value that is assignable to the field
-// for the given descriptor. For scalars, this returns the default value.
-// For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryWithdrawHistoryResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.address":
-		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.QueryWithdrawHistoryResponse.amount":
-		list := []*v1beta1.Coin{}
-		return protoreflect.ValueOfList(&_QueryWithdrawHistoryResponse_2_list{list: &list})
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryWithdrawHistoryResponse"))
-		}
-		panic(fmt.Errorf("message nova.gal.v1.QueryWithdrawHistoryResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// WhichOneof reports which field within the oneof is populated,
-// returning nil if none are populated.
-// It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryWithdrawHistoryResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
-	switch d.FullName() {
-	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.QueryWithdrawHistoryResponse", d.FullName()))
-	}
-	panic("unreachable")
-}
-
-// GetUnknown retrieves the entire list of unknown fields.
-// The caller may only mutate the contents of the RawFields
-// if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryWithdrawHistoryResponse) GetUnknown() protoreflect.RawFields {
-	return x.unknownFields
-}
-
-// SetUnknown stores an entire list of unknown fields.
-// The raw fields must be syntactically valid according to the wire format.
-// An implementation may panic if this is not the case.
-// Once stored, the caller must not mutate the content of the RawFields.
-// An empty RawFields may be passed to clear the fields.
-//
-// SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryWithdrawHistoryResponse) SetUnknown(fields protoreflect.RawFields) {
-	x.unknownFields = fields
-}
-
-// IsValid reports whether the message is valid.
-//
-// An invalid message is an empty, read-only value.
-//
-// An invalid message often corresponds to a nil pointer of the concrete
-// message type, but the details are implementation dependent.
-// Validity is not part of the protobuf data model, and may not
-// be preserved in marshaling or other operations.
-func (x *fastReflection_QueryWithdrawHistoryResponse) IsValid() bool {
-	return x != nil
-}
-
-// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
-// This method may return nil.
-//
-// The returned methods type is identical to
-// "google.golang.org/protobuf/runtime/protoiface".Methods.
-// Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryWithdrawHistoryResponse) ProtoMethods() *protoiface.Methods {
-	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryWithdrawHistoryResponse)
-		if x == nil {
-			return protoiface.SizeOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Size:              0,
-			}
-		}
-		options := runtime.SizeInputToOptions(input)
-		_ = options
-		var n int
-		var l int
-		_ = l
-		l = len(x.Address)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if len(x.Amount) > 0 {
-			for _, e := range x.Amount {
-				l = options.Size(e)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
-		}
-		if x.unknownFields != nil {
-			n += len(x.unknownFields)
-		}
-		return protoiface.SizeOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Size:              n,
-		}
-	}
-
-	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryWithdrawHistoryResponse)
-		if x == nil {
-			return protoiface.MarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Buf:               input.Buf,
-			}, nil
-		}
-		options := runtime.MarshalInputToOptions(input)
-		_ = options
-		size := options.Size(x)
-		dAtA := make([]byte, size)
-		i := len(dAtA)
-		_ = i
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			i -= len(x.unknownFields)
-			copy(dAtA[i:], x.unknownFields)
-		}
-		if len(x.Amount) > 0 {
-			for iNdEx := len(x.Amount) - 1; iNdEx >= 0; iNdEx-- {
-				encoded, err := options.Marshal(x.Amount[iNdEx])
-				if err != nil {
-					return protoiface.MarshalOutput{
-						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-						Buf:               input.Buf,
-					}, err
-				}
-				i -= len(encoded)
-				copy(dAtA[i:], encoded)
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-				i--
-				dAtA[i] = 0x12
-			}
-		}
-		if len(x.Address) > 0 {
-			i -= len(x.Address)
-			copy(dAtA[i:], x.Address)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
-			i--
-			dAtA[i] = 0xa
-		}
-		if input.Buf != nil {
-			input.Buf = append(input.Buf, dAtA...)
-		} else {
-			input.Buf = dAtA
-		}
-		return protoiface.MarshalOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Buf:               input.Buf,
-		}, nil
-	}
-	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryWithdrawHistoryResponse)
-		if x == nil {
-			return protoiface.UnmarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Flags:             input.Flags,
-			}, nil
-		}
-		options := runtime.UnmarshalInputToOptions(input)
-		_ = options
-		dAtA := input.Buf
-		l := len(dAtA)
-		iNdEx := 0
-		for iNdEx < l {
-			preIndex := iNdEx
-			var wire uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				wire |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			fieldNum := int32(wire >> 3)
-			wireType := int(wire & 0x7)
-			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryWithdrawHistoryResponse: wiretype end group for non-group")
-			}
-			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryWithdrawHistoryResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-			}
-			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Address = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Amount = append(x.Amount, &v1beta1.Coin{})
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount[len(x.Amount)-1]); err != nil {
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.WithdrawRecord); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
@@ -8980,8 +7070,7 @@ func (x *ActiveWithdrawalsResponse) GetAmount() *v1beta1.Coin {
 	return nil
 }
 
-// QueryMyShareRequest defines request form to query balance of snToken with address.
-type QueryMyShareRequest struct {
+type QueryDepositRecordRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -8990,8 +7079,8 @@ type QueryMyShareRequest struct {
 	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-func (x *QueryMyShareRequest) Reset() {
-	*x = QueryMyShareRequest{}
+func (x *QueryDepositRecordRequest) Reset() {
+	*x = QueryDepositRecordRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_query_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -8999,43 +7088,41 @@ func (x *QueryMyShareRequest) Reset() {
 	}
 }
 
-func (x *QueryMyShareRequest) String() string {
+func (x *QueryDepositRecordRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryMyShareRequest) ProtoMessage() {}
+func (*QueryDepositRecordRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryMyShareRequest.ProtoReflect.Descriptor instead.
-func (*QueryMyShareRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryDepositRecordRequest.ProtoReflect.Descriptor instead.
+func (*QueryDepositRecordRequest) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *QueryMyShareRequest) GetZoneId() string {
+func (x *QueryDepositRecordRequest) GetZoneId() string {
 	if x != nil {
 		return x.ZoneId
 	}
 	return ""
 }
 
-func (x *QueryMyShareRequest) GetAddress() string {
+func (x *QueryDepositRecordRequest) GetAddress() string {
 	if x != nil {
 		return x.Address
 	}
 	return ""
 }
 
-// QuerySharesResponse defines response of QueryBalanceRequest.
-type QueryMyShareResponse struct {
+type QueryDepositRecordResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address string        `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Amount  *v1beta1.Coin `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	DepositRecord *DepositRecord `protobuf:"bytes,1,opt,name=deposit_record,json=depositRecord,proto3" json:"deposit_record,omitempty"`
 }
 
-func (x *QueryMyShareResponse) Reset() {
-	*x = QueryMyShareResponse{}
+func (x *QueryDepositRecordResponse) Reset() {
+	*x = QueryDepositRecordResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_query_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -9043,41 +7130,35 @@ func (x *QueryMyShareResponse) Reset() {
 	}
 }
 
-func (x *QueryMyShareResponse) String() string {
+func (x *QueryDepositRecordResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryMyShareResponse) ProtoMessage() {}
+func (*QueryDepositRecordResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryMyShareResponse.ProtoReflect.Descriptor instead.
-func (*QueryMyShareResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryDepositRecordResponse.ProtoReflect.Descriptor instead.
+func (*QueryDepositRecordResponse) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *QueryMyShareResponse) GetAddress() string {
+func (x *QueryDepositRecordResponse) GetDepositRecord() *DepositRecord {
 	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-func (x *QueryMyShareResponse) GetAmount() *v1beta1.Coin {
-	if x != nil {
-		return x.Amount
+		return x.DepositRecord
 	}
 	return nil
 }
 
-type QueryAllSharesRequest struct {
+type QueryUndelegateRecordRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-func (x *QueryAllSharesRequest) Reset() {
-	*x = QueryAllSharesRequest{}
+func (x *QueryUndelegateRecordRequest) Reset() {
+	*x = QueryUndelegateRecordRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_query_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -9085,35 +7166,41 @@ func (x *QueryAllSharesRequest) Reset() {
 	}
 }
 
-func (x *QueryAllSharesRequest) String() string {
+func (x *QueryUndelegateRecordRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryAllSharesRequest) ProtoMessage() {}
+func (*QueryUndelegateRecordRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryAllSharesRequest.ProtoReflect.Descriptor instead.
-func (*QueryAllSharesRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryUndelegateRecordRequest.ProtoReflect.Descriptor instead.
+func (*QueryUndelegateRecordRequest) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *QueryAllSharesRequest) GetAddress() string {
+func (x *QueryUndelegateRecordRequest) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *QueryUndelegateRecordRequest) GetAddress() string {
 	if x != nil {
 		return x.Address
 	}
 	return ""
 }
 
-type QueryDepositHistoryRequest struct {
+type QueryUndelegateRecordResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	UndelegateRecord *UndelegateRecord `protobuf:"bytes,1,opt,name=undelegate_record,json=undelegateRecord,proto3" json:"undelegate_record,omitempty"`
 }
 
-func (x *QueryDepositHistoryRequest) Reset() {
-	*x = QueryDepositHistoryRequest{}
+func (x *QueryUndelegateRecordResponse) Reset() {
+	*x = QueryUndelegateRecordResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_query_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -9121,42 +7208,35 @@ func (x *QueryDepositHistoryRequest) Reset() {
 	}
 }
 
-func (x *QueryDepositHistoryRequest) String() string {
+func (x *QueryUndelegateRecordResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryDepositHistoryRequest) ProtoMessage() {}
+func (*QueryUndelegateRecordResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryDepositHistoryRequest.ProtoReflect.Descriptor instead.
-func (*QueryDepositHistoryRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryUndelegateRecordResponse.ProtoReflect.Descriptor instead.
+func (*QueryUndelegateRecordResponse) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *QueryDepositHistoryRequest) GetZoneId() string {
+func (x *QueryUndelegateRecordResponse) GetUndelegateRecord() *UndelegateRecord {
 	if x != nil {
-		return x.ZoneId
+		return x.UndelegateRecord
 	}
-	return ""
+	return nil
 }
 
-func (x *QueryDepositHistoryRequest) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-type QueryDepositHistoryResponse struct {
+type QueryWithdrawRecordRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address string          `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Amount  []*v1beta1.Coin `protobuf:"bytes,2,rep,name=amount,proto3" json:"amount,omitempty"`
+	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-func (x *QueryDepositHistoryResponse) Reset() {
-	*x = QueryDepositHistoryResponse{}
+func (x *QueryWithdrawRecordRequest) Reset() {
+	*x = QueryWithdrawRecordRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_query_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -9164,42 +7244,41 @@ func (x *QueryDepositHistoryResponse) Reset() {
 	}
 }
 
-func (x *QueryDepositHistoryResponse) String() string {
+func (x *QueryWithdrawRecordRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryDepositHistoryResponse) ProtoMessage() {}
+func (*QueryWithdrawRecordRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryDepositHistoryResponse.ProtoReflect.Descriptor instead.
-func (*QueryDepositHistoryResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryWithdrawRecordRequest.ProtoReflect.Descriptor instead.
+func (*QueryWithdrawRecordRequest) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *QueryDepositHistoryResponse) GetAddress() string {
+func (x *QueryWithdrawRecordRequest) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *QueryWithdrawRecordRequest) GetAddress() string {
 	if x != nil {
 		return x.Address
 	}
 	return ""
 }
 
-func (x *QueryDepositHistoryResponse) GetAmount() []*v1beta1.Coin {
-	if x != nil {
-		return x.Amount
-	}
-	return nil
-}
-
-type QueryUndelegateHistoryRequest struct {
+type QueryWithdrawRecordResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	WithdrawRecord *WithdrawRecord `protobuf:"bytes,1,opt,name=withdraw_record,json=withdrawRecord,proto3" json:"withdraw_record,omitempty"`
 }
 
-func (x *QueryUndelegateHistoryRequest) Reset() {
-	*x = QueryUndelegateHistoryRequest{}
+func (x *QueryWithdrawRecordResponse) Reset() {
+	*x = QueryWithdrawRecordResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_query_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -9207,164 +7286,20 @@ func (x *QueryUndelegateHistoryRequest) Reset() {
 	}
 }
 
-func (x *QueryUndelegateHistoryRequest) String() string {
+func (x *QueryWithdrawRecordResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryUndelegateHistoryRequest) ProtoMessage() {}
+func (*QueryWithdrawRecordResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryUndelegateHistoryRequest.ProtoReflect.Descriptor instead.
-func (*QueryUndelegateHistoryRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryWithdrawRecordResponse.ProtoReflect.Descriptor instead.
+func (*QueryWithdrawRecordResponse) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *QueryUndelegateHistoryRequest) GetZoneId() string {
+func (x *QueryWithdrawRecordResponse) GetWithdrawRecord() *WithdrawRecord {
 	if x != nil {
-		return x.ZoneId
-	}
-	return ""
-}
-
-func (x *QueryUndelegateHistoryRequest) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-type QueryUndelegateHistoryResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Address       string          `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	BurnedSnAsset []*v1beta1.Coin `protobuf:"bytes,2,rep,name=burned_sn_asset,json=burnedSnAsset,proto3" json:"burned_sn_asset,omitempty"`
-	MintedWAsset  []*v1beta1.Coin `protobuf:"bytes,3,rep,name=minted_w_asset,json=mintedWAsset,proto3" json:"minted_w_asset,omitempty"`
-}
-
-func (x *QueryUndelegateHistoryResponse) Reset() {
-	*x = QueryUndelegateHistoryResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_gal_v1_query_proto_msgTypes[14]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *QueryUndelegateHistoryResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*QueryUndelegateHistoryResponse) ProtoMessage() {}
-
-// Deprecated: Use QueryUndelegateHistoryResponse.ProtoReflect.Descriptor instead.
-func (*QueryUndelegateHistoryResponse) Descriptor() ([]byte, []int) {
-	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *QueryUndelegateHistoryResponse) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-func (x *QueryUndelegateHistoryResponse) GetBurnedSnAsset() []*v1beta1.Coin {
-	if x != nil {
-		return x.BurnedSnAsset
-	}
-	return nil
-}
-
-func (x *QueryUndelegateHistoryResponse) GetMintedWAsset() []*v1beta1.Coin {
-	if x != nil {
-		return x.MintedWAsset
-	}
-	return nil
-}
-
-type QueryWithdrawHistoryRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
-}
-
-func (x *QueryWithdrawHistoryRequest) Reset() {
-	*x = QueryWithdrawHistoryRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_gal_v1_query_proto_msgTypes[15]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *QueryWithdrawHistoryRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*QueryWithdrawHistoryRequest) ProtoMessage() {}
-
-// Deprecated: Use QueryWithdrawHistoryRequest.ProtoReflect.Descriptor instead.
-func (*QueryWithdrawHistoryRequest) Descriptor() ([]byte, []int) {
-	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *QueryWithdrawHistoryRequest) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
-	}
-	return ""
-}
-
-func (x *QueryWithdrawHistoryRequest) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-type QueryWithdrawHistoryResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Address string          `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Amount  []*v1beta1.Coin `protobuf:"bytes,2,rep,name=amount,proto3" json:"amount,omitempty"`
-}
-
-func (x *QueryWithdrawHistoryResponse) Reset() {
-	*x = QueryWithdrawHistoryResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_gal_v1_query_proto_msgTypes[16]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *QueryWithdrawHistoryResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*QueryWithdrawHistoryResponse) ProtoMessage() {}
-
-// Deprecated: Use QueryWithdrawHistoryResponse.ProtoReflect.Descriptor instead.
-func (*QueryWithdrawHistoryResponse) Descriptor() ([]byte, []int) {
-	return file_nova_gal_v1_query_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *QueryWithdrawHistoryResponse) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-func (x *QueryWithdrawHistoryResponse) GetAmount() []*v1beta1.Coin {
-	if x != nil {
-		return x.Amount
+		return x.WithdrawRecord
 	}
 	return nil
 }
@@ -9377,235 +7312,184 @@ var file_nova_gal_v1_query_proto_rawDesc = []byte{
 	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x18, 0x6e, 0x6f,
 	0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
-	0x1e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62,
-	0x65, 0x74, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22,
-	0x14, 0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x48, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61,
-	0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x31, 0x0a, 0x06,
-	0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22,
-	0xa5, 0x01, 0x0a, 0x16, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f,
-	0x75, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f,
-	0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e,
-	0x65, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x28, 0x0a,
-	0x10, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x5f, 0x69,
-	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65,
-	0x72, 0x50, 0x6f, 0x72, 0x74, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x74, 0x72, 0x61, 0x6e, 0x73,
-	0x66, 0x65, 0x72, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68,
-	0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x52, 0x0a, 0x17, 0x43, 0x6c, 0x61, 0x69, 0x6d,
-	0x61, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65,
-	0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8,
-	0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0xa8, 0x01, 0x0a, 0x19,
-	0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61,
-	0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e,
-	0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65,
-	0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x28, 0x0a, 0x10,
-	0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x5f, 0x69, 0x64,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72,
-	0x50, 0x6f, 0x72, 0x74, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66,
-	0x65, 0x72, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x11, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61,
-	0x6e, 0x6e, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x55, 0x0a, 0x1a, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e,
-	0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61,
-	0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42,
-	0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0xa7, 0x01,
-	0x0a, 0x18, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
-	0x61, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f,
-	0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e,
-	0x65, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x28, 0x0a,
-	0x10, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x5f, 0x69,
-	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65,
-	0x72, 0x50, 0x6f, 0x72, 0x74, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x74, 0x72, 0x61, 0x6e, 0x73,
-	0x66, 0x65, 0x72, 0x5f, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68,
-	0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x49, 0x64, 0x22, 0x54, 0x0a, 0x19, 0x41, 0x63, 0x74, 0x69, 0x76,
-	0x65, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61,
-	0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42,
-	0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x62, 0x0a,
-	0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x79, 0x53, 0x68, 0x61, 0x72, 0x65, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x32, 0x0a,
-	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18,
-	0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65,
-	0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x22, 0x83, 0x01, 0x0a, 0x14, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x79, 0x53, 0x68, 0x61,
-	0x72, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d,
-	0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53,
-	0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x37,
-	0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19,
-	0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62,
-	0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52,
-	0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x4b, 0x0a, 0x15, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x41, 0x6c, 0x6c, 0x53, 0x68, 0x61, 0x72, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x22, 0x69, 0x0a, 0x1a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x44, 0x65, 0x70,
-	0x6f, 0x73, 0x69, 0x74, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x07, 0x61,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4,
-	0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22,
-	0xb6, 0x01, 0x0a, 0x1b, 0x51, 0x75, 0x65, 0x72, 0x79, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74,
-	0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73,
-	0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30,
-	0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
-	0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73,
-	0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x6c, 0x0a, 0x1d, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x48, 0x69, 0x73, 0x74, 0x6f,
-	0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e,
-	0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65,
-	0x49, 0x64, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
-	0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0xbc, 0x02, 0x0a, 0x1e, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72,
-	0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14,
-	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74,
-	0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x73, 0x0a,
-	0x0f, 0x62, 0x75, 0x72, 0x6e, 0x65, 0x64, 0x5f, 0x73, 0x6e, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74,
-	0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
-	0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69,
-	0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f,
-	0x69, 0x6e, 0x73, 0x52, 0x0d, 0x62, 0x75, 0x72, 0x6e, 0x65, 0x64, 0x53, 0x6e, 0x41, 0x73, 0x73,
-	0x65, 0x74, 0x12, 0x71, 0x0a, 0x0e, 0x6d, 0x69, 0x6e, 0x74, 0x65, 0x64, 0x5f, 0x77, 0x5f, 0x61,
-	0x73, 0x73, 0x65, 0x74, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31,
-	0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
-	0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65,
-	0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x0c, 0x6d, 0x69, 0x6e, 0x74, 0x65, 0x64, 0x57,
-	0x41, 0x73, 0x73, 0x65, 0x74, 0x22, 0x6a, 0x0a, 0x1b, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x69,
-	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x32, 0x0a,
-	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18,
-	0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65,
-	0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x22, 0xb7, 0x01, 0x0a, 0x1c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x69, 0x74, 0x68, 0x64,
-	0x72, 0x61, 0x77, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
-	0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x63, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
-	0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
-	0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69,
-	0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f,
-	0x69, 0x6e, 0x73, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x32, 0xaa, 0x09, 0x0a, 0x05,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x68, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12,
-	0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c,
+	0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e,
+	0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
+	0x19, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6f,
+	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x63, 0x6f, 0x73, 0x6d,
+	0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f,
+	0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x14, 0x0a, 0x12, 0x51, 0x75,
 	0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x1b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x15, 0x12, 0x13, 0x2f, 0x6e, 0x6f, 0x76,
-	0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12,
-	0x97, 0x01, 0x0a, 0x0f, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f,
-	0x75, 0x6e, 0x74, 0x12, 0x23, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76,
-	0x31, 0x2e, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e,
-	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65,
-	0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x39,
-	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x33, 0x12, 0x31, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61,
-	0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x63, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x61,
-	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f,
-	0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x12, 0xa3, 0x01, 0x0a, 0x12, 0x50, 0x65,
-	0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73,
-	0x12, 0x26, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50,
-	0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69,
-	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x3c, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x36, 0x12, 0x34, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
-	0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x5f,
-	0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x2f, 0x7b, 0x61, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x12,
-	0x9f, 0x01, 0x0a, 0x11, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72,
-	0x61, 0x77, 0x61, 0x6c, 0x73, 0x12, 0x25, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c,
-	0x2e, 0x76, 0x31, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72,
-	0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x76,
-	0x65, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x3b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x35, 0x12, 0x33, 0x2f, 0x6e,
-	0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x63, 0x74, 0x69, 0x76,
-	0x65, 0x5f, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x2f, 0x7b, 0x61,
+	0x22, 0x48, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x31, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d,
+	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67,
+	0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x04, 0xc8, 0xde,
+	0x1f, 0x00, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22, 0xa5, 0x01, 0x0a, 0x16, 0x43,
+	0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x18,
+	0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x72, 0x61, 0x6e,
+	0x73, 0x66, 0x65, 0x72, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x50, 0x6f, 0x72, 0x74,
+	0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x63,
+	0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x11, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c,
+	0x49, 0x64, 0x22, 0x52, 0x0a, 0x17, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x37, 0x0a,
+	0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e,
+	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65,
+	0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06,
+	0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0xa8, 0x01, 0x0a, 0x19, 0x50, 0x65, 0x6e, 0x64, 0x69,
+	0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x18, 0x0a,
+	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x72, 0x61, 0x6e, 0x73,
+	0x66, 0x65, 0x72, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x50, 0x6f, 0x72, 0x74, 0x49,
+	0x64, 0x12, 0x2e, 0x0a, 0x13, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x63, 0x68,
+	0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11,
+	0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x49,
+	0x64, 0x22, 0x55, 0x0a, 0x1a, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31,
+	0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00,
+	0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0xa7, 0x01, 0x0a, 0x18, 0x41, 0x63, 0x74,
+	0x69, 0x76, 0x65, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x18,
+	0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x72, 0x61, 0x6e,
+	0x73, 0x66, 0x65, 0x72, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x50, 0x6f, 0x72, 0x74,
+	0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x63,
+	0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x11, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c,
+	0x49, 0x64, 0x22, 0x54, 0x0a, 0x19, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31,
+	0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00,
+	0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x68, 0x0a, 0x19, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x32,
+	0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42,
+	0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x22, 0x5f, 0x0a, 0x1a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x44, 0x65, 0x70, 0x6f, 0x73,
+	0x69, 0x74, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x41, 0x0a, 0x0e, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x5f, 0x72, 0x65, 0x63, 0x6f,
+	0x72, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65,
+	0x63, 0x6f, 0x72, 0x64, 0x52, 0x0d, 0x64, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x63,
+	0x6f, 0x72, 0x64, 0x22, 0x6b, 0x0a, 0x1c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x55, 0x6e, 0x64, 0x65,
+	0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x07,
+	0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2,
+	0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x22, 0x6b, 0x0a, 0x1d, 0x51, 0x75, 0x65, 0x72, 0x79, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67,
+	0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x4a, 0x0a, 0x11, 0x75, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x5f,
+	0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x6e, 0x64, 0x65, 0x6c,
+	0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x10, 0x75, 0x6e, 0x64,
+	0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x22, 0x69, 0x0a,
+	0x1a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65,
+	0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a,
+	0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f,
+	0x6e, 0x65, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
+	0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52,
+	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x63, 0x0a, 0x1b, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x44, 0x0a, 0x0f, 0x77, 0x69, 0x74, 0x68, 0x64,
+	0x72, 0x61, 0x77, 0x5f, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x57,
+	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x0e, 0x77,
+	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x32, 0xa5, 0x08,
+	0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x68, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d,
+	0x73, 0x12, 0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31,
+	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x15, 0x12, 0x13, 0x2f, 0x6e,
+	0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d,
+	0x73, 0x12, 0x97, 0x01, 0x0a, 0x0f, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x23, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c,
+	0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f,
+	0x75, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62,
+	0x6c, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x39, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x33, 0x12, 0x31, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f,
+	0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x63, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65,
+	0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x7d, 0x2f, 0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x12, 0xa3, 0x01, 0x0a, 0x12,
+	0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61,
+	0x6c, 0x73, 0x12, 0x26, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31,
+	0x2e, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
+	0x61, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67,
+	0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x3c, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x36, 0x12, 0x34, 0x2f, 0x6e, 0x6f,
+	0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x65, 0x6e, 0x64, 0x69, 0x6e,
+	0x67, 0x5f, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x2f, 0x7b, 0x61,
 	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64,
-	0x7d, 0x12, 0x7d, 0x0a, 0x05, 0x53, 0x68, 0x61, 0x72, 0x65, 0x12, 0x20, 0x2e, 0x6e, 0x6f, 0x76,
-	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x79,
-	0x53, 0x68, 0x61, 0x72, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x21, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x4d, 0x79, 0x53, 0x68, 0x61, 0x72, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x2f, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x29, 0x12, 0x27, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67,
-	0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x68, 0x61, 0x72, 0x65, 0x73, 0x2f, 0x7b, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d,
-	0x12, 0x95, 0x01, 0x0a, 0x0e, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x48, 0x69, 0x73, 0x74,
-	0x6f, 0x72, 0x79, 0x12, 0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76,
-	0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x48, 0x69,
-	0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x30, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2a, 0x12, 0x28,
-	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x64, 0x65, 0x70,
-	0x6f, 0x73, 0x69, 0x74, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x7b,
-	0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x12, 0xa1, 0x01, 0x0a, 0x11, 0x55, 0x6e, 0x64,
-	0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x12, 0x2a,
+	0x7d, 0x12, 0x9f, 0x01, 0x0a, 0x11, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x12, 0x25, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67,
+	0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x26,
+	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x63, 0x74,
+	0x69, 0x76, 0x65, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x3b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x35, 0x12, 0x33,
+	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x63, 0x74,
+	0x69, 0x76, 0x65, 0x5f, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x61, 0x6c, 0x73, 0x2f,
+	0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f,
+	0x69, 0x64, 0x7d, 0x12, 0x93, 0x01, 0x0a, 0x0e, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52,
+	0x65, 0x63, 0x6f, 0x72, 0x64, 0x73, 0x12, 0x26, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61,
+	0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69,
+	0x74, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27,
 	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65,
-	0x72, 0x79, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x48, 0x69, 0x73, 0x74,
-	0x6f, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x6e, 0x6f, 0x76,
+	0x72, 0x79, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x30, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2a, 0x12,
+	0x28, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x64, 0x65,
+	0x70, 0x6f, 0x73, 0x69, 0x74, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f,
+	0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x12, 0x9f, 0x01, 0x0a, 0x11, 0x55, 0x6e,
+	0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x73, 0x12,
+	0x29, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63,
+	0x6f, 0x72, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x6e, 0x6f, 0x76,
 	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x55, 0x6e,
-	0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x33, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2d, 0x12,
-	0x2b, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x6e,
-	0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x7d, 0x2f, 0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x12, 0x99, 0x01, 0x0a,
-	0x0f, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79,
-	0x12, 0x28, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x48, 0x69, 0x73, 0x74,
-	0x6f, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x6e, 0x6f, 0x76,
-	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x69,
-	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x31, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2b, 0x12, 0x29, 0x2f,
-	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x76, 0x31, 0x2f, 0x77, 0x69, 0x74, 0x68,
-	0x64, 0x72, 0x61, 0x77, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x7b,
-	0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x42, 0x9e, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d,
-	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61,
-	0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
-	0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03,
-	0x4e, 0x47, 0x58, 0xaa, 0x02, 0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56,
-	0x31, 0xca, 0x02, 0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0xe2,
-	0x02, 0x17, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50,
-	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0d, 0x4e, 0x6f, 0x76, 0x61,
-	0x3a, 0x3a, 0x47, 0x61, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x33, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2d, 0x12, 0x2b,
+	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x6e, 0x64,
+	0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x7d, 0x2f, 0x7b, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x12, 0x97, 0x01, 0x0a, 0x0f,
+	0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x73, 0x12,
+	0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72,
+	0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x31, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2b, 0x12, 0x29, 0x2f, 0x6e, 0x6f, 0x76,
+	0x61, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x76, 0x31, 0x2f, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61,
+	0x77, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x7b, 0x7a, 0x6f, 0x6e,
+	0x65, 0x5f, 0x69, 0x64, 0x7d, 0x42, 0x9e, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f,
+	0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f,
+	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61,
+	0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58,
+	0xaa, 0x02, 0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02,
+	0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x17, 0x4e,
+	0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0d, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x47,
+	0x61, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -9620,59 +7504,55 @@ func file_nova_gal_v1_query_proto_rawDescGZIP() []byte {
 	return file_nova_gal_v1_query_proto_rawDescData
 }
 
-var file_nova_gal_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_nova_gal_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_nova_gal_v1_query_proto_goTypes = []interface{}{
-	(*QueryParamsRequest)(nil),             // 0: nova.gal.v1.QueryParamsRequest
-	(*QueryParamsResponse)(nil),            // 1: nova.gal.v1.QueryParamsResponse
-	(*ClaimableAmountRequest)(nil),         // 2: nova.gal.v1.ClaimableAmountRequest
-	(*ClaimableAmountResponse)(nil),        // 3: nova.gal.v1.ClaimableAmountResponse
-	(*PendingWithdrawalsRequest)(nil),      // 4: nova.gal.v1.PendingWithdrawalsRequest
-	(*PendingWithdrawalsResponse)(nil),     // 5: nova.gal.v1.PendingWithdrawalsResponse
-	(*ActiveWithdrawalsRequest)(nil),       // 6: nova.gal.v1.ActiveWithdrawalsRequest
-	(*ActiveWithdrawalsResponse)(nil),      // 7: nova.gal.v1.ActiveWithdrawalsResponse
-	(*QueryMyShareRequest)(nil),            // 8: nova.gal.v1.QueryMyShareRequest
-	(*QueryMyShareResponse)(nil),           // 9: nova.gal.v1.QueryMyShareResponse
-	(*QueryAllSharesRequest)(nil),          // 10: nova.gal.v1.QueryAllSharesRequest
-	(*QueryDepositHistoryRequest)(nil),     // 11: nova.gal.v1.QueryDepositHistoryRequest
-	(*QueryDepositHistoryResponse)(nil),    // 12: nova.gal.v1.QueryDepositHistoryResponse
-	(*QueryUndelegateHistoryRequest)(nil),  // 13: nova.gal.v1.QueryUndelegateHistoryRequest
-	(*QueryUndelegateHistoryResponse)(nil), // 14: nova.gal.v1.QueryUndelegateHistoryResponse
-	(*QueryWithdrawHistoryRequest)(nil),    // 15: nova.gal.v1.QueryWithdrawHistoryRequest
-	(*QueryWithdrawHistoryResponse)(nil),   // 16: nova.gal.v1.QueryWithdrawHistoryResponse
-	(*Params)(nil),                         // 17: nova.gal.v1.Params
-	(*v1beta1.Coin)(nil),                   // 18: cosmos.base.v1beta1.Coin
+	(*QueryParamsRequest)(nil),            // 0: nova.gal.v1.QueryParamsRequest
+	(*QueryParamsResponse)(nil),           // 1: nova.gal.v1.QueryParamsResponse
+	(*ClaimableAmountRequest)(nil),        // 2: nova.gal.v1.ClaimableAmountRequest
+	(*ClaimableAmountResponse)(nil),       // 3: nova.gal.v1.ClaimableAmountResponse
+	(*PendingWithdrawalsRequest)(nil),     // 4: nova.gal.v1.PendingWithdrawalsRequest
+	(*PendingWithdrawalsResponse)(nil),    // 5: nova.gal.v1.PendingWithdrawalsResponse
+	(*ActiveWithdrawalsRequest)(nil),      // 6: nova.gal.v1.ActiveWithdrawalsRequest
+	(*ActiveWithdrawalsResponse)(nil),     // 7: nova.gal.v1.ActiveWithdrawalsResponse
+	(*QueryDepositRecordRequest)(nil),     // 8: nova.gal.v1.QueryDepositRecordRequest
+	(*QueryDepositRecordResponse)(nil),    // 9: nova.gal.v1.QueryDepositRecordResponse
+	(*QueryUndelegateRecordRequest)(nil),  // 10: nova.gal.v1.QueryUndelegateRecordRequest
+	(*QueryUndelegateRecordResponse)(nil), // 11: nova.gal.v1.QueryUndelegateRecordResponse
+	(*QueryWithdrawRecordRequest)(nil),    // 12: nova.gal.v1.QueryWithdrawRecordRequest
+	(*QueryWithdrawRecordResponse)(nil),   // 13: nova.gal.v1.QueryWithdrawRecordResponse
+	(*Params)(nil),                        // 14: nova.gal.v1.Params
+	(*v1beta1.Coin)(nil),                  // 15: cosmos.base.v1beta1.Coin
+	(*DepositRecord)(nil),                 // 16: nova.gal.v1.DepositRecord
+	(*UndelegateRecord)(nil),              // 17: nova.gal.v1.UndelegateRecord
+	(*WithdrawRecord)(nil),                // 18: nova.gal.v1.WithdrawRecord
 }
 var file_nova_gal_v1_query_proto_depIdxs = []int32{
-	17, // 0: nova.gal.v1.QueryParamsResponse.params:type_name -> nova.gal.v1.Params
-	18, // 1: nova.gal.v1.ClaimableAmountResponse.amount:type_name -> cosmos.base.v1beta1.Coin
-	18, // 2: nova.gal.v1.PendingWithdrawalsResponse.amount:type_name -> cosmos.base.v1beta1.Coin
-	18, // 3: nova.gal.v1.ActiveWithdrawalsResponse.amount:type_name -> cosmos.base.v1beta1.Coin
-	18, // 4: nova.gal.v1.QueryMyShareResponse.amount:type_name -> cosmos.base.v1beta1.Coin
-	18, // 5: nova.gal.v1.QueryDepositHistoryResponse.amount:type_name -> cosmos.base.v1beta1.Coin
-	18, // 6: nova.gal.v1.QueryUndelegateHistoryResponse.burned_sn_asset:type_name -> cosmos.base.v1beta1.Coin
-	18, // 7: nova.gal.v1.QueryUndelegateHistoryResponse.minted_w_asset:type_name -> cosmos.base.v1beta1.Coin
-	18, // 8: nova.gal.v1.QueryWithdrawHistoryResponse.amount:type_name -> cosmos.base.v1beta1.Coin
-	0,  // 9: nova.gal.v1.Query.Params:input_type -> nova.gal.v1.QueryParamsRequest
-	2,  // 10: nova.gal.v1.Query.ClaimableAmount:input_type -> nova.gal.v1.ClaimableAmountRequest
-	4,  // 11: nova.gal.v1.Query.PendingWithdrawals:input_type -> nova.gal.v1.PendingWithdrawalsRequest
-	6,  // 12: nova.gal.v1.Query.ActiveWithdrawals:input_type -> nova.gal.v1.ActiveWithdrawalsRequest
-	8,  // 13: nova.gal.v1.Query.Share:input_type -> nova.gal.v1.QueryMyShareRequest
-	11, // 14: nova.gal.v1.Query.DepositHistory:input_type -> nova.gal.v1.QueryDepositHistoryRequest
-	13, // 15: nova.gal.v1.Query.UndelegateHistory:input_type -> nova.gal.v1.QueryUndelegateHistoryRequest
-	15, // 16: nova.gal.v1.Query.WithdrawHistory:input_type -> nova.gal.v1.QueryWithdrawHistoryRequest
-	1,  // 17: nova.gal.v1.Query.Params:output_type -> nova.gal.v1.QueryParamsResponse
-	3,  // 18: nova.gal.v1.Query.ClaimableAmount:output_type -> nova.gal.v1.ClaimableAmountResponse
-	5,  // 19: nova.gal.v1.Query.PendingWithdrawals:output_type -> nova.gal.v1.PendingWithdrawalsResponse
-	7,  // 20: nova.gal.v1.Query.ActiveWithdrawals:output_type -> nova.gal.v1.ActiveWithdrawalsResponse
-	9,  // 21: nova.gal.v1.Query.Share:output_type -> nova.gal.v1.QueryMyShareResponse
-	12, // 22: nova.gal.v1.Query.DepositHistory:output_type -> nova.gal.v1.QueryDepositHistoryResponse
-	14, // 23: nova.gal.v1.Query.UndelegateHistory:output_type -> nova.gal.v1.QueryUndelegateHistoryResponse
-	16, // 24: nova.gal.v1.Query.WithdrawHistory:output_type -> nova.gal.v1.QueryWithdrawHistoryResponse
-	17, // [17:25] is the sub-list for method output_type
-	9,  // [9:17] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	14, // 0: nova.gal.v1.QueryParamsResponse.params:type_name -> nova.gal.v1.Params
+	15, // 1: nova.gal.v1.ClaimableAmountResponse.amount:type_name -> cosmos.base.v1beta1.Coin
+	15, // 2: nova.gal.v1.PendingWithdrawalsResponse.amount:type_name -> cosmos.base.v1beta1.Coin
+	15, // 3: nova.gal.v1.ActiveWithdrawalsResponse.amount:type_name -> cosmos.base.v1beta1.Coin
+	16, // 4: nova.gal.v1.QueryDepositRecordResponse.deposit_record:type_name -> nova.gal.v1.DepositRecord
+	17, // 5: nova.gal.v1.QueryUndelegateRecordResponse.undelegate_record:type_name -> nova.gal.v1.UndelegateRecord
+	18, // 6: nova.gal.v1.QueryWithdrawRecordResponse.withdraw_record:type_name -> nova.gal.v1.WithdrawRecord
+	0,  // 7: nova.gal.v1.Query.Params:input_type -> nova.gal.v1.QueryParamsRequest
+	2,  // 8: nova.gal.v1.Query.ClaimableAmount:input_type -> nova.gal.v1.ClaimableAmountRequest
+	4,  // 9: nova.gal.v1.Query.PendingWithdrawals:input_type -> nova.gal.v1.PendingWithdrawalsRequest
+	6,  // 10: nova.gal.v1.Query.ActiveWithdrawals:input_type -> nova.gal.v1.ActiveWithdrawalsRequest
+	8,  // 11: nova.gal.v1.Query.DepositRecords:input_type -> nova.gal.v1.QueryDepositRecordRequest
+	10, // 12: nova.gal.v1.Query.UndelegateRecords:input_type -> nova.gal.v1.QueryUndelegateRecordRequest
+	12, // 13: nova.gal.v1.Query.WithdrawRecords:input_type -> nova.gal.v1.QueryWithdrawRecordRequest
+	1,  // 14: nova.gal.v1.Query.Params:output_type -> nova.gal.v1.QueryParamsResponse
+	3,  // 15: nova.gal.v1.Query.ClaimableAmount:output_type -> nova.gal.v1.ClaimableAmountResponse
+	5,  // 16: nova.gal.v1.Query.PendingWithdrawals:output_type -> nova.gal.v1.PendingWithdrawalsResponse
+	7,  // 17: nova.gal.v1.Query.ActiveWithdrawals:output_type -> nova.gal.v1.ActiveWithdrawalsResponse
+	9,  // 18: nova.gal.v1.Query.DepositRecords:output_type -> nova.gal.v1.QueryDepositRecordResponse
+	11, // 19: nova.gal.v1.Query.UndelegateRecords:output_type -> nova.gal.v1.QueryUndelegateRecordResponse
+	13, // 20: nova.gal.v1.Query.WithdrawRecords:output_type -> nova.gal.v1.QueryWithdrawRecordResponse
+	14, // [14:21] is the sub-list for method output_type
+	7,  // [7:14] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_nova_gal_v1_query_proto_init() }
@@ -9681,6 +7561,7 @@ func file_nova_gal_v1_query_proto_init() {
 		return
 	}
 	file_nova_gal_v1_params_proto_init()
+	file_nova_gal_v1_genesis_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_nova_gal_v1_query_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryParamsRequest); i {
@@ -9779,7 +7660,7 @@ func file_nova_gal_v1_query_proto_init() {
 			}
 		}
 		file_nova_gal_v1_query_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryMyShareRequest); i {
+			switch v := v.(*QueryDepositRecordRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -9791,7 +7672,7 @@ func file_nova_gal_v1_query_proto_init() {
 			}
 		}
 		file_nova_gal_v1_query_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryMyShareResponse); i {
+			switch v := v.(*QueryDepositRecordResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -9803,7 +7684,7 @@ func file_nova_gal_v1_query_proto_init() {
 			}
 		}
 		file_nova_gal_v1_query_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryAllSharesRequest); i {
+			switch v := v.(*QueryUndelegateRecordRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -9815,7 +7696,7 @@ func file_nova_gal_v1_query_proto_init() {
 			}
 		}
 		file_nova_gal_v1_query_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryDepositHistoryRequest); i {
+			switch v := v.(*QueryUndelegateRecordResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -9827,7 +7708,7 @@ func file_nova_gal_v1_query_proto_init() {
 			}
 		}
 		file_nova_gal_v1_query_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryDepositHistoryResponse); i {
+			switch v := v.(*QueryWithdrawRecordRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -9839,43 +7720,7 @@ func file_nova_gal_v1_query_proto_init() {
 			}
 		}
 		file_nova_gal_v1_query_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryUndelegateHistoryRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_nova_gal_v1_query_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryUndelegateHistoryResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_nova_gal_v1_query_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryWithdrawHistoryRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_nova_gal_v1_query_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryWithdrawHistoryResponse); i {
+			switch v := v.(*QueryWithdrawRecordResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -9893,7 +7738,7 @@ func file_nova_gal_v1_query_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_gal_v1_query_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

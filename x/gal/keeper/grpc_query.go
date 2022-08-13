@@ -49,7 +49,7 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Claim
 }
 
 func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.PendingWithdrawalsRequest) (*types.PendingWithdrawalsResponse, error) {
-	// return sum of all withdraw-able assets with WITHDRAW_REGISTER status
+	// return sum of all withdraw-able assets with WithdrawStatus_Registerred status
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
@@ -70,7 +70,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Pe
 	}
 
 	for _, record := range withdrawRecord.Records {
-		if record.State == int64(WITHDRAW_REGISTER) {
+		if record.State == int64(WithdrawStatus_Registerred) {
 			amount = amount.Add(*record.Amount)
 		}
 	}
@@ -99,22 +99,17 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Act
 	}, nil
 }
 
-func (q QueryServer) Share(goCtx context.Context, request *types.QueryMyShareRequest) (*types.QueryMyShareResponse, error) {
+func (q QueryServer) DepositRecords(ctx context.Context, request *types.QueryDepositRecordRequest) (*types.QueryDepositRecordResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (q QueryServer) DepositHistory(goCtx context.Context, request *types.QueryDepositHistoryRequest) (*types.QueryDepositHistoryResponse, error) {
+func (q QueryServer) UndelegateRecords(ctx context.Context, request *types.QueryUndelegateRecordRequest) (*types.QueryUndelegateRecordResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (q QueryServer) UndelegateHistory(goCtx context.Context, request *types.QueryUndelegateHistoryRequest) (*types.QueryUndelegateHistoryResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (q QueryServer) WithdrawHistory(goCtx context.Context, request *types.QueryWithdrawHistoryRequest) (*types.QueryWithdrawHistoryResponse, error) {
+func (q QueryServer) WithdrawRecords(ctx context.Context, request *types.QueryWithdrawRecordRequest) (*types.QueryWithdrawRecordResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }

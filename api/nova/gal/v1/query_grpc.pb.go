@@ -26,10 +26,9 @@ type QueryClient interface {
 	ClaimableAmount(ctx context.Context, in *ClaimableAmountRequest, opts ...grpc.CallOption) (*ClaimableAmountResponse, error)
 	PendingWithdrawals(ctx context.Context, in *PendingWithdrawalsRequest, opts ...grpc.CallOption) (*PendingWithdrawalsResponse, error)
 	ActiveWithdrawals(ctx context.Context, in *ActiveWithdrawalsRequest, opts ...grpc.CallOption) (*ActiveWithdrawalsResponse, error)
-	Share(ctx context.Context, in *QueryMyShareRequest, opts ...grpc.CallOption) (*QueryMyShareResponse, error)
-	DepositHistory(ctx context.Context, in *QueryDepositHistoryRequest, opts ...grpc.CallOption) (*QueryDepositHistoryResponse, error)
-	UndelegateHistory(ctx context.Context, in *QueryUndelegateHistoryRequest, opts ...grpc.CallOption) (*QueryUndelegateHistoryResponse, error)
-	WithdrawHistory(ctx context.Context, in *QueryWithdrawHistoryRequest, opts ...grpc.CallOption) (*QueryWithdrawHistoryResponse, error)
+	DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error)
+	UndelegateRecords(ctx context.Context, in *QueryUndelegateRecordRequest, opts ...grpc.CallOption) (*QueryUndelegateRecordResponse, error)
+	WithdrawRecords(ctx context.Context, in *QueryWithdrawRecordRequest, opts ...grpc.CallOption) (*QueryWithdrawRecordResponse, error)
 }
 
 type queryClient struct {
@@ -76,36 +75,27 @@ func (c *queryClient) ActiveWithdrawals(ctx context.Context, in *ActiveWithdrawa
 	return out, nil
 }
 
-func (c *queryClient) Share(ctx context.Context, in *QueryMyShareRequest, opts ...grpc.CallOption) (*QueryMyShareResponse, error) {
-	out := new(QueryMyShareResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/Share", in, out, opts...)
+func (c *queryClient) DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error) {
+	out := new(QueryDepositRecordResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DepositRecords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *queryClient) DepositHistory(ctx context.Context, in *QueryDepositHistoryRequest, opts ...grpc.CallOption) (*QueryDepositHistoryResponse, error) {
-	out := new(QueryDepositHistoryResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DepositHistory", in, out, opts...)
+func (c *queryClient) UndelegateRecords(ctx context.Context, in *QueryUndelegateRecordRequest, opts ...grpc.CallOption) (*QueryUndelegateRecordResponse, error) {
+	out := new(QueryUndelegateRecordResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/UndelegateRecords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *queryClient) UndelegateHistory(ctx context.Context, in *QueryUndelegateHistoryRequest, opts ...grpc.CallOption) (*QueryUndelegateHistoryResponse, error) {
-	out := new(QueryUndelegateHistoryResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/UndelegateHistory", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *queryClient) WithdrawHistory(ctx context.Context, in *QueryWithdrawHistoryRequest, opts ...grpc.CallOption) (*QueryWithdrawHistoryResponse, error) {
-	out := new(QueryWithdrawHistoryResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/WithdrawHistory", in, out, opts...)
+func (c *queryClient) WithdrawRecords(ctx context.Context, in *QueryWithdrawRecordRequest, opts ...grpc.CallOption) (*QueryWithdrawRecordResponse, error) {
+	out := new(QueryWithdrawRecordResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/WithdrawRecords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -120,10 +110,9 @@ type QueryServer interface {
 	ClaimableAmount(context.Context, *ClaimableAmountRequest) (*ClaimableAmountResponse, error)
 	PendingWithdrawals(context.Context, *PendingWithdrawalsRequest) (*PendingWithdrawalsResponse, error)
 	ActiveWithdrawals(context.Context, *ActiveWithdrawalsRequest) (*ActiveWithdrawalsResponse, error)
-	Share(context.Context, *QueryMyShareRequest) (*QueryMyShareResponse, error)
-	DepositHistory(context.Context, *QueryDepositHistoryRequest) (*QueryDepositHistoryResponse, error)
-	UndelegateHistory(context.Context, *QueryUndelegateHistoryRequest) (*QueryUndelegateHistoryResponse, error)
-	WithdrawHistory(context.Context, *QueryWithdrawHistoryRequest) (*QueryWithdrawHistoryResponse, error)
+	DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error)
+	UndelegateRecords(context.Context, *QueryUndelegateRecordRequest) (*QueryUndelegateRecordResponse, error)
+	WithdrawRecords(context.Context, *QueryWithdrawRecordRequest) (*QueryWithdrawRecordResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -143,17 +132,14 @@ func (UnimplementedQueryServer) PendingWithdrawals(context.Context, *PendingWith
 func (UnimplementedQueryServer) ActiveWithdrawals(context.Context, *ActiveWithdrawalsRequest) (*ActiveWithdrawalsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ActiveWithdrawals not implemented")
 }
-func (UnimplementedQueryServer) Share(context.Context, *QueryMyShareRequest) (*QueryMyShareResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Share not implemented")
+func (UnimplementedQueryServer) DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DepositRecords not implemented")
 }
-func (UnimplementedQueryServer) DepositHistory(context.Context, *QueryDepositHistoryRequest) (*QueryDepositHistoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DepositHistory not implemented")
+func (UnimplementedQueryServer) UndelegateRecords(context.Context, *QueryUndelegateRecordRequest) (*QueryUndelegateRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UndelegateRecords not implemented")
 }
-func (UnimplementedQueryServer) UndelegateHistory(context.Context, *QueryUndelegateHistoryRequest) (*QueryUndelegateHistoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UndelegateHistory not implemented")
-}
-func (UnimplementedQueryServer) WithdrawHistory(context.Context, *QueryWithdrawHistoryRequest) (*QueryWithdrawHistoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WithdrawHistory not implemented")
+func (UnimplementedQueryServer) WithdrawRecords(context.Context, *QueryWithdrawRecordRequest) (*QueryWithdrawRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WithdrawRecords not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -240,74 +226,56 @@ func _Query_ActiveWithdrawals_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_Share_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryMyShareRequest)
+func _Query_DepositRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryDepositRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).Share(ctx, in)
+		return srv.(QueryServer).DepositRecords(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Query/Share",
+		FullMethod: "/nova.gal.v1.Query/DepositRecords",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Share(ctx, req.(*QueryMyShareRequest))
+		return srv.(QueryServer).DepositRecords(ctx, req.(*QueryDepositRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_DepositHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryDepositHistoryRequest)
+func _Query_UndelegateRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUndelegateRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).DepositHistory(ctx, in)
+		return srv.(QueryServer).UndelegateRecords(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Query/DepositHistory",
+		FullMethod: "/nova.gal.v1.Query/UndelegateRecords",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).DepositHistory(ctx, req.(*QueryDepositHistoryRequest))
+		return srv.(QueryServer).UndelegateRecords(ctx, req.(*QueryUndelegateRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_UndelegateHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryUndelegateHistoryRequest)
+func _Query_WithdrawRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryWithdrawRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).UndelegateHistory(ctx, in)
+		return srv.(QueryServer).WithdrawRecords(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Query/UndelegateHistory",
+		FullMethod: "/nova.gal.v1.Query/WithdrawRecords",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).UndelegateHistory(ctx, req.(*QueryUndelegateHistoryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Query_WithdrawHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryWithdrawHistoryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).WithdrawHistory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/nova.gal.v1.Query/WithdrawHistory",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).WithdrawHistory(ctx, req.(*QueryWithdrawHistoryRequest))
+		return srv.(QueryServer).WithdrawRecords(ctx, req.(*QueryWithdrawRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -336,20 +304,16 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Query_ActiveWithdrawals_Handler,
 		},
 		{
-			MethodName: "Share",
-			Handler:    _Query_Share_Handler,
+			MethodName: "DepositRecords",
+			Handler:    _Query_DepositRecords_Handler,
 		},
 		{
-			MethodName: "DepositHistory",
-			Handler:    _Query_DepositHistory_Handler,
+			MethodName: "UndelegateRecords",
+			Handler:    _Query_UndelegateRecords_Handler,
 		},
 		{
-			MethodName: "UndelegateHistory",
-			Handler:    _Query_UndelegateHistory_Handler,
-		},
-		{
-			MethodName: "WithdrawHistory",
-			Handler:    _Query_WithdrawHistory_Handler,
+			MethodName: "WithdrawRecords",
+			Handler:    _Query_WithdrawRecords_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
