@@ -49,7 +49,7 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Claim
 }
 
 func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.PendingWithdrawalsRequest) (*types.PendingWithdrawalsResponse, error) {
-	// return sum of all withdraw-able assets with WithdrawStatus_Registerred status
+	// return sum of all withdraw-able assets with WithdrawStatus_Registered status
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
@@ -70,7 +70,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Pe
 	}
 
 	for _, record := range withdrawRecord.Records {
-		if record.State == int64(WithdrawStatus_Registerred) {
+		if record.State == int64(WithdrawStatus_Registered) {
 			amount = amount.Add(*record.Amount)
 		}
 	}
