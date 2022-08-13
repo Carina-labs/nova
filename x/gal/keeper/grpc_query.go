@@ -60,10 +60,11 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Pe
 	amount := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
 	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
-	withdrawRecord, found := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
+	withdrawRecord, err := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
 
 	// if found is false, withdrawRecord variable is nil
-	if !found {
+	if err != nil {
+		ctx.Logger().Debug("failed to fetch withdraw record", "err", err, "request", request)
 		return &types.PendingWithdrawalsResponse{
 			Amount: amount,
 		}, nil
@@ -90,7 +91,11 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Act
 
 	// sum of all pending withdrawals
 	// if the user has no pending withdrawals (when transfer success record doesn't exist), return 0
-	withdrawAmt := q.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, request.Address)
+	withdrawAmt, err := q.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, request.Address)
+	if err != nil {
+		return nil, err
+	}
+
 	ibcDenom := q.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, request.TransferPortId, request.TransferChannelId, zoneInfo.BaseDenom)
 	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
 
@@ -118,10 +123,24 @@ func (q QueryServer) DepositRecords(goCtx context.Context, request *types.QueryD
 
 func (q QueryServer) UndelegateRecords(goCtx context.Context, request *types.QueryUndelegateRecordRequest) (*types.QueryUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
+	result, err := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.QueryUndelegateRecordResponse{
+		UndelegateRecord: result,
+	}, nil
 }
 
 func (q QueryServer) WithdrawRecords(goCtx context.Context, request *types.QueryWithdrawRecordRequest) (*types.QueryWithdrawRecordResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	result, err := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.QueryWithdrawRecordResponse{
+		WithdrawRecord: result,
+	}, nil
 }
