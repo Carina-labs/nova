@@ -29,11 +29,11 @@ func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) 
 }
 
 // GetWithdrawRecord returns withdraw record item by key.
-func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*types.WithdrawRecord, bool) {
+func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*types.WithdrawRecord, error) {
 	store := k.getWithdrawRecordStore(ctx)
 	keyBytes := []byte(zoneId + withdrawer)
 	if !store.Has(keyBytes) {
-		return nil, false
+		return nil, types.ErrNoWithdrawRecord
 	}
 
 	res := store.Get(keyBytes)
@@ -41,7 +41,7 @@ func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*
 	var withdrawRecord types.WithdrawRecord
 	k.cdc.MustUnmarshal(res, &withdrawRecord)
 
-	return &withdrawRecord, true
+	return &withdrawRecord, nil
 }
 
 // DeleteWithdrawRecord removes withdraw record.
@@ -96,18 +96,17 @@ func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state W
 
 // SetWithdrawRecords write multiple withdraw record.
 func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Time) {
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool) {
 		if undelegateInfo.ZoneId == zoneId {
 			for _, items := range undelegateInfo.Records {
 				if items.State == int64(UNDELEGATE_REQUEST_ICA) {
-					withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, items.Withdrawer)
-					if !found {
+					withdrawRecord, err := k.GetWithdrawRecord(ctx, zoneId, items.Withdrawer)
+					if err != nil {
 						withdrawRecord = &types.WithdrawRecord{
 							ZoneId:     zoneId,
 							Withdrawer: items.Withdrawer,
 						}
 						withdrawRecord.Records = make(map[uint64]*types.WithdrawRecordContent)
-
 					}
 
 					withdrawRecordContent, found := withdrawRecord.Records[items.UndelegateVersion]
@@ -138,12 +137,12 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 	})
 }
 
-func (k Keeper) GetWithdrawAmontForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
+func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) (*sdk.Coin, error) {
 	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
-	withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, withdrawer)
-	if !found {
-		return amount
+	withdrawRecord, err := k.GetWithdrawRecord(ctx, zoneId, withdrawer)
+	if err != nil {
+		return nil, err
 	}
 
 	for _, record := range withdrawRecord.Records {
@@ -152,7 +151,7 @@ func (k Keeper) GetWithdrawAmontForUser(ctx sdk.Context, zoneId, denom string, w
 		}
 	}
 
-	return amount
+	return &amount, nil
 }
 
 func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {

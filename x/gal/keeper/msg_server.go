@@ -120,7 +120,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	return &types.MsgDelegateResponse{}, nil
 }
 
-// Undelegate is used when user requests undelegate their staked asset.
+// PendingUndelegate is used when user requests undelegate their staked asset.
 // 1. User sends their st-token to module account.
 // 2. And GAL coins step 1 to the store.
 func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.MsgPendingUndelegate) (*types.MsgPendingUndelegateResponse, error) {
@@ -157,6 +157,8 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 				Delegator: undelegate.Delegator,
 				Records:   []*types.UndelegateRecordContent{&newRecord},
 			}
+		} else {
+			return nil, err
 		}
 	} else {
 		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
@@ -238,13 +240,17 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
 	}
 
-	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, zoneInfo.ZoneId, withdraw.Withdrawer)
-	if !found {
-		return nil, types.ErrNoWithdrawRecord
+	withdrawRecord, err := m.keeper.GetWithdrawRecord(ctx, zoneInfo.ZoneId, withdraw.Withdrawer)
+	if err != nil {
+		return nil, err
 	}
 
 	// sum of all withdraw records for user
-	withdrawAmt := m.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
+	withdrawAmt, err := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
+	if err != nil {
+		return nil, err
+	}
+
 	if withdrawAmt.IsZero() {
 		return nil, types.ErrNoWithdrawRecord
 	}

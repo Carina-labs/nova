@@ -39,10 +39,9 @@ func (k Keeper) GetUndelegateRecord(ctx sdk.Context, zoneId, delegator string) (
 }
 
 // GetAllUndelegateRecord returns all undelegate record.
-func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []types.UndelegateRecord {
-	var undelegateInfo = []types.UndelegateRecord{}
-
-	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord types.UndelegateRecord) (stop bool) {
+func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.UndelegateRecord {
+	var undelegateInfo []*types.UndelegateRecord
+	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			undelegateInfo = append(undelegateInfo, undelegateRecord)
 		}
@@ -91,7 +90,7 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, 
 // UNDELEGATE_REQUEST_USER : Just requested undelegate by user. It is not in undelegate period.
 // UNDELEGATE_REQUEST_ICA  : Requested by ICA, It is in undelegate period.
 func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state UndelegatedState) {
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord types.UndelegateRecord) (stop bool) {
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			for _, record := range undelegateRecord.Records {
 				record.State = int64(state)
@@ -127,7 +126,7 @@ func (k Keeper) GetUndelegateVersion(ctx sdk.Context, zoneId string) uint64 {
 }
 
 func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state UndelegatedState, version uint64) bool {
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord types.UndelegateRecord) (stop bool) {
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			isChanged := false
 			for _, record := range undelegateRecord.Records {
@@ -149,7 +148,7 @@ func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state
 // DeleteUndelegateRecords removes undelegate record.
 func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state UndelegatedState) {
 	var recordItems []*types.UndelegateRecordContent
-	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord types.UndelegateRecord) (stop bool) {
+	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			for _, record := range undelegateRecord.Records {
 				if record.State != int64(state) {
@@ -168,7 +167,7 @@ func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state Un
 }
 
 // IterateUndelegatedRecords iterate through zones
-func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, undelegateInfo types.UndelegateRecord) (stop bool)) {
+func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool)) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
 	defer func(iterator sdk.Iterator) {
@@ -181,10 +180,9 @@ func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, 
 	i := int64(0)
 
 	for ; iterator.Valid(); iterator.Next() {
-		res := types.UndelegateRecord{}
-
+		var res types.UndelegateRecord
 		k.cdc.MustUnmarshal(iterator.Value(), &res)
-		stop := fn(i, res)
+		stop := fn(i, &res)
 		if stop {
 			break
 		}
