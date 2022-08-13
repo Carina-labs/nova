@@ -40,6 +40,7 @@ func GetQueryCmd() *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
+	cmd.AddCommand(queryParams())
 	cmd.AddCommand(queryClaimableAsset())
 	cmd.AddCommand(queryPendingWithdrawals())
 	cmd.AddCommand(queryActiveWithdrawals())
