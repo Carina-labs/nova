@@ -56,7 +56,7 @@ func getRegisterZoneCmd() *cobra.Command {
 			icaConnId := args[2]
 			validatorAddr := args[3]
 			denom := args[4]
-			decimal, err := strconv.ParseInt(args[5],10, 64)
+			decimal, err := strconv.ParseInt(args[5], 10, 64)
 			if err != nil {
 				return err
 			}

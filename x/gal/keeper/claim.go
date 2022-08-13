@@ -13,10 +13,9 @@ const snAssetDecimal = 18
 
 var (
 	precisionMultipliers []*big.Int
-	precisionReuse       = new(big.Int).Exp(big.NewInt(10), big.NewInt(snAssetDecimal), nil)
 )
 
-func init (){
+func init() {
 	precisionMultipliers = make([]*big.Int, snAssetDecimal+1)
 	for i := 0; i <= snAssetDecimal; i++ {
 		precisionMultipliers[i] = calcPrecisionMultiplier(int64(i))
@@ -78,7 +77,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 // TotalClaimableAssets returns the total amount of claimable snAsset.
 func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, transferPortId string, transferChannelId string, claimer sdk.AccAddress) (*sdk.Coin, error) {
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChannelId, zone.BaseDenom)
-	result :=  sdk.NewCoin(ibcDenom, sdk.NewIntFromUint64(0))
+	result := sdk.NewCoin(ibcDenom, sdk.NewIntFromUint64(0))
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
 	records, err := k.GetRecordedDepositAmt(ctx, zone.ZoneId, claimer)
@@ -131,7 +130,7 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 
 func (k Keeper) CalculateWithdrawAlpha(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {
 	res := new(big.Int)
-	if totalShareTokenSupply.Cmp(big.NewInt(0)) == 0{
+	if totalShareTokenSupply.Cmp(big.NewInt(0)) == 0 {
 		totalShareTokenSupply = totalStakedAmount
 	}
 	return res.Mul(burnedStTokenAmt, totalStakedAmount).Div(res, totalShareTokenSupply)
@@ -175,14 +174,14 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPor
 	return chainBalanceWithIbcDenom.Sub(unMintedAmount), nil
 }
 
-func (k Keeper) ConvertWAssetToSnAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin{
+func (k Keeper) ConvertWAssetToSnAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin {
 	convertDecimal := snAssetDecimal - decimal
 	snAsset := new(big.Int).Mul(amount, precisionMultiplier(convertDecimal))
-	return  sdk.NewCoin(denom, sdk.NewIntFromBigInt(snAsset))
+	return sdk.NewCoin(denom, sdk.NewIntFromBigInt(snAsset))
 }
 
-func (k Keeper) ConvertSnAssetToWAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin{
+func (k Keeper) ConvertSnAssetToWAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin {
 	convertDecimal := snAssetDecimal - decimal
 	wAsset := new(big.Int).Quo(amount, precisionMultiplier(convertDecimal)).Int64()
-	return  sdk.NewInt64Coin(denom, wAsset)
+	return sdk.NewInt64Coin(denom, wAsset)
 }

@@ -34,7 +34,7 @@ func NewMsgRegisterZone(zoneId, icaConnectionId string, daomodifierAddress sdk.A
 		},
 		ValidatorAddress: validatorAddress,
 		BaseDenom:        baseDenom,
-		Decimal: decimal,
+		Decimal:          decimal,
 	}
 }
 
@@ -332,7 +332,7 @@ func NewMsgChangeZoneInfo(zoneId, icaConnectionId string, daomodifierAddress sdk
 		},
 		ValidatorAddress: validatorAddress,
 		BaseDenom:        baseDenom,
-		Decimal: decimal,
+		Decimal:          decimal,
 	}
 }
 

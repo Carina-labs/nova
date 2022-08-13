@@ -47,6 +47,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
+	// check IBC denom
 	if deposit.Amount.Denom != m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, deposit.TransferPortId, deposit.TransferChannelId, zoneInfo.BaseDenom) {
 		return nil, types.ErrInvalidDenom
 	}
