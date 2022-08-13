@@ -60,11 +60,11 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Pe
 	amount := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
 	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
-	withdrawRecord, err := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
+	withdrawRecord, found := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
 
 	// if found is false, withdrawRecord variable is nil
-	if err != nil {
-		ctx.Logger().Debug("failed to fetch withdraw record", "err", err, "request", request)
+	if !found {
+		ctx.Logger().Debug("failed to find withdraw record", "request", request)
 		return &types.PendingWithdrawalsResponse{
 			Amount: amount,
 		}, nil
@@ -91,11 +91,7 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Act
 
 	// sum of all pending withdrawals
 	// if the user has no pending withdrawals (when transfer success record doesn't exist), return 0
-	withdrawAmt, err := q.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, request.Address)
-	if err != nil {
-		return nil, err
-	}
-
+	withdrawAmt := q.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, request.Address)
 	ibcDenom := q.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, request.TransferPortId, request.TransferChannelId, zoneInfo.BaseDenom)
 	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
 
@@ -111,9 +107,9 @@ func (q QueryServer) DepositRecords(goCtx context.Context, request *types.QueryD
 		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
 	}
 
-	records, err := q.keeper.GetUserDepositRecord(ctx, request.ZoneId, user)
-	if err != nil {
-		return nil, err
+	records, found := q.keeper.GetUserDepositRecord(ctx, request.ZoneId, user)
+	if !found {
+		return nil, types.ErrNoDepositRecord
 	}
 
 	return &types.QueryDepositRecordResponse{
@@ -123,9 +119,9 @@ func (q QueryServer) DepositRecords(goCtx context.Context, request *types.QueryD
 
 func (q QueryServer) UndelegateRecords(goCtx context.Context, request *types.QueryUndelegateRecordRequest) (*types.QueryUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	result, err := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
-	if err != nil {
-		return nil, err
+	result, found := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
+	if !found {
+		return nil, types.ErrNoUndelegateRecord
 	}
 
 	return &types.QueryUndelegateRecordResponse{
@@ -135,9 +131,9 @@ func (q QueryServer) UndelegateRecords(goCtx context.Context, request *types.Que
 
 func (q QueryServer) WithdrawRecords(goCtx context.Context, request *types.QueryWithdrawRecordRequest) (*types.QueryWithdrawRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	result, err := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
-	if err != nil {
-		return nil, err
+	result, found := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
+	if !found {
+		return nil, types.ErrNoWithdrawRecord
 	}
 
 	return &types.QueryWithdrawRecordResponse{

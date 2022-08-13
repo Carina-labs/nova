@@ -25,17 +25,16 @@ func (k Keeper) SetUndelegateRecord(ctx sdk.Context, record *types.UndelegateRec
 }
 
 // GetUndelegateRecord returns undelegate record by key.
-func (k Keeper) GetUndelegateRecord(ctx sdk.Context, zoneId, delegator string) (*types.UndelegateRecord, error) {
+func (k Keeper) GetUndelegateRecord(ctx sdk.Context, zoneId, delegator string) (result *types.UndelegateRecord, found bool) {
 	key := zoneId + delegator
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
 	bz := store.Get([]byte(key))
 	if len(bz) == 0 {
-		return nil, types.ErrNoUndelegateRecord
+		return nil, false
 	}
 
-	var result types.UndelegateRecord
-	k.cdc.MustUnmarshal(bz, &result)
-	return &result, nil
+	k.cdc.MustUnmarshal(bz, result)
+	return result, true
 }
 
 // GetAllUndelegateRecord returns all undelegate record.
