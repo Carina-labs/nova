@@ -13,7 +13,7 @@ import (
 type WithdrawStatusType int
 
 const (
-	WithdrawStatus_Registerred WithdrawStatusType = iota + 1
+	WithdrawStatus_Registered WithdrawStatusType = iota + 1
 	WithdrawStatus_Transferred
 )
 
@@ -114,7 +114,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 
 					if !found {
 						withdrawRecordContent = &types.WithdrawRecordContent{
-							State:           int64(WithdrawStatus_Registerred),
+							State:           int64(WithdrawStatus_Registered),
 							WithdrawVersion: items.UndelegateVersion,
 							Amount: &sdk.Coin{
 								Amount: items.WithdrawAmount.Amount,
