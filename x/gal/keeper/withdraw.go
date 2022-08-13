@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"context"
 	"encoding/binary"
 	"fmt"
 	"time"
@@ -214,36 +213,6 @@ func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, wit
 		}
 		i++
 	}
-}
-
-func (k Keeper) UndelegateHistory(goCtx context.Context, rq *types.QueryUndelegateHistoryRequest) (*types.QueryUndelegateHistoryResponse, error) {
-	// sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	// zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
-	// if zoneInfo == nil {
-	// 	return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
-	// }
-
-	// udInfo, ok := k.GetUndelegateRecord(sdkCtx, zoneInfo.ZoneId+rq.Address)
-	// if !ok {
-	// 	return nil, fmt.Errorf("there is no undelegate data for address: %s, denom: %s", rq.Address, rq.Denom)
-	// }
-
-	return &types.QueryUndelegateHistoryResponse{}, nil
-}
-
-func (k Keeper) WithdrawHistory(goCtx context.Context, rq *types.QueryWithdrawHistoryRequest) (*types.QueryWithdrawHistoryResponse, error) {
-	// sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	// zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
-	// if zoneInfo == nil {
-	// 	return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
-	// }
-
-	// wdInfo, found := k.GetWithdrawRecord(sdkCtx, zoneInfo.ZoneId, rq.Address)
-	// if !found {
-	// 	return nil, types.ErrNoWithdrawRecord
-	// }
-
-	return &types.QueryWithdrawHistoryResponse{}, nil
 }
 
 func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState WithdrawStatusType) {
