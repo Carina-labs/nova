@@ -44,12 +44,10 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 // TotalClaimableAssets returns the total amount of claimable snAsset.
 func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, transferPortId string, transferChannelId string, claimer sdk.AccAddress) (*sdk.Coin, error) {
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChannelId, zone.BaseDenom)
-	result := sdk.Coin{
-		Amount: sdk.NewIntFromUint64(0),
-		Denom:  ibcDenom,
-	}
+	result := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
+
 	records, found := k.GetUserDepositRecord(ctx, zone.ZoneId, claimer)
 	if !found {
 		return nil, types.ErrNoDepositRecord

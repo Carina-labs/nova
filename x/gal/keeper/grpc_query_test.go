@@ -5,6 +5,7 @@ import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"time"
 )
 
 var (
@@ -44,7 +45,87 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 		TransferChannelId: transferChannel,
 	})
 
-	suite.NoError(err)
-	suite.Equal(amt.Amount.Denom, denom)
-	suite.Equal(amt.Amount.Amount.Int64(), amount.Int64())
+	suite.Require().NoError(err)
+	suite.Require().Equal(amt.Amount.Denom, denom)
+	suite.Require().Equal(amt.Amount.Amount.Int64(), amount.Int64())
+}
+
+func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
+	// add pending withdrawals to the kv store
+	// query pending withdrawals and check if the result is correct
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+	galKeeper := suite.App.GalKeeper
+	denom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
+
+	// query with invalid zone
+	_, err := queryClient.PendingWithdrawals(ctx.Context(), &types.PendingWithdrawalsRequest{
+		ZoneId: "invalid",
+	})
+	suite.Require().Error(err)
+
+	// query with invalid user
+	invalidResult, err := queryClient.PendingWithdrawals(ctx.Context(), &types.PendingWithdrawalsRequest{
+		ZoneId:            zoneId,
+		Address:           "invalid_user",
+		TransferPortId:    transferPort,
+		TransferChannelId: transferChannel,
+	})
+	suite.Require().NoError(err)
+	suite.Require().Equal(denom, invalidResult.Amount.Denom)
+	suite.Require().Equal(sdk.ZeroInt(), invalidResult.Amount.Amount)
+
+	// fill the fake content
+	records := make(map[uint64]*types.WithdrawRecordContent)
+
+	amount := sdk.NewInt64Coin(denom, 100)
+	records[1] = &types.WithdrawRecordContent{
+		Amount:          &amount,
+		State:           int64(galkeeper.WithdrawStatus_Registered),
+		OracleVersion:   1,
+		WithdrawVersion: 1,
+		CompletionTime:  time.Time{},
+	}
+
+	records[2] = &types.WithdrawRecordContent{
+		Amount:          &amount,
+		State:           int64(galkeeper.WithdrawStatus_Registered),
+		OracleVersion:   1,
+		WithdrawVersion: 1,
+		CompletionTime:  time.Time{},
+	}
+
+	galKeeper.SetWithdrawRecord(ctx, &types.WithdrawRecord{
+		ZoneId:     zoneId,
+		Withdrawer: fooUser.String(),
+		Records:    records,
+	})
+
+	// query the pending withdrawal amount and check if the amount is correct
+	result, err := queryClient.PendingWithdrawals(ctx.Context(), &types.PendingWithdrawalsRequest{
+		ZoneId:            zoneId,
+		Address:           fooUser.String(),
+		TransferPortId:    transferPort,
+		TransferChannelId: transferChannel,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(result.Amount.Denom, denom)
+	suite.Require().Equal(result.Amount.Amount, sdk.NewInt(200))
+}
+
+func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
+
+}
+
+func (suite *KeeperTestSuite) TestQueryDepositRecord() {
+
+}
+
+func (suite *KeeperTestSuite) TestQueryWithdrawRecord() {
+
+}
+
+func (suite *KeeperTestSuite) TestQueryUndelegateRecord() {
+
 }

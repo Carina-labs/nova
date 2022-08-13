@@ -33,8 +33,9 @@ func (k Keeper) GetUndelegateRecord(ctx sdk.Context, zoneId, delegator string) (
 		return nil, false
 	}
 
-	k.cdc.MustUnmarshal(bz, result)
-	return result, true
+	var record types.UndelegateRecord
+	k.cdc.MustUnmarshal(bz, &record)
+	return &record, true
 }
 
 // GetAllUndelegateRecord returns all undelegate record.

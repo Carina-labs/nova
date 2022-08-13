@@ -39,9 +39,9 @@ func (k Keeper) GetUserDepositRecord(ctx sdk.Context, zoneId string, claimer sdk
 	}
 
 	res := store.Get(key)
-
-	k.cdc.MustUnmarshal(res, result)
-	return result, true
+	var record types.DepositRecord
+	k.cdc.MustUnmarshal(res, &record)
+	return &record, true
 }
 
 func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state DepositState) sdk.Coin {
