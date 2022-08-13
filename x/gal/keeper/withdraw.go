@@ -29,19 +29,17 @@ func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) 
 }
 
 // GetWithdrawRecord returns withdraw record item by key.
-func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*types.WithdrawRecord, error) {
+func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (result *types.WithdrawRecord, found bool) {
 	store := k.getWithdrawRecordStore(ctx)
 	keyBytes := []byte(zoneId + withdrawer)
 	if !store.Has(keyBytes) {
-		return nil, types.ErrNoWithdrawRecord
+		return nil, false
 	}
 
 	res := store.Get(keyBytes)
 
-	var withdrawRecord types.WithdrawRecord
-	k.cdc.MustUnmarshal(res, &withdrawRecord)
-
-	return &withdrawRecord, nil
+	k.cdc.MustUnmarshal(res, result)
+	return result, true
 }
 
 // DeleteWithdrawRecord removes withdraw record.
@@ -100,8 +98,8 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 		if undelegateInfo.ZoneId == zoneId {
 			for _, items := range undelegateInfo.Records {
 				if items.State == int64(UNDELEGATE_REQUEST_ICA) {
-					withdrawRecord, err := k.GetWithdrawRecord(ctx, zoneId, items.Withdrawer)
-					if err != nil {
+					withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, items.Withdrawer)
+					if !found {
 						withdrawRecord = &types.WithdrawRecord{
 							ZoneId:     zoneId,
 							Withdrawer: items.Withdrawer,
@@ -137,12 +135,13 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 	})
 }
 
-func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) (*sdk.Coin, error) {
+func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
 	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
-	withdrawRecord, err := k.GetWithdrawRecord(ctx, zoneId, withdrawer)
-	if err != nil {
-		return nil, err
+	withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, withdrawer)
+	if !found {
+		k.Logger(ctx).Error("withdraw record not found", "func", "GetWithdrawAmountForUser", "zoneId", zoneId, "address", withdrawer)
+		return amount
 	}
 
 	for _, record := range withdrawRecord.Records {
@@ -151,7 +150,7 @@ func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, 
 		}
 	}
 
-	return &amount, nil
+	return amount
 }
 
 func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {

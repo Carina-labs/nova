@@ -31,18 +31,17 @@ func (k Keeper) SetDepositRecord(ctx sdk.Context, msg *types.DepositRecord) {
 }
 
 // GetUserDepositRecord returns the amount of coin user deposit by address.
-func (k Keeper) GetUserDepositRecord(ctx sdk.Context, zoneId string, claimer sdk.AccAddress) (*types.DepositRecord, error) {
+func (k Keeper) GetUserDepositRecord(ctx sdk.Context, zoneId string, claimer sdk.AccAddress) (result *types.DepositRecord, found bool) {
 	store := k.getDepositRecordStore(ctx)
 	key := []byte(zoneId + claimer.String())
 	if !store.Has(key) {
-		return nil, types.ErrNoDepositRecord
+		return nil, false
 	}
 
 	res := store.Get(key)
 
-	var msg types.DepositRecord
-	k.cdc.MustUnmarshal(res, &msg)
-	return &msg, nil
+	k.cdc.MustUnmarshal(res, result)
+	return result, true
 }
 
 func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state DepositState) sdk.Coin {
@@ -134,9 +133,9 @@ func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state D
 }
 
 func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, depositor sdk.AccAddress, state DepositState) error {
-	record, err := k.GetUserDepositRecord(ctx, zoneId, depositor)
-	if err != nil {
-		return err
+	record, found := k.GetUserDepositRecord(ctx, zoneId, depositor)
+	if !found {
+		return types.ErrNoDepositRecord
 	}
 
 	var recordItems []*types.DepositRecordContent

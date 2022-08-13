@@ -57,9 +57,9 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		State:     int64(DEPOSIT_REQUEST),
 	}
 
-	record, err := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, claimAcc)
+	record, found := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, claimAcc)
 
-	if err == types.ErrNoDepositRecord {
+	if !found {
 		m.keeper.SetDepositRecord(ctx, &types.DepositRecord{
 			ZoneId:  deposit.ZoneId,
 			Claimer: deposit.Claimer,
@@ -129,7 +129,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	// change undelegate State
 	zoneInfo, found := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
 	if !found {
-		return nil, errors.New("zone not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	//send stAsset to GAL moduleAccount
@@ -149,16 +149,12 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 
 	snAssetAmt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
 
-	undelegateRecord, err := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
-	if err != nil {
-		if err == types.ErrNoUndelegateRecord {
-			undelegateRecord = &types.UndelegateRecord{
-				ZoneId:    undelegate.ZoneId,
-				Delegator: undelegate.Delegator,
-				Records:   []*types.UndelegateRecordContent{&newRecord},
-			}
-		} else {
-			return nil, err
+	undelegateRecord, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
+	if !found {
+		undelegateRecord = &types.UndelegateRecord{
+			ZoneId:    undelegate.ZoneId,
+			Delegator: undelegate.Delegator,
+			Records:   []*types.UndelegateRecordContent{&newRecord},
 		}
 	} else {
 		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
@@ -240,17 +236,13 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
 	}
 
-	withdrawRecord, err := m.keeper.GetWithdrawRecord(ctx, zoneInfo.ZoneId, withdraw.Withdrawer)
-	if err != nil {
-		return nil, err
+	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, zoneInfo.ZoneId, withdraw.Withdrawer)
+	if !found {
+		return nil, types.ErrNoWithdrawRecord
 	}
 
 	// sum of all withdraw records for user
-	withdrawAmt, err := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
-	if err != nil {
-		return nil, err
-	}
-
+	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
 	if withdrawAmt.IsZero() {
 		return nil, types.ErrNoWithdrawRecord
 	}
@@ -328,9 +320,10 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	if err != nil {
 		return nil, err
 	}
-	records, err := m.keeper.GetUserDepositRecord(ctx, claimMsg.ZoneId, claimerAddr)
-	if err != nil {
-		return nil, err
+
+	records, found := m.keeper.GetUserDepositRecord(ctx, claimMsg.ZoneId, claimerAddr)
+	if !found {
+		return nil, types.ErrNoDepositRecord
 	}
 
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, records.ZoneId)

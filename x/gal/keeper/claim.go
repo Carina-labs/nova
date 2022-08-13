@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+	"github.com/Carina-labs/nova/x/gal/types"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -49,9 +50,9 @@ func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.Regis
 	}
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
-	records, err := k.GetUserDepositRecord(ctx, zone.ZoneId, claimer)
-	if err != nil {
-		return nil, err
+	records, found := k.GetUserDepositRecord(ctx, zone.ZoneId, claimer)
+	if !found {
+		return nil, types.ErrNoDepositRecord
 	}
 
 	for _, record := range records.Records {
