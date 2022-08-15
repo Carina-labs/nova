@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"errors"
+	"github.com/cosmos/cosmos-sdk/x/authz"
 	"time"
 
 	"github.com/Carina-labs/nova/x/ibcstaking/types"
@@ -238,4 +239,58 @@ func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgR
 	k.Keeper.RegisterZone(ctx, &zoneInfo)
 
 	return &types.MsgRegisterHostAccountResponse{}, nil
+}
+
+func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGrant) (*types.MsgIcaAuthzGrantResponse, error){
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
+
+	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
+	if !ok {
+		return nil, errors.New("zone name is not found")
+	}
+
+	var msgs []sdk.Msg
+	msgs = append(msgs, &authz.MsgGrant{
+		Granter: zoneInfo.IcaAccount.HostAddress,
+		Grantee: msg.Grantee,
+		Grant: msg.Grant,
+	})
+
+	err := k.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		return nil, errors.New("IcaAuthzGrant transaction failed to send")
+	}
+
+	return &types.MsgIcaAuthzGrantResponse{}, nil
+}
+
+func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzRevoke) (*types.MsgIcaAuthzRevokeResponse, error){
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
+
+	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
+	if !ok {
+		return nil, errors.New("zone name is not found")
+	}
+
+	var msgs []sdk.Msg
+	msgs = append(msgs, &authz.MsgRevoke{
+		Granter: zoneInfo.IcaAccount.HostAddress,
+		Grantee: msg.Grantee,
+		MsgTypeUrl: msg.MsgTypeUrl,
+	})
+
+	err := k.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		return nil, errors.New("IcaAuthzRevoke transaction failed to send")
+	}
+
+	return &types.MsgIcaAuthzRevokeResponse{}, nil
 }
