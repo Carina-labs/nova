@@ -73,7 +73,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 	zoneInfo, ok := k.GetRegisteredZone(ctx, zone.ZoneId)
 
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	if zoneInfo.IcaAccount.DaomodifierAddress != zone.DaomodifierAddress {
@@ -121,7 +121,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -146,7 +146,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -171,7 +171,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -197,7 +197,7 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -250,7 +250,7 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -277,7 +277,7 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg

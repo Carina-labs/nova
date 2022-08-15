@@ -242,7 +242,6 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, types.ErrNoWithdrawRecord
 	}
 
-	// get withdrawAmount : withdraw기록들 중에서 time이 지난 금액들 전부 합해서 반환
 	withdrawAmt := m.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
 	if withdrawAmt.IsZero() {
 		return nil, nil
@@ -282,7 +281,7 @@ func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingW
 
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	withdrawAmount := m.keeper.GetTotalWithdrawAmountForZoneId(ctx, msg.ZoneId, zoneInfo.BaseDenom, msg.ChainTime)

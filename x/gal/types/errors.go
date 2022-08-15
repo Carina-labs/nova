@@ -8,7 +8,7 @@ var (
 	ErrNoWithdrawRecord    = errors.Register(ModuleName, 2, "no withdraw history for this account")
 	ErrCanNotReplaceRecord = errors.Register(ModuleName, 3, "cannot replace record")
 	ErrInsufficientFunds   = errors.Register(ModuleName, 4, "cannot withdraw funds : insufficient fund")
-	ErrNotFoundZoneInfo    = errors.Register(ModuleName, 5, "not found zone info")
+	ErrNotFoundZoneInfo    = errors.Register(ModuleName, 5, "registered zone not found with given name")
 	ErrCanNotWithdrawAsset = errors.Register(ModuleName, 6, "cannot withdraw funds")
 	ErrInvalidTime         = errors.Register(ModuleName, 7, "time is not zero")
 	ErrCanNotChangeState   = errors.Register(ModuleName, 8, "cannot change state")
