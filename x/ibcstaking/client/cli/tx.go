@@ -38,22 +38,22 @@ func GetTxCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(
-		NewRegisterZoneCmd(),
-		NewDelegateTxCmd(),
-		NewUndelegateTxCmd(),
-		NewAutoStakingTxCmd(),
-		NewTransferTxCmd(),
-		NewHostAddressTxCmd(),
-		NewDeleteZoneTxCmd(),
-		NewChangeZoneInfoTxCmd(),
-		NewAuthzGrantTxCmd(),
-		NewAuthzRevokeTxCmd(),
+		txRegisterZoneCmd(),
+		txDelegateTxCmd(),
+		txUndelegateTxCmd(),
+		txAutoStakingTxCmd(),
+		txTransferTxCmd(),
+		txHostAddressTxCmd(),
+		txDeleteZoneTxCmd(),
+		txChangeZoneInfoTxCmd(),
+		txAuthzGrantTxCmd(),
+		txAuthzRevokeTxCmd(),
 	)
 
 	return cmd
 }
 
-func NewRegisterZoneCmd() *cobra.Command {
+func txRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "registerzone [zone-id] [controller-address] [connection-id] [validator_address] [base-denom]",
 		Args: cobra.ExactArgs(5),
@@ -88,7 +88,7 @@ func NewRegisterZoneCmd() *cobra.Command {
 	return cmd
 }
 
-func NewDelegateTxCmd() *cobra.Command {
+func txDelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "icadelegate [zone-id] [controller-address] [host-address] [amount]",
 		Args: cobra.ExactArgs(4),
@@ -121,7 +121,7 @@ func NewDelegateTxCmd() *cobra.Command {
 	return cmd
 }
 
-func NewUndelegateTxCmd() *cobra.Command {
+func txUndelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "icaundelegate [zone-id] [controller-address] [host-address] [amount]",
 		Args: cobra.ExactArgs(4),
@@ -149,7 +149,7 @@ func NewUndelegateTxCmd() *cobra.Command {
 	return cmd
 }
 
-func NewAutoStakingTxCmd() *cobra.Command {
+func txAutoStakingTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "icaautostaking [zone-id] [controller-address] [host-address] [amount]",
 		Args: cobra.ExactArgs(4),
@@ -180,7 +180,7 @@ func NewAutoStakingTxCmd() *cobra.Command {
 	return cmd
 }
 
-func NewTransferTxCmd() *cobra.Command {
+func txTransferTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "icatransfer [zone-id] [controller-address] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
 		Args: cobra.ExactArgs(7),
@@ -215,7 +215,7 @@ func NewTransferTxCmd() *cobra.Command {
 	return cmd
 }
 
-func NewHostAddressTxCmd() *cobra.Command {
+func txHostAddressTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "registerhostaddress [zone-id] [host-address] [controller-address]",
 		Args: cobra.ExactArgs(3),
@@ -242,7 +242,7 @@ func NewHostAddressTxCmd() *cobra.Command {
 	return cmd
 }
 
-func NewDeleteZoneTxCmd() *cobra.Command {
+func txDeleteZoneTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "icadeletezone [zone-id] [controller-address]",
 		Args: cobra.ExactArgs(2),
@@ -268,7 +268,7 @@ func NewDeleteZoneTxCmd() *cobra.Command {
 	return cmd
 }
 
-func NewChangeZoneInfoTxCmd() *cobra.Command {
+func txChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "changezoneinfo [zone-id] [host-address] [controller-address] [connection-id] [validator_address] [base-denom]",
 		Args: cobra.ExactArgs(5),
@@ -301,7 +301,7 @@ func NewChangeZoneInfoTxCmd() *cobra.Command {
 
 	return cmd
 }
-func NewAuthzGrantTxCmd() *cobra.Command {
+func txAuthzGrantTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "icagrant [zone-id] [grantee-address] [authorization-type]  --from [granter]",
 		Args: cobra.ExactArgs(3),
@@ -422,7 +422,7 @@ func NewAuthzGrantTxCmd() *cobra.Command {
 	return cmd
 }
 
-func NewAuthzRevokeTxCmd() *cobra.Command {
+func txAuthzRevokeTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "icarevoke [zone-id] [grantee-address] [msg_type]  --from [controller-address]",
 
