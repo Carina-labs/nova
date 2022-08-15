@@ -34,7 +34,7 @@ func queryParams() *cobra.Command {
 
 func queryClaimableAsset() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "claimable_asset [zone_id] [address] [transfer_port_id] [transfer_channel_id]",
+		Use:  "claimable_asset [zone-id] [address] [transfer-port-id] [transfer-channel-id]",
 		Long: "Query for claimable snAssets",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -66,7 +66,7 @@ func queryClaimableAsset() *cobra.Command {
 
 func queryPendingWithdrawals() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "pending_withdrawals [zone_id] [address] [transfer_port_id] [transfer_channel_id]",
+		Use:  "pending_withdrawals [zone-id] [address] [transfer-port-id] [transfer-channel-id]",
 		Long: "Query for pending withdrawals",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -98,7 +98,7 @@ func queryPendingWithdrawals() *cobra.Command {
 
 func queryActiveWithdrawals() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "active_withdrawals [zone_id] [address] [transfer_port_id] [transfer_channel_id]",
+		Use:  "active_withdrawals [zone-id] [address] [transfer-port-id] [transfer-channel-id]",
 		Long: "Query for pending withdrawals",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -130,7 +130,7 @@ func queryActiveWithdrawals() *cobra.Command {
 
 func queryDepositRecords() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "deposit_records [zone_id] [address]",
+		Use:  "deposit_records [zone-id] [address]",
 		Long: "Query for deposit records",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -164,7 +164,7 @@ func queryDepositRecords() *cobra.Command {
 
 func queryUndelegateRecords() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegate_records [zone_id] [address]",
+		Use:  "undelegate_records [zone-id] [address]",
 		Long: "Query for undelegate records",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
@@ -196,7 +196,7 @@ func queryUndelegateRecords() *cobra.Command {
 
 func queryWithdrawRecords() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "withdraw_records [zone_id] [address]",
+		Use:  "withdraw_records [zone-id] [address]",
 		Long: "Query for withdraw records",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
