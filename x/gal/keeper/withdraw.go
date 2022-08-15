@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"context"
 	"encoding/binary"
 	"fmt"
 	"time"
@@ -11,11 +10,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-type WithdrawRegisterType int
+type WithdrawStatusType int
 
 const (
-	WITHDRAW_REGISTER WithdrawRegisterType = iota + 1
-	TRANSFER_SUCCESS
+	WithdrawStatus_Registered WithdrawStatusType = iota + 1
+	WithdrawStatus_Transferred
 )
 
 func (k Keeper) getWithdrawRecordStore(ctx sdk.Context) prefix.Store {
@@ -23,14 +22,14 @@ func (k Keeper) getWithdrawRecordStore(ctx sdk.Context) prefix.Store {
 }
 
 // SetWithdrawRecord writes withdraw record.
-func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record types.WithdrawRecord) {
+func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record *types.WithdrawRecord) {
 	store := k.getWithdrawRecordStore(ctx)
-	bz := k.cdc.MustMarshal(&record)
+	bz := k.cdc.MustMarshal(record)
 	store.Set([]byte(record.ZoneId+record.Withdrawer), bz)
 }
 
 // GetWithdrawRecord returns withdraw record item by key.
-func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*types.WithdrawRecord, bool) {
+func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (result *types.WithdrawRecord, found bool) {
 	store := k.getWithdrawRecordStore(ctx)
 	keyBytes := []byte(zoneId + withdrawer)
 	if !store.Has(keyBytes) {
@@ -39,10 +38,9 @@ func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (*
 
 	res := store.Get(keyBytes)
 
-	var withdrawRecord types.WithdrawRecord
-	k.cdc.MustUnmarshal(res, &withdrawRecord)
-
-	return &withdrawRecord, true
+	var record types.WithdrawRecord
+	k.cdc.MustUnmarshal(res, &record)
+	return &record, true
 }
 
 // DeleteWithdrawRecord removes withdraw record.
@@ -75,8 +73,8 @@ func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
 
-func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state WithdrawRegisterType, version uint64) bool {
-	k.IterateWithdrawRecords(ctx, func(index int64, withdrawRecord types.WithdrawRecord) (stop bool) {
+func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state WithdrawStatusType, version uint64) bool {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawRecord *types.WithdrawRecord) (stop bool) {
 		if withdrawRecord.ZoneId == zoneId {
 			isChanged := false
 			for _, record := range withdrawRecord.Records {
@@ -97,7 +95,7 @@ func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state W
 
 // SetWithdrawRecords write multiple withdraw record.
 func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Time) {
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo types.UndelegateRecord) (stop bool) {
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool) {
 		if undelegateInfo.ZoneId == zoneId {
 			for _, items := range undelegateInfo.Records {
 				if items.State == int64(UNDELEGATE_REQUEST_ICA) {
@@ -108,14 +106,13 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 							Withdrawer: items.Withdrawer,
 						}
 						withdrawRecord.Records = make(map[uint64]*types.WithdrawRecordContent)
-
 					}
 
 					withdrawRecordContent, found := withdrawRecord.Records[items.UndelegateVersion]
 
 					if !found {
 						withdrawRecordContent = &types.WithdrawRecordContent{
-							State:           int64(WITHDRAW_REGISTER),
+							State:           int64(WithdrawStatus_Registered),
 							WithdrawVersion: items.UndelegateVersion,
 							Amount: &sdk.Coin{
 								Amount: items.WithdrawAmount.Amount,
@@ -129,7 +126,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 					}
 					withdrawRecord.Records[items.UndelegateVersion] = withdrawRecordContent
 
-					k.SetWithdrawRecord(ctx, *withdrawRecord)
+					k.SetWithdrawRecord(ctx, withdrawRecord)
 				}
 
 			}
@@ -139,19 +136,17 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 	})
 }
 
-func (k Keeper) GetWithdrawAmontForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
-	amount := sdk.Coin{
-		Amount: sdk.NewInt(0),
-		Denom:  denom,
-	}
+func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
+	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
 	withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, withdrawer)
 	if !found {
+		k.Logger(ctx).Error("withdraw record not found", "func", "GetWithdrawAmountForUser", "zoneId", zoneId, "address", withdrawer)
 		return amount
 	}
 
 	for _, record := range withdrawRecord.Records {
-		if record.State == int64(TRANSFER_SUCCESS) {
+		if record.State == int64(WithdrawStatus_Transferred) {
 			amount = amount.Add(*record.Amount)
 		}
 	}
@@ -160,12 +155,9 @@ func (k Keeper) GetWithdrawAmontForUser(ctx sdk.Context, zoneId, denom string, w
 }
 
 func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {
-	amount := sdk.Coin{
-		Amount: sdk.NewInt(0),
-		Denom:  denom,
-	}
+	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
-	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
 		if withdrawInfo.ZoneId == zoneId {
 			for _, record := range withdrawInfo.Records {
 				if record.CompletionTime.Before(blockTime) {
@@ -197,7 +189,7 @@ func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, from sdk.AccAddress, amt sdk.C
 }
 
 // IterateWithdrawRecords iterate
-func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, withdrawInfo types.WithdrawRecord) (stop bool)) {
+func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool)) {
 	store := k.getWithdrawRecordStore(ctx)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
 	defer func(iterator sdk.Iterator) {
@@ -214,7 +206,7 @@ func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, wit
 		res := types.WithdrawRecord{}
 
 		k.cdc.MustUnmarshal(iterator.Value(), &res)
-		stop := fn(i, res)
+		stop := fn(i, &res)
 		if stop {
 			break
 		}
@@ -222,38 +214,8 @@ func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, wit
 	}
 }
 
-func (k Keeper) UndelegateHistory(goCtx context.Context, rq *types.QueryUndelegateHistoryRequest) (*types.QueryUndelegateHistoryResponse, error) {
-	// sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	// zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
-	// if zoneInfo == nil {
-	// 	return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
-	// }
-
-	// udInfo, ok := k.GetUndelegateRecord(sdkCtx, zoneInfo.ZoneId+rq.Address)
-	// if !ok {
-	// 	return nil, fmt.Errorf("there is no undelegate data for address: %s, denom: %s", rq.Address, rq.Denom)
-	// }
-
-	return &types.QueryUndelegateHistoryResponse{}, nil
-}
-
-func (k Keeper) WithdrawHistory(goCtx context.Context, rq *types.QueryWithdrawHistoryRequest) (*types.QueryWithdrawHistoryResponse, error) {
-	// sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	// zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(sdkCtx, rq.Denom)
-	// if zoneInfo == nil {
-	// 	return nil, fmt.Errorf("can't find registered zone for denom : %s", rq.Denom)
-	// }
-
-	// wdInfo, found := k.GetWithdrawRecord(sdkCtx, zoneInfo.ZoneId, rq.Address)
-	// if !found {
-	// 	return nil, types.ErrNoWithdrawRecord
-	// }
-
-	return &types.QueryWithdrawHistoryResponse{}, nil
-}
-
-func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState WithdrawRegisterType) {
-	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo types.WithdrawRecord) (stop bool) {
+func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState WithdrawStatusType) {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
 		for _, record := range withdrawInfo.Records {
 			if record.State == int64(preState) {
 				record.State = int64(postState)

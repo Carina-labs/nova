@@ -1,10 +1,7 @@
 package keeper
 
 import (
-	"context"
 	"encoding/binary"
-	"fmt"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -63,32 +60,4 @@ func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) uint64 {
 	}
 
 	return binary.BigEndian.Uint64(bz)
-}
-
-func (k Keeper) DepositHistory(goCtx context.Context, request *types.QueryDepositHistoryRequest) (*types.QueryDepositHistoryResponse, error) {
-	sdkCtx := sdk.UnwrapSDKContext(goCtx)
-	zoneInfo, ok := k.ibcstakingKeeper.GetRegisteredZone(sdkCtx, request.ZoneId)
-	if !ok {
-		return nil, fmt.Errorf("can't find registered zone for denom : %s", request.ZoneId)
-	}
-
-	acc, err := sdk.AccAddressFromBech32(request.Address)
-	if err != nil {
-		return nil, err
-	}
-
-	dpInfo, err := k.GetRecordedDepositAmt(sdkCtx, zoneInfo.ZoneId, acc)
-	if err != nil {
-		return nil, err
-	}
-
-	coins := sdk.Coins{}
-	for _, r := range dpInfo.Records {
-		coins.Add(*r.Amount)
-	}
-
-	return &types.QueryDepositHistoryResponse{
-		Address: dpInfo.Claimer,
-		Amount:  coins,
-	}, nil
 }

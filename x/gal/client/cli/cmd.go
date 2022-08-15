@@ -18,13 +18,13 @@ func GetTxCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(
-		NewDepositCmd(),
-		NewDelegateCmd(),
-		NewWithdrawCmd(),
-		NewUndelegateRequestCmd(),
-		NewUndelegateCmd(),
-		NewClaimSnTokenCmd(),
-		NewPendingWithdrawCmd(),
+		txDepositCmd(),
+		txDelegateCmd(),
+		txWithdrawCmd(),
+		txUndelegateRequestCmd(),
+		txUndelegateCmd(),
+		txClaimSnTokenCmd(),
+		txPendingWithdrawCmd(),
 	)
 
 	return cmd
@@ -40,11 +40,13 @@ func GetQueryCmd() *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
-	cmd.AddCommand(cmdShares())
-	cmd.AddCommand(cmdClaimableAsset())
-	cmd.AddCommand(cmdDepositHistory())
-	cmd.AddCommand(cmdUndelegateHistory())
-	cmd.AddCommand(cmdWithdrawHistory())
+	cmd.AddCommand(queryParams())
+	cmd.AddCommand(queryClaimableAsset())
+	cmd.AddCommand(queryPendingWithdrawals())
+	cmd.AddCommand(queryActiveWithdrawals())
+	cmd.AddCommand(queryDepositRecords())
+	cmd.AddCommand(queryUndelegateRecords())
+	cmd.AddCommand(queryWithdrawRecords())
 
 	return cmd
 }

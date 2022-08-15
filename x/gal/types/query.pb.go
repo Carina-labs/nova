@@ -7,7 +7,6 @@ import (
 	context "context"
 	fmt "fmt"
 	_ "github.com/cosmos/cosmos-proto"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
 	types "github.com/cosmos/cosmos-sdk/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
@@ -457,24 +456,23 @@ func (m *ActiveWithdrawalsResponse) GetAmount() types.Coin {
 	return types.Coin{}
 }
 
-// QueryMyShareRequest defines request form to query balance of snToken with address.
-type QueryMyShareRequest struct {
+type QueryDepositRecordRequest struct {
 	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-func (m *QueryMyShareRequest) Reset()         { *m = QueryMyShareRequest{} }
-func (m *QueryMyShareRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryMyShareRequest) ProtoMessage()    {}
-func (*QueryMyShareRequest) Descriptor() ([]byte, []int) {
+func (m *QueryDepositRecordRequest) Reset()         { *m = QueryDepositRecordRequest{} }
+func (m *QueryDepositRecordRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryDepositRecordRequest) ProtoMessage()    {}
+func (*QueryDepositRecordRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_701b18bfd5c1fb8e, []int{8}
 }
-func (m *QueryMyShareRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryDepositRecordRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryMyShareRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryDepositRecordRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryMyShareRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryDepositRecordRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -484,50 +482,48 @@ func (m *QueryMyShareRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return b[:n], nil
 	}
 }
-func (m *QueryMyShareRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryMyShareRequest.Merge(m, src)
+func (m *QueryDepositRecordRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryDepositRecordRequest.Merge(m, src)
 }
-func (m *QueryMyShareRequest) XXX_Size() int {
+func (m *QueryDepositRecordRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryMyShareRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryMyShareRequest.DiscardUnknown(m)
+func (m *QueryDepositRecordRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryDepositRecordRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryMyShareRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryDepositRecordRequest proto.InternalMessageInfo
 
-func (m *QueryMyShareRequest) GetZoneId() string {
+func (m *QueryDepositRecordRequest) GetZoneId() string {
 	if m != nil {
 		return m.ZoneId
 	}
 	return ""
 }
 
-func (m *QueryMyShareRequest) GetAddress() string {
+func (m *QueryDepositRecordRequest) GetAddress() string {
 	if m != nil {
 		return m.Address
 	}
 	return ""
 }
 
-// QuerySharesResponse defines response of QueryBalanceRequest.
-type QueryMyShareResponse struct {
-	Address string     `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Amount  types.Coin `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount"`
+type QueryDepositRecordResponse struct {
+	DepositRecord *DepositRecord `protobuf:"bytes,1,opt,name=deposit_record,json=depositRecord,proto3" json:"deposit_record,omitempty"`
 }
 
-func (m *QueryMyShareResponse) Reset()         { *m = QueryMyShareResponse{} }
-func (m *QueryMyShareResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryMyShareResponse) ProtoMessage()    {}
-func (*QueryMyShareResponse) Descriptor() ([]byte, []int) {
+func (m *QueryDepositRecordResponse) Reset()         { *m = QueryDepositRecordResponse{} }
+func (m *QueryDepositRecordResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryDepositRecordResponse) ProtoMessage()    {}
+func (*QueryDepositRecordResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_701b18bfd5c1fb8e, []int{9}
 }
-func (m *QueryMyShareResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryDepositRecordResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryMyShareResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryDepositRecordResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryMyShareResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryDepositRecordResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -537,48 +533,42 @@ func (m *QueryMyShareResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte
 		return b[:n], nil
 	}
 }
-func (m *QueryMyShareResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryMyShareResponse.Merge(m, src)
+func (m *QueryDepositRecordResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryDepositRecordResponse.Merge(m, src)
 }
-func (m *QueryMyShareResponse) XXX_Size() int {
+func (m *QueryDepositRecordResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryMyShareResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryMyShareResponse.DiscardUnknown(m)
+func (m *QueryDepositRecordResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryDepositRecordResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryMyShareResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryDepositRecordResponse proto.InternalMessageInfo
 
-func (m *QueryMyShareResponse) GetAddress() string {
+func (m *QueryDepositRecordResponse) GetDepositRecord() *DepositRecord {
 	if m != nil {
-		return m.Address
+		return m.DepositRecord
 	}
-	return ""
+	return nil
 }
 
-func (m *QueryMyShareResponse) GetAmount() types.Coin {
-	if m != nil {
-		return m.Amount
-	}
-	return types.Coin{}
+type QueryUndelegateRecordRequest struct {
+	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-type QueryAllSharesRequest struct {
-	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-}
-
-func (m *QueryAllSharesRequest) Reset()         { *m = QueryAllSharesRequest{} }
-func (m *QueryAllSharesRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryAllSharesRequest) ProtoMessage()    {}
-func (*QueryAllSharesRequest) Descriptor() ([]byte, []int) {
+func (m *QueryUndelegateRecordRequest) Reset()         { *m = QueryUndelegateRecordRequest{} }
+func (m *QueryUndelegateRecordRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryUndelegateRecordRequest) ProtoMessage()    {}
+func (*QueryUndelegateRecordRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_701b18bfd5c1fb8e, []int{10}
 }
-func (m *QueryAllSharesRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryUndelegateRecordRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryAllSharesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryUndelegateRecordRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryAllSharesRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryUndelegateRecordRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -588,42 +578,48 @@ func (m *QueryAllSharesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *QueryAllSharesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllSharesRequest.Merge(m, src)
+func (m *QueryUndelegateRecordRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryUndelegateRecordRequest.Merge(m, src)
 }
-func (m *QueryAllSharesRequest) XXX_Size() int {
+func (m *QueryUndelegateRecordRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryAllSharesRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllSharesRequest.DiscardUnknown(m)
+func (m *QueryUndelegateRecordRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryUndelegateRecordRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryAllSharesRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryUndelegateRecordRequest proto.InternalMessageInfo
 
-func (m *QueryAllSharesRequest) GetAddress() string {
+func (m *QueryUndelegateRecordRequest) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+func (m *QueryUndelegateRecordRequest) GetAddress() string {
 	if m != nil {
 		return m.Address
 	}
 	return ""
 }
 
-type QueryDepositHistoryRequest struct {
-	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+type QueryUndelegateRecordResponse struct {
+	UndelegateRecord *UndelegateRecord `protobuf:"bytes,1,opt,name=undelegate_record,json=undelegateRecord,proto3" json:"undelegate_record,omitempty"`
 }
 
-func (m *QueryDepositHistoryRequest) Reset()         { *m = QueryDepositHistoryRequest{} }
-func (m *QueryDepositHistoryRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryDepositHistoryRequest) ProtoMessage()    {}
-func (*QueryDepositHistoryRequest) Descriptor() ([]byte, []int) {
+func (m *QueryUndelegateRecordResponse) Reset()         { *m = QueryUndelegateRecordResponse{} }
+func (m *QueryUndelegateRecordResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryUndelegateRecordResponse) ProtoMessage()    {}
+func (*QueryUndelegateRecordResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_701b18bfd5c1fb8e, []int{11}
 }
-func (m *QueryDepositHistoryRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryUndelegateRecordResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryDepositHistoryRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryUndelegateRecordResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryDepositHistoryRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryUndelegateRecordResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -633,49 +629,42 @@ func (m *QueryDepositHistoryRequest) XXX_Marshal(b []byte, deterministic bool) (
 		return b[:n], nil
 	}
 }
-func (m *QueryDepositHistoryRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryDepositHistoryRequest.Merge(m, src)
+func (m *QueryUndelegateRecordResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryUndelegateRecordResponse.Merge(m, src)
 }
-func (m *QueryDepositHistoryRequest) XXX_Size() int {
+func (m *QueryUndelegateRecordResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryDepositHistoryRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryDepositHistoryRequest.DiscardUnknown(m)
+func (m *QueryUndelegateRecordResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryUndelegateRecordResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryDepositHistoryRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryUndelegateRecordResponse proto.InternalMessageInfo
 
-func (m *QueryDepositHistoryRequest) GetZoneId() string {
+func (m *QueryUndelegateRecordResponse) GetUndelegateRecord() *UndelegateRecord {
 	if m != nil {
-		return m.ZoneId
+		return m.UndelegateRecord
 	}
-	return ""
+	return nil
 }
 
-func (m *QueryDepositHistoryRequest) GetAddress() string {
-	if m != nil {
-		return m.Address
-	}
-	return ""
+type QueryWithdrawRecordRequest struct {
+	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-type QueryDepositHistoryResponse struct {
-	Address string                                   `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Amount  github_com_cosmos_cosmos_sdk_types.Coins `protobuf:"bytes,2,rep,name=amount,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
-}
-
-func (m *QueryDepositHistoryResponse) Reset()         { *m = QueryDepositHistoryResponse{} }
-func (m *QueryDepositHistoryResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryDepositHistoryResponse) ProtoMessage()    {}
-func (*QueryDepositHistoryResponse) Descriptor() ([]byte, []int) {
+func (m *QueryWithdrawRecordRequest) Reset()         { *m = QueryWithdrawRecordRequest{} }
+func (m *QueryWithdrawRecordRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryWithdrawRecordRequest) ProtoMessage()    {}
+func (*QueryWithdrawRecordRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_701b18bfd5c1fb8e, []int{12}
 }
-func (m *QueryDepositHistoryResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryWithdrawRecordRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryDepositHistoryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryWithdrawRecordRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryDepositHistoryResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryWithdrawRecordRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -685,49 +674,48 @@ func (m *QueryDepositHistoryResponse) XXX_Marshal(b []byte, deterministic bool) 
 		return b[:n], nil
 	}
 }
-func (m *QueryDepositHistoryResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryDepositHistoryResponse.Merge(m, src)
+func (m *QueryWithdrawRecordRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryWithdrawRecordRequest.Merge(m, src)
 }
-func (m *QueryDepositHistoryResponse) XXX_Size() int {
+func (m *QueryWithdrawRecordRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryDepositHistoryResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryDepositHistoryResponse.DiscardUnknown(m)
+func (m *QueryWithdrawRecordRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryWithdrawRecordRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryDepositHistoryResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryWithdrawRecordRequest proto.InternalMessageInfo
 
-func (m *QueryDepositHistoryResponse) GetAddress() string {
+func (m *QueryWithdrawRecordRequest) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+func (m *QueryWithdrawRecordRequest) GetAddress() string {
 	if m != nil {
 		return m.Address
 	}
 	return ""
 }
 
-func (m *QueryDepositHistoryResponse) GetAmount() github_com_cosmos_cosmos_sdk_types.Coins {
-	if m != nil {
-		return m.Amount
-	}
-	return nil
+type QueryWithdrawRecordResponse struct {
+	WithdrawRecord *WithdrawRecord `protobuf:"bytes,1,opt,name=withdraw_record,json=withdrawRecord,proto3" json:"withdraw_record,omitempty"`
 }
 
-type QueryUndelegateHistoryRequest struct {
-	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
-}
-
-func (m *QueryUndelegateHistoryRequest) Reset()         { *m = QueryUndelegateHistoryRequest{} }
-func (m *QueryUndelegateHistoryRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryUndelegateHistoryRequest) ProtoMessage()    {}
-func (*QueryUndelegateHistoryRequest) Descriptor() ([]byte, []int) {
+func (m *QueryWithdrawRecordResponse) Reset()         { *m = QueryWithdrawRecordResponse{} }
+func (m *QueryWithdrawRecordResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryWithdrawRecordResponse) ProtoMessage()    {}
+func (*QueryWithdrawRecordResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_701b18bfd5c1fb8e, []int{13}
 }
-func (m *QueryUndelegateHistoryRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryWithdrawRecordResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryUndelegateHistoryRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryWithdrawRecordResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryUndelegateHistoryRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryWithdrawRecordResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -737,192 +725,21 @@ func (m *QueryUndelegateHistoryRequest) XXX_Marshal(b []byte, deterministic bool
 		return b[:n], nil
 	}
 }
-func (m *QueryUndelegateHistoryRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryUndelegateHistoryRequest.Merge(m, src)
+func (m *QueryWithdrawRecordResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryWithdrawRecordResponse.Merge(m, src)
 }
-func (m *QueryUndelegateHistoryRequest) XXX_Size() int {
+func (m *QueryWithdrawRecordResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryUndelegateHistoryRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryUndelegateHistoryRequest.DiscardUnknown(m)
+func (m *QueryWithdrawRecordResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryWithdrawRecordResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryUndelegateHistoryRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryWithdrawRecordResponse proto.InternalMessageInfo
 
-func (m *QueryUndelegateHistoryRequest) GetZoneId() string {
+func (m *QueryWithdrawRecordResponse) GetWithdrawRecord() *WithdrawRecord {
 	if m != nil {
-		return m.ZoneId
-	}
-	return ""
-}
-
-func (m *QueryUndelegateHistoryRequest) GetAddress() string {
-	if m != nil {
-		return m.Address
-	}
-	return ""
-}
-
-type QueryUndelegateHistoryResponse struct {
-	Address       string                                   `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	BurnedSnAsset github_com_cosmos_cosmos_sdk_types.Coins `protobuf:"bytes,2,rep,name=burned_sn_asset,json=burnedSnAsset,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"burned_sn_asset"`
-	MintedWAsset  github_com_cosmos_cosmos_sdk_types.Coins `protobuf:"bytes,3,rep,name=minted_w_asset,json=mintedWAsset,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"minted_w_asset"`
-}
-
-func (m *QueryUndelegateHistoryResponse) Reset()         { *m = QueryUndelegateHistoryResponse{} }
-func (m *QueryUndelegateHistoryResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryUndelegateHistoryResponse) ProtoMessage()    {}
-func (*QueryUndelegateHistoryResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_701b18bfd5c1fb8e, []int{14}
-}
-func (m *QueryUndelegateHistoryResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryUndelegateHistoryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryUndelegateHistoryResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryUndelegateHistoryResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryUndelegateHistoryResponse.Merge(m, src)
-}
-func (m *QueryUndelegateHistoryResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryUndelegateHistoryResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryUndelegateHistoryResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryUndelegateHistoryResponse proto.InternalMessageInfo
-
-func (m *QueryUndelegateHistoryResponse) GetAddress() string {
-	if m != nil {
-		return m.Address
-	}
-	return ""
-}
-
-func (m *QueryUndelegateHistoryResponse) GetBurnedSnAsset() github_com_cosmos_cosmos_sdk_types.Coins {
-	if m != nil {
-		return m.BurnedSnAsset
-	}
-	return nil
-}
-
-func (m *QueryUndelegateHistoryResponse) GetMintedWAsset() github_com_cosmos_cosmos_sdk_types.Coins {
-	if m != nil {
-		return m.MintedWAsset
-	}
-	return nil
-}
-
-type QueryWithdrawHistoryRequest struct {
-	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
-}
-
-func (m *QueryWithdrawHistoryRequest) Reset()         { *m = QueryWithdrawHistoryRequest{} }
-func (m *QueryWithdrawHistoryRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryWithdrawHistoryRequest) ProtoMessage()    {}
-func (*QueryWithdrawHistoryRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_701b18bfd5c1fb8e, []int{15}
-}
-func (m *QueryWithdrawHistoryRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryWithdrawHistoryRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryWithdrawHistoryRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryWithdrawHistoryRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryWithdrawHistoryRequest.Merge(m, src)
-}
-func (m *QueryWithdrawHistoryRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryWithdrawHistoryRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryWithdrawHistoryRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryWithdrawHistoryRequest proto.InternalMessageInfo
-
-func (m *QueryWithdrawHistoryRequest) GetZoneId() string {
-	if m != nil {
-		return m.ZoneId
-	}
-	return ""
-}
-
-func (m *QueryWithdrawHistoryRequest) GetAddress() string {
-	if m != nil {
-		return m.Address
-	}
-	return ""
-}
-
-type QueryWithdrawHistoryResponse struct {
-	Address string                                   `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Amount  github_com_cosmos_cosmos_sdk_types.Coins `protobuf:"bytes,2,rep,name=amount,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"amount"`
-}
-
-func (m *QueryWithdrawHistoryResponse) Reset()         { *m = QueryWithdrawHistoryResponse{} }
-func (m *QueryWithdrawHistoryResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryWithdrawHistoryResponse) ProtoMessage()    {}
-func (*QueryWithdrawHistoryResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_701b18bfd5c1fb8e, []int{16}
-}
-func (m *QueryWithdrawHistoryResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryWithdrawHistoryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryWithdrawHistoryResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryWithdrawHistoryResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryWithdrawHistoryResponse.Merge(m, src)
-}
-func (m *QueryWithdrawHistoryResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryWithdrawHistoryResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryWithdrawHistoryResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryWithdrawHistoryResponse proto.InternalMessageInfo
-
-func (m *QueryWithdrawHistoryResponse) GetAddress() string {
-	if m != nil {
-		return m.Address
-	}
-	return ""
-}
-
-func (m *QueryWithdrawHistoryResponse) GetAmount() github_com_cosmos_cosmos_sdk_types.Coins {
-	if m != nil {
-		return m.Amount
+		return m.WithdrawRecord
 	}
 	return nil
 }
@@ -936,82 +753,72 @@ func init() {
 	proto.RegisterType((*PendingWithdrawalsResponse)(nil), "nova.gal.v1.PendingWithdrawalsResponse")
 	proto.RegisterType((*ActiveWithdrawalsRequest)(nil), "nova.gal.v1.ActiveWithdrawalsRequest")
 	proto.RegisterType((*ActiveWithdrawalsResponse)(nil), "nova.gal.v1.ActiveWithdrawalsResponse")
-	proto.RegisterType((*QueryMyShareRequest)(nil), "nova.gal.v1.QueryMyShareRequest")
-	proto.RegisterType((*QueryMyShareResponse)(nil), "nova.gal.v1.QueryMyShareResponse")
-	proto.RegisterType((*QueryAllSharesRequest)(nil), "nova.gal.v1.QueryAllSharesRequest")
-	proto.RegisterType((*QueryDepositHistoryRequest)(nil), "nova.gal.v1.QueryDepositHistoryRequest")
-	proto.RegisterType((*QueryDepositHistoryResponse)(nil), "nova.gal.v1.QueryDepositHistoryResponse")
-	proto.RegisterType((*QueryUndelegateHistoryRequest)(nil), "nova.gal.v1.QueryUndelegateHistoryRequest")
-	proto.RegisterType((*QueryUndelegateHistoryResponse)(nil), "nova.gal.v1.QueryUndelegateHistoryResponse")
-	proto.RegisterType((*QueryWithdrawHistoryRequest)(nil), "nova.gal.v1.QueryWithdrawHistoryRequest")
-	proto.RegisterType((*QueryWithdrawHistoryResponse)(nil), "nova.gal.v1.QueryWithdrawHistoryResponse")
+	proto.RegisterType((*QueryDepositRecordRequest)(nil), "nova.gal.v1.QueryDepositRecordRequest")
+	proto.RegisterType((*QueryDepositRecordResponse)(nil), "nova.gal.v1.QueryDepositRecordResponse")
+	proto.RegisterType((*QueryUndelegateRecordRequest)(nil), "nova.gal.v1.QueryUndelegateRecordRequest")
+	proto.RegisterType((*QueryUndelegateRecordResponse)(nil), "nova.gal.v1.QueryUndelegateRecordResponse")
+	proto.RegisterType((*QueryWithdrawRecordRequest)(nil), "nova.gal.v1.QueryWithdrawRecordRequest")
+	proto.RegisterType((*QueryWithdrawRecordResponse)(nil), "nova.gal.v1.QueryWithdrawRecordResponse")
 }
 
 func init() { proto.RegisterFile("nova/gal/v1/query.proto", fileDescriptor_701b18bfd5c1fb8e) }
 
 var fileDescriptor_701b18bfd5c1fb8e = []byte{
-	// 961 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x97, 0x4f, 0x6f, 0x1b, 0x45,
-	0x18, 0xc6, 0x33, 0x49, 0xeb, 0xaa, 0x6f, 0x20, 0x21, 0x93, 0x94, 0x38, 0xdb, 0xe2, 0x94, 0x05,
-	0x1a, 0xa7, 0x51, 0x76, 0xeb, 0x84, 0x3f, 0x42, 0x70, 0x71, 0xc2, 0xa1, 0x11, 0x42, 0x0a, 0x09,
-	0x55, 0x25, 0x2e, 0xd6, 0xd8, 0x3b, 0xac, 0x07, 0xd6, 0x33, 0xce, 0xce, 0xd8, 0x21, 0x54, 0xb9,
-	0xc0, 0x17, 0x40, 0x42, 0x08, 0x71, 0x42, 0x08, 0x21, 0x50, 0xcf, 0x08, 0x2e, 0x7c, 0x80, 0x1e,
-	0x2b, 0xb8, 0x70, 0x02, 0x94, 0xf0, 0x41, 0xd0, 0xce, 0x8c, 0x8d, 0x37, 0x5e, 0xc7, 0x51, 0x83,
-	0xa5, 0x9c, 0x92, 0xdd, 0x79, 0x66, 0x9e, 0xdf, 0xfb, 0xec, 0x64, 0xde, 0x09, 0xcc, 0x73, 0xd1,
-	0x26, 0x7e, 0x48, 0x22, 0xbf, 0x5d, 0xf2, 0xf7, 0x5a, 0x34, 0x3e, 0xf0, 0x9a, 0xb1, 0x50, 0x02,
-	0x4f, 0x26, 0x03, 0x5e, 0x48, 0x22, 0xaf, 0x5d, 0x72, 0xe6, 0x42, 0x11, 0x0a, 0xfd, 0xde, 0x4f,
-	0x7e, 0x33, 0x12, 0x27, 0xdf, 0x3b, 0xb7, 0x49, 0x62, 0xd2, 0x90, 0x76, 0xe4, 0x46, 0x28, 0x44,
-	0x18, 0x51, 0x9f, 0x34, 0x99, 0x4f, 0x38, 0x17, 0x8a, 0x28, 0x26, 0x78, 0x67, 0x74, 0xa1, 0x26,
-	0x64, 0x43, 0xc8, 0x8a, 0x59, 0xd0, 0x3c, 0xd8, 0xa1, 0x82, 0x79, 0xf2, 0xab, 0x44, 0x52, 0xbf,
-	0x5d, 0xaa, 0x52, 0x45, 0x4a, 0x7e, 0x4d, 0x30, 0x6e, 0xc6, 0xdd, 0x39, 0xc0, 0xef, 0x26, 0x90,
-	0xdb, 0xda, 0x6d, 0x87, 0xee, 0xb5, 0xa8, 0x54, 0xee, 0x5d, 0x98, 0x4d, 0xbd, 0x95, 0x4d, 0xc1,
-	0x25, 0xc5, 0x25, 0xc8, 0x19, 0xaa, 0x3c, 0xba, 0x89, 0x8a, 0x93, 0x6b, 0xb3, 0x5e, 0x4f, 0x4d,
-	0x9e, 0x11, 0x6f, 0x5c, 0x7a, 0xf4, 0xe7, 0xe2, 0xd8, 0x8e, 0x15, 0xba, 0xdf, 0x23, 0x78, 0x76,
-	0x33, 0x22, 0xac, 0x41, 0xaa, 0x11, 0x2d, 0x37, 0x44, 0x8b, 0x2b, 0x6b, 0x82, 0xe7, 0xe1, 0xca,
-	0x27, 0x82, 0xd3, 0x0a, 0x0b, 0xf4, 0x72, 0x57, 0x77, 0x72, 0xc9, 0xe3, 0x56, 0x80, 0xf3, 0x70,
-	0x85, 0x04, 0x41, 0x4c, 0xa5, 0xcc, 0x8f, 0xeb, 0x81, 0xce, 0x23, 0x2e, 0xc2, 0x33, 0x2a, 0x26,
-	0x5c, 0x7e, 0x40, 0xe3, 0x4a, 0x53, 0xc4, 0x2a, 0x99, 0x3b, 0xa1, 0x25, 0x53, 0x9d, 0xf7, 0xdb,
-	0x22, 0x56, 0x5b, 0x01, 0xf6, 0x60, 0xb6, 0xab, 0xac, 0xd5, 0x09, 0xe7, 0x34, 0x4a, 0xc4, 0x97,
-	0xb4, 0x78, 0xa6, 0x33, 0xb4, 0x69, 0x46, 0xb6, 0x02, 0x77, 0x07, 0xe6, 0xfb, 0x30, 0x6d, 0xd5,
-	0xaf, 0x41, 0x8e, 0xe8, 0x37, 0x9a, 0x66, 0x72, 0x6d, 0xc1, 0xb3, 0x09, 0x27, 0x99, 0x7a, 0x36,
-	0x53, 0x6f, 0x53, 0x30, 0xde, 0xa9, 0xdd, 0xc8, 0xdd, 0x1f, 0x11, 0x2c, 0x6c, 0x53, 0x1e, 0x30,
-	0x1e, 0xde, 0x67, 0xaa, 0x1e, 0xc4, 0x64, 0x9f, 0x44, 0xf2, 0x42, 0x96, 0x7f, 0x0f, 0x9c, 0x2c,
-	0xd2, 0xf3, 0x26, 0xf0, 0x03, 0x82, 0x7c, 0xb9, 0xa6, 0x58, 0x9b, 0x5e, 0xf4, 0x00, 0xde, 0x83,
-	0x85, 0x0c, 0xd0, 0xf3, 0xd6, 0x5f, 0xb5, 0x7f, 0x47, 0xef, 0x1c, 0xec, 0xd6, 0x49, 0x4c, 0x87,
-	0x56, 0xbe, 0x76, 0xa2, 0xf2, 0x8d, 0xfc, 0x6f, 0x3f, 0xad, 0xce, 0x59, 0xb3, 0xb2, 0x19, 0xd9,
-	0x55, 0x31, 0xe3, 0x61, 0x37, 0x13, 0xf7, 0x33, 0x04, 0x73, 0x69, 0x13, 0x4b, 0xdd, 0xb3, 0x18,
-	0x3a, 0xe3, 0x62, 0x4f, 0x5e, 0xe9, 0xdb, 0x70, 0x4d, 0x43, 0x94, 0xa3, 0x48, 0x53, 0x74, 0xbf,
-	0xf2, 0x13, 0x50, 0xb8, 0x0c, 0x1c, 0xbd, 0xd8, 0x5b, 0xb4, 0x29, 0x24, 0x53, 0x77, 0x99, 0x54,
-	0x22, 0x3e, 0x18, 0x49, 0x7a, 0x3f, 0x23, 0xb8, 0x9e, 0xe9, 0x75, 0x8e, 0x10, 0x6b, 0x3d, 0x21,
-	0x4e, 0x9c, 0x1e, 0xe2, 0x9d, 0x24, 0xc4, 0x87, 0x7f, 0x2d, 0x16, 0x43, 0xa6, 0xea, 0xad, 0xaa,
-	0x57, 0x13, 0x0d, 0x7b, 0x7e, 0xdb, 0x1f, 0xab, 0x32, 0xf8, 0xc8, 0x57, 0x07, 0x4d, 0x2a, 0xf5,
-	0x04, 0xd9, 0x0d, 0x3c, 0x82, 0xe7, 0x34, 0xf7, 0x3d, 0x1e, 0xd0, 0x88, 0x86, 0x44, 0xd1, 0x51,
-	0xc6, 0xf4, 0xeb, 0x38, 0x14, 0x06, 0xd9, 0x9d, 0x23, 0x29, 0x09, 0xd3, 0xd5, 0x56, 0xcc, 0x69,
-	0x50, 0x91, 0xbc, 0x42, 0xa4, 0xa4, 0x23, 0x89, 0xec, 0x69, 0xe3, 0xb1, 0xcb, 0xcb, 0x89, 0x03,
-	0xde, 0x83, 0xa9, 0x06, 0xe3, 0x8a, 0x06, 0x95, 0x7d, 0xeb, 0x39, 0xf1, 0xff, 0x7b, 0x3e, 0x65,
-	0x2c, 0xee, 0x6b, 0x4b, 0xf7, 0x43, 0xbb, 0xc9, 0x3a, 0x87, 0xcb, 0x28, 0x3f, 0xd5, 0x2f, 0x08,
-	0x6e, 0x64, 0x9b, 0x5d, 0xf0, 0x2d, 0xbd, 0xf6, 0xf0, 0x2a, 0x5c, 0xd6, 0xe4, 0xb8, 0x0e, 0x39,
-	0x73, 0x9b, 0xc0, 0x8b, 0xa9, 0x2b, 0x46, 0xff, 0x55, 0xc5, 0xb9, 0x39, 0x58, 0x60, 0xea, 0x75,
-	0xaf, 0x7f, 0xfa, 0xfb, 0x3f, 0x5f, 0x8c, 0x5f, 0xc3, 0xb3, 0x7e, 0xff, 0xf5, 0x0a, 0x7f, 0x85,
-	0x60, 0xfa, 0x44, 0xe3, 0xc7, 0x2f, 0xa4, 0x96, 0xcc, 0xbe, 0xbd, 0x38, 0x2f, 0x9e, 0x2e, 0xb2,
-	0xde, 0xaf, 0x6b, 0xef, 0x75, 0x5c, 0x4a, 0x79, 0xd7, 0x3a, 0xea, 0x8a, 0xa9, 0xdc, 0x7f, 0x60,
-	0x73, 0x3e, 0xf4, 0x1f, 0xd8, 0x8d, 0x70, 0x88, 0xbf, 0x43, 0x80, 0xfb, 0x7b, 0x32, 0xbe, 0x95,
-	0xbe, 0x73, 0x0d, 0xba, 0x5e, 0x38, 0x4b, 0x43, 0x75, 0x16, 0xf1, 0x4d, 0x8d, 0xf8, 0x2a, 0x7e,
-	0x39, 0x1d, 0x8f, 0x99, 0x50, 0xd9, 0xff, 0x6f, 0x46, 0x26, 0xe5, 0x37, 0x08, 0x66, 0xfa, 0x1a,
-	0x27, 0x7e, 0x29, 0x65, 0x3e, 0xe8, 0x06, 0xe0, 0xdc, 0x1a, 0x26, 0xb3, 0x88, 0x6f, 0x68, 0xc4,
-	0x57, 0xf0, 0x7a, 0x0a, 0x91, 0x68, 0xfd, 0x50, 0xc2, 0x43, 0xb8, 0xac, 0x3b, 0x12, 0xce, 0xd8,
-	0x29, 0xe9, 0xbe, 0xec, 0x3c, 0x7f, 0x8a, 0xc2, 0xa2, 0xf8, 0x1a, 0x65, 0x19, 0x2f, 0xa5, 0x50,
-	0xa4, 0x6e, 0x79, 0x99, 0xf6, 0x5f, 0x22, 0x98, 0x4a, 0xf7, 0x16, 0xbc, 0xd4, 0x6f, 0x93, 0xd9,
-	0xe9, 0x9c, 0xe2, 0x70, 0xa1, 0xc5, 0xba, 0xa3, 0xb1, 0x6e, 0xe3, 0x62, 0x0a, 0x2b, 0x30, 0xe2,
-	0x4c, 0xae, 0x6f, 0x11, 0xcc, 0xf4, 0x1d, 0xe6, 0xf8, 0x76, 0xbf, 0xe3, 0xa0, 0x06, 0xe3, 0xac,
-	0x9c, 0x49, 0x6b, 0x01, 0xd7, 0x35, 0xe0, 0x2a, 0x5e, 0xb1, 0x80, 0x54, 0x25, 0x80, 0xad, 0xae,
-	0x3e, 0x93, 0xf1, 0x6b, 0x04, 0xd3, 0x27, 0x4e, 0x31, 0x9c, 0x91, 0x49, 0xf6, 0xa9, 0xea, 0x2c,
-	0x9f, 0x41, 0x69, 0xe9, 0x4a, 0x9a, 0x6e, 0x05, 0x2f, 0xa7, 0xe8, 0x3a, 0x3b, 0x2b, 0x8b, 0x6d,
-	0xa3, 0xfc, 0xe8, 0xa8, 0x80, 0x1e, 0x1f, 0x15, 0xd0, 0xdf, 0x47, 0x05, 0xf4, 0xf9, 0x71, 0x61,
-	0xec, 0xf1, 0x71, 0x61, 0xec, 0x8f, 0xe3, 0xc2, 0xd8, 0xfb, 0x4b, 0x3d, 0x07, 0xdf, 0x26, 0x89,
-	0x19, 0x27, 0xab, 0x11, 0xa9, 0x4a, 0xb3, 0xf4, 0xc7, 0xfa, 0xdb, 0xe8, 0xd3, 0xaf, 0x9a, 0xd3,
-	0xff, 0x82, 0xad, 0xff, 0x1b, 0x00, 0x00, 0xff, 0xff, 0x9c, 0xc9, 0x79, 0x6b, 0x33, 0x0e, 0x00,
-	0x00,
+	// 853 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0x4f, 0x6f, 0x23, 0x35,
+	0x1c, 0xcd, 0x2c, 0x4b, 0x16, 0x5c, 0x91, 0xdd, 0x3a, 0x85, 0x26, 0xd3, 0xdd, 0xec, 0x6a, 0x80,
+	0xdd, 0xb4, 0x55, 0x67, 0x48, 0xc2, 0x1f, 0x21, 0xb8, 0xa4, 0xe9, 0x81, 0x72, 0x2a, 0x81, 0x0a,
+	0x89, 0x4b, 0xe4, 0xcc, 0x98, 0xc9, 0xa8, 0x13, 0x3b, 0x1d, 0x3b, 0x09, 0xa5, 0xea, 0x85, 0x4f,
+	0x80, 0xd4, 0x03, 0x47, 0x0e, 0xa8, 0x82, 0x0f, 0xc0, 0x87, 0xe8, 0xb1, 0x82, 0x0b, 0x27, 0x84,
+	0x5a, 0x3e, 0x08, 0x1a, 0xdb, 0x93, 0xc6, 0xc9, 0x0c, 0x59, 0xa9, 0xaa, 0xd4, 0x5b, 0xec, 0xf7,
+	0xec, 0xdf, 0x7b, 0x3f, 0xeb, 0xf7, 0x26, 0x60, 0x95, 0xd0, 0x11, 0x72, 0x7c, 0x14, 0x3a, 0xa3,
+	0x9a, 0x73, 0x38, 0xc4, 0xd1, 0x91, 0x3d, 0x88, 0x28, 0xa7, 0x70, 0x29, 0x06, 0x6c, 0x1f, 0x85,
+	0xf6, 0xa8, 0x66, 0xae, 0xf8, 0xd4, 0xa7, 0x62, 0xdf, 0x89, 0x7f, 0x49, 0x8a, 0x59, 0x9a, 0x3e,
+	0x3b, 0x40, 0x11, 0xea, 0x33, 0x85, 0x94, 0xa7, 0x11, 0x1f, 0x13, 0xcc, 0x82, 0x04, 0x7a, 0xec,
+	0x53, 0xea, 0x87, 0xd8, 0x41, 0x83, 0xc0, 0x41, 0x84, 0x50, 0x8e, 0x78, 0x40, 0xc9, 0xe4, 0xa0,
+	0x4b, 0x59, 0x9f, 0xb2, 0x8e, 0xac, 0x25, 0x17, 0x0a, 0xaa, 0xc8, 0x95, 0xd3, 0x45, 0x0c, 0x3b,
+	0xa3, 0x5a, 0x17, 0x73, 0x54, 0x73, 0x5c, 0x1a, 0x10, 0x89, 0x5b, 0x2b, 0x00, 0x7e, 0x11, 0xeb,
+	0xdf, 0x13, 0x42, 0xda, 0xf8, 0x70, 0x88, 0x19, 0xb7, 0x3e, 0x03, 0x45, 0x6d, 0x97, 0x0d, 0x28,
+	0x61, 0x18, 0xd6, 0x40, 0x5e, 0x0a, 0x2e, 0x19, 0xcf, 0x8c, 0xea, 0x52, 0xbd, 0x68, 0x4f, 0xd9,
+	0xb5, 0x25, 0x79, 0xfb, 0xfe, 0xf9, 0xdf, 0x4f, 0x73, 0x6d, 0x45, 0xb4, 0xce, 0x0c, 0xf0, 0x56,
+	0x2b, 0x44, 0x41, 0x1f, 0x75, 0x43, 0xdc, 0xec, 0xd3, 0x21, 0xe1, 0xaa, 0x08, 0x5c, 0x05, 0x0f,
+	0xbe, 0xa7, 0x04, 0x77, 0x02, 0x4f, 0x5c, 0xf7, 0x7a, 0x3b, 0x1f, 0x2f, 0x77, 0x3d, 0x58, 0x02,
+	0x0f, 0x90, 0xe7, 0x45, 0x98, 0xb1, 0xd2, 0x3d, 0x01, 0x24, 0x4b, 0x58, 0x05, 0x8f, 0x78, 0x84,
+	0x08, 0xfb, 0x16, 0x47, 0x9d, 0x01, 0x8d, 0x78, 0x7c, 0xf6, 0x15, 0x41, 0x29, 0x24, 0xfb, 0x7b,
+	0x34, 0xe2, 0xbb, 0x1e, 0xb4, 0x41, 0x71, 0xc2, 0x74, 0x7b, 0x88, 0x10, 0x1c, 0xc6, 0xe4, 0xfb,
+	0x82, 0xbc, 0x9c, 0x40, 0x2d, 0x89, 0xec, 0x7a, 0x56, 0x1b, 0xac, 0xce, 0xc9, 0x54, 0xae, 0x3f,
+	0x02, 0x79, 0x24, 0x76, 0x84, 0x9a, 0xa5, 0x7a, 0xd9, 0x56, 0x1d, 0x8e, 0x7b, 0x6a, 0xab, 0x9e,
+	0xda, 0x2d, 0x1a, 0x90, 0xc4, 0xbb, 0xa4, 0x5b, 0xbf, 0x19, 0xa0, 0xbc, 0x87, 0x89, 0x17, 0x10,
+	0xff, 0xeb, 0x80, 0xf7, 0xbc, 0x08, 0x8d, 0x51, 0xc8, 0xee, 0xa4, 0xfd, 0x7d, 0x60, 0xa6, 0x29,
+	0xbd, 0x69, 0x07, 0x7e, 0x35, 0x40, 0xa9, 0xe9, 0xf2, 0x60, 0x84, 0xef, 0x7a, 0x03, 0xbe, 0x02,
+	0xe5, 0x14, 0xa1, 0x37, 0xf5, 0xdf, 0x03, 0x65, 0x31, 0x47, 0x3b, 0x78, 0x40, 0x59, 0xc0, 0xdb,
+	0xd8, 0xa5, 0x91, 0xb7, 0xd0, 0x7f, 0x7d, 0xc6, 0xff, 0x76, 0xe9, 0x8f, 0xdf, 0xb7, 0x56, 0x54,
+	0xc9, 0xa6, 0x44, 0xbe, 0xe4, 0x51, 0x40, 0xfc, 0x49, 0x67, 0xac, 0x0e, 0x30, 0xd3, 0x2a, 0x29,
+	0x03, 0x4d, 0x50, 0xf0, 0x24, 0xd0, 0x89, 0x04, 0xa2, 0x06, 0xd8, 0xd4, 0x06, 0x58, 0x3f, 0xfb,
+	0x86, 0x37, 0xbd, 0xb4, 0x0e, 0xc0, 0x63, 0x51, 0x60, 0x9f, 0x78, 0x38, 0xc4, 0x3e, 0xe2, 0xf8,
+	0x16, 0xdd, 0x1c, 0x80, 0x27, 0x19, 0xc5, 0x94, 0xa1, 0xcf, 0xc1, 0xf2, 0x70, 0x82, 0xe9, 0x9e,
+	0x9e, 0x68, 0x9e, 0xe6, 0x6e, 0x78, 0x34, 0x9c, 0xd9, 0xb1, 0x02, 0xd5, 0xba, 0xe4, 0xe5, 0x6f,
+	0xd1, 0x97, 0x0b, 0xd6, 0x52, 0x4b, 0x29, 0x57, 0x3b, 0xe0, 0xe1, 0x58, 0x21, 0xba, 0xa7, 0x35,
+	0xcd, 0xd3, 0xcc, 0xe9, 0xc2, 0x58, 0x5b, 0xd7, 0xcf, 0x5e, 0x03, 0xaf, 0x8a, 0x2a, 0xb0, 0x07,
+	0xf2, 0x32, 0x94, 0xe1, 0x53, 0xed, 0x82, 0xf9, 0xc4, 0x37, 0x9f, 0x65, 0x13, 0xa4, 0x38, 0x6b,
+	0xed, 0x87, 0x3f, 0xff, 0x3d, 0xbd, 0xf7, 0x26, 0x2c, 0x3a, 0xf3, 0x1f, 0x30, 0xf8, 0x93, 0x01,
+	0x1e, 0xce, 0xe4, 0x27, 0x7c, 0x5b, 0xbb, 0x32, 0xfd, 0x23, 0x60, 0xbe, 0xf3, 0xff, 0x24, 0x55,
+	0xfb, 0x63, 0x51, 0xbb, 0x01, 0x6b, 0x5a, 0x6d, 0x37, 0x61, 0x77, 0xe4, 0xb8, 0x39, 0xc7, 0xaa,
+	0xcf, 0x27, 0xce, 0xb1, 0x7a, 0xb3, 0x13, 0xf8, 0x8b, 0x01, 0xe0, 0x7c, 0xb4, 0xc1, 0xe7, 0xfa,
+	0xa7, 0x2b, 0x2b, 0xa5, 0xcd, 0x17, 0x0b, 0x79, 0x4a, 0xe2, 0xa7, 0x42, 0xe2, 0x87, 0xf0, 0x7d,
+	0xbd, 0x3d, 0xf2, 0x40, 0x67, 0x7c, 0x7d, 0x22, 0x55, 0xe5, 0xcf, 0x06, 0x58, 0x9e, 0xcb, 0x1f,
+	0xf8, 0xae, 0x56, 0x3c, 0x2b, 0x48, 0xcd, 0xe7, 0x8b, 0x68, 0x4a, 0xe2, 0x27, 0x42, 0xe2, 0x07,
+	0xb0, 0xa1, 0x49, 0x44, 0x82, 0xbf, 0x50, 0xe1, 0xa9, 0x01, 0x0a, 0x5a, 0x40, 0xcc, 0xf6, 0x30,
+	0x33, 0xe8, 0x66, 0x7a, 0x98, 0x1d, 0x53, 0xd6, 0x7b, 0x42, 0xe0, 0x06, 0xac, 0x6a, 0x02, 0x55,
+	0x0e, 0x65, 0xf6, 0x6d, 0x76, 0xc4, 0x19, 0x5c, 0x9f, 0x2f, 0x98, 0x11, 0x5b, 0xe6, 0xc6, 0xcb,
+	0x50, 0x95, 0xbc, 0x86, 0x90, 0xb7, 0x05, 0x37, 0x95, 0x3c, 0xcc, 0x63, 0x79, 0xd7, 0x79, 0x92,
+	0xaa, 0x30, 0x9e, 0x0c, 0x7d, 0x60, 0x19, 0x4c, 0x69, 0x48, 0x6a, 0xf8, 0x98, 0xd5, 0xc5, 0x44,
+	0xa5, 0xad, 0x26, 0xb4, 0x6d, 0xc2, 0x75, 0x4d, 0x5b, 0xf2, 0xa8, 0x69, 0xca, 0xb6, 0x9b, 0xe7,
+	0x97, 0x15, 0xe3, 0xe2, 0xb2, 0x62, 0xfc, 0x73, 0x59, 0x31, 0x7e, 0xbc, 0xaa, 0xe4, 0x2e, 0xae,
+	0x2a, 0xb9, 0xbf, 0xae, 0x2a, 0xb9, 0x6f, 0x5e, 0xf8, 0x01, 0xef, 0x0d, 0xbb, 0xb6, 0x4b, 0xfb,
+	0x4e, 0x0b, 0x45, 0x01, 0x41, 0x5b, 0x21, 0xea, 0x32, 0x79, 0xf5, 0x77, 0xe2, 0x5d, 0xf8, 0xd1,
+	0x00, 0xb3, 0x6e, 0x5e, 0xfc, 0x89, 0x6c, 0xfc, 0x17, 0x00, 0x00, 0xff, 0xff, 0x69, 0x6e, 0x64,
+	0xcd, 0x10, 0x0b, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1030,10 +837,9 @@ type QueryClient interface {
 	ClaimableAmount(ctx context.Context, in *ClaimableAmountRequest, opts ...grpc.CallOption) (*ClaimableAmountResponse, error)
 	PendingWithdrawals(ctx context.Context, in *PendingWithdrawalsRequest, opts ...grpc.CallOption) (*PendingWithdrawalsResponse, error)
 	ActiveWithdrawals(ctx context.Context, in *ActiveWithdrawalsRequest, opts ...grpc.CallOption) (*ActiveWithdrawalsResponse, error)
-	Share(ctx context.Context, in *QueryMyShareRequest, opts ...grpc.CallOption) (*QueryMyShareResponse, error)
-	DepositHistory(ctx context.Context, in *QueryDepositHistoryRequest, opts ...grpc.CallOption) (*QueryDepositHistoryResponse, error)
-	UndelegateHistory(ctx context.Context, in *QueryUndelegateHistoryRequest, opts ...grpc.CallOption) (*QueryUndelegateHistoryResponse, error)
-	WithdrawHistory(ctx context.Context, in *QueryWithdrawHistoryRequest, opts ...grpc.CallOption) (*QueryWithdrawHistoryResponse, error)
+	DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error)
+	UndelegateRecords(ctx context.Context, in *QueryUndelegateRecordRequest, opts ...grpc.CallOption) (*QueryUndelegateRecordResponse, error)
+	WithdrawRecords(ctx context.Context, in *QueryWithdrawRecordRequest, opts ...grpc.CallOption) (*QueryWithdrawRecordResponse, error)
 }
 
 type queryClient struct {
@@ -1080,36 +886,27 @@ func (c *queryClient) ActiveWithdrawals(ctx context.Context, in *ActiveWithdrawa
 	return out, nil
 }
 
-func (c *queryClient) Share(ctx context.Context, in *QueryMyShareRequest, opts ...grpc.CallOption) (*QueryMyShareResponse, error) {
-	out := new(QueryMyShareResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/Share", in, out, opts...)
+func (c *queryClient) DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error) {
+	out := new(QueryDepositRecordResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DepositRecords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *queryClient) DepositHistory(ctx context.Context, in *QueryDepositHistoryRequest, opts ...grpc.CallOption) (*QueryDepositHistoryResponse, error) {
-	out := new(QueryDepositHistoryResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DepositHistory", in, out, opts...)
+func (c *queryClient) UndelegateRecords(ctx context.Context, in *QueryUndelegateRecordRequest, opts ...grpc.CallOption) (*QueryUndelegateRecordResponse, error) {
+	out := new(QueryUndelegateRecordResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/UndelegateRecords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *queryClient) UndelegateHistory(ctx context.Context, in *QueryUndelegateHistoryRequest, opts ...grpc.CallOption) (*QueryUndelegateHistoryResponse, error) {
-	out := new(QueryUndelegateHistoryResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/UndelegateHistory", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *queryClient) WithdrawHistory(ctx context.Context, in *QueryWithdrawHistoryRequest, opts ...grpc.CallOption) (*QueryWithdrawHistoryResponse, error) {
-	out := new(QueryWithdrawHistoryResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/WithdrawHistory", in, out, opts...)
+func (c *queryClient) WithdrawRecords(ctx context.Context, in *QueryWithdrawRecordRequest, opts ...grpc.CallOption) (*QueryWithdrawRecordResponse, error) {
+	out := new(QueryWithdrawRecordResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/WithdrawRecords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1122,10 +919,9 @@ type QueryServer interface {
 	ClaimableAmount(context.Context, *ClaimableAmountRequest) (*ClaimableAmountResponse, error)
 	PendingWithdrawals(context.Context, *PendingWithdrawalsRequest) (*PendingWithdrawalsResponse, error)
 	ActiveWithdrawals(context.Context, *ActiveWithdrawalsRequest) (*ActiveWithdrawalsResponse, error)
-	Share(context.Context, *QueryMyShareRequest) (*QueryMyShareResponse, error)
-	DepositHistory(context.Context, *QueryDepositHistoryRequest) (*QueryDepositHistoryResponse, error)
-	UndelegateHistory(context.Context, *QueryUndelegateHistoryRequest) (*QueryUndelegateHistoryResponse, error)
-	WithdrawHistory(context.Context, *QueryWithdrawHistoryRequest) (*QueryWithdrawHistoryResponse, error)
+	DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error)
+	UndelegateRecords(context.Context, *QueryUndelegateRecordRequest) (*QueryUndelegateRecordResponse, error)
+	WithdrawRecords(context.Context, *QueryWithdrawRecordRequest) (*QueryWithdrawRecordResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -1144,17 +940,14 @@ func (*UnimplementedQueryServer) PendingWithdrawals(ctx context.Context, req *Pe
 func (*UnimplementedQueryServer) ActiveWithdrawals(ctx context.Context, req *ActiveWithdrawalsRequest) (*ActiveWithdrawalsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ActiveWithdrawals not implemented")
 }
-func (*UnimplementedQueryServer) Share(ctx context.Context, req *QueryMyShareRequest) (*QueryMyShareResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Share not implemented")
+func (*UnimplementedQueryServer) DepositRecords(ctx context.Context, req *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DepositRecords not implemented")
 }
-func (*UnimplementedQueryServer) DepositHistory(ctx context.Context, req *QueryDepositHistoryRequest) (*QueryDepositHistoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DepositHistory not implemented")
+func (*UnimplementedQueryServer) UndelegateRecords(ctx context.Context, req *QueryUndelegateRecordRequest) (*QueryUndelegateRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UndelegateRecords not implemented")
 }
-func (*UnimplementedQueryServer) UndelegateHistory(ctx context.Context, req *QueryUndelegateHistoryRequest) (*QueryUndelegateHistoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UndelegateHistory not implemented")
-}
-func (*UnimplementedQueryServer) WithdrawHistory(ctx context.Context, req *QueryWithdrawHistoryRequest) (*QueryWithdrawHistoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WithdrawHistory not implemented")
+func (*UnimplementedQueryServer) WithdrawRecords(ctx context.Context, req *QueryWithdrawRecordRequest) (*QueryWithdrawRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WithdrawRecords not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -1233,74 +1026,56 @@ func _Query_ActiveWithdrawals_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_Share_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryMyShareRequest)
+func _Query_DepositRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryDepositRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).Share(ctx, in)
+		return srv.(QueryServer).DepositRecords(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Query/Share",
+		FullMethod: "/nova.gal.v1.Query/DepositRecords",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Share(ctx, req.(*QueryMyShareRequest))
+		return srv.(QueryServer).DepositRecords(ctx, req.(*QueryDepositRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_DepositHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryDepositHistoryRequest)
+func _Query_UndelegateRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUndelegateRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).DepositHistory(ctx, in)
+		return srv.(QueryServer).UndelegateRecords(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Query/DepositHistory",
+		FullMethod: "/nova.gal.v1.Query/UndelegateRecords",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).DepositHistory(ctx, req.(*QueryDepositHistoryRequest))
+		return srv.(QueryServer).UndelegateRecords(ctx, req.(*QueryUndelegateRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_UndelegateHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryUndelegateHistoryRequest)
+func _Query_WithdrawRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryWithdrawRecordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).UndelegateHistory(ctx, in)
+		return srv.(QueryServer).WithdrawRecords(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Query/UndelegateHistory",
+		FullMethod: "/nova.gal.v1.Query/WithdrawRecords",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).UndelegateHistory(ctx, req.(*QueryUndelegateHistoryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Query_WithdrawHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryWithdrawHistoryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).WithdrawHistory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/nova.gal.v1.Query/WithdrawHistory",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).WithdrawHistory(ctx, req.(*QueryWithdrawHistoryRequest))
+		return srv.(QueryServer).WithdrawRecords(ctx, req.(*QueryWithdrawRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1326,20 +1101,16 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Query_ActiveWithdrawals_Handler,
 		},
 		{
-			MethodName: "Share",
-			Handler:    _Query_Share_Handler,
+			MethodName: "DepositRecords",
+			Handler:    _Query_DepositRecords_Handler,
 		},
 		{
-			MethodName: "DepositHistory",
-			Handler:    _Query_DepositHistory_Handler,
+			MethodName: "UndelegateRecords",
+			Handler:    _Query_UndelegateRecords_Handler,
 		},
 		{
-			MethodName: "UndelegateHistory",
-			Handler:    _Query_UndelegateHistory_Handler,
-		},
-		{
-			MethodName: "WithdrawHistory",
-			Handler:    _Query_WithdrawHistory_Handler,
+			MethodName: "WithdrawRecords",
+			Handler:    _Query_WithdrawRecords_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1654,7 +1425,7 @@ func (m *ActiveWithdrawalsResponse) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryMyShareRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryDepositRecordRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1664,12 +1435,12 @@ func (m *QueryMyShareRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryMyShareRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryDepositRecordRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryMyShareRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryDepositRecordRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1691,7 +1462,7 @@ func (m *QueryMyShareRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryMyShareResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryDepositRecordResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1701,37 +1472,32 @@ func (m *QueryMyShareResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryMyShareResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryDepositRecordResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryMyShareResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryDepositRecordResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	{
-		size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
-		if err != nil {
-			return 0, err
+	if m.DepositRecord != nil {
+		{
+			size, err := m.DepositRecord.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
 		}
-		i -= size
-		i = encodeVarintQuery(dAtA, i, uint64(size))
-	}
-	i--
-	dAtA[i] = 0x12
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.Address)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryAllSharesRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryUndelegateRecordRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1741,42 +1507,12 @@ func (m *QueryAllSharesRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryAllSharesRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryUndelegateRecordRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryAllSharesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.Address)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *QueryDepositHistoryRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryDepositHistoryRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryDepositHistoryRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryUndelegateRecordRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1798,7 +1534,7 @@ func (m *QueryDepositHistoryRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryDepositHistoryResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryUndelegateRecordResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1808,41 +1544,32 @@ func (m *QueryDepositHistoryResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryDepositHistoryResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryUndelegateRecordResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryDepositHistoryResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryUndelegateRecordResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Amount) > 0 {
-		for iNdEx := len(m.Amount) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Amount[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintQuery(dAtA, i, uint64(size))
+	if m.UndelegateRecord != nil {
+		{
+			size, err := m.UndelegateRecord.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
 			}
-			i--
-			dAtA[i] = 0x12
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
 		}
-	}
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.Address)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryUndelegateHistoryRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryWithdrawRecordRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1852,12 +1579,12 @@ func (m *QueryUndelegateHistoryRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryUndelegateHistoryRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryWithdrawRecordRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryUndelegateHistoryRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryWithdrawRecordRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1879,7 +1606,7 @@ func (m *QueryUndelegateHistoryRequest) MarshalToSizedBuffer(dAtA []byte) (int, 
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryUndelegateHistoryResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryWithdrawRecordResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1889,129 +1616,25 @@ func (m *QueryUndelegateHistoryResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryUndelegateHistoryResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryWithdrawRecordResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryUndelegateHistoryResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryWithdrawRecordResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.MintedWAsset) > 0 {
-		for iNdEx := len(m.MintedWAsset) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.MintedWAsset[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintQuery(dAtA, i, uint64(size))
+	if m.WithdrawRecord != nil {
+		{
+			size, err := m.WithdrawRecord.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
 			}
-			i--
-			dAtA[i] = 0x1a
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
 		}
-	}
-	if len(m.BurnedSnAsset) > 0 {
-		for iNdEx := len(m.BurnedSnAsset) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.BurnedSnAsset[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintQuery(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x12
-		}
-	}
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.Address)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *QueryWithdrawHistoryRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryWithdrawHistoryRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryWithdrawHistoryRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.Address)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.ZoneId) > 0 {
-		i -= len(m.ZoneId)
-		copy(dAtA[i:], m.ZoneId)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.ZoneId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *QueryWithdrawHistoryResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryWithdrawHistoryResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryWithdrawHistoryResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Amount) > 0 {
-		for iNdEx := len(m.Amount) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Amount[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintQuery(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x12
-		}
-	}
-	if len(m.Address) > 0 {
-		i -= len(m.Address)
-		copy(dAtA[i:], m.Address)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.Address)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -2157,7 +1780,7 @@ func (m *ActiveWithdrawalsResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryMyShareRequest) Size() (n int) {
+func (m *QueryDepositRecordRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2174,35 +1797,20 @@ func (m *QueryMyShareRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryMyShareResponse) Size() (n int) {
+func (m *QueryDepositRecordResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Address)
-	if l > 0 {
-		n += 1 + l + sovQuery(uint64(l))
-	}
-	l = m.Amount.Size()
-	n += 1 + l + sovQuery(uint64(l))
-	return n
-}
-
-func (m *QueryAllSharesRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Address)
-	if l > 0 {
+	if m.DepositRecord != nil {
+		l = m.DepositRecord.Size()
 		n += 1 + l + sovQuery(uint64(l))
 	}
 	return n
 }
 
-func (m *QueryDepositHistoryRequest) Size() (n int) {
+func (m *QueryUndelegateRecordRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2219,26 +1827,20 @@ func (m *QueryDepositHistoryRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryDepositHistoryResponse) Size() (n int) {
+func (m *QueryUndelegateRecordResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Address)
-	if l > 0 {
+	if m.UndelegateRecord != nil {
+		l = m.UndelegateRecord.Size()
 		n += 1 + l + sovQuery(uint64(l))
-	}
-	if len(m.Amount) > 0 {
-		for _, e := range m.Amount {
-			l = e.Size()
-			n += 1 + l + sovQuery(uint64(l))
-		}
 	}
 	return n
 }
 
-func (m *QueryUndelegateHistoryRequest) Size() (n int) {
+func (m *QueryWithdrawRecordRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -2255,63 +1857,15 @@ func (m *QueryUndelegateHistoryRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryUndelegateHistoryResponse) Size() (n int) {
+func (m *QueryWithdrawRecordResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Address)
-	if l > 0 {
+	if m.WithdrawRecord != nil {
+		l = m.WithdrawRecord.Size()
 		n += 1 + l + sovQuery(uint64(l))
-	}
-	if len(m.BurnedSnAsset) > 0 {
-		for _, e := range m.BurnedSnAsset {
-			l = e.Size()
-			n += 1 + l + sovQuery(uint64(l))
-		}
-	}
-	if len(m.MintedWAsset) > 0 {
-		for _, e := range m.MintedWAsset {
-			l = e.Size()
-			n += 1 + l + sovQuery(uint64(l))
-		}
-	}
-	return n
-}
-
-func (m *QueryWithdrawHistoryRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.ZoneId)
-	if l > 0 {
-		n += 1 + l + sovQuery(uint64(l))
-	}
-	l = len(m.Address)
-	if l > 0 {
-		n += 1 + l + sovQuery(uint64(l))
-	}
-	return n
-}
-
-func (m *QueryWithdrawHistoryResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Address)
-	if l > 0 {
-		n += 1 + l + sovQuery(uint64(l))
-	}
-	if len(m.Amount) > 0 {
-		for _, e := range m.Amount {
-			l = e.Size()
-			n += 1 + l + sovQuery(uint64(l))
-		}
 	}
 	return n
 }
@@ -3238,7 +2792,7 @@ func (m *ActiveWithdrawalsResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryMyShareRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryDepositRecordRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3261,10 +2815,10 @@ func (m *QueryMyShareRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryMyShareRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryDepositRecordRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryMyShareRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryDepositRecordRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3352,7 +2906,7 @@ func (m *QueryMyShareRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryMyShareResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryDepositRecordResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3375,47 +2929,15 @@ func (m *QueryMyShareResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryMyShareResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryDepositRecordResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryMyShareResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryDepositRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Address = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DepositRecord", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -3442,7 +2964,10 @@ func (m *QueryMyShareResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if m.DepositRecord == nil {
+				m.DepositRecord = &DepositRecord{}
+			}
+			if err := m.DepositRecord.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3467,7 +2992,7 @@ func (m *QueryMyShareResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryAllSharesRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryUndelegateRecordRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3490,92 +3015,10 @@ func (m *QueryAllSharesRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllSharesRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryUndelegateRecordRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllSharesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Address = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryDepositHistoryRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryDepositHistoryRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryDepositHistoryRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryUndelegateRecordRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3663,7 +3106,7 @@ func (m *QueryDepositHistoryRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryDepositHistoryResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryUndelegateRecordResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3686,47 +3129,15 @@ func (m *QueryDepositHistoryResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryDepositHistoryResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryUndelegateRecordResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryDepositHistoryResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryUndelegateRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Address = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field UndelegateRecord", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -3753,8 +3164,10 @@ func (m *QueryDepositHistoryResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Amount = append(m.Amount, types.Coin{})
-			if err := m.Amount[len(m.Amount)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if m.UndelegateRecord == nil {
+				m.UndelegateRecord = &UndelegateRecord{}
+			}
+			if err := m.UndelegateRecord.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -3779,7 +3192,7 @@ func (m *QueryDepositHistoryResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryUndelegateHistoryRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryWithdrawRecordRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3802,10 +3215,10 @@ func (m *QueryUndelegateHistoryRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryUndelegateHistoryRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryWithdrawRecordRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryUndelegateHistoryRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryWithdrawRecordRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -3893,7 +3306,7 @@ func (m *QueryUndelegateHistoryRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryUndelegateHistoryResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryWithdrawRecordResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -3916,47 +3329,15 @@ func (m *QueryUndelegateHistoryResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryUndelegateHistoryResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryWithdrawRecordResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryUndelegateHistoryResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryWithdrawRecordResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Address = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BurnedSnAsset", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field WithdrawRecord", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -3983,272 +3364,10 @@ func (m *QueryUndelegateHistoryResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.BurnedSnAsset = append(m.BurnedSnAsset, types.Coin{})
-			if err := m.BurnedSnAsset[len(m.BurnedSnAsset)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
+			if m.WithdrawRecord == nil {
+				m.WithdrawRecord = &WithdrawRecord{}
 			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MintedWAsset", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.MintedWAsset = append(m.MintedWAsset, types.Coin{})
-			if err := m.MintedWAsset[len(m.MintedWAsset)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryWithdrawHistoryRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryWithdrawHistoryRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryWithdrawHistoryRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ZoneId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Address = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryWithdrawHistoryResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryWithdrawHistoryResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryWithdrawHistoryResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Address = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Amount = append(m.Amount, types.Coin{})
-			if err := m.Amount[len(m.Amount)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.WithdrawRecord.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func NewDepositCmd() *cobra.Command {
+func txDepositCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "deposit [zone-id] [depositor] [claimer] [amount] [transfer-port-id] [transfer-channel-id]",
 		Short: "Deposit wrapped token to nova",
@@ -55,7 +55,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 	return cmd
 }
 
-func NewUndelegateRequestCmd() *cobra.Command {
+func txUndelegateRequestCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "pendingundelegate [zone-id] [delegator] [withdrawer] [amount]",
 		Args: cobra.ExactArgs(4),
@@ -99,7 +99,7 @@ func NewUndelegateRequestCmd() *cobra.Command {
 	return cmd
 }
 
-func NewUndelegateCmd() *cobra.Command {
+func txUndelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "undelegate [zone-id] [controller-address]",
 		Args: cobra.ExactArgs(2),
@@ -131,7 +131,7 @@ func NewUndelegateCmd() *cobra.Command {
 	return cmd
 }
 
-func NewWithdrawCmd() *cobra.Command {
+func txWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "withdraw [zone-id] [withdrawer] [transfer-port-id] [transfer-channel-id]",
 		Short: "Withdraw wrapped token to nova",
@@ -169,7 +169,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 	return cmd
 }
 
-func NewClaimSnTokenCmd() *cobra.Command {
+func txClaimSnTokenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "claimsntoken [zone-id] [claimer-address] [transfer-port-id] [transfer-channel-id]",
 		Short: "claim wrapped token to nova",
@@ -201,7 +201,7 @@ func NewClaimSnTokenCmd() *cobra.Command {
 	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
-func NewPendingWithdrawCmd() *cobra.Command {
+func txPendingWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "pendingwithdraw [zone-id] [conroller-address] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
 		Args: cobra.ExactArgs(5),
@@ -234,7 +234,7 @@ func NewPendingWithdrawCmd() *cobra.Command {
 
 	return cmd
 }
-func NewDelegateCmd() *cobra.Command {
+func txDelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "delegate [zone-id] [controller-address] [transfer-port-id] [transfer-channel-id]",
 		Args: cobra.ExactArgs(4),
