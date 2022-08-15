@@ -360,13 +360,12 @@ func (msg MsgChangeRegisteredZoneInfo) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-
 func NewMsgAuthzGrant(zoneId, grantee string, granter sdk.AccAddress, authorization authz.Authorization, expiration time.Time) (*MsgIcaAuthzGrant, error) {
 	m := &MsgIcaAuthzGrant{
-		ZoneId: zoneId,
+		ZoneId:            zoneId,
 		ControllerAddress: granter.String(),
-		Grantee: grantee,
-		Grant:  authz.Grant{Expiration: expiration},
+		Grantee:           grantee,
+		Grant:             authz.Grant{Expiration: expiration},
 	}
 	err := m.SetAuthorization(authorization)
 	if err != nil {
@@ -412,10 +411,10 @@ func (msg MsgIcaAuthzGrant) GetSigners() []sdk.AccAddress {
 
 func NewMsgAuthzRevoke(zoneId, grantee, msgType string, granter sdk.AccAddress) *MsgIcaAuthzRevoke {
 	return &MsgIcaAuthzRevoke{
-		ZoneId: zoneId,
+		ZoneId:            zoneId,
 		ControllerAddress: granter.String(),
-		Grantee: grantee,
-		MsgTypeUrl: msgType,
+		Grantee:           grantee,
+		MsgTypeUrl:        msgType,
 	}
 }
 

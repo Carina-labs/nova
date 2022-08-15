@@ -241,7 +241,7 @@ func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgR
 	return &types.MsgRegisterHostAccountResponse{}, nil
 }
 
-func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGrant) (*types.MsgIcaAuthzGrantResponse, error){
+func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGrant) (*types.MsgIcaAuthzGrantResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
@@ -257,7 +257,7 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 	msgs = append(msgs, &authz.MsgGrant{
 		Granter: zoneInfo.IcaAccount.HostAddress,
 		Grantee: msg.Grantee,
-		Grant: msg.Grant,
+		Grant:   msg.Grant,
 	})
 
 	err := k.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
@@ -268,7 +268,7 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 	return &types.MsgIcaAuthzGrantResponse{}, nil
 }
 
-func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzRevoke) (*types.MsgIcaAuthzRevokeResponse, error){
+func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzRevoke) (*types.MsgIcaAuthzRevokeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
@@ -282,8 +282,8 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &authz.MsgRevoke{
-		Granter: zoneInfo.IcaAccount.HostAddress,
-		Grantee: msg.Grantee,
+		Granter:    zoneInfo.IcaAccount.HostAddress,
+		Grantee:    msg.Grantee,
 		MsgTypeUrl: msg.MsgTypeUrl,
 	})
 

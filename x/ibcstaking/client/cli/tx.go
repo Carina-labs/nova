@@ -424,7 +424,7 @@ func NewAuthzGrantTxCmd() *cobra.Command {
 
 func NewAuthzRevokeTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "icarevoke [zone-id] [grantee-address] [msg_type]  --from [controller-address]",
+		Use: "icarevoke [zone-id] [grantee-address] [msg_type]  --from [controller-address]",
 
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
