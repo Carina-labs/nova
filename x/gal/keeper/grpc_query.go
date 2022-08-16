@@ -72,7 +72,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Pe
 
 	for _, record := range withdrawRecord.Records {
 		if record.State == int64(WithdrawStatus_Registered) {
-			amount = amount.Add(*record.Amount)
+			amount.Amount = amount.Amount.Add(record.Amount)
 		}
 	}
 

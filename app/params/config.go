@@ -12,10 +12,6 @@ const (
 	DefaultBondDenom = BaseCoinUnit
 )
 
-func init() {
-	RegisterDenoms()
-}
-
 func RegisterDenoms() {
 	err := sdk.RegisterDenom(HumanCoinUnit, sdk.OneDec())
 	if err != nil {

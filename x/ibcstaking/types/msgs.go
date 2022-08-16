@@ -27,7 +27,7 @@ var (
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
-func NewMsgRegisterZone(zoneId, icaConnectionId string, daomodifierAddress sdk.AccAddress, validatorAddress, baseDenom string) *MsgRegisterZone {
+func NewMsgRegisterZone(zoneId, icaConnectionId string, daomodifierAddress sdk.AccAddress, validatorAddress, baseDenom string, decimal int64) *MsgRegisterZone {
 	return &MsgRegisterZone{
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
@@ -39,6 +39,7 @@ func NewMsgRegisterZone(zoneId, icaConnectionId string, daomodifierAddress sdk.A
 		},
 		ValidatorAddress: validatorAddress,
 		BaseDenom:        baseDenom,
+		Decimal:          decimal,
 	}
 }
 
@@ -324,7 +325,7 @@ func (msg MsgDeleteRegisteredZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgChangeZoneInfo(zoneId, icaConnectionId string, daomodifierAddress sdk.AccAddress, validatorAddress, baseDenom string) *MsgChangeRegisteredZoneInfo {
+func NewMsgChangeZoneInfo(zoneId, icaConnectionId string, daomodifierAddress sdk.AccAddress, validatorAddress, baseDenom string, decimal int64) *MsgChangeRegisteredZoneInfo {
 	return &MsgChangeRegisteredZoneInfo{
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
@@ -336,6 +337,7 @@ func NewMsgChangeZoneInfo(zoneId, icaConnectionId string, daomodifierAddress sdk
 		},
 		ValidatorAddress: validatorAddress,
 		BaseDenom:        baseDenom,
+		Decimal:          decimal,
 	}
 }
 

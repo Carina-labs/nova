@@ -47,6 +47,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
+	// check IBC denom
 	if deposit.Amount.Denom != m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, deposit.TransferPortId, deposit.TransferChannelId, zoneInfo.BaseDenom) {
 		return nil, types.ErrInvalidDenom
 	}
@@ -271,7 +272,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	return &types.MsgWithdrawResponse{
 		Withdrawer:     withdraw.Withdrawer,
-		WithdrawAmount: withdrawAmount,
+		WithdrawAmount: withdrawAmount.Amount,
 	}, nil
 }
 
@@ -342,6 +343,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 
 	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	for _, record := range records.Records {
+
 		if record.OracleVersion >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}

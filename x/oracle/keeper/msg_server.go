@@ -26,7 +26,6 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 		Coin:            state.Coin,
 		OperatorAddress: state.Operator,
 		LastBlockHeight: state.BlockHeight,
-		Decimal:         state.Decimal,
 		AppHash:         state.AppHash,
 		ChainId:         state.ChainId,
 	}
@@ -55,7 +54,6 @@ func (server msgServer) GetChainState(goCtx context.Context, request *types.Quer
 
 	return &types.QueryStateResponse{
 		Coin:            result.Coin,
-		Decimal:         result.Decimal,
 		LastBlockHeight: result.LastBlockHeight,
 		AppHash:         result.AppHash,
 		ChainId:         result.ChainId,
