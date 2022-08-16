@@ -83,8 +83,7 @@ message MsgWithdraw {
 
 message MsgWithdrawResponse {
   string withdrawer = 1;
-  cosmos.base.v1beta1.Coin withdraw_amount = 2
-  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+  string withdraw_amount = 2[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
 }
 
 // MsgClaim defines claim msg used when user want to claim their st token.

@@ -83,7 +83,7 @@ message WithdrawRecord {
 }
 
 message WithdrawRecordContent {
-  cosmos.base.v1beta1.Coin amount = 1;
+  string amount = 1[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
   int64 state = 2;
   int64 oracle_version = 3;
   uint64 withdraw_version = 4;

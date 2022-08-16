@@ -270,7 +270,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	return &types.MsgWithdrawResponse{
 		Withdrawer:     withdraw.Withdrawer,
-		WithdrawAmount: withdrawAmount,
+		WithdrawAmount: withdrawAmount.Amount,
 	}, nil
 }
 

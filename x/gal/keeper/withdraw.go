@@ -114,21 +114,17 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 						withdrawRecordContent = &types.WithdrawRecordContent{
 							State:           int64(WithdrawStatus_Registered),
 							WithdrawVersion: items.UndelegateVersion,
-							Amount: &sdk.Coin{
-								Amount: items.WithdrawAmount.Amount,
-								Denom:  items.WithdrawAmount.Denom,
-							},
-							CompletionTime: time,
+							Amount:          items.WithdrawAmount.Amount,
+							CompletionTime:  time,
 						}
 
 					} else {
-						*withdrawRecordContent.Amount = withdrawRecordContent.Amount.Add(*items.WithdrawAmount)
+						withdrawRecordContent.Amount = items.WithdrawAmount.Amount.Add(withdrawRecordContent.Amount)
 					}
 					withdrawRecord.Records[items.UndelegateVersion] = withdrawRecordContent
 
 					k.SetWithdrawRecord(ctx, withdrawRecord)
 				}
-
 			}
 
 		}
@@ -147,7 +143,7 @@ func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, 
 
 	for _, record := range withdrawRecord.Records {
 		if record.State == int64(WithdrawStatus_Transferred) {
-			amount = amount.Add(*record.Amount)
+			amount.Amount = amount.Amount.Add(record.Amount)
 		}
 	}
 
@@ -161,7 +157,7 @@ func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom s
 		if withdrawInfo.ZoneId == zoneId {
 			for _, record := range withdrawInfo.Records {
 				if record.CompletionTime.Before(blockTime) {
-					amount = amount.Add(*record.Amount)
+					amount.Amount = amount.Amount.Add(record.Amount)
 				}
 			}
 		}

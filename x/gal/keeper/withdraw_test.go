@@ -10,7 +10,7 @@ import (
 func (suite *KeeperTestSuite) SetWithdrawRecords(zoneId, withdrawer, delegator, recipient string, amount sdk.Coin, state int64, time time.Time) {
 	records := make(map[uint64]*types.WithdrawRecordContent)
 	records[1] = &types.WithdrawRecordContent{
-		Amount:         &amount,
+		Amount:         amount.Amount,
 		State:          state,
 		CompletionTime: time,
 	}
