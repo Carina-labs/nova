@@ -395,6 +395,14 @@ func (msg MsgIcaAuthzGrant) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
 	}
 
+	if msg.Grantee == "" {
+		return sdkerrors.Wrapf(sdkerrors.ErrUnknownAddress, "Grantee address is not nil")
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "Grantee address is not nil")
+	}
+
 	return nil
 }
 
@@ -405,6 +413,7 @@ func (msg MsgIcaAuthzGrant) GetSigners() []sdk.AccAddress {
 	if err != nil {
 		panic(err)
 	}
+
 
 	return []sdk.AccAddress{accAddr}
 }
@@ -425,6 +434,13 @@ func (msg MsgIcaAuthzRevoke) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
 	}
 
+	if msg.Grantee == "" {
+		return sdkerrors.Wrapf(sdkerrors.ErrUnknownAddress, "Grantee address is not nil")
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "Grantee address is not nil")
+	}
 	return nil
 }
 

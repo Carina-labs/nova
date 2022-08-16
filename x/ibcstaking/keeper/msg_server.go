@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	"time"
 
@@ -245,7 +246,7 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -259,9 +260,9 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 		Grantee: msg.Grantee,
 		Grant:   msg.Grant,
 	})
-
 	err := k.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
+		fmt.Println("err : ", err)
 		return nil, errors.New("IcaAuthzGrant transaction failed to send")
 	}
 

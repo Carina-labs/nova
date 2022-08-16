@@ -10,4 +10,5 @@ var (
 	ErrMsgNotFound            = sdkerrors.Register(ModuleName, 4, "message not found ")
 	ErrMsgNotNil              = sdkerrors.Register(ModuleName, 5, "message is not nil")
 	ErrNotFoundZoneInfo       = sdkerrors.Register(ModuleName, 6, "registered zone not found with given name")
+	ErrZoneIdNotNil           = sdkerrors.Register(ModuleName, 7, "zone Id is not nil")
 )
