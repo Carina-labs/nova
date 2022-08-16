@@ -36,6 +36,7 @@ message MsgRegisterZone {
   IcaAccount ica_account = 3;
   string validator_address = 4;
   string base_denom = 5;
+  int64 decimal = 6;
 }
 
 message MsgRegisterZoneResponse {}
@@ -48,6 +49,7 @@ message MsgChangeRegisteredZoneInfo{
   IcaAccount ica_account = 3;
   string validator_address = 4;
   string base_denom = 5;
+  int64 decimal = 6;
 }
 message MsgChangeRegisteredZoneInfoResponse{}
 

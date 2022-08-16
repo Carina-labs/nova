@@ -41,7 +41,6 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 		OperatorAddress: fooOperator.String(),
 		LastBlockHeight: 10,
-		Decimal:         6,
 		AppHash:         []byte(fooAppHash),
 		ChainId:         fooChainId,
 	}

@@ -23,7 +23,6 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress: fooOperator.String(),
 				LastBlockHeight: 10,
-				Decimal:         6,
 			},
 			queryDenom: fooDenom,
 			wantErr:    false,
@@ -34,7 +33,6 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress: fooOperator.String(),
 				LastBlockHeight: 10,
-				Decimal:         6,
 			},
 			queryDenom: invalidDenom,
 			wantErr:    true,
@@ -62,7 +60,6 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 			suite.Require().NoError(err)
 			suite.Require().Equal(val.LastBlockHeight, tt.chainInfo.LastBlockHeight)
 			suite.Require().Equal(val.Coin, tt.chainInfo.Coin)
-			suite.Require().Equal(val.Decimal, tt.chainInfo.Decimal)
 		})
 	}
 }
