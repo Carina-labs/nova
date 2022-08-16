@@ -2,7 +2,8 @@ package keeper
 
 import (
 	"fmt"
-	"math/big"
+	"github.com/Carina-labs/nova/x/gal/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -77,12 +78,14 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 // TotalClaimableAssets returns the total amount of claimable snAsset.
 func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, transferPortId string, transferChannelId string, claimer sdk.AccAddress) (*sdk.Coin, error) {
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChannelId, zone.BaseDenom)
-	result := sdk.NewCoin(ibcDenom, sdk.NewIntFromUint64(0))
+	result := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
+
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
-	records, err := k.GetRecordedDepositAmt(ctx, zone.ZoneId, claimer)
-	if err != nil {
-		return nil, err
+
+	records, found := k.GetUserDepositRecord(ctx, zone.ZoneId, claimer)
+	if !found {
+		return nil, types.ErrNoDepositRecord
 	}
 
 	for _, record := range records.Records {

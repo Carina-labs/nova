@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"fmt"
-
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -23,27 +22,26 @@ func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
 }
 
-// SetDepositAmt write the amount of coin user deposit to the "DepositRecord" store.
-func (k Keeper) SetDepositAmt(ctx sdk.Context, msg *types.DepositRecord) {
+// SetDepositRecord stores the deposit record which stores amount of the coin and user address.
+func (k Keeper) SetDepositRecord(ctx sdk.Context, msg *types.DepositRecord) {
 	store := k.getDepositRecordStore(ctx)
 	key := msg.ZoneId + msg.Claimer
 	bz := k.cdc.MustMarshal(msg)
 	store.Set([]byte(key), bz)
 }
 
-// GetRecordedDepositAmt returns the amount of coin user deposit by address.
-func (k Keeper) GetRecordedDepositAmt(ctx sdk.Context, zoneId string, claimer sdk.AccAddress) (*types.DepositRecord, error) {
+// GetUserDepositRecord returns the amount of coin user deposit by address.
+func (k Keeper) GetUserDepositRecord(ctx sdk.Context, zoneId string, claimer sdk.AccAddress) (result *types.DepositRecord, found bool) {
 	store := k.getDepositRecordStore(ctx)
 	key := []byte(zoneId + claimer.String())
 	if !store.Has(key) {
-		return nil, types.ErrNoDepositRecord
+		return nil, false
 	}
 
 	res := store.Get(key)
-
-	var msg types.DepositRecord
-	k.cdc.MustUnmarshal(res, &msg)
-	return &msg, nil
+	var record types.DepositRecord
+	k.cdc.MustUnmarshal(res, &record)
+	return &record, true
 }
 
 func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state DepositState) sdk.Coin {
@@ -78,7 +76,7 @@ func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state De
 			}
 
 			if isChanged {
-				k.SetDepositAmt(ctx, &depositRecord)
+				k.SetDepositRecord(ctx, &depositRecord)
 			}
 		}
 
@@ -100,7 +98,7 @@ func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, pos
 				}
 			}
 			if stateCheck {
-				k.SetDepositAmt(ctx, &depositRecord)
+				k.SetDepositRecord(ctx, &depositRecord)
 				isChanged = true
 			}
 		}
@@ -125,7 +123,7 @@ func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state D
 				}
 			}
 			if isChanged {
-				k.SetDepositAmt(ctx, &depositRecord)
+				k.SetDepositRecord(ctx, &depositRecord)
 			}
 		}
 		return false
@@ -135,9 +133,9 @@ func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state D
 }
 
 func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, depositor sdk.AccAddress, state DepositState) error {
-	record, err := k.GetRecordedDepositAmt(ctx, zoneId, depositor)
-	if err != nil {
-		return err
+	record, found := k.GetUserDepositRecord(ctx, zoneId, depositor)
+	if !found {
+		return types.ErrNoDepositRecord
 	}
 
 	var recordItems []*types.DepositRecordContent
@@ -150,7 +148,7 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	isDeleted := len(recordItems) < len(record.Records)
 	if isDeleted {
 		record.Records = recordItems
-		k.SetDepositAmt(ctx, record)
+		k.SetDepositRecord(ctx, record)
 	}
 
 	return nil

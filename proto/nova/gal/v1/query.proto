@@ -3,6 +3,7 @@ package nova.gal.v1;
 
 import "gogoproto/gogo.proto";
 import "nova/gal/v1/params.proto";
+import "nova/gal/v1/genesis.proto";
 import "google/api/annotations.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
@@ -27,19 +28,15 @@ service Query {
     option (google.api.http).get = "/nova/gal/v1/active_withdrawals/{address}/{zone_id}";
   }
 
-  rpc Share(QueryMyShareRequest) returns (QueryMyShareResponse) {
-    option (google.api.http).get = "/nova/gal/v1/shares/{address}/{zone_id}";
-  }
-
-  rpc DepositHistory(QueryDepositHistoryRequest) returns (QueryDepositHistoryResponse) {
+  rpc DepositRecords(QueryDepositRecordRequest) returns (QueryDepositRecordResponse) {
     option (google.api.http).get = "/nova/gal/v1/deposit/{address}/{zone_id}";
   }
 
-  rpc UndelegateHistory(QueryUndelegateHistoryRequest) returns (QueryUndelegateHistoryResponse) {
+  rpc UndelegateRecords(QueryUndelegateRecordRequest) returns (QueryUndelegateRecordResponse) {
     option (google.api.http).get = "/nova/get/v1/undelegate/{address}/{zone_id}";
   }
 
-  rpc WithdrawHistory(QueryWithdrawHistoryRequest) returns (QueryWithdrawHistoryResponse) {
+  rpc WithdrawRecords(QueryWithdrawRecordRequest) returns (QueryWithdrawRecordResponse) {
     option (google.api.http).get = "/nova/get/v1/withdraw/{address}/{zone_id}";
   }
 }
@@ -59,8 +56,8 @@ message QueryParamsResponse {
 message ClaimableAmountRequest {
   string zone_id = 1;
   string address = 2;
-  string ica_transfer_port_id = 3;
-  string ica_transfer_channel_id = 4;
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
 }
 
 // ClaimableAmountResponse is the response type for the Query/ClaimableAmount RPC method.
@@ -72,6 +69,8 @@ message ClaimableAmountResponse {
 message PendingWithdrawalsRequest {
   string zone_id = 1;
   string address = 2;
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
 }
 
 // PendingWithdrawalsResponse is the response type for the Query/PendingWithdrawals RPC method.
@@ -83,6 +82,8 @@ message PendingWithdrawalsResponse {
 message ActiveWithdrawalsRequest {
   string zone_id = 1;
   string address = 2;
+  string transfer_port_id = 3;
+  string transfer_channel_id = 4;
 }
 
 // ActiveWithdrawalsResponse is the response type for the Query/ActiveWithdrawals RPC method.
@@ -90,53 +91,29 @@ message ActiveWithdrawalsResponse {
   cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
 }
 
-// QueryMyShareRequest defines request form to query balance of snToken with address.
-message QueryMyShareRequest {
+message QueryDepositRecordRequest {
   string zone_id = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
-// QuerySharesResponse defines response of QueryBalanceRequest.
-message QueryMyShareResponse{
-  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  cosmos.base.v1beta1.Coin amount = 2 [(gogoproto.nullable) = false];
+message QueryDepositRecordResponse {
+  DepositRecord deposit_record = 1;
 }
 
-message QueryAllSharesRequest {
-  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-}
-
-message QueryDepositHistoryRequest {
+message QueryUndelegateRecordRequest {
   string zone_id = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
-message QueryDepositHistoryResponse {
-  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  repeated cosmos.base.v1beta1.Coin amount = 2
-    [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+message QueryUndelegateRecordResponse {
+  UndelegateRecord undelegate_record = 1;
 }
 
-message QueryUndelegateHistoryRequest {
+message QueryWithdrawRecordRequest {
   string zone_id = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
-message QueryUndelegateHistoryResponse {
-  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  repeated cosmos.base.v1beta1.Coin burned_sn_asset = 2
-    [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
-  repeated cosmos.base.v1beta1.Coin minted_w_asset = 3
-  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
-}
-
-message QueryWithdrawHistoryRequest {
-  string zone_id = 1;
-  string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-}
-
-message QueryWithdrawHistoryResponse {
-  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-  repeated cosmos.base.v1beta1.Coin amount = 2
-    [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+message QueryWithdrawRecordResponse {
+  WithdrawRecord withdraw_record = 1;
 }

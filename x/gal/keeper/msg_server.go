@@ -58,25 +58,27 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		State:     int64(DEPOSIT_REQUEST),
 	}
 
-	record, err := m.keeper.GetRecordedDepositAmt(ctx, zoneInfo.ZoneId, claimAcc)
+	record, found := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, claimAcc)
 
-	if err == types.ErrNoDepositRecord {
-		m.keeper.SetDepositAmt(ctx, &types.DepositRecord{
+	if !found {
+		m.keeper.SetDepositRecord(ctx, &types.DepositRecord{
 			ZoneId:  deposit.ZoneId,
 			Claimer: deposit.Claimer,
 			Records: []*types.DepositRecordContent{newRecord},
 		})
 	} else {
 		record.Records = append(record.Records, newRecord)
-		m.keeper.SetDepositAmt(ctx, record)
+		m.keeper.SetDepositRecord(ctx, record)
 	}
 
-	err = m.keeper.TransferToTargetZone(ctx,
-		deposit.TransferPortId,
-		deposit.TransferChannelId,
-		deposit.Depositor,
-		zoneInfo.IcaAccount.HostAddress,
-		deposit.Amount)
+	err = m.keeper.TransferToTargetZone(ctx, &IBCTransferOption{
+		SourcePort:    deposit.TransferPortId,
+		SourceChannel: deposit.TransferChannelId,
+		Token:         deposit.Amount,
+		Sender:        deposit.Depositor,
+		Receiver:      zoneInfo.IcaAccount.HostAddress,
+	})
+
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +123,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	return &types.MsgDelegateResponse{}, nil
 }
 
-// Undelegate is used when user requests undelegate their staked asset.
+// PendingUndelegate is used when user requests undelegate their staked asset.
 // 1. User sends their st-token to module account.
 // 2. And GAL coins step 1 to the store.
 func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.MsgPendingUndelegate) (*types.MsgPendingUndelegateResponse, error) {
@@ -130,7 +132,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	// change undelegate State
 	zoneInfo, found := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
 	if !found {
-		return nil, errors.New("zone not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	//send stAsset to GAL moduleAccount
@@ -151,15 +153,14 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	snAssetAmt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
 
 	undelegateRecord, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
-
-	if found {
-		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
-	} else {
-		undelegateRecord = types.UndelegateRecord{
+	if !found {
+		undelegateRecord = &types.UndelegateRecord{
 			ZoneId:    undelegate.ZoneId,
 			Delegator: undelegate.Delegator,
 			Records:   []*types.UndelegateRecordContent{&newRecord},
 		}
+	} else {
+		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
 	}
 
 	m.keeper.SetUndelegateRecord(ctx, undelegateRecord)
@@ -243,10 +244,10 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, types.ErrNoWithdrawRecord
 	}
 
-	// get withdrawAmount : withdraw기록들 중에서 time이 지난 금액들 전부 합해서 반환
-	withdrawAmt := m.keeper.GetWithdrawAmontForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
+	// sum of all withdraw records for user
+	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
 	if withdrawAmt.IsZero() {
-		return nil, nil
+		return nil, types.ErrNoWithdrawRecord
 	}
 
 	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, zoneInfo.BaseDenom)
@@ -322,9 +323,10 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	if err != nil {
 		return nil, err
 	}
-	records, err := m.keeper.GetRecordedDepositAmt(ctx, claimMsg.ZoneId, claimerAddr)
-	if err != nil {
-		return nil, err
+
+	records, found := m.keeper.GetUserDepositRecord(ctx, claimMsg.ZoneId, claimerAddr)
+	if !found {
+		return nil, types.ErrNoDepositRecord
 	}
 
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, records.ZoneId)
