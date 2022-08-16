@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
+	"math/big"
 
-	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
@@ -79,7 +79,6 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, transferPortId string, transferChannelId string, claimer sdk.AccAddress) (*sdk.Coin, error) {
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChannelId, zone.BaseDenom)
 	result := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
-
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
 
