@@ -11,4 +11,3 @@ func ParseAddressToIbcAddress(destPort string, destChannel string, denom string)
 	voucherDenom := denomTrace.IBCDenom()
 	return voucherDenom
 }
-

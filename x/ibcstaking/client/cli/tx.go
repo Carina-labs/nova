@@ -78,7 +78,7 @@ func txRegisterZoneCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			msg := types.NewMsgRegisterZone(zoneId, icaConnId, daomodifierAddr, validatorAddr, denom, decimal)
+			msg := types.NewMsgRegisterZone(zoneId, icaConnId, controllerAddr, validatorAddr, denom, decimal)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -297,7 +297,7 @@ func txChangeZoneInfoTxCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgChangeZoneInfo(zoneId, icaConnId, daomodifierAddr, validatorAddr, denom, decimal)
+			msg := types.NewMsgChangeZoneInfo(zoneId, icaConnId, controllerAddr, validatorAddr, denom, decimal)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err

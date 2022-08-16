@@ -416,7 +416,6 @@ func (msg MsgIcaAuthzGrant) GetSigners() []sdk.AccAddress {
 		panic(err)
 	}
 
-
 	return []sdk.AccAddress{accAddr}
 }
 

@@ -246,7 +246,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	// sum of all withdraw records for user
 	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
-  
+
 	if withdrawAmt.IsZero() {
 		return nil, types.ErrNoWithdrawRecord
 	}

@@ -219,6 +219,6 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 	}
 }
 
-func (suite *KeeperTestSuite) GetControllerAddr() string{
+func (suite *KeeperTestSuite) GetControllerAddr() string {
 	return acc1.Address
 }
