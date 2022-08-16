@@ -81,7 +81,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 
 	amount := sdk.NewInt64Coin(denom, 100)
 	records[1] = &types.WithdrawRecordContent{
-		Amount:          &amount,
+		Amount:          amount.Amount,
 		State:           int64(galkeeper.WithdrawStatus_Registered),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
@@ -89,7 +89,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	}
 
 	records[2] = &types.WithdrawRecordContent{
-		Amount:          &amount,
+		Amount:          amount.Amount,
 		State:           int64(galkeeper.WithdrawStatus_Registered),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
@@ -134,7 +134,7 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 	activeAmount := sdk.NewCoin(zoneBaseDenom, sdk.NewInt(80))
 
 	records[1] = &types.WithdrawRecordContent{
-		Amount:          &activeAmount,
+		Amount:          activeAmount.Amount,
 		State:           int64(galkeeper.WithdrawStatus_Transferred),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
@@ -142,7 +142,7 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 	}
 
 	records[2] = &types.WithdrawRecordContent{
-		Amount:          &pendingAmount,
+		Amount:          pendingAmount.Amount,
 		State:           int64(galkeeper.WithdrawStatus_Registered),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
@@ -230,7 +230,7 @@ func (suite *KeeperTestSuite) TestQueryWithdrawRecord() {
 	records := make(map[uint64]*types.WithdrawRecordContent)
 	token := sdk.NewCoin(zoneBaseDenom, sdk.NewInt(80))
 	records[0] = &types.WithdrawRecordContent{
-		Amount:          &token,
+		Amount:          token.Amount,
 		State:           int64(galkeeper.WithdrawStatus_Transferred),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
