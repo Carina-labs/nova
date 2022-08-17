@@ -200,17 +200,19 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.BaseDenom, zoneInfo.ZoneId, oracleVersion, UNDELEGATE_REQUEST_ICA)
 
-	if burnAssets.Amount.Equal(sdk.NewInt(0)) || undelegateAssets.Amount.Equal(sdk.NewInt(0)) {
+	if burnAssets.Amount.Equal(sdk.NewInt(0)) || undelegateAssets.Equal(sdk.NewInt(0)) {
 		// TODO: should handle if no coins to undelegate
 		return nil, errors.New("no coins to undelegate")
 	}
+
+	undelegateAmt := sdk.NewCoin(zoneInfo.BaseDenom, undelegateAssets)
 
 	var msgs []sdk.Msg
 
 	msgs = append(msgs, &stakingtype.MsgUndelegate{
 		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
-		Amount:           undelegateAssets})
+		Amount:           undelegateAmt})
 	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
@@ -225,7 +227,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	return &types.MsgUndelegateResponse{
 		ZoneId:               zoneInfo.ZoneId,
 		TotalBurnAsset:       burnAssets,
-		TotalUndelegateAsset: undelegateAssets,
+		TotalUndelegateAsset: undelegateAmt,
 	}, nil
 }
 

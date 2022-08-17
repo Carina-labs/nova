@@ -271,7 +271,7 @@ func (suite *KeeperTestSuite) TestQueryUndelegateRecord() {
 	// save the undelegate recod to the keeper
 	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
 	snToken := sdk.NewInt64Coin(ibcDenom, 100)
-	withdrawAmount := sdk.NewInt64Coin(zoneBaseDenom, 150)
+	withdrawAmount := sdk.NewInt(150)
 
 	records := &types.UndelegateRecord{
 		ZoneId:    zoneId,
@@ -280,7 +280,7 @@ func (suite *KeeperTestSuite) TestQueryUndelegateRecord() {
 			{
 				Withdrawer:        fooUser.String(),
 				SnAssetAmount:     &snToken,
-				WithdrawAmount:    &withdrawAmount,
+				WithdrawAmount:    withdrawAmount,
 				State:             0,
 				OracleVersion:     0,
 				UndelegateVersion: 0,
