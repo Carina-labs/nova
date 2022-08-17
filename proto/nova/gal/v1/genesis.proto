@@ -70,7 +70,7 @@ message UndelegateRecord {
 message UndelegateRecordContent {
   string withdrawer = 1;
   cosmos.base.v1beta1.Coin sn_asset_amount = 2;
-  cosmos.base.v1beta1.Coin withdraw_amount = 3;
+  string withdraw_amount = 3[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
   int64 state = 4;
   uint64 oracle_version = 5;
   uint64 undelegate_version = 6;
