@@ -43,6 +43,9 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 			Coin:            value.Coin,
 			OperatorAddress: value.OperatorAddress,
 			LastBlockHeight: value.LastBlockHeight,
+			AppHash:         value.AppHash,
+			ChainId:         value.ChainId,
+			OracleVersion:   value.OracleVersion,
 		})
 	}
 
