@@ -239,6 +239,17 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
 	}
 
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, zoneInfo.BaseDenom)
+	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
+	if err != nil {
+		return nil, err
+	}
+
+	wAsset := m.keeper.bankKeeper.GetBalance(ctx, controllerAddr, ibcDenom)
+	if wAsset.Amount.IsZero() {
+		return nil, types.ErrTransferInfoNotFound
+	}
+
 	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, zoneInfo.ZoneId, withdraw.Withdrawer)
 	if !found {
 		return nil, types.ErrNoWithdrawRecord
@@ -250,13 +261,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, types.ErrNoWithdrawRecord
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, withdraw.TransferPortId, withdraw.TransferChannelId, zoneInfo.BaseDenom)
-
 	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
-	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.DaomodifierAddress)
-	if err != nil {
-		return nil, err
-	}
 
 	withdrawerAddr, err := sdk.AccAddressFromBech32(withdraw.Withdrawer)
 	if err != nil {
