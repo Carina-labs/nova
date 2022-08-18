@@ -73,12 +73,12 @@ func (k Keeper) IsValidOperator(ctx sdk.Context, operatorAddress string) bool {
 	return false
 }
 
-func (k Keeper) GetOracleVersionStore(ctx sdk.Context) prefix.Store {
+func (k Keeper) oracleVersionStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyOracleVersion)
 }
 
 func (k Keeper) SetOracleVersion(ctx sdk.Context, zoneId string, version uint64) {
-	store := k.GetOracleVersionStore(ctx)
+	store := k.oracleVersionStore(ctx)
 	key := zoneId
 	bz := make([]byte, 8)
 	binary.BigEndian.PutUint64(bz, version)

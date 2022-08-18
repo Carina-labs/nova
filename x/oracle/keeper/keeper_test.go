@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"github.com/Carina-labs/nova/x/oracle/keeper"
 	"testing"
 
 	"github.com/Carina-labs/nova/app/apptesting"
@@ -23,11 +24,13 @@ var (
 type KeeperTestSuite struct {
 	apptesting.KeeperTestHelper
 	queryClient types.QueryClient
+	msgServer   types.MsgServer
 }
 
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
 	suite.queryClient = types.NewQueryClient(suite.QueryHelper)
+	suite.msgServer = keeper.NewMsgServerImpl(suite.App.OracleKeeper)
 }
 
 func TestKeeperTestSuite(t *testing.T) {
@@ -90,4 +93,25 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 			}
 		})
 	}
+}
+
+func (suite *KeeperTestSuite) TestSetOracleVersion() {
+	testZoneId := "cosmos"
+	version := uint64(1)
+
+	// set & get oracle version
+	oracleKeeper := suite.App.OracleKeeper
+	oracleKeeper.SetOracleVersion(suite.Ctx, testZoneId, version)
+	got := oracleKeeper.GetOracleVersion(suite.Ctx, testZoneId)
+	suite.Require().Equal(version, got)
+
+	// update to new version
+	newVersion := uint64(2)
+	oracleKeeper.SetOracleVersion(suite.Ctx, testZoneId, newVersion)
+	got = oracleKeeper.GetOracleVersion(suite.Ctx, testZoneId)
+	suite.Require().Equal(newVersion, got)
+
+	// if there's no version info, return 0
+	got = oracleKeeper.GetOracleVersion(suite.Ctx, "unknown")
+	suite.Require().Equal(uint64(0), got)
 }
