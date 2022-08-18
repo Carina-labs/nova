@@ -23,6 +23,9 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress: fooOperator.String(),
 				LastBlockHeight: 10,
+				AppHash:         []byte("apphash"),
+				ChainId:         fooChainId,
+				OracleVersion:   0,
 			},
 			queryDenom: fooDenom,
 			wantErr:    false,
@@ -33,6 +36,9 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 				Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
 				OperatorAddress: fooOperator.String(),
 				LastBlockHeight: 10,
+				AppHash:         []byte("apphash"),
+				ChainId:         fooChainId,
+				OracleVersion:   0,
 			},
 			queryDenom: invalidDenom,
 			wantErr:    true,
@@ -60,6 +66,9 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 			suite.Require().NoError(err)
 			suite.Require().Equal(val.LastBlockHeight, tt.chainInfo.LastBlockHeight)
 			suite.Require().Equal(val.Coin, tt.chainInfo.Coin)
+			suite.Require().Equal(val.AppHash, tt.chainInfo.AppHash)
+			suite.Require().Equal(val.ChainId, tt.chainInfo.ChainId)
+
 		})
 	}
 }

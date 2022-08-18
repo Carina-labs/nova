@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -21,6 +22,9 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 
 func (server msgServer) UpdateChainState(goctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goctx)
+	if !server.keeper.IsValidOperator(ctx, state.Operator) {
+		return nil, types.ErrInvalidOperator
+	}
 
 	newOracleState := &types.ChainInfo{
 		Coin:            state.Coin,
@@ -34,28 +38,12 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 	server.keeper.SetOracleVersion(ctx, state.ChainId, oracleVersion+1)
 
 	if err := server.keeper.UpdateChainState(ctx, newOracleState); err != nil {
-		return nil, err
+		return nil, sdkerrors.Wrapf(types.ErrUnknown, "err: %v", err)
 	}
 
 	if err := ctx.EventManager().EmitTypedEvent(newOracleState); err != nil {
-		return nil, err
+		return nil, sdkerrors.Wrapf(types.ErrUnknown, "err: %v", err)
 	}
 
 	return &types.MsgUpdateChainStateResponse{}, nil
-}
-
-func (server msgServer) GetChainState(goCtx context.Context, request *types.QueryStateRequest) (*types.QueryStateResponse, error) {
-	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	result, err := server.keeper.GetChainState(ctx, request.ChainDenom)
-	if err != nil {
-		return nil, err
-	}
-
-	return &types.QueryStateResponse{
-		Coin:            result.Coin,
-		LastBlockHeight: result.LastBlockHeight,
-		AppHash:         result.AppHash,
-		ChainId:         result.ChainId,
-	}, nil
 }

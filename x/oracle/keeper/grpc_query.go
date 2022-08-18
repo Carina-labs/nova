@@ -23,7 +23,11 @@ func (q Querier) State(ctx context.Context, request *types.QueryStateRequest) (*
 
 	return &types.QueryStateResponse{
 		Coin:            res.Coin,
+		Operator:        res.OperatorAddress,
+		Decimal:         0,
 		LastBlockHeight: res.LastBlockHeight,
+		AppHash:         res.AppHash,
+		ChainId:         res.ChainId,
 	}, nil
 }
 

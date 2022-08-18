@@ -5,5 +5,7 @@ import (
 )
 
 var (
-	ErrNoSupportChain = sdkerrors.Register(ModuleName, 0, "this chain is not supported")
+	ErrNoSupportChain  = sdkerrors.Register(ModuleName, 0, "this chain is not supported")
+	ErrInvalidOperator = sdkerrors.Register(ModuleName, 1, "invalid operator address")
+	ErrUnknown         = sdkerrors.Register(ModuleName, 2, "unknown error")
 )
