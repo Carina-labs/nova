@@ -248,6 +248,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 	}
 
 	wAsset := m.keeper.bankKeeper.GetBalance(ctx, controllerAddr, ibcDenom)
+
 	if wAsset.Amount.IsZero() {
 		return nil, types.ErrTransferInfoNotFound
 	}
@@ -258,7 +259,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 	}
 
 	// sum of all withdraw records for user
-	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
+	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, ibcDenom, withdraw.Withdrawer)
 	if withdrawAmt.IsZero() {
 		return nil, types.ErrNoWithdrawRecord
 	}
