@@ -11,21 +11,6 @@ var (
 	validOperator = sdk.AccAddress(pk.Address())
 )
 
-func (suite *KeeperTestSuite) TestInitGenesis() {
-	genesis := types.NewGenesisState(types.Params{
-		OracleOperators: []string{validOperator.String()},
-	})
-
-	err := genesis.Validate()
-	suite.Require().NoError(err)
-
-	genesis = types.NewGenesisState(types.Params{
-		OracleOperators: []string{"invalid_addr"},
-	})
-	err = genesis.Validate()
-	suite.Require().NotNil(err, "error expected but not found", err)
-}
-
 func (suite *KeeperTestSuite) TestExportGenesis() {
 	genesis := &types.GenesisState{
 		Params: types.Params{
