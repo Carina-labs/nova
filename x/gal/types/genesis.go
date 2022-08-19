@@ -7,7 +7,6 @@ func NewGenesisState() *GenesisState {
 
 // DefaultGenesisState returns a default gal module genesis state.
 func DefaultGenesisState() *GenesisState {
-
 	genesisParam := DefaultParams()
 
 	return &GenesisState{
