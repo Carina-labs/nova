@@ -3,6 +3,8 @@ package keeper
 import (
 	"context"
 	"errors"
+	"fmt"
+	"github.com/cosmos/cosmos-sdk/x/authz"
 	"time"
 
 	"github.com/Carina-labs/nova/x/ibcstaking/types"
@@ -72,7 +74,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 	zoneInfo, ok := k.GetRegisteredZone(ctx, zone.ZoneId)
 
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	if zoneInfo.IcaAccount.DaomodifierAddress != zone.DaomodifierAddress {
@@ -120,7 +122,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -145,7 +147,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -170,7 +172,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -196,7 +198,7 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	var msgs []sdk.Msg
@@ -238,4 +240,58 @@ func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgR
 	k.Keeper.RegisterZone(ctx, &zoneInfo)
 
 	return &types.MsgRegisterHostAccountResponse{}, nil
+}
+
+func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGrant) (*types.MsgIcaAuthzGrantResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
+
+	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
+	if !ok {
+		return nil, types.ErrNotFoundZoneInfo
+	}
+
+	var msgs []sdk.Msg
+	msgs = append(msgs, &authz.MsgGrant{
+		Granter: zoneInfo.IcaAccount.HostAddress,
+		Grantee: msg.Grantee,
+		Grant:   msg.Grant,
+	})
+	err := k.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		fmt.Println("err : ", err)
+		return nil, errors.New("IcaAuthzGrant transaction failed to send")
+	}
+
+	return &types.MsgIcaAuthzGrantResponse{}, nil
+}
+
+func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzRevoke) (*types.MsgIcaAuthzRevokeResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
+
+	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
+	if !ok {
+		return nil, types.ErrNotFoundZoneInfo
+	}
+
+	var msgs []sdk.Msg
+	msgs = append(msgs, &authz.MsgRevoke{
+		Granter:    zoneInfo.IcaAccount.HostAddress,
+		Grantee:    msg.Grantee,
+		MsgTypeUrl: msg.MsgTypeUrl,
+	})
+
+	err := k.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		return nil, errors.New("IcaAuthzRevoke transaction failed to send")
+	}
+
+	return &types.MsgIcaAuthzRevokeResponse{}, nil
 }

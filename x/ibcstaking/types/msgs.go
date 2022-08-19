@@ -2,10 +2,13 @@ package types
 
 import (
 	"errors"
-	"strings"
-
+	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/cosmos/cosmos-sdk/x/authz"
+	"github.com/gogo/protobuf/proto"
+	"strings"
+	"time"
 )
 
 var (
@@ -15,6 +18,8 @@ var (
 	_ sdk.Msg = &MsgIcaTransfer{}
 	_ sdk.Msg = &MsgIcaAutoStaking{}
 	_ sdk.Msg = &MsgRegisterHostAccount{}
+	_ sdk.Msg = &MsgIcaAuthzGrant{}
+	//_ sdk.Msg = &MsgIcaAuthzRevoke{}
 
 	//modify
 	_ sdk.Msg = &MsgDeleteRegisteredZone{}
@@ -349,6 +354,100 @@ func (msg MsgChangeRegisteredZoneInfo) ValidateBasic() error {
 // GetSigners implements sdk.Msg
 func (msg MsgChangeRegisteredZoneInfo) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.IcaAccount.DaomodifierAddress)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{accAddr}
+}
+
+func NewMsgAuthzGrant(zoneId, grantee string, granter sdk.AccAddress, authorization authz.Authorization, expiration time.Time) (*MsgIcaAuthzGrant, error) {
+	m := &MsgIcaAuthzGrant{
+		ZoneId:            zoneId,
+		ControllerAddress: granter.String(),
+		Grantee:           grantee,
+		Grant:             authz.Grant{Expiration: expiration},
+	}
+	err := m.SetAuthorization(authorization)
+	if err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// SetAuthorization converts Authorization to any and adds it to MsgGrant.Authorization.
+func (msg *MsgIcaAuthzGrant) SetAuthorization(a authz.Authorization) error {
+	m, ok := a.(proto.Message)
+	if !ok {
+		return sdkerrors.Wrapf(sdkerrors.ErrPackAny, "can't proto marshal %T", m)
+	}
+	any, err := cdctypes.NewAnyWithValue(m)
+	if err != nil {
+		return err
+	}
+	msg.Grant.Authorization = any
+	return nil
+}
+
+// ValidateBasic implements sdk.Msg
+func (msg MsgIcaAuthzGrant) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+	}
+
+	if msg.Grantee == "" {
+		return sdkerrors.Wrapf(sdkerrors.ErrUnknownAddress, "Grantee address is not nil")
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "Grantee address is not nil")
+	}
+
+	return nil
+}
+
+// GetSigners implements sdk.Msg
+func (msg MsgIcaAuthzGrant) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{accAddr}
+}
+
+func NewMsgAuthzRevoke(zoneId, grantee, msgType string, granter sdk.AccAddress) *MsgIcaAuthzRevoke {
+	return &MsgIcaAuthzRevoke{
+		ZoneId:            zoneId,
+		ControllerAddress: granter.String(),
+		Grantee:           grantee,
+		MsgTypeUrl:        msgType,
+	}
+}
+
+// ValidateBasic implements sdk.Msg
+func (msg MsgIcaAuthzRevoke) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+	}
+
+	if msg.Grantee == "" {
+		return sdkerrors.Wrapf(sdkerrors.ErrUnknownAddress, "Grantee address is not nil")
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "Grantee address is not nil")
+	}
+	return nil
+}
+
+// GetSigners implements sdk.Msg
+func (msg MsgIcaAuthzRevoke) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 
 	if err != nil {
 		panic(err)

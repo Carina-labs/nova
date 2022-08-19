@@ -246,6 +246,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	// sum of all withdraw records for user
 	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
+
 	if withdrawAmt.IsZero() {
 		return nil, types.ErrNoWithdrawRecord
 	}
@@ -284,7 +285,7 @@ func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingW
 
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	withdrawAmount := m.keeper.GetTotalWithdrawAmountForZoneId(ctx, msg.ZoneId, zoneInfo.BaseDenom, msg.ChainTime)

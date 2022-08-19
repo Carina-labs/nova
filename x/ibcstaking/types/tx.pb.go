@@ -7,6 +7,7 @@ import (
 	context "context"
 	fmt "fmt"
 	types "github.com/cosmos/cosmos-sdk/types"
+	authz "github.com/cosmos/cosmos-sdk/x/authz"
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
@@ -641,6 +642,158 @@ func (m *MsgRegisterHostAccountResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgRegisterHostAccountResponse proto.InternalMessageInfo
 
+type MsgIcaAuthzGrant struct {
+	ZoneId            string      `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Grantee           string      `protobuf:"bytes,2,opt,name=grantee,proto3" json:"grantee,omitempty"`
+	ControllerAddress string      `protobuf:"bytes,3,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	Grant             authz.Grant `protobuf:"bytes,4,opt,name=grant,proto3" json:"grant"`
+}
+
+func (m *MsgIcaAuthzGrant) Reset()         { *m = MsgIcaAuthzGrant{} }
+func (m *MsgIcaAuthzGrant) String() string { return proto.CompactTextString(m) }
+func (*MsgIcaAuthzGrant) ProtoMessage()    {}
+func (*MsgIcaAuthzGrant) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0029d8583e8a6872, []int{16}
+}
+func (m *MsgIcaAuthzGrant) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgIcaAuthzGrant) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgIcaAuthzGrant.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgIcaAuthzGrant) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIcaAuthzGrant.Merge(m, src)
+}
+func (m *MsgIcaAuthzGrant) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgIcaAuthzGrant) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIcaAuthzGrant.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgIcaAuthzGrant proto.InternalMessageInfo
+
+type MsgIcaAuthzGrantResponse struct {
+}
+
+func (m *MsgIcaAuthzGrantResponse) Reset()         { *m = MsgIcaAuthzGrantResponse{} }
+func (m *MsgIcaAuthzGrantResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgIcaAuthzGrantResponse) ProtoMessage()    {}
+func (*MsgIcaAuthzGrantResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0029d8583e8a6872, []int{17}
+}
+func (m *MsgIcaAuthzGrantResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgIcaAuthzGrantResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgIcaAuthzGrantResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgIcaAuthzGrantResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIcaAuthzGrantResponse.Merge(m, src)
+}
+func (m *MsgIcaAuthzGrantResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgIcaAuthzGrantResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIcaAuthzGrantResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgIcaAuthzGrantResponse proto.InternalMessageInfo
+
+type MsgIcaAuthzRevoke struct {
+	ZoneId            string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Grantee           string `protobuf:"bytes,2,opt,name=grantee,proto3" json:"grantee,omitempty"`
+	ControllerAddress string `protobuf:"bytes,3,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	MsgTypeUrl        string `protobuf:"bytes,4,opt,name=msg_type_url,json=msgTypeUrl,proto3" json:"msg_type_url,omitempty"`
+}
+
+func (m *MsgIcaAuthzRevoke) Reset()         { *m = MsgIcaAuthzRevoke{} }
+func (m *MsgIcaAuthzRevoke) String() string { return proto.CompactTextString(m) }
+func (*MsgIcaAuthzRevoke) ProtoMessage()    {}
+func (*MsgIcaAuthzRevoke) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0029d8583e8a6872, []int{18}
+}
+func (m *MsgIcaAuthzRevoke) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgIcaAuthzRevoke) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgIcaAuthzRevoke.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgIcaAuthzRevoke) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIcaAuthzRevoke.Merge(m, src)
+}
+func (m *MsgIcaAuthzRevoke) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgIcaAuthzRevoke) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIcaAuthzRevoke.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgIcaAuthzRevoke proto.InternalMessageInfo
+
+type MsgIcaAuthzRevokeResponse struct {
+}
+
+func (m *MsgIcaAuthzRevokeResponse) Reset()         { *m = MsgIcaAuthzRevokeResponse{} }
+func (m *MsgIcaAuthzRevokeResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgIcaAuthzRevokeResponse) ProtoMessage()    {}
+func (*MsgIcaAuthzRevokeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0029d8583e8a6872, []int{19}
+}
+func (m *MsgIcaAuthzRevokeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgIcaAuthzRevokeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgIcaAuthzRevokeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgIcaAuthzRevokeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgIcaAuthzRevokeResponse.Merge(m, src)
+}
+func (m *MsgIcaAuthzRevokeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgIcaAuthzRevokeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgIcaAuthzRevokeResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgIcaAuthzRevokeResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgRegisterZone)(nil), "nova.ibcstaking.v1.MsgRegisterZone")
 	proto.RegisterType((*MsgRegisterZoneResponse)(nil), "nova.ibcstaking.v1.MsgRegisterZoneResponse")
@@ -658,6 +811,10 @@ func init() {
 	proto.RegisterType((*MsgIcaTransferResponse)(nil), "nova.ibcstaking.v1.MsgIcaTransferResponse")
 	proto.RegisterType((*MsgRegisterHostAccount)(nil), "nova.ibcstaking.v1.MsgRegisterHostAccount")
 	proto.RegisterType((*MsgRegisterHostAccountResponse)(nil), "nova.ibcstaking.v1.MsgRegisterHostAccountResponse")
+	proto.RegisterType((*MsgIcaAuthzGrant)(nil), "nova.ibcstaking.v1.MsgIcaAuthzGrant")
+	proto.RegisterType((*MsgIcaAuthzGrantResponse)(nil), "nova.ibcstaking.v1.MsgIcaAuthzGrantResponse")
+	proto.RegisterType((*MsgIcaAuthzRevoke)(nil), "nova.ibcstaking.v1.MsgIcaAuthzRevoke")
+	proto.RegisterType((*MsgIcaAuthzRevokeResponse)(nil), "nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse")
 }
 
 func init() { proto.RegisterFile("nova/ibcstaking/v1/tx.proto", fileDescriptor_0029d8583e8a6872) }
@@ -744,6 +901,8 @@ type MsgClient interface {
 	// IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
 	IcaRegisterHostAccount(ctx context.Context, in *MsgRegisterHostAccount, opts ...grpc.CallOption) (*MsgRegisterHostAccountResponse, error)
 	// DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
+	IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opts ...grpc.CallOption) (*MsgIcaAuthzGrantResponse, error)
+	IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, opts ...grpc.CallOption) (*MsgIcaAuthzRevokeResponse, error)
 	DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error)
 	ChangeRegisteredZoneInfo(ctx context.Context, in *MsgChangeRegisteredZoneInfo, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneInfoResponse, error)
 }
@@ -810,6 +969,24 @@ func (c *msgClient) IcaRegisterHostAccount(ctx context.Context, in *MsgRegisterH
 	return out, nil
 }
 
+func (c *msgClient) IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opts ...grpc.CallOption) (*MsgIcaAuthzGrantResponse, error) {
+	out := new(MsgIcaAuthzGrantResponse)
+	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAuthzGrant", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, opts ...grpc.CallOption) (*MsgIcaAuthzRevokeResponse, error) {
+	out := new(MsgIcaAuthzRevokeResponse)
+	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAuthzRevoke", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *msgClient) DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error) {
 	out := new(MsgDeleteRegisteredZoneResponse)
 	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/DeleteRegisteredZone", in, out, opts...)
@@ -843,6 +1020,8 @@ type MsgServer interface {
 	// IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
 	IcaRegisterHostAccount(context.Context, *MsgRegisterHostAccount) (*MsgRegisterHostAccountResponse, error)
 	// DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
+	IcaAuthzGrant(context.Context, *MsgIcaAuthzGrant) (*MsgIcaAuthzGrantResponse, error)
+	IcaAuthzRevoke(context.Context, *MsgIcaAuthzRevoke) (*MsgIcaAuthzRevokeResponse, error)
 	DeleteRegisteredZone(context.Context, *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error)
 	ChangeRegisteredZoneInfo(context.Context, *MsgChangeRegisteredZoneInfo) (*MsgChangeRegisteredZoneInfoResponse, error)
 }
@@ -868,6 +1047,12 @@ func (*UnimplementedMsgServer) IcaAutoStaking(ctx context.Context, req *MsgIcaAu
 }
 func (*UnimplementedMsgServer) IcaRegisterHostAccount(ctx context.Context, req *MsgRegisterHostAccount) (*MsgRegisterHostAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IcaRegisterHostAccount not implemented")
+}
+func (*UnimplementedMsgServer) IcaAuthzGrant(ctx context.Context, req *MsgIcaAuthzGrant) (*MsgIcaAuthzGrantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IcaAuthzGrant not implemented")
+}
+func (*UnimplementedMsgServer) IcaAuthzRevoke(ctx context.Context, req *MsgIcaAuthzRevoke) (*MsgIcaAuthzRevokeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IcaAuthzRevoke not implemented")
 }
 func (*UnimplementedMsgServer) DeleteRegisteredZone(ctx context.Context, req *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRegisteredZone not implemented")
@@ -988,6 +1173,42 @@ func _Msg_IcaRegisterHostAccount_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_IcaAuthzGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgIcaAuthzGrant)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).IcaAuthzGrant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.ibcstaking.v1.Msg/IcaAuthzGrant",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).IcaAuthzGrant(ctx, req.(*MsgIcaAuthzGrant))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_IcaAuthzRevoke_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgIcaAuthzRevoke)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).IcaAuthzRevoke(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.ibcstaking.v1.Msg/IcaAuthzRevoke",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).IcaAuthzRevoke(ctx, req.(*MsgIcaAuthzRevoke))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Msg_DeleteRegisteredZone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MsgDeleteRegisteredZone)
 	if err := dec(in); err != nil {
@@ -1051,6 +1272,14 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IcaRegisterHostAccount",
 			Handler:    _Msg_IcaRegisterHostAccount_Handler,
+		},
+		{
+			MethodName: "IcaAuthzGrant",
+			Handler:    _Msg_IcaAuthzGrant_Handler,
+		},
+		{
+			MethodName: "IcaAuthzRevoke",
+			Handler:    _Msg_IcaAuthzRevoke_Handler,
 		},
 		{
 			MethodName: "DeleteRegisteredZone",
@@ -1711,6 +1940,157 @@ func (m *MsgRegisterHostAccountResponse) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgIcaAuthzGrant) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgIcaAuthzGrant) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgIcaAuthzGrant) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.Grant.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintTx(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0x22
+	if len(m.ControllerAddress) > 0 {
+		i -= len(m.ControllerAddress)
+		copy(dAtA[i:], m.ControllerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ControllerAddress)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Grantee) > 0 {
+		i -= len(m.Grantee)
+		copy(dAtA[i:], m.Grantee)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Grantee)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgIcaAuthzGrantResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgIcaAuthzGrantResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgIcaAuthzGrantResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgIcaAuthzRevoke) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgIcaAuthzRevoke) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgIcaAuthzRevoke) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.MsgTypeUrl) > 0 {
+		i -= len(m.MsgTypeUrl)
+		copy(dAtA[i:], m.MsgTypeUrl)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.MsgTypeUrl)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.ControllerAddress) > 0 {
+		i -= len(m.ControllerAddress)
+		copy(dAtA[i:], m.ControllerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ControllerAddress)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Grantee) > 0 {
+		i -= len(m.Grantee)
+		copy(dAtA[i:], m.Grantee)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Grantee)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgIcaAuthzRevokeResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgIcaAuthzRevokeResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgIcaAuthzRevokeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -1988,6 +2368,72 @@ func (m *MsgRegisterHostAccount) Size() (n int) {
 }
 
 func (m *MsgRegisterHostAccountResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgIcaAuthzGrant) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Grantee)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.ControllerAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = m.Grant.Size()
+	n += 1 + l + sovTx(uint64(l))
+	return n
+}
+
+func (m *MsgIcaAuthzGrantResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgIcaAuthzRevoke) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Grantee)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.ControllerAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.MsgTypeUrl)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgIcaAuthzRevokeResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3897,6 +4343,463 @@ func (m *MsgRegisterHostAccountResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgRegisterHostAccountResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgIcaAuthzGrant) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgIcaAuthzGrant: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgIcaAuthzGrant: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Grantee", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Grantee = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ControllerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Grant", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Grant.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgIcaAuthzGrantResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgIcaAuthzGrantResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgIcaAuthzGrantResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgIcaAuthzRevoke) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgIcaAuthzRevoke: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgIcaAuthzRevoke: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Grantee", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Grantee = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ControllerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MsgTypeUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MsgTypeUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgIcaAuthzRevokeResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgIcaAuthzRevokeResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgIcaAuthzRevokeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

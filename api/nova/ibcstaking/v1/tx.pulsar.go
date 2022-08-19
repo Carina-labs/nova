@@ -3,6 +3,7 @@ package ibcstakingv1
 
 import (
 	fmt "fmt"
+	v1beta11 "github.com/Carina-labs/nova/api/cosmos/authz/v1beta1"
 	v1beta1 "github.com/Carina-labs/nova/api/cosmos/base/v1beta1"
 	runtime "github.com/cosmos/cosmos-proto/runtime"
 	_ "github.com/gogo/protobuf/gogoproto"
@@ -8053,6 +8054,1957 @@ func (x *fastReflection_MsgRegisterHostAccountResponse) ProtoMethods() *protoifa
 	}
 }
 
+var (
+	md_MsgIcaAuthzGrant                    protoreflect.MessageDescriptor
+	fd_MsgIcaAuthzGrant_zone_id            protoreflect.FieldDescriptor
+	fd_MsgIcaAuthzGrant_grantee            protoreflect.FieldDescriptor
+	fd_MsgIcaAuthzGrant_controller_address protoreflect.FieldDescriptor
+	fd_MsgIcaAuthzGrant_grant              protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_ibcstaking_v1_tx_proto_init()
+	md_MsgIcaAuthzGrant = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAuthzGrant")
+	fd_MsgIcaAuthzGrant_zone_id = md_MsgIcaAuthzGrant.Fields().ByName("zone_id")
+	fd_MsgIcaAuthzGrant_grantee = md_MsgIcaAuthzGrant.Fields().ByName("grantee")
+	fd_MsgIcaAuthzGrant_controller_address = md_MsgIcaAuthzGrant.Fields().ByName("controller_address")
+	fd_MsgIcaAuthzGrant_grant = md_MsgIcaAuthzGrant.Fields().ByName("grant")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgIcaAuthzGrant)(nil)
+
+type fastReflection_MsgIcaAuthzGrant MsgIcaAuthzGrant
+
+func (x *MsgIcaAuthzGrant) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaAuthzGrant)(x)
+}
+
+func (x *MsgIcaAuthzGrant) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgIcaAuthzGrant_messageType fastReflection_MsgIcaAuthzGrant_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaAuthzGrant_messageType{}
+
+type fastReflection_MsgIcaAuthzGrant_messageType struct{}
+
+func (x fastReflection_MsgIcaAuthzGrant_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaAuthzGrant)(nil)
+}
+func (x fastReflection_MsgIcaAuthzGrant_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAuthzGrant)
+}
+func (x fastReflection_MsgIcaAuthzGrant_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAuthzGrant
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgIcaAuthzGrant) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAuthzGrant
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgIcaAuthzGrant) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaAuthzGrant_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgIcaAuthzGrant) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAuthzGrant)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgIcaAuthzGrant) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaAuthzGrant)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgIcaAuthzGrant) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_MsgIcaAuthzGrant_zone_id, value) {
+			return
+		}
+	}
+	if x.Grantee != "" {
+		value := protoreflect.ValueOfString(x.Grantee)
+		if !f(fd_MsgIcaAuthzGrant_grantee, value) {
+			return
+		}
+	}
+	if x.ControllerAddress != "" {
+		value := protoreflect.ValueOfString(x.ControllerAddress)
+		if !f(fd_MsgIcaAuthzGrant_controller_address, value) {
+			return
+		}
+	}
+	if x.Grant != nil {
+		value := protoreflect.ValueOfMessage(x.Grant.ProtoReflect())
+		if !f(fd_MsgIcaAuthzGrant_grant, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgIcaAuthzGrant) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
+		return x.ZoneId != ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
+		return x.Grantee != ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
+		return x.ControllerAddress != ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
+		return x.Grant != nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzGrant) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
+		x.ZoneId = ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
+		x.Grantee = ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
+		x.ControllerAddress = ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
+		x.Grant = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgIcaAuthzGrant) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
+		value := x.Grantee
+		return protoreflect.ValueOfString(value)
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
+		value := x.ControllerAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
+		value := x.Grant
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzGrant) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
+		x.Grantee = value.Interface().(string)
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
+		x.ControllerAddress = value.Interface().(string)
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
+		x.Grant = value.Message().Interface().(*v1beta11.Grant)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzGrant) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
+		if x.Grant == nil {
+			x.Grant = new(v1beta11.Grant)
+		}
+		return protoreflect.ValueOfMessage(x.Grant.ProtoReflect())
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgIcaAuthzGrant is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
+		panic(fmt.Errorf("field grantee of message nova.ibcstaking.v1.MsgIcaAuthzGrant is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.ibcstaking.v1.MsgIcaAuthzGrant is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgIcaAuthzGrant) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
+		return protoreflect.ValueOfString("")
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
+		return protoreflect.ValueOfString("")
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
+		return protoreflect.ValueOfString("")
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
+		m := new(v1beta11.Grant)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgIcaAuthzGrant) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAuthzGrant", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgIcaAuthzGrant) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzGrant) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgIcaAuthzGrant) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgIcaAuthzGrant) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgIcaAuthzGrant)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Grantee)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ControllerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Grant != nil {
+			l = options.Size(x.Grant)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAuthzGrant)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Grant != nil {
+			encoded, err := options.Marshal(x.Grant)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.ControllerAddress) > 0 {
+			i -= len(x.ControllerAddress)
+			copy(dAtA[i:], x.ControllerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ControllerAddress)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.Grantee) > 0 {
+			i -= len(x.Grantee)
+			copy(dAtA[i:], x.Grantee)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Grantee)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAuthzGrant)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAuthzGrant: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAuthzGrant: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Grantee", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Grantee = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ControllerAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Grant", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Grant == nil {
+					x.Grant = &v1beta11.Grant{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Grant); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgIcaAuthzGrantResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_ibcstaking_v1_tx_proto_init()
+	md_MsgIcaAuthzGrantResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAuthzGrantResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgIcaAuthzGrantResponse)(nil)
+
+type fastReflection_MsgIcaAuthzGrantResponse MsgIcaAuthzGrantResponse
+
+func (x *MsgIcaAuthzGrantResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaAuthzGrantResponse)(x)
+}
+
+func (x *MsgIcaAuthzGrantResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgIcaAuthzGrantResponse_messageType fastReflection_MsgIcaAuthzGrantResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaAuthzGrantResponse_messageType{}
+
+type fastReflection_MsgIcaAuthzGrantResponse_messageType struct{}
+
+func (x fastReflection_MsgIcaAuthzGrantResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaAuthzGrantResponse)(nil)
+}
+func (x fastReflection_MsgIcaAuthzGrantResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAuthzGrantResponse)
+}
+func (x fastReflection_MsgIcaAuthzGrantResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAuthzGrantResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAuthzGrantResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaAuthzGrantResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAuthzGrantResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaAuthzGrantResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAuthzGrantResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgIcaAuthzGrantResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgIcaAuthzGrantResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAuthzGrantResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAuthzGrantResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAuthzGrantResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAuthzGrantResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgIcaAuthzRevoke                    protoreflect.MessageDescriptor
+	fd_MsgIcaAuthzRevoke_zone_id            protoreflect.FieldDescriptor
+	fd_MsgIcaAuthzRevoke_grantee            protoreflect.FieldDescriptor
+	fd_MsgIcaAuthzRevoke_controller_address protoreflect.FieldDescriptor
+	fd_MsgIcaAuthzRevoke_msg_type_url       protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_ibcstaking_v1_tx_proto_init()
+	md_MsgIcaAuthzRevoke = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAuthzRevoke")
+	fd_MsgIcaAuthzRevoke_zone_id = md_MsgIcaAuthzRevoke.Fields().ByName("zone_id")
+	fd_MsgIcaAuthzRevoke_grantee = md_MsgIcaAuthzRevoke.Fields().ByName("grantee")
+	fd_MsgIcaAuthzRevoke_controller_address = md_MsgIcaAuthzRevoke.Fields().ByName("controller_address")
+	fd_MsgIcaAuthzRevoke_msg_type_url = md_MsgIcaAuthzRevoke.Fields().ByName("msg_type_url")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgIcaAuthzRevoke)(nil)
+
+type fastReflection_MsgIcaAuthzRevoke MsgIcaAuthzRevoke
+
+func (x *MsgIcaAuthzRevoke) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaAuthzRevoke)(x)
+}
+
+func (x *MsgIcaAuthzRevoke) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgIcaAuthzRevoke_messageType fastReflection_MsgIcaAuthzRevoke_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaAuthzRevoke_messageType{}
+
+type fastReflection_MsgIcaAuthzRevoke_messageType struct{}
+
+func (x fastReflection_MsgIcaAuthzRevoke_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaAuthzRevoke)(nil)
+}
+func (x fastReflection_MsgIcaAuthzRevoke_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAuthzRevoke)
+}
+func (x fastReflection_MsgIcaAuthzRevoke_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAuthzRevoke
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgIcaAuthzRevoke) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAuthzRevoke
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgIcaAuthzRevoke) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaAuthzRevoke_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgIcaAuthzRevoke) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAuthzRevoke)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgIcaAuthzRevoke) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaAuthzRevoke)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgIcaAuthzRevoke) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_MsgIcaAuthzRevoke_zone_id, value) {
+			return
+		}
+	}
+	if x.Grantee != "" {
+		value := protoreflect.ValueOfString(x.Grantee)
+		if !f(fd_MsgIcaAuthzRevoke_grantee, value) {
+			return
+		}
+	}
+	if x.ControllerAddress != "" {
+		value := protoreflect.ValueOfString(x.ControllerAddress)
+		if !f(fd_MsgIcaAuthzRevoke_controller_address, value) {
+			return
+		}
+	}
+	if x.MsgTypeUrl != "" {
+		value := protoreflect.ValueOfString(x.MsgTypeUrl)
+		if !f(fd_MsgIcaAuthzRevoke_msg_type_url, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgIcaAuthzRevoke) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
+		return x.ZoneId != ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
+		return x.Grantee != ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
+		return x.ControllerAddress != ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
+		return x.MsgTypeUrl != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzRevoke) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
+		x.ZoneId = ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
+		x.Grantee = ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
+		x.ControllerAddress = ""
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
+		x.MsgTypeUrl = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgIcaAuthzRevoke) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
+		value := x.Grantee
+		return protoreflect.ValueOfString(value)
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
+		value := x.ControllerAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
+		value := x.MsgTypeUrl
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzRevoke) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
+		x.Grantee = value.Interface().(string)
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
+		x.ControllerAddress = value.Interface().(string)
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
+		x.MsgTypeUrl = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzRevoke) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgIcaAuthzRevoke is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
+		panic(fmt.Errorf("field grantee of message nova.ibcstaking.v1.MsgIcaAuthzRevoke is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.ibcstaking.v1.MsgIcaAuthzRevoke is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
+		panic(fmt.Errorf("field msg_type_url of message nova.ibcstaking.v1.MsgIcaAuthzRevoke is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgIcaAuthzRevoke) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
+		return protoreflect.ValueOfString("")
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
+		return protoreflect.ValueOfString("")
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
+		return protoreflect.ValueOfString("")
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgIcaAuthzRevoke) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAuthzRevoke", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgIcaAuthzRevoke) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzRevoke) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgIcaAuthzRevoke) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgIcaAuthzRevoke) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgIcaAuthzRevoke)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Grantee)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ControllerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.MsgTypeUrl)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAuthzRevoke)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.MsgTypeUrl) > 0 {
+			i -= len(x.MsgTypeUrl)
+			copy(dAtA[i:], x.MsgTypeUrl)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.MsgTypeUrl)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.ControllerAddress) > 0 {
+			i -= len(x.ControllerAddress)
+			copy(dAtA[i:], x.ControllerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ControllerAddress)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.Grantee) > 0 {
+			i -= len(x.Grantee)
+			copy(dAtA[i:], x.Grantee)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Grantee)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAuthzRevoke)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAuthzRevoke: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAuthzRevoke: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Grantee", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Grantee = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ControllerAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field MsgTypeUrl", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.MsgTypeUrl = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgIcaAuthzRevokeResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_ibcstaking_v1_tx_proto_init()
+	md_MsgIcaAuthzRevokeResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAuthzRevokeResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgIcaAuthzRevokeResponse)(nil)
+
+type fastReflection_MsgIcaAuthzRevokeResponse MsgIcaAuthzRevokeResponse
+
+func (x *MsgIcaAuthzRevokeResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaAuthzRevokeResponse)(x)
+}
+
+func (x *MsgIcaAuthzRevokeResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgIcaAuthzRevokeResponse_messageType fastReflection_MsgIcaAuthzRevokeResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaAuthzRevokeResponse_messageType{}
+
+type fastReflection_MsgIcaAuthzRevokeResponse_messageType struct{}
+
+func (x fastReflection_MsgIcaAuthzRevokeResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaAuthzRevokeResponse)(nil)
+}
+func (x fastReflection_MsgIcaAuthzRevokeResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAuthzRevokeResponse)
+}
+func (x fastReflection_MsgIcaAuthzRevokeResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAuthzRevokeResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaAuthzRevokeResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaAuthzRevokeResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaAuthzRevokeResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaAuthzRevokeResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
+		}
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgIcaAuthzRevokeResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgIcaAuthzRevokeResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAuthzRevokeResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgIcaAuthzRevokeResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAuthzRevokeResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaAuthzRevokeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -8771,6 +10723,176 @@ func (*MsgRegisterHostAccountResponse) Descriptor() ([]byte, []int) {
 	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{15}
 }
 
+type MsgIcaAuthzGrant struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneId            string          `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Grantee           string          `protobuf:"bytes,2,opt,name=grantee,proto3" json:"grantee,omitempty"`
+	ControllerAddress string          `protobuf:"bytes,3,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	Grant             *v1beta11.Grant `protobuf:"bytes,4,opt,name=grant,proto3" json:"grant,omitempty"`
+}
+
+func (x *MsgIcaAuthzGrant) Reset() {
+	*x = MsgIcaAuthzGrant{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgIcaAuthzGrant) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgIcaAuthzGrant) ProtoMessage() {}
+
+// Deprecated: Use MsgIcaAuthzGrant.ProtoReflect.Descriptor instead.
+func (*MsgIcaAuthzGrant) Descriptor() ([]byte, []int) {
+	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *MsgIcaAuthzGrant) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *MsgIcaAuthzGrant) GetGrantee() string {
+	if x != nil {
+		return x.Grantee
+	}
+	return ""
+}
+
+func (x *MsgIcaAuthzGrant) GetControllerAddress() string {
+	if x != nil {
+		return x.ControllerAddress
+	}
+	return ""
+}
+
+func (x *MsgIcaAuthzGrant) GetGrant() *v1beta11.Grant {
+	if x != nil {
+		return x.Grant
+	}
+	return nil
+}
+
+type MsgIcaAuthzGrantResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgIcaAuthzGrantResponse) Reset() {
+	*x = MsgIcaAuthzGrantResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgIcaAuthzGrantResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgIcaAuthzGrantResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgIcaAuthzGrantResponse.ProtoReflect.Descriptor instead.
+func (*MsgIcaAuthzGrantResponse) Descriptor() ([]byte, []int) {
+	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{17}
+}
+
+type MsgIcaAuthzRevoke struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneId            string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Grantee           string `protobuf:"bytes,2,opt,name=grantee,proto3" json:"grantee,omitempty"`
+	ControllerAddress string `protobuf:"bytes,3,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	MsgTypeUrl        string `protobuf:"bytes,4,opt,name=msg_type_url,json=msgTypeUrl,proto3" json:"msg_type_url,omitempty"`
+}
+
+func (x *MsgIcaAuthzRevoke) Reset() {
+	*x = MsgIcaAuthzRevoke{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgIcaAuthzRevoke) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgIcaAuthzRevoke) ProtoMessage() {}
+
+// Deprecated: Use MsgIcaAuthzRevoke.ProtoReflect.Descriptor instead.
+func (*MsgIcaAuthzRevoke) Descriptor() ([]byte, []int) {
+	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *MsgIcaAuthzRevoke) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *MsgIcaAuthzRevoke) GetGrantee() string {
+	if x != nil {
+		return x.Grantee
+	}
+	return ""
+}
+
+func (x *MsgIcaAuthzRevoke) GetControllerAddress() string {
+	if x != nil {
+		return x.ControllerAddress
+	}
+	return ""
+}
+
+func (x *MsgIcaAuthzRevoke) GetMsgTypeUrl() string {
+	if x != nil {
+		return x.MsgTypeUrl
+	}
+	return ""
+}
+
+type MsgIcaAuthzRevokeResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgIcaAuthzRevokeResponse) Reset() {
+	*x = MsgIcaAuthzRevokeResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgIcaAuthzRevokeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgIcaAuthzRevokeResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgIcaAuthzRevokeResponse.ProtoReflect.Descriptor instead.
+func (*MsgIcaAuthzRevokeResponse) Descriptor() ([]byte, []int) {
+	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{19}
+}
+
 var File_nova_ibcstaking_v1_tx_proto protoreflect.FileDescriptor
 
 var file_nova_ibcstaking_v1_tx_proto_rawDesc = []byte{
@@ -8987,7 +11109,7 @@ func file_nova_ibcstaking_v1_tx_proto_rawDescGZIP() []byte {
 	return file_nova_ibcstaking_v1_tx_proto_rawDescData
 }
 
-var file_nova_ibcstaking_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_nova_ibcstaking_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_nova_ibcstaking_v1_tx_proto_goTypes = []interface{}{
 	(*MsgRegisterZone)(nil),                     // 0: nova.ibcstaking.v1.MsgRegisterZone
 	(*MsgRegisterZoneResponse)(nil),             // 1: nova.ibcstaking.v1.MsgRegisterZoneResponse
@@ -9005,41 +11127,51 @@ var file_nova_ibcstaking_v1_tx_proto_goTypes = []interface{}{
 	(*MsgIcaTransferResponse)(nil),              // 13: nova.ibcstaking.v1.MsgIcaTransferResponse
 	(*MsgRegisterHostAccount)(nil),              // 14: nova.ibcstaking.v1.MsgRegisterHostAccount
 	(*MsgRegisterHostAccountResponse)(nil),      // 15: nova.ibcstaking.v1.MsgRegisterHostAccountResponse
-	(*IcaConnectionInfo)(nil),                   // 16: nova.ibcstaking.v1.IcaConnectionInfo
-	(*IcaAccount)(nil),                          // 17: nova.ibcstaking.v1.IcaAccount
-	(*v1beta1.Coin)(nil),                        // 18: cosmos.base.v1beta1.Coin
+	(*MsgIcaAuthzGrant)(nil),                    // 16: nova.ibcstaking.v1.MsgIcaAuthzGrant
+	(*MsgIcaAuthzGrantResponse)(nil),            // 17: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse
+	(*MsgIcaAuthzRevoke)(nil),                   // 18: nova.ibcstaking.v1.MsgIcaAuthzRevoke
+	(*MsgIcaAuthzRevokeResponse)(nil),           // 19: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse
+	(*IcaConnectionInfo)(nil),                   // 20: nova.ibcstaking.v1.IcaConnectionInfo
+	(*IcaAccount)(nil),                          // 21: nova.ibcstaking.v1.IcaAccount
+	(*v1beta1.Coin)(nil),                        // 22: cosmos.base.v1beta1.Coin
+	(*v1beta11.Grant)(nil),                      // 23: cosmos.authz.v1beta1.Grant
 }
 var file_nova_ibcstaking_v1_tx_proto_depIdxs = []int32{
-	16, // 0: nova.ibcstaking.v1.MsgRegisterZone.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
-	17, // 1: nova.ibcstaking.v1.MsgRegisterZone.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
-	16, // 2: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
-	17, // 3: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
-	18, // 4: nova.ibcstaking.v1.MsgIcaDelegate.amount:type_name -> cosmos.base.v1beta1.Coin
-	18, // 5: nova.ibcstaking.v1.MsgIcaUndelegate.amount:type_name -> cosmos.base.v1beta1.Coin
-	18, // 6: nova.ibcstaking.v1.MsgIcaAutoStaking.amount:type_name -> cosmos.base.v1beta1.Coin
-	18, // 7: nova.ibcstaking.v1.MsgIcaTransfer.amount:type_name -> cosmos.base.v1beta1.Coin
-	17, // 8: nova.ibcstaking.v1.MsgRegisterHostAccount.account_info:type_name -> nova.ibcstaking.v1.IcaAccount
-	0,  // 9: nova.ibcstaking.v1.Msg.RegisterZone:input_type -> nova.ibcstaking.v1.MsgRegisterZone
-	6,  // 10: nova.ibcstaking.v1.Msg.IcaDelegate:input_type -> nova.ibcstaking.v1.MsgIcaDelegate
-	8,  // 11: nova.ibcstaking.v1.Msg.IcaUndelegate:input_type -> nova.ibcstaking.v1.MsgIcaUndelegate
-	12, // 12: nova.ibcstaking.v1.Msg.IcaTransfer:input_type -> nova.ibcstaking.v1.MsgIcaTransfer
-	10, // 13: nova.ibcstaking.v1.Msg.IcaAutoStaking:input_type -> nova.ibcstaking.v1.MsgIcaAutoStaking
-	14, // 14: nova.ibcstaking.v1.Msg.IcaRegisterHostAccount:input_type -> nova.ibcstaking.v1.MsgRegisterHostAccount
-	4,  // 15: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:input_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZone
-	2,  // 16: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:input_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo
-	1,  // 17: nova.ibcstaking.v1.Msg.RegisterZone:output_type -> nova.ibcstaking.v1.MsgRegisterZoneResponse
-	7,  // 18: nova.ibcstaking.v1.Msg.IcaDelegate:output_type -> nova.ibcstaking.v1.MsgIcaDelegateResponse
-	9,  // 19: nova.ibcstaking.v1.Msg.IcaUndelegate:output_type -> nova.ibcstaking.v1.MsgIcaUndelegateResponse
-	13, // 20: nova.ibcstaking.v1.Msg.IcaTransfer:output_type -> nova.ibcstaking.v1.MsgIcaTransferResponse
-	11, // 21: nova.ibcstaking.v1.Msg.IcaAutoStaking:output_type -> nova.ibcstaking.v1.MsgIcaAutoStakingResponse
-	15, // 22: nova.ibcstaking.v1.Msg.IcaRegisterHostAccount:output_type -> nova.ibcstaking.v1.MsgRegisterHostAccountResponse
-	5,  // 23: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:output_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse
-	3,  // 24: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:output_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse
-	17, // [17:25] is the sub-list for method output_type
-	9,  // [9:17] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	20, // 0: nova.ibcstaking.v1.MsgRegisterZone.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
+	21, // 1: nova.ibcstaking.v1.MsgRegisterZone.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
+	20, // 2: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
+	21, // 3: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
+	22, // 4: nova.ibcstaking.v1.MsgIcaDelegate.amount:type_name -> cosmos.base.v1beta1.Coin
+	22, // 5: nova.ibcstaking.v1.MsgIcaUndelegate.amount:type_name -> cosmos.base.v1beta1.Coin
+	22, // 6: nova.ibcstaking.v1.MsgIcaAutoStaking.amount:type_name -> cosmos.base.v1beta1.Coin
+	22, // 7: nova.ibcstaking.v1.MsgIcaTransfer.amount:type_name -> cosmos.base.v1beta1.Coin
+	21, // 8: nova.ibcstaking.v1.MsgRegisterHostAccount.account_info:type_name -> nova.ibcstaking.v1.IcaAccount
+	23, // 9: nova.ibcstaking.v1.MsgIcaAuthzGrant.grant:type_name -> cosmos.authz.v1beta1.Grant
+	0,  // 10: nova.ibcstaking.v1.Msg.RegisterZone:input_type -> nova.ibcstaking.v1.MsgRegisterZone
+	6,  // 11: nova.ibcstaking.v1.Msg.IcaDelegate:input_type -> nova.ibcstaking.v1.MsgIcaDelegate
+	8,  // 12: nova.ibcstaking.v1.Msg.IcaUndelegate:input_type -> nova.ibcstaking.v1.MsgIcaUndelegate
+	12, // 13: nova.ibcstaking.v1.Msg.IcaTransfer:input_type -> nova.ibcstaking.v1.MsgIcaTransfer
+	10, // 14: nova.ibcstaking.v1.Msg.IcaAutoStaking:input_type -> nova.ibcstaking.v1.MsgIcaAutoStaking
+	14, // 15: nova.ibcstaking.v1.Msg.IcaRegisterHostAccount:input_type -> nova.ibcstaking.v1.MsgRegisterHostAccount
+	16, // 16: nova.ibcstaking.v1.Msg.IcaAuthzGrant:input_type -> nova.ibcstaking.v1.MsgIcaAuthzGrant
+	18, // 17: nova.ibcstaking.v1.Msg.IcaAuthzRevoke:input_type -> nova.ibcstaking.v1.MsgIcaAuthzRevoke
+	4,  // 18: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:input_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZone
+	2,  // 19: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:input_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo
+	1,  // 20: nova.ibcstaking.v1.Msg.RegisterZone:output_type -> nova.ibcstaking.v1.MsgRegisterZoneResponse
+	7,  // 21: nova.ibcstaking.v1.Msg.IcaDelegate:output_type -> nova.ibcstaking.v1.MsgIcaDelegateResponse
+	9,  // 22: nova.ibcstaking.v1.Msg.IcaUndelegate:output_type -> nova.ibcstaking.v1.MsgIcaUndelegateResponse
+	13, // 23: nova.ibcstaking.v1.Msg.IcaTransfer:output_type -> nova.ibcstaking.v1.MsgIcaTransferResponse
+	11, // 24: nova.ibcstaking.v1.Msg.IcaAutoStaking:output_type -> nova.ibcstaking.v1.MsgIcaAutoStakingResponse
+	15, // 25: nova.ibcstaking.v1.Msg.IcaRegisterHostAccount:output_type -> nova.ibcstaking.v1.MsgRegisterHostAccountResponse
+	17, // 26: nova.ibcstaking.v1.Msg.IcaAuthzGrant:output_type -> nova.ibcstaking.v1.MsgIcaAuthzGrantResponse
+	19, // 27: nova.ibcstaking.v1.Msg.IcaAuthzRevoke:output_type -> nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse
+	5,  // 28: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:output_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse
+	3,  // 29: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:output_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse
+	20, // [20:30] is the sub-list for method output_type
+	10, // [10:20] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_nova_ibcstaking_v1_tx_proto_init() }
@@ -9241,6 +11373,54 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
+		file_nova_ibcstaking_v1_tx_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgIcaAuthzGrant); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_ibcstaking_v1_tx_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgIcaAuthzGrantResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_ibcstaking_v1_tx_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgIcaAuthzRevoke); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_ibcstaking_v1_tx_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgIcaAuthzRevokeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -9248,7 +11428,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_ibcstaking_v1_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
