@@ -28,7 +28,7 @@ func (suite *KeeperTestSuite) setControllerAddr(address string) {
 	suite.chainA.App.IbcstakingKeeper.SetParams(suite.chainA.GetContext(), params)
 }
 
-func (suite *KeeperTestSuite) setMintWAsset(amt sdk.Int, toAddr sdk.AccAddress) sdk.Coin{
+func (suite *KeeperTestSuite) setMintWAsset(amt sdk.Int, toAddr sdk.AccAddress) sdk.Coin {
 	var wAssets sdk.Coins
 
 	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(suite.chainA.GetContext(), transferPort, transferChannel, baseDenom)
@@ -43,36 +43,36 @@ func (suite *KeeperTestSuite) setMintWAsset(amt sdk.Int, toAddr sdk.AccAddress) 
 	return wAsset
 }
 
-func setWithdrawRecordContents(cnt int) map[uint64]*types.WithdrawRecordContent{
+func setWithdrawRecordContents(cnt int) map[uint64]*types.WithdrawRecordContent {
 	records := make(map[uint64]*types.WithdrawRecordContent)
 
 	for i := 1; i <= cnt; i++ {
-		amt := int64(i*100)
-		records[uint64(i)] =  &types.WithdrawRecordContent{
-			Amount: sdk.NewInt(amt),
-			CompletionTime: time.Now(),
+		amt := int64(i * 100)
+		records[uint64(i)] = &types.WithdrawRecordContent{
+			Amount:          sdk.NewInt(amt),
+			CompletionTime:  time.Now(),
 			WithdrawVersion: uint64(0),
-			State: int64(2),
-			OracleVersion: int64(0),
+			State:           int64(2),
+			OracleVersion:   int64(0),
 		}
 	}
 
 	return records
 }
 
-func setWithdrawRecords(zoneId, withdrawer string, recordContentsCnt int) *types.WithdrawRecord{
+func setWithdrawRecords(zoneId, withdrawer string, recordContentsCnt int) *types.WithdrawRecord {
 	var record *types.WithdrawRecord
 
 	recordContents := setWithdrawRecordContents(recordContentsCnt)
 	record = &types.WithdrawRecord{
-		ZoneId: zoneId,
+		ZoneId:     zoneId,
 		Withdrawer: withdrawer,
-		Records: recordContents,
+		Records:    recordContents,
 	}
 	return record
 }
 
-func (suite *KeeperTestSuite) TestWithdraw(){
+func (suite *KeeperTestSuite) TestWithdraw() {
 	suite.setControllerAddr(suite.GetControllerAddr())
 
 	withdrawer := suite.GenRandomAddress().String()
@@ -98,57 +98,57 @@ func (suite *KeeperTestSuite) TestWithdraw(){
 	suite.setMintWAsset(sdk.NewInt(10000), controllerAddr)
 
 	tcs := []struct {
-		name      string
-		withdrawMsg  types.MsgWithdraw
-		shouldErr bool
+		name        string
+		withdrawMsg types.MsgWithdraw
+		shouldErr   bool
 	}{
 		{
-			name:      "success",
+			name: "success",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId: zoneId,
-				Withdrawer: withdrawer,
+				ZoneId:            zoneId,
+				Withdrawer:        withdrawer,
 				TransferChannelId: transferChannel,
-				TransferPortId: transferPort,
+				TransferPortId:    transferPort,
 			},
 			shouldErr: false,
 		},
 		{
-			name:      "transfer channel id is not found",
+			name: "transfer channel id is not found",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId: zoneId,
-				Withdrawer: withdrawer,
+				ZoneId:            zoneId,
+				Withdrawer:        withdrawer,
 				TransferChannelId: "channel-111",
-				TransferPortId: transferPort,
+				TransferPortId:    transferPort,
 			},
 			shouldErr: true,
 		},
 		{
-			name:      "transfer port id is not found",
+			name: "transfer port id is not found",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId: zoneId,
-				Withdrawer: withdrawer,
+				ZoneId:            zoneId,
+				Withdrawer:        withdrawer,
 				TransferChannelId: transferChannel,
-				TransferPortId: "testport",
+				TransferPortId:    "testport",
 			},
 			shouldErr: true,
 		},
 		{
-			name:      "wAsset is zero amount",
+			name: "wAsset is zero amount",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId: zoneId,
-				Withdrawer: withdrawer,
+				ZoneId:            zoneId,
+				Withdrawer:        withdrawer,
 				TransferChannelId: transferChannel,
-				TransferPortId: transferPort,
+				TransferPortId:    transferPort,
 			},
 			shouldErr: true,
 		},
 		{
-			name:      "zone not found",
+			name: "zone not found",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId: "test",
-				Withdrawer: withdrawer,
+				ZoneId:            "test",
+				Withdrawer:        withdrawer,
 				TransferChannelId: transferChannel,
-				TransferPortId: transferPort,
+				TransferPortId:    transferPort,
 			},
 			shouldErr: true,
 		},
