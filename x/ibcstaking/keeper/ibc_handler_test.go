@@ -153,7 +153,7 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 
 	packetData := channeltypes.Packet{
 		Sequence:           1,
-		SourcePort:         "icacontroller-" + zone[0].IcaAccount.DaomodifierAddress,
+		SourcePort:         "icacontroller-" + zone[0].IcaAccount.ControllerAddress,
 		SourceChannel:      "channel-0",
 		DestinationPort:    "icahost",
 		DestinationChannel: "channel-0",
@@ -229,7 +229,7 @@ func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 
 	packetData := channeltypes.Packet{
 		Sequence:           1,
-		SourcePort:         "icacontroller-" + zone[0].IcaAccount.DaomodifierAddress,
+		SourcePort:         "icacontroller-" + zone[0].IcaAccount.ControllerAddress,
 		SourceChannel:      "channel-0",
 		DestinationPort:    "icahost",
 		DestinationChannel: "channel-0",
