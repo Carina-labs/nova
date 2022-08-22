@@ -57,8 +57,8 @@ func GetTxCmd() *cobra.Command {
 
 func txRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "registerzone [zone-id] [daomodifier-address] [connection-id] [validator_address] [base-denom] [decimal]",
-		Args: cobra.ExactArgs(6),
+		Use:  "registerzone [zone-id] [controller-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
+		Args: cobra.ExactArgs(8),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -72,13 +72,15 @@ func txRegisterZoneCmd() *cobra.Command {
 			zoneId := args[0]
 			controllerAddr := clientCtx.GetFromAddress()
 			icaConnId := args[2]
-			validatorAddr := args[3]
-			denom := args[4]
-			decimal, err := strconv.ParseInt(args[5], 10, 64)
+			transferPortId := args[3]
+			transferChanId := args[4]
+			validatorAddr := args[5]
+			denom := args[6]
+			decimal, err := strconv.ParseInt(args[7], 10, 64)
 			if err != nil {
 				return err
 			}
-			msg := types.NewMsgRegisterZone(zoneId, icaConnId, controllerAddr, validatorAddr, denom, decimal)
+			msg := types.NewMsgRegisterZone(zoneId, icaConnId, controllerAddr, transferPortId, transferChanId, validatorAddr, denom, decimal)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -156,8 +158,8 @@ func txUndelegateTxCmd() *cobra.Command {
 
 func txAutoStakingTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "icaautostaking [zone-id] [controller-address] [host-address] [amount]",
-		Args: cobra.ExactArgs(4),
+		Use:  "icaautostaking [zone-id] [controller-address] [amount]",
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -170,13 +172,12 @@ func txAutoStakingTxCmd() *cobra.Command {
 
 			zoneId := args[0]
 			controllerAddr := clientCtx.GetFromAddress()
-			hostAddr := args[2]
-			amount, err := sdk.ParseCoinNormalized(args[3])
+			amount, err := sdk.ParseCoinNormalized(args[2])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgIcaAutoStaking(zoneId, hostAddr, controllerAddr, amount)
+			msg := types.NewMsgIcaAutoStaking(zoneId, controllerAddr, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -275,10 +276,10 @@ func txDeleteZoneTxCmd() *cobra.Command {
 
 func txChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "changezoneinfo [zone-id] [host-address] [daomodifier-address] [connection-id] [validator_address] [base-denom] [decimal]",
-		Args: cobra.ExactArgs(6),
+		Use:  "changezoneinfo [zone-id] [host-address] [controller-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
+		Args: cobra.ExactArgs(9),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
 				return err
 			}
 
@@ -288,16 +289,19 @@ func txChangeZoneInfoTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
+			hostAddr := args[1]
 			controllerAddr := clientCtx.GetFromAddress()
-			icaConnId := args[2]
-			validatorAddr := args[3]
-			denom := args[4]
-			decimal, err := strconv.ParseInt(args[5], 10, 64)
+			icaConnId := args[3]
+			transferPortId := args[4]
+			transferChanId := args[5]
+			validatorAddr := args[6]
+			denom := args[7]
+			decimal, err := strconv.ParseInt(args[8], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgChangeZoneInfo(zoneId, icaConnId, controllerAddr, validatorAddr, denom, decimal)
+			msg := types.NewMsgChangeZoneInfo(zoneId, hostAddr, controllerAddr, icaConnId, transferPortId, transferChanId, validatorAddr, denom, decimal)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err

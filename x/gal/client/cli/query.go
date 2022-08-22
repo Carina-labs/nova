@@ -34,9 +34,9 @@ func queryParams() *cobra.Command {
 
 func queryClaimableAsset() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "claimable_asset [zone-id] [address] [transfer-port-id] [transfer-channel-id]",
+		Use:  "claimable_asset [zone-id] [address]",
 		Long: "Query for claimable snAssets",
-		Args: cobra.ExactArgs(4),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -47,10 +47,8 @@ func queryClaimableAsset() *cobra.Command {
 
 			ctx := cmd.Context()
 			query := &types.ClaimableAmountRequest{
-				ZoneId:            args[0],
-				Address:           args[1],
-				TransferPortId:    args[2],
-				TransferChannelId: args[3],
+				ZoneId:  args[0],
+				Address: args[1],
 			}
 			res, err := queryClient.ClaimableAmount(ctx, query)
 			if err != nil {
@@ -66,9 +64,9 @@ func queryClaimableAsset() *cobra.Command {
 
 func queryPendingWithdrawals() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "pending_withdrawals [zone-id] [address] [transfer-port-id] [transfer-channel-id]",
+		Use:  "pending_withdrawals [zone-id] [address]",
 		Long: "Query for pending withdrawals",
-		Args: cobra.ExactArgs(4),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -79,10 +77,8 @@ func queryPendingWithdrawals() *cobra.Command {
 
 			ctx := cmd.Context()
 			query := &types.PendingWithdrawalsRequest{
-				ZoneId:            args[0],
-				Address:           args[1],
-				TransferPortId:    args[2],
-				TransferChannelId: args[3],
+				ZoneId:  args[0],
+				Address: args[1],
 			}
 			res, err := queryClient.PendingWithdrawals(ctx, query)
 			if err != nil {
@@ -98,9 +94,9 @@ func queryPendingWithdrawals() *cobra.Command {
 
 func queryActiveWithdrawals() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "active_withdrawals [zone-id] [address] [transfer-port-id] [transfer-channel-id]",
+		Use:  "active_withdrawals [zone-id] [address]",
 		Long: "Query for pending withdrawals",
-		Args: cobra.ExactArgs(4),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -111,10 +107,8 @@ func queryActiveWithdrawals() *cobra.Command {
 
 			ctx := cmd.Context()
 			query := &types.ActiveWithdrawalsRequest{
-				ZoneId:            args[0],
-				Address:           args[1],
-				TransferPortId:    args[2],
-				TransferChannelId: args[3],
+				ZoneId:  args[0],
+				Address: args[1],
 			}
 			res, err := queryClient.ActiveWithdrawals(ctx, query)
 			if err != nil {
@@ -166,6 +160,7 @@ func queryUndelegateRecords() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "undelegate_records [zone-id] [address]",
 		Long: "Query for undelegate records",
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -198,6 +193,7 @@ func queryWithdrawRecords() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "withdraw_records [zone-id] [address]",
 		Long: "Query for withdraw records",
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {

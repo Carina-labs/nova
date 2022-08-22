@@ -46,13 +46,13 @@ func NewUpdateStateCmd() *cobra.Command {
 				return err
 			}
 
-			blockHeight, err := strconv.ParseInt(args[3], 10, 64)
+			blockHeight, err := strconv.ParseInt(args[2], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			appHash := []byte(args[4])
-			chainId := args[5]
+			appHash := []byte(args[3])
+			chainId := args[4]
 
 			msg := types.NewMsgUpdateChainState(clientCtx.GetFromAddress(), chainId, amount, blockHeight, appHash)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)

@@ -14,12 +14,12 @@ import (
 
 func txDepositCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "deposit [zone-id] [depositor] [claimer] [amount] [transfer-port-id] [transfer-channel-id]",
+		Use:   "deposit [zone-id] [depositor] [claimer] [amount]",
 		Short: "Deposit wrapped token to nova",
 		Long: `Deposit wrapped token to nova.
 Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(6),
+		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -42,10 +42,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			portId := args[4]
-			chanId := args[5]
-
-			msg := types.NewMsgDeposit(zoneId, depositor.GetFromAddress(), claimer, coin, portId, chanId)
+			msg := types.NewMsgDeposit(zoneId, depositor.GetFromAddress(), claimer, coin)
 
 			return tx.GenerateOrBroadcastTxCLI(depositor, cmd.Flags(), msg)
 		},
@@ -133,12 +130,12 @@ func txUndelegateCmd() *cobra.Command {
 
 func txWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [zone-id] [withdrawer] [transfer-port-id] [transfer-channel-id]",
+		Use:   "withdraw [zone-id] [withdrawer]",
 		Short: "Withdraw wrapped token to nova",
 		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(4),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
 			if err != nil {
@@ -157,10 +154,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			portId := args[2]
-			chanId := args[3]
-
-			msg := types.NewMsgWithdraw(zoneId, withrawer, portId, chanId)
+			msg := types.NewMsgWithdraw(zoneId, withrawer)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -171,9 +165,9 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 func txClaimSnTokenCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "claimsntoken [zone-id] [claimer-address] [transfer-port-id] [transfer-channel-id]",
+		Use:   "claimsntoken [zone-id] [claimer-address]",
 		Short: "claim wrapped token to nova",
-		Args:  cobra.ExactArgs(4),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
 			if err != nil {
@@ -190,10 +184,8 @@ func txClaimSnTokenCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			transferPortId := args[2]
-			transferChanId := args[3]
 
-			msg := types.NewMsgClaimSnAsset(zoneId, claimer, transferPortId, transferChanId)
+			msg := types.NewMsgClaimSnAsset(zoneId, claimer)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -236,8 +228,8 @@ func txPendingWithdrawCmd() *cobra.Command {
 }
 func txDelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "delegate [zone-id] [controller-address] [transfer-port-id] [transfer-channel-id]",
-		Args: cobra.ExactArgs(4),
+		Use:  "delegate [zone-id] [controller-address]",
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -251,10 +243,8 @@ func txDelegateCmd() *cobra.Command {
 
 			zoneId := args[0]
 			controllerAddr := clientCtx.GetFromAddress()
-			transferPortId := args[2]
-			transferChanId := args[3]
 
-			msg := types.NewMsgDelegate(zoneId, controllerAddr, transferPortId, transferChanId)
+			msg := types.NewMsgDelegate(zoneId, controllerAddr)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

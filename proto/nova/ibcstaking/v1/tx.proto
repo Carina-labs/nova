@@ -33,32 +33,35 @@ service Msg {
 // MsgRegisterZone defines the payload for Msg/RegisterZone
 message MsgRegisterZone {
   option (gogoproto.equal) = false;
-  
+
   string zone_id = 1;
   IcaConnectionInfo ica_info = 2;
   IcaAccount ica_account = 3;
-  string validator_address = 4;
-  string base_denom = 5;
-  int64 decimal = 6;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  int64 decimal = 7;
 }
 
 message MsgRegisterZoneResponse {}
 
 message MsgChangeRegisteredZoneInfo{
-  option (gogoproto.equal)           = false;
+  option (gogoproto.equal) = false;
 
   string zone_id = 1;
   IcaConnectionInfo ica_info = 2;
   IcaAccount ica_account = 3;
-  string validator_address = 4;
-  string base_denom = 5;
-  int64 decimal = 6;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  int64 decimal = 7;
+
 }
 message MsgChangeRegisteredZoneInfoResponse{}
 
 message MsgDeleteRegisteredZone{
   string zone_id = 1;
-  string daomodifier_address = 2;
+  string controller_address = 2;
 }
 
 message MsgDeleteRegisteredZoneResponse{}
@@ -66,7 +69,7 @@ message MsgDeleteRegisteredZoneResponse{}
 message MsgIcaDelegate{
   string zone_id = 1;
   string host_address = 2;
-  string daomodifier_address = 3;
+  string controller_address = 3;
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
@@ -75,7 +78,7 @@ message MsgIcaDelegateResponse{}
 message MsgIcaUndelegate{
   string zone_id = 1;
   string host_address = 2;
-  string daomodifier_address = 3;
+  string controller_address = 3;
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
@@ -103,8 +106,8 @@ message MsgIcaTransfer{
 message MsgIcaTransferResponse{}
 
 message MsgRegisterHostAccount{
-   string zone_id = 1;
-   IcaAccount account_info = 2;
+  string zone_id = 1;
+  IcaAccount account_info = 2;
 }
 
 message MsgRegisterHostAccountResponse{}
@@ -120,8 +123,8 @@ message MsgIcaAuthzGrantResponse{}
 
 message MsgIcaAuthzRevoke{
   string zone_id = 1;
-  string grantee      = 2;
-  string controller_address      = 3;
+  string grantee = 2;
+  string controller_address = 3;
   string msg_type_url = 4;
 }
 

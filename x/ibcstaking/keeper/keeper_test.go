@@ -65,7 +65,7 @@ func (suite *KeeperTestSuite) setZone(num int) []ibcstakingtypes.RegisteredZone 
 				PortId:       "icacontroller-" + addr[i].String(),
 			},
 			IcaAccount: &ibcstakingtypes.IcaAccount{
-				DaomodifierAddress: addr[i].String(),
+				ControllerAddress: addr[i].String(),
 				HostAddress:        addr[i].String(),
 			},
 			ValidatorAddress: sdk.ValAddress(addr[i]).String(),
