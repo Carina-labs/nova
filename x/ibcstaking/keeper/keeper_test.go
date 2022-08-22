@@ -66,7 +66,7 @@ func (suite *KeeperTestSuite) setZone(num int) []ibcstakingtypes.RegisteredZone 
 			},
 			IcaAccount: &ibcstakingtypes.IcaAccount{
 				ControllerAddress: addr[i].String(),
-				HostAddress:        addr[i].String(),
+				HostAddress:       addr[i].String(),
 			},
 			ValidatorAddress: sdk.ValAddress(addr[i]).String(),
 			BaseDenom:        "atom",
