@@ -24,14 +24,12 @@ var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
 var _ sdk.Msg = &MsgPendingWithdraw{}
 
-func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin, portId, chanId string) *MsgDeposit {
+func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin) *MsgDeposit {
 	return &MsgDeposit{
-		ZoneId:            zoneId,
-		Depositor:         depositor.String(),
-		Claimer:           claimer.String(),
-		Amount:            amount,
-		TransferPortId:    portId,
-		TransferChannelId: chanId,
+		ZoneId:    zoneId,
+		Depositor: depositor.String(),
+		Claimer:   claimer.String(),
+		Amount:    amount,
 	}
 }
 
@@ -55,14 +53,6 @@ func (msg MsgDeposit) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
-	if msg.TransferChannelId == "" {
-		return errors.New("transfer channel id is not null")
-	}
-
-	if msg.TransferPortId == "" {
-		return errors.New("transfer port id is not null")
-	}
-
 	return nil
 }
 
@@ -75,12 +65,10 @@ func (msg MsgDeposit) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{depositor}
 }
 
-func NewMsgDelegate(zoneId string, daomodifierAddr sdk.AccAddress, transferPortId, transferChanId string) *MsgDelegate {
+func NewMsgDelegate(zoneId string, daomodifierAddr sdk.AccAddress) *MsgDelegate {
 	return &MsgDelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: daomodifierAddr.String(),
-		TransferPortId:    transferPortId,
-		TransferChannelId: transferChanId,
 	}
 }
 
@@ -182,12 +170,10 @@ func (msg MsgPendingUndelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress, portId, chanId string) *MsgWithdraw {
+func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress) *MsgWithdraw {
 	return &MsgWithdraw{
-		ZoneId:            zoneId,
-		Withdrawer:        withdrawer.String(),
-		TransferPortId:    portId,
-		TransferChannelId: chanId,
+		ZoneId:     zoneId,
+		Withdrawer: withdrawer.String(),
 	}
 }
 
@@ -216,12 +202,10 @@ func (msg MsgWithdraw) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgClaimSnAsset(zoneId string, claimer sdk.AccAddress, transferPortId, transferChanId string) *MsgClaimSnAsset {
+func NewMsgClaimSnAsset(zoneId string, claimer sdk.AccAddress) *MsgClaimSnAsset {
 	return &MsgClaimSnAsset{
-		ZoneId:            zoneId,
-		Claimer:           claimer.String(),
-		TransferPortId:    transferPortId,
-		TransferChannelId: transferChanId,
+		ZoneId:  zoneId,
+		Claimer: claimer.String(),
 	}
 }
 

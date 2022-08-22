@@ -38,15 +38,19 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 			PortId:       zone.IcaInfo.PortId,
 		},
 		IcaAccount: &types.IcaAccount{
-			DaomodifierAddress: zone.IcaAccount.DaomodifierAddress,
+			ControllerAddress: zone.IcaAccount.ControllerAddress,
+		},
+		TransferInfo: &types.TransferConnectionInfo{
+			PortId:    zone.TransferInfo.PortId,
+			ChannelId: zone.TransferInfo.ChannelId,
 		},
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
 		SnDenom:          "sn" + zone.BaseDenom,
 	}
 
-	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.DaomodifierAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.DaomodifierAddress)
+	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
 	}
 
 	_, ok := k.Keeper.GetRegisteredZone(ctx, zoneInfo.ZoneId)
@@ -56,7 +60,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
 
-	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaAccount.DaomodifierAddress); err != nil {
+	if err := k.icaControllerKeeper.RegisterInterchainAccount(ctx, zone.IcaInfo.ConnectionId, zone.IcaAccount.ControllerAddress); err != nil {
 		return nil, err
 	}
 
@@ -67,8 +71,8 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDeleteRegisteredZone) (*types.MsgDeleteRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, zone.DaomodifierAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.DaomodifierAddress)
+	if !k.IsValidDaoModifier(ctx, zone.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, zone.ZoneId)
@@ -77,7 +81,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 		return nil, types.ErrNotFoundZoneInfo
 	}
 
-	if zoneInfo.IcaAccount.DaomodifierAddress != zone.DaomodifierAddress {
+	if zoneInfo.IcaAccount.ControllerAddress != zone.ControllerAddress {
 		return nil, errors.New("sender is not valid daomodifier address")
 	}
 
@@ -89,8 +93,8 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZoneInfo) (*types.MsgChangeRegisteredZoneInfoResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.DaomodifierAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.DaomodifierAddress)
+	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
 	}
 
 	zoneInfo := &types.RegisteredZone{
@@ -100,8 +104,12 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 			PortId:       zone.IcaInfo.PortId,
 		},
 		IcaAccount: &types.IcaAccount{
-			DaomodifierAddress: zone.IcaAccount.DaomodifierAddress,
-			HostAddress:        zone.IcaAccount.HostAddress,
+			ControllerAddress: zone.IcaAccount.ControllerAddress,
+			HostAddress:       zone.IcaAccount.HostAddress,
+		},
+		TransferInfo: &types.TransferConnectionInfo{
+			PortId:    zone.TransferInfo.PortId,
+			ChannelId: zone.TransferInfo.ChannelId,
 		},
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
@@ -116,8 +124,8 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate) (*types.MsgIcaDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.DaomodifierAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
+	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -128,7 +136,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	var msgs []sdk.Msg
 
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
-	err := k.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := k.SendIcaTx(ctx, zoneInfo.IcaAccount.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaDelegate transaction failed to send")
@@ -141,8 +149,8 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndelegate) (*types.MsgIcaUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.DaomodifierAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
+	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -153,7 +161,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	var msgs []sdk.Msg
 
 	msgs = append(msgs, &stakingtype.MsgUndelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
-	err := k.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := k.SendIcaTx(ctx, zoneInfo.IcaAccount.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
@@ -177,8 +185,8 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 	var msgs []sdk.Msg
 
-	msgs = append(msgs, &distributiontype.MsgWithdrawDelegatorReward{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress})
-	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: msg.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
+	msgs = append(msgs, &distributiontype.MsgWithdrawDelegatorReward{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress})
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
 
 	err := k.SendIcaTx(ctx, msg.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {

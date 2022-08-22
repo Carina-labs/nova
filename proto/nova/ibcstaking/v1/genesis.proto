@@ -17,14 +17,15 @@ message RegisteredZone {
   string zone_id = 1;
   IcaConnectionInfo ica_connection_info = 2;
   IcaAccount ica_account = 3;
-  string validator_address = 4;
-  string base_denom = 5;
-  string sn_denom = 6;
-  int64 decimal = 7;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
 }
 
 message IcaAccount {
-  string daomodifier_address = 1;
+  string controller_address = 1;
   string host_address = 2;
   cosmos.base.v1beta1.Coin balance = 3 [
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
@@ -35,5 +36,11 @@ message IcaAccount {
 //zone name, connection id, portID(owner address)
 message IcaConnectionInfo {
   string connection_id = 1;
+  string port_id = 2;
+}
+
+//transfer connection info
+message TransferConnectionInfo {
+  string channel_id = 1;
   string port_id = 2;
 }
