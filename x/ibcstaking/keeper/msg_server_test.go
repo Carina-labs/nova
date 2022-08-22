@@ -85,7 +85,7 @@ func (suite *KeeperTestSuite) TestAuthzGrant() {
 			PortId:       suite.icaPath.EndpointA.ChannelID,
 		},
 		IcaAccount: &ibcstakingtypes.IcaAccount{
-			DaomodifierAddress: controllerAddr.String(),
+			ControllerAddress: controllerAddr.String(),
 		},
 		ValidatorAddress: "",
 		BaseDenom:        "uatom",

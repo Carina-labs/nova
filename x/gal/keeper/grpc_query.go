@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
@@ -38,6 +39,7 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Claim
 		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
 	}
 
+	fmt.Println("transfer info : ", zone.TransferInfo)
 	assets, err := q.keeper.TotalClaimableAssets(ctx, zone, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, addr)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(types.ErrUnknown, "failed to get total claimable assets: %s", err.Error())

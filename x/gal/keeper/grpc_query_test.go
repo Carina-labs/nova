@@ -40,10 +40,8 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	})
 
 	amt, err := queryClient.ClaimableAmount(ctx.Context(), &types.ClaimableAmountRequest{
-		ZoneId:            zoneId,
-		Address:           fooUser.String(),
-		TransferPortId:    transferPort,
-		TransferChannelId: transferChannel,
+		ZoneId:  zoneId,
+		Address: fooUser.String(),
 	})
 
 	suite.Require().NoError(err)
@@ -67,10 +65,8 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 
 	// query with invalid user
 	invalidResult, err := queryClient.PendingWithdrawals(ctx.Context(), &types.PendingWithdrawalsRequest{
-		ZoneId:            zoneId,
-		Address:           "invalid_user",
-		TransferPortId:    transferPort,
-		TransferChannelId: transferChannel,
+		ZoneId:  zoneId,
+		Address: "invalid_user",
 	})
 	suite.Require().NoError(err)
 	suite.Require().Equal(denom, invalidResult.Amount.Denom)
@@ -104,10 +100,8 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 
 	// query the pending withdrawal amount and check if the amount is correct
 	result, err := queryClient.PendingWithdrawals(ctx.Context(), &types.PendingWithdrawalsRequest{
-		ZoneId:            zoneId,
-		Address:           fooUser.String(),
-		TransferPortId:    transferPort,
-		TransferChannelId: transferChannel,
+		ZoneId:  zoneId,
+		Address: fooUser.String(),
 	})
 
 	suite.Require().NoError(err)
@@ -157,10 +151,8 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 
 	// query the pending withdrawal amount and check if the amount is correct
 	result, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.ActiveWithdrawalsRequest{
-		ZoneId:            zoneId,
-		Address:           fooUser.String(),
-		TransferPortId:    transferPort,
-		TransferChannelId: transferChannel,
+		ZoneId:  zoneId,
+		Address: fooUser.String(),
 	})
 
 	// only transferred amount should be returned
