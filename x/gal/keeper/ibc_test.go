@@ -61,7 +61,7 @@ func NewIbcTransferPath(chainA, chainB *novatesting.TestChain) *novatesting.Path
 	return path
 }
 
-func NewIcaPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
+func newIcaPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 	path := novatesting.NewPath(chainA, chainB)
 	path.EndpointA.ChannelConfig.PortID = icatypes.PortID
 	path.EndpointB.ChannelConfig.PortID = icatypes.PortID
@@ -80,8 +80,8 @@ func NewIcaPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 	return path
 }
 
-func SetupIcaPath(path *novatesting.Path, owner string) error {
-	if err := RegisterInterchainAccount(path.EndpointA, owner); err != nil {
+func setupIcaPath(path *novatesting.Path, owner string) error {
+	if err := registerInterchainAccount(path.EndpointA, owner); err != nil {
 		return err
 	}
 
@@ -100,7 +100,7 @@ func SetupIcaPath(path *novatesting.Path, owner string) error {
 	return nil
 }
 
-func RegisterInterchainAccount(e *novatesting.Endpoint, owner string) error {
+func registerInterchainAccount(e *novatesting.Endpoint, owner string) error {
 	portID, err := icatypes.NewControllerPortID(owner)
 	if err != nil {
 		return err
@@ -120,7 +120,7 @@ func RegisterInterchainAccount(e *novatesting.Endpoint, owner string) error {
 }
 
 // newBaseRegisteredZone returns a new zone info for testing purpose only
-func NewBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
+func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
 	icaControllerPort := zoneId + "." + baseOwnerAcc.String()
 	return &ibcstakingtypes.RegisteredZone{
 		ZoneId: zoneId,
