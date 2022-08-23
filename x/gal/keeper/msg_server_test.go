@@ -25,20 +25,20 @@ func (suite *KeeperTestSuite) setControllerAddr(address string) {
 	params := ibcstakingtypes.Params{
 		DaoModifiers: addresses,
 	}
-	suite.chainA.App.IbcstakingKeeper.SetParams(suite.chainA.GetContext(), params)
+	suite.App.IbcstakingKeeper.SetParams(suite.Ctx, params)
 }
 
 func (suite *KeeperTestSuite) setMintWAsset(amt sdk.Int, toAddr sdk.AccAddress) sdk.Coin {
 	var wAssets sdk.Coins
 
-	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(suite.chainA.GetContext(), transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, "stake")
 
 	wAsset := sdk.NewCoin(ibcDenom, amt)
 	wAssets = append(wAssets, wAsset)
 
 	//snAsset mint
-	suite.chainA.App.BankKeeper.MintCoins(suite.chainA.GetContext(), minttypes.ModuleName, wAssets)
-	suite.chainA.App.BankKeeper.SendCoinsFromModuleToAccount(suite.chainA.GetContext(), minttypes.ModuleName, toAddr, wAssets)
+	suite.App.BankKeeper.MintCoins(suite.Ctx, minttypes.ModuleName, wAssets)
+	suite.App.BankKeeper.SendCoinsFromModuleToAccount(suite.Ctx, minttypes.ModuleName, toAddr, wAssets)
 
 	return wAsset
 }
@@ -73,29 +73,11 @@ func setWithdrawRecords(zoneId, withdrawer string, recordContentsCnt int) *types
 }
 
 func (suite *KeeperTestSuite) TestWithdraw() {
-	suite.setControllerAddr(suite.GetControllerAddr())
-
 	withdrawer := suite.GenRandomAddress().String()
-	controllerAddr, _ := sdk.AccAddressFromBech32(suite.GetControllerAddr())
-
-	suite.chainA.App.IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), &ibcstakingtypes.RegisteredZone{
-		ZoneId: zoneId,
-		IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
-			ConnectionId: suite.icaPath.EndpointA.ConnectionID,
-			PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
-		},
-		IcaAccount: &ibcstakingtypes.IcaAccount{
-			DaomodifierAddress: controllerAddr.String(),
-		},
-		ValidatorAddress: "",
-		BaseDenom:        baseDenom,
-		SnDenom:          baseSnDenom,
-	})
-
 	record := setWithdrawRecords(zoneId, withdrawer, 3)
 
-	suite.chainA.App.GalKeeper.SetWithdrawRecord(suite.chainA.GetContext(), record)
-	suite.setMintWAsset(sdk.NewInt(10000), controllerAddr)
+	suite.App.GalKeeper.SetWithdrawRecord(suite.Ctx, record)
+	suite.setMintWAsset(sdk.NewInt(10000), baseOwnerAcc)
 
 	tcs := []struct {
 		name        string
@@ -105,50 +87,40 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 		{
 			name: "success",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId:            zoneId,
-				Withdrawer:        withdrawer,
-				TransferChannelId: transferChannel,
-				TransferPortId:    transferPort,
+				ZoneId:     zoneId,
+				Withdrawer: withdrawer,
 			},
 			shouldErr: false,
 		},
 		{
 			name: "transfer channel id is not found",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId:            zoneId,
-				Withdrawer:        withdrawer,
-				TransferChannelId: "channel-111",
-				TransferPortId:    transferPort,
+				ZoneId:     zoneId,
+				Withdrawer: withdrawer,
 			},
 			shouldErr: true,
 		},
 		{
 			name: "transfer port id is not found",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId:            zoneId,
-				Withdrawer:        withdrawer,
-				TransferChannelId: transferChannel,
-				TransferPortId:    "testport",
+				ZoneId:     zoneId,
+				Withdrawer: withdrawer,
 			},
 			shouldErr: true,
 		},
 		{
 			name: "wAsset is zero amount",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId:            zoneId,
-				Withdrawer:        withdrawer,
-				TransferChannelId: transferChannel,
-				TransferPortId:    transferPort,
+				ZoneId:     zoneId,
+				Withdrawer: withdrawer,
 			},
 			shouldErr: true,
 		},
 		{
 			name: "zone not found",
 			withdrawMsg: types.MsgWithdraw{
-				ZoneId:            "test",
-				Withdrawer:        withdrawer,
-				TransferChannelId: transferChannel,
-				TransferPortId:    transferPort,
+				ZoneId:     "test",
+				Withdrawer: withdrawer,
 			},
 			shouldErr: true,
 		},
@@ -156,8 +128,8 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			msgServer := galkeeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
-			_, err := msgServer.Withdraw(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.withdrawMsg)
+			msgServer := galkeeper.NewMsgServerImpl(suite.App.GalKeeper)
+			_, err := msgServer.Withdraw(sdk.WrapSDKContext(suite.Ctx), &tc.withdrawMsg)
 			if tc.shouldErr {
 				suite.Require().Error(err)
 			} else {

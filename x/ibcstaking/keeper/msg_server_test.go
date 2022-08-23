@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	ibcstakingkeeper "github.com/Carina-labs/nova/x/ibcstaking/keeper"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -67,7 +66,7 @@ func (suite *KeeperTestSuite) getGrantMsg(msg, zoneId, grantee string, controlle
 
 	time := time.Now().AddDate(2, 0, 0).UTC()
 	grantMsg, _ := ibcstakingtypes.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, time)
-	fmt.Println(*grantMsg)
+
 	return *grantMsg
 }
 
@@ -91,9 +90,6 @@ func (suite *KeeperTestSuite) TestAuthzGrant() {
 		BaseDenom:        "uatom",
 		SnDenom:          "snatom",
 	})
-
-	hostAddr, _ := suite.chainA.App.ICAControllerKeeper.GetInterchainAccountAddress(suite.chainA.GetContext(), suite.icaPath.EndpointA.ConnectionID, suite.icaPath.EndpointA.ChannelConfig.PortID)
-	fmt.Println("hostAddr : ", hostAddr)
 
 	tcs := []struct {
 		name      string
