@@ -3,7 +3,6 @@ package keeper_test
 import (
 	novatesting "github.com/Carina-labs/nova/testing"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
-	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
@@ -32,25 +31,6 @@ var (
 	undelegateMsgName  = "/cosmos.staking.v1beta1.MsgUndelegate"
 	ibcTransferMsgName = "/ibc.applications.transfer.v1.MsgTransfer"
 )
-
-func (suite *KeeperTestSuite) TestSetIbcZone(zoneMsg []ibcstakingtypes.RegisteredZone) {
-	for _, msg := range zoneMsg {
-		suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &msg)
-	}
-}
-
-func (suite *KeeperTestSuite) TestSetOracle(operators []sdk.Address, msg []oracletypes.ChainInfo) {
-	for _, operator := range operators {
-		suite.App.OracleKeeper.SetParams(suite.Ctx, oracletypes.Params{
-			OracleOperators: []string{operator.String()},
-		})
-	}
-
-	for _, m := range msg {
-		err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, &m)
-		suite.Require().NoError(err)
-	}
-}
 
 func NewIbcTransferPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 	path := novatesting.NewPath(chainA, chainB)
