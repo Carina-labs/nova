@@ -68,10 +68,6 @@ func (suite *KeeperTestSuite) setZone(num int) []ibcstakingtypes.RegisteredZone 
 				ControllerAddress: addr[i].String(),
 				HostAddress:       addr[i].String(),
 			},
-			TransferInfo: &ibcstakingtypes.TransferConnectionInfo{
-				PortId:    suite.path.EndpointA.ChannelConfig.PortID,
-				ChannelId: suite.path.EndpointA.ChannelID,
-			},
 			ValidatorAddress: sdk.ValAddress(addr[i]).String(),
 			BaseDenom:        "atom",
 			SnDenom:          "snatom",
@@ -156,6 +152,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 	suite.icaPath = NewICAPAth(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
+
 	err := suite.SetupICAPath(suite.icaPath, acc1.Address)
 	suite.NoError(err)
 }

@@ -35,17 +35,17 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
 	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))
 
-	suite.transferPath = newIbcTransferPath(suite.chainA, suite.chainB)
+	suite.transferPath = NewIbcTransferPath(suite.chainA, suite.chainB)
 	suite.coordinator.Setup(suite.transferPath)
 
-	suite.icaPath = newIcaPath(suite.chainA, suite.chainB)
+	suite.icaPath = NewIcaPath(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
 	suite.icaOwnerAddr = baseOwnerAcc
 
-	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, newBaseRegisteredZone())
-	suite.chainA.GetApp().IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, NewBaseRegisteredZone())
+	suite.chainA.GetApp().IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), NewBaseRegisteredZone())
 
-	err := setupIcaPath(suite.icaPath, zoneId+"."+suite.icaOwnerAddr.String())
+	err := SetupIcaPath(suite.icaPath, zoneId+"."+suite.icaOwnerAddr.String())
 	suite.Require().NoError(err)
 }
 

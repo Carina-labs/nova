@@ -228,22 +228,6 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 	return &types.MsgIcaTransferResponse{}, nil
 }
 
-// IcaRegisterHostAccount implements the Msg/MsgRegisterHostAccount interface
-func (k msgServer) IcaRegisterHostAccount(goCtx context.Context, msg *types.MsgRegisterHostAccount) (*types.MsgRegisterHostAccountResponse, error) {
-	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	zoneInfo, found := k.GetRegisteredZone(ctx, msg.ZoneId)
-	if !found {
-		return &types.MsgRegisterHostAccountResponse{}, errors.New("zone is not found")
-	}
-
-	zoneInfo.IcaAccount.HostAddress = msg.AccountInfo.HostAddress
-
-	k.Keeper.RegisterZone(ctx, &zoneInfo)
-
-	return &types.MsgRegisterHostAccountResponse{}, nil
-}
-
 func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGrant) (*types.MsgIcaAuthzGrantResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 

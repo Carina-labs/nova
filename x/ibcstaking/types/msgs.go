@@ -17,7 +17,6 @@ var (
 	_ sdk.Msg = &MsgIcaUndelegate{}
 	_ sdk.Msg = &MsgIcaTransfer{}
 	_ sdk.Msg = &MsgIcaAutoStaking{}
-	_ sdk.Msg = &MsgRegisterHostAccount{}
 	_ sdk.Msg = &MsgIcaAuthzGrant{}
 	_ sdk.Msg = &MsgIcaAuthzRevoke{}
 
@@ -253,41 +252,6 @@ func (msg MsgIcaTransfer) ValidateBasic() error {
 // GetSigners implements sdk.Msg
 func (msg MsgIcaTransfer) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
-
-	if err != nil {
-		panic(err)
-	}
-
-	return []sdk.AccAddress{accAddr}
-}
-
-func NewMsgRegisterHostAccount(zoneId, hostAddr string, controllerAddr sdk.AccAddress) *MsgRegisterHostAccount {
-	return &MsgRegisterHostAccount{
-		ZoneId: zoneId,
-		AccountInfo: &IcaAccount{
-			ControllerAddress: controllerAddr.String(),
-			HostAddress:       hostAddr,
-		},
-	}
-}
-
-// ValidateBasic implements sdk.Msg
-func (msg MsgRegisterHostAccount) ValidateBasic() error {
-	_, err := sdk.AccAddressFromBech32(msg.AccountInfo.ControllerAddress)
-	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid modifier address")
-	}
-
-	if strings.TrimSpace(msg.AccountInfo.HostAddress) == "" {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid host address")
-	}
-
-	return nil
-}
-
-// GetSigners implements sdk.Msg
-func (msg MsgRegisterHostAccount) GetSigners() []sdk.AccAddress {
-	accAddr, err := sdk.AccAddressFromBech32(msg.AccountInfo.ControllerAddress)
 
 	if err != nil {
 		panic(err)

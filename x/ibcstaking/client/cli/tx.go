@@ -45,7 +45,6 @@ func GetTxCmd() *cobra.Command {
 		txUndelegateTxCmd(),
 		txAutoStakingTxCmd(),
 		txTransferTxCmd(),
-		txHostAddressTxCmd(),
 		txDeleteZoneTxCmd(),
 		txChangeZoneInfoTxCmd(),
 		txAuthzGrantTxCmd(),
@@ -213,33 +212,6 @@ func txTransferTxCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgIcaTransfer(zoneId, hostAddr, controllerAddr, receiver, portId, chanId, amount)
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-func txHostAddressTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "registerhostaddress [zone-id] [host-address] [controller-address]",
-		Args: cobra.ExactArgs(3),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
-				return err
-			}
-			clientCtx, err := client.GetClientTxContext(cmd)
-
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			hostAddr := args[1]
-			controllerAddr := clientCtx.GetFromAddress()
-
-			msg := types.NewMsgRegisterHostAccount(zoneId, hostAddr, controllerAddr)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
