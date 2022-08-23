@@ -27,15 +27,15 @@ var (
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
-func NewMsgRegisterZone(zoneId, icaConnectionId string, daomodifierAddress sdk.AccAddress, transferPortId, transferChanId string, validatorAddress, baseDenom string, decimal int64) *MsgRegisterZone {
+func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAddress, transferPortId, transferChanId string, validatorAddress, baseDenom string, decimal int64) *MsgRegisterZone {
 	return &MsgRegisterZone{
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
 			ConnectionId: icaConnectionId,
-			PortId:       "icacontroller-" + daomodifierAddress.String(),
+			PortId:       zoneId + "." + controllerAddr.String(),
 		},
 		IcaAccount: &IcaAccount{
-			ControllerAddress: daomodifierAddress.String(),
+			ControllerAddress: controllerAddr.String(),
 		},
 		TransferInfo: &TransferConnectionInfo{
 			ChannelId: transferChanId,
@@ -55,10 +55,6 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 
 	if strings.TrimSpace(msg.IcaInfo.ConnectionId) == "" {
 		return errors.New("missing ICA connection ID")
-	}
-
-	if strings.TrimSpace(msg.IcaInfo.PortId) == "" {
-		return errors.New("missing ICA port ID")
 	}
 
 	_, err := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
@@ -87,10 +83,10 @@ func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaDelegate(zoneId string, daomodifierAddr sdk.AccAddress, hostAddr string, amount sdk.Coin) *MsgIcaDelegate {
+func NewMsgIcaDelegate(zoneId string, controllerAddr sdk.AccAddress, hostAddr string, amount sdk.Coin) *MsgIcaDelegate {
 	return &MsgIcaDelegate{
 		ZoneId:            zoneId,
-		ControllerAddress: daomodifierAddr.String(),
+		ControllerAddress: controllerAddr.String(),
 		HostAddress:       hostAddr,
 		Amount:            amount,
 	}
@@ -100,7 +96,7 @@ func NewMsgIcaDelegate(zoneId string, daomodifierAddr sdk.AccAddress, hostAddr s
 func (msg MsgIcaDelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if strings.TrimSpace(msg.HostAddress) == "" {
@@ -129,10 +125,10 @@ func (msg MsgIcaDelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaUnDelegate(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaUndelegate {
+func NewMsgIcaUnDelegate(zoneId, hostAddr string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaUndelegate {
 	return &MsgIcaUndelegate{
 		ZoneId:            zoneId,
-		ControllerAddress: daomodifierAddr.String(),
+		ControllerAddress: controllerAddr.String(),
 		HostAddress:       hostAddr,
 		Amount:            amount,
 	}
@@ -142,7 +138,7 @@ func NewMsgIcaUnDelegate(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress
 func (msg MsgIcaUndelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if strings.TrimSpace(msg.HostAddress) == "" {
@@ -187,7 +183,7 @@ func (msg MsgIcaAutoStaking) ValidateBasic() error {
 
 	_, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if strings.TrimSpace(msg.HostAddress) == "" {
@@ -216,11 +212,11 @@ func (msg MsgIcaAutoStaking) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaTransfer(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgIcaTransfer {
+func NewMsgIcaTransfer(zoneId, hostAddr string, controllerAddr sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgIcaTransfer {
 	return &MsgIcaTransfer{
 		ZoneId:               zoneId,
 		HostAddress:          hostAddr,
-		DaomodifierAddress:   daomodifierAddr.String(),
+		DaomodifierAddress:   controllerAddr.String(),
 		ReceiverAddress:      receiver,
 		IcaTransferPortId:    portId,
 		IcaTransferChannelId: chanId,
@@ -236,7 +232,7 @@ func (msg MsgIcaTransfer) ValidateBasic() error {
 
 	_, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if strings.TrimSpace(msg.HostAddress) == "" {
@@ -265,11 +261,11 @@ func (msg MsgIcaTransfer) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgRegisterHostAccount(zoneId, hostAddr string, daomodifierAddr sdk.AccAddress) *MsgRegisterHostAccount {
+func NewMsgRegisterHostAccount(zoneId, hostAddr string, controllerAddr sdk.AccAddress) *MsgRegisterHostAccount {
 	return &MsgRegisterHostAccount{
 		ZoneId: zoneId,
 		AccountInfo: &IcaAccount{
-			ControllerAddress: daomodifierAddr.String(),
+			ControllerAddress: controllerAddr.String(),
 			HostAddress:       hostAddr,
 		},
 	}
@@ -300,10 +296,10 @@ func (msg MsgRegisterHostAccount) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgDeleteRegisteredZone(zoneId string, daomodifierAddr sdk.AccAddress) *MsgDeleteRegisteredZone {
+func NewMsgDeleteRegisteredZone(zoneId string, controllerAddr sdk.AccAddress) *MsgDeleteRegisteredZone {
 	return &MsgDeleteRegisteredZone{
 		ZoneId:            zoneId,
-		ControllerAddress: daomodifierAddr.String(),
+		ControllerAddress: controllerAddr.String(),
 	}
 }
 
@@ -311,7 +307,7 @@ func NewMsgDeleteRegisteredZone(zoneId string, daomodifierAddr sdk.AccAddress) *
 func (msg MsgDeleteRegisteredZone) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	return nil
@@ -333,7 +329,7 @@ func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
 			ConnectionId: icaConnectionId,
-			PortId:       "icacontroller-" + controllerAddr.String(),
+			PortId:       zoneId + "." + controllerAddr.String(),
 		},
 		IcaAccount: &IcaAccount{
 			ControllerAddress: controllerAddr.String(),
@@ -353,7 +349,7 @@ func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress
 func (msg MsgChangeRegisteredZoneInfo) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	return nil
@@ -402,7 +398,7 @@ func (msg *MsgIcaAuthzGrant) SetAuthorization(a authz.Authorization) error {
 func (msg MsgIcaAuthzGrant) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if msg.Grantee == "" {
@@ -440,7 +436,7 @@ func NewMsgAuthzRevoke(zoneId, grantee, msgType string, granter sdk.AccAddress) 
 func (msg MsgIcaAuthzRevoke) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid daomodifier address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if msg.Grantee == "" {

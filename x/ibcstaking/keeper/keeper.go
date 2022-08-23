@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"fmt"
-
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"
@@ -21,7 +20,7 @@ type Keeper struct {
 	storeKey            sdk.StoreKey
 	authKeeper          types.AccountKeeper
 	scopedKeeper        capabilitykeeper.ScopedKeeper
-	icaControllerKeeper icacontrollerkeeper.Keeper
+	IcaControllerKeeper icacontrollerkeeper.Keeper
 	hooks               types.ICAHooks
 	paramSpace          paramtypes.Subspace
 }
@@ -41,7 +40,7 @@ func NewKeeper(cdc codec.Codec, storeKey sdk.StoreKey, ak types.AccountKeeper, i
 		authKeeper:          ak,
 		scopedKeeper:        scopedKeeper,
 		paramSpace:          paramStore,
-		icaControllerKeeper: iaKeeper,
+		IcaControllerKeeper: iaKeeper,
 	}
 }
 
@@ -74,4 +73,14 @@ func (k Keeper) IsValidDaoModifier(ctx sdk.Context, daoModifier string) bool {
 		}
 	}
 	return false
+}
+
+func (k Keeper) GetConnectionId(ctx sdk.Context, portId string) (string, error) {
+	icas := k.IcaControllerKeeper.GetAllInterchainAccounts(ctx)
+	for _, ica := range icas {
+		if ica.PortId == portId {
+			return ica.ConnectionId, nil
+		}
+	}
+	return "", fmt.Errorf("portId %s has no associated connectionId", portId)
 }

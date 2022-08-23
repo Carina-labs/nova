@@ -28,6 +28,7 @@ type KeeperTestSuite struct {
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
 
+	//register_zone
 	suite.queryClient = types.NewQueryClient(suite.QueryHelper)
 
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
@@ -41,10 +42,11 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.coordinator.SetupConnections(suite.icaPath)
 	suite.icaOwnerAddr = baseOwnerAcc
 
-	err := setupIcaPath(suite.icaPath, suite.icaOwnerAddr.String())
-	suite.Require().NoError(err)
-
 	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, newBaseRegisteredZone())
+	suite.chainA.GetApp().IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+
+	err := setupIcaPath(suite.icaPath, zoneId+"."+suite.icaOwnerAddr.String())
+	suite.Require().NoError(err)
 }
 
 func TestKeeperTestSuite(t *testing.T) {

@@ -121,7 +121,7 @@ func registerInterchainAccount(e *novatesting.Endpoint, owner string) error {
 
 // newBaseRegisteredZone returns a new zone info for testing purpose only
 func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
-	icaControllerPort, _ := icatypes.NewControllerPortID(baseOwnerAcc.String())
+	icaControllerPort := zoneId + "." + baseOwnerAcc.String()
 	return &ibcstakingtypes.RegisteredZone{
 		ZoneId: zoneId,
 		IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
