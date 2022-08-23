@@ -4,6 +4,7 @@ package nova.ibcstaking.v1;
 import "gogoproto/gogo.proto";
 import "nova/ibcstaking/v1/genesis.proto";
 import "cosmos/base/v1beta1/coin.proto";
+import "cosmos/authz/v1beta1/authz.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/ibcstaking/types";
 option (gogoproto.goproto_getters_all) = false;
@@ -23,6 +24,8 @@ service Msg {
   // IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
   rpc IcaRegisterHostAccount(MsgRegisterHostAccount) returns (MsgRegisterHostAccountResponse);
   // DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
+  rpc IcaAuthzGrant(MsgIcaAuthzGrant) returns (MsgIcaAuthzGrantResponse);
+  rpc IcaAuthzRevoke(MsgIcaAuthzRevoke) returns (MsgIcaAuthzRevokeResponse);
   rpc DeleteRegisteredZone(MsgDeleteRegisteredZone) returns (MsgDeleteRegisteredZoneResponse);
   rpc ChangeRegisteredZoneInfo(MsgChangeRegisteredZoneInfo) returns (MsgChangeRegisteredZoneInfoResponse);
 }
@@ -30,32 +33,35 @@ service Msg {
 // MsgRegisterZone defines the payload for Msg/RegisterZone
 message MsgRegisterZone {
   option (gogoproto.equal) = false;
-  
+
   string zone_id = 1;
   IcaConnectionInfo ica_info = 2;
   IcaAccount ica_account = 3;
-  string validator_address = 4;
-  string base_denom = 5;
-  int64 decimal = 6;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  int64 decimal = 7;
 }
 
 message MsgRegisterZoneResponse {}
 
 message MsgChangeRegisteredZoneInfo{
-  option (gogoproto.equal)           = false;
+  option (gogoproto.equal) = false;
 
   string zone_id = 1;
   IcaConnectionInfo ica_info = 2;
   IcaAccount ica_account = 3;
-  string validator_address = 4;
-  string base_denom = 5;
-  int64 decimal = 6;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  int64 decimal = 7;
+
 }
 message MsgChangeRegisteredZoneInfoResponse{}
 
 message MsgDeleteRegisteredZone{
   string zone_id = 1;
-  string daomodifier_address = 2;
+  string controller_address = 2;
 }
 
 message MsgDeleteRegisteredZoneResponse{}
@@ -63,7 +69,7 @@ message MsgDeleteRegisteredZoneResponse{}
 message MsgIcaDelegate{
   string zone_id = 1;
   string host_address = 2;
-  string daomodifier_address = 3;
+  string controller_address = 3;
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
@@ -72,7 +78,7 @@ message MsgIcaDelegateResponse{}
 message MsgIcaUndelegate{
   string zone_id = 1;
   string host_address = 2;
-  string daomodifier_address = 3;
+  string controller_address = 3;
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
@@ -100,8 +106,26 @@ message MsgIcaTransfer{
 message MsgIcaTransferResponse{}
 
 message MsgRegisterHostAccount{
-   string zone_id = 1;
-   IcaAccount account_info = 2;
+  string zone_id = 1;
+  IcaAccount account_info = 2;
 }
 
 message MsgRegisterHostAccountResponse{}
+
+message MsgIcaAuthzGrant{
+  string zone_id = 1;
+  string grantee = 2;
+  string controller_address = 3;
+  cosmos.authz.v1beta1.Grant grant = 4 [(gogoproto.nullable) = false];
+}
+
+message MsgIcaAuthzGrantResponse{}
+
+message MsgIcaAuthzRevoke{
+  string zone_id = 1;
+  string grantee = 2;
+  string controller_address = 3;
+  string msg_type_url = 4;
+}
+
+message MsgIcaAuthzRevokeResponse{}

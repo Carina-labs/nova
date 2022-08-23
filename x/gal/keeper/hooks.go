@@ -59,8 +59,8 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	asset := transferMsg.Token
 
 	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, asset.Denom)
-	if transferMsg.Receiver != zoneInfo.IcaAccount.DaomodifierAddress {
-		h.k.Logger(ctx).Error("Receiver is not daomodifier address", "receiver", transferMsg.Receiver, "daomodifier address", zoneInfo.IcaAccount.DaomodifierAddress, "hook", "AfterWithdrawEnd")
+	if transferMsg.Receiver != zoneInfo.IcaAccount.ControllerAddress {
+		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zoneInfo.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
 		return
 	}
 

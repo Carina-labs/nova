@@ -129,8 +129,12 @@ func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
 			PortId:       icaControllerPort,
 		},
 		IcaAccount: &ibcstakingtypes.IcaAccount{
-			DaomodifierAddress: baseOwnerAcc.String(),
-			HostAddress:        baseHostAcc.String(),
+			ControllerAddress: baseOwnerAcc.String(),
+			HostAddress:       baseHostAcc.String(),
+		},
+		TransferInfo: &ibcstakingtypes.TransferConnectionInfo{
+			PortId:    transferPort,
+			ChannelId: transferChannel,
 		},
 		ValidatorAddress: "",
 		BaseDenom:        zoneBaseDenom,

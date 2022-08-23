@@ -80,7 +80,7 @@ func (suite *KeeperTestSuite) TestGetRegisterZoneInfo() {
 			if ok {
 				suite.Require().Equal(res.ZoneId, tc.zone.ZoneId)
 				suite.Require().Equal(res.IcaConnectionInfo.ConnectionId, tc.zone.IcaConnectionInfo.ConnectionId)
-				suite.Require().Equal(res.IcaAccount.DaomodifierAddress, tc.zone.IcaAccount.DaomodifierAddress)
+				suite.Require().Equal(res.IcaAccount.ControllerAddress, tc.zone.IcaAccount.ControllerAddress)
 				suite.Require().Equal(res.ValidatorAddress, tc.zone.ValidatorAddress)
 				suite.Require().Equal(res.SnDenom, tc.zone.SnDenom)
 			}

@@ -82,10 +82,10 @@ func (im IBCModule) OnChanOpenAck(
 
 	icaAccount := &types.MsgRegisterHostAccount{
 		AccountInfo: &types.IcaAccount{
-			DaomodifierAddress: daomodifierAddress,
+			ControllerAddress: daomodifierAddress,
 		},
 	}
-	icaAccount.AccountInfo.DaomodifierAddress = daomodifierAddress
+	icaAccount.AccountInfo.ControllerAddress = daomodifierAddress
 
 	err = ctx.EventManager().EmitTypedEvent(icaAccount)
 	return err

@@ -2,9 +2,10 @@ package types
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
-func NewGenesisState(params Params) *GenesisState {
+func NewGenesisState(params Params, chainInfos []ChainInfo) *GenesisState {
 	return &GenesisState{
 		Params: params,
+		States: chainInfos,
 	}
 }
 

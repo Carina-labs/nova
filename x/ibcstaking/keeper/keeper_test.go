@@ -65,8 +65,12 @@ func (suite *KeeperTestSuite) setZone(num int) []ibcstakingtypes.RegisteredZone 
 				PortId:       "icacontroller-" + addr[i].String(),
 			},
 			IcaAccount: &ibcstakingtypes.IcaAccount{
-				DaomodifierAddress: addr[i].String(),
-				HostAddress:        addr[i].String(),
+				ControllerAddress: addr[i].String(),
+				HostAddress:       addr[i].String(),
+			},
+			TransferInfo: &ibcstakingtypes.TransferConnectionInfo{
+				PortId:    suite.path.EndpointA.ChannelConfig.PortID,
+				ChannelId: suite.path.EndpointA.ChannelID,
 			},
 			ValidatorAddress: sdk.ValAddress(addr[i]).String(),
 			BaseDenom:        "atom",

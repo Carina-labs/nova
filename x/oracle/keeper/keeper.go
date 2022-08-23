@@ -41,11 +41,7 @@ func (k Keeper) UpdateChainState(ctx sdk.Context, chainInfo *types.ChainInfo) er
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	bz, err := chainInfo.Marshal()
-	if err != nil {
-		return err
-	}
-
+	bz := k.cdc.MustMarshal(chainInfo)
 	store.Set([]byte(chainInfo.Coin.Denom), bz)
 	return nil
 }
@@ -77,12 +73,12 @@ func (k Keeper) IsValidOperator(ctx sdk.Context, operatorAddress string) bool {
 	return false
 }
 
-func (k Keeper) GetOracleVersionStore(ctx sdk.Context) prefix.Store {
+func (k Keeper) oracleVersionStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyOracleVersion)
 }
 
 func (k Keeper) SetOracleVersion(ctx sdk.Context, zoneId string, version uint64) {
-	store := k.GetOracleVersionStore(ctx)
+	store := k.oracleVersionStore(ctx)
 	key := zoneId
 	bz := make([]byte, 8)
 	binary.BigEndian.PutUint64(bz, version)
@@ -100,12 +96,3 @@ func (k Keeper) GetOracleVersion(ctx sdk.Context, zoneId string) uint64 {
 
 	return binary.BigEndian.Uint64(bz)
 }
-
-// func (k Keeper) GetOracleVersion(ctx sdk.Context, chainDenom string) (uint64, error) {
-// 	chainInfo, err := k.GetChainState(ctx, chainDenom)
-// 	if err != nil {
-// 		return 0, err
-// 	}
-
-// 	return chainInfo.OracleVersion, nil
-// }

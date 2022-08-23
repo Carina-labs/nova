@@ -48,7 +48,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	// check IBC denom
-	if deposit.Amount.Denom != m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, deposit.TransferPortId, deposit.TransferChannelId, zoneInfo.BaseDenom) {
+	if deposit.Amount.Denom != m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom) {
 		return nil, types.ErrInvalidDenom
 	}
 
@@ -72,8 +72,8 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	err = m.keeper.TransferToTargetZone(ctx, &IBCTransferOption{
-		SourcePort:    deposit.TransferPortId,
-		SourceChannel: deposit.TransferChannelId,
+		SourcePort:    zoneInfo.TransferInfo.PortId,
+		SourceChannel: zoneInfo.TransferInfo.ChannelId,
 		Token:         deposit.Amount,
 		Sender:        deposit.Depositor,
 		Receiver:      zoneInfo.IcaAccount.HostAddress,
@@ -107,7 +107,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 		return nil, types.ErrCanNotChangeState
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, delegate.TransferPortId, delegate.TransferChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 
 	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, DELEGATE_REQUEST)
 	delegateAmt.Denom = zoneInfo.BaseDenom
@@ -115,7 +115,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: delegateAmt})
 
-	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.DaomodifierAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, types.ErrDelegateFail
 	}
@@ -260,11 +260,16 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	// sum of all withdraw records for user
 	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, ibcDenom, withdraw.Withdrawer)
+
 	if withdrawAmt.IsZero() {
 		return nil, types.ErrNoWithdrawRecord
 	}
 
-	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.ControllerAddress)
+	if err != nil {
+		return nil, err
+	}
 
 	withdrawerAddr, err := sdk.AccAddressFromBech32(withdraw.Withdrawer)
 	if err != nil {
@@ -292,7 +297,7 @@ func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingW
 
 	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone name is not found")
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	withdrawAmount := m.keeper.GetTotalWithdrawAmountForZoneId(ctx, msg.ZoneId, zoneInfo.BaseDenom, msg.ChainTime)
@@ -342,7 +347,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		return nil, fmt.Errorf("cannot find zone id : %s", records.ZoneId)
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, claimMsg.TransferPortId, claimMsg.TransferChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	totalClaimAsset := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
 		Denom:  ibcDenom,
@@ -359,7 +364,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		}
 	}
 
-	minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, totalClaimAsset, claimMsg.TransferPortId, claimMsg.TransferChannelId)
+	minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, totalClaimAsset, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
 			"account: %s", claimMsg.Claimer)
