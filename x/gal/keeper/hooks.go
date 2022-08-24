@@ -57,13 +57,14 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 // ica transfer
 func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	asset := transferMsg.Token
-	ctx.Logger().Info("AfterWithdrawEnd", "transferMsg", transferMsg)
+	ctx.Logger().Debug("AfterWithdrawEnd", "transferMsg", transferMsg)
 
 	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, asset.Denom)
 	if transferMsg.Receiver != zoneInfo.IcaAccount.ControllerAddress {
 		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zoneInfo.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
 		return
 	}
+	ctx.Logger().Info("AfterWithdrawEnd", "zoneInfo", zoneInfo)
 
 	if asset.Amount.IsZero() || asset.Amount.IsNil() {
 		// TODO: withdraw fail event

@@ -60,6 +60,8 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		return msgResponse.String(), nil
 	case sdk.MsgTypeURL(&transfertypes.MsgTransfer{}): // withdraw(transfer)
 		var data ibcaccounttypes.InterchainAccountPacketData
+		ctx.Logger().Info("ICA transfer Logger", "data", data)
+
 		err := ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data)
 		if err != nil {
 			return "", err
@@ -69,12 +71,13 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		if err != nil {
 			return "", err
 		}
+		ctx.Logger().Info("ICA transfer Logger", "packet", packetData)
 
 		transferMsg, ok := packetData[0].(*transfertypes.MsgTransfer)
 		if !ok {
 			return "", err
 		}
-
+		ctx.Logger().Info("ICA transfer Logger", "transferMsg", transferMsg)
 		k.AfterWithdrawEnd(ctx, *transferMsg)
 		return "", nil
 	default:

@@ -290,7 +290,7 @@ func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingW
 	if withdrawAmount.IsZero() {
 		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "total widraw amount: %s", withdrawAmount)
 	}
-
+	ctx.Logger().Info("PendingWithdraw", "withdrawAmount", withdrawAmount)
 	var msgs []sdk.Msg
 
 	//transfer msg

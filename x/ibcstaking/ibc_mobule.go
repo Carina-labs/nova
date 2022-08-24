@@ -141,13 +141,11 @@ func (im IBCModule) OnAcknowledgementPacket(
 	if err := proto.Unmarshal(ack.GetResult(), txMsgData); err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "cannot unmarshal ICS-27 tx message data: %v", err)
 	}
-	ctx.Logger().Info("OnAcknowledgementPacket", "ackResult", ack.Success())
-	ctx.Logger().Info("OnAcknowledgementPacket", "txMsgData", txMsgData.Data)
 
-	if !ack.Success(){
-		return sdkerrors.Wrap(types.ErrAckResult, "ack result is false")
-	}
-
+	//if !ack.Success(){
+	//	return sdkerrors.Wrap(types.ErrAckResult, "ack result is false")
+	//}
+	ctx.Logger().Info("ICA transfer Logger", "ack", ack.Success())
 	switch len(txMsgData.Data) {
 	case 0:
 		// TODO: handle for sdk 0.46.x
