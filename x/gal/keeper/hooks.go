@@ -57,6 +57,7 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 // ica transfer
 func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	asset := transferMsg.Token
+	ctx.Logger().Info("AfterWithdrawEnd", "transferMsg", transferMsg)
 
 	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, asset.Denom)
 	if transferMsg.Receiver != zoneInfo.IcaAccount.ControllerAddress {

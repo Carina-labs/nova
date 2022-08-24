@@ -80,6 +80,8 @@ func (im IBCModule) OnChanOpenAck(
 		return types.ErrNotFoundZoneInfo
 	}
 
+	ctx.Logger().Info("OnChanOpenAck", "hostAddr", hostAddr)
+
 	zoneInfo.IcaAccount.HostAddress = hostAddr
 	im.keeper.RegisterZone(ctx, zoneInfo)
 	return nil
@@ -138,6 +140,12 @@ func (im IBCModule) OnAcknowledgementPacket(
 	txMsgData := &sdk.TxMsgData{}
 	if err := proto.Unmarshal(ack.GetResult(), txMsgData); err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "cannot unmarshal ICS-27 tx message data: %v", err)
+	}
+	ctx.Logger().Info("OnAcknowledgementPacket", "ackResult", ack.Success())
+	ctx.Logger().Info("OnAcknowledgementPacket", "txMsgData", txMsgData.Data)
+
+	if !ack.Success(){
+		return sdkerrors.Wrap(types.ErrAckResult, "ack result is false")
 	}
 
 	switch len(txMsgData.Data) {
