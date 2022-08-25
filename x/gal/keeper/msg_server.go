@@ -209,7 +209,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	msgs = append(msgs, &stakingtype.MsgUndelegate{
 		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
-		Amount:           undelegateAssets})
+		Amount:           undelegateAmt})
 	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
