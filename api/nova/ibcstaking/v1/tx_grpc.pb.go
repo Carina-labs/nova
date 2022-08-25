@@ -32,8 +32,6 @@ type MsgClient interface {
 	IcaTransfer(ctx context.Context, in *MsgIcaTransfer, opts ...grpc.CallOption) (*MsgIcaTransferResponse, error)
 	// IcaAutoStaking defines a rpc handler for MsgIcaAutoStaking
 	IcaAutoStaking(ctx context.Context, in *MsgIcaAutoStaking, opts ...grpc.CallOption) (*MsgIcaAutoStakingResponse, error)
-	// IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
-	IcaRegisterHostAccount(ctx context.Context, in *MsgRegisterHostAccount, opts ...grpc.CallOption) (*MsgRegisterHostAccountResponse, error)
 	// DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
 	IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opts ...grpc.CallOption) (*MsgIcaAuthzGrantResponse, error)
 	IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, opts ...grpc.CallOption) (*MsgIcaAuthzRevokeResponse, error)
@@ -94,15 +92,6 @@ func (c *msgClient) IcaAutoStaking(ctx context.Context, in *MsgIcaAutoStaking, o
 	return out, nil
 }
 
-func (c *msgClient) IcaRegisterHostAccount(ctx context.Context, in *MsgRegisterHostAccount, opts ...grpc.CallOption) (*MsgRegisterHostAccountResponse, error) {
-	out := new(MsgRegisterHostAccountResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaRegisterHostAccount", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *msgClient) IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opts ...grpc.CallOption) (*MsgIcaAuthzGrantResponse, error) {
 	out := new(MsgIcaAuthzGrantResponse)
 	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAuthzGrant", in, out, opts...)
@@ -153,8 +142,6 @@ type MsgServer interface {
 	IcaTransfer(context.Context, *MsgIcaTransfer) (*MsgIcaTransferResponse, error)
 	// IcaAutoStaking defines a rpc handler for MsgIcaAutoStaking
 	IcaAutoStaking(context.Context, *MsgIcaAutoStaking) (*MsgIcaAutoStakingResponse, error)
-	// IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
-	IcaRegisterHostAccount(context.Context, *MsgRegisterHostAccount) (*MsgRegisterHostAccountResponse, error)
 	// DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
 	IcaAuthzGrant(context.Context, *MsgIcaAuthzGrant) (*MsgIcaAuthzGrantResponse, error)
 	IcaAuthzRevoke(context.Context, *MsgIcaAuthzRevoke) (*MsgIcaAuthzRevokeResponse, error)
@@ -181,9 +168,6 @@ func (UnimplementedMsgServer) IcaTransfer(context.Context, *MsgIcaTransfer) (*Ms
 }
 func (UnimplementedMsgServer) IcaAutoStaking(context.Context, *MsgIcaAutoStaking) (*MsgIcaAutoStakingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IcaAutoStaking not implemented")
-}
-func (UnimplementedMsgServer) IcaRegisterHostAccount(context.Context, *MsgRegisterHostAccount) (*MsgRegisterHostAccountResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IcaRegisterHostAccount not implemented")
 }
 func (UnimplementedMsgServer) IcaAuthzGrant(context.Context, *MsgIcaAuthzGrant) (*MsgIcaAuthzGrantResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IcaAuthzGrant not implemented")
@@ -300,24 +284,6 @@ func _Msg_IcaAutoStaking_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_IcaRegisterHostAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgRegisterHostAccount)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).IcaRegisterHostAccount(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaRegisterHostAccount",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).IcaRegisterHostAccount(ctx, req.(*MsgRegisterHostAccount))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Msg_IcaAuthzGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MsgIcaAuthzGrant)
 	if err := dec(in); err != nil {
@@ -416,10 +382,6 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IcaAutoStaking",
 			Handler:    _Msg_IcaAutoStaking_Handler,
-		},
-		{
-			MethodName: "IcaRegisterHostAccount",
-			Handler:    _Msg_IcaRegisterHostAccount_Handler,
 		},
 		{
 			MethodName: "IcaAuthzGrant",

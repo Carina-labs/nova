@@ -91,6 +91,21 @@ func (k Keeper) GetZoneForDenom(ctx sdk.Context, denom string) *types.Registered
 	return zone
 }
 
+func (k Keeper) GetRegisterZoneForPortId(ctx sdk.Context, portId string) (*types.RegisteredZone, bool) {
+	var zone *types.RegisteredZone
+	ok := false
+	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
+		if "icacontroller-"+zoneInfo.IcaConnectionInfo.PortId == portId {
+			zone = &zoneInfo
+			ok = true
+			return true
+		}
+		return false
+	})
+
+	return zone, ok
+}
+
 func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, baseDenom string) string {
 	var snDenom string
 

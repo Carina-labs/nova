@@ -71,25 +71,10 @@ func (suite *KeeperTestSuite) getGrantMsg(msg, zoneId, grantee string, controlle
 }
 
 func (suite *KeeperTestSuite) TestAuthzGrant() {
-	suite.SetupTest()
 	suite.setControllerAddr(suite.GetControllerAddr())
 	granteeAddr := suite.GenRandomAddress()
 	controllerAddr, _ := sdk.AccAddressFromBech32(suite.GetControllerAddr())
 	randAddr := suite.GenRandomAddress()
-
-	suite.chainA.App.IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), &ibcstakingtypes.RegisteredZone{
-		ZoneId: "gaia",
-		IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
-			ConnectionId: suite.icaPath.EndpointA.ConnectionID,
-			PortId:       suite.icaPath.EndpointA.ChannelID,
-		},
-		IcaAccount: &ibcstakingtypes.IcaAccount{
-			ControllerAddress: controllerAddr.String(),
-		},
-		ValidatorAddress: "",
-		BaseDenom:        "uatom",
-		SnDenom:          "snatom",
-	})
 
 	tcs := []struct {
 		name      string
@@ -98,12 +83,12 @@ func (suite *KeeperTestSuite) TestAuthzGrant() {
 	}{
 		{
 			name:      "success",
-			grantMsg:  suite.getGrantMsg("send", "gaia", granteeAddr.String(), controllerAddr),
+			grantMsg:  suite.getGrantMsg("send", "gaia0", granteeAddr.String(), controllerAddr),
 			shouldErr: false,
 		},
 		{
 			name:      "success",
-			grantMsg:  suite.getGrantMsg("send", "gaia", granteeAddr.String(), controllerAddr),
+			grantMsg:  suite.getGrantMsg("send", "gaia0", granteeAddr.String(), controllerAddr),
 			shouldErr: false,
 		},
 		{
