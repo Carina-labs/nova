@@ -165,7 +165,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 			baseTestZone.BaseDenom = "stake"
 			baseTestZone.SnDenom = "snstake"
 			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, baseTestZone)
-			
+
 			for _, item := range tc.depositInfo {
 				ibcAmount := sdk.NewInt64Coin(ibcDenom, item.amount.Amount.Int64())
 				record := types.DepositRecord{
