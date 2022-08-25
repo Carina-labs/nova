@@ -200,8 +200,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.BaseDenom, zoneInfo.ZoneId, oracleVersion, UNDELEGATE_REQUEST_ICA)
 
-	if burnAssets.Amount.Equal(sdk.NewInt(0)) || undelegateAssets.Equal(sdk.NewInt(0)) {
-		// TODO: should handle if no coins to undelegate
+	if burnAssets.IsZero() || undelegateAssets.IsZero() {
 		return nil, errors.New("no coins to undelegate")
 	}
 
@@ -252,6 +251,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 	if err != nil {
 		return nil, err
 	}
+
 	// sum of all withdraw records for user
 	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, ibcDenom, withdraw.Withdrawer)
 	if withdrawAmt.IsZero() {
