@@ -42,7 +42,7 @@ func calcPrecisionMultiplier(prec int64) *big.Int {
 // ClaimAndMintShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
 func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, asset sdk.Coin, transferPortId, transferChanId string) (sdk.Coin, error) {
-	snDenom, err := k.GetsnDenomForIBCDenom(ctx, asset.Denom)
+	snDenom, err := k.GetSnDenomForIBCDenom(ctx, asset.Denom)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -138,7 +138,12 @@ func (k Keeper) CalculateWithdrawAlpha(burnedStTokenAmt, totalShareTokenSupply, 
 	return res.Mul(burnedStTokenAmt, totalStakedAmount).Div(res, totalShareTokenSupply)
 }
 
-func (k Keeper) GetsnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string, error) {
+func (k Keeper) GetSnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string, error) {
+	err := transfertypes.ValidateIBCDenom(ibcDenom)
+	if err != nil {
+		return "", err
+	}
+
 	denom, err := k.ibcTransferKeeper.DenomPathFromHash(ctx, ibcDenom)
 	if err != nil {
 		return "", err

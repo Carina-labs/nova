@@ -29,6 +29,7 @@ func (q QueryServer) Params(c context.Context, request *types.QueryParamsRequest
 func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.ClaimableAmountRequest) (*types.ClaimableAmountResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	zone, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
+
 	if !ok {
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, "zone not found")
 	}
