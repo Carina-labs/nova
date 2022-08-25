@@ -66,6 +66,7 @@ func (suite *KeeperTestSuite) getGrantMsg(msg, zoneId, grantee string, controlle
 
 	time := time.Now().AddDate(2, 0, 0).UTC()
 	grantMsg, _ := ibcstakingtypes.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, time)
+
 	return *grantMsg
 }
 

@@ -198,10 +198,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.BaseDenom, zoneInfo.ZoneId, oracleVersion, UNDELEGATE_REQUEST_ICA)
 
-	if burnAssets.Amount.Equal(sdk.NewInt(0)) || undelegateAssets.Amount.Equal(sdk.NewInt(0)) {
-		// TODO: should handle if no coins to undelegate
+	if burnAssets.IsZero() || undelegateAssets.IsZero() {
 		return nil, errors.New("no coins to undelegate")
 	}
+
+	undelegateAmt := sdk.NewCoin(zoneInfo.BaseDenom, undelegateAssets)
 
 	var msgs []sdk.Msg
 
@@ -223,7 +224,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	return &types.MsgUndelegateResponse{
 		ZoneId:               zoneInfo.ZoneId,
 		TotalBurnAsset:       burnAssets,
-		TotalUndelegateAsset: undelegateAssets,
+		TotalUndelegateAsset: undelegateAmt,
 	}, nil
 }
 
@@ -242,19 +243,17 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, types.ErrNoWithdrawRecord
 	}
 
-	// sum of all withdraw records for user
-	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, withdraw.Withdrawer)
-
-	if withdrawAmt.IsZero() {
-		return nil, types.ErrNoWithdrawRecord
-	}
-
 	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 
-	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
 	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.ControllerAddress)
 	if err != nil {
 		return nil, err
+	}
+
+	// sum of all withdraw records for user
+	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, ibcDenom, withdraw.Withdrawer)
+	if withdrawAmt.IsZero() {
+		return nil, types.ErrNoWithdrawRecord
 	}
 
 	withdrawerAddr, err := sdk.AccAddressFromBech32(withdraw.Withdrawer)
@@ -262,7 +261,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, err
 	}
 
-	if err := m.keeper.ClaimWithdrawAsset(ctx, controllerAddr, withdrawerAddr, withdrawAmount); err != nil {
+	if err := m.keeper.ClaimWithdrawAsset(ctx, controllerAddr, withdrawerAddr, withdrawAmt); err != nil {
 		return nil, err
 	}
 
@@ -270,7 +269,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	return &types.MsgWithdrawResponse{
 		Withdrawer:     withdraw.Withdrawer,
-		WithdrawAmount: withdrawAmount.Amount,
+		WithdrawAmount: withdrawAmt.Amount,
 	}, nil
 }
 

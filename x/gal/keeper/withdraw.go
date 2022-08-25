@@ -114,12 +114,12 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 						withdrawRecordContent = &types.WithdrawRecordContent{
 							State:           int64(WithdrawStatus_Registered),
 							WithdrawVersion: items.UndelegateVersion,
-							Amount:          items.WithdrawAmount.Amount,
+							Amount:          items.WithdrawAmount,
 							CompletionTime:  time,
 						}
 
 					} else {
-						withdrawRecordContent.Amount = items.WithdrawAmount.Amount.Add(withdrawRecordContent.Amount)
+						withdrawRecordContent.Amount = items.WithdrawAmount.Add(withdrawRecordContent.Amount)
 					}
 					withdrawRecord.Records[items.UndelegateVersion] = withdrawRecordContent
 

@@ -16,7 +16,7 @@ var (
 	icaConnection      = "connection-1"
 
 	baseDenom    = "unova"
-	baseIbcDenom = ParseAddressToIbcAddress(transferPort, transferChannel, baseDenom)
+	baseIbcDenom = parseAddressToIbcAddress(transferPort, transferChannel, baseDenom)
 	baseAcc      = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 	baseHostAcc  = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 	baseOwnerAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
@@ -26,7 +26,7 @@ var (
 
 	zoneId        = "cosmos-1"
 	zoneBaseDenom = "stake"
-	zoneIbcDeno   = ParseAddressToIbcAddress(transferPort, transferChannel, zoneBaseDenom)
+	zoneIbcDeno   = parseAddressToIbcAddress(transferPort, transferChannel, zoneBaseDenom)
 
 	undelegateMsgName  = "/cosmos.staking.v1beta1.MsgUndelegate"
 	ibcTransferMsgName = "/ibc.applications.transfer.v1.MsgTransfer"
