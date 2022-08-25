@@ -23,9 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
-	ClaimableAmount(ctx context.Context, in *ClaimableAmountRequest, opts ...grpc.CallOption) (*ClaimableAmountResponse, error)
-	PendingWithdrawals(ctx context.Context, in *PendingWithdrawalsRequest, opts ...grpc.CallOption) (*PendingWithdrawalsResponse, error)
-	ActiveWithdrawals(ctx context.Context, in *ActiveWithdrawalsRequest, opts ...grpc.CallOption) (*ActiveWithdrawalsResponse, error)
+	EstimateSnAsset(ctx context.Context, in *QueryEstimateSnAssetRequest, opts ...grpc.CallOption) (*QueryEstimateSnAssetResponse, error)
+	ClaimableAmount(ctx context.Context, in *QueryClaimableAmountRequest, opts ...grpc.CallOption) (*QueryClaimableAmountResponse, error)
+	PendingWithdrawals(ctx context.Context, in *QueryPendingWithdrawalsRequest, opts ...grpc.CallOption) (*QueryPendingWithdrawalsResponse, error)
+	ActiveWithdrawals(ctx context.Context, in *QueryActiveWithdrawalsRequest, opts ...grpc.CallOption) (*QueryActiveWithdrawalsResponse, error)
 	DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error)
 	UndelegateRecords(ctx context.Context, in *QueryUndelegateRecordRequest, opts ...grpc.CallOption) (*QueryUndelegateRecordResponse, error)
 	WithdrawRecords(ctx context.Context, in *QueryWithdrawRecordRequest, opts ...grpc.CallOption) (*QueryWithdrawRecordResponse, error)
@@ -48,8 +49,17 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
-func (c *queryClient) ClaimableAmount(ctx context.Context, in *ClaimableAmountRequest, opts ...grpc.CallOption) (*ClaimableAmountResponse, error) {
-	out := new(ClaimableAmountResponse)
+func (c *queryClient) EstimateSnAsset(ctx context.Context, in *QueryEstimateSnAssetRequest, opts ...grpc.CallOption) (*QueryEstimateSnAssetResponse, error) {
+	out := new(QueryEstimateSnAssetResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/EstimateSnAsset", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ClaimableAmount(ctx context.Context, in *QueryClaimableAmountRequest, opts ...grpc.CallOption) (*QueryClaimableAmountResponse, error) {
+	out := new(QueryClaimableAmountResponse)
 	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/ClaimableAmount", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -57,8 +67,8 @@ func (c *queryClient) ClaimableAmount(ctx context.Context, in *ClaimableAmountRe
 	return out, nil
 }
 
-func (c *queryClient) PendingWithdrawals(ctx context.Context, in *PendingWithdrawalsRequest, opts ...grpc.CallOption) (*PendingWithdrawalsResponse, error) {
-	out := new(PendingWithdrawalsResponse)
+func (c *queryClient) PendingWithdrawals(ctx context.Context, in *QueryPendingWithdrawalsRequest, opts ...grpc.CallOption) (*QueryPendingWithdrawalsResponse, error) {
+	out := new(QueryPendingWithdrawalsResponse)
 	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/PendingWithdrawals", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -66,8 +76,8 @@ func (c *queryClient) PendingWithdrawals(ctx context.Context, in *PendingWithdra
 	return out, nil
 }
 
-func (c *queryClient) ActiveWithdrawals(ctx context.Context, in *ActiveWithdrawalsRequest, opts ...grpc.CallOption) (*ActiveWithdrawalsResponse, error) {
-	out := new(ActiveWithdrawalsResponse)
+func (c *queryClient) ActiveWithdrawals(ctx context.Context, in *QueryActiveWithdrawalsRequest, opts ...grpc.CallOption) (*QueryActiveWithdrawalsResponse, error) {
+	out := new(QueryActiveWithdrawalsResponse)
 	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/ActiveWithdrawals", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -107,9 +117,10 @@ func (c *queryClient) WithdrawRecords(ctx context.Context, in *QueryWithdrawReco
 // for forward compatibility
 type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
-	ClaimableAmount(context.Context, *ClaimableAmountRequest) (*ClaimableAmountResponse, error)
-	PendingWithdrawals(context.Context, *PendingWithdrawalsRequest) (*PendingWithdrawalsResponse, error)
-	ActiveWithdrawals(context.Context, *ActiveWithdrawalsRequest) (*ActiveWithdrawalsResponse, error)
+	EstimateSnAsset(context.Context, *QueryEstimateSnAssetRequest) (*QueryEstimateSnAssetResponse, error)
+	ClaimableAmount(context.Context, *QueryClaimableAmountRequest) (*QueryClaimableAmountResponse, error)
+	PendingWithdrawals(context.Context, *QueryPendingWithdrawalsRequest) (*QueryPendingWithdrawalsResponse, error)
+	ActiveWithdrawals(context.Context, *QueryActiveWithdrawalsRequest) (*QueryActiveWithdrawalsResponse, error)
 	DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error)
 	UndelegateRecords(context.Context, *QueryUndelegateRecordRequest) (*QueryUndelegateRecordResponse, error)
 	WithdrawRecords(context.Context, *QueryWithdrawRecordRequest) (*QueryWithdrawRecordResponse, error)
@@ -123,13 +134,16 @@ type UnimplementedQueryServer struct {
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
-func (UnimplementedQueryServer) ClaimableAmount(context.Context, *ClaimableAmountRequest) (*ClaimableAmountResponse, error) {
+func (UnimplementedQueryServer) EstimateSnAsset(context.Context, *QueryEstimateSnAssetRequest) (*QueryEstimateSnAssetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EstimateSnAsset not implemented")
+}
+func (UnimplementedQueryServer) ClaimableAmount(context.Context, *QueryClaimableAmountRequest) (*QueryClaimableAmountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClaimableAmount not implemented")
 }
-func (UnimplementedQueryServer) PendingWithdrawals(context.Context, *PendingWithdrawalsRequest) (*PendingWithdrawalsResponse, error) {
+func (UnimplementedQueryServer) PendingWithdrawals(context.Context, *QueryPendingWithdrawalsRequest) (*QueryPendingWithdrawalsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PendingWithdrawals not implemented")
 }
-func (UnimplementedQueryServer) ActiveWithdrawals(context.Context, *ActiveWithdrawalsRequest) (*ActiveWithdrawalsResponse, error) {
+func (UnimplementedQueryServer) ActiveWithdrawals(context.Context, *QueryActiveWithdrawalsRequest) (*QueryActiveWithdrawalsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ActiveWithdrawals not implemented")
 }
 func (UnimplementedQueryServer) DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error) {
@@ -172,8 +186,26 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_EstimateSnAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryEstimateSnAssetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).EstimateSnAsset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/EstimateSnAsset",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).EstimateSnAsset(ctx, req.(*QueryEstimateSnAssetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Query_ClaimableAmount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ClaimableAmountRequest)
+	in := new(QueryClaimableAmountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -185,13 +217,13 @@ func _Query_ClaimableAmount_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/nova.gal.v1.Query/ClaimableAmount",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).ClaimableAmount(ctx, req.(*ClaimableAmountRequest))
+		return srv.(QueryServer).ClaimableAmount(ctx, req.(*QueryClaimableAmountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_PendingWithdrawals_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PendingWithdrawalsRequest)
+	in := new(QueryPendingWithdrawalsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -203,13 +235,13 @@ func _Query_PendingWithdrawals_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/nova.gal.v1.Query/PendingWithdrawals",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).PendingWithdrawals(ctx, req.(*PendingWithdrawalsRequest))
+		return srv.(QueryServer).PendingWithdrawals(ctx, req.(*QueryPendingWithdrawalsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_ActiveWithdrawals_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ActiveWithdrawalsRequest)
+	in := new(QueryActiveWithdrawalsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -221,7 +253,7 @@ func _Query_ActiveWithdrawals_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/nova.gal.v1.Query/ActiveWithdrawals",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).ActiveWithdrawals(ctx, req.(*ActiveWithdrawalsRequest))
+		return srv.(QueryServer).ActiveWithdrawals(ctx, req.(*QueryActiveWithdrawalsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,6 +322,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "EstimateSnAsset",
+			Handler:    _Query_EstimateSnAsset_Handler,
 		},
 		{
 			MethodName: "ClaimableAmount",

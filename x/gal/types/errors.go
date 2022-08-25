@@ -17,4 +17,5 @@ var (
 	ErrInvalidAddress       = errors.Register(ModuleName, 11, "invalid address")
 	ErrUnknown              = errors.Register(ModuleName, 12, "unknown error occurred")
 	ErrTransferInfoNotFound = errors.Register(ModuleName, 13, "transfer info is not found")
+	ErrInvalidParameter     = errors.Register(ModuleName, 14, "invalid parameter")
 )
