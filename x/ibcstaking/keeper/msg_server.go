@@ -3,7 +3,6 @@ package keeper
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	"time"
 
@@ -269,7 +268,6 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 	})
 	err := k.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
-		fmt.Println("err : ", err)
 		return nil, errors.New("IcaAuthzGrant transaction failed to send")
 	}
 

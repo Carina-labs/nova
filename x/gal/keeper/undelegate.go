@@ -52,17 +52,14 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.
 }
 
 // GetUndelegateAmount returns the amount of undelegated coin.
-func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, zoneId string, version uint64, state UndelegatedState) (sdk.Coin, sdk.Coin) {
+func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, zoneId string, version uint64, state UndelegatedState) (sdk.Coin, sdk.Int) {
 
 	snAsset := sdk.Coin{
 		Amount: sdk.NewInt(0),
 		Denom:  snDenom,
 	}
 
-	wAsset := sdk.Coin{
-		Amount: sdk.NewInt(0),
-		Denom:  baseDenom,
-	}
+	wAsset := sdk.NewInt(0)
 
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
@@ -72,10 +69,10 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, 
 					if err != nil {
 						return false
 					}
-					record.WithdrawAmount = &withdrawAsset
+					record.WithdrawAmount = withdrawAsset.Amount
 
 					record.State = int64(state)
-					wAsset = wAsset.Add(*record.WithdrawAmount)
+					wAsset = wAsset.Add(record.WithdrawAmount)
 					snAsset = snAsset.Add(*record.SnAssetAmount)
 				}
 			}

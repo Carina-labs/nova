@@ -1,14 +1,29 @@
 package keeper_test
 
 import (
-	"testing"
-
+	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	"github.com/stretchr/testify/suite"
+	"testing"
 
 	"github.com/Carina-labs/nova/app/apptesting"
 	novatesting "github.com/Carina-labs/nova/testing"
-	"github.com/Carina-labs/nova/x/gal/types"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
+)
+
+var (
+	key1 = secp256k1.GenPrivKey()
+	acc1 = authtypes.NewBaseAccount(key1.PubKey().Address().Bytes(), key1.PubKey(), 0, 0)
+
+	version = string(icatypes.ModuleCdc.MustMarshalJSON(&icatypes.Metadata{
+		Version:                "ics27-1",
+		ControllerConnectionId: "connection-1",
+		HostConnectionId:       "connection-1",
+		Encoding:               "proto3",
+		TxType:                 "sdk_multi_msg",
+	}))
 )
 
 type KeeperTestSuite struct {
@@ -45,6 +60,10 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.Require().NoError(err)
 
 	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, newBaseRegisteredZone())
+}
+
+func (suite *KeeperTestSuite) GetControllerAddr() string {
+	return acc1.Address
 }
 
 func TestKeeperTestSuite(t *testing.T) {
