@@ -156,7 +156,7 @@ func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom s
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
 		if withdrawInfo.ZoneId == zoneId {
 			for _, record := range withdrawInfo.Records {
-				if record.CompletionTime.Before(blockTime) {
+				if record.CompletionTime.Before(blockTime) && record.State == int64(WithdrawStatus_Registered) {
 					amount.Amount = amount.Amount.Add(record.Amount)
 				}
 			}
