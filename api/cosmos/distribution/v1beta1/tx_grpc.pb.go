@@ -109,6 +109,7 @@ func (c *msgClient) CommunityPoolSpend(ctx context.Context, in *MsgCommunityPool
 	}
 	return out, nil
 }
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -315,7 +316,6 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "CommunityPoolSpend",
 			Handler:    _Msg_CommunityPoolSpend_Handler,
 		},
-
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "cosmos/distribution/v1beta1/tx.proto",
