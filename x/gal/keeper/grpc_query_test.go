@@ -39,7 +39,7 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 		},
 	})
 
-	amt, err := queryClient.ClaimableAmount(ctx.Context(), &types.ClaimableAmountRequest{
+	amt, err := queryClient.ClaimableAmount(ctx.Context(), &types.QueryClaimableAmountRequest{
 		ZoneId:  zoneId,
 		Address: fooUser.String(),
 	})
@@ -58,13 +58,13 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	denom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
 
 	// query with invalid zone
-	_, err := queryClient.PendingWithdrawals(ctx.Context(), &types.PendingWithdrawalsRequest{
+	_, err := queryClient.PendingWithdrawals(ctx.Context(), &types.QueryPendingWithdrawalsRequest{
 		ZoneId: "invalid",
 	})
 	suite.Require().Error(err)
 
 	// query with invalid user
-	invalidResult, err := queryClient.PendingWithdrawals(ctx.Context(), &types.PendingWithdrawalsRequest{
+	invalidResult, err := queryClient.PendingWithdrawals(ctx.Context(), &types.QueryPendingWithdrawalsRequest{
 		ZoneId:  zoneId,
 		Address: "invalid_user",
 	})
@@ -99,7 +99,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	})
 
 	// query the pending withdrawal amount and check if the amount is correct
-	result, err := queryClient.PendingWithdrawals(ctx.Context(), &types.PendingWithdrawalsRequest{
+	result, err := queryClient.PendingWithdrawals(ctx.Context(), &types.QueryPendingWithdrawalsRequest{
 		ZoneId:  zoneId,
 		Address: fooUser.String(),
 	})
@@ -116,7 +116,7 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 	denom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
 
 	// query with invalid zone
-	_, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.ActiveWithdrawalsRequest{
+	_, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.QueryActiveWithdrawalsRequest{
 		ZoneId: "invalid",
 	})
 	suite.Require().Error(err)
@@ -150,7 +150,7 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 	})
 
 	// query the pending withdrawal amount and check if the amount is correct
-	result, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.ActiveWithdrawalsRequest{
+	result, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.QueryActiveWithdrawalsRequest{
 		ZoneId:  zoneId,
 		Address: fooUser.String(),
 	})

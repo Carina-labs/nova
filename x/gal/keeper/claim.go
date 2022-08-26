@@ -48,14 +48,13 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 	}
 
 	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
 	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, transferPortId, transferChanId)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
-
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 
 	// convert decimal
 	snAsset := k.ConvertWAssetToSnAssetDecimal(asset.Amount.BigInt(), zoneInfo.Decimal, snDenom)
@@ -167,7 +166,7 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPor
 		return sdk.Coin{}, fmt.Errorf("cannot find zone denom in oracle : %s", denom)
 	}
 
-	unMintedAmount, err := k.GetAllAmountNotMintShareToken(ctx, zone.ZoneId, transferPortId, transferChanId)
+	unMintedAmount, err := k.GetAllAmountNotMintShareToken(ctx, zone)
 	if err != nil {
 		return sdk.Coin{}, err
 	}

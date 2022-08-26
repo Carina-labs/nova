@@ -2,7 +2,6 @@ package keeper_test
 
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"math/big"
@@ -160,15 +159,13 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					},
 				},
 			})
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &ibcstakingtypes.RegisteredZone{
-				ZoneId:            "stake-1",
-				IcaConnectionInfo: nil,
-				IcaAccount:        nil,
-				ValidatorAddress:  "",
-				BaseDenom:         "stake",
-				SnDenom:           "snstake",
-				Decimal:           6,
-			})
+
+			baseTestZone := newBaseRegisteredZone()
+			baseTestZone.ZoneId = "stake-1"
+			baseTestZone.BaseDenom = "stake"
+			baseTestZone.SnDenom = "snstake"
+			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, baseTestZone)
+
 			for _, item := range tc.depositInfo {
 				ibcAmount := sdk.NewInt64Coin(ibcDenom, item.amount.Amount.Int64())
 				record := types.DepositRecord{

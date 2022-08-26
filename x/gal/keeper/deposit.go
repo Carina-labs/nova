@@ -3,6 +3,7 @@ package keeper
 import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -154,22 +155,16 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	return nil
 }
 
-func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zoneId, transferPortId, transferChanId string) (sdk.Coin, error) {
-	targetZoneInfo, ok := k.ibcstakingKeeper.GetRegisteredZone(ctx, zoneId)
-	if !ok {
-		return sdk.Coin{}, fmt.Errorf("cannot find zone id : %s", zoneId)
-	}
-
-	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChanId, targetZoneInfo.BaseDenom)
+func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone) (sdk.Coin, error) {
+	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 
 	res := sdk.NewInt64Coin(ibcDenom, 0)
 	k.IterateDepositRecord(ctx, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
-		if depositRecord.ZoneId != zoneId {
-			return false
-		}
-		for _, record := range depositRecord.Records {
-			if record.State == int64(DELEGATE_SUCCESS) {
-				res = res.Add(*record.Amount)
+		if depositRecord.ZoneId == zone.ZoneId {
+			for _, record := range depositRecord.Records {
+				if record.State == int64(DELEGATE_SUCCESS) {
+					res = res.Add(*record.Amount)
+				}
 			}
 		}
 		return false

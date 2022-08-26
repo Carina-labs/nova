@@ -46,7 +46,7 @@ func queryClaimableAsset() *cobra.Command {
 			queryClient := types.NewQueryClient(clientCtx)
 
 			ctx := cmd.Context()
-			query := &types.ClaimableAmountRequest{
+			query := &types.QueryClaimableAmountRequest{
 				ZoneId:  args[0],
 				Address: args[1],
 			}
@@ -76,7 +76,7 @@ func queryPendingWithdrawals() *cobra.Command {
 			queryClient := types.NewQueryClient(clientCtx)
 
 			ctx := cmd.Context()
-			query := &types.PendingWithdrawalsRequest{
+			query := &types.QueryPendingWithdrawalsRequest{
 				ZoneId:  args[0],
 				Address: args[1],
 			}
@@ -106,7 +106,7 @@ func queryActiveWithdrawals() *cobra.Command {
 			queryClient := types.NewQueryClient(clientCtx)
 
 			ctx := cmd.Context()
-			query := &types.ActiveWithdrawalsRequest{
+			query := &types.QueryActiveWithdrawalsRequest{
 				ZoneId:  args[0],
 				Address: args[1],
 			}

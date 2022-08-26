@@ -1,6 +1,7 @@
 package novatesting
 
 import (
+	"github.com/Carina-labs/nova/app/params"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"testing"
 )
@@ -23,7 +24,7 @@ func TestChainSetup(t *testing.T) {
 	}
 
 	testZoneState2 := TestZoneState{
-		denom:      "unova",
+		denom:      params.BaseCoinUnit,
 		accounts:   accountState,
 		validators: valState,
 	}
