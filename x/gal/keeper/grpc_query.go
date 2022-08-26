@@ -117,7 +117,6 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Que
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
-		ctx.Logger().Error("zone_id not found", "zone_id", request.ZoneId, "module", types.ModuleName)
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
 	}
 

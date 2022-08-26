@@ -17,7 +17,7 @@ func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, ms
 		return err
 	}
 
-	channelID, found := k.icaControllerKeeper.GetActiveChannelID(ctx, connectionId, portID)
+	channelID, found := k.IcaControllerKeeper.GetActiveChannelID(ctx, connectionId, portID)
 	if !found {
 		return sdkerrors.Wrapf(icatypes.ErrActiveChannelNotFound, "failed to retrieve active channel for port %s", portID)
 	}
@@ -39,7 +39,7 @@ func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, ms
 	// timeoutTimestamp set to max value with the unsigned bit shifted to satisfy hermes timestamp conversion
 	// it is the responsibility of the auth module developer to ensure an appropriate timeout timestamp
 	timeoutTimestamp := time.Now().Add(time.Minute * 10).UnixNano()
-	_, err = k.icaControllerKeeper.SendTx(ctx, chanCap, connectionId, portID, packetData, uint64(timeoutTimestamp))
+	_, err = k.IcaControllerKeeper.SendTx(ctx, chanCap, connectionId, portID, packetData, uint64(timeoutTimestamp))
 	if err != nil {
 		return err
 	}

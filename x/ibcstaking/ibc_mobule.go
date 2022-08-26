@@ -1,9 +1,6 @@
 package ibcstaking
 
 import (
-	"fmt"
-	"strings"
-
 	proto "github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/ibcstaking/keeper"
@@ -12,7 +9,6 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	capabilitytypes "github.com/cosmos/cosmos-sdk/x/capability/types"
 
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	porttypes "github.com/cosmos/ibc-go/v3/modules/core/05-port/types"
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
@@ -69,26 +65,24 @@ func (im IBCModule) OnChanOpenAck(
 	counterpartyChannelID string,
 	counterpartyVersion string,
 ) error {
-
-	if !strings.HasPrefix(portID, icatypes.PortPrefix) {
-		return fmt.Errorf("invalid port id : %s", portID)
-	}
-
-	daomodifierAddress := portID[14:]
-	_, err := sdk.AccAddressFromBech32(daomodifierAddress)
+	connId, err := im.keeper.GetConnectionId(ctx, portID)
 	if err != nil {
 		return err
 	}
 
-	icaAccount := &types.MsgRegisterHostAccount{
-		AccountInfo: &types.IcaAccount{
-			ControllerAddress: daomodifierAddress,
-		},
+	hostAddr, ok := im.keeper.IcaControllerKeeper.GetInterchainAccountAddress(ctx, connId, portID)
+	if !ok {
+		return types.ErrNotFoundHostAddr
 	}
-	icaAccount.AccountInfo.ControllerAddress = daomodifierAddress
 
-	err = ctx.EventManager().EmitTypedEvent(icaAccount)
-	return err
+	zoneInfo, found := im.keeper.GetRegisterZoneForPortId(ctx, portID)
+	if !found {
+		return types.ErrNotFoundZoneInfo
+	}
+
+	zoneInfo.IcaAccount.HostAddress = hostAddr
+	im.keeper.RegisterZone(ctx, zoneInfo)
+	return nil
 }
 
 // OnChanOpenConfirm implements the IBCModule interface

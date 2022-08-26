@@ -21,8 +21,6 @@ service Msg {
   rpc IcaTransfer(MsgIcaTransfer) returns (MsgIcaTransferResponse);
   // IcaAutoStaking defines a rpc handler for MsgIcaAutoStaking
   rpc IcaAutoStaking(MsgIcaAutoStaking) returns (MsgIcaAutoStakingResponse);
-  // IcaRegisterHostAccount defines a rpc handler for MsgRegisterHostAccount
-  rpc IcaRegisterHostAccount(MsgRegisterHostAccount) returns (MsgRegisterHostAccountResponse);
   // DeleteRegisteredZone defines a rpc handler for MsgDeleteRegisteredZone
   rpc IcaAuthzGrant(MsgIcaAuthzGrant) returns (MsgIcaAuthzGrantResponse);
   rpc IcaAuthzRevoke(MsgIcaAuthzRevoke) returns (MsgIcaAuthzRevokeResponse);
@@ -104,13 +102,6 @@ message MsgIcaTransfer{
 }
 
 message MsgIcaTransferResponse{}
-
-message MsgRegisterHostAccount{
-  string zone_id = 1;
-  IcaAccount account_info = 2;
-}
-
-message MsgRegisterHostAccountResponse{}
 
 message MsgIcaAuthzGrant{
   string zone_id = 1;

@@ -19,14 +19,6 @@ import (
 var (
 	key1 = secp256k1.GenPrivKey()
 	acc1 = authtypes.NewBaseAccount(key1.PubKey().Address().Bytes(), key1.PubKey(), 0, 0)
-
-	version = string(icatypes.ModuleCdc.MustMarshalJSON(&icatypes.Metadata{
-		Version:                "ics27-1",
-		ControllerConnectionId: "connection-1",
-		HostConnectionId:       "connection-1",
-		Encoding:               "proto3",
-		TxType:                 "sdk_multi_msg",
-	}))
 )
 
 type KeeperTestSuite struct {
@@ -62,15 +54,15 @@ func (suite *KeeperTestSuite) setZone(num int) []ibcstakingtypes.RegisteredZone 
 			ZoneId: "gaia" + strconv.Itoa(i),
 			IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
 				ConnectionId: "connection-" + strconv.Itoa(i),
-				PortId:       "icacontroller-" + addr[i].String(),
+				PortId:       "gaia" + strconv.Itoa(i) + "." + addr[i].String(),
 			},
 			IcaAccount: &ibcstakingtypes.IcaAccount{
 				ControllerAddress: addr[i].String(),
 				HostAddress:       addr[i].String(),
 			},
 			TransferInfo: &ibcstakingtypes.TransferConnectionInfo{
-				PortId:    suite.path.EndpointA.ChannelConfig.PortID,
-				ChannelId: suite.path.EndpointA.ChannelID,
+				PortId:    "transfer",
+				ChannelId: "channel-" + strconv.Itoa(i),
 			},
 			ValidatorAddress: sdk.ValAddress(addr[i]).String(),
 			BaseDenom:        "atom",
@@ -81,12 +73,19 @@ func (suite *KeeperTestSuite) setZone(num int) []ibcstakingtypes.RegisteredZone 
 	return zones
 }
 
-func NewICAPAth(chainA, chainB *novatesting.TestChain) *novatesting.Path {
+func NewICAPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
 	path := novatesting.NewPath(chainA, chainB)
 	path.EndpointA.ChannelConfig.PortID = icatypes.PortID
 	path.EndpointB.ChannelConfig.PortID = icatypes.PortID
 	path.EndpointA.ChannelConfig.Order = ibcchanneltypes.ORDERED
 	path.EndpointB.ChannelConfig.Order = ibcchanneltypes.ORDERED
+	version := string(icatypes.ModuleCdc.MustMarshalJSON(&icatypes.Metadata{
+		Version:                "ics27-1",
+		ControllerConnectionId: "connection-0",
+		HostConnectionId:       "connection-0",
+		Encoding:               "proto3",
+		TxType:                 "sdk_multi_msg",
+	}))
 	path.EndpointA.ChannelConfig.Version = version
 	path.EndpointB.ChannelConfig.Version = version
 	return path
@@ -142,22 +141,18 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
 	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
 	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))
-	suite.ctxA = suite.chainA.GetContext()
-	suite.ctxB = suite.chainB.GetContext()
 
-	//setup path (chainA <===>chainB)
-	path := novatesting.NewPath(suite.chainA, suite.chainB)
-	path.EndpointA.ChannelConfig.PortID = novatesting.TransferPort
-	path.EndpointB.ChannelConfig.PortID = novatesting.TransferPort
-	path.EndpointA.ChannelConfig.Version = "ics20-1"
-	path.EndpointB.ChannelConfig.Version = "ics20-1"
-	suite.coordinator.Setup(path)
-	suite.path = path
-
-	suite.icaPath = NewICAPAth(suite.chainA, suite.chainB)
+	suite.icaPath = NewICAPath(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
-	err := suite.SetupICAPath(suite.icaPath, acc1.Address)
-	suite.NoError(err)
+	zones := suite.setZone(1)
+
+	for _, zone := range zones {
+		suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &zone)
+		suite.chainA.GetApp().IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), &zone)
+		err := suite.SetupICAPath(suite.icaPath, zone.ZoneId+"."+zone.IcaAccount.ControllerAddress)
+		suite.Require().NoError(err)
+	}
+
 }
 
 func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []ibcstakingtypes.RegisteredZone) {

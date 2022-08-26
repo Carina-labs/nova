@@ -7358,861 +7358,6 @@ func (x *fastReflection_MsgIcaTransferResponse) ProtoMethods() *protoiface.Metho
 }
 
 var (
-	md_MsgRegisterHostAccount              protoreflect.MessageDescriptor
-	fd_MsgRegisterHostAccount_zone_id      protoreflect.FieldDescriptor
-	fd_MsgRegisterHostAccount_account_info protoreflect.FieldDescriptor
-)
-
-func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgRegisterHostAccount = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgRegisterHostAccount")
-	fd_MsgRegisterHostAccount_zone_id = md_MsgRegisterHostAccount.Fields().ByName("zone_id")
-	fd_MsgRegisterHostAccount_account_info = md_MsgRegisterHostAccount.Fields().ByName("account_info")
-}
-
-var _ protoreflect.Message = (*fastReflection_MsgRegisterHostAccount)(nil)
-
-type fastReflection_MsgRegisterHostAccount MsgRegisterHostAccount
-
-func (x *MsgRegisterHostAccount) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgRegisterHostAccount)(x)
-}
-
-func (x *MsgRegisterHostAccount) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[14]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-var _fastReflection_MsgRegisterHostAccount_messageType fastReflection_MsgRegisterHostAccount_messageType
-var _ protoreflect.MessageType = fastReflection_MsgRegisterHostAccount_messageType{}
-
-type fastReflection_MsgRegisterHostAccount_messageType struct{}
-
-func (x fastReflection_MsgRegisterHostAccount_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgRegisterHostAccount)(nil)
-}
-func (x fastReflection_MsgRegisterHostAccount_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgRegisterHostAccount)
-}
-func (x fastReflection_MsgRegisterHostAccount_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgRegisterHostAccount
-}
-
-// Descriptor returns message descriptor, which contains only the protobuf
-// type information for the message.
-func (x *fastReflection_MsgRegisterHostAccount) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgRegisterHostAccount
-}
-
-// Type returns the message type, which encapsulates both Go and protobuf
-// type information. If the Go type information is not needed,
-// it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgRegisterHostAccount) Type() protoreflect.MessageType {
-	return _fastReflection_MsgRegisterHostAccount_messageType
-}
-
-// New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgRegisterHostAccount) New() protoreflect.Message {
-	return new(fastReflection_MsgRegisterHostAccount)
-}
-
-// Interface unwraps the message reflection interface and
-// returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgRegisterHostAccount) Interface() protoreflect.ProtoMessage {
-	return (*MsgRegisterHostAccount)(x)
-}
-
-// Range iterates over every populated field in an undefined order,
-// calling f for each field descriptor and value encountered.
-// Range returns immediately if f returns false.
-// While iterating, mutating operations may only be performed
-// on the current field descriptor.
-func (x *fastReflection_MsgRegisterHostAccount) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.ZoneId != "" {
-		value := protoreflect.ValueOfString(x.ZoneId)
-		if !f(fd_MsgRegisterHostAccount_zone_id, value) {
-			return
-		}
-	}
-	if x.AccountInfo != nil {
-		value := protoreflect.ValueOfMessage(x.AccountInfo.ProtoReflect())
-		if !f(fd_MsgRegisterHostAccount_account_info, value) {
-			return
-		}
-	}
-}
-
-// Has reports whether a field is populated.
-//
-// Some fields have the property of nullability where it is possible to
-// distinguish between the default value of a field and whether the field
-// was explicitly populated with the default value. Singular message fields,
-// member fields of a oneof, and proto2 scalar fields are nullable. Such
-// fields are populated only if explicitly set.
-//
-// In other cases (aside from the nullable cases above),
-// a proto3 scalar field is populated if it contains a non-zero value, and
-// a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgRegisterHostAccount) Has(fd protoreflect.FieldDescriptor) bool {
-	switch fd.FullName() {
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.zone_id":
-		return x.ZoneId != ""
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.account_info":
-		return x.AccountInfo != nil
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccount"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccount does not contain field %s", fd.FullName()))
-	}
-}
-
-// Clear clears the field such that a subsequent Has call reports false.
-//
-// Clearing an extension field clears both the extension type and value
-// associated with the given field number.
-//
-// Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgRegisterHostAccount) Clear(fd protoreflect.FieldDescriptor) {
-	switch fd.FullName() {
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.zone_id":
-		x.ZoneId = ""
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.account_info":
-		x.AccountInfo = nil
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccount"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccount does not contain field %s", fd.FullName()))
-	}
-}
-
-// Get retrieves the value for a field.
-//
-// For unpopulated scalars, it returns the default value, where
-// the default value of a bytes scalar is guaranteed to be a copy.
-// For unpopulated composite types, it returns an empty, read-only view
-// of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgRegisterHostAccount) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
-	switch descriptor.FullName() {
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.zone_id":
-		value := x.ZoneId
-		return protoreflect.ValueOfString(value)
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.account_info":
-		value := x.AccountInfo
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	default:
-		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccount"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccount does not contain field %s", descriptor.FullName()))
-	}
-}
-
-// Set stores the value for a field.
-//
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType.
-// When setting a composite type, it is unspecified whether the stored value
-// aliases the source's memory in any way. If the composite value is an
-// empty, read-only value, then it panics.
-//
-// Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgRegisterHostAccount) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
-	switch fd.FullName() {
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.zone_id":
-		x.ZoneId = value.Interface().(string)
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.account_info":
-		x.AccountInfo = value.Message().Interface().(*IcaAccount)
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccount"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccount does not contain field %s", fd.FullName()))
-	}
-}
-
-// Mutable returns a mutable reference to a composite type.
-//
-// If the field is unpopulated, it may allocate a composite value.
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType
-// if not already stored.
-// It panics if the field does not contain a composite type.
-//
-// Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgRegisterHostAccount) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.account_info":
-		if x.AccountInfo == nil {
-			x.AccountInfo = new(IcaAccount)
-		}
-		return protoreflect.ValueOfMessage(x.AccountInfo.ProtoReflect())
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgRegisterHostAccount is not mutable"))
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccount"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccount does not contain field %s", fd.FullName()))
-	}
-}
-
-// NewField returns a new value that is assignable to the field
-// for the given descriptor. For scalars, this returns the default value.
-// For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgRegisterHostAccount) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.zone_id":
-		return protoreflect.ValueOfString("")
-	case "nova.ibcstaking.v1.MsgRegisterHostAccount.account_info":
-		m := new(IcaAccount)
-		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccount"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccount does not contain field %s", fd.FullName()))
-	}
-}
-
-// WhichOneof reports which field within the oneof is populated,
-// returning nil if none are populated.
-// It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgRegisterHostAccount) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
-	switch d.FullName() {
-	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgRegisterHostAccount", d.FullName()))
-	}
-	panic("unreachable")
-}
-
-// GetUnknown retrieves the entire list of unknown fields.
-// The caller may only mutate the contents of the RawFields
-// if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgRegisterHostAccount) GetUnknown() protoreflect.RawFields {
-	return x.unknownFields
-}
-
-// SetUnknown stores an entire list of unknown fields.
-// The raw fields must be syntactically valid according to the wire format.
-// An implementation may panic if this is not the case.
-// Once stored, the caller must not mutate the content of the RawFields.
-// An empty RawFields may be passed to clear the fields.
-//
-// SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgRegisterHostAccount) SetUnknown(fields protoreflect.RawFields) {
-	x.unknownFields = fields
-}
-
-// IsValid reports whether the message is valid.
-//
-// An invalid message is an empty, read-only value.
-//
-// An invalid message often corresponds to a nil pointer of the concrete
-// message type, but the details are implementation dependent.
-// Validity is not part of the protobuf data model, and may not
-// be preserved in marshaling or other operations.
-func (x *fastReflection_MsgRegisterHostAccount) IsValid() bool {
-	return x != nil
-}
-
-// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
-// This method may return nil.
-//
-// The returned methods type is identical to
-// "google.golang.org/protobuf/runtime/protoiface".Methods.
-// Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgRegisterHostAccount) ProtoMethods() *protoiface.Methods {
-	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgRegisterHostAccount)
-		if x == nil {
-			return protoiface.SizeOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Size:              0,
-			}
-		}
-		options := runtime.SizeInputToOptions(input)
-		_ = options
-		var n int
-		var l int
-		_ = l
-		l = len(x.ZoneId)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.AccountInfo != nil {
-			l = options.Size(x.AccountInfo)
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.unknownFields != nil {
-			n += len(x.unknownFields)
-		}
-		return protoiface.SizeOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Size:              n,
-		}
-	}
-
-	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgRegisterHostAccount)
-		if x == nil {
-			return protoiface.MarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Buf:               input.Buf,
-			}, nil
-		}
-		options := runtime.MarshalInputToOptions(input)
-		_ = options
-		size := options.Size(x)
-		dAtA := make([]byte, size)
-		i := len(dAtA)
-		_ = i
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			i -= len(x.unknownFields)
-			copy(dAtA[i:], x.unknownFields)
-		}
-		if x.AccountInfo != nil {
-			encoded, err := options.Marshal(x.AccountInfo)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.ZoneId) > 0 {
-			i -= len(x.ZoneId)
-			copy(dAtA[i:], x.ZoneId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
-			i--
-			dAtA[i] = 0xa
-		}
-		if input.Buf != nil {
-			input.Buf = append(input.Buf, dAtA...)
-		} else {
-			input.Buf = dAtA
-		}
-		return protoiface.MarshalOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Buf:               input.Buf,
-		}, nil
-	}
-	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgRegisterHostAccount)
-		if x == nil {
-			return protoiface.UnmarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Flags:             input.Flags,
-			}, nil
-		}
-		options := runtime.UnmarshalInputToOptions(input)
-		_ = options
-		dAtA := input.Buf
-		l := len(dAtA)
-		iNdEx := 0
-		for iNdEx < l {
-			preIndex := iNdEx
-			var wire uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				wire |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			fieldNum := int32(wire >> 3)
-			wireType := int(wire & 0x7)
-			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgRegisterHostAccount: wiretype end group for non-group")
-			}
-			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgRegisterHostAccount: illegal tag %d (wire type %d)", fieldNum, wire)
-			}
-			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.ZoneId = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AccountInfo", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if x.AccountInfo == nil {
-					x.AccountInfo = &IcaAccount{}
-				}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.AccountInfo); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				iNdEx = postIndex
-			default:
-				iNdEx = preIndex
-				skippy, err := runtime.Skip(dAtA[iNdEx:])
-				if err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				if (skippy < 0) || (iNdEx+skippy) < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if (iNdEx + skippy) > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if !options.DiscardUnknown {
-					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-				}
-				iNdEx += skippy
-			}
-		}
-
-		if iNdEx > l {
-			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-		}
-		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
-	}
-	return &protoiface.Methods{
-		NoUnkeyedLiterals: struct{}{},
-		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
-		Size:              size,
-		Marshal:           marshal,
-		Unmarshal:         unmarshal,
-		Merge:             nil,
-		CheckInitialized:  nil,
-	}
-}
-
-var (
-	md_MsgRegisterHostAccountResponse protoreflect.MessageDescriptor
-)
-
-func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgRegisterHostAccountResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgRegisterHostAccountResponse")
-}
-
-var _ protoreflect.Message = (*fastReflection_MsgRegisterHostAccountResponse)(nil)
-
-type fastReflection_MsgRegisterHostAccountResponse MsgRegisterHostAccountResponse
-
-func (x *MsgRegisterHostAccountResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgRegisterHostAccountResponse)(x)
-}
-
-func (x *MsgRegisterHostAccountResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[15]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-var _fastReflection_MsgRegisterHostAccountResponse_messageType fastReflection_MsgRegisterHostAccountResponse_messageType
-var _ protoreflect.MessageType = fastReflection_MsgRegisterHostAccountResponse_messageType{}
-
-type fastReflection_MsgRegisterHostAccountResponse_messageType struct{}
-
-func (x fastReflection_MsgRegisterHostAccountResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgRegisterHostAccountResponse)(nil)
-}
-func (x fastReflection_MsgRegisterHostAccountResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgRegisterHostAccountResponse)
-}
-func (x fastReflection_MsgRegisterHostAccountResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgRegisterHostAccountResponse
-}
-
-// Descriptor returns message descriptor, which contains only the protobuf
-// type information for the message.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgRegisterHostAccountResponse
-}
-
-// Type returns the message type, which encapsulates both Go and protobuf
-// type information. If the Go type information is not needed,
-// it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Type() protoreflect.MessageType {
-	return _fastReflection_MsgRegisterHostAccountResponse_messageType
-}
-
-// New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgRegisterHostAccountResponse) New() protoreflect.Message {
-	return new(fastReflection_MsgRegisterHostAccountResponse)
-}
-
-// Interface unwraps the message reflection interface and
-// returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Interface() protoreflect.ProtoMessage {
-	return (*MsgRegisterHostAccountResponse)(x)
-}
-
-// Range iterates over every populated field in an undefined order,
-// calling f for each field descriptor and value encountered.
-// Range returns immediately if f returns false.
-// While iterating, mutating operations may only be performed
-// on the current field descriptor.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-}
-
-// Has reports whether a field is populated.
-//
-// Some fields have the property of nullability where it is possible to
-// distinguish between the default value of a field and whether the field
-// was explicitly populated with the default value. Singular message fields,
-// member fields of a oneof, and proto2 scalar fields are nullable. Such
-// fields are populated only if explicitly set.
-//
-// In other cases (aside from the nullable cases above),
-// a proto3 scalar field is populated if it contains a non-zero value, and
-// a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Has(fd protoreflect.FieldDescriptor) bool {
-	switch fd.FullName() {
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccountResponse"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccountResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Clear clears the field such that a subsequent Has call reports false.
-//
-// Clearing an extension field clears both the extension type and value
-// associated with the given field number.
-//
-// Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Clear(fd protoreflect.FieldDescriptor) {
-	switch fd.FullName() {
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccountResponse"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccountResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Get retrieves the value for a field.
-//
-// For unpopulated scalars, it returns the default value, where
-// the default value of a bytes scalar is guaranteed to be a copy.
-// For unpopulated composite types, it returns an empty, read-only view
-// of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
-	switch descriptor.FullName() {
-	default:
-		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccountResponse"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccountResponse does not contain field %s", descriptor.FullName()))
-	}
-}
-
-// Set stores the value for a field.
-//
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType.
-// When setting a composite type, it is unspecified whether the stored value
-// aliases the source's memory in any way. If the composite value is an
-// empty, read-only value, then it panics.
-//
-// Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
-	switch fd.FullName() {
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccountResponse"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccountResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// Mutable returns a mutable reference to a composite type.
-//
-// If the field is unpopulated, it may allocate a composite value.
-// For a field belonging to a oneof, it implicitly clears any other field
-// that may be currently set within the same oneof.
-// For extension fields, it implicitly stores the provided ExtensionType
-// if not already stored.
-// It panics if the field does not contain a composite type.
-//
-// Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgRegisterHostAccountResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccountResponse"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccountResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// NewField returns a new value that is assignable to the field
-// for the given descriptor. For scalars, this returns the default value.
-// For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgRegisterHostAccountResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
-	switch fd.FullName() {
-	default:
-		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterHostAccountResponse"))
-		}
-		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterHostAccountResponse does not contain field %s", fd.FullName()))
-	}
-}
-
-// WhichOneof reports which field within the oneof is populated,
-// returning nil if none are populated.
-// It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgRegisterHostAccountResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
-	switch d.FullName() {
-	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgRegisterHostAccountResponse", d.FullName()))
-	}
-	panic("unreachable")
-}
-
-// GetUnknown retrieves the entire list of unknown fields.
-// The caller may only mutate the contents of the RawFields
-// if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgRegisterHostAccountResponse) GetUnknown() protoreflect.RawFields {
-	return x.unknownFields
-}
-
-// SetUnknown stores an entire list of unknown fields.
-// The raw fields must be syntactically valid according to the wire format.
-// An implementation may panic if this is not the case.
-// Once stored, the caller must not mutate the content of the RawFields.
-// An empty RawFields may be passed to clear the fields.
-//
-// SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgRegisterHostAccountResponse) SetUnknown(fields protoreflect.RawFields) {
-	x.unknownFields = fields
-}
-
-// IsValid reports whether the message is valid.
-//
-// An invalid message is an empty, read-only value.
-//
-// An invalid message often corresponds to a nil pointer of the concrete
-// message type, but the details are implementation dependent.
-// Validity is not part of the protobuf data model, and may not
-// be preserved in marshaling or other operations.
-func (x *fastReflection_MsgRegisterHostAccountResponse) IsValid() bool {
-	return x != nil
-}
-
-// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
-// This method may return nil.
-//
-// The returned methods type is identical to
-// "google.golang.org/protobuf/runtime/protoiface".Methods.
-// Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgRegisterHostAccountResponse) ProtoMethods() *protoiface.Methods {
-	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgRegisterHostAccountResponse)
-		if x == nil {
-			return protoiface.SizeOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Size:              0,
-			}
-		}
-		options := runtime.SizeInputToOptions(input)
-		_ = options
-		var n int
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			n += len(x.unknownFields)
-		}
-		return protoiface.SizeOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Size:              n,
-		}
-	}
-
-	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgRegisterHostAccountResponse)
-		if x == nil {
-			return protoiface.MarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Buf:               input.Buf,
-			}, nil
-		}
-		options := runtime.MarshalInputToOptions(input)
-		_ = options
-		size := options.Size(x)
-		dAtA := make([]byte, size)
-		i := len(dAtA)
-		_ = i
-		var l int
-		_ = l
-		if x.unknownFields != nil {
-			i -= len(x.unknownFields)
-			copy(dAtA[i:], x.unknownFields)
-		}
-		if input.Buf != nil {
-			input.Buf = append(input.Buf, dAtA...)
-		} else {
-			input.Buf = dAtA
-		}
-		return protoiface.MarshalOutput{
-			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-			Buf:               input.Buf,
-		}, nil
-	}
-	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgRegisterHostAccountResponse)
-		if x == nil {
-			return protoiface.UnmarshalOutput{
-				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-				Flags:             input.Flags,
-			}, nil
-		}
-		options := runtime.UnmarshalInputToOptions(input)
-		_ = options
-		dAtA := input.Buf
-		l := len(dAtA)
-		iNdEx := 0
-		for iNdEx < l {
-			preIndex := iNdEx
-			var wire uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				wire |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			fieldNum := int32(wire >> 3)
-			wireType := int(wire & 0x7)
-			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgRegisterHostAccountResponse: wiretype end group for non-group")
-			}
-			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgRegisterHostAccountResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-			}
-			switch fieldNum {
-			default:
-				iNdEx = preIndex
-				skippy, err := runtime.Skip(dAtA[iNdEx:])
-				if err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				if (skippy < 0) || (iNdEx+skippy) < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if (iNdEx + skippy) > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if !options.DiscardUnknown {
-					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-				}
-				iNdEx += skippy
-			}
-		}
-
-		if iNdEx > l {
-			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-		}
-		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
-	}
-	return &protoiface.Methods{
-		NoUnkeyedLiterals: struct{}{},
-		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
-		Size:              size,
-		Marshal:           marshal,
-		Unmarshal:         unmarshal,
-		Merge:             nil,
-		CheckInitialized:  nil,
-	}
-}
-
-var (
 	md_MsgIcaAuthzGrant                    protoreflect.MessageDescriptor
 	fd_MsgIcaAuthzGrant_zone_id            protoreflect.FieldDescriptor
 	fd_MsgIcaAuthzGrant_grantee            protoreflect.FieldDescriptor
@@ -8238,7 +7383,7 @@ func (x *MsgIcaAuthzGrant) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAuthzGrant) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[16]
+	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8857,7 +8002,7 @@ func (x *MsgIcaAuthzGrantResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAuthzGrantResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[17]
+	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9221,7 +8366,7 @@ func (x *MsgIcaAuthzRevoke) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAuthzRevoke) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[18]
+	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9825,7 +8970,7 @@ func (x *MsgIcaAuthzRevokeResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAuthzRevokeResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[19]
+	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10828,75 +9973,6 @@ func (*MsgIcaTransferResponse) Descriptor() ([]byte, []int) {
 	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{13}
 }
 
-type MsgRegisterHostAccount struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ZoneId      string      `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	AccountInfo *IcaAccount `protobuf:"bytes,2,opt,name=account_info,json=accountInfo,proto3" json:"account_info,omitempty"`
-}
-
-func (x *MsgRegisterHostAccount) Reset() {
-	*x = MsgRegisterHostAccount{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[14]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *MsgRegisterHostAccount) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*MsgRegisterHostAccount) ProtoMessage() {}
-
-// Deprecated: Use MsgRegisterHostAccount.ProtoReflect.Descriptor instead.
-func (*MsgRegisterHostAccount) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *MsgRegisterHostAccount) GetZoneId() string {
-	if x != nil {
-		return x.ZoneId
-	}
-	return ""
-}
-
-func (x *MsgRegisterHostAccount) GetAccountInfo() *IcaAccount {
-	if x != nil {
-		return x.AccountInfo
-	}
-	return nil
-}
-
-type MsgRegisterHostAccountResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *MsgRegisterHostAccountResponse) Reset() {
-	*x = MsgRegisterHostAccountResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[15]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *MsgRegisterHostAccountResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*MsgRegisterHostAccountResponse) ProtoMessage() {}
-
-// Deprecated: Use MsgRegisterHostAccountResponse.ProtoReflect.Descriptor instead.
-func (*MsgRegisterHostAccountResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{15}
-}
-
 type MsgIcaAuthzGrant struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10911,7 +9987,7 @@ type MsgIcaAuthzGrant struct {
 func (x *MsgIcaAuthzGrant) Reset() {
 	*x = MsgIcaAuthzGrant{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[16]
+		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10925,7 +10001,7 @@ func (*MsgIcaAuthzGrant) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAuthzGrant.ProtoReflect.Descriptor instead.
 func (*MsgIcaAuthzGrant) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{16}
+	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *MsgIcaAuthzGrant) GetZoneId() string {
@@ -10965,7 +10041,7 @@ type MsgIcaAuthzGrantResponse struct {
 func (x *MsgIcaAuthzGrantResponse) Reset() {
 	*x = MsgIcaAuthzGrantResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[17]
+		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10979,7 +10055,7 @@ func (*MsgIcaAuthzGrantResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAuthzGrantResponse.ProtoReflect.Descriptor instead.
 func (*MsgIcaAuthzGrantResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{17}
+	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{15}
 }
 
 type MsgIcaAuthzRevoke struct {
@@ -10996,7 +10072,7 @@ type MsgIcaAuthzRevoke struct {
 func (x *MsgIcaAuthzRevoke) Reset() {
 	*x = MsgIcaAuthzRevoke{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[18]
+		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11010,7 +10086,7 @@ func (*MsgIcaAuthzRevoke) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAuthzRevoke.ProtoReflect.Descriptor instead.
 func (*MsgIcaAuthzRevoke) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{18}
+	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *MsgIcaAuthzRevoke) GetZoneId() string {
@@ -11050,7 +10126,7 @@ type MsgIcaAuthzRevokeResponse struct {
 func (x *MsgIcaAuthzRevokeResponse) Reset() {
 	*x = MsgIcaAuthzRevokeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[19]
+		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -11064,7 +10140,7 @@ func (*MsgIcaAuthzRevokeResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAuthzRevokeResponse.ProtoReflect.Descriptor instead.
 func (*MsgIcaAuthzRevokeResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{19}
+	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{17}
 }
 
 var File_nova_ibcstaking_v1_tx_proto protoreflect.FileDescriptor
@@ -11201,123 +10277,105 @@ var file_nova_ibcstaking_v1_tx_proto_rawDesc = []byte{
 	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61,
 	0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d,
 	0x6f, 0x75, 0x6e, 0x74, 0x22, 0x18, 0x0a, 0x16, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x54, 0x72,
-	0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x74,
-	0x0a, 0x16, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x48, 0x6f, 0x73,
-	0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65,
-	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49,
-	0x64, 0x12, 0x41, 0x0a, 0x0c, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x5f, 0x69, 0x6e, 0x66,
-	0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69,
-	0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x63, 0x61,
-	0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x0b, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74,
-	0x49, 0x6e, 0x66, 0x6f, 0x22, 0x20, 0x0a, 0x1e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73,
-	0x74, 0x65, 0x72, 0x48, 0x6f, 0x73, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xad, 0x01, 0x0a, 0x10, 0x4d, 0x73, 0x67, 0x49, 0x63,
-	0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x47, 0x72, 0x61, 0x6e, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a,
-	0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f,
-	0x6e, 0x65, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x65, 0x65, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x65, 0x65, 0x12, 0x2d,
-	0x0a, 0x12, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e, 0x74,
-	0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x37, 0x0a,
-	0x05, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x63,
-	0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x7a, 0x2e, 0x76, 0x31, 0x62, 0x65,
-	0x74, 0x61, 0x31, 0x2e, 0x47, 0x72, 0x61, 0x6e, 0x74, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52,
-	0x05, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x22, 0x1a, 0x0a, 0x18, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61,
-	0x41, 0x75, 0x74, 0x68, 0x7a, 0x47, 0x72, 0x61, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x97, 0x01, 0x0a, 0x11, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74,
-	0x68, 0x7a, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65,
-	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49,
-	0x64, 0x12, 0x18, 0x0a, 0x07, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x65, 0x65, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x07, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x65, 0x65, 0x12, 0x2d, 0x0a, 0x12, 0x63,
-	0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c,
-	0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x20, 0x0a, 0x0c, 0x6d, 0x73,
-	0x67, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0a, 0x6d, 0x73, 0x67, 0x54, 0x79, 0x70, 0x65, 0x55, 0x72, 0x6c, 0x22, 0x1b, 0x0a, 0x19,
-	0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x52, 0x65, 0x76, 0x6f, 0x6b,
-	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xba, 0x08, 0x0a, 0x03, 0x4d, 0x73,
-	0x67, 0x12, 0x60, 0x0a, 0x0c, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a, 0x6f, 0x6e,
-	0x65, 0x12, 0x23, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b,
-	0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74,
-	0x65, 0x72, 0x5a, 0x6f, 0x6e, 0x65, 0x1a, 0x2b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62,
-	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52,
-	0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0b, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61,
-	0x74, 0x65, 0x12, 0x22, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61,
-	0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65,
-	0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x2a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62,
-	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49,
-	0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x63, 0x0a, 0x0d, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67,
-	0x61, 0x74, 0x65, 0x12, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74,
-	0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x55,
-	0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x2c, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
+	0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xad,
+	0x01, 0x0a, 0x10, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x47, 0x72,
+	0x61, 0x6e, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07,
+	0x67, 0x72, 0x61, 0x6e, 0x74, 0x65, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x67,
+	0x72, 0x61, 0x6e, 0x74, 0x65, 0x65, 0x12, 0x2d, 0x0a, 0x12, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x37, 0x0a, 0x05, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x61, 0x75,
+	0x74, 0x68, 0x7a, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x47, 0x72, 0x61, 0x6e,
+	0x74, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x05, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x22, 0x1a,
+	0x0a, 0x18, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x47, 0x72, 0x61,
+	0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x97, 0x01, 0x0a, 0x11, 0x4d,
+	0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65,
+	0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x67, 0x72, 0x61,
+	0x6e, 0x74, 0x65, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x67, 0x72, 0x61, 0x6e,
+	0x74, 0x65, 0x65, 0x12, 0x2d, 0x0a, 0x12, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65,
+	0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x12, 0x20, 0x0a, 0x0c, 0x6d, 0x73, 0x67, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x5f, 0x75,
+	0x72, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x6d, 0x73, 0x67, 0x54, 0x79, 0x70,
+	0x65, 0x55, 0x72, 0x6c, 0x22, 0x1b, 0x0a, 0x19, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75,
+	0x74, 0x68, 0x7a, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x32, 0xc0, 0x07, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x60, 0x0a, 0x0c, 0x52, 0x65, 0x67,
+	0x69, 0x73, 0x74, 0x65, 0x72, 0x5a, 0x6f, 0x6e, 0x65, 0x12, 0x23, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
 	0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
-	0x73, 0x67, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0b, 0x49, 0x63, 0x61, 0x54, 0x72,
-	0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x12, 0x22, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62,
-	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49,
-	0x63, 0x61, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x1a, 0x2a, 0x2e, 0x6e, 0x6f, 0x76,
+	0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a, 0x6f, 0x6e, 0x65, 0x1a, 0x2b,
+	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
+	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x5a,
+	0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0b, 0x49,
+	0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x22, 0x2e, 0x6e, 0x6f, 0x76,
 	0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e,
-	0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x66, 0x0a, 0x0e, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74,
-	0x6f, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x12, 0x25, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
-	0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x6f, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x1a,
-	0x2d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x6f, 0x53,
-	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x78,
-	0x0a, 0x16, 0x49, 0x63, 0x61, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x48, 0x6f, 0x73,
-	0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x2a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
-	0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x48, 0x6f, 0x73, 0x74, 0x41, 0x63, 0x63,
-	0x6f, 0x75, 0x6e, 0x74, 0x1a, 0x32, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73,
-	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67,
-	0x69, 0x73, 0x74, 0x65, 0x72, 0x48, 0x6f, 0x73, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x63, 0x0a, 0x0d, 0x49, 0x63, 0x61, 0x41,
-	0x75, 0x74, 0x68, 0x7a, 0x47, 0x72, 0x61, 0x6e, 0x74, 0x12, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
-	0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
-	0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x47, 0x72, 0x61, 0x6e, 0x74, 0x1a,
-	0x2c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a,
-	0x47, 0x72, 0x61, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x66, 0x0a,
-	0x0e, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x12,
-	0x25, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a,
-	0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x1a, 0x2d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62,
-	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49,
-	0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x78, 0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52,
-	0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x12, 0x2b, 0x2e,
+	0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x2a,
+	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
+	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61,
+	0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x63, 0x0a, 0x0d, 0x49, 0x63,
+	0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x24, 0x2e, 0x6e, 0x6f,
+	0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31,
+	0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74,
+	0x65, 0x1a, 0x2c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b,
+	0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x55, 0x6e, 0x64,
+	0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x5d, 0x0a, 0x0b, 0x49, 0x63, 0x61, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x12, 0x22,
+	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
+	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66,
+	0x65, 0x72, 0x1a, 0x2a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61,
+	0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x66,
+	0x0a, 0x0e, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x6f, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
+	0x12, 0x25, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69,
+	0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x6f,
+	0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x1a, 0x2d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69,
+	0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67,
+	0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x6f, 0x53, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x63, 0x0a, 0x0d, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74,
+	0x68, 0x7a, 0x47, 0x72, 0x61, 0x6e, 0x74, 0x12, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69,
+	0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67,
+	0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x47, 0x72, 0x61, 0x6e, 0x74, 0x1a, 0x2c, 0x2e,
 	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e,
-	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x67, 0x69,
-	0x73, 0x74, 0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x1a, 0x33, 0x2e, 0x6e, 0x6f, 0x76,
+	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x47, 0x72,
+	0x61, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x66, 0x0a, 0x0e, 0x49,
+	0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x12, 0x25, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e,
+	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x41, 0x75, 0x74, 0x68, 0x7a, 0x52, 0x65,
+	0x76, 0x6f, 0x6b, 0x65, 0x1a, 0x2d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73,
+	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61,
+	0x41, 0x75, 0x74, 0x68, 0x7a, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x78, 0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x67,
+	0x69, 0x73, 0x74, 0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x12, 0x2b, 0x2e, 0x6e, 0x6f,
+	0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31,
+	0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74,
+	0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x1a, 0x33, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
+	0x67, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x65,
+	0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x84, 0x01,
+	0x0a, 0x18, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72,
+	0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x2f, 0x2e, 0x6e, 0x6f, 0x76,
 	0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e,
-	0x4d, 0x73, 0x67, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65,
-	0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x84, 0x01, 0x0a, 0x18, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74,
-	0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x2f, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76,
-	0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x65, 0x67, 0x69, 0x73,
-	0x74, 0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x1a, 0x37, 0x2e,
-	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e,
-	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x65, 0x67, 0x69,
-	0x73, 0x74, 0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xd0, 0x01, 0x0a, 0x16, 0x63, 0x6f, 0x6d, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76,
-	0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d,
-	0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f,
-	0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31,
-	0x3b, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x76, 0x31, 0xa2, 0x02, 0x03,
-	0x4e, 0x49, 0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x49, 0x62, 0x63, 0x73, 0x74,
-	0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x5c,
-	0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1e,
-	0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c,
-	0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
-	0x14, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x3a, 0x3a, 0x56, 0x31, 0xc8, 0xe1, 0x1e, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x4d, 0x73, 0x67, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65,
+	0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x1a, 0x37, 0x2e, 0x6e, 0x6f,
+	0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31,
+	0x2e, 0x4d, 0x73, 0x67, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74,
+	0x65, 0x72, 0x65, 0x64, 0x5a, 0x6f, 0x6e, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x42, 0xd0, 0x01, 0x0a, 0x16, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x42,
+	0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68,
+	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61,
+	0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
+	0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x3b, 0x69,
+	0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49,
+	0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b,
+	0x69, 0x6e, 0x67, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62,
+	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1e, 0x4e, 0x6f,
+	0x76, 0x61, 0x5c, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c, 0x56, 0x31,
+	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x14, 0x4e,
+	0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x3a,
+	0x3a, 0x56, 0x31, 0xc8, 0xe1, 0x1e, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -11332,7 +10390,7 @@ func file_nova_ibcstaking_v1_tx_proto_rawDescGZIP() []byte {
 	return file_nova_ibcstaking_v1_tx_proto_rawDescData
 }
 
-var file_nova_ibcstaking_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_nova_ibcstaking_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_nova_ibcstaking_v1_tx_proto_goTypes = []interface{}{
 	(*MsgRegisterZone)(nil),                     // 0: nova.ibcstaking.v1.MsgRegisterZone
 	(*MsgRegisterZoneResponse)(nil),             // 1: nova.ibcstaking.v1.MsgRegisterZoneResponse
@@ -11348,56 +10406,51 @@ var file_nova_ibcstaking_v1_tx_proto_goTypes = []interface{}{
 	(*MsgIcaAutoStakingResponse)(nil),           // 11: nova.ibcstaking.v1.MsgIcaAutoStakingResponse
 	(*MsgIcaTransfer)(nil),                      // 12: nova.ibcstaking.v1.MsgIcaTransfer
 	(*MsgIcaTransferResponse)(nil),              // 13: nova.ibcstaking.v1.MsgIcaTransferResponse
-	(*MsgRegisterHostAccount)(nil),              // 14: nova.ibcstaking.v1.MsgRegisterHostAccount
-	(*MsgRegisterHostAccountResponse)(nil),      // 15: nova.ibcstaking.v1.MsgRegisterHostAccountResponse
-	(*MsgIcaAuthzGrant)(nil),                    // 16: nova.ibcstaking.v1.MsgIcaAuthzGrant
-	(*MsgIcaAuthzGrantResponse)(nil),            // 17: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse
-	(*MsgIcaAuthzRevoke)(nil),                   // 18: nova.ibcstaking.v1.MsgIcaAuthzRevoke
-	(*MsgIcaAuthzRevokeResponse)(nil),           // 19: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse
-	(*IcaConnectionInfo)(nil),                   // 20: nova.ibcstaking.v1.IcaConnectionInfo
-	(*IcaAccount)(nil),                          // 21: nova.ibcstaking.v1.IcaAccount
-	(*TransferConnectionInfo)(nil),              // 22: nova.ibcstaking.v1.TransferConnectionInfo
-	(*v1beta1.Coin)(nil),                        // 23: cosmos.base.v1beta1.Coin
-	(*v1beta11.Grant)(nil),                      // 24: cosmos.authz.v1beta1.Grant
+	(*MsgIcaAuthzGrant)(nil),                    // 14: nova.ibcstaking.v1.MsgIcaAuthzGrant
+	(*MsgIcaAuthzGrantResponse)(nil),            // 15: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse
+	(*MsgIcaAuthzRevoke)(nil),                   // 16: nova.ibcstaking.v1.MsgIcaAuthzRevoke
+	(*MsgIcaAuthzRevokeResponse)(nil),           // 17: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse
+	(*IcaConnectionInfo)(nil),                   // 18: nova.ibcstaking.v1.IcaConnectionInfo
+	(*IcaAccount)(nil),                          // 19: nova.ibcstaking.v1.IcaAccount
+	(*TransferConnectionInfo)(nil),              // 20: nova.ibcstaking.v1.TransferConnectionInfo
+	(*v1beta1.Coin)(nil),                        // 21: cosmos.base.v1beta1.Coin
+	(*v1beta11.Grant)(nil),                      // 22: cosmos.authz.v1beta1.Grant
 }
 var file_nova_ibcstaking_v1_tx_proto_depIdxs = []int32{
-	20, // 0: nova.ibcstaking.v1.MsgRegisterZone.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
-	21, // 1: nova.ibcstaking.v1.MsgRegisterZone.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
-	22, // 2: nova.ibcstaking.v1.MsgRegisterZone.transfer_info:type_name -> nova.ibcstaking.v1.TransferConnectionInfo
-	20, // 3: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
-	21, // 4: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
-	22, // 5: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info:type_name -> nova.ibcstaking.v1.TransferConnectionInfo
-	23, // 6: nova.ibcstaking.v1.MsgIcaDelegate.amount:type_name -> cosmos.base.v1beta1.Coin
-	23, // 7: nova.ibcstaking.v1.MsgIcaUndelegate.amount:type_name -> cosmos.base.v1beta1.Coin
-	23, // 8: nova.ibcstaking.v1.MsgIcaAutoStaking.amount:type_name -> cosmos.base.v1beta1.Coin
-	23, // 9: nova.ibcstaking.v1.MsgIcaTransfer.amount:type_name -> cosmos.base.v1beta1.Coin
-	21, // 10: nova.ibcstaking.v1.MsgRegisterHostAccount.account_info:type_name -> nova.ibcstaking.v1.IcaAccount
-	24, // 11: nova.ibcstaking.v1.MsgIcaAuthzGrant.grant:type_name -> cosmos.authz.v1beta1.Grant
-	0,  // 12: nova.ibcstaking.v1.Msg.RegisterZone:input_type -> nova.ibcstaking.v1.MsgRegisterZone
-	6,  // 13: nova.ibcstaking.v1.Msg.IcaDelegate:input_type -> nova.ibcstaking.v1.MsgIcaDelegate
-	8,  // 14: nova.ibcstaking.v1.Msg.IcaUndelegate:input_type -> nova.ibcstaking.v1.MsgIcaUndelegate
-	12, // 15: nova.ibcstaking.v1.Msg.IcaTransfer:input_type -> nova.ibcstaking.v1.MsgIcaTransfer
-	10, // 16: nova.ibcstaking.v1.Msg.IcaAutoStaking:input_type -> nova.ibcstaking.v1.MsgIcaAutoStaking
-	14, // 17: nova.ibcstaking.v1.Msg.IcaRegisterHostAccount:input_type -> nova.ibcstaking.v1.MsgRegisterHostAccount
-	16, // 18: nova.ibcstaking.v1.Msg.IcaAuthzGrant:input_type -> nova.ibcstaking.v1.MsgIcaAuthzGrant
-	18, // 19: nova.ibcstaking.v1.Msg.IcaAuthzRevoke:input_type -> nova.ibcstaking.v1.MsgIcaAuthzRevoke
-	4,  // 20: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:input_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZone
-	2,  // 21: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:input_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo
-	1,  // 22: nova.ibcstaking.v1.Msg.RegisterZone:output_type -> nova.ibcstaking.v1.MsgRegisterZoneResponse
-	7,  // 23: nova.ibcstaking.v1.Msg.IcaDelegate:output_type -> nova.ibcstaking.v1.MsgIcaDelegateResponse
-	9,  // 24: nova.ibcstaking.v1.Msg.IcaUndelegate:output_type -> nova.ibcstaking.v1.MsgIcaUndelegateResponse
-	13, // 25: nova.ibcstaking.v1.Msg.IcaTransfer:output_type -> nova.ibcstaking.v1.MsgIcaTransferResponse
-	11, // 26: nova.ibcstaking.v1.Msg.IcaAutoStaking:output_type -> nova.ibcstaking.v1.MsgIcaAutoStakingResponse
-	15, // 27: nova.ibcstaking.v1.Msg.IcaRegisterHostAccount:output_type -> nova.ibcstaking.v1.MsgRegisterHostAccountResponse
-	17, // 28: nova.ibcstaking.v1.Msg.IcaAuthzGrant:output_type -> nova.ibcstaking.v1.MsgIcaAuthzGrantResponse
-	19, // 29: nova.ibcstaking.v1.Msg.IcaAuthzRevoke:output_type -> nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse
-	5,  // 30: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:output_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse
-	3,  // 31: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:output_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse
-	22, // [22:32] is the sub-list for method output_type
-	12, // [12:22] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	18, // 0: nova.ibcstaking.v1.MsgRegisterZone.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
+	19, // 1: nova.ibcstaking.v1.MsgRegisterZone.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
+	20, // 2: nova.ibcstaking.v1.MsgRegisterZone.transfer_info:type_name -> nova.ibcstaking.v1.TransferConnectionInfo
+	18, // 3: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
+	19, // 4: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
+	20, // 5: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info:type_name -> nova.ibcstaking.v1.TransferConnectionInfo
+	21, // 6: nova.ibcstaking.v1.MsgIcaDelegate.amount:type_name -> cosmos.base.v1beta1.Coin
+	21, // 7: nova.ibcstaking.v1.MsgIcaUndelegate.amount:type_name -> cosmos.base.v1beta1.Coin
+	21, // 8: nova.ibcstaking.v1.MsgIcaAutoStaking.amount:type_name -> cosmos.base.v1beta1.Coin
+	21, // 9: nova.ibcstaking.v1.MsgIcaTransfer.amount:type_name -> cosmos.base.v1beta1.Coin
+	22, // 10: nova.ibcstaking.v1.MsgIcaAuthzGrant.grant:type_name -> cosmos.authz.v1beta1.Grant
+	0,  // 11: nova.ibcstaking.v1.Msg.RegisterZone:input_type -> nova.ibcstaking.v1.MsgRegisterZone
+	6,  // 12: nova.ibcstaking.v1.Msg.IcaDelegate:input_type -> nova.ibcstaking.v1.MsgIcaDelegate
+	8,  // 13: nova.ibcstaking.v1.Msg.IcaUndelegate:input_type -> nova.ibcstaking.v1.MsgIcaUndelegate
+	12, // 14: nova.ibcstaking.v1.Msg.IcaTransfer:input_type -> nova.ibcstaking.v1.MsgIcaTransfer
+	10, // 15: nova.ibcstaking.v1.Msg.IcaAutoStaking:input_type -> nova.ibcstaking.v1.MsgIcaAutoStaking
+	14, // 16: nova.ibcstaking.v1.Msg.IcaAuthzGrant:input_type -> nova.ibcstaking.v1.MsgIcaAuthzGrant
+	16, // 17: nova.ibcstaking.v1.Msg.IcaAuthzRevoke:input_type -> nova.ibcstaking.v1.MsgIcaAuthzRevoke
+	4,  // 18: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:input_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZone
+	2,  // 19: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:input_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo
+	1,  // 20: nova.ibcstaking.v1.Msg.RegisterZone:output_type -> nova.ibcstaking.v1.MsgRegisterZoneResponse
+	7,  // 21: nova.ibcstaking.v1.Msg.IcaDelegate:output_type -> nova.ibcstaking.v1.MsgIcaDelegateResponse
+	9,  // 22: nova.ibcstaking.v1.Msg.IcaUndelegate:output_type -> nova.ibcstaking.v1.MsgIcaUndelegateResponse
+	13, // 23: nova.ibcstaking.v1.Msg.IcaTransfer:output_type -> nova.ibcstaking.v1.MsgIcaTransferResponse
+	11, // 24: nova.ibcstaking.v1.Msg.IcaAutoStaking:output_type -> nova.ibcstaking.v1.MsgIcaAutoStakingResponse
+	15, // 25: nova.ibcstaking.v1.Msg.IcaAuthzGrant:output_type -> nova.ibcstaking.v1.MsgIcaAuthzGrantResponse
+	17, // 26: nova.ibcstaking.v1.Msg.IcaAuthzRevoke:output_type -> nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse
+	5,  // 27: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:output_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse
+	3,  // 28: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:output_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse
+	20, // [20:29] is the sub-list for method output_type
+	11, // [11:20] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_nova_ibcstaking_v1_tx_proto_init() }
@@ -11576,30 +10629,6 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 			}
 		}
 		file_nova_ibcstaking_v1_tx_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgRegisterHostAccount); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgRegisterHostAccountResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAuthzGrant); i {
 			case 0:
 				return &v.state
@@ -11611,7 +10640,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_ibcstaking_v1_tx_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAuthzGrantResponse); i {
 			case 0:
 				return &v.state
@@ -11623,7 +10652,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_ibcstaking_v1_tx_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAuthzRevoke); i {
 			case 0:
 				return &v.state
@@ -11635,7 +10664,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_ibcstaking_v1_tx_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAuthzRevokeResponse); i {
 			case 0:
 				return &v.state
@@ -11654,7 +10683,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_ibcstaking_v1_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

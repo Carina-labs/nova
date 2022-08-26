@@ -101,21 +101,19 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
-
 	ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, DEPOSIT_SUCCESS, DELEGATE_REQUEST)
 	if !ok {
 		return nil, types.ErrCanNotChangeState
 	}
 
 	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
-
 	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, DELEGATE_REQUEST)
 	delegateAmt.Denom = zoneInfo.BaseDenom
 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: delegateAmt})
 
-	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, types.ErrDelegateFail
 	}
@@ -212,7 +210,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
 		Amount:           undelegateAmt})
-	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaAccount.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
@@ -309,7 +307,7 @@ func (m msgServer) PendingWithdraw(goCtx context.Context, msg *types.MsgPendingW
 		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
 	})
 
-	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, msg.ControllerAddress, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, errors.New("PendingWithdraw transaction failed to send")
 	}
