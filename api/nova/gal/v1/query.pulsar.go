@@ -6325,7 +6325,7 @@ var (
 	md_QueryEstimateSnAssetRequest         protoreflect.MessageDescriptor
 	fd_QueryEstimateSnAssetRequest_zone_id protoreflect.FieldDescriptor
 	fd_QueryEstimateSnAssetRequest_amount  protoreflect.FieldDescriptor
-	fd_QueryEstimateSnAssetRequest_address protoreflect.FieldDescriptor
+	fd_QueryEstimateSnAssetRequest_denom   protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -6333,7 +6333,7 @@ func init() {
 	md_QueryEstimateSnAssetRequest = File_nova_gal_v1_query_proto.Messages().ByName("QueryEstimateSnAssetRequest")
 	fd_QueryEstimateSnAssetRequest_zone_id = md_QueryEstimateSnAssetRequest.Fields().ByName("zone_id")
 	fd_QueryEstimateSnAssetRequest_amount = md_QueryEstimateSnAssetRequest.Fields().ByName("amount")
-	fd_QueryEstimateSnAssetRequest_address = md_QueryEstimateSnAssetRequest.Fields().ByName("address")
+	fd_QueryEstimateSnAssetRequest_denom = md_QueryEstimateSnAssetRequest.Fields().ByName("denom")
 }
 
 var _ protoreflect.Message = (*fastReflection_QueryEstimateSnAssetRequest)(nil)
@@ -6407,15 +6407,15 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) Range(f func(protoreflect.F
 			return
 		}
 	}
-	if x.Amount != nil {
-		value := protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
+	if x.Amount != "" {
+		value := protoreflect.ValueOfString(x.Amount)
 		if !f(fd_QueryEstimateSnAssetRequest_amount, value) {
 			return
 		}
 	}
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryEstimateSnAssetRequest_address, value) {
+	if x.Denom != "" {
+		value := protoreflect.ValueOfString(x.Denom)
+		if !f(fd_QueryEstimateSnAssetRequest_denom, value) {
 			return
 		}
 	}
@@ -6437,9 +6437,9 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) Has(fd protoreflect.FieldDe
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.zone_id":
 		return x.ZoneId != ""
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.amount":
-		return x.Amount != nil
-	case "nova.gal.v1.QueryEstimateSnAssetRequest.address":
-		return x.Address != ""
+		return x.Amount != ""
+	case "nova.gal.v1.QueryEstimateSnAssetRequest.denom":
+		return x.Denom != ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryEstimateSnAssetRequest"))
@@ -6459,9 +6459,9 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) Clear(fd protoreflect.Field
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.zone_id":
 		x.ZoneId = ""
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.amount":
-		x.Amount = nil
-	case "nova.gal.v1.QueryEstimateSnAssetRequest.address":
-		x.Address = ""
+		x.Amount = ""
+	case "nova.gal.v1.QueryEstimateSnAssetRequest.denom":
+		x.Denom = ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryEstimateSnAssetRequest"))
@@ -6483,9 +6483,9 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) Get(descriptor protoreflect
 		return protoreflect.ValueOfString(value)
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.amount":
 		value := x.Amount
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.gal.v1.QueryEstimateSnAssetRequest.address":
-		value := x.Address
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.QueryEstimateSnAssetRequest.denom":
+		value := x.Denom
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
@@ -6510,9 +6510,9 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) Set(fd protoreflect.FieldDe
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.zone_id":
 		x.ZoneId = value.Interface().(string)
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.amount":
-		x.Amount = value.Message().Interface().(*v1beta1.Coin)
-	case "nova.gal.v1.QueryEstimateSnAssetRequest.address":
-		x.Address = value.Interface().(string)
+		x.Amount = value.Interface().(string)
+	case "nova.gal.v1.QueryEstimateSnAssetRequest.denom":
+		x.Denom = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryEstimateSnAssetRequest"))
@@ -6533,15 +6533,12 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) Set(fd protoreflect.FieldDe
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryEstimateSnAssetRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.QueryEstimateSnAssetRequest.amount":
-		if x.Amount == nil {
-			x.Amount = new(v1beta1.Coin)
-		}
-		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.zone_id":
 		panic(fmt.Errorf("field zone_id of message nova.gal.v1.QueryEstimateSnAssetRequest is not mutable"))
-	case "nova.gal.v1.QueryEstimateSnAssetRequest.address":
-		panic(fmt.Errorf("field address of message nova.gal.v1.QueryEstimateSnAssetRequest is not mutable"))
+	case "nova.gal.v1.QueryEstimateSnAssetRequest.amount":
+		panic(fmt.Errorf("field amount of message nova.gal.v1.QueryEstimateSnAssetRequest is not mutable"))
+	case "nova.gal.v1.QueryEstimateSnAssetRequest.denom":
+		panic(fmt.Errorf("field denom of message nova.gal.v1.QueryEstimateSnAssetRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.QueryEstimateSnAssetRequest"))
@@ -6558,9 +6555,8 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) NewField(fd protoreflect.Fi
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.zone_id":
 		return protoreflect.ValueOfString("")
 	case "nova.gal.v1.QueryEstimateSnAssetRequest.amount":
-		m := new(v1beta1.Coin)
-		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.gal.v1.QueryEstimateSnAssetRequest.address":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.QueryEstimateSnAssetRequest.denom":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
@@ -6635,11 +6631,11 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) ProtoMethods() *protoiface.
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if x.Amount != nil {
-			l = options.Size(x.Amount)
+		l = len(x.Amount)
+		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.Address)
+		l = len(x.Denom)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
@@ -6672,24 +6668,17 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) ProtoMethods() *protoiface.
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Address) > 0 {
-			i -= len(x.Address)
-			copy(dAtA[i:], x.Address)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
+		if len(x.Denom) > 0 {
+			i -= len(x.Denom)
+			copy(dAtA[i:], x.Denom)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Denom)))
 			i--
 			dAtA[i] = 0x1a
 		}
-		if x.Amount != nil {
-			encoded, err := options.Marshal(x.Amount)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+		if len(x.Amount) > 0 {
+			i -= len(x.Amount)
+			copy(dAtA[i:], x.Amount)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Amount)))
 			i--
 			dAtA[i] = 0x12
 		}
@@ -6785,7 +6774,7 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) ProtoMethods() *protoiface.
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
 				}
-				var msglen int
+				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -6795,31 +6784,27 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) ProtoMethods() *protoiface.
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					msglen |= int(b&0x7F) << shift
+					stringLen |= uint64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				if msglen < 0 {
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + msglen
+				postIndex := iNdEx + intStringLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				if x.Amount == nil {
-					x.Amount = &v1beta1.Coin{}
-				}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Amount); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
+				x.Amount = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 3:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Denom", wireType)
 				}
 				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
@@ -6847,7 +6832,7 @@ func (x *fastReflection_QueryEstimateSnAssetRequest) ProtoMethods() *protoiface.
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Address = string(dAtA[iNdEx:postIndex])
+				x.Denom = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -7875,9 +7860,9 @@ type QueryEstimateSnAssetRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ZoneId  string        `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	Amount  *v1beta1.Coin `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
-	Address string        `protobuf:"bytes,3,opt,name=address,proto3" json:"address,omitempty"`
+	ZoneId string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Amount string `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	Denom  string `protobuf:"bytes,3,opt,name=denom,proto3" json:"denom,omitempty"`
 }
 
 func (x *QueryEstimateSnAssetRequest) Reset() {
@@ -7907,16 +7892,16 @@ func (x *QueryEstimateSnAssetRequest) GetZoneId() string {
 	return ""
 }
 
-func (x *QueryEstimateSnAssetRequest) GetAmount() *v1beta1.Coin {
+func (x *QueryEstimateSnAssetRequest) GetAmount() string {
 	if x != nil {
 		return x.Amount
 	}
-	return nil
+	return ""
 }
 
-func (x *QueryEstimateSnAssetRequest) GetAddress() string {
+func (x *QueryEstimateSnAssetRequest) GetDenom() string {
 	if x != nil {
-		return x.Address
+		return x.Denom
 	}
 	return ""
 }
@@ -8049,39 +8034,36 @@ var file_nova_gal_v1_query_proto_rawDesc = []byte{
 	0x5f, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e,
 	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x57, 0x69, 0x74, 0x68,
 	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x0e, 0x77, 0x69, 0x74, 0x68,
-	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x22, 0x9d, 0x01, 0x0a, 0x1b, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x45, 0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x53, 0x6e, 0x41, 0x73,
-	0x73, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f,
-	0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e,
-	0x65, 0x49, 0x64, 0x12, 0x31, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73,
-	0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x52, 0x06,
-	0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x32, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2, 0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x53, 0x74, 0x72, 0x69, 0x6e,
-	0x67, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x57, 0x0a, 0x1c, 0x51, 0x75,
+	0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x22, 0x64, 0x0a, 0x1b, 0x51, 0x75,
 	0x65, 0x72, 0x79, 0x45, 0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x53, 0x6e, 0x41, 0x73, 0x73,
-	0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d,
-	0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73,
-	0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31,
-	0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f,
-	0x75, 0x6e, 0x74, 0x32, 0xd4, 0x09, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x68, 0x0a,
-	0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67,
-	0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61,
-	0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1b, 0x82, 0xd3, 0xe4, 0x93,
-	0x02, 0x15, 0x12, 0x13, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31,
-	0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x8e, 0x01, 0x0a, 0x0f, 0x45, 0x73, 0x74, 0x69,
-	0x6d, 0x61, 0x74, 0x65, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x12, 0x28, 0x2e, 0x6e, 0x6f,
+	0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e,
+	0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65,
+	0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x64, 0x65,
+	0x6e, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x64, 0x65, 0x6e, 0x6f, 0x6d,
+	0x22, 0x57, 0x0a, 0x1c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x73, 0x74, 0x69, 0x6d, 0x61, 0x74,
+	0x65, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x37, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76,
+	0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f,
+	0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x32, 0xde, 0x09, 0x0a, 0x05, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x12, 0x68, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x1f, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20,
+	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x1b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x15, 0x12, 0x13, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f,
+	0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x98, 0x01,
+	0x0a, 0x0f, 0x45, 0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65,
+	0x74, 0x12, 0x28, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x53, 0x6e, 0x41,
+	0x73, 0x73, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x6e, 0x6f,
 	0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45,
 	0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c,
-	0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x73, 0x74, 0x69, 0x6d, 0x61, 0x74,
-	0x65, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x26, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x20, 0x12, 0x1e, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f,
-	0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x65, 0x73, 0x74, 0x69, 0x6d, 0x61, 0x74, 0x65, 0x5f,
-	0x73, 0x6e, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74, 0x12, 0xa1, 0x01, 0x0a, 0x0f, 0x43, 0x6c, 0x61,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x30, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2a, 0x12, 0x28,
+	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x65, 0x73, 0x74,
+	0x69, 0x6d, 0x61, 0x74, 0x65, 0x5f, 0x73, 0x6e, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74, 0x2f, 0x7b,
+	0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x7d, 0x12, 0xa1, 0x01, 0x0a, 0x0f, 0x43, 0x6c, 0x61,
 	0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x28, 0x2e, 0x6e,
 	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
 	0x43, 0x6c, 0x61, 0x69, 0x6d, 0x61, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52,
@@ -8200,29 +8182,28 @@ var file_nova_gal_v1_query_proto_depIdxs = []int32{
 	18, // 4: nova.gal.v1.QueryDepositRecordResponse.deposit_record:type_name -> nova.gal.v1.DepositRecord
 	19, // 5: nova.gal.v1.QueryUndelegateRecordResponse.undelegate_record:type_name -> nova.gal.v1.UndelegateRecord
 	20, // 6: nova.gal.v1.QueryWithdrawRecordResponse.withdraw_record:type_name -> nova.gal.v1.WithdrawRecord
-	17, // 7: nova.gal.v1.QueryEstimateSnAssetRequest.amount:type_name -> cosmos.base.v1beta1.Coin
-	17, // 8: nova.gal.v1.QueryEstimateSnAssetResponse.amount:type_name -> cosmos.base.v1beta1.Coin
-	0,  // 9: nova.gal.v1.Query.Params:input_type -> nova.gal.v1.QueryParamsRequest
-	14, // 10: nova.gal.v1.Query.EstimateSnAsset:input_type -> nova.gal.v1.QueryEstimateSnAssetRequest
-	2,  // 11: nova.gal.v1.Query.ClaimableAmount:input_type -> nova.gal.v1.QueryClaimableAmountRequest
-	4,  // 12: nova.gal.v1.Query.PendingWithdrawals:input_type -> nova.gal.v1.QueryPendingWithdrawalsRequest
-	6,  // 13: nova.gal.v1.Query.ActiveWithdrawals:input_type -> nova.gal.v1.QueryActiveWithdrawalsRequest
-	8,  // 14: nova.gal.v1.Query.DepositRecords:input_type -> nova.gal.v1.QueryDepositRecordRequest
-	10, // 15: nova.gal.v1.Query.UndelegateRecords:input_type -> nova.gal.v1.QueryUndelegateRecordRequest
-	12, // 16: nova.gal.v1.Query.WithdrawRecords:input_type -> nova.gal.v1.QueryWithdrawRecordRequest
-	1,  // 17: nova.gal.v1.Query.Params:output_type -> nova.gal.v1.QueryParamsResponse
-	15, // 18: nova.gal.v1.Query.EstimateSnAsset:output_type -> nova.gal.v1.QueryEstimateSnAssetResponse
-	3,  // 19: nova.gal.v1.Query.ClaimableAmount:output_type -> nova.gal.v1.QueryClaimableAmountResponse
-	5,  // 20: nova.gal.v1.Query.PendingWithdrawals:output_type -> nova.gal.v1.QueryPendingWithdrawalsResponse
-	7,  // 21: nova.gal.v1.Query.ActiveWithdrawals:output_type -> nova.gal.v1.QueryActiveWithdrawalsResponse
-	9,  // 22: nova.gal.v1.Query.DepositRecords:output_type -> nova.gal.v1.QueryDepositRecordResponse
-	11, // 23: nova.gal.v1.Query.UndelegateRecords:output_type -> nova.gal.v1.QueryUndelegateRecordResponse
-	13, // 24: nova.gal.v1.Query.WithdrawRecords:output_type -> nova.gal.v1.QueryWithdrawRecordResponse
-	17, // [17:25] is the sub-list for method output_type
-	9,  // [9:17] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	17, // 7: nova.gal.v1.QueryEstimateSnAssetResponse.amount:type_name -> cosmos.base.v1beta1.Coin
+	0,  // 8: nova.gal.v1.Query.Params:input_type -> nova.gal.v1.QueryParamsRequest
+	14, // 9: nova.gal.v1.Query.EstimateSnAsset:input_type -> nova.gal.v1.QueryEstimateSnAssetRequest
+	2,  // 10: nova.gal.v1.Query.ClaimableAmount:input_type -> nova.gal.v1.QueryClaimableAmountRequest
+	4,  // 11: nova.gal.v1.Query.PendingWithdrawals:input_type -> nova.gal.v1.QueryPendingWithdrawalsRequest
+	6,  // 12: nova.gal.v1.Query.ActiveWithdrawals:input_type -> nova.gal.v1.QueryActiveWithdrawalsRequest
+	8,  // 13: nova.gal.v1.Query.DepositRecords:input_type -> nova.gal.v1.QueryDepositRecordRequest
+	10, // 14: nova.gal.v1.Query.UndelegateRecords:input_type -> nova.gal.v1.QueryUndelegateRecordRequest
+	12, // 15: nova.gal.v1.Query.WithdrawRecords:input_type -> nova.gal.v1.QueryWithdrawRecordRequest
+	1,  // 16: nova.gal.v1.Query.Params:output_type -> nova.gal.v1.QueryParamsResponse
+	15, // 17: nova.gal.v1.Query.EstimateSnAsset:output_type -> nova.gal.v1.QueryEstimateSnAssetResponse
+	3,  // 18: nova.gal.v1.Query.ClaimableAmount:output_type -> nova.gal.v1.QueryClaimableAmountResponse
+	5,  // 19: nova.gal.v1.Query.PendingWithdrawals:output_type -> nova.gal.v1.QueryPendingWithdrawalsResponse
+	7,  // 20: nova.gal.v1.Query.ActiveWithdrawals:output_type -> nova.gal.v1.QueryActiveWithdrawalsResponse
+	9,  // 21: nova.gal.v1.Query.DepositRecords:output_type -> nova.gal.v1.QueryDepositRecordResponse
+	11, // 22: nova.gal.v1.Query.UndelegateRecords:output_type -> nova.gal.v1.QueryUndelegateRecordResponse
+	13, // 23: nova.gal.v1.Query.WithdrawRecords:output_type -> nova.gal.v1.QueryWithdrawRecordResponse
+	16, // [16:24] is the sub-list for method output_type
+	8,  // [8:16] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_nova_gal_v1_query_proto_init() }

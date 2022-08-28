@@ -56,6 +56,23 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 	return totalDepositAmt
 }
 
+func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, userAddr, denom string) sdk.Coin {
+	totalDepositAmt := sdk.NewCoin(denom, sdk.NewInt(0))
+
+	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
+		if depositRecord.Claimer == userAddr {
+			for _, record := range depositRecord.Records {
+				if record.State == types.DepositRequest {
+					totalDepositAmt = totalDepositAmt.Add(*record.Amount)
+				}
+			}
+		}
+		return false
+	})
+
+	return totalDepositAmt
+}
+
 func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state types.WithdrawStatusType, oracleVersion uint64) {
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		isChanged := false

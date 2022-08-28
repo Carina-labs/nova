@@ -34,9 +34,9 @@ type ServiceClient interface {
 	GetLatestValidatorSet(ctx context.Context, in *GetLatestValidatorSetRequest, opts ...grpc.CallOption) (*GetLatestValidatorSetResponse, error)
 	// GetValidatorSetByHeight queries validator-set at a given height.
 	GetValidatorSetByHeight(ctx context.Context, in *GetValidatorSetByHeightRequest, opts ...grpc.CallOption) (*GetValidatorSetByHeightResponse, error)
-	// ABCIQuery defines a query handler that supports ABCI queries directly to
-	// the application, bypassing Tendermint completely. The ABCI query must
-	// contain a valid and supported path, including app, custom, p2p, and store.
+	// ABCIQuery defines a query handler that supports ABCI queries directly to the
+	// application, bypassing Tendermint completely. The ABCI query must contain
+	// a valid and supported path, including app, custom, p2p, and store.
 	//
 	// Since: cosmos-sdk 0.46
 	ABCIQuery(ctx context.Context, in *ABCIQueryRequest, opts ...grpc.CallOption) (*ABCIQueryResponse, error)
@@ -129,9 +129,9 @@ type ServiceServer interface {
 	GetLatestValidatorSet(context.Context, *GetLatestValidatorSetRequest) (*GetLatestValidatorSetResponse, error)
 	// GetValidatorSetByHeight queries validator-set at a given height.
 	GetValidatorSetByHeight(context.Context, *GetValidatorSetByHeightRequest) (*GetValidatorSetByHeightResponse, error)
-	// ABCIQuery defines a query handler that supports ABCI queries directly to
-	// the application, bypassing Tendermint completely. The ABCI query must
-	// contain a valid and supported path, including app, custom, p2p, and store.
+	// ABCIQuery defines a query handler that supports ABCI queries directly to the
+	// application, bypassing Tendermint completely. The ABCI query must contain
+	// a valid and supported path, including app, custom, p2p, and store.
 	//
 	// Since: cosmos-sdk 0.46
 	ABCIQuery(context.Context, *ABCIQueryRequest) (*ABCIQueryResponse, error)
