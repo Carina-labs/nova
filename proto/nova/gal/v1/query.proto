@@ -24,6 +24,10 @@ service Query {
     option (google.api.http).get = "/nova/gal/v1/claimable_amount/{address}/{zone_id}";
   }
 
+  rpc DepositAmount(QueryDepositAmountRequest) returns (QueryDepositAmountResponse) {
+    option (google.api.http).get = "/nova/gal/v1/deposit_amount/{address}/{zone_id}";
+  }
+
   rpc PendingWithdrawals(QueryPendingWithdrawalsRequest) returns (QueryPendingWithdrawalsResponse) {
     option (google.api.http).get = "/nova/gal/v1/pending_withdrawals/{address}/{zone_id}";
   }
@@ -75,6 +79,17 @@ message QueryPendingWithdrawalsRequest {
 
 // QueryPendingWithdrawalsResponse is the response type for the Query/PendingWithdrawals RPC method.
 message QueryPendingWithdrawalsResponse {
+  cosmos.base.v1beta1.Coin amount = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryDepositAmountRequest is the request type for the Query/DepositAmount RPC method.
+message QueryDepositAmountRequest {
+  string zone_id = 1;
+  string address = 2;
+}
+
+// QueryDepositAmountResponse is the response type for the Query/DepositAmount RPC method.
+message QueryDepositAmountResponse {
   cosmos.base.v1beta1.Coin amount = 1 [(gogoproto.nullable) = false];
 }
 
