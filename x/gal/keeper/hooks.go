@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"github.com/Carina-labs/nova/x/gal/types"
 	icatypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -34,7 +35,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		return
 	}
 
-	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, DEPOSIT_REQUEST, DEPOSIT_SUCCESS)
+	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DepositRequest, types.DepositSuccess)
 }
 
 // delegateAddr(controllerAddr), validatorAddr, delegateAmt
@@ -49,9 +50,9 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, delegateVersion+1)
 
 	// change deposit state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
-	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, DELEGATE_REQUEST, DELEGATE_SUCCESS)
-	h.k.SetDepositOracleVersion(ctx, zoneInfo.ZoneId, DELEGATE_SUCCESS, oracleVersion)
-	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, DELEGATE_SUCCESS, delegateVersion+1)
+	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DelegateRequest, types.DelegateSuccess)
+	h.k.SetDepositOracleVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, oracleVersion)
+	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, delegateVersion+1)
 }
 
 // ica transfer
@@ -73,7 +74,7 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	withdrawVersion := h.k.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
 
 	h.k.SetWithdrawVersion(ctx, zoneInfo.ZoneId, withdrawVersion+1)
-	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, WithdrawStatus_Registered, WithdrawStatus_Transferred)
+	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
 }
 
 func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
@@ -91,12 +92,12 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	}
 
 	undelegateVersion := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
-	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA, undelegateVersion+1)
+	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, types.UndelegateRequestIca, undelegateVersion+1)
 
 	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
 	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, undelegateVersion+1)
 
-	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
+	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, types.UndelegateRequestIca)
 }
 
 func (h Hooks) AfterAutoStakingEnd() {

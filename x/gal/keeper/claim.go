@@ -66,7 +66,7 @@ func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, 
 		return sdk.Coin{}, err
 	}
 
-	err = k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimer, DELEGATE_SUCCESS)
+	err = k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimer, types.DelegateSuccess)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -87,7 +87,7 @@ func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.Regis
 	}
 
 	for _, record := range records.Records {
-		if record.State == int64(DELEGATE_SUCCESS) && record.OracleVersion < oracleVersion {
+		if record.State == int64(types.DelegateSuccess) && record.OracleVersion < oracleVersion {
 			result = result.Add(*record.Amount)
 		}
 	}
