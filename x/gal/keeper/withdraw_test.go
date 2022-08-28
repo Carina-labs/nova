@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-func (suite *KeeperTestSuite) SetWithdrawRecords(zoneId, withdrawer, delegator, recipient string, amount sdk.Coin, state types.WithdrawStatusType, time time.Time) {
+func (suite *KeeperTestSuite) SetWithdrawRecords(zoneId, withdrawer, delegator, recipient string, amount sdk.Coin, state int64, time time.Time) {
 	records := make(map[uint64]*types.WithdrawRecordContent)
 	records[1] = &types.WithdrawRecordContent{
 		Amount:         amount.Amount,
@@ -134,13 +134,13 @@ func (suite *KeeperTestSuite) TestGetTotalWithdrawAmountForZoneId() {
 	// 1 : WITHDRAW_REGISTER
 	// 2 : TRANSFER_SUCCESS
 	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &zoneInfo)
-	suite.SetWithdrawRecords("gaia", "test1", "recipient1", "delegator1", sdk.NewCoin("stake", sdk.NewInt(1000)), 1,
+	suite.SetWithdrawRecords("gaia", "test1", "recipient1", "delegator1", sdk.NewCoin("stake", sdk.NewInt(1000)), int64(1),
 		time.Date(time.Now().Year(), time.Now().UTC().Month(), time.Now().UTC().Day(), time.Now().UTC().Hour(), time.Now().UTC().Minute(), time.Now().UTC().Second(), time.Now().UTC().Nanosecond(), time.UTC))
-	suite.SetWithdrawRecords("gaia", "test2", "recipient2", "delegator1", sdk.NewCoin("stake", sdk.NewInt(2000)), 2,
+	suite.SetWithdrawRecords("gaia", "test2", "recipient2", "delegator1", sdk.NewCoin("stake", sdk.NewInt(2000)), int64(2),
 		time.Date(time.Now().Year(), time.Now().UTC().Month(), time.Now().UTC().Day(), time.Now().UTC().Hour()-1, time.Now().UTC().Minute(), time.Now().UTC().Second(), time.Now().UTC().Nanosecond(), time.UTC))
-	suite.SetWithdrawRecords("gaia", "test3", "recipient3", "delegator1", sdk.NewCoin("stake", sdk.NewInt(500)), 1,
+	suite.SetWithdrawRecords("gaia", "test3", "recipient3", "delegator1", sdk.NewCoin("stake", sdk.NewInt(500)), int64(1),
 		time.Date(time.Now().Year(), time.Now().UTC().Month(), time.Now().UTC().Day(), time.Now().UTC().Hour()-1, time.Now().UTC().Minute(), time.Now().UTC().Second(), time.Now().UTC().Nanosecond(), time.UTC))
-	suite.SetWithdrawRecords("gaia", "test4", "recipient4", "delegator1", sdk.NewCoin("stake", sdk.NewInt(700)), 2,
+	suite.SetWithdrawRecords("gaia", "test4", "recipient4", "delegator1", sdk.NewCoin("stake", sdk.NewInt(700)), int64(2),
 		time.Date(time.Now().Year(), time.Now().UTC().Month(), time.Now().UTC().Day(), time.Now().UTC().Hour(), time.Now().UTC().Minute(), time.Now().UTC().Second(), time.Now().UTC().Nanosecond(), time.UTC))
 
 	tcs := []struct {

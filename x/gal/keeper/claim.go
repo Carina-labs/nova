@@ -87,7 +87,7 @@ func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.Regis
 	}
 
 	for _, record := range records.Records {
-		if record.State == DELEGATE_SUCCESS && record.OracleVersion < oracleVersion {
+		if record.State == int64(DELEGATE_SUCCESS) && record.OracleVersion < oracleVersion {
 			result = result.Add(*record.Amount)
 		}
 	}
