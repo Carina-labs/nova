@@ -203,13 +203,15 @@ func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, wit
 	}
 }
 
-func (k Keeper) ChangeWithdrawState(ctx sdk.Context, preState, postState types.WithdrawStatusType) {
+func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState types.WithdrawStatusType) {
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
-		for _, record := range withdrawInfo.Records {
-			if record.State == preState {
-				record.State = postState
+		if withdrawInfo.ZoneId == zoneId {
+			for _, record := range withdrawInfo.Records {
+				if record.State == preState {
+					record.State = postState
+				}
+				k.SetWithdrawRecord(ctx, withdrawInfo)
 			}
-			k.SetWithdrawRecord(ctx, withdrawInfo)
 		}
 		return false
 	})

@@ -6,19 +6,19 @@ const (
 )
 
 const (
-	DepositRequest DepositState = iota + 1
+	DepositRequest DepositStatusType = iota + 1
 	DepositSuccess
 	DelegateRequest
 	DelegateSuccess
 )
 
 const (
-	UndelegateRequestUser UndelegatedState = iota + 1
+	UndelegateRequestUser UndelegatedStatusType = iota + 1
 	UndelegateRequestIca
 )
 
 type (
-	WithdrawStatusType = int64
-	DepositState       = int64
-	UndelegatedState   = int64
+	WithdrawStatusType    = int64
+	DepositStatusType     = int64
+	UndelegatedStatusType = int64
 )

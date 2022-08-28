@@ -47,7 +47,7 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.
 }
 
 // GetUndelegateAmount returns the amount of undelegated coin.
-func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone ibcstakingtypes.RegisteredZone, version uint64, state types.UndelegatedState) (sdk.Coin, sdk.Int) {
+func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone ibcstakingtypes.RegisteredZone, version uint64, state types.UndelegatedStatusType) (sdk.Coin, sdk.Int) {
 
 	snAsset := sdk.Coin{
 		Amount: sdk.NewInt(0),
@@ -81,7 +81,7 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone ibcsta
 // ChangeUndelegateState changes undelegate record.
 // UNDELEGATE_REQUEST_USER : Just requested undelegate by user. It is not in undelegate period.
 // UNDELEGATE_REQUEST_ICA  : Requested by ICA, It is in undelegate period.
-func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state types.UndelegatedState) {
+func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			for _, record := range undelegateRecord.Records {
@@ -117,7 +117,7 @@ func (k Keeper) GetUndelegateVersion(ctx sdk.Context, zoneId string) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
 
-func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state types.UndelegatedState, version uint64) bool {
+func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType, version uint64) bool {
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			isChanged := false
@@ -138,7 +138,7 @@ func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state
 }
 
 // DeleteUndelegateRecords removes undelegate record.
-func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state types.UndelegatedState) {
+func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
 	var recordItems []*types.UndelegateRecordContent
 	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
