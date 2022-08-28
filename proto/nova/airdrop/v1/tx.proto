@@ -1,0 +1,25 @@
+syntax = "proto3";
+package nova.airdrop.v1;
+
+import "cosmos/base/v1beta1/coin.proto";
+import "gogoproto/gogo.proto";
+
+import "nova/airdrop/v1/genesis.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
+
+service Msg {
+  rpc ClaimAirdrop(MsgClaimAirdropRequest) returns (MsgClaimAirdropResponse);
+}
+
+message MsgClaimAirdropRequest {
+  // address of the airdrop recipient.
+  string address = 1 [ (gogoproto.nullable) = false ];
+
+  // quest type of the airdrop to claim.
+  QuestType quest_type = 2 [ (gogoproto.nullable) = false ];
+}
+
+message MsgClaimAirdropResponse {
+  bool succeeded = 1 [ (gogoproto.nullable) = false ];
+}

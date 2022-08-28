@@ -1,0 +1,61 @@
+syntax = "proto3";
+package nova.airdrop.v1;
+
+import "nova/airdrop/v1/params.proto";
+
+import "cosmos/base/v1beta1/coin.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
+
+message GenesisState {
+  // params defines all the parameters of module.
+  Params params = 1 [(gogoproto.nullable) = false];
+
+  // states for the airdrop, how much coins are allocated for each address is must be pre-defined.
+  repeated AirdropState states = 2 [(gogoproto.nullable) = false];
+}
+
+enum QuestType {
+  QUEST_NOTHING_TO_DO = 0;
+  QUEST_UNDELEGATE = 1;
+  QUEST_SN_ASSET_CLAIM = 2;
+  QUEST_PROVIDE_LIQUIDITY = 3;
+  QUEST_VOTE_ON_PROPOSALS = 4;
+}
+
+enum QuestStateType {
+  // quest is not conducted by user yet
+  QUEST_STATE_NOT_STARTED = 0;
+
+  // quest is done, now user can claim her/his airdrop reward.
+  QUEST_STATE_CLAIMABLE = 1;
+
+  // quest is done, and user has claimed her/his airdrop reward.
+  QUEST_STATE_CLAIMED = 2;
+};
+
+message AirdropState {
+  // address of the airdrop recipient.
+  string address = 1 [(gogoproto.nullable) = false];
+
+  // amount of coins to be allocated to the recipient.
+  string total_amount = 2 [(gogoproto.nullable) = false];
+
+  // claim histories
+  map<QuestType, QuestState> quest_states = 3 [(gogoproto.nullable) = false];
+}
+
+message QuestState {
+  // achieve_timestamp is the timestamp when the quest is achieved.
+  int64 achieve_timestamp = 1 [(gogoproto.nullable) = false];
+
+  // claimable is a mark to indicate that this quest is achieved so you can claim your airdrop.
+  bool claimable = 2 [(gogoproto.nullable) = false];
+
+  // claimed is a mark to indicate that the amount is claimed.
+  bool claimed = 3 [(gogoproto.nullable) = false];
+
+  // claim_timestamp is the timestamp when the user claimed the amount.
+  int64 claim_timestamp = 4 [(gogoproto.nullable) = false];
+}

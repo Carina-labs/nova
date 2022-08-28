@@ -1,0 +1,55 @@
+syntax = "proto3";
+package nova.airdrop.v1;
+
+import "cosmos/base/v1beta1/coin.proto";
+import "google/api/annotations.proto";
+import "gogoproto/gogo.proto";
+
+import "nova/airdrop/v1/params.proto";
+import "nova/airdrop/v1/genesis.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
+
+service Query {
+  // Params returns the total set of minting parameters.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/nova/airdrop/v1/params";
+  }
+
+  // get total assets of the airdrop for a given address
+  rpc TotalAssetForAirdrop(QueryTotalAssetForAirdropRequest) returns (QueryTotalAssetForAirdropResponse) {
+    option (google.api.http).get = "/nova/airdrop/v1/total_asset_for_airdrop";
+  }
+
+  // query for state of quests
+  rpc QuestState(QueryQuestStateRequest) returns (QueryQuestStateResponse) {
+    option (google.api.http).get = "/nova/airdrop/v1/quest_state";
+  }
+}
+
+message QueryParamsRequest {}
+message QueryParamsResponse {
+  // params defines the parameters of the module.
+  Params params = 1 [ (gogoproto.nullable) = false ];
+}
+
+message QueryTotalAssetForAirdropRequest {
+  // address of the airdrop recipient.
+  string address = 1 [ (gogoproto.nullable) = false ];
+}
+
+message QueryTotalAssetForAirdropResponse {
+  // total_asset_for_airdrop is the total asset for airdrop.
+  cosmos.base.v1beta1.Coin total_assets = 1 [
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message QueryQuestStateRequest {
+  // address of the airdrop recipient.
+  string address = 1 [ (gogoproto.nullable) = false ];
+}
+message QueryQuestStateResponse {
+  map<QuestType, QuestState> quest_states = 1 [(gogoproto.nullable) = false];
+}
