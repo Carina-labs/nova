@@ -61,7 +61,7 @@ func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state ty
 		isChanged := false
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
-				if record.State == int64(state) && record.OracleVersion == 0 {
+				if record.State == state && record.OracleVersion == 0 {
 					record.OracleVersion = oracleVersion
 					isChanged = true
 				}
@@ -84,8 +84,8 @@ func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, pos
 		stateCheck := false
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
-				if record.State == int64(preState) {
-					record.State = int64(postState)
+				if record.State == preState {
+					record.State = postState
 					stateCheck = true
 				}
 			}
