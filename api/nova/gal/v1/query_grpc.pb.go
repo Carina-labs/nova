@@ -25,6 +25,7 @@ type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	EstimateSnAsset(ctx context.Context, in *QueryEstimateSnAssetRequest, opts ...grpc.CallOption) (*QueryEstimateSnAssetResponse, error)
 	ClaimableAmount(ctx context.Context, in *QueryClaimableAmountRequest, opts ...grpc.CallOption) (*QueryClaimableAmountResponse, error)
+	DepositAmount(ctx context.Context, in *QueryDepositAmountRequest, opts ...grpc.CallOption) (*QueryDepositAmountResponse, error)
 	PendingWithdrawals(ctx context.Context, in *QueryPendingWithdrawalsRequest, opts ...grpc.CallOption) (*QueryPendingWithdrawalsResponse, error)
 	ActiveWithdrawals(ctx context.Context, in *QueryActiveWithdrawalsRequest, opts ...grpc.CallOption) (*QueryActiveWithdrawalsResponse, error)
 	DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error)
@@ -61,6 +62,15 @@ func (c *queryClient) EstimateSnAsset(ctx context.Context, in *QueryEstimateSnAs
 func (c *queryClient) ClaimableAmount(ctx context.Context, in *QueryClaimableAmountRequest, opts ...grpc.CallOption) (*QueryClaimableAmountResponse, error) {
 	out := new(QueryClaimableAmountResponse)
 	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/ClaimableAmount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) DepositAmount(ctx context.Context, in *QueryDepositAmountRequest, opts ...grpc.CallOption) (*QueryDepositAmountResponse, error) {
+	out := new(QueryDepositAmountResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DepositAmount", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -119,6 +129,7 @@ type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	EstimateSnAsset(context.Context, *QueryEstimateSnAssetRequest) (*QueryEstimateSnAssetResponse, error)
 	ClaimableAmount(context.Context, *QueryClaimableAmountRequest) (*QueryClaimableAmountResponse, error)
+	DepositAmount(context.Context, *QueryDepositAmountRequest) (*QueryDepositAmountResponse, error)
 	PendingWithdrawals(context.Context, *QueryPendingWithdrawalsRequest) (*QueryPendingWithdrawalsResponse, error)
 	ActiveWithdrawals(context.Context, *QueryActiveWithdrawalsRequest) (*QueryActiveWithdrawalsResponse, error)
 	DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error)
@@ -139,6 +150,9 @@ func (UnimplementedQueryServer) EstimateSnAsset(context.Context, *QueryEstimateS
 }
 func (UnimplementedQueryServer) ClaimableAmount(context.Context, *QueryClaimableAmountRequest) (*QueryClaimableAmountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClaimableAmount not implemented")
+}
+func (UnimplementedQueryServer) DepositAmount(context.Context, *QueryDepositAmountRequest) (*QueryDepositAmountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DepositAmount not implemented")
 }
 func (UnimplementedQueryServer) PendingWithdrawals(context.Context, *QueryPendingWithdrawalsRequest) (*QueryPendingWithdrawalsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PendingWithdrawals not implemented")
@@ -218,6 +232,24 @@ func _Query_ClaimableAmount_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).ClaimableAmount(ctx, req.(*QueryClaimableAmountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_DepositAmount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryDepositAmountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).DepositAmount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/DepositAmount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).DepositAmount(ctx, req.(*QueryDepositAmountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -330,6 +362,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ClaimableAmount",
 			Handler:    _Query_ClaimableAmount_Handler,
+		},
+		{
+			MethodName: "DepositAmount",
+			Handler:    _Query_DepositAmount_Handler,
 		},
 		{
 			MethodName: "PendingWithdrawals",

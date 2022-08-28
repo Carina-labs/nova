@@ -18,4 +18,5 @@ var (
 	ErrUnknown              = errors.Register(ModuleName, 12, "unknown error occurred")
 	ErrTransferInfoNotFound = errors.Register(ModuleName, 13, "transfer info is not found")
 	ErrInvalidParameter     = errors.Register(ModuleName, 14, "invalid parameter")
+	ErrDeleteDepositRecord  = errors.Register(ModuleName, 15, "fail delete deposit record")
 )

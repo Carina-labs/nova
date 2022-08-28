@@ -158,9 +158,10 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	if isDeleted {
 		record.Records = recordItems
 		k.SetDepositRecord(ctx, record)
+		return nil
 	}
 
-	return nil
+	return types.ErrNoDepositRecord
 }
 
 func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone) (sdk.Coin, error) {
