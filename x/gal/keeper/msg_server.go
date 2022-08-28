@@ -55,7 +55,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	newRecord := &types.DepositRecordContent{
 		Depositor: depositorAcc.String(),
 		Amount:    &deposit.Amount,
-		State:     int64(DEPOSIT_REQUEST),
+		State:     types.DepositRequest,
 	}
 
 	record, found := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, claimAcc)
@@ -101,13 +101,13 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
-	ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, DEPOSIT_SUCCESS, DELEGATE_REQUEST)
+	ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DepositSuccess, types.DelegateRequest)
 	if !ok {
 		return nil, types.ErrCanNotChangeState
 	}
 
 	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
-	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, DELEGATE_REQUEST)
+	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, types.DelegateRequest)
 	delegateAmt.Denom = zoneInfo.BaseDenom
 
 	var msgs []sdk.Msg
@@ -144,7 +144,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	newRecord := types.UndelegateRecordContent{
 		Withdrawer:    undelegate.Withdrawer,
 		SnAssetAmount: &undelegate.Amount,
-		State:         int64(UNDELEGATE_REQUEST_USER),
+		State:         types.UndelegateRequestUser,
 		OracleVersion: oracleVersion,
 	}
 
@@ -192,11 +192,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("zone is not found")
 	}
 
-	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, UNDELEGATE_REQUEST_ICA)
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestIca)
 
 	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 
-	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.BaseDenom, zoneInfo.ZoneId, oracleVersion, UNDELEGATE_REQUEST_ICA)
+	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo.BaseDenom, zoneInfo.ZoneId, oracleVersion, types.UndelegateRequestIca)
 
 	if burnAssets.IsZero() || undelegateAssets.IsZero() {
 		return nil, errors.New("no coins to undelegate")
@@ -344,7 +344,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		if record.OracleVersion >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
-		if record.State == int64(DELEGATE_SUCCESS) {
+		if record.State == types.DelegateSuccess {
 			totalClaimAsset = totalClaimAsset.Add(*record.Amount)
 		}
 	}
