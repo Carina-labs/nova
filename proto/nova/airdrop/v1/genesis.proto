@@ -50,11 +50,8 @@ message QuestState {
   // achieve_timestamp is the timestamp when the quest is achieved.
   int64 achieve_timestamp = 1 [(gogoproto.nullable) = false];
 
-  // claimable is a mark to indicate that this quest is achieved so you can claim your airdrop.
-  bool claimable = 2 [(gogoproto.nullable) = false];
-
-  // claimed is a mark to indicate that the amount is claimed.
-  bool claimed = 3 [(gogoproto.nullable) = false];
+  // state to indicate that quest is not started, claimable or claimed.
+  QuestStateType state = 2 [(gogoproto.nullable) = false];
 
   // claim_timestamp is the timestamp when the user claimed the amount.
   int64 claim_timestamp = 4 [(gogoproto.nullable) = false];
