@@ -53,7 +53,6 @@ message MsgChangeRegisteredZoneInfo{
   string validator_address = 5;
   string base_denom = 6;
   int64 decimal = 7;
-
 }
 message MsgChangeRegisteredZoneInfoResponse{}
 
@@ -96,9 +95,8 @@ message MsgIcaTransfer{
   string host_address = 2;
   string daomodifier_address = 3;
   string receiver_address = 4;
-  string ica_transfer_port_id = 5;
-  string ica_transfer_channel_id = 6;
-  cosmos.base.v1beta1.Coin amount = 7[(gogoproto.nullable) = false];
+  string ica_transfer_channel_id = 5;
+  cosmos.base.v1beta1.Coin amount = 6[(gogoproto.nullable) = false];
 }
 
 message MsgIcaTransferResponse{}

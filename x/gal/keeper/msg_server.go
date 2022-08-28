@@ -349,7 +349,15 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		}
 	}
 
-	minted, err := m.keeper.ClaimAndMintShareToken(ctx, claimerAddr, totalClaimAsset, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId)
+	claimSnAsset, err := m.keeper.ClaimShareToken(ctx, &zoneInfo, totalClaimAsset)
+	if err != nil {
+		return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
+			"account: %s", claimMsg.Claimer)
+	}
+
+	minted, err := m.keeper.MintShareToken(ctx, claimerAddr, claimSnAsset)
+
+	err = m.keeper.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimerAddr, DELEGATE_SUCCESS)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(types.ErrNoDepositRecord,
 			"account: %s", claimMsg.Claimer)

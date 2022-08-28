@@ -211,7 +211,7 @@ require (
 	github.com/ultraware/whitespace v0.0.4 // indirect
 	github.com/uudashr/gocognit v1.0.5 // indirect
 	github.com/yeya24/promlinter v0.1.0 // indirect
-	github.com/zondax/hid v0.9.0 // indirect
+	github.com/zondax/hid v0.9.1 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
 	golang.org/x/mod v0.5.0 // indirect
@@ -234,5 +234,6 @@ replace (
 	github.com/cosmos/ibc-go/v3 => github.com/Carina-labs/ibc-go/v3 v3.0.0-nova-alpha
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	github.com/keybase/go-keychain => github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4
+	github.com/zondax/hid => github.com/itsdevbear/hid v0.9.1-0.20220302052558-a59c1e68c29a
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 )

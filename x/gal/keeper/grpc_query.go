@@ -2,10 +2,9 @@ package keeper
 
 import (
 	"context"
+	"github.com/Carina-labs/nova/x/gal/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-
-	"github.com/Carina-labs/nova/x/gal/types"
 )
 
 type QueryServer struct {
@@ -28,39 +27,29 @@ func (q QueryServer) Params(goCtx context.Context, request *types.QueryParamsReq
 
 func (q QueryServer) EstimateSnAsset(goCtx context.Context, request *types.QueryEstimateSnAssetRequest) (*types.QueryEstimateSnAssetResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	snDenom, err := q.keeper.GetSnDenomForIBCDenom(ctx, request.Amount.Denom)
-	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrInvalidParameter, err.Error())
-	}
-
 	zone, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, "zone not found")
 	}
 
-	if zone.SnDenom != snDenom {
-		return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "given amount is not supported")
+	amt, ok := sdk.NewIntFromString(request.Amount)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrUnknown, "failed to get amount")
 	}
 
-	totalSnSupply := q.keeper.bankKeeper.GetSupply(ctx, snDenom)
-	totalStakedAmount, err := q.keeper.GetTotalStakedForLazyMinting(ctx, zone.BaseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId)
+	estimateAsset, err := q.keeper.ClaimShareToken(ctx, &zone, sdk.NewCoin(request.Denom, amt))
 	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrUnknown, "failed to get total staked amount")
+		return nil, sdkerrors.Wrap(types.ErrUnknown, "failed to get amount")
 	}
-
-	// convert decimal
-	snAsset := q.keeper.ConvertWAssetToSnAssetDecimal(request.Amount.Amount.BigInt(), zone.Decimal, snDenom)
-	mintAmt := q.keeper.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
 
 	return &types.QueryEstimateSnAssetResponse{
-		Amount: sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)),
+		Amount: estimateAsset,
 	}, nil
 }
 
 func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.QueryClaimableAmountRequest) (*types.QueryClaimableAmountResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	zone, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
-
 	if !ok {
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, "zone not found")
 	}
@@ -77,6 +66,21 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Query
 
 	return &types.QueryClaimableAmountResponse{
 		Amount: *assets,
+	}, nil
+}
+
+func (q QueryServer) DepositAmount(goCtx context.Context, request *types.QueryDepositAmountRequest) (*types.QueryDepositAmountResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	zone, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, "zone not found")
+	}
+
+	ibcDenom := q.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
+	assets := q.keeper.GetTotalDepositAmtForUserAddr(ctx, request.Address, ibcDenom)
+
+	return &types.QueryDepositAmountResponse{
+		Amount: assets,
 	}, nil
 }
 
