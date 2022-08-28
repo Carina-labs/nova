@@ -32,7 +32,7 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 			{
 				Depositor:       fooUser.String(),
 				Amount:          &coin,
-				State:           galkeeper.DELEGATE_SUCCESS,
+				State:           int64(galkeeper.DELEGATE_SUCCESS),
 				OracleVersion:   1,
 				DelegateVersion: 1,
 			},
@@ -78,7 +78,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	amount := sdk.NewInt64Coin(denom, 100)
 	records[1] = &types.WithdrawRecordContent{
 		Amount:          amount.Amount,
-		State:           galkeeper.WITHDRAWSTATUS_REGISTERED,
+		State:           int64(galkeeper.WithdrawStatus_Registered),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
 		CompletionTime:  time.Time{},
@@ -86,7 +86,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 
 	records[2] = &types.WithdrawRecordContent{
 		Amount:          amount.Amount,
-		State:           galkeeper.WITHDRAWSTATUS_REGISTERED,
+		State:           int64(galkeeper.WithdrawStatus_Registered),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
 		CompletionTime:  time.Time{},
@@ -129,7 +129,7 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 
 	records[1] = &types.WithdrawRecordContent{
 		Amount:          activeAmount.Amount,
-		State:           galkeeper.WITHDRAWSTATUS_TRANSFERRED,
+		State:           int64(galkeeper.WithdrawStatus_Transferred),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
 		CompletionTime:  time.Time{},
@@ -137,7 +137,7 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 
 	records[2] = &types.WithdrawRecordContent{
 		Amount:          pendingAmount.Amount,
-		State:           galkeeper.WITHDRAWSTATUS_REGISTERED,
+		State:           int64(galkeeper.WithdrawStatus_Registered),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
 		CompletionTime:  time.Time{},
@@ -184,7 +184,7 @@ func (suite *KeeperTestSuite) TestQueryDepositRecord() {
 			{
 				Depositor:       fooUser.String(),
 				Amount:          &token,
-				State:           galkeeper.DEPOSIT_REQUEST,
+				State:           int64(galkeeper.DEPOSIT_REQUEST),
 				OracleVersion:   0,
 				DelegateVersion: 0,
 			},
@@ -223,7 +223,7 @@ func (suite *KeeperTestSuite) TestQueryWithdrawRecord() {
 	token := sdk.NewCoin(zoneBaseDenom, sdk.NewInt(80))
 	records[0] = &types.WithdrawRecordContent{
 		Amount:          token.Amount,
-		State:           galkeeper.WITHDRAWSTATUS_TRANSFERRED,
+		State:           int64(galkeeper.WithdrawStatus_Transferred),
 		OracleVersion:   1,
 		WithdrawVersion: 1,
 		CompletionTime:  time.Time{},

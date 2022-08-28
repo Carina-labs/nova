@@ -1281,7 +1281,7 @@ func (x *Minter) GetAnnualProvisions() string {
 	return ""
 }
 
-// Params defines the parameters for the x/mint module.
+// Params holds parameters for the mint module.
 type Params struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

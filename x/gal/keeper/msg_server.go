@@ -55,7 +55,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	newRecord := &types.DepositRecordContent{
 		Depositor: depositorAcc.String(),
 		Amount:    &deposit.Amount,
-		State:     DEPOSIT_REQUEST,
+		State:     int64(DEPOSIT_REQUEST),
 	}
 
 	record, found := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, claimAcc)
@@ -144,7 +144,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	newRecord := types.UndelegateRecordContent{
 		Withdrawer:    undelegate.Withdrawer,
 		SnAssetAmount: &undelegate.Amount,
-		State:         UNDELEGATE_REQUEST_USER,
+		State:         int64(UNDELEGATE_REQUEST_USER),
 		OracleVersion: oracleVersion,
 	}
 
@@ -344,7 +344,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		if record.OracleVersion >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
-		if record.State == DELEGATE_SUCCESS {
+		if record.State == int64(DELEGATE_SUCCESS) {
 			totalClaimAsset = totalClaimAsset.Add(*record.Amount)
 		}
 	}
