@@ -6394,33 +6394,33 @@ func (x *fastReflection_MsgClaimSnAssetResponse) ProtoMethods() *protoiface.Meth
 }
 
 var (
-	md_MsgPendingWithdraw                         protoreflect.MessageDescriptor
-	fd_MsgPendingWithdraw_zone_id                 protoreflect.FieldDescriptor
-	fd_MsgPendingWithdraw_controller_address      protoreflect.FieldDescriptor
-	fd_MsgPendingWithdraw_ica_transfer_port_id    protoreflect.FieldDescriptor
-	fd_MsgPendingWithdraw_ica_transfer_channel_id protoreflect.FieldDescriptor
-	fd_MsgPendingWithdraw_chain_time              protoreflect.FieldDescriptor
+	md_MsgIcaWithdraw                         protoreflect.MessageDescriptor
+	fd_MsgIcaWithdraw_zone_id                 protoreflect.FieldDescriptor
+	fd_MsgIcaWithdraw_controller_address      protoreflect.FieldDescriptor
+	fd_MsgIcaWithdraw_ica_transfer_port_id    protoreflect.FieldDescriptor
+	fd_MsgIcaWithdraw_ica_transfer_channel_id protoreflect.FieldDescriptor
+	fd_MsgIcaWithdraw_chain_time              protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_tx_proto_init()
-	md_MsgPendingWithdraw = File_nova_gal_v1_tx_proto.Messages().ByName("MsgPendingWithdraw")
-	fd_MsgPendingWithdraw_zone_id = md_MsgPendingWithdraw.Fields().ByName("zone_id")
-	fd_MsgPendingWithdraw_controller_address = md_MsgPendingWithdraw.Fields().ByName("controller_address")
-	fd_MsgPendingWithdraw_ica_transfer_port_id = md_MsgPendingWithdraw.Fields().ByName("ica_transfer_port_id")
-	fd_MsgPendingWithdraw_ica_transfer_channel_id = md_MsgPendingWithdraw.Fields().ByName("ica_transfer_channel_id")
-	fd_MsgPendingWithdraw_chain_time = md_MsgPendingWithdraw.Fields().ByName("chain_time")
+	md_MsgIcaWithdraw = File_nova_gal_v1_tx_proto.Messages().ByName("MsgIcaWithdraw")
+	fd_MsgIcaWithdraw_zone_id = md_MsgIcaWithdraw.Fields().ByName("zone_id")
+	fd_MsgIcaWithdraw_controller_address = md_MsgIcaWithdraw.Fields().ByName("controller_address")
+	fd_MsgIcaWithdraw_ica_transfer_port_id = md_MsgIcaWithdraw.Fields().ByName("ica_transfer_port_id")
+	fd_MsgIcaWithdraw_ica_transfer_channel_id = md_MsgIcaWithdraw.Fields().ByName("ica_transfer_channel_id")
+	fd_MsgIcaWithdraw_chain_time = md_MsgIcaWithdraw.Fields().ByName("chain_time")
 }
 
-var _ protoreflect.Message = (*fastReflection_MsgPendingWithdraw)(nil)
+var _ protoreflect.Message = (*fastReflection_MsgIcaWithdraw)(nil)
 
-type fastReflection_MsgPendingWithdraw MsgPendingWithdraw
+type fastReflection_MsgIcaWithdraw MsgIcaWithdraw
 
-func (x *MsgPendingWithdraw) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgPendingWithdraw)(x)
+func (x *MsgIcaWithdraw) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaWithdraw)(x)
 }
 
-func (x *MsgPendingWithdraw) slowProtoReflect() protoreflect.Message {
+func (x *MsgIcaWithdraw) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_tx_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -6432,43 +6432,43 @@ func (x *MsgPendingWithdraw) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_MsgPendingWithdraw_messageType fastReflection_MsgPendingWithdraw_messageType
-var _ protoreflect.MessageType = fastReflection_MsgPendingWithdraw_messageType{}
+var _fastReflection_MsgIcaWithdraw_messageType fastReflection_MsgIcaWithdraw_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaWithdraw_messageType{}
 
-type fastReflection_MsgPendingWithdraw_messageType struct{}
+type fastReflection_MsgIcaWithdraw_messageType struct{}
 
-func (x fastReflection_MsgPendingWithdraw_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgPendingWithdraw)(nil)
+func (x fastReflection_MsgIcaWithdraw_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaWithdraw)(nil)
 }
-func (x fastReflection_MsgPendingWithdraw_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgPendingWithdraw)
+func (x fastReflection_MsgIcaWithdraw_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaWithdraw)
 }
-func (x fastReflection_MsgPendingWithdraw_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgPendingWithdraw
+func (x fastReflection_MsgIcaWithdraw_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaWithdraw
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_MsgPendingWithdraw) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgPendingWithdraw
+func (x *fastReflection_MsgIcaWithdraw) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaWithdraw
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgPendingWithdraw) Type() protoreflect.MessageType {
-	return _fastReflection_MsgPendingWithdraw_messageType
+func (x *fastReflection_MsgIcaWithdraw) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaWithdraw_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgPendingWithdraw) New() protoreflect.Message {
-	return new(fastReflection_MsgPendingWithdraw)
+func (x *fastReflection_MsgIcaWithdraw) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaWithdraw)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgPendingWithdraw) Interface() protoreflect.ProtoMessage {
-	return (*MsgPendingWithdraw)(x)
+func (x *fastReflection_MsgIcaWithdraw) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaWithdraw)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -6476,34 +6476,34 @@ func (x *fastReflection_MsgPendingWithdraw) Interface() protoreflect.ProtoMessag
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_MsgPendingWithdraw) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_MsgIcaWithdraw) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.ZoneId != "" {
 		value := protoreflect.ValueOfString(x.ZoneId)
-		if !f(fd_MsgPendingWithdraw_zone_id, value) {
+		if !f(fd_MsgIcaWithdraw_zone_id, value) {
 			return
 		}
 	}
 	if x.ControllerAddress != "" {
 		value := protoreflect.ValueOfString(x.ControllerAddress)
-		if !f(fd_MsgPendingWithdraw_controller_address, value) {
+		if !f(fd_MsgIcaWithdraw_controller_address, value) {
 			return
 		}
 	}
 	if x.IcaTransferPortId != "" {
 		value := protoreflect.ValueOfString(x.IcaTransferPortId)
-		if !f(fd_MsgPendingWithdraw_ica_transfer_port_id, value) {
+		if !f(fd_MsgIcaWithdraw_ica_transfer_port_id, value) {
 			return
 		}
 	}
 	if x.IcaTransferChannelId != "" {
 		value := protoreflect.ValueOfString(x.IcaTransferChannelId)
-		if !f(fd_MsgPendingWithdraw_ica_transfer_channel_id, value) {
+		if !f(fd_MsgIcaWithdraw_ica_transfer_channel_id, value) {
 			return
 		}
 	}
 	if x.ChainTime != nil {
 		value := protoreflect.ValueOfMessage(x.ChainTime.ProtoReflect())
-		if !f(fd_MsgPendingWithdraw_chain_time, value) {
+		if !f(fd_MsgIcaWithdraw_chain_time, value) {
 			return
 		}
 	}
@@ -6520,23 +6520,23 @@ func (x *fastReflection_MsgPendingWithdraw) Range(f func(protoreflect.FieldDescr
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgPendingWithdraw) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_MsgIcaWithdraw) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgPendingWithdraw.zone_id":
+	case "nova.gal.v1.MsgIcaWithdraw.zone_id":
 		return x.ZoneId != ""
-	case "nova.gal.v1.MsgPendingWithdraw.controller_address":
+	case "nova.gal.v1.MsgIcaWithdraw.controller_address":
 		return x.ControllerAddress != ""
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_port_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_port_id":
 		return x.IcaTransferPortId != ""
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_channel_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_channel_id":
 		return x.IcaTransferChannelId != ""
-	case "nova.gal.v1.MsgPendingWithdraw.chain_time":
+	case "nova.gal.v1.MsgIcaWithdraw.chain_time":
 		return x.ChainTime != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6546,23 +6546,23 @@ func (x *fastReflection_MsgPendingWithdraw) Has(fd protoreflect.FieldDescriptor)
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgPendingWithdraw) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_MsgIcaWithdraw) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgPendingWithdraw.zone_id":
+	case "nova.gal.v1.MsgIcaWithdraw.zone_id":
 		x.ZoneId = ""
-	case "nova.gal.v1.MsgPendingWithdraw.controller_address":
+	case "nova.gal.v1.MsgIcaWithdraw.controller_address":
 		x.ControllerAddress = ""
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_port_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_port_id":
 		x.IcaTransferPortId = ""
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_channel_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_channel_id":
 		x.IcaTransferChannelId = ""
-	case "nova.gal.v1.MsgPendingWithdraw.chain_time":
+	case "nova.gal.v1.MsgIcaWithdraw.chain_time":
 		x.ChainTime = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6572,28 +6572,28 @@ func (x *fastReflection_MsgPendingWithdraw) Clear(fd protoreflect.FieldDescripto
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgPendingWithdraw) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgIcaWithdraw) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.MsgPendingWithdraw.zone_id":
+	case "nova.gal.v1.MsgIcaWithdraw.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.MsgPendingWithdraw.controller_address":
+	case "nova.gal.v1.MsgIcaWithdraw.controller_address":
 		value := x.ControllerAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_port_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_port_id":
 		value := x.IcaTransferPortId
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_channel_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_channel_id":
 		value := x.IcaTransferChannelId
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.MsgPendingWithdraw.chain_time":
+	case "nova.gal.v1.MsgIcaWithdraw.chain_time":
 		value := x.ChainTime
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdraw does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdraw does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -6607,23 +6607,23 @@ func (x *fastReflection_MsgPendingWithdraw) Get(descriptor protoreflect.FieldDes
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgPendingWithdraw) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_MsgIcaWithdraw) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgPendingWithdraw.zone_id":
+	case "nova.gal.v1.MsgIcaWithdraw.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.gal.v1.MsgPendingWithdraw.controller_address":
+	case "nova.gal.v1.MsgIcaWithdraw.controller_address":
 		x.ControllerAddress = value.Interface().(string)
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_port_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_port_id":
 		x.IcaTransferPortId = value.Interface().(string)
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_channel_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_channel_id":
 		x.IcaTransferChannelId = value.Interface().(string)
-	case "nova.gal.v1.MsgPendingWithdraw.chain_time":
+	case "nova.gal.v1.MsgIcaWithdraw.chain_time":
 		x.ChainTime = value.Message().Interface().(*timestamppb.Timestamp)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6637,60 +6637,60 @@ func (x *fastReflection_MsgPendingWithdraw) Set(fd protoreflect.FieldDescriptor,
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgPendingWithdraw) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgIcaWithdraw) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgPendingWithdraw.chain_time":
+	case "nova.gal.v1.MsgIcaWithdraw.chain_time":
 		if x.ChainTime == nil {
 			x.ChainTime = new(timestamppb.Timestamp)
 		}
 		return protoreflect.ValueOfMessage(x.ChainTime.ProtoReflect())
-	case "nova.gal.v1.MsgPendingWithdraw.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.gal.v1.MsgPendingWithdraw is not mutable"))
-	case "nova.gal.v1.MsgPendingWithdraw.controller_address":
-		panic(fmt.Errorf("field controller_address of message nova.gal.v1.MsgPendingWithdraw is not mutable"))
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_port_id":
-		panic(fmt.Errorf("field ica_transfer_port_id of message nova.gal.v1.MsgPendingWithdraw is not mutable"))
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_channel_id":
-		panic(fmt.Errorf("field ica_transfer_channel_id of message nova.gal.v1.MsgPendingWithdraw is not mutable"))
+	case "nova.gal.v1.MsgIcaWithdraw.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.MsgIcaWithdraw is not mutable"))
+	case "nova.gal.v1.MsgIcaWithdraw.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.gal.v1.MsgIcaWithdraw is not mutable"))
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_port_id":
+		panic(fmt.Errorf("field ica_transfer_port_id of message nova.gal.v1.MsgIcaWithdraw is not mutable"))
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_channel_id":
+		panic(fmt.Errorf("field ica_transfer_channel_id of message nova.gal.v1.MsgIcaWithdraw is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgPendingWithdraw) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgIcaWithdraw) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgPendingWithdraw.zone_id":
+	case "nova.gal.v1.MsgIcaWithdraw.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.MsgPendingWithdraw.controller_address":
+	case "nova.gal.v1.MsgIcaWithdraw.controller_address":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_port_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_port_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.MsgPendingWithdraw.ica_transfer_channel_id":
+	case "nova.gal.v1.MsgIcaWithdraw.ica_transfer_channel_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.MsgPendingWithdraw.chain_time":
+	case "nova.gal.v1.MsgIcaWithdraw.chain_time":
 		m := new(timestamppb.Timestamp)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdraw"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdraw"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdraw does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdraw does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgPendingWithdraw) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_MsgIcaWithdraw) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgPendingWithdraw", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgIcaWithdraw", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -6698,7 +6698,7 @@ func (x *fastReflection_MsgPendingWithdraw) WhichOneof(d protoreflect.OneofDescr
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgPendingWithdraw) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_MsgIcaWithdraw) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -6709,7 +6709,7 @@ func (x *fastReflection_MsgPendingWithdraw) GetUnknown() protoreflect.RawFields 
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgPendingWithdraw) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_MsgIcaWithdraw) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -6721,7 +6721,7 @@ func (x *fastReflection_MsgPendingWithdraw) SetUnknown(fields protoreflect.RawFi
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_MsgPendingWithdraw) IsValid() bool {
+func (x *fastReflection_MsgIcaWithdraw) IsValid() bool {
 	return x != nil
 }
 
@@ -6731,9 +6731,9 @@ func (x *fastReflection_MsgPendingWithdraw) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgPendingWithdraw) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_MsgIcaWithdraw) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgPendingWithdraw)
+		x := input.Message.Interface().(*MsgIcaWithdraw)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6775,7 +6775,7 @@ func (x *fastReflection_MsgPendingWithdraw) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgPendingWithdraw)
+		x := input.Message.Interface().(*MsgIcaWithdraw)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6847,7 +6847,7 @@ func (x *fastReflection_MsgPendingWithdraw) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgPendingWithdraw)
+		x := input.Message.Interface().(*MsgIcaWithdraw)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -6879,10 +6879,10 @@ func (x *fastReflection_MsgPendingWithdraw) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgPendingWithdraw: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaWithdraw: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgPendingWithdraw: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaWithdraw: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -7085,23 +7085,23 @@ func (x *fastReflection_MsgPendingWithdraw) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_MsgPendingWithdrawResponse protoreflect.MessageDescriptor
+	md_MsgIcaWithdrawResponse protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_tx_proto_init()
-	md_MsgPendingWithdrawResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgPendingWithdrawResponse")
+	md_MsgIcaWithdrawResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgIcaWithdrawResponse")
 }
 
-var _ protoreflect.Message = (*fastReflection_MsgPendingWithdrawResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_MsgIcaWithdrawResponse)(nil)
 
-type fastReflection_MsgPendingWithdrawResponse MsgPendingWithdrawResponse
+type fastReflection_MsgIcaWithdrawResponse MsgIcaWithdrawResponse
 
-func (x *MsgPendingWithdrawResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgPendingWithdrawResponse)(x)
+func (x *MsgIcaWithdrawResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgIcaWithdrawResponse)(x)
 }
 
-func (x *MsgPendingWithdrawResponse) slowProtoReflect() protoreflect.Message {
+func (x *MsgIcaWithdrawResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_tx_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -7113,43 +7113,43 @@ func (x *MsgPendingWithdrawResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_MsgPendingWithdrawResponse_messageType fastReflection_MsgPendingWithdrawResponse_messageType
-var _ protoreflect.MessageType = fastReflection_MsgPendingWithdrawResponse_messageType{}
+var _fastReflection_MsgIcaWithdrawResponse_messageType fastReflection_MsgIcaWithdrawResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgIcaWithdrawResponse_messageType{}
 
-type fastReflection_MsgPendingWithdrawResponse_messageType struct{}
+type fastReflection_MsgIcaWithdrawResponse_messageType struct{}
 
-func (x fastReflection_MsgPendingWithdrawResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgPendingWithdrawResponse)(nil)
+func (x fastReflection_MsgIcaWithdrawResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgIcaWithdrawResponse)(nil)
 }
-func (x fastReflection_MsgPendingWithdrawResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgPendingWithdrawResponse)
+func (x fastReflection_MsgIcaWithdrawResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaWithdrawResponse)
 }
-func (x fastReflection_MsgPendingWithdrawResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgPendingWithdrawResponse
+func (x fastReflection_MsgIcaWithdrawResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaWithdrawResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_MsgPendingWithdrawResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgPendingWithdrawResponse
+func (x *fastReflection_MsgIcaWithdrawResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgIcaWithdrawResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgPendingWithdrawResponse) Type() protoreflect.MessageType {
-	return _fastReflection_MsgPendingWithdrawResponse_messageType
+func (x *fastReflection_MsgIcaWithdrawResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgIcaWithdrawResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgPendingWithdrawResponse) New() protoreflect.Message {
-	return new(fastReflection_MsgPendingWithdrawResponse)
+func (x *fastReflection_MsgIcaWithdrawResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgIcaWithdrawResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgPendingWithdrawResponse) Interface() protoreflect.ProtoMessage {
-	return (*MsgPendingWithdrawResponse)(x)
+func (x *fastReflection_MsgIcaWithdrawResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgIcaWithdrawResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -7157,7 +7157,7 @@ func (x *fastReflection_MsgPendingWithdrawResponse) Interface() protoreflect.Pro
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_MsgPendingWithdrawResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_MsgIcaWithdrawResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 }
 
 // Has reports whether a field is populated.
@@ -7171,13 +7171,13 @@ func (x *fastReflection_MsgPendingWithdrawResponse) Range(f func(protoreflect.Fi
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgPendingWithdrawResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_MsgIcaWithdrawResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7187,13 +7187,13 @@ func (x *fastReflection_MsgPendingWithdrawResponse) Has(fd protoreflect.FieldDes
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgPendingWithdrawResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_MsgIcaWithdrawResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7203,13 +7203,13 @@ func (x *fastReflection_MsgPendingWithdrawResponse) Clear(fd protoreflect.FieldD
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgPendingWithdrawResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgIcaWithdrawResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdrawResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdrawResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -7223,13 +7223,13 @@ func (x *fastReflection_MsgPendingWithdrawResponse) Get(descriptor protoreflect.
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgPendingWithdrawResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_MsgIcaWithdrawResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7243,36 +7243,36 @@ func (x *fastReflection_MsgPendingWithdrawResponse) Set(fd protoreflect.FieldDes
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgPendingWithdrawResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgIcaWithdrawResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgPendingWithdrawResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgIcaWithdrawResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgPendingWithdrawResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgIcaWithdrawResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgPendingWithdrawResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgIcaWithdrawResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgPendingWithdrawResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_MsgIcaWithdrawResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgPendingWithdrawResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgIcaWithdrawResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -7280,7 +7280,7 @@ func (x *fastReflection_MsgPendingWithdrawResponse) WhichOneof(d protoreflect.On
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgPendingWithdrawResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_MsgIcaWithdrawResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -7291,7 +7291,7 @@ func (x *fastReflection_MsgPendingWithdrawResponse) GetUnknown() protoreflect.Ra
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgPendingWithdrawResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_MsgIcaWithdrawResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -7303,7 +7303,7 @@ func (x *fastReflection_MsgPendingWithdrawResponse) SetUnknown(fields protorefle
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_MsgPendingWithdrawResponse) IsValid() bool {
+func (x *fastReflection_MsgIcaWithdrawResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -7313,9 +7313,9 @@ func (x *fastReflection_MsgPendingWithdrawResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgPendingWithdrawResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_MsgIcaWithdrawResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgPendingWithdrawResponse)
+		x := input.Message.Interface().(*MsgIcaWithdrawResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7337,7 +7337,7 @@ func (x *fastReflection_MsgPendingWithdrawResponse) ProtoMethods() *protoiface.M
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgPendingWithdrawResponse)
+		x := input.Message.Interface().(*MsgIcaWithdrawResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7367,7 +7367,7 @@ func (x *fastReflection_MsgPendingWithdrawResponse) ProtoMethods() *protoiface.M
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgPendingWithdrawResponse)
+		x := input.Message.Interface().(*MsgIcaWithdrawResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7399,10 +7399,10 @@ func (x *fastReflection_MsgPendingWithdrawResponse) ProtoMethods() *protoiface.M
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgPendingWithdrawResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaWithdrawResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgPendingWithdrawResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgIcaWithdrawResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			default:
@@ -8028,7 +8028,7 @@ func (x *MsgClaimSnAssetResponse) GetMinted() *v1beta1.Coin {
 	return nil
 }
 
-type MsgPendingWithdraw struct {
+type MsgIcaWithdraw struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -8040,8 +8040,8 @@ type MsgPendingWithdraw struct {
 	ChainTime            *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=chain_time,json=chainTime,proto3" json:"chain_time,omitempty"`
 }
 
-func (x *MsgPendingWithdraw) Reset() {
-	*x = MsgPendingWithdraw{}
+func (x *MsgIcaWithdraw) Reset() {
+	*x = MsgIcaWithdraw{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_tx_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -8049,60 +8049,60 @@ func (x *MsgPendingWithdraw) Reset() {
 	}
 }
 
-func (x *MsgPendingWithdraw) String() string {
+func (x *MsgIcaWithdraw) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MsgPendingWithdraw) ProtoMessage() {}
+func (*MsgIcaWithdraw) ProtoMessage() {}
 
-// Deprecated: Use MsgPendingWithdraw.ProtoReflect.Descriptor instead.
-func (*MsgPendingWithdraw) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgIcaWithdraw.ProtoReflect.Descriptor instead.
+func (*MsgIcaWithdraw) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *MsgPendingWithdraw) GetZoneId() string {
+func (x *MsgIcaWithdraw) GetZoneId() string {
 	if x != nil {
 		return x.ZoneId
 	}
 	return ""
 }
 
-func (x *MsgPendingWithdraw) GetControllerAddress() string {
+func (x *MsgIcaWithdraw) GetControllerAddress() string {
 	if x != nil {
 		return x.ControllerAddress
 	}
 	return ""
 }
 
-func (x *MsgPendingWithdraw) GetIcaTransferPortId() string {
+func (x *MsgIcaWithdraw) GetIcaTransferPortId() string {
 	if x != nil {
 		return x.IcaTransferPortId
 	}
 	return ""
 }
 
-func (x *MsgPendingWithdraw) GetIcaTransferChannelId() string {
+func (x *MsgIcaWithdraw) GetIcaTransferChannelId() string {
 	if x != nil {
 		return x.IcaTransferChannelId
 	}
 	return ""
 }
 
-func (x *MsgPendingWithdraw) GetChainTime() *timestamppb.Timestamp {
+func (x *MsgIcaWithdraw) GetChainTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ChainTime
 	}
 	return nil
 }
 
-type MsgPendingWithdrawResponse struct {
+type MsgIcaWithdrawResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *MsgPendingWithdrawResponse) Reset() {
-	*x = MsgPendingWithdrawResponse{}
+func (x *MsgIcaWithdrawResponse) Reset() {
+	*x = MsgIcaWithdrawResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_tx_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -8110,14 +8110,14 @@ func (x *MsgPendingWithdrawResponse) Reset() {
 	}
 }
 
-func (x *MsgPendingWithdrawResponse) String() string {
+func (x *MsgIcaWithdrawResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MsgPendingWithdrawResponse) ProtoMessage() {}
+func (*MsgIcaWithdrawResponse) ProtoMessage() {}
 
-// Deprecated: Use MsgPendingWithdrawResponse.ProtoReflect.Descriptor instead.
-func (*MsgPendingWithdrawResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgIcaWithdrawResponse.ProtoReflect.Descriptor instead.
+func (*MsgIcaWithdrawResponse) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{13}
 }
 
@@ -8246,71 +8246,70 @@ var file_nova_gal_v1_tx_proto_rawDesc = []byte{
 	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
 	0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65,
 	0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x06, 0x6d, 0x69, 0x6e, 0x74, 0x65, 0x64, 0x22,
-	0x89, 0x02, 0x0a, 0x12, 0x4d, 0x73, 0x67, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69,
-	0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69,
-	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12,
-	0x2d, 0x0a, 0x12, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e,
-	0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x2f,
-	0x0a, 0x14, 0x69, 0x63, 0x61, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x70,
-	0x6f, 0x72, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x69, 0x63,
-	0x61, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x50, 0x6f, 0x72, 0x74, 0x49, 0x64, 0x12,
-	0x35, 0x0a, 0x17, 0x69, 0x63, 0x61, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f,
-	0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x14, 0x69, 0x63, 0x61, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61,
-	0x6e, 0x6e, 0x65, 0x6c, 0x49, 0x64, 0x12, 0x43, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f,
-	0x74, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01,
-	0x52, 0x09, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x1c, 0x0a, 0x1a, 0x4d,
-	0x73, 0x67, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61,
-	0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xbc, 0x04, 0x0a, 0x03, 0x4d, 0x73,
-	0x67, 0x12, 0x43, 0x0a, 0x07, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x12, 0x17, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65,
-	0x70, 0x6f, 0x73, 0x69, 0x74, 0x1a, 0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c,
-	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x46, 0x0a, 0x08, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61,
-	0x74, 0x65, 0x12, 0x18, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31,
-	0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x20, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65,
-	0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4c,
-	0x0a, 0x0a, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x1a, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x6e,
-	0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x22, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65,
-	0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x61, 0x0a, 0x11,
-	0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74,
-	0x65, 0x12, 0x21, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e,
-	0x4d, 0x73, 0x67, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65,
-	0x67, 0x61, 0x74, 0x65, 0x1a, 0x29, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e,
-	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x55, 0x6e, 0x64,
-	0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x46, 0x0a, 0x08, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x18, 0x2e, 0x6e, 0x6f,
-	0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74,
-	0x68, 0x64, 0x72, 0x61, 0x77, 0x1a, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c,
-	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x52, 0x0a, 0x0c, 0x43, 0x6c, 0x61, 0x69, 0x6d,
-	0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x12, 0x1c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67,
-	0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e,
-	0x41, 0x73, 0x73, 0x65, 0x74, 0x1a, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c,
-	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73,
-	0x73, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5b, 0x0a, 0x0f, 0x50,
-	0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x1f,
-	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67,
-	0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x1a,
-	0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
-	0x67, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x9b, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d,
-	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78,
-	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f,
-	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61,
-	0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58,
-	0xaa, 0x02, 0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02,
-	0x0b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x17, 0x4e,
-	0x6f, 0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0d, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x47,
-	0x61, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x85, 0x02, 0x0a, 0x0e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72,
+	0x61, 0x77, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x2d, 0x0a, 0x12, 0x63,
+	0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c,
+	0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x2f, 0x0a, 0x14, 0x69, 0x63,
+	0x61, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x70, 0x6f, 0x72, 0x74, 0x5f,
+	0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x69, 0x63, 0x61, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x66, 0x65, 0x72, 0x50, 0x6f, 0x72, 0x74, 0x49, 0x64, 0x12, 0x35, 0x0a, 0x17, 0x69,
+	0x63, 0x61, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x5f, 0x63, 0x68, 0x61, 0x6e,
+	0x6e, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x14, 0x69, 0x63,
+	0x61, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c,
+	0x49, 0x64, 0x12, 0x43, 0x0a, 0x0a, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x74, 0x69, 0x6d, 0x65,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
+	0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52, 0x09, 0x63, 0x68,
+	0x61, 0x69, 0x6e, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x18, 0x0a, 0x16, 0x4d, 0x73, 0x67, 0x49, 0x63,
+	0x61, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x32, 0xb0, 0x04, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x43, 0x0a, 0x07, 0x44, 0x65, 0x70,
+	0x6f, 0x73, 0x69, 0x74, 0x12, 0x17, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e,
+	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x1a, 0x1f, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44,
+	0x65, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x46,
+	0x0a, 0x08, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x18, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x6c, 0x65,
+	0x67, 0x61, 0x74, 0x65, 0x1a, 0x20, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e,
+	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4c, 0x0a, 0x0a, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65,
+	0x67, 0x61, 0x74, 0x65, 0x12, 0x1a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e,
+	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65,
+	0x1a, 0x22, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
+	0x73, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x61, 0x0a, 0x11, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x55,
+	0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x12, 0x21, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
+	0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x50, 0x65, 0x6e, 0x64, 0x69,
+	0x6e, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x1a, 0x29, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x50, 0x65,
+	0x6e, 0x64, 0x69, 0x6e, 0x67, 0x55, 0x6e, 0x64, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x46, 0x0a, 0x08, 0x57, 0x69, 0x74, 0x68, 0x64,
+	0x72, 0x61, 0x77, 0x12, 0x18, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76,
+	0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x1a, 0x20, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x57,
+	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x52, 0x0a, 0x0c, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x12,
+	0x1c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
+	0x67, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x1a, 0x24, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43,
+	0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x4f, 0x0a, 0x0b, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72,
+	0x61, 0x77, 0x12, 0x1b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31,
+	0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x1a,
+	0x23, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73,
+	0x67, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x42, 0x9b, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74,
+	0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31,
+	0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58, 0xaa, 0x02, 0x0b, 0x4e,
+	0x6f, 0x76, 0x61, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0b, 0x4e, 0x6f, 0x76,
+	0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x17, 0x4e, 0x6f, 0x76, 0x61, 0x5c,
+	0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0xea, 0x02, 0x0d, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x47, 0x61, 0x6c, 0x3a, 0x3a,
+	0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -8339,8 +8338,8 @@ var file_nova_gal_v1_tx_proto_goTypes = []interface{}{
 	(*MsgWithdrawResponse)(nil),          // 9: nova.gal.v1.MsgWithdrawResponse
 	(*MsgClaimSnAsset)(nil),              // 10: nova.gal.v1.MsgClaimSnAsset
 	(*MsgClaimSnAssetResponse)(nil),      // 11: nova.gal.v1.MsgClaimSnAssetResponse
-	(*MsgPendingWithdraw)(nil),           // 12: nova.gal.v1.MsgPendingWithdraw
-	(*MsgPendingWithdrawResponse)(nil),   // 13: nova.gal.v1.MsgPendingWithdrawResponse
+	(*MsgIcaWithdraw)(nil),               // 12: nova.gal.v1.MsgIcaWithdraw
+	(*MsgIcaWithdrawResponse)(nil),       // 13: nova.gal.v1.MsgIcaWithdrawResponse
 	(*v1beta1.Coin)(nil),                 // 14: cosmos.base.v1beta1.Coin
 	(*timestamppb.Timestamp)(nil),        // 15: google.protobuf.Timestamp
 }
@@ -8353,21 +8352,21 @@ var file_nova_gal_v1_tx_proto_depIdxs = []int32{
 	14, // 5: nova.gal.v1.MsgPendingUndelegateResponse.burn_asset:type_name -> cosmos.base.v1beta1.Coin
 	14, // 6: nova.gal.v1.MsgPendingUndelegateResponse.undelegate_asset:type_name -> cosmos.base.v1beta1.Coin
 	14, // 7: nova.gal.v1.MsgClaimSnAssetResponse.minted:type_name -> cosmos.base.v1beta1.Coin
-	15, // 8: nova.gal.v1.MsgPendingWithdraw.chain_time:type_name -> google.protobuf.Timestamp
+	15, // 8: nova.gal.v1.MsgIcaWithdraw.chain_time:type_name -> google.protobuf.Timestamp
 	0,  // 9: nova.gal.v1.Msg.Deposit:input_type -> nova.gal.v1.MsgDeposit
 	2,  // 10: nova.gal.v1.Msg.Delegate:input_type -> nova.gal.v1.MsgDelegate
 	4,  // 11: nova.gal.v1.Msg.Undelegate:input_type -> nova.gal.v1.MsgUndelegate
 	6,  // 12: nova.gal.v1.Msg.PendingUndelegate:input_type -> nova.gal.v1.MsgPendingUndelegate
 	8,  // 13: nova.gal.v1.Msg.Withdraw:input_type -> nova.gal.v1.MsgWithdraw
 	10, // 14: nova.gal.v1.Msg.ClaimSnAsset:input_type -> nova.gal.v1.MsgClaimSnAsset
-	12, // 15: nova.gal.v1.Msg.PendingWithdraw:input_type -> nova.gal.v1.MsgPendingWithdraw
+	12, // 15: nova.gal.v1.Msg.IcaWithdraw:input_type -> nova.gal.v1.MsgIcaWithdraw
 	1,  // 16: nova.gal.v1.Msg.Deposit:output_type -> nova.gal.v1.MsgDepositResponse
 	3,  // 17: nova.gal.v1.Msg.Delegate:output_type -> nova.gal.v1.MsgDelegateResponse
 	5,  // 18: nova.gal.v1.Msg.Undelegate:output_type -> nova.gal.v1.MsgUndelegateResponse
 	7,  // 19: nova.gal.v1.Msg.PendingUndelegate:output_type -> nova.gal.v1.MsgPendingUndelegateResponse
 	9,  // 20: nova.gal.v1.Msg.Withdraw:output_type -> nova.gal.v1.MsgWithdrawResponse
 	11, // 21: nova.gal.v1.Msg.ClaimSnAsset:output_type -> nova.gal.v1.MsgClaimSnAssetResponse
-	13, // 22: nova.gal.v1.Msg.PendingWithdraw:output_type -> nova.gal.v1.MsgPendingWithdrawResponse
+	13, // 22: nova.gal.v1.Msg.IcaWithdraw:output_type -> nova.gal.v1.MsgIcaWithdrawResponse
 	16, // [16:23] is the sub-list for method output_type
 	9,  // [9:16] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name
@@ -8526,7 +8525,7 @@ func file_nova_gal_v1_tx_proto_init() {
 			}
 		}
 		file_nova_gal_v1_tx_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgPendingWithdraw); i {
+			switch v := v.(*MsgIcaWithdraw); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -8538,7 +8537,7 @@ func file_nova_gal_v1_tx_proto_init() {
 			}
 		}
 		file_nova_gal_v1_tx_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgPendingWithdrawResponse); i {
+			switch v := v.(*MsgIcaWithdrawResponse); i {
 			case 0:
 				return &v.state
 			case 1:

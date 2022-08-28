@@ -28,7 +28,7 @@ type MsgClient interface {
 	PendingUndelegate(ctx context.Context, in *MsgPendingUndelegate, opts ...grpc.CallOption) (*MsgPendingUndelegateResponse, error)
 	Withdraw(ctx context.Context, in *MsgWithdraw, opts ...grpc.CallOption) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts ...grpc.CallOption) (*MsgClaimSnAssetResponse, error)
-	PendingWithdraw(ctx context.Context, in *MsgPendingWithdraw, opts ...grpc.CallOption) (*MsgPendingWithdrawResponse, error)
+	IcaWithdraw(ctx context.Context, in *MsgIcaWithdraw, opts ...grpc.CallOption) (*MsgIcaWithdrawResponse, error)
 }
 
 type msgClient struct {
@@ -93,9 +93,9 @@ func (c *msgClient) ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts 
 	return out, nil
 }
 
-func (c *msgClient) PendingWithdraw(ctx context.Context, in *MsgPendingWithdraw, opts ...grpc.CallOption) (*MsgPendingWithdrawResponse, error) {
-	out := new(MsgPendingWithdrawResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/PendingWithdraw", in, out, opts...)
+func (c *msgClient) IcaWithdraw(ctx context.Context, in *MsgIcaWithdraw, opts ...grpc.CallOption) (*MsgIcaWithdrawResponse, error) {
+	out := new(MsgIcaWithdrawResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/IcaWithdraw", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ type MsgServer interface {
 	PendingUndelegate(context.Context, *MsgPendingUndelegate) (*MsgPendingUndelegateResponse, error)
 	Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error)
-	PendingWithdraw(context.Context, *MsgPendingWithdraw) (*MsgPendingWithdrawResponse, error)
+	IcaWithdraw(context.Context, *MsgIcaWithdraw) (*MsgIcaWithdrawResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -138,8 +138,8 @@ func (UnimplementedMsgServer) Withdraw(context.Context, *MsgWithdraw) (*MsgWithd
 func (UnimplementedMsgServer) ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClaimSnAsset not implemented")
 }
-func (UnimplementedMsgServer) PendingWithdraw(context.Context, *MsgPendingWithdraw) (*MsgPendingWithdrawResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PendingWithdraw not implemented")
+func (UnimplementedMsgServer) IcaWithdraw(context.Context, *MsgIcaWithdraw) (*MsgIcaWithdrawResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IcaWithdraw not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -262,20 +262,20 @@ func _Msg_ClaimSnAsset_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_PendingWithdraw_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgPendingWithdraw)
+func _Msg_IcaWithdraw_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgIcaWithdraw)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).PendingWithdraw(ctx, in)
+		return srv.(MsgServer).IcaWithdraw(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Msg/PendingWithdraw",
+		FullMethod: "/nova.gal.v1.Msg/IcaWithdraw",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).PendingWithdraw(ctx, req.(*MsgPendingWithdraw))
+		return srv.(MsgServer).IcaWithdraw(ctx, req.(*MsgIcaWithdraw))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -312,8 +312,8 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_ClaimSnAsset_Handler,
 		},
 		{
-			MethodName: "PendingWithdraw",
-			Handler:    _Msg_PendingWithdraw_Handler,
+			MethodName: "IcaWithdraw",
+			Handler:    _Msg_IcaWithdraw_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

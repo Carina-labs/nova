@@ -17,7 +17,7 @@ service Msg {
   rpc PendingUndelegate(MsgPendingUndelegate) returns (MsgPendingUndelegateResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
   rpc ClaimSnAsset(MsgClaimSnAsset) returns (MsgClaimSnAssetResponse);
-  rpc PendingWithdraw(MsgPendingWithdraw) returns (MsgPendingWithdrawResponse);
+  rpc IcaWithdraw(MsgIcaWithdraw) returns (MsgIcaWithdrawResponse);
 }
 
 // MsgDeposit defines user who deposit and amount of coins.
@@ -92,7 +92,7 @@ message MsgClaimSnAssetResponse {
   [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 
-message MsgPendingWithdraw{
+message MsgIcaWithdraw{
   string zone_id = 1;
   string controller_address = 2;
   string ica_transfer_port_id = 3;
@@ -100,4 +100,4 @@ message MsgPendingWithdraw{
   google.protobuf.Timestamp chain_time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
 }
 
-message MsgPendingWithdrawResponse{}
+message MsgIcaWithdrawResponse{}

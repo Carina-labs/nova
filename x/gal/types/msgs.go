@@ -22,7 +22,7 @@ var _ sdk.Msg = &MsgUndelegate{}
 var _ sdk.Msg = &MsgPendingUndelegate{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
-var _ sdk.Msg = &MsgPendingWithdraw{}
+var _ sdk.Msg = &MsgIcaWithdraw{}
 
 func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin) *MsgDeposit {
 	return &MsgDeposit{
@@ -226,8 +226,8 @@ func (msg MsgClaimSnAsset) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{claimer}
 }
 
-func NewMsgPendingWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId, chanId string, blockTime time.Time) *MsgPendingWithdraw {
-	return &MsgPendingWithdraw{
+func NewMsgPendingWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId, chanId string, blockTime time.Time) *MsgIcaWithdraw {
+	return &MsgIcaWithdraw{
 		ZoneId:               zoneId,
 		ControllerAddress:    controllerAddr.String(),
 		IcaTransferPortId:    portId,
@@ -236,11 +236,11 @@ func NewMsgPendingWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId,
 	}
 }
 
-func (msg MsgPendingWithdraw) Route() string {
+func (msg MsgIcaWithdraw) Route() string {
 	return RouterKey
 }
 
-func (msg MsgPendingWithdraw) ValidateBasic() error {
+func (msg MsgIcaWithdraw) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
@@ -252,11 +252,11 @@ func (msg MsgPendingWithdraw) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgPendingWithdraw) GetSignBytes() []byte {
+func (msg MsgIcaWithdraw) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgPendingWithdraw) GetSigners() []sdk.AccAddress {
+func (msg MsgIcaWithdraw) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	return []sdk.AccAddress{withdrawer}
 }
