@@ -41,32 +41,31 @@ func calcPrecisionMultiplier(prec int64) *big.Int {
 
 // ClaimAndMintShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
-func (k Keeper) ClaimAndMintShareToken(ctx sdk.Context, claimer sdk.AccAddress, asset sdk.Coin, transferPortId, transferChanId string) (sdk.Coin, error) {
+func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone, asset sdk.Coin) (sdk.Coin, error) {
 	snDenom, err := k.GetSnDenomForIBCDenom(ctx, asset.Denom)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
 	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
 
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
-	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, transferPortId, transferChanId)
+
+	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
 	// convert decimal
-	snAsset := k.ConvertWAssetToSnAssetDecimal(asset.Amount.BigInt(), zoneInfo.Decimal, snDenom)
+	snAsset := k.ConvertWAssetToSnAssetDecimal(asset.Amount.BigInt(), zone.Decimal, snDenom)
 	mintAmt := k.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
-	mintCoin := sdk.NewCoin(zoneInfo.SnDenom, sdk.NewIntFromBigInt(mintAmt))
 
-	err = k.MintShareTokens(ctx, claimer, mintCoin)
-	if err != nil {
-		return sdk.Coin{}, err
-	}
+	return sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)), nil
 
-	err = k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimer, types.DelegateSuccess)
+}
+
+func (k Keeper) MintShareToken(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coin) (sdk.Coin, error) {
+	err := k.MintShareTokens(ctx, claimer, mintCoin)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
