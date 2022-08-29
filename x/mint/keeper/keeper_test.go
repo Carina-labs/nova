@@ -31,7 +31,7 @@ func (suite *KeeperTestSuite) TestMintCoinsToFeeCollectorAndGetProportions() {
 
 	// When coin is minted to the fee collector
 	fee := sdk.NewCoin("nova", sdk.NewInt(0))
-	coin := mintKeeper.GetProportions(suite.Ctx, fee, sdk.NewDecWithPrec(2, 1))
+	coin := mintKeeper.GetProportions(fee, sdk.NewDecWithPrec(2, 1))
 	suite.Equal("0nova", coin.String())
 
 	// When mint the 100K stake coin to the fee collector
@@ -45,7 +45,7 @@ func (suite *KeeperTestSuite) TestMintCoinsToFeeCollectorAndGetProportions() {
 	suite.NoError(err)
 
 	// check proportion for 20%
-	coin = mintKeeper.GetProportions(suite.Ctx, fee, sdk.NewDecWithPrec(2, 1))
+	coin = mintKeeper.GetProportions(fee, sdk.NewDecWithPrec(2, 1))
 	suite.Equal(fees[0].Amount.Quo(sdk.NewInt(5)), coin.Amount)
 }
 

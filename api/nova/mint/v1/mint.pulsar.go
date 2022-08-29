@@ -498,11 +498,10 @@ func (x *fastReflection_Minter) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_DistributionProportions                             protoreflect.MessageDescriptor
-	fd_DistributionProportions_staking                     protoreflect.FieldDescriptor
-	fd_DistributionProportions_lp_incentives               protoreflect.FieldDescriptor
-	fd_DistributionProportions_stable_guarantee_incentives protoreflect.FieldDescriptor
-	fd_DistributionProportions_community_pool              protoreflect.FieldDescriptor
+	md_DistributionProportions                protoreflect.MessageDescriptor
+	fd_DistributionProportions_staking        protoreflect.FieldDescriptor
+	fd_DistributionProportions_lp_incentives  protoreflect.FieldDescriptor
+	fd_DistributionProportions_community_pool protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -510,7 +509,6 @@ func init() {
 	md_DistributionProportions = File_nova_mint_v1_mint_proto.Messages().ByName("DistributionProportions")
 	fd_DistributionProportions_staking = md_DistributionProportions.Fields().ByName("staking")
 	fd_DistributionProportions_lp_incentives = md_DistributionProportions.Fields().ByName("lp_incentives")
-	fd_DistributionProportions_stable_guarantee_incentives = md_DistributionProportions.Fields().ByName("stable_guarantee_incentives")
 	fd_DistributionProportions_community_pool = md_DistributionProportions.Fields().ByName("community_pool")
 }
 
@@ -591,12 +589,6 @@ func (x *fastReflection_DistributionProportions) Range(f func(protoreflect.Field
 			return
 		}
 	}
-	if x.StableGuaranteeIncentives != "" {
-		value := protoreflect.ValueOfString(x.StableGuaranteeIncentives)
-		if !f(fd_DistributionProportions_stable_guarantee_incentives, value) {
-			return
-		}
-	}
 	if x.CommunityPool != "" {
 		value := protoreflect.ValueOfString(x.CommunityPool)
 		if !f(fd_DistributionProportions_community_pool, value) {
@@ -622,8 +614,6 @@ func (x *fastReflection_DistributionProportions) Has(fd protoreflect.FieldDescri
 		return x.Staking != ""
 	case "nova.mint.v1.DistributionProportions.lp_incentives":
 		return x.LpIncentives != ""
-	case "nova.mint.v1.DistributionProportions.stable_guarantee_incentives":
-		return x.StableGuaranteeIncentives != ""
 	case "nova.mint.v1.DistributionProportions.community_pool":
 		return x.CommunityPool != ""
 	default:
@@ -646,8 +636,6 @@ func (x *fastReflection_DistributionProportions) Clear(fd protoreflect.FieldDesc
 		x.Staking = ""
 	case "nova.mint.v1.DistributionProportions.lp_incentives":
 		x.LpIncentives = ""
-	case "nova.mint.v1.DistributionProportions.stable_guarantee_incentives":
-		x.StableGuaranteeIncentives = ""
 	case "nova.mint.v1.DistributionProportions.community_pool":
 		x.CommunityPool = ""
 	default:
@@ -671,9 +659,6 @@ func (x *fastReflection_DistributionProportions) Get(descriptor protoreflect.Fie
 		return protoreflect.ValueOfString(value)
 	case "nova.mint.v1.DistributionProportions.lp_incentives":
 		value := x.LpIncentives
-		return protoreflect.ValueOfString(value)
-	case "nova.mint.v1.DistributionProportions.stable_guarantee_incentives":
-		value := x.StableGuaranteeIncentives
 		return protoreflect.ValueOfString(value)
 	case "nova.mint.v1.DistributionProportions.community_pool":
 		value := x.CommunityPool
@@ -702,8 +687,6 @@ func (x *fastReflection_DistributionProportions) Set(fd protoreflect.FieldDescri
 		x.Staking = value.Interface().(string)
 	case "nova.mint.v1.DistributionProportions.lp_incentives":
 		x.LpIncentives = value.Interface().(string)
-	case "nova.mint.v1.DistributionProportions.stable_guarantee_incentives":
-		x.StableGuaranteeIncentives = value.Interface().(string)
 	case "nova.mint.v1.DistributionProportions.community_pool":
 		x.CommunityPool = value.Interface().(string)
 	default:
@@ -730,8 +713,6 @@ func (x *fastReflection_DistributionProportions) Mutable(fd protoreflect.FieldDe
 		panic(fmt.Errorf("field staking of message nova.mint.v1.DistributionProportions is not mutable"))
 	case "nova.mint.v1.DistributionProportions.lp_incentives":
 		panic(fmt.Errorf("field lp_incentives of message nova.mint.v1.DistributionProportions is not mutable"))
-	case "nova.mint.v1.DistributionProportions.stable_guarantee_incentives":
-		panic(fmt.Errorf("field stable_guarantee_incentives of message nova.mint.v1.DistributionProportions is not mutable"))
 	case "nova.mint.v1.DistributionProportions.community_pool":
 		panic(fmt.Errorf("field community_pool of message nova.mint.v1.DistributionProportions is not mutable"))
 	default:
@@ -750,8 +731,6 @@ func (x *fastReflection_DistributionProportions) NewField(fd protoreflect.FieldD
 	case "nova.mint.v1.DistributionProportions.staking":
 		return protoreflect.ValueOfString("")
 	case "nova.mint.v1.DistributionProportions.lp_incentives":
-		return protoreflect.ValueOfString("")
-	case "nova.mint.v1.DistributionProportions.stable_guarantee_incentives":
 		return protoreflect.ValueOfString("")
 	case "nova.mint.v1.DistributionProportions.community_pool":
 		return protoreflect.ValueOfString("")
@@ -832,10 +811,6 @@ func (x *fastReflection_DistributionProportions) ProtoMethods() *protoiface.Meth
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.StableGuaranteeIncentives)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
 		l = len(x.CommunityPool)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
@@ -875,13 +850,6 @@ func (x *fastReflection_DistributionProportions) ProtoMethods() *protoiface.Meth
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.CommunityPool)))
 			i--
 			dAtA[i] = 0x22
-		}
-		if len(x.StableGuaranteeIncentives) > 0 {
-			i -= len(x.StableGuaranteeIncentives)
-			copy(dAtA[i:], x.StableGuaranteeIncentives)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.StableGuaranteeIncentives)))
-			i--
-			dAtA[i] = 0x1a
 		}
 		if len(x.LpIncentives) > 0 {
 			i -= len(x.LpIncentives)
@@ -1009,38 +977,6 @@ func (x *fastReflection_DistributionProportions) ProtoMethods() *protoiface.Meth
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
 				x.LpIncentives = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 3:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field StableGuaranteeIncentives", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.StableGuaranteeIncentives = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 4:
 				if wireType != 2 {
@@ -1982,9 +1918,6 @@ type DistributionProportions struct {
 	// pool_incentives defines the proportion of the minted minted_denom that is
 	// to be allocated as pool incentives.
 	LpIncentives string `protobuf:"bytes,2,opt,name=lp_incentives,json=lpIncentives,proto3" json:"lp_incentives,omitempty"`
-	// developer_rewards defines the proportion of the minted minted_denom that is
-	// to be allocated to developer rewards address.
-	StableGuaranteeIncentives string `protobuf:"bytes,3,opt,name=stable_guarantee_incentives,json=stableGuaranteeIncentives,proto3" json:"stable_guarantee_incentives,omitempty"`
 	// community_pool defines the proportion of the minted minted_denom that is
 	// to be allocated to the community pool.
 	CommunityPool string `protobuf:"bytes,4,opt,name=community_pool,json=communityPool,proto3" json:"community_pool,omitempty"`
@@ -2020,13 +1953,6 @@ func (x *DistributionProportions) GetStaking() string {
 func (x *DistributionProportions) GetLpIncentives() string {
 	if x != nil {
 		return x.LpIncentives
-	}
-	return ""
-}
-
-func (x *DistributionProportions) GetStableGuaranteeIncentives() string {
-	if x != nil {
-		return x.StableGuaranteeIncentives
 	}
 	return ""
 }
@@ -2148,7 +2074,7 @@ var file_nova_mint_v1_mint_proto_rawDesc = []byte{
 	0x63, 0xf2, 0xde, 0x1f, 0x18, 0x79, 0x61, 0x6d, 0x6c, 0x3a, 0x22, 0x61, 0x6e, 0x6e, 0x75, 0x61,
 	0x6c, 0x5f, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x52, 0x10, 0x61,
 	0x6e, 0x6e, 0x75, 0x61, 0x6c, 0x50, 0x72, 0x6f, 0x76, 0x69, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x22,
-	0xff, 0x02, 0x0a, 0x17, 0x44, 0x69, 0x73, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x69, 0x6f, 0x6e,
+	0x8f, 0x02, 0x0a, 0x17, 0x44, 0x69, 0x73, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x69, 0x6f, 0x6e,
 	0x50, 0x72, 0x6f, 0x70, 0x6f, 0x72, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x48, 0x0a, 0x07, 0x73,
 	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x2e, 0xc8, 0xde,
 	0x1f, 0x00, 0xda, 0xde, 0x1f, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
@@ -2159,13 +2085,6 @@ var file_nova_mint_v1_mint_proto_rawDesc = []byte{
 	0x1f, 0x00, 0xda, 0xde, 0x1f, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
 	0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73,
 	0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x44, 0x65, 0x63, 0x52, 0x0c, 0x6c, 0x70,
-	0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x73, 0x12, 0x6e, 0x0a, 0x1b, 0x73, 0x74,
-	0x61, 0x62, 0x6c, 0x65, 0x5f, 0x67, 0x75, 0x61, 0x72, 0x61, 0x6e, 0x74, 0x65, 0x65, 0x5f, 0x69,
-	0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x42,
-	0x2e, 0xc8, 0xde, 0x1f, 0x00, 0xda, 0xde, 0x1f, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
-	0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x44, 0x65, 0x63, 0x52,
-	0x19, 0x73, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x47, 0x75, 0x61, 0x72, 0x61, 0x6e, 0x74, 0x65, 0x65,
 	0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x73, 0x12, 0x55, 0x0a, 0x0e, 0x63, 0x6f,
 	0x6d, 0x6d, 0x75, 0x6e, 0x69, 0x74, 0x79, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x18, 0x04, 0x20, 0x01,
 	0x28, 0x09, 0x42, 0x2e, 0xc8, 0xde, 0x1f, 0x00, 0xda, 0xde, 0x1f, 0x26, 0x67, 0x69, 0x74, 0x68,
