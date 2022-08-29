@@ -100,19 +100,18 @@ var (
 
 	// module account permissions
 	maccPerms = map[string][]string{
-		authtypes.FeeCollectorName:                      nil,
-		distrtypes.ModuleName:                           nil,
-		icatypes.ModuleName:                             nil,
-		minttypes.LpIncentiveModuleAccName:              nil,
-		minttypes.StableGuaranteeIncentiveModuleAccName: nil,
-		minttypes.ModuleName:                            {authtypes.Minter},
-		stakingtypes.BondedPoolName:                     {authtypes.Burner, authtypes.Staking},
-		stakingtypes.NotBondedPoolName:                  {authtypes.Burner, authtypes.Staking},
-		govtypes.ModuleName:                             {authtypes.Burner},
-		ibctransfertypes.ModuleName:                     {authtypes.Minter, authtypes.Burner},
-		wasm.ModuleName:                                 {authtypes.Burner},
-		ibcstakingtypes.ModuleName:                      {authtypes.Minter, authtypes.Burner},
-		gal.ModuleName:                                  {authtypes.Minter, authtypes.Burner},
+		authtypes.FeeCollectorName:         nil,
+		distrtypes.ModuleName:              nil,
+		icatypes.ModuleName:                nil,
+		minttypes.LpIncentiveModuleAccName: nil,
+		minttypes.ModuleName:               {authtypes.Minter},
+		stakingtypes.BondedPoolName:        {authtypes.Burner, authtypes.Staking},
+		stakingtypes.NotBondedPoolName:     {authtypes.Burner, authtypes.Staking},
+		govtypes.ModuleName:                {authtypes.Burner},
+		ibctransfertypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
+		wasm.ModuleName:                    {authtypes.Burner},
+		ibcstakingtypes.ModuleName:         {authtypes.Minter, authtypes.Burner},
+		gal.ModuleName:                     {authtypes.Minter, authtypes.Burner},
 	}
 )
 
