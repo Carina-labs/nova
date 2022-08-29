@@ -13,15 +13,13 @@ import (
 
 // Parameter store keys
 var (
-	KeyMintDenom                 = []byte("MintDenom")
-	KeyInflationRateChange       = []byte("InflationRateChange")
-	KeyInflationMax              = []byte("InflationMax")
-	KeyInflationMin              = []byte("InflationMin")
-	KeyGoalBonded                = []byte("GoalBonded")
-	KeyBlocksPerYear             = []byte("BlocksPerYear")
-	KeyLPIncentives              = []byte("LPIncentives")
-	KeyStableGuaranteeIncentives = []byte("StableGuaranteeIncentives")
-	KeyPoolAllocationRatio       = []byte("PoolAllocationRatio")
+	KeyMintDenom               = []byte("MintDenom")
+	KeyInflationRateChange     = []byte("InflationRateChange")
+	KeyInflationMax            = []byte("InflationMax")
+	KeyInflationMin            = []byte("InflationMin")
+	KeyGoalBonded              = []byte("GoalBonded")
+	KeyBlocksPerYear           = []byte("BlocksPerYear")
+	KeyDistributionProportions = []byte("DistributionProportions")
 )
 
 // ParamTable for minting module.
@@ -53,12 +51,11 @@ func DefaultParams() Params {
 		InflationMax:        sdk.NewDecWithPrec(20, 2),
 		InflationMin:        sdk.NewDecWithPrec(7, 2),
 		GoalBonded:          sdk.NewDecWithPrec(67, 2),
-		BlocksPerYear:       uint64(60 * 60 * 8766 / 6), // assuming 5 second block times
+		BlocksPerYear:       uint64(60 * 60 * 8766 / 6), // assuming 5second block times
 		DistributionProportions: DistributionProportions{
-			Staking:                   sdk.NewDecWithPrec(5, 1), // 0.5
-			LpIncentives:              sdk.NewDecWithPrec(3, 1), // 0.3
-			StableGuaranteeIncentives: sdk.NewDecWithPrec(1, 1), // 0.1
-			CommunityPool:             sdk.NewDecWithPrec(1, 1), // 0.1
+			Staking:       sdk.NewDecWithPrec(5, 1), // 0.5
+			LpIncentives:  sdk.NewDecWithPrec(4, 1), // 0.4
+			CommunityPool: sdk.NewDecWithPrec(1, 1), // 0.1
 		},
 	}
 }
@@ -111,7 +108,7 @@ func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 		paramtypes.NewParamSetPair(KeyInflationMin, &p.InflationMin, validateInflationMin),
 		paramtypes.NewParamSetPair(KeyGoalBonded, &p.GoalBonded, validateGoalBonded),
 		paramtypes.NewParamSetPair(KeyBlocksPerYear, &p.BlocksPerYear, validateBlocksPerYear),
-		paramtypes.NewParamSetPair(KeyPoolAllocationRatio, &p.DistributionProportions, validateDistributionProportions),
+		paramtypes.NewParamSetPair(KeyDistributionProportions, &p.DistributionProportions, validateDistributionProportions),
 	}
 }
 
@@ -222,17 +219,11 @@ func validateDistributionProportions(i interface{}) error {
 		return errors.New("pool incentives distribution ratio should not be negative")
 	}
 
-	if v.StableGuaranteeIncentives.IsNegative() {
-		return errors.New("developer rewards distribution ratio should not be negative")
-	}
-
-	// TODO: Maybe we should allow this :joy:, lets you burn osmo from community pool
-	// for new chains
 	if v.CommunityPool.IsNegative() {
 		return errors.New("community pool distribution ratio should not be negative")
 	}
 
-	totalProportions := v.Staking.Add(v.LpIncentives).Add(v.StableGuaranteeIncentives).Add(v.CommunityPool)
+	totalProportions := v.Staking.Add(v.LpIncentives).Add(v.CommunityPool)
 
 	if !totalProportions.Equal(sdk.NewDec(1)) {
 		return errors.New("total distributions ratio should be 1")

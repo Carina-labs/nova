@@ -10,9 +10,6 @@ const (
 	//module account name for LP incentive vesting
 	LpIncentiveModuleAccName = "lp_incentive"
 
-	//module account name for Stable Guarantee incentive vesting
-	StableGuaranteeIncentiveModuleAccName = "stable_guarantee_incentive"
-
 	// StoreKey is the default store key for mint
 	StoreKey = ModuleName
 
