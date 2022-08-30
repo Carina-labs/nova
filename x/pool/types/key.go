@@ -1,7 +1,7 @@
 package types
 
 const (
-	ModuleName = "lp-incentives"
+	ModuleName = "pool"
 
 	StoreKey = ModuleName
 
