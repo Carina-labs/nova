@@ -8,7 +8,7 @@ import (
 )
 
 func (suite *KeeperTestSuite) TestClaimShareToken() {
-	// user가 예치한 금액에서 
+
 }
 
 func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
