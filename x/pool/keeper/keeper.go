@@ -16,6 +16,7 @@ type Keeper struct {
 	paramSpace paramtypes.Subspace
 }
 
+// NewKeeper returns a new instance of pool keeper.
 func NewKeeper(cdc codec.BinaryCodec, storeKey sdk.StoreKey, paramSpace paramtypes.Subspace) Keeper {
 	return Keeper{
 		cdc:        cdc,
@@ -24,14 +25,17 @@ func NewKeeper(cdc codec.BinaryCodec, storeKey sdk.StoreKey, paramSpace paramtyp
 	}
 }
 
+// Logger returns logger for pool keeper.
 func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
+// getPoolStore returns store saving pool information.
 func (k Keeper) getPoolStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPool)
 }
 
+// isValidOperator checks if signer of msg is valid.
 func (k Keeper) isValidOperator(msg *types.MsgSetPoolWeight) bool {
 	controllerAcc, err := sdk.AccAddressFromBech32(msg.Operator)
 	if err != nil {
