@@ -9,8 +9,8 @@ import (
 
 func (k Keeper) InitGenesis(ctx sdk.Context, genesisState *types.GenesisState) {
 	k.SetParams(ctx, genesisState.Params)
-	for _, pool := range genesisState.PoolInfo.Pools {
-		if err := k.CreatePool(ctx, pool.PoolId, pool.PoolContractAddress); err != nil {
+	for i := range genesisState.PoolInfo.Pools {
+		if err := k.CreatePool(ctx, genesisState.PoolInfo.Pools[i]); err != nil {
 			panic(fmt.Errorf("failed to initialize genesis state at %s, err: %v", types.ModuleName, err))
 		}
 	}

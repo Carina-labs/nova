@@ -19,9 +19,16 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 	}
 }
 
-func (m msgServer) CreatePool(goCtx context.Context, pool *types.MsgCreatePool) (*types.MsgCreatePoolResponse, error) {
+// CreatePool handles MsgCreatePool message, it creates a new pool
+// with pool id and contract address of pool.
+func (m msgServer) CreatePool(goCtx context.Context, msg *types.MsgCreatePool) (*types.MsgCreatePoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	err := m.keeper.CreatePool(ctx, pool.PoolId, pool.PoolAddress)
+	pool := &types.Pool{
+		PoolId:              msg.PoolId,
+		PoolContractAddress: msg.PoolAddress,
+		Weight:              0,
+	}
+	err := m.keeper.CreatePool(ctx, pool)
 	if err != nil {
 		return nil, err
 	}
@@ -29,6 +36,8 @@ func (m msgServer) CreatePool(goCtx context.Context, pool *types.MsgCreatePool) 
 	return &types.MsgCreatePoolResponse{}, nil
 }
 
+// SetPoolWeight handles MsgSetPoolWeight message,
+// it set a weight of pool, and it is used for calculating portion of distribution for newly minted nova token.
 func (m msgServer) SetPoolWeight(goCtx context.Context, msg *types.MsgSetPoolWeight) (*types.MsgSetPoolWeightResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	ok := m.keeper.isValidOperator(msg)
