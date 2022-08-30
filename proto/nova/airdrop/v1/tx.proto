@@ -3,6 +3,7 @@ package nova.airdrop.v1;
 
 import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
 
 import "nova/airdrop/v1/genesis.proto";
 
@@ -12,11 +13,15 @@ service Msg {
   rpc ClaimAirdrop(MsgClaimAirdropRequest) returns (MsgClaimAirdropResponse);
 
   rpc MarkSocialQuestPerformed(MsgMarkSocialQuestPerformedRequest) returns (MsgMarkSocialQuestPerformedResponse);
+
+  rpc MarkUserProvidedLiquidity(MsgMarkUserProvidedLiquidityRequest) returns (MsgMarkUserProvidedLiquidityResponse);
 }
 
 message MsgClaimAirdropRequest {
+  option (cosmos.msg.v1.signer) = "user_address";
+
   // address of the airdrop recipient.
-  string address = 1 [ (gogoproto.nullable) = false ];
+  string user_address = 1 [ (gogoproto.nullable) = false ];
 
   // quest type of the airdrop to claim.
   QuestType quest_type = 2 [ (gogoproto.nullable) = false ];
@@ -28,6 +33,8 @@ message MsgClaimAirdropResponse {
 
 // MsgMarkSocialQuestPerformedRequest the controller marks social quest performed for the users.
 message MsgMarkSocialQuestPerformedRequest {
+  option (cosmos.msg.v1.signer) = "controller_address";
+
   // controller address for the airdrop module.
   string controller_address = 1 [ (gogoproto.nullable) = false ];
 
@@ -36,5 +43,19 @@ message MsgMarkSocialQuestPerformedRequest {
 }
 
 message MsgMarkSocialQuestPerformedResponse {
+  bool succeeded = 1 [ (gogoproto.nullable) = false ];
+}
+
+message MsgMarkUserProvidedLiquidityRequest {
+  option (cosmos.msg.v1.signer) = "controller_address";
+
+  // controller address for the airdrop module.
+  string controller_address = 1 [ (gogoproto.nullable) = false ];
+
+  // the addresses of the users who provided the liquidities.
+  repeated string user_addresses = 2 [ (gogoproto.nullable) = false ];
+}
+
+message MsgMarkUserProvidedLiquidityResponse {
   bool succeeded = 1 [ (gogoproto.nullable) = false ];
 }
