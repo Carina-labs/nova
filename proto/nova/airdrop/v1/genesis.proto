@@ -5,6 +5,7 @@ import "nova/airdrop/v1/params.proto";
 
 import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
 
@@ -18,7 +19,7 @@ message GenesisState {
 
 enum QuestType {
   QUEST_NOTHING_TO_DO = 0;
-  QUEST_UNDELEGATE = 1;
+  QUEST_SOCIAL = 1;
   QUEST_SN_ASSET_CLAIM = 2;
   QUEST_PROVIDE_LIQUIDITY = 3;
   QUEST_VOTE_ON_PROPOSALS = 4;
@@ -47,12 +48,12 @@ message AirdropState {
 }
 
 message QuestState {
-  // achieve_timestamp is the timestamp when the quest is achieved.
-  int64 achieve_timestamp = 1 [(gogoproto.nullable) = false];
-
   // state to indicate that quest is not started, claimable or claimed.
-  QuestStateType state = 2 [(gogoproto.nullable) = false];
+  QuestStateType state = 1 [(gogoproto.nullable) = false];
+
+  // achieve_timestamp is the timestamp when the quest is achieved.
+  google.protobuf.Timestamp achieved_at = 2 [(gogoproto.nullable) = false];
 
   // claim_timestamp is the timestamp when the user claimed the amount.
-  int64 claim_timestamp = 4 [(gogoproto.nullable) = false];
+  google.protobuf.Timestamp claimed_at = 3 [(gogoproto.nullable) = false];
 }
