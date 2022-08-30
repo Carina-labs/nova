@@ -5,14 +5,13 @@ import (
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"math/big"
-
 )
 
-func (suite *KeeperTestSuite) TestClaimShareToken(){
-
+func (suite *KeeperTestSuite) TestClaimShareToken() {
+	// user가 예치한 금액에서 
 }
 
-func (suite *KeeperTestSuite) TestTotalClaimableAssets(){
+func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 
 }
 
@@ -65,7 +64,7 @@ func (suite *KeeperTestSuite) TestCalculateDepositAlpha() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestGetWithdrawAmt(){
+func (suite *KeeperTestSuite) TestGetWithdrawAmt() {
 
 }
 
@@ -100,7 +99,7 @@ func (suite *KeeperTestSuite) TestCalculateWithdrawAlpha() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestGetSnDenomForIBCDenom(){
+func (suite *KeeperTestSuite) TestGetSnDenomForIBCDenom() {
 
 }
 
@@ -207,16 +206,10 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestConvertWAssetToSnAssetDecimal(){
+func (suite *KeeperTestSuite) TestConvertWAssetToSnAssetDecimal() {
 
 }
 
-func (suite *KeeperTestSuite) TestConvertSnAssetToWAssetDecimal(){
+func (suite *KeeperTestSuite) TestConvertSnAssetToWAssetDecimal() {
 
 }
-
-
-
-
-
-
