@@ -44,7 +44,7 @@ message AirdropState {
   string total_amount = 2 [(gogoproto.nullable) = false];
 
   // claim histories
-  map<QuestType, QuestState> quest_states = 3 [(gogoproto.nullable) = false];
+  map<int32, QuestState> quest_states = 3 [(gogoproto.nullable) = false];
 }
 
 message QuestState {
