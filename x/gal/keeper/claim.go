@@ -64,13 +64,17 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.Registere
 
 }
 
-func (k Keeper) MintShareToken(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coin) (sdk.Coin, error) {
-	err := k.MintShareTokens(ctx, claimer, mintCoin)
-	if err != nil {
-		return sdk.Coin{}, err
+// MintShareToken mints sn-token(share token) regard with deposited token.
+func (k Keeper) MintShareToken(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coin) error {
+	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(mintCoin)); err != nil {
+		return err
 	}
 
-	return mintCoin, nil
+	if err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, claimer, sdk.NewCoins(mintCoin)); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // TotalClaimableAssets returns the total amount of claimable snAsset.

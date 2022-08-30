@@ -355,7 +355,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
-	minted, err := m.keeper.MintShareToken(ctx, claimerAddr, claimSnAsset)
+	err = m.keeper.MintShareToken(ctx, claimerAddr, claimSnAsset)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(err,
 			"account: %s", claimMsg.Claimer)
@@ -369,6 +369,6 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 
 	return &types.MsgClaimSnAssetResponse{
 		Claimer: claimMsg.Claimer,
-		Minted:  minted,
+		Minted:  claimSnAsset,
 	}, nil
 }

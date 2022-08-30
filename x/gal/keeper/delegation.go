@@ -7,37 +7,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// MintShareTokens mints sn-token(share token) regard with deposited token.
-func (k Keeper) MintShareTokens(ctx sdk.Context, depositor sdk.AccAddress, amt sdk.Coin) error {
-	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(amt)); err != nil {
-		return err
-	}
-
-	if err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, depositor, sdk.NewCoins(amt)); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// BurnShareTokens burns share token.
-func (k Keeper) BurnShareTokens(ctx sdk.Context, burner sdk.Address, amt sdk.Coin) error {
-	burnerAddr, err := sdk.AccAddressFromBech32(burner.String())
-	if err != nil {
-		return err
-	}
-
-	if err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, burnerAddr, types.ModuleName, sdk.NewCoins(amt)); err != nil {
-		return err
-	}
-
-	if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.NewCoins(amt)); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (k Keeper) GetDelegateVersionStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyDelegateVersion)
 }
