@@ -10,6 +10,8 @@ option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
 
 service Msg {
   rpc ClaimAirdrop(MsgClaimAirdropRequest) returns (MsgClaimAirdropResponse);
+
+  rpc MarkSocialQuestPerformed(MsgMarkSocialQuestPerformedRequest) returns (MsgMarkSocialQuestPerformedResponse);
 }
 
 message MsgClaimAirdropRequest {
@@ -21,5 +23,18 @@ message MsgClaimAirdropRequest {
 }
 
 message MsgClaimAirdropResponse {
+  bool succeeded = 1 [ (gogoproto.nullable) = false ];
+}
+
+// MsgMarkSocialQuestPerformedRequest the controller marks social quest performed for the users.
+message MsgMarkSocialQuestPerformedRequest {
+  // controller address for the airdrop module.
+  string controller_address = 1 [ (gogoproto.nullable) = false ];
+
+  // the addresses of the users who performed the social quest.
+  repeated string user_addresses = 2 [ (gogoproto.nullable) = false ];
+}
+
+message MsgMarkSocialQuestPerformedResponse {
   bool succeeded = 1 [ (gogoproto.nullable) = false ];
 }
