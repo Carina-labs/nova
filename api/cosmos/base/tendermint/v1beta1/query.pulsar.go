@@ -10396,8 +10396,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// GetValidatorSetByHeightRequest is the request type for the
-// Query/GetValidatorSetByHeight RPC method.
+// GetValidatorSetByHeightRequest is the request type for the Query/GetValidatorSetByHeight RPC method.
 type GetValidatorSetByHeightRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10442,8 +10441,7 @@ func (x *GetValidatorSetByHeightRequest) GetPagination() *v1beta1.PageRequest {
 	return nil
 }
 
-// GetValidatorSetByHeightResponse is the response type for the
-// Query/GetValidatorSetByHeight RPC method.
+// GetValidatorSetByHeightResponse is the response type for the Query/GetValidatorSetByHeight RPC method.
 type GetValidatorSetByHeightResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10496,8 +10494,7 @@ func (x *GetValidatorSetByHeightResponse) GetPagination() *v1beta1.PageResponse 
 	return nil
 }
 
-// GetLatestValidatorSetRequest is the request type for the
-// Query/GetValidatorSetByHeight RPC method.
+// GetLatestValidatorSetRequest is the request type for the Query/GetValidatorSetByHeight RPC method.
 type GetLatestValidatorSetRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10534,8 +10531,7 @@ func (x *GetLatestValidatorSetRequest) GetPagination() *v1beta1.PageRequest {
 	return nil
 }
 
-// GetLatestValidatorSetResponse is the response type for the
-// Query/GetValidatorSetByHeight RPC method.
+// GetLatestValidatorSetResponse is the response type for the Query/GetValidatorSetByHeight RPC method.
 type GetLatestValidatorSetResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10648,8 +10644,7 @@ func (x *Validator) GetProposerPriority() int64 {
 	return 0
 }
 
-// GetBlockByHeightRequest is the request type for the Query/GetBlockByHeight
-// RPC method.
+// GetBlockByHeightRequest is the request type for the Query/GetBlockByHeight RPC method.
 type GetBlockByHeightRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10685,8 +10680,7 @@ func (x *GetBlockByHeightRequest) GetHeight() int64 {
 	return 0
 }
 
-// GetBlockByHeightResponse is the response type for the Query/GetBlockByHeight
-// RPC method.
+// GetBlockByHeightResponse is the response type for the Query/GetBlockByHeight RPC method.
 type GetBlockByHeightResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10740,8 +10734,7 @@ func (x *GetBlockByHeightResponse) GetSdkBlock() *Block {
 	return nil
 }
 
-// GetLatestBlockRequest is the request type for the Query/GetLatestBlock RPC
-// method.
+// GetLatestBlockRequest is the request type for the Query/GetLatestBlock RPC method.
 type GetLatestBlockRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10768,8 +10761,7 @@ func (*GetLatestBlockRequest) Descriptor() ([]byte, []int) {
 	return file_cosmos_base_tendermint_v1beta1_query_proto_rawDescGZIP(), []int{7}
 }
 
-// GetLatestBlockResponse is the response type for the Query/GetLatestBlock RPC
-// method.
+// GetLatestBlockResponse is the response type for the Query/GetLatestBlock RPC method.
 type GetLatestBlockResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -10913,8 +10905,7 @@ func (*GetNodeInfoRequest) Descriptor() ([]byte, []int) {
 	return file_cosmos_base_tendermint_v1beta1_query_proto_rawDescGZIP(), []int{11}
 }
 
-// GetNodeInfoResponse is the response type for the Query/GetNodeInfo RPC
-// method.
+// GetNodeInfoResponse is the response type for the Query/GetNodeInfo RPC method.
 type GetNodeInfoResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -11166,8 +11157,7 @@ func (x *ABCIQueryRequest) GetProve() bool {
 	return false
 }
 
-// ABCIQueryResponse defines the response structure for the ABCIQuery gRPC
-// query.
+// ABCIQueryResponse defines the response structure for the ABCIQuery gRPC query.
 //
 // Note: This type is a duplicate of the ResponseQuery proto type defined in
 // Tendermint.
@@ -11274,8 +11264,7 @@ func (x *ABCIQueryResponse) GetCodespace() string {
 // be arbitrary format, providing nessecary data for example neighbouring node
 // hash.
 //
-// Note: This type is a duplicate of the ProofOp proto type defined in
-// Tendermint.
+// Note: This type is a duplicate of the ProofOp proto type defined in Tendermint.
 type ProofOp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -11329,8 +11318,7 @@ func (x *ProofOp) GetData() []byte {
 
 // ProofOps is Merkle proof defined by the list of ProofOps.
 //
-// Note: This type is a duplicate of the ProofOps proto type defined in
-// Tendermint.
+// Note: This type is a duplicate of the ProofOps proto type defined in Tendermint.
 type ProofOps struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

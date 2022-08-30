@@ -11,10 +11,10 @@ option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
 
 message GenesisState {
   // params defines all the parameters of module.
-  Params params = 1 [(gogoproto.nullable) = false];
+  Params params = 1;
 
   // states for the airdrop, how much coins are allocated for each address is must be pre-defined.
-  repeated AirdropState states = 2 [(gogoproto.nullable) = false];
+  repeated AirdropState states = 2;
 }
 
 enum QuestType {
@@ -38,22 +38,28 @@ enum QuestStateType {
 
 message AirdropState {
   // address of the airdrop recipient.
-  string address = 1 [(gogoproto.nullable) = false];
+  string recipient = 1;
 
   // amount of coins to be allocated to the recipient.
-  string total_amount = 2 [(gogoproto.nullable) = false];
+  string total_amount = 2;
 
   // claim histories
-  map<int32, QuestState> quest_states = 3 [(gogoproto.nullable) = false];
+  map<int32, QuestState> quest_states = 3;
 }
 
 message QuestState {
   // state to indicate that quest is not started, claimable or claimed.
-  QuestStateType state = 1 [(gogoproto.nullable) = false];
+  QuestStateType state = 1;
 
   // achieve_timestamp is the timestamp when the quest is achieved.
-  google.protobuf.Timestamp achieved_at = 2 [(gogoproto.nullable) = false];
+  google.protobuf.Timestamp achieved_at = 2 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false
+  ];
 
   // claim_timestamp is the timestamp when the user claimed the amount.
-  google.protobuf.Timestamp claimed_at = 3 [(gogoproto.nullable) = false];
+  google.protobuf.Timestamp claimed_at = 3 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false
+  ];
 }
