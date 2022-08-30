@@ -51,5 +51,5 @@ message QueryQuestStateRequest {
   string address = 1 [ (gogoproto.nullable) = false ];
 }
 message QueryQuestStateResponse {
-  map<QuestType, QuestState> quest_states = 1 [(gogoproto.nullable) = false];
+  map<int32, QuestState> quest_states = 1 [(gogoproto.nullable) = false];
 }
