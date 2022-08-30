@@ -5,9 +5,18 @@ import (
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"math/big"
+
 )
 
-func (suite *KeeperTestSuite) TestCalculateMintAmount() {
+func (suite *KeeperTestSuite) TestClaimShareToken(){
+
+}
+
+func (suite *KeeperTestSuite) TestTotalClaimableAssets(){
+
+}
+
+func (suite *KeeperTestSuite) TestCalculateDepositAlpha() {
 	tcs := []struct {
 		userDepositAmt        int64
 		totalShareTokenSupply int64
@@ -56,7 +65,11 @@ func (suite *KeeperTestSuite) TestCalculateMintAmount() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestCalculateBurnAmount() {
+func (suite *KeeperTestSuite) TestGetWithdrawAmt(){
+
+}
+
+func (suite *KeeperTestSuite) TestCalculateWithdrawAlpha() {
 	tcs := []struct {
 		userBurnStTokenAmt    int64
 		totalShareTokenSupply int64
@@ -85,6 +98,10 @@ func (suite *KeeperTestSuite) TestCalculateBurnAmount() {
 		res := suite.App.GalKeeper.CalculateWithdrawAlpha(big.NewInt(burnedAmount), big.NewInt(totalShareTokenSupply), big.NewInt(totalStakedAmount))
 		suite.Equal(tc.expected, res)
 	}
+}
+
+func (suite *KeeperTestSuite) TestGetSnDenomForIBCDenom(){
+
 }
 
 func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
@@ -189,3 +206,17 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 		})
 	}
 }
+
+func (suite *KeeperTestSuite) TestConvertWAssetToSnAssetDecimal(){
+
+}
+
+func (suite *KeeperTestSuite) TestConvertSnAssetToWAssetDecimal(){
+
+}
+
+
+
+
+
+
