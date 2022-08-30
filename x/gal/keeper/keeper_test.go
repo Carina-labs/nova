@@ -1,17 +1,16 @@
 package keeper_test
 
 import (
+	"github.com/Carina-labs/nova/app/apptesting"
+	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/types"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	"github.com/stretchr/testify/suite"
 	"testing"
-
-	"github.com/Carina-labs/nova/app/apptesting"
-	novatesting "github.com/Carina-labs/nova/testing"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 )
 
 var (
@@ -44,7 +43,6 @@ type KeeperTestSuite struct {
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
 
-	//register_zone
 	suite.queryClient = types.NewQueryClient(suite.QueryHelper)
 
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
@@ -65,10 +63,6 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.Require().NoError(err)
 }
 
-func (suite *KeeperTestSuite) GetControllerAddr() string {
-	return acc1.Address
-}
-
 func TestKeeperTestSuite(t *testing.T) {
 	suite.Run(t, new(KeeperTestSuite))
 }
@@ -79,4 +73,8 @@ func parseAddressToIbcAddress(destPort string, destChannel string, denom string)
 	denomTrace := transfertypes.ParseDenomTrace(prefixedDenom)
 	voucherDenom := denomTrace.IBCDenom()
 	return voucherDenom
+}
+
+func (suite *KeeperTestSuite) GetControllerAddr() string {
+	return acc1.Address
 }
