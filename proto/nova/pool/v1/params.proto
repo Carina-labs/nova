@@ -1,0 +1,8 @@
+syntax = "proto3";
+package nova.pool.v1;
+
+option go_package = "github.com/Carina-labs/nova/x/pool/types";
+
+message Params {
+  string controller = 1;
+}

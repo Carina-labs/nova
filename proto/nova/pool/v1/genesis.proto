@@ -1,0 +1,24 @@
+syntax = "proto3";
+package nova.pool.v1;
+
+import "nova/pool/v1/params.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/pool/types";
+
+message GenesisState {
+  Params params = 1 [ (gogoproto.nullable) = false ];
+  PoolInfo pool_info = 2 [ (gogoproto.nullable) = false ];
+}
+
+
+message PoolInfo {
+  uint64 total_weight = 1;
+  repeated Pool pools = 2;
+}
+
+message Pool {
+  string pool_id = 1;
+  string pool_contract_address = 2;
+  uint64 weight = 3;
+}

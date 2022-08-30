@@ -1,0 +1,30 @@
+syntax = "proto3";
+package nova.pool.v1;
+
+import "cosmos_proto/cosmos.proto";
+
+option go_package = "github.com/carina-labs/nova/x/pool/types";
+
+service Msg {
+  rpc CreatePool(MsgCreatePool) returns (MsgCreatePoolResponse);
+  rpc SetPoolWeight(MsgSetPoolWeight) returns (MsgSetPoolWeightResponse);
+}
+
+message MsgCreatePool {
+  string pool_id = 1;
+  string pool_address = 2;
+}
+
+message MsgCreatePoolResponse {
+
+}
+
+message MsgSetPoolWeight {
+  string pool_id = 1;
+  uint64 new_weight = 2;
+  string operator = 3 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+}
+
+message MsgSetPoolWeightResponse {
+
+}
