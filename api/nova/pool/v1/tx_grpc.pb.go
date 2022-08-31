@@ -22,8 +22,14 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MsgClient interface {
-	CreatePool(ctx context.Context, in *MsgCreatePool, opts ...grpc.CallOption) (*MsgCreatePoolResponse, error)
+	// CreateCandidatePool creates new "candidate" pool, which can be created by anyone
+	CreateCandidatePool(ctx context.Context, in *MsgCreateCandidatePool, opts ...grpc.CallOption) (*MsgCreateCandidatePoolResponse, error)
+	// CreateIncentivePool creates new "incentive" pool, which can be created by only operator
+	CreateIncentivePool(ctx context.Context, in *MsgCreateIncentivePool, opts ...grpc.CallOption) (*MsgCreateIncentivePoolResponse, error)
+	// SetPoolWeight sets new weight of one pool
 	SetPoolWeight(ctx context.Context, in *MsgSetPoolWeight, opts ...grpc.CallOption) (*MsgSetPoolWeightResponse, error)
+	// SetMultiplePoolWeight sets new weight of multiple pool
+	SetMultiplePoolWeight(ctx context.Context, in *MsgSetMultiplePoolWeight, opts ...grpc.CallOption) (*MsgSetMultiplePoolWeightResponse, error)
 }
 
 type msgClient struct {
@@ -34,9 +40,18 @@ func NewMsgClient(cc grpc.ClientConnInterface) MsgClient {
 	return &msgClient{cc}
 }
 
-func (c *msgClient) CreatePool(ctx context.Context, in *MsgCreatePool, opts ...grpc.CallOption) (*MsgCreatePoolResponse, error) {
-	out := new(MsgCreatePoolResponse)
-	err := c.cc.Invoke(ctx, "/nova.pool.v1.Msg/CreatePool", in, out, opts...)
+func (c *msgClient) CreateCandidatePool(ctx context.Context, in *MsgCreateCandidatePool, opts ...grpc.CallOption) (*MsgCreateCandidatePoolResponse, error) {
+	out := new(MsgCreateCandidatePoolResponse)
+	err := c.cc.Invoke(ctx, "/nova.pool.v1.Msg/CreateCandidatePool", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) CreateIncentivePool(ctx context.Context, in *MsgCreateIncentivePool, opts ...grpc.CallOption) (*MsgCreateIncentivePoolResponse, error) {
+	out := new(MsgCreateIncentivePoolResponse)
+	err := c.cc.Invoke(ctx, "/nova.pool.v1.Msg/CreateIncentivePool", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -52,12 +67,27 @@ func (c *msgClient) SetPoolWeight(ctx context.Context, in *MsgSetPoolWeight, opt
 	return out, nil
 }
 
+func (c *msgClient) SetMultiplePoolWeight(ctx context.Context, in *MsgSetMultiplePoolWeight, opts ...grpc.CallOption) (*MsgSetMultiplePoolWeightResponse, error) {
+	out := new(MsgSetMultiplePoolWeightResponse)
+	err := c.cc.Invoke(ctx, "/nova.pool.v1.Msg/SetMultiplePoolWeight", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
 type MsgServer interface {
-	CreatePool(context.Context, *MsgCreatePool) (*MsgCreatePoolResponse, error)
+	// CreateCandidatePool creates new "candidate" pool, which can be created by anyone
+	CreateCandidatePool(context.Context, *MsgCreateCandidatePool) (*MsgCreateCandidatePoolResponse, error)
+	// CreateIncentivePool creates new "incentive" pool, which can be created by only operator
+	CreateIncentivePool(context.Context, *MsgCreateIncentivePool) (*MsgCreateIncentivePoolResponse, error)
+	// SetPoolWeight sets new weight of one pool
 	SetPoolWeight(context.Context, *MsgSetPoolWeight) (*MsgSetPoolWeightResponse, error)
+	// SetMultiplePoolWeight sets new weight of multiple pool
+	SetMultiplePoolWeight(context.Context, *MsgSetMultiplePoolWeight) (*MsgSetMultiplePoolWeightResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -65,11 +95,17 @@ type MsgServer interface {
 type UnimplementedMsgServer struct {
 }
 
-func (UnimplementedMsgServer) CreatePool(context.Context, *MsgCreatePool) (*MsgCreatePoolResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePool not implemented")
+func (UnimplementedMsgServer) CreateCandidatePool(context.Context, *MsgCreateCandidatePool) (*MsgCreateCandidatePoolResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCandidatePool not implemented")
+}
+func (UnimplementedMsgServer) CreateIncentivePool(context.Context, *MsgCreateIncentivePool) (*MsgCreateIncentivePoolResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateIncentivePool not implemented")
 }
 func (UnimplementedMsgServer) SetPoolWeight(context.Context, *MsgSetPoolWeight) (*MsgSetPoolWeightResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetPoolWeight not implemented")
+}
+func (UnimplementedMsgServer) SetMultiplePoolWeight(context.Context, *MsgSetMultiplePoolWeight) (*MsgSetMultiplePoolWeightResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetMultiplePoolWeight not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -84,20 +120,38 @@ func RegisterMsgServer(s grpc.ServiceRegistrar, srv MsgServer) {
 	s.RegisterService(&Msg_ServiceDesc, srv)
 }
 
-func _Msg_CreatePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgCreatePool)
+func _Msg_CreateCandidatePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateCandidatePool)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).CreatePool(ctx, in)
+		return srv.(MsgServer).CreateCandidatePool(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.pool.v1.Msg/CreatePool",
+		FullMethod: "/nova.pool.v1.Msg/CreateCandidatePool",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).CreatePool(ctx, req.(*MsgCreatePool))
+		return srv.(MsgServer).CreateCandidatePool(ctx, req.(*MsgCreateCandidatePool))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_CreateIncentivePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateIncentivePool)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateIncentivePool(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.pool.v1.Msg/CreateIncentivePool",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateIncentivePool(ctx, req.(*MsgCreateIncentivePool))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -120,6 +174,24 @@ func _Msg_SetPoolWeight_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_SetMultiplePoolWeight_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSetMultiplePoolWeight)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SetMultiplePoolWeight(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.pool.v1.Msg/SetMultiplePoolWeight",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SetMultiplePoolWeight(ctx, req.(*MsgSetMultiplePoolWeight))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -128,12 +200,20 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreatePool",
-			Handler:    _Msg_CreatePool_Handler,
+			MethodName: "CreateCandidatePool",
+			Handler:    _Msg_CreateCandidatePool_Handler,
+		},
+		{
+			MethodName: "CreateIncentivePool",
+			Handler:    _Msg_CreateIncentivePool_Handler,
 		},
 		{
 			MethodName: "SetPoolWeight",
 			Handler:    _Msg_SetPoolWeight_Handler,
+		},
+		{
+			MethodName: "SetMultiplePoolWeight",
+			Handler:    _Msg_SetMultiplePoolWeight_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

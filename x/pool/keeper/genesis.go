@@ -4,13 +4,18 @@ import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/pool/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/gogo/protobuf/proto"
 )
 
 func (k Keeper) InitGenesis(ctx sdk.Context, genesisState *types.GenesisState) {
 	k.SetParams(ctx, genesisState.Params)
-	for i := range genesisState.PoolInfo.Pools {
-		if err := k.CreatePool(ctx, genesisState.PoolInfo.Pools[i]); err != nil {
+	for i := range genesisState.CandidatePools {
+		if err := k.CreateCandidatePool(ctx, &genesisState.CandidatePools[i]); err != nil {
+			panic(fmt.Errorf("failed to initialize genesis state at %s, err: %v", types.ModuleName, err))
+		}
+	}
+
+	for i := range genesisState.IncentivePools {
+		if err := k.CreateIncentivePool(ctx, &genesisState.IncentivePools[i]); err != nil {
 			panic(fmt.Errorf("failed to initialize genesis state at %s, err: %v", types.ModuleName, err))
 		}
 	}
@@ -18,37 +23,20 @@ func (k Keeper) InitGenesis(ctx sdk.Context, genesisState *types.GenesisState) {
 
 func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 	result := &types.GenesisState{
-		Params: k.GetParams(ctx),
-		PoolInfo: types.PoolInfo{
-			TotalWeight: 0,
-			Pools:       []*types.Pool{},
-		},
+		Params:         k.GetParams(ctx),
+		CandidatePools: []types.CandidatePool{},
+		IncentivePools: []types.IncentivePool{},
 	}
 
-	store := ctx.KVStore(k.storeKey)
-	iterator := store.Iterator(nil, nil)
-	defer func() {
-		err := iterator.Close()
-		if err != nil {
-			ctx.Logger().Error(fmt.Sprintf("unexpected iterator closed: %s", err))
-			return
-		}
-	}()
+	k.IterateCandidatePools(ctx, func(i int64, pool *types.CandidatePool) bool {
+		result.CandidatePools = append(result.CandidatePools, *pool)
+		return false
+	})
 
-	for ; iterator.Valid(); iterator.Next() {
-		value := types.Pool{}
-		if err := proto.Unmarshal(iterator.Value(), &value); err != nil {
-			panic(fmt.Errorf("unable to unmarshal chain state: %v", err))
-		}
-
-		result.PoolInfo.Pools = append(result.PoolInfo.Pools, &types.Pool{
-			PoolId:              value.PoolId,
-			PoolContractAddress: value.PoolContractAddress,
-			Weight:              value.Weight,
-		})
-
-		result.PoolInfo.TotalWeight += value.Weight
-	}
+	k.IterateIncentivePools(ctx, func(i int64, pool *types.IncentivePool) bool {
+		result.IncentivePools = append(result.IncentivePools, *pool)
+		return false
+	})
 
 	return result
 }

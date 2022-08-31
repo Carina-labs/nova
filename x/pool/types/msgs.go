@@ -3,41 +3,45 @@ package types
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
 const (
-	TypeMsgCreatePool       = "createPool"
-	TypeMsgModifyPoolWeight = "modifyPoolWeight"
+	TypeMsgCreateCandidatePool   = "createCandidatePool"
+	TypeMsgCreateIncentivePool   = "createIncentivePool"
+	TypeMsgSetPoolWeight         = "setPoolWeight"
+	TypeMsgSetMultiplePoolWeight = "setMultiplePoolWeight"
 )
 
-var _ sdk.Msg = &MsgCreatePool{}
+var _ sdk.Msg = &MsgCreateCandidatePool{}
 var _ sdk.Msg = &MsgSetPoolWeight{}
+var _ sdk.Msg = &MsgCreateIncentivePool{}
+var _ sdk.Msg = &MsgSetMultiplePoolWeight{}
 
-func NewMsgCreatePool(poolId string, poolContractAddress string) *MsgCreatePool {
-	return &MsgCreatePool{
+func NewMsgCreateCandidatePool(poolId string, poolContractAddress string) *MsgCreateCandidatePool {
+	return &MsgCreateCandidatePool{
 		PoolId:              poolId,
 		PoolContractAddress: poolContractAddress,
 	}
 }
 
-func (m MsgCreatePool) Route() string {
+func (m MsgCreateCandidatePool) Route() string {
 	return RouterKey
 }
 
-func (m MsgCreatePool) Type() string {
-	return TypeMsgCreatePool
+func (m MsgCreateCandidatePool) Type() string {
+	return TypeMsgCreateCandidatePool
 }
 
-func (m MsgCreatePool) ValidateBasic() error {
+func (m MsgCreateCandidatePool) ValidateBasic() error {
 	return nil
 }
 
-func (m MsgCreatePool) GetSignBytes() []byte {
+func (m MsgCreateCandidatePool) GetSignBytes() []byte {
 	return nil
 }
 
-func (m MsgCreatePool) GetSigners() []sdk.AccAddress {
+func (m MsgCreateCandidatePool) GetSigners() []sdk.AccAddress {
 	return nil
 }
 
-func NewMsgModifyPoolWeight(poolId string, newWeight uint64, operator string) *MsgSetPoolWeight {
+func NewMsgSetPoolWeight(poolId string, newWeight uint64, operator string) *MsgSetPoolWeight {
 	return &MsgSetPoolWeight{
 		PoolId:    poolId,
 		NewWeight: newWeight,
@@ -50,7 +54,7 @@ func (m MsgSetPoolWeight) Route() string {
 }
 
 func (m MsgSetPoolWeight) Type() string {
-	return TypeMsgCreatePool
+	return TypeMsgSetPoolWeight
 }
 
 func (m MsgSetPoolWeight) ValidateBasic() error {
@@ -66,6 +70,71 @@ func (m MsgSetPoolWeight) GetSignBytes() []byte {
 }
 
 func (m MsgSetPoolWeight) GetSigners() []sdk.AccAddress {
+	controller, _ := sdk.AccAddressFromBech32(m.Operator)
+	return []sdk.AccAddress{controller}
+}
+
+func NewMsgCreateIncentivePool(poolId string, poolContractAddress string, operator string) *MsgCreateIncentivePool {
+	return &MsgCreateIncentivePool{
+		PoolId:              poolId,
+		PoolContractAddress: poolContractAddress,
+		Operator:            operator,
+	}
+}
+
+func (m MsgCreateIncentivePool) Route() string {
+	return RouterKey
+}
+
+func (m MsgCreateIncentivePool) Type() string {
+	return TypeMsgCreateIncentivePool
+}
+
+func (m MsgCreateIncentivePool) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(m.Operator); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m MsgCreateIncentivePool) GetSignBytes() []byte {
+	return nil
+}
+
+func (m MsgCreateIncentivePool) GetSigners() []sdk.AccAddress {
+	controller, _ := sdk.AccAddressFromBech32(m.Operator)
+	return []sdk.AccAddress{controller}
+}
+
+func NewMsgSetMultipleWeight(newPoolData []NewPoolWeight, operator string) *MsgSetMultiplePoolWeight {
+	return &MsgSetMultiplePoolWeight{
+		NewPoolData: newPoolData,
+		Operator:    operator,
+	}
+}
+
+func (m MsgSetMultiplePoolWeight) Route() string {
+	return RouterKey
+}
+
+func (m MsgSetMultiplePoolWeight) Type() string {
+	return TypeMsgSetMultiplePoolWeight
+}
+
+func (m MsgSetMultiplePoolWeight) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(m.Operator); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m MsgSetMultiplePoolWeight) GetSignBytes() []byte {
+	return nil
+}
+
+func (m MsgSetMultiplePoolWeight) GetSigners() []sdk.AccAddress {
 	controller, _ := sdk.AccAddressFromBech32(m.Operator)
 	return []sdk.AccAddress{controller}
 }
