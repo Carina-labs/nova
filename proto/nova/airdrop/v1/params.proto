@@ -7,32 +7,5 @@ import "google/protobuf/timestamp.proto";
 option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
 
 message Params {
-  option (gogoproto.goproto_stringer) = false;
 
-  // The snapshot date based for the distribution of the airdrop.
-  google.protobuf.Timestamp snapshot_timestamp = 1 [
-    (gogoproto.stdtime) = true,
-    (gogoproto.nullable) = false
-  ];
-
-  // THe time when you can claim your airdrop nova tokens.
-  google.protobuf.Timestamp claimable_timestamp = 2 [
-    (gogoproto.stdtime) = true,
-    (gogoproto.nullable) = false
-  ];
-
-  // THe time when the user no longer can claim the airdrop tokens.
-  google.protobuf.Timestamp airdrop_end_timestamp = 3 [
-    (gogoproto.stdtime) = true,
-    (gogoproto.nullable) = false
-  ];
-
-  // The denom for the airdrop coin.
-  string airdrop_denom = 4;
-
-  // the number of quests user to do
-  int32 quests_count = 5;
-
-  // controller address is responsible to check the user has performed the social quest (e.g. twitter, facebook or etc)
-  string controller_address = 6;
 }

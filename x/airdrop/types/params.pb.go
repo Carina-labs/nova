@@ -7,19 +7,16 @@ import (
 	fmt "fmt"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	math "math"
 	math_bits "math/bits"
-	time "time"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
-var _ = time.Kitchen
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -28,22 +25,11 @@ var _ = time.Kitchen
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Params struct {
-	// The snapshot date based for the distribution of the airdrop.
-	SnapshotTimestamp time.Time `protobuf:"bytes,1,opt,name=snapshot_timestamp,json=snapshotTimestamp,proto3,stdtime" json:"snapshot_timestamp"`
-	// THe time when you can claim your airdrop nova tokens.
-	ClaimableTimestamp time.Time `protobuf:"bytes,2,opt,name=claimable_timestamp,json=claimableTimestamp,proto3,stdtime" json:"claimable_timestamp"`
-	// THe time when the user no longer can claim the airdrop tokens.
-	AirdropEndTimestamp time.Time `protobuf:"bytes,3,opt,name=airdrop_end_timestamp,json=airdropEndTimestamp,proto3,stdtime" json:"airdrop_end_timestamp"`
-	// The denom for the airdrop coin.
-	AirdropDenom string `protobuf:"bytes,4,opt,name=airdrop_denom,json=airdropDenom,proto3" json:"airdrop_denom,omitempty"`
-	// the number of quests user to do
-	QuestsCount int32 `protobuf:"varint,5,opt,name=quests_count,json=questsCount,proto3" json:"quests_count,omitempty"`
-	// controller address is responsible to check the user has performed the social quest (e.g. twitter, facebook or etc)
-	ControllerAddress string `protobuf:"bytes,6,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
 }
 
-func (m *Params) Reset()      { *m = Params{} }
-func (*Params) ProtoMessage() {}
+func (m *Params) Reset()         { *m = Params{} }
+func (m *Params) String() string { return proto.CompactTextString(m) }
+func (*Params) ProtoMessage()    {}
 func (*Params) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3606a1093e1fd3a2, []int{0}
 }
@@ -74,48 +60,6 @@ func (m *Params) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Params proto.InternalMessageInfo
 
-func (m *Params) GetSnapshotTimestamp() time.Time {
-	if m != nil {
-		return m.SnapshotTimestamp
-	}
-	return time.Time{}
-}
-
-func (m *Params) GetClaimableTimestamp() time.Time {
-	if m != nil {
-		return m.ClaimableTimestamp
-	}
-	return time.Time{}
-}
-
-func (m *Params) GetAirdropEndTimestamp() time.Time {
-	if m != nil {
-		return m.AirdropEndTimestamp
-	}
-	return time.Time{}
-}
-
-func (m *Params) GetAirdropDenom() string {
-	if m != nil {
-		return m.AirdropDenom
-	}
-	return ""
-}
-
-func (m *Params) GetQuestsCount() int32 {
-	if m != nil {
-		return m.QuestsCount
-	}
-	return 0
-}
-
-func (m *Params) GetControllerAddress() string {
-	if m != nil {
-		return m.ControllerAddress
-	}
-	return ""
-}
-
 func init() {
 	proto.RegisterType((*Params)(nil), "nova.airdrop.v1.Params")
 }
@@ -123,30 +67,19 @@ func init() {
 func init() { proto.RegisterFile("nova/airdrop/v1/params.proto", fileDescriptor_3606a1093e1fd3a2) }
 
 var fileDescriptor_3606a1093e1fd3a2 = []byte{
-	// 357 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0xd2, 0xbf, 0x6a, 0xe3, 0x30,
-	0x00, 0x06, 0x70, 0xeb, 0xf2, 0x87, 0x3b, 0x25, 0xc7, 0x11, 0xe5, 0x0e, 0x4c, 0x38, 0xec, 0xdc,
-	0x75, 0x09, 0x94, 0x58, 0xa4, 0xdd, 0xba, 0x35, 0x69, 0xf6, 0x92, 0xb6, 0x50, 0xba, 0x18, 0xd9,
-	0x56, 0x1d, 0x83, 0x2d, 0xb9, 0x92, 0x1c, 0xda, 0x67, 0xe8, 0x92, 0xb1, 0x63, 0x1f, 0x27, 0x63,
-	0xc6, 0x4e, 0x6d, 0x49, 0x5e, 0xa4, 0xf8, 0x6f, 0xb2, 0x66, 0xb3, 0xbf, 0xef, 0xd3, 0x0f, 0x04,
-	0x82, 0x7f, 0x19, 0x5f, 0x10, 0x4c, 0x02, 0xe1, 0x09, 0x1e, 0xe3, 0xc5, 0x08, 0xc7, 0x44, 0x90,
-	0x48, 0x5a, 0xb1, 0xe0, 0x8a, 0xa3, 0x5f, 0x69, 0x6b, 0x15, 0xad, 0xb5, 0x18, 0xf5, 0x7e, 0xfb,
-	0xdc, 0xe7, 0x59, 0x87, 0xd3, 0xaf, 0x7c, 0xd6, 0x33, 0x7d, 0xce, 0xfd, 0x90, 0xe2, 0xec, 0xcf,
-	0x49, 0xee, 0xb1, 0x0a, 0x22, 0x2a, 0x15, 0x89, 0xe2, 0x7c, 0xf0, 0xff, 0xb9, 0x06, 0x9b, 0x97,
-	0x19, 0x8c, 0xae, 0x20, 0x92, 0x8c, 0xc4, 0x72, 0xce, 0x95, 0x5d, 0xcd, 0x74, 0xd0, 0x07, 0x83,
-	0xd6, 0x49, 0xcf, 0xca, 0x21, 0xab, 0x84, 0xac, 0xeb, 0x72, 0x31, 0xfe, 0xbe, 0x7a, 0x37, 0xb5,
-	0xe5, 0x87, 0x09, 0x66, 0x9d, 0xf2, 0x7c, 0x55, 0xa2, 0x1b, 0xd8, 0x75, 0x43, 0x12, 0x44, 0xc4,
-	0x09, 0xe9, 0x9e, 0xfa, 0xed, 0x00, 0x15, 0x55, 0xc0, 0x8e, 0xbd, 0x85, 0x7f, 0x8a, 0xbb, 0xdb,
-	0x94, 0x79, 0x7b, 0x70, 0xed, 0x00, 0xb8, 0x5b, 0x10, 0x53, 0xe6, 0xed, 0xe4, 0x23, 0xf8, 0xb3,
-	0x94, 0x3d, 0xca, 0x78, 0xa4, 0xd7, 0xfb, 0x60, 0xf0, 0x63, 0xd6, 0x2e, 0xc2, 0x8b, 0x34, 0x43,
-	0xff, 0x60, 0xfb, 0x21, 0xa1, 0x52, 0x49, 0xdb, 0xe5, 0x09, 0x53, 0x7a, 0xa3, 0x0f, 0x06, 0x8d,
-	0x59, 0x2b, 0xcf, 0x26, 0x69, 0x84, 0x86, 0x10, 0xb9, 0x9c, 0x29, 0xc1, 0xc3, 0x90, 0x0a, 0x9b,
-	0x78, 0x9e, 0xa0, 0x52, 0xea, 0xcd, 0x0c, 0xeb, 0xec, 0x9a, 0xf3, 0xbc, 0x38, 0xab, 0xbf, 0xbc,
-	0x9a, 0xda, 0x78, 0xba, 0xda, 0x18, 0x60, 0xbd, 0x31, 0xc0, 0xe7, 0xc6, 0x00, 0xcb, 0xad, 0xa1,
-	0xad, 0xb7, 0x86, 0xf6, 0xb6, 0x35, 0xb4, 0xbb, 0x63, 0x3f, 0x50, 0xf3, 0xc4, 0xb1, 0x5c, 0x1e,
-	0xe1, 0x09, 0x11, 0x01, 0x23, 0xc3, 0x90, 0x38, 0x12, 0x67, 0x8f, 0xe4, 0xb1, 0x7a, 0x26, 0xea,
-	0x29, 0xa6, 0xd2, 0x69, 0x66, 0xd7, 0x3e, 0xfd, 0x0a, 0x00, 0x00, 0xff, 0xff, 0x1f, 0xae, 0xe3,
-	0xae, 0x43, 0x02, 0x00, 0x00,
+	// 177 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xc9, 0xcb, 0x2f, 0x4b,
+	0xd4, 0x4f, 0xcc, 0x2c, 0x4a, 0x29, 0xca, 0x2f, 0xd0, 0x2f, 0x33, 0xd4, 0x2f, 0x48, 0x2c, 0x4a,
+	0xcc, 0x2d, 0xd6, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x07, 0xc9, 0xea, 0x41, 0x65, 0xf5,
+	0xca, 0x0c, 0xa5, 0x44, 0xd2, 0xf3, 0xd3, 0xf3, 0xc1, 0x72, 0xfa, 0x20, 0x16, 0x44, 0x99, 0x94,
+	0x7c, 0x7a, 0x7e, 0x7e, 0x7a, 0x4e, 0xaa, 0x3e, 0x98, 0x97, 0x54, 0x9a, 0xa6, 0x5f, 0x92, 0x99,
+	0x9b, 0x5a, 0x5c, 0x92, 0x98, 0x5b, 0x00, 0x51, 0xa0, 0xc4, 0xc1, 0xc5, 0x16, 0x00, 0x36, 0xd7,
+	0xc9, 0xf5, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0,
+	0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0xb4, 0xd3, 0x33, 0x4b,
+	0x32, 0x4a, 0x93, 0xf4, 0x92, 0xf3, 0x73, 0xf5, 0x9d, 0x13, 0x8b, 0x32, 0xf3, 0x12, 0x75, 0x73,
+	0x12, 0x93, 0x8a, 0xf5, 0xc1, 0x0e, 0xac, 0x80, 0x3b, 0xb1, 0xa4, 0xb2, 0x20, 0xb5, 0x38, 0x89,
+	0x0d, 0x6c, 0xae, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0x34, 0x7d, 0x19, 0x83, 0xbf, 0x00, 0x00,
+	0x00,
 }
 
 func (m *Params) Marshal() (dAtA []byte, err error) {
@@ -169,49 +102,6 @@ func (m *Params) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.ControllerAddress) > 0 {
-		i -= len(m.ControllerAddress)
-		copy(dAtA[i:], m.ControllerAddress)
-		i = encodeVarintParams(dAtA, i, uint64(len(m.ControllerAddress)))
-		i--
-		dAtA[i] = 0x32
-	}
-	if m.QuestsCount != 0 {
-		i = encodeVarintParams(dAtA, i, uint64(m.QuestsCount))
-		i--
-		dAtA[i] = 0x28
-	}
-	if len(m.AirdropDenom) > 0 {
-		i -= len(m.AirdropDenom)
-		copy(dAtA[i:], m.AirdropDenom)
-		i = encodeVarintParams(dAtA, i, uint64(len(m.AirdropDenom)))
-		i--
-		dAtA[i] = 0x22
-	}
-	n1, err1 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.AirdropEndTimestamp, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.AirdropEndTimestamp):])
-	if err1 != nil {
-		return 0, err1
-	}
-	i -= n1
-	i = encodeVarintParams(dAtA, i, uint64(n1))
-	i--
-	dAtA[i] = 0x1a
-	n2, err2 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.ClaimableTimestamp, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.ClaimableTimestamp):])
-	if err2 != nil {
-		return 0, err2
-	}
-	i -= n2
-	i = encodeVarintParams(dAtA, i, uint64(n2))
-	i--
-	dAtA[i] = 0x12
-	n3, err3 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.SnapshotTimestamp, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.SnapshotTimestamp):])
-	if err3 != nil {
-		return 0, err3
-	}
-	i -= n3
-	i = encodeVarintParams(dAtA, i, uint64(n3))
-	i--
-	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -232,23 +122,6 @@ func (m *Params) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.SnapshotTimestamp)
-	n += 1 + l + sovParams(uint64(l))
-	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.ClaimableTimestamp)
-	n += 1 + l + sovParams(uint64(l))
-	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.AirdropEndTimestamp)
-	n += 1 + l + sovParams(uint64(l))
-	l = len(m.AirdropDenom)
-	if l > 0 {
-		n += 1 + l + sovParams(uint64(l))
-	}
-	if m.QuestsCount != 0 {
-		n += 1 + sovParams(uint64(m.QuestsCount))
-	}
-	l = len(m.ControllerAddress)
-	if l > 0 {
-		n += 1 + l + sovParams(uint64(l))
-	}
 	return n
 }
 
@@ -287,188 +160,6 @@ func (m *Params) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: Params: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SnapshotTimestamp", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowParams
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthParams
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthParams
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.SnapshotTimestamp, dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClaimableTimestamp", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowParams
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthParams
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthParams
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.ClaimableTimestamp, dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AirdropEndTimestamp", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowParams
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthParams
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthParams
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.AirdropEndTimestamp, dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AirdropDenom", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowParams
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthParams
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthParams
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.AirdropDenom = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field QuestsCount", wireType)
-			}
-			m.QuestsCount = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowParams
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.QuestsCount |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowParams
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthParams
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthParams
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ControllerAddress = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipParams(dAtA[iNdEx:])
