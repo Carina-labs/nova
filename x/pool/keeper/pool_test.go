@@ -115,8 +115,8 @@ func (suite *KeeperTestSuite) TestSetPoolWeight() {
 			err := keeper.SetPoolWeight(suite.Ctx, tc.targetId, tc.newWeight)
 			suite.NoError(err)
 
-			pool, ok := keeper.FindPoolById(suite.Ctx, tc.targetId)
-			suite.True(ok)
+			pool, err := keeper.FindPoolById(suite.Ctx, tc.targetId)
+			suite.NoError(err)
 			suite.Equal(tc.newWeight, pool.Weight)
 
 			keeper.ClearPools(suite.Ctx)
