@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	transferPort       = "transfer"
-	transferChannel    = "channel-0"
-	icaConnection      = "connection-1"
+	transferPort    = "transfer"
+	transferChannel = "channel-0"
+	icaConnection   = "connection-1"
 
-	zoneId        = "baseZone"
+	zoneId       = "baseZone"
 	baseOwnerAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 	baseDenom    = "base"
 	baseSnDenom  = "snbase"
