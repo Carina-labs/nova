@@ -80,6 +80,28 @@ func (suite *KeeperTestSuite) TestSetPoolWeight() {
 			targetId:  "pool-1",
 			newWeight: 10,
 		},
+		{
+			name: "valid case 2",
+			preset: []*types.Pool{
+				{
+					PoolId:              "pool-1",
+					PoolContractAddress: "12345",
+					Weight:              5,
+				},
+				{
+					PoolId:              "pool-2",
+					PoolContractAddress: "abcde",
+					Weight:              3,
+				},
+				{
+					PoolId:              "pool-3",
+					PoolContractAddress: "abcde12345",
+					Weight:              2,
+				},
+			},
+			targetId:  "pool-3",
+			newWeight: 1,
+		},
 	}
 
 	for _, tc := range tcs {
@@ -96,6 +118,70 @@ func (suite *KeeperTestSuite) TestSetPoolWeight() {
 			pool, ok := keeper.FindPoolById(suite.Ctx, tc.targetId)
 			suite.True(ok)
 			suite.Equal(tc.newWeight, pool.Weight)
+
+			keeper.ClearPools(suite.Ctx)
+		})
+	}
+}
+
+func (suite *KeeperTestSuite) TestGetTotalWeight() {
+	keeper := suite.App.PoolKeeper
+	tcs := []struct {
+		name                string
+		preset              []*types.Pool
+		expectedTotalWeight uint64
+	}{
+		{
+			name: "valid case 1",
+			preset: []*types.Pool{
+				{
+					PoolId:              "pool-1",
+					PoolContractAddress: "12345",
+					Weight:              5,
+				},
+				{
+					PoolId:              "pool-2",
+					PoolContractAddress: "12345abcde",
+					Weight:              5,
+				},
+			},
+			expectedTotalWeight: 10,
+		},
+		{
+			name: "valid case 2",
+			preset: []*types.Pool{
+				{
+					PoolId:              "pool-1",
+					PoolContractAddress: "12345",
+					Weight:              5,
+				},
+				{
+					PoolId:              "pool-2",
+					PoolContractAddress: "abcde",
+					Weight:              3,
+				},
+				{
+					PoolId:              "pool-3",
+					PoolContractAddress: "abcde12345",
+					Weight:              2,
+				},
+			},
+			expectedTotalWeight: 10,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			// create pool with presets
+			for _, p := range tc.preset {
+				err := keeper.CreatePool(suite.Ctx, p)
+				suite.NoError(err)
+			}
+
+			totalWeight := keeper.GetTotalWeight(suite.Ctx)
+			suite.Equal(tc.expectedTotalWeight, totalWeight)
+
+			keeper.ClearPools(suite.Ctx)
 		})
 	}
 }
