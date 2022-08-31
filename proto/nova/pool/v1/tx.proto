@@ -13,7 +13,7 @@ service Msg {
 
 message MsgCreatePool {
   string pool_id = 1;
-  string pool_address = 2;
+  string pool_contract_address = 2;
 }
 
 message MsgCreatePoolResponse {
