@@ -15,7 +15,7 @@ func NewQuerier(k Keeper) Querier {
 	return Querier{Keeper: k}
 }
 
-func (q Querier) Params(ctx context.Context, request *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {
+func (q Querier) AirdropInfo(ctx context.Context, request *types.QueryAirdropInfoRequest) (*types.QueryAirdropInfoResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }
