@@ -19,7 +19,7 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	oracleKeeper := suite.App.OracleKeeper
 	ctx := suite.Ctx
 
-	denom := ibcstaking.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
+	denom := ibcstaking.GetIBCHashDenom(ctx, transferPort, transferChannel, baseDenom)
 	amount := sdk.NewInt(1000_000000)
 	coin := sdk.NewCoin(denom, amount)
 
@@ -54,7 +54,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	queryClient := suite.queryClient
 	ctx := suite.Ctx
 	galKeeper := suite.App.GalKeeper
-	denom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
+	denom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, baseDenom)
 
 	// query with invalid zone
 	_, err := queryClient.PendingWithdrawals(ctx.Context(), &types.QueryPendingWithdrawalsRequest{
@@ -112,7 +112,7 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 	queryClient := suite.queryClient
 	ctx := suite.Ctx
 	galKeeper := suite.App.GalKeeper
-	denom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
+	denom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, baseDenom)
 
 	// query with invalid zone
 	_, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.QueryActiveWithdrawalsRequest{
@@ -123,8 +123,8 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 	// fill the fake content
 	records := make(map[uint64]*types.WithdrawRecordContent)
 
-	pendingAmount := sdk.NewCoin(zoneBaseDenom, sdk.NewInt(150))
-	activeAmount := sdk.NewCoin(zoneBaseDenom, sdk.NewInt(80))
+	pendingAmount := sdk.NewCoin(baseDenom, sdk.NewInt(150))
+	activeAmount := sdk.NewCoin(baseDenom, sdk.NewInt(80))
 
 	records[1] = &types.WithdrawRecordContent{
 		Amount:          activeAmount.Amount,
@@ -175,7 +175,7 @@ func (suite *KeeperTestSuite) TestQueryDepositRecord() {
 	suite.Require().Error(err)
 
 	// Save the deposit record to the keeper
-	token := sdk.NewInt64Coin(zoneBaseDenom, 100)
+	token := sdk.NewInt64Coin(baseDenom, 100)
 	fooRecords := &types.DepositRecord{
 		ZoneId:  zoneId,
 		Claimer: fooUser.String(),
@@ -219,7 +219,7 @@ func (suite *KeeperTestSuite) TestQueryWithdrawRecord() {
 
 	// Save the withdrawal record to the keeper
 	records := make(map[uint64]*types.WithdrawRecordContent)
-	token := sdk.NewCoin(zoneBaseDenom, sdk.NewInt(80))
+	token := sdk.NewCoin(baseDenom, sdk.NewInt(80))
 	records[0] = &types.WithdrawRecordContent{
 		Amount:          token.Amount,
 		State:           types.WithdrawStatusTransferred,
@@ -260,7 +260,7 @@ func (suite *KeeperTestSuite) TestQueryUndelegateRecord() {
 	suite.Require().Error(err)
 
 	// save the undelegate recod to the keeper
-	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, zoneBaseDenom)
+	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, baseDenom)
 	snToken := sdk.NewInt64Coin(ibcDenom, 100)
 	withdrawAmount := sdk.NewInt(150)
 

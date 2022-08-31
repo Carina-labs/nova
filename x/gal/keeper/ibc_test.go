@@ -12,24 +12,12 @@ import (
 var (
 	transferPort       = "transfer"
 	transferChannel    = "channel-0"
-	transferConnection = "connection-0"
 	icaConnection      = "connection-1"
 
-	baseDenom    = "unova"
-	baseIbcDenom = parseAddressToIbcAddress(transferPort, transferChannel, baseDenom)
-	baseAcc      = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-	baseHostAcc  = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	zoneId        = "baseZone"
 	baseOwnerAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-	baseSnDenom  = "snstake"
-
-	oracleOperatorAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-
-	zoneId        = "cosmos-1"
-	zoneBaseDenom = "stake"
-	zoneIbcDeno   = parseAddressToIbcAddress(transferPort, transferChannel, zoneBaseDenom)
-
-	undelegateMsgName  = "/cosmos.staking.v1beta1.MsgUndelegate"
-	ibcTransferMsgName = "/ibc.applications.transfer.v1.MsgTransfer"
+	baseDenom    = "base"
+	baseSnDenom  = "snbase"
 )
 
 func NewIbcTransferPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
@@ -110,14 +98,13 @@ func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
 		},
 		IcaAccount: &ibcstakingtypes.IcaAccount{
 			ControllerAddress: baseOwnerAcc.String(),
-			HostAddress:       baseHostAcc.String(),
 		},
 		TransferInfo: &ibcstakingtypes.TransferConnectionInfo{
 			PortId:    transferPort,
 			ChannelId: transferChannel,
 		},
 		ValidatorAddress: "",
-		BaseDenom:        zoneBaseDenom,
+		BaseDenom:        baseDenom,
 		SnDenom:          baseSnDenom,
 	}
 }

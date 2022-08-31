@@ -61,11 +61,10 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.Registere
 	mintAmt := k.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
 
 	return sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)), nil
-
 }
 
 // MintShareToken mints sn-token(share token) regard with deposited token.
-func (k Keeper) MintShareToken(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coin) error {
+func (k Keeper) MintTo(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coin) error {
 	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(mintCoin)); err != nil {
 		return err
 	}
@@ -78,8 +77,8 @@ func (k Keeper) MintShareToken(ctx sdk.Context, claimer sdk.AccAddress, mintCoin
 }
 
 // TotalClaimableAssets returns the total amount of claimable snAsset.
-func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, transferPortId string, transferChannelId string, claimer sdk.AccAddress) (*sdk.Coin, error) {
-	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChannelId, zone.BaseDenom)
+func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, claimer sdk.AccAddress) (*sdk.Coin, error) {
+	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 	result := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
@@ -107,25 +106,6 @@ func (k Keeper) CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, tot
 		totalShareTokenSupply = totalStakedAmount
 	}
 	return res.Mul(userDepositAmt, totalShareTokenSupply).Div(res, totalStakedAmount)
-}
-
-// GetWithdrawAmt is used for calculating the amount of coin user can withdraw
-// after un-delegate. This function is executed when ICA un-delegate call executed,
-// and calculate using the balance of user's share coin.
-func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
-	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
-	totalSharedToken := k.bankKeeper.GetSupply(ctx, amt.Denom)
-	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, baseDenom)
-	if err != nil {
-		return sdk.Coin{}, err
-	}
-
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
-
-	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
-	wAsset := k.ConvertSnAssetToWAssetDecimal(withdrawAmt, zoneInfo.Decimal, baseDenom)
-
-	return wAsset, nil
 }
 
 // CalculateWithdrawAlpha calculates lambda value.
@@ -185,12 +165,12 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPor
 
 func (k Keeper) ConvertWAssetToSnAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin {
 	convertDecimal := snAssetDecimal - decimal
-	snAsset := new(big.Int).Mul(amount, precisionMultiplier(convertDecimal))
+	asset := new(big.Int).Mul(amount, precisionMultiplier(0))
+	snAsset := new(big.Int).Quo(asset, precisionMultiplier(convertDecimal))
 	return sdk.NewCoin(denom, sdk.NewIntFromBigInt(snAsset))
 }
 
 func (k Keeper) ConvertSnAssetToWAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin {
-	convertDecimal := snAssetDecimal - decimal
-	wAsset := new(big.Int).Quo(amount, precisionMultiplier(convertDecimal)).Int64()
-	return sdk.NewInt64Coin(denom, wAsset)
+	wAsset := new(big.Int).Quo(amount, precisionMultiplier(decimal))
+	return sdk.NewCoin(denom, sdk.NewIntFromBigInt(wAsset))
 }
