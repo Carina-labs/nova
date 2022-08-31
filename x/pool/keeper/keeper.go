@@ -36,15 +36,11 @@ func (k Keeper) getPoolStore(ctx sdk.Context) prefix.Store {
 }
 
 // isValidOperator checks if signer of msg is valid.
-func (k Keeper) isValidOperator(msg *types.MsgSetPoolWeight) bool {
-	controllerAcc, err := sdk.AccAddressFromBech32(msg.Operator)
-	if err != nil {
-		return false
-	}
+func (k Keeper) isValidOperator(ctx sdk.Context, operatorAddress string) bool {
+	params := k.GetParams(ctx)
 
-	signers := msg.GetSigners()
-	for _, signer := range signers {
-		if controllerAcc.Equals(signer) {
+	for i := range params.Operators {
+		if params.Operators[i] == operatorAddress {
 			return true
 		}
 	}
