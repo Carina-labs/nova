@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/Carina-labs/nova/x/pool"
 	"io"
 	"net/http"
 	"os"
@@ -290,6 +291,7 @@ func NewNovaApp(
 		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
 		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.AccountKeeper, app.BankKeeper),
+		pool.NewAppModule(appCodec, *app.PoolKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
 
