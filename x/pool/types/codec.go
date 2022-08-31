@@ -13,15 +13,19 @@ var (
 )
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&MsgCreatePool{}, "supernova/pool/create-pool", nil)
+	cdc.RegisterConcrete(&MsgCreateCandidatePool{}, "supernova/pool/create-candidate-pool", nil)
+	cdc.RegisterConcrete(&MsgCreateIncentivePool{}, "supernova/pool/create-incentive-pool", nil)
 	cdc.RegisterConcrete(&MsgSetPoolWeight{}, "supernova/pool/set-pool-weight", nil)
+	cdc.RegisterConcrete(&MsgSetMultiplePoolWeight{}, "supernova/pool/set-multiple-pool-weight", nil)
 }
 
 func RegisterInterfaces(registry types.InterfaceRegistry) {
 	registry.RegisterImplementations(
 		(*sdk.Msg)(nil),
-		&MsgCreatePool{},
+		&MsgCreateCandidatePool{},
+		&MsgCreateIncentivePool{},
 		&MsgSetPoolWeight{},
+		&MsgSetMultiplePoolWeight{},
 	)
 
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)

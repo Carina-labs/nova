@@ -19,21 +19,42 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 	}
 }
 
-// CreatePool handles MsgCreatePool message, it creates a new pool
+// CreateCandidatePool handles MsgCreateCandidatePool message, it creates a new candidate pool
 // with pool id and contract address of pool.
-func (m msgServer) CreatePool(goCtx context.Context, msg *types.MsgCreatePool) (*types.MsgCreatePoolResponse, error) {
+func (m msgServer) CreateCandidatePool(goCtx context.Context, msg *types.MsgCreateCandidatePool) (*types.MsgCreateCandidatePoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	pool := &types.Pool{
+	pool := &types.CandidatePool{
+		PoolId:              msg.PoolId,
+		PoolContractAddress: msg.PoolContractAddress,
+	}
+
+	if err := m.keeper.CreateCandidatePool(ctx, pool); err != nil {
+		return nil, err
+	}
+
+	return &types.MsgCreateCandidatePoolResponse{}, nil
+}
+
+// CreateIncentivePool handles MsgCreateIncentivePool message, it creates a new incentive pool
+// with pool id and contract address of pool.
+// This message only can be handled by operator.
+func (m msgServer) CreateIncentivePool(goCtx context.Context, msg *types.MsgCreateIncentivePool) (*types.MsgCreateIncentivePoolResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	ok := m.keeper.isValidOperator(ctx, msg.Operator)
+	if !ok {
+		return nil, fmt.Errorf("invalid controller address: %s", msg.Operator)
+	}
+	pool := &types.IncentivePool{
 		PoolId:              msg.PoolId,
 		PoolContractAddress: msg.PoolContractAddress,
 		Weight:              0,
 	}
-	err := m.keeper.CreatePool(ctx, pool)
-	if err != nil {
+
+	if err := m.keeper.CreateIncentivePool(ctx, pool); err != nil {
 		return nil, err
 	}
 
-	return &types.MsgCreatePoolResponse{}, nil
+	return &types.MsgCreateIncentivePoolResponse{}, nil
 }
 
 // SetPoolWeight handles MsgSetPoolWeight message,
@@ -50,4 +71,20 @@ func (m msgServer) SetPoolWeight(goCtx context.Context, msg *types.MsgSetPoolWei
 	}
 
 	return &types.MsgSetPoolWeightResponse{}, nil
+}
+
+func (m msgServer) SetMultiplePoolWeight(goCtx context.Context, msg *types.MsgSetMultiplePoolWeight) (*types.MsgSetMultiplePoolWeightResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	ok := m.keeper.isValidOperator(ctx, msg.Operator)
+	if !ok {
+		return nil, fmt.Errorf("invalid controller address: %s", msg.Operator)
+	}
+
+	for _, pool := range msg.NewPoolData {
+		if err := m.keeper.SetPoolWeight(ctx, pool.PoolId, pool.NewWeight); err != nil {
+			return nil, err
+		}
+	}
+
+	return &types.MsgSetMultiplePoolWeightResponse{}, nil
 }

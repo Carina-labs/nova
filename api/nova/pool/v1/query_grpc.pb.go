@@ -23,6 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePool, opts ...grpc.CallOption) (*QuerySingleCandidatePool, error)
+	AllCandidatePool(ctx context.Context, in *QueryAllCandidatePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
+	SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
+	AllIncentivePool(ctx context.Context, in *QueryAllIncentivePool, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error)
 }
 
 type queryClient struct {
@@ -42,11 +46,51 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePool, opts ...grpc.CallOption) (*QuerySingleCandidatePool, error) {
+	out := new(QuerySingleCandidatePool)
+	err := c.cc.Invoke(ctx, "/nova.pool.v1.Query/SingleCandidatePool", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) AllCandidatePool(ctx context.Context, in *QueryAllCandidatePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error) {
+	out := new(QueryAllCandidatePoolResponse)
+	err := c.cc.Invoke(ctx, "/nova.pool.v1.Query/AllCandidatePool", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error) {
+	out := new(QueryAllCandidatePoolResponse)
+	err := c.cc.Invoke(ctx, "/nova.pool.v1.Query/SingleIncentivePool", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) AllIncentivePool(ctx context.Context, in *QueryAllIncentivePool, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error) {
+	out := new(QueryAllIncentivePoolResponse)
+	err := c.cc.Invoke(ctx, "/nova.pool.v1.Query/AllIncentivePool", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	SingleCandidatePool(context.Context, *QuerySingleCandidatePool) (*QuerySingleCandidatePool, error)
+	AllCandidatePool(context.Context, *QueryAllCandidatePool) (*QueryAllCandidatePoolResponse, error)
+	SingleIncentivePool(context.Context, *QuerySingleIncentivePool) (*QueryAllCandidatePoolResponse, error)
+	AllIncentivePool(context.Context, *QueryAllIncentivePool) (*QueryAllIncentivePoolResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -56,6 +100,18 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (UnimplementedQueryServer) SingleCandidatePool(context.Context, *QuerySingleCandidatePool) (*QuerySingleCandidatePool, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SingleCandidatePool not implemented")
+}
+func (UnimplementedQueryServer) AllCandidatePool(context.Context, *QueryAllCandidatePool) (*QueryAllCandidatePoolResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AllCandidatePool not implemented")
+}
+func (UnimplementedQueryServer) SingleIncentivePool(context.Context, *QuerySingleIncentivePool) (*QueryAllCandidatePoolResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SingleIncentivePool not implemented")
+}
+func (UnimplementedQueryServer) AllIncentivePool(context.Context, *QueryAllIncentivePool) (*QueryAllIncentivePoolResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AllIncentivePool not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -88,6 +144,78 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_SingleCandidatePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuerySingleCandidatePool)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).SingleCandidatePool(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.pool.v1.Query/SingleCandidatePool",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).SingleCandidatePool(ctx, req.(*QuerySingleCandidatePool))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_AllCandidatePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllCandidatePool)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AllCandidatePool(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.pool.v1.Query/AllCandidatePool",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AllCandidatePool(ctx, req.(*QueryAllCandidatePool))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_SingleIncentivePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QuerySingleIncentivePool)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).SingleIncentivePool(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.pool.v1.Query/SingleIncentivePool",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).SingleIncentivePool(ctx, req.(*QuerySingleIncentivePool))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_AllIncentivePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllIncentivePool)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AllIncentivePool(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.pool.v1.Query/AllIncentivePool",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AllIncentivePool(ctx, req.(*QueryAllIncentivePool))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +226,22 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "SingleCandidatePool",
+			Handler:    _Query_SingleCandidatePool_Handler,
+		},
+		{
+			MethodName: "AllCandidatePool",
+			Handler:    _Query_AllCandidatePool_Handler,
+		},
+		{
+			MethodName: "SingleIncentivePool",
+			Handler:    _Query_SingleIncentivePool_Handler,
+		},
+		{
+			MethodName: "AllIncentivePool",
+			Handler:    _Query_AllIncentivePool_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

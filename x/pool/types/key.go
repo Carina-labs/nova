@@ -12,5 +12,6 @@ const (
 
 // KVStore keys
 var (
-	KeyPool = []byte{0x00}
+	KeyCandidatePool = []byte{0x00}
+	KeyIncentivePool = []byte{0x01}
 )

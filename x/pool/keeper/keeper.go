@@ -30,9 +30,13 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
-// getPoolStore returns store saving pool information.
-func (k Keeper) getPoolStore(ctx sdk.Context) prefix.Store {
-	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPool)
+// getCandidatePoolStore returns store saving pool information.
+func (k Keeper) getCandidatePoolStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyCandidatePool)
+}
+
+func (k Keeper) getIncentivePoolStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyIncentivePool)
 }
 
 // isValidOperator checks if signer of msg is valid.

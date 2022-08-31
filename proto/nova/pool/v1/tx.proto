@@ -1,22 +1,43 @@
 syntax = "proto3";
 package nova.pool.v1;
 
+import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/msg/v1/msg.proto";
 
 option go_package = "github.com/carina-labs/nova/x/pool/types";
 
 service Msg {
-  rpc CreatePool(MsgCreatePool) returns (MsgCreatePoolResponse);
+  // CreateCandidatePool creates new "candidate" pool, which can be created by anyone
+  rpc CreateCandidatePool(MsgCreateCandidatePool) returns (MsgCreateCandidatePoolResponse);
+
+  // CreateIncentivePool creates new "incentive" pool, which can be created by only operator
+  rpc CreateIncentivePool(MsgCreateIncentivePool) returns (MsgCreateIncentivePoolResponse);
+
+  // SetPoolWeight sets new weight of one pool
   rpc SetPoolWeight(MsgSetPoolWeight) returns (MsgSetPoolWeightResponse);
+
+  // SetMultiplePoolWeight sets new weight of multiple pool
+  rpc SetMultiplePoolWeight(MsgSetMultiplePoolWeight) returns (MsgSetMultiplePoolWeightResponse);
 }
 
-message MsgCreatePool {
+message MsgCreateCandidatePool {
   string pool_id = 1;
   string pool_contract_address = 2;
 }
 
-message MsgCreatePoolResponse {
+message MsgCreateCandidatePoolResponse {
+
+}
+
+message MsgCreateIncentivePool {
+  option (cosmos.msg.v1.signer) = "operator";
+  string pool_id = 1;
+  string pool_contract_address = 2;
+  string operator = 3;
+}
+
+message MsgCreateIncentivePoolResponse {
 
 }
 
@@ -24,9 +45,24 @@ message MsgSetPoolWeight {
   option (cosmos.msg.v1.signer) = "operator";
   string pool_id = 1;
   uint64 new_weight = 2;
-  string operator = 3 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+  string operator = 3;
 }
 
 message MsgSetPoolWeightResponse {
+
+}
+
+message MsgSetMultiplePoolWeight {
+  option (cosmos.msg.v1.signer) = "operator";
+  repeated NewPoolWeight new_pool_data = 1 [ (gogoproto.nullable) = false ];
+  string operator = 2;
+}
+
+message NewPoolWeight {
+  string pool_id = 1;
+  uint64 new_weight = 2;
+}
+
+message MsgSetMultiplePoolWeightResponse {
 
 }

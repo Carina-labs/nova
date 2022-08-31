@@ -4,14 +4,14 @@ import (
 	"github.com/Carina-labs/nova/x/pool/types"
 )
 
-func (suite *KeeperTestSuite) TestCreatePool() {
+func (suite *KeeperTestSuite) TestCreateCandidatePool() {
 	tcs := []struct {
 		name string
-		pool []types.Pool
+		pool []types.CandidatePool
 	}{
 		{
 			name: "valid case 1",
-			pool: []types.Pool{
+			pool: []types.CandidatePool{
 				{
 					PoolId:              "1",
 					PoolContractAddress: "12345",
@@ -20,7 +20,7 @@ func (suite *KeeperTestSuite) TestCreatePool() {
 		},
 		{
 			name: "valid case 1",
-			pool: []types.Pool{
+			pool: []types.CandidatePool{
 				{
 					PoolId:              "1",
 					PoolContractAddress: "12345",
@@ -42,18 +42,17 @@ func (suite *KeeperTestSuite) TestCreatePool() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			for _, p := range tc.pool {
-				err := keeper.CreatePool(suite.Ctx, &p)
+				err := keeper.CreateCandidatePool(suite.Ctx, &p)
 				suite.NoError(err)
 			}
 
-			keeper.IteratePools(suite.Ctx, func(i int64, pool *types.Pool) bool {
+			keeper.IterateCandidatePools(suite.Ctx, func(i int64, pool *types.CandidatePool) bool {
 				suite.Equal(tc.pool[i].PoolId, pool.PoolId)
 				suite.Equal(tc.pool[i].PoolContractAddress, pool.PoolContractAddress)
-				suite.Equal(tc.pool[i].Weight, pool.Weight)
 				return false
 			})
 
-			keeper.ClearPools(suite.Ctx)
+			keeper.ClearCandidatePools(suite.Ctx)
 		})
 	}
 }
@@ -64,13 +63,13 @@ func (suite *KeeperTestSuite) TestSetPoolWeight() {
 
 	tcs := []struct {
 		name      string
-		preset    []*types.Pool
+		preset    []*types.IncentivePool
 		targetId  string
 		newWeight uint64
 	}{
 		{
 			name: "valid case 1",
-			preset: []*types.Pool{
+			preset: []*types.IncentivePool{
 				{
 					PoolId:              "pool-1",
 					PoolContractAddress: "12345",
@@ -82,7 +81,7 @@ func (suite *KeeperTestSuite) TestSetPoolWeight() {
 		},
 		{
 			name: "valid case 2",
-			preset: []*types.Pool{
+			preset: []*types.IncentivePool{
 				{
 					PoolId:              "pool-1",
 					PoolContractAddress: "12345",
@@ -108,18 +107,18 @@ func (suite *KeeperTestSuite) TestSetPoolWeight() {
 		suite.Run(tc.name, func() {
 			// create pool with presets
 			for _, p := range tc.preset {
-				err := keeper.CreatePool(suite.Ctx, p)
+				err := keeper.CreateIncentivePool(suite.Ctx, p)
 				suite.NoError(err)
 			}
 
 			err := keeper.SetPoolWeight(suite.Ctx, tc.targetId, tc.newWeight)
 			suite.NoError(err)
 
-			pool, err := keeper.FindPoolById(suite.Ctx, tc.targetId)
+			pool, err := keeper.FindIncentivePoolById(suite.Ctx, tc.targetId)
 			suite.NoError(err)
 			suite.Equal(tc.newWeight, pool.Weight)
 
-			keeper.ClearPools(suite.Ctx)
+			keeper.ClearIncentivePools(suite.Ctx)
 		})
 	}
 }
@@ -128,12 +127,12 @@ func (suite *KeeperTestSuite) TestGetTotalWeight() {
 	keeper := suite.App.PoolKeeper
 	tcs := []struct {
 		name                string
-		preset              []*types.Pool
+		preset              []*types.IncentivePool
 		expectedTotalWeight uint64
 	}{
 		{
 			name: "valid case 1",
-			preset: []*types.Pool{
+			preset: []*types.IncentivePool{
 				{
 					PoolId:              "pool-1",
 					PoolContractAddress: "12345",
@@ -149,7 +148,7 @@ func (suite *KeeperTestSuite) TestGetTotalWeight() {
 		},
 		{
 			name: "valid case 2",
-			preset: []*types.Pool{
+			preset: []*types.IncentivePool{
 				{
 					PoolId:              "pool-1",
 					PoolContractAddress: "12345",
@@ -174,14 +173,14 @@ func (suite *KeeperTestSuite) TestGetTotalWeight() {
 		suite.Run(tc.name, func() {
 			// create pool with presets
 			for _, p := range tc.preset {
-				err := keeper.CreatePool(suite.Ctx, p)
+				err := keeper.CreateIncentivePool(suite.Ctx, p)
 				suite.NoError(err)
 			}
 
 			totalWeight := keeper.GetTotalWeight(suite.Ctx)
 			suite.Equal(tc.expectedTotalWeight, totalWeight)
 
-			keeper.ClearPools(suite.Ctx)
+			keeper.ClearIncentivePools(suite.Ctx)
 		})
 	}
 }

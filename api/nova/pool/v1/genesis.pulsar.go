@@ -13,17 +13,121 @@ import (
 	sync "sync"
 )
 
+var _ protoreflect.List = (*_GenesisState_2_list)(nil)
+
+type _GenesisState_2_list struct {
+	list *[]*IncentivePool
+}
+
+func (x *_GenesisState_2_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_GenesisState_2_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_GenesisState_2_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*IncentivePool)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_GenesisState_2_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*IncentivePool)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_GenesisState_2_list) AppendMutable() protoreflect.Value {
+	v := new(IncentivePool)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_GenesisState_2_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_GenesisState_2_list) NewElement() protoreflect.Value {
+	v := new(IncentivePool)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_GenesisState_2_list) IsValid() bool {
+	return x.list != nil
+}
+
+var _ protoreflect.List = (*_GenesisState_3_list)(nil)
+
+type _GenesisState_3_list struct {
+	list *[]*CandidatePool
+}
+
+func (x *_GenesisState_3_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_GenesisState_3_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_GenesisState_3_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*CandidatePool)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_GenesisState_3_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*CandidatePool)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_GenesisState_3_list) AppendMutable() protoreflect.Value {
+	v := new(CandidatePool)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_GenesisState_3_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_GenesisState_3_list) NewElement() protoreflect.Value {
+	v := new(CandidatePool)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_GenesisState_3_list) IsValid() bool {
+	return x.list != nil
+}
+
 var (
-	md_GenesisState           protoreflect.MessageDescriptor
-	fd_GenesisState_params    protoreflect.FieldDescriptor
-	fd_GenesisState_pool_info protoreflect.FieldDescriptor
+	md_GenesisState                 protoreflect.MessageDescriptor
+	fd_GenesisState_params          protoreflect.FieldDescriptor
+	fd_GenesisState_incentive_pools protoreflect.FieldDescriptor
+	fd_GenesisState_candidate_pools protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_pool_v1_genesis_proto_init()
 	md_GenesisState = File_nova_pool_v1_genesis_proto.Messages().ByName("GenesisState")
 	fd_GenesisState_params = md_GenesisState.Fields().ByName("params")
-	fd_GenesisState_pool_info = md_GenesisState.Fields().ByName("pool_info")
+	fd_GenesisState_incentive_pools = md_GenesisState.Fields().ByName("incentive_pools")
+	fd_GenesisState_candidate_pools = md_GenesisState.Fields().ByName("candidate_pools")
 }
 
 var _ protoreflect.Message = (*fastReflection_GenesisState)(nil)
@@ -97,9 +201,15 @@ func (x *fastReflection_GenesisState) Range(f func(protoreflect.FieldDescriptor,
 			return
 		}
 	}
-	if x.PoolInfo != nil {
-		value := protoreflect.ValueOfMessage(x.PoolInfo.ProtoReflect())
-		if !f(fd_GenesisState_pool_info, value) {
+	if len(x.IncentivePools) != 0 {
+		value := protoreflect.ValueOfList(&_GenesisState_2_list{list: &x.IncentivePools})
+		if !f(fd_GenesisState_incentive_pools, value) {
+			return
+		}
+	}
+	if len(x.CandidatePools) != 0 {
+		value := protoreflect.ValueOfList(&_GenesisState_3_list{list: &x.CandidatePools})
+		if !f(fd_GenesisState_candidate_pools, value) {
 			return
 		}
 	}
@@ -120,8 +230,10 @@ func (x *fastReflection_GenesisState) Has(fd protoreflect.FieldDescriptor) bool 
 	switch fd.FullName() {
 	case "nova.pool.v1.GenesisState.params":
 		return x.Params != nil
-	case "nova.pool.v1.GenesisState.pool_info":
-		return x.PoolInfo != nil
+	case "nova.pool.v1.GenesisState.incentive_pools":
+		return len(x.IncentivePools) != 0
+	case "nova.pool.v1.GenesisState.candidate_pools":
+		return len(x.CandidatePools) != 0
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.GenesisState"))
@@ -140,8 +252,10 @@ func (x *fastReflection_GenesisState) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	case "nova.pool.v1.GenesisState.params":
 		x.Params = nil
-	case "nova.pool.v1.GenesisState.pool_info":
-		x.PoolInfo = nil
+	case "nova.pool.v1.GenesisState.incentive_pools":
+		x.IncentivePools = nil
+	case "nova.pool.v1.GenesisState.candidate_pools":
+		x.CandidatePools = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.GenesisState"))
@@ -161,9 +275,18 @@ func (x *fastReflection_GenesisState) Get(descriptor protoreflect.FieldDescripto
 	case "nova.pool.v1.GenesisState.params":
 		value := x.Params
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.pool.v1.GenesisState.pool_info":
-		value := x.PoolInfo
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "nova.pool.v1.GenesisState.incentive_pools":
+		if len(x.IncentivePools) == 0 {
+			return protoreflect.ValueOfList(&_GenesisState_2_list{})
+		}
+		listValue := &_GenesisState_2_list{list: &x.IncentivePools}
+		return protoreflect.ValueOfList(listValue)
+	case "nova.pool.v1.GenesisState.candidate_pools":
+		if len(x.CandidatePools) == 0 {
+			return protoreflect.ValueOfList(&_GenesisState_3_list{})
+		}
+		listValue := &_GenesisState_3_list{list: &x.CandidatePools}
+		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.GenesisState"))
@@ -186,8 +309,14 @@ func (x *fastReflection_GenesisState) Set(fd protoreflect.FieldDescriptor, value
 	switch fd.FullName() {
 	case "nova.pool.v1.GenesisState.params":
 		x.Params = value.Message().Interface().(*Params)
-	case "nova.pool.v1.GenesisState.pool_info":
-		x.PoolInfo = value.Message().Interface().(*PoolInfo)
+	case "nova.pool.v1.GenesisState.incentive_pools":
+		lv := value.List()
+		clv := lv.(*_GenesisState_2_list)
+		x.IncentivePools = *clv.list
+	case "nova.pool.v1.GenesisState.candidate_pools":
+		lv := value.List()
+		clv := lv.(*_GenesisState_3_list)
+		x.CandidatePools = *clv.list
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.GenesisState"))
@@ -213,11 +342,18 @@ func (x *fastReflection_GenesisState) Mutable(fd protoreflect.FieldDescriptor) p
 			x.Params = new(Params)
 		}
 		return protoreflect.ValueOfMessage(x.Params.ProtoReflect())
-	case "nova.pool.v1.GenesisState.pool_info":
-		if x.PoolInfo == nil {
-			x.PoolInfo = new(PoolInfo)
+	case "nova.pool.v1.GenesisState.incentive_pools":
+		if x.IncentivePools == nil {
+			x.IncentivePools = []*IncentivePool{}
 		}
-		return protoreflect.ValueOfMessage(x.PoolInfo.ProtoReflect())
+		value := &_GenesisState_2_list{list: &x.IncentivePools}
+		return protoreflect.ValueOfList(value)
+	case "nova.pool.v1.GenesisState.candidate_pools":
+		if x.CandidatePools == nil {
+			x.CandidatePools = []*CandidatePool{}
+		}
+		value := &_GenesisState_3_list{list: &x.CandidatePools}
+		return protoreflect.ValueOfList(value)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.GenesisState"))
@@ -234,9 +370,12 @@ func (x *fastReflection_GenesisState) NewField(fd protoreflect.FieldDescriptor) 
 	case "nova.pool.v1.GenesisState.params":
 		m := new(Params)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.pool.v1.GenesisState.pool_info":
-		m := new(PoolInfo)
-		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "nova.pool.v1.GenesisState.incentive_pools":
+		list := []*IncentivePool{}
+		return protoreflect.ValueOfList(&_GenesisState_2_list{list: &list})
+	case "nova.pool.v1.GenesisState.candidate_pools":
+		list := []*CandidatePool{}
+		return protoreflect.ValueOfList(&_GenesisState_3_list{list: &list})
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.GenesisState"))
@@ -310,9 +449,17 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 			l = options.Size(x.Params)
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if x.PoolInfo != nil {
-			l = options.Size(x.PoolInfo)
-			n += 1 + l + runtime.Sov(uint64(l))
+		if len(x.IncentivePools) > 0 {
+			for _, e := range x.IncentivePools {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if len(x.CandidatePools) > 0 {
+			for _, e := range x.CandidatePools {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -343,19 +490,37 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if x.PoolInfo != nil {
-			encoded, err := options.Marshal(x.PoolInfo)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
+		if len(x.CandidatePools) > 0 {
+			for iNdEx := len(x.CandidatePools) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.CandidatePools[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x1a
 			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-			i--
-			dAtA[i] = 0x12
+		}
+		if len(x.IncentivePools) > 0 {
+			for iNdEx := len(x.IncentivePools) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.IncentivePools[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x12
+			}
 		}
 		if x.Params != nil {
 			encoded, err := options.Marshal(x.Params)
@@ -458,7 +623,7 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 				iNdEx = postIndex
 			case 2:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field PoolInfo", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field IncentivePools", wireType)
 				}
 				var msglen int
 				for shift := uint(0); ; shift += 7 {
@@ -485,10 +650,42 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				if x.PoolInfo == nil {
-					x.PoolInfo = &PoolInfo{}
+				x.IncentivePools = append(x.IncentivePools, &IncentivePool{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.IncentivePools[len(x.IncentivePools)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.PoolInfo); err != nil {
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CandidatePools", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.CandidatePools = append(x.CandidatePools, &CandidatePool{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.CandidatePools[len(x.CandidatePools)-1]); err != nil {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
@@ -527,79 +724,28 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 	}
 }
 
-var _ protoreflect.List = (*_PoolInfo_2_list)(nil)
-
-type _PoolInfo_2_list struct {
-	list *[]*Pool
-}
-
-func (x *_PoolInfo_2_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_PoolInfo_2_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
-}
-
-func (x *_PoolInfo_2_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*Pool)
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_PoolInfo_2_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.Message()
-	concreteValue := valueUnwrapped.Interface().(*Pool)
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_PoolInfo_2_list) AppendMutable() protoreflect.Value {
-	v := new(Pool)
-	*x.list = append(*x.list, v)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_PoolInfo_2_list) Truncate(n int) {
-	for i := n; i < len(*x.list); i++ {
-		(*x.list)[i] = nil
-	}
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_PoolInfo_2_list) NewElement() protoreflect.Value {
-	v := new(Pool)
-	return protoreflect.ValueOfMessage(v.ProtoReflect())
-}
-
-func (x *_PoolInfo_2_list) IsValid() bool {
-	return x.list != nil
-}
-
 var (
-	md_PoolInfo              protoreflect.MessageDescriptor
-	fd_PoolInfo_total_weight protoreflect.FieldDescriptor
-	fd_PoolInfo_pools        protoreflect.FieldDescriptor
+	md_CandidatePool                       protoreflect.MessageDescriptor
+	fd_CandidatePool_pool_id               protoreflect.FieldDescriptor
+	fd_CandidatePool_pool_contract_address protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_pool_v1_genesis_proto_init()
-	md_PoolInfo = File_nova_pool_v1_genesis_proto.Messages().ByName("PoolInfo")
-	fd_PoolInfo_total_weight = md_PoolInfo.Fields().ByName("total_weight")
-	fd_PoolInfo_pools = md_PoolInfo.Fields().ByName("pools")
+	md_CandidatePool = File_nova_pool_v1_genesis_proto.Messages().ByName("CandidatePool")
+	fd_CandidatePool_pool_id = md_CandidatePool.Fields().ByName("pool_id")
+	fd_CandidatePool_pool_contract_address = md_CandidatePool.Fields().ByName("pool_contract_address")
 }
 
-var _ protoreflect.Message = (*fastReflection_PoolInfo)(nil)
+var _ protoreflect.Message = (*fastReflection_CandidatePool)(nil)
 
-type fastReflection_PoolInfo PoolInfo
+type fastReflection_CandidatePool CandidatePool
 
-func (x *PoolInfo) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_PoolInfo)(x)
+func (x *CandidatePool) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_CandidatePool)(x)
 }
 
-func (x *PoolInfo) slowProtoReflect() protoreflect.Message {
+func (x *CandidatePool) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_pool_v1_genesis_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -611,43 +757,43 @@ func (x *PoolInfo) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_PoolInfo_messageType fastReflection_PoolInfo_messageType
-var _ protoreflect.MessageType = fastReflection_PoolInfo_messageType{}
+var _fastReflection_CandidatePool_messageType fastReflection_CandidatePool_messageType
+var _ protoreflect.MessageType = fastReflection_CandidatePool_messageType{}
 
-type fastReflection_PoolInfo_messageType struct{}
+type fastReflection_CandidatePool_messageType struct{}
 
-func (x fastReflection_PoolInfo_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_PoolInfo)(nil)
+func (x fastReflection_CandidatePool_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_CandidatePool)(nil)
 }
-func (x fastReflection_PoolInfo_messageType) New() protoreflect.Message {
-	return new(fastReflection_PoolInfo)
+func (x fastReflection_CandidatePool_messageType) New() protoreflect.Message {
+	return new(fastReflection_CandidatePool)
 }
-func (x fastReflection_PoolInfo_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_PoolInfo
+func (x fastReflection_CandidatePool_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_CandidatePool
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_PoolInfo) Descriptor() protoreflect.MessageDescriptor {
-	return md_PoolInfo
+func (x *fastReflection_CandidatePool) Descriptor() protoreflect.MessageDescriptor {
+	return md_CandidatePool
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_PoolInfo) Type() protoreflect.MessageType {
-	return _fastReflection_PoolInfo_messageType
+func (x *fastReflection_CandidatePool) Type() protoreflect.MessageType {
+	return _fastReflection_CandidatePool_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_PoolInfo) New() protoreflect.Message {
-	return new(fastReflection_PoolInfo)
+func (x *fastReflection_CandidatePool) New() protoreflect.Message {
+	return new(fastReflection_CandidatePool)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_PoolInfo) Interface() protoreflect.ProtoMessage {
-	return (*PoolInfo)(x)
+func (x *fastReflection_CandidatePool) Interface() protoreflect.ProtoMessage {
+	return (*CandidatePool)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -655,16 +801,16 @@ func (x *fastReflection_PoolInfo) Interface() protoreflect.ProtoMessage {
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_PoolInfo) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.TotalWeight != uint64(0) {
-		value := protoreflect.ValueOfUint64(x.TotalWeight)
-		if !f(fd_PoolInfo_total_weight, value) {
+func (x *fastReflection_CandidatePool) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.PoolId != "" {
+		value := protoreflect.ValueOfString(x.PoolId)
+		if !f(fd_CandidatePool_pool_id, value) {
 			return
 		}
 	}
-	if len(x.Pools) != 0 {
-		value := protoreflect.ValueOfList(&_PoolInfo_2_list{list: &x.Pools})
-		if !f(fd_PoolInfo_pools, value) {
+	if x.PoolContractAddress != "" {
+		value := protoreflect.ValueOfString(x.PoolContractAddress)
+		if !f(fd_CandidatePool_pool_contract_address, value) {
 			return
 		}
 	}
@@ -681,17 +827,17 @@ func (x *fastReflection_PoolInfo) Range(f func(protoreflect.FieldDescriptor, pro
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_PoolInfo) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_CandidatePool) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.pool.v1.PoolInfo.total_weight":
-		return x.TotalWeight != uint64(0)
-	case "nova.pool.v1.PoolInfo.pools":
-		return len(x.Pools) != 0
+	case "nova.pool.v1.CandidatePool.pool_id":
+		return x.PoolId != ""
+	case "nova.pool.v1.CandidatePool.pool_contract_address":
+		return x.PoolContractAddress != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.PoolInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.CandidatePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.PoolInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.CandidatePool does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -701,17 +847,17 @@ func (x *fastReflection_PoolInfo) Has(fd protoreflect.FieldDescriptor) bool {
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_PoolInfo) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_CandidatePool) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.pool.v1.PoolInfo.total_weight":
-		x.TotalWeight = uint64(0)
-	case "nova.pool.v1.PoolInfo.pools":
-		x.Pools = nil
+	case "nova.pool.v1.CandidatePool.pool_id":
+		x.PoolId = ""
+	case "nova.pool.v1.CandidatePool.pool_contract_address":
+		x.PoolContractAddress = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.PoolInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.CandidatePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.PoolInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.CandidatePool does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -721,22 +867,19 @@ func (x *fastReflection_PoolInfo) Clear(fd protoreflect.FieldDescriptor) {
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_PoolInfo) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_CandidatePool) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.pool.v1.PoolInfo.total_weight":
-		value := x.TotalWeight
-		return protoreflect.ValueOfUint64(value)
-	case "nova.pool.v1.PoolInfo.pools":
-		if len(x.Pools) == 0 {
-			return protoreflect.ValueOfList(&_PoolInfo_2_list{})
-		}
-		listValue := &_PoolInfo_2_list{list: &x.Pools}
-		return protoreflect.ValueOfList(listValue)
+	case "nova.pool.v1.CandidatePool.pool_id":
+		value := x.PoolId
+		return protoreflect.ValueOfString(value)
+	case "nova.pool.v1.CandidatePool.pool_contract_address":
+		value := x.PoolContractAddress
+		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.PoolInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.CandidatePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.PoolInfo does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.CandidatePool does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -750,19 +893,17 @@ func (x *fastReflection_PoolInfo) Get(descriptor protoreflect.FieldDescriptor) p
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_PoolInfo) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_CandidatePool) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.pool.v1.PoolInfo.total_weight":
-		x.TotalWeight = value.Uint()
-	case "nova.pool.v1.PoolInfo.pools":
-		lv := value.List()
-		clv := lv.(*_PoolInfo_2_list)
-		x.Pools = *clv.list
+	case "nova.pool.v1.CandidatePool.pool_id":
+		x.PoolId = value.Interface().(string)
+	case "nova.pool.v1.CandidatePool.pool_contract_address":
+		x.PoolContractAddress = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.PoolInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.CandidatePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.PoolInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.CandidatePool does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -776,49 +917,44 @@ func (x *fastReflection_PoolInfo) Set(fd protoreflect.FieldDescriptor, value pro
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_PoolInfo) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_CandidatePool) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.pool.v1.PoolInfo.pools":
-		if x.Pools == nil {
-			x.Pools = []*Pool{}
-		}
-		value := &_PoolInfo_2_list{list: &x.Pools}
-		return protoreflect.ValueOfList(value)
-	case "nova.pool.v1.PoolInfo.total_weight":
-		panic(fmt.Errorf("field total_weight of message nova.pool.v1.PoolInfo is not mutable"))
+	case "nova.pool.v1.CandidatePool.pool_id":
+		panic(fmt.Errorf("field pool_id of message nova.pool.v1.CandidatePool is not mutable"))
+	case "nova.pool.v1.CandidatePool.pool_contract_address":
+		panic(fmt.Errorf("field pool_contract_address of message nova.pool.v1.CandidatePool is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.PoolInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.CandidatePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.PoolInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.CandidatePool does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_PoolInfo) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_CandidatePool) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.pool.v1.PoolInfo.total_weight":
-		return protoreflect.ValueOfUint64(uint64(0))
-	case "nova.pool.v1.PoolInfo.pools":
-		list := []*Pool{}
-		return protoreflect.ValueOfList(&_PoolInfo_2_list{list: &list})
+	case "nova.pool.v1.CandidatePool.pool_id":
+		return protoreflect.ValueOfString("")
+	case "nova.pool.v1.CandidatePool.pool_contract_address":
+		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.PoolInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.CandidatePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.PoolInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.CandidatePool does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_PoolInfo) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_CandidatePool) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.pool.v1.PoolInfo", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.pool.v1.CandidatePool", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -826,7 +962,7 @@ func (x *fastReflection_PoolInfo) WhichOneof(d protoreflect.OneofDescriptor) pro
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_PoolInfo) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_CandidatePool) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -837,7 +973,7 @@ func (x *fastReflection_PoolInfo) GetUnknown() protoreflect.RawFields {
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_PoolInfo) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_CandidatePool) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -849,7 +985,7 @@ func (x *fastReflection_PoolInfo) SetUnknown(fields protoreflect.RawFields) {
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_PoolInfo) IsValid() bool {
+func (x *fastReflection_CandidatePool) IsValid() bool {
 	return x != nil
 }
 
@@ -859,9 +995,9 @@ func (x *fastReflection_PoolInfo) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_PoolInfo) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_CandidatePool) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*PoolInfo)
+		x := input.Message.Interface().(*CandidatePool)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -873,14 +1009,13 @@ func (x *fastReflection_PoolInfo) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		if x.TotalWeight != 0 {
-			n += 1 + runtime.Sov(uint64(x.TotalWeight))
+		l = len(x.PoolId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if len(x.Pools) > 0 {
-			for _, e := range x.Pools {
-				l = options.Size(e)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
+		l = len(x.PoolContractAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -892,7 +1027,7 @@ func (x *fastReflection_PoolInfo) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*PoolInfo)
+		x := input.Message.Interface().(*CandidatePool)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -911,26 +1046,19 @@ func (x *fastReflection_PoolInfo) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Pools) > 0 {
-			for iNdEx := len(x.Pools) - 1; iNdEx >= 0; iNdEx-- {
-				encoded, err := options.Marshal(x.Pools[iNdEx])
-				if err != nil {
-					return protoiface.MarshalOutput{
-						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-						Buf:               input.Buf,
-					}, err
-				}
-				i -= len(encoded)
-				copy(dAtA[i:], encoded)
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-				i--
-				dAtA[i] = 0x12
-			}
-		}
-		if x.TotalWeight != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.TotalWeight))
+		if len(x.PoolContractAddress) > 0 {
+			i -= len(x.PoolContractAddress)
+			copy(dAtA[i:], x.PoolContractAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.PoolContractAddress)))
 			i--
-			dAtA[i] = 0x8
+			dAtA[i] = 0x12
+		}
+		if len(x.PoolId) > 0 {
+			i -= len(x.PoolId)
+			copy(dAtA[i:], x.PoolId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.PoolId)))
+			i--
+			dAtA[i] = 0xa
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -943,7 +1071,7 @@ func (x *fastReflection_PoolInfo) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*PoolInfo)
+		x := input.Message.Interface().(*CandidatePool)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -975,36 +1103,17 @@ func (x *fastReflection_PoolInfo) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: PoolInfo: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: CandidatePool: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: PoolInfo: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: CandidatePool: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
-				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TotalWeight", wireType)
-				}
-				x.TotalWeight = 0
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					x.TotalWeight |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-			case 2:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Pools", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field PoolId", wireType)
 				}
-				var msglen int
+				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -1014,25 +1123,55 @@ func (x *fastReflection_PoolInfo) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					msglen |= int(b&0x7F) << shift
+					stringLen |= uint64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				if msglen < 0 {
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + msglen
+				postIndex := iNdEx + intStringLen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Pools = append(x.Pools, &Pool{})
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Pools[len(x.Pools)-1]); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				x.PoolId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field PoolContractAddress", wireType)
 				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.PoolContractAddress = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -1070,29 +1209,29 @@ func (x *fastReflection_PoolInfo) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_Pool                       protoreflect.MessageDescriptor
-	fd_Pool_pool_id               protoreflect.FieldDescriptor
-	fd_Pool_pool_contract_address protoreflect.FieldDescriptor
-	fd_Pool_weight                protoreflect.FieldDescriptor
+	md_IncentivePool                       protoreflect.MessageDescriptor
+	fd_IncentivePool_pool_id               protoreflect.FieldDescriptor
+	fd_IncentivePool_pool_contract_address protoreflect.FieldDescriptor
+	fd_IncentivePool_weight                protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_pool_v1_genesis_proto_init()
-	md_Pool = File_nova_pool_v1_genesis_proto.Messages().ByName("Pool")
-	fd_Pool_pool_id = md_Pool.Fields().ByName("pool_id")
-	fd_Pool_pool_contract_address = md_Pool.Fields().ByName("pool_contract_address")
-	fd_Pool_weight = md_Pool.Fields().ByName("weight")
+	md_IncentivePool = File_nova_pool_v1_genesis_proto.Messages().ByName("IncentivePool")
+	fd_IncentivePool_pool_id = md_IncentivePool.Fields().ByName("pool_id")
+	fd_IncentivePool_pool_contract_address = md_IncentivePool.Fields().ByName("pool_contract_address")
+	fd_IncentivePool_weight = md_IncentivePool.Fields().ByName("weight")
 }
 
-var _ protoreflect.Message = (*fastReflection_Pool)(nil)
+var _ protoreflect.Message = (*fastReflection_IncentivePool)(nil)
 
-type fastReflection_Pool Pool
+type fastReflection_IncentivePool IncentivePool
 
-func (x *Pool) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_Pool)(x)
+func (x *IncentivePool) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_IncentivePool)(x)
 }
 
-func (x *Pool) slowProtoReflect() protoreflect.Message {
+func (x *IncentivePool) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_pool_v1_genesis_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1104,43 +1243,43 @@ func (x *Pool) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_Pool_messageType fastReflection_Pool_messageType
-var _ protoreflect.MessageType = fastReflection_Pool_messageType{}
+var _fastReflection_IncentivePool_messageType fastReflection_IncentivePool_messageType
+var _ protoreflect.MessageType = fastReflection_IncentivePool_messageType{}
 
-type fastReflection_Pool_messageType struct{}
+type fastReflection_IncentivePool_messageType struct{}
 
-func (x fastReflection_Pool_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_Pool)(nil)
+func (x fastReflection_IncentivePool_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_IncentivePool)(nil)
 }
-func (x fastReflection_Pool_messageType) New() protoreflect.Message {
-	return new(fastReflection_Pool)
+func (x fastReflection_IncentivePool_messageType) New() protoreflect.Message {
+	return new(fastReflection_IncentivePool)
 }
-func (x fastReflection_Pool_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_Pool
+func (x fastReflection_IncentivePool_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_IncentivePool
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_Pool) Descriptor() protoreflect.MessageDescriptor {
-	return md_Pool
+func (x *fastReflection_IncentivePool) Descriptor() protoreflect.MessageDescriptor {
+	return md_IncentivePool
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_Pool) Type() protoreflect.MessageType {
-	return _fastReflection_Pool_messageType
+func (x *fastReflection_IncentivePool) Type() protoreflect.MessageType {
+	return _fastReflection_IncentivePool_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_Pool) New() protoreflect.Message {
-	return new(fastReflection_Pool)
+func (x *fastReflection_IncentivePool) New() protoreflect.Message {
+	return new(fastReflection_IncentivePool)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_Pool) Interface() protoreflect.ProtoMessage {
-	return (*Pool)(x)
+func (x *fastReflection_IncentivePool) Interface() protoreflect.ProtoMessage {
+	return (*IncentivePool)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1148,22 +1287,22 @@ func (x *fastReflection_Pool) Interface() protoreflect.ProtoMessage {
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_Pool) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_IncentivePool) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.PoolId != "" {
 		value := protoreflect.ValueOfString(x.PoolId)
-		if !f(fd_Pool_pool_id, value) {
+		if !f(fd_IncentivePool_pool_id, value) {
 			return
 		}
 	}
 	if x.PoolContractAddress != "" {
 		value := protoreflect.ValueOfString(x.PoolContractAddress)
-		if !f(fd_Pool_pool_contract_address, value) {
+		if !f(fd_IncentivePool_pool_contract_address, value) {
 			return
 		}
 	}
 	if x.Weight != uint64(0) {
 		value := protoreflect.ValueOfUint64(x.Weight)
-		if !f(fd_Pool_weight, value) {
+		if !f(fd_IncentivePool_weight, value) {
 			return
 		}
 	}
@@ -1180,19 +1319,19 @@ func (x *fastReflection_Pool) Range(f func(protoreflect.FieldDescriptor, protore
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_Pool) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_IncentivePool) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.pool.v1.Pool.pool_id":
+	case "nova.pool.v1.IncentivePool.pool_id":
 		return x.PoolId != ""
-	case "nova.pool.v1.Pool.pool_contract_address":
+	case "nova.pool.v1.IncentivePool.pool_contract_address":
 		return x.PoolContractAddress != ""
-	case "nova.pool.v1.Pool.weight":
+	case "nova.pool.v1.IncentivePool.weight":
 		return x.Weight != uint64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.Pool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.IncentivePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.Pool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.IncentivePool does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1202,19 +1341,19 @@ func (x *fastReflection_Pool) Has(fd protoreflect.FieldDescriptor) bool {
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Pool) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_IncentivePool) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.pool.v1.Pool.pool_id":
+	case "nova.pool.v1.IncentivePool.pool_id":
 		x.PoolId = ""
-	case "nova.pool.v1.Pool.pool_contract_address":
+	case "nova.pool.v1.IncentivePool.pool_contract_address":
 		x.PoolContractAddress = ""
-	case "nova.pool.v1.Pool.weight":
+	case "nova.pool.v1.IncentivePool.weight":
 		x.Weight = uint64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.Pool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.IncentivePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.Pool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.IncentivePool does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1224,22 +1363,22 @@ func (x *fastReflection_Pool) Clear(fd protoreflect.FieldDescriptor) {
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_Pool) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_IncentivePool) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.pool.v1.Pool.pool_id":
+	case "nova.pool.v1.IncentivePool.pool_id":
 		value := x.PoolId
 		return protoreflect.ValueOfString(value)
-	case "nova.pool.v1.Pool.pool_contract_address":
+	case "nova.pool.v1.IncentivePool.pool_contract_address":
 		value := x.PoolContractAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.pool.v1.Pool.weight":
+	case "nova.pool.v1.IncentivePool.weight":
 		value := x.Weight
 		return protoreflect.ValueOfUint64(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.Pool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.IncentivePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.Pool does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.IncentivePool does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1253,19 +1392,19 @@ func (x *fastReflection_Pool) Get(descriptor protoreflect.FieldDescriptor) proto
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Pool) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_IncentivePool) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.pool.v1.Pool.pool_id":
+	case "nova.pool.v1.IncentivePool.pool_id":
 		x.PoolId = value.Interface().(string)
-	case "nova.pool.v1.Pool.pool_contract_address":
+	case "nova.pool.v1.IncentivePool.pool_contract_address":
 		x.PoolContractAddress = value.Interface().(string)
-	case "nova.pool.v1.Pool.weight":
+	case "nova.pool.v1.IncentivePool.weight":
 		x.Weight = value.Uint()
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.Pool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.IncentivePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.Pool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.IncentivePool does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1279,48 +1418,48 @@ func (x *fastReflection_Pool) Set(fd protoreflect.FieldDescriptor, value protore
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Pool) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_IncentivePool) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.pool.v1.Pool.pool_id":
-		panic(fmt.Errorf("field pool_id of message nova.pool.v1.Pool is not mutable"))
-	case "nova.pool.v1.Pool.pool_contract_address":
-		panic(fmt.Errorf("field pool_contract_address of message nova.pool.v1.Pool is not mutable"))
-	case "nova.pool.v1.Pool.weight":
-		panic(fmt.Errorf("field weight of message nova.pool.v1.Pool is not mutable"))
+	case "nova.pool.v1.IncentivePool.pool_id":
+		panic(fmt.Errorf("field pool_id of message nova.pool.v1.IncentivePool is not mutable"))
+	case "nova.pool.v1.IncentivePool.pool_contract_address":
+		panic(fmt.Errorf("field pool_contract_address of message nova.pool.v1.IncentivePool is not mutable"))
+	case "nova.pool.v1.IncentivePool.weight":
+		panic(fmt.Errorf("field weight of message nova.pool.v1.IncentivePool is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.Pool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.IncentivePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.Pool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.IncentivePool does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_Pool) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_IncentivePool) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.pool.v1.Pool.pool_id":
+	case "nova.pool.v1.IncentivePool.pool_id":
 		return protoreflect.ValueOfString("")
-	case "nova.pool.v1.Pool.pool_contract_address":
+	case "nova.pool.v1.IncentivePool.pool_contract_address":
 		return protoreflect.ValueOfString("")
-	case "nova.pool.v1.Pool.weight":
+	case "nova.pool.v1.IncentivePool.weight":
 		return protoreflect.ValueOfUint64(uint64(0))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.Pool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.pool.v1.IncentivePool"))
 		}
-		panic(fmt.Errorf("message nova.pool.v1.Pool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.pool.v1.IncentivePool does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_Pool) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_IncentivePool) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.pool.v1.Pool", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.pool.v1.IncentivePool", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1328,7 +1467,7 @@ func (x *fastReflection_Pool) WhichOneof(d protoreflect.OneofDescriptor) protore
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_Pool) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_IncentivePool) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1339,7 +1478,7 @@ func (x *fastReflection_Pool) GetUnknown() protoreflect.RawFields {
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_Pool) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_IncentivePool) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1351,7 +1490,7 @@ func (x *fastReflection_Pool) SetUnknown(fields protoreflect.RawFields) {
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_Pool) IsValid() bool {
+func (x *fastReflection_IncentivePool) IsValid() bool {
 	return x != nil
 }
 
@@ -1361,9 +1500,9 @@ func (x *fastReflection_Pool) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_Pool) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_IncentivePool) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*Pool)
+		x := input.Message.Interface().(*IncentivePool)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1396,7 +1535,7 @@ func (x *fastReflection_Pool) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*Pool)
+		x := input.Message.Interface().(*IncentivePool)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1445,7 +1584,7 @@ func (x *fastReflection_Pool) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*Pool)
+		x := input.Message.Interface().(*IncentivePool)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1477,10 +1616,10 @@ func (x *fastReflection_Pool) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Pool: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: IncentivePool: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Pool: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: IncentivePool: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -1619,8 +1758,11 @@ type GenesisState struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Params   *Params   `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
-	PoolInfo *PoolInfo `protobuf:"bytes,2,opt,name=pool_info,json=poolInfo,proto3" json:"pool_info,omitempty"`
+	Params *Params `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
+	// incentive_pools holds incentive pool list.
+	IncentivePools []*IncentivePool `protobuf:"bytes,2,rep,name=incentive_pools,json=incentivePools,proto3" json:"incentive_pools,omitempty"`
+	// candidate_pools holds incentive pool list and total weight
+	CandidatePools []*CandidatePool `protobuf:"bytes,3,rep,name=candidate_pools,json=candidatePools,proto3" json:"candidate_pools,omitempty"`
 }
 
 func (x *GenesisState) Reset() {
@@ -1650,24 +1792,31 @@ func (x *GenesisState) GetParams() *Params {
 	return nil
 }
 
-func (x *GenesisState) GetPoolInfo() *PoolInfo {
+func (x *GenesisState) GetIncentivePools() []*IncentivePool {
 	if x != nil {
-		return x.PoolInfo
+		return x.IncentivePools
 	}
 	return nil
 }
 
-type PoolInfo struct {
+func (x *GenesisState) GetCandidatePools() []*CandidatePool {
+	if x != nil {
+		return x.CandidatePools
+	}
+	return nil
+}
+
+type CandidatePool struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TotalWeight uint64  `protobuf:"varint,1,opt,name=total_weight,json=totalWeight,proto3" json:"total_weight,omitempty"`
-	Pools       []*Pool `protobuf:"bytes,2,rep,name=pools,proto3" json:"pools,omitempty"`
+	PoolId              string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
+	PoolContractAddress string `protobuf:"bytes,2,opt,name=pool_contract_address,json=poolContractAddress,proto3" json:"pool_contract_address,omitempty"`
 }
 
-func (x *PoolInfo) Reset() {
-	*x = PoolInfo{}
+func (x *CandidatePool) Reset() {
+	*x = CandidatePool{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_pool_v1_genesis_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1675,32 +1824,32 @@ func (x *PoolInfo) Reset() {
 	}
 }
 
-func (x *PoolInfo) String() string {
+func (x *CandidatePool) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PoolInfo) ProtoMessage() {}
+func (*CandidatePool) ProtoMessage() {}
 
-// Deprecated: Use PoolInfo.ProtoReflect.Descriptor instead.
-func (*PoolInfo) Descriptor() ([]byte, []int) {
+// Deprecated: Use CandidatePool.ProtoReflect.Descriptor instead.
+func (*CandidatePool) Descriptor() ([]byte, []int) {
 	return file_nova_pool_v1_genesis_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *PoolInfo) GetTotalWeight() uint64 {
+func (x *CandidatePool) GetPoolId() string {
 	if x != nil {
-		return x.TotalWeight
+		return x.PoolId
 	}
-	return 0
+	return ""
 }
 
-func (x *PoolInfo) GetPools() []*Pool {
+func (x *CandidatePool) GetPoolContractAddress() string {
 	if x != nil {
-		return x.Pools
+		return x.PoolContractAddress
 	}
-	return nil
+	return ""
 }
 
-type Pool struct {
+type IncentivePool struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -1710,8 +1859,8 @@ type Pool struct {
 	Weight              uint64 `protobuf:"varint,3,opt,name=weight,proto3" json:"weight,omitempty"`
 }
 
-func (x *Pool) Reset() {
-	*x = Pool{}
+func (x *IncentivePool) Reset() {
+	*x = IncentivePool{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_pool_v1_genesis_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1719,32 +1868,32 @@ func (x *Pool) Reset() {
 	}
 }
 
-func (x *Pool) String() string {
+func (x *IncentivePool) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Pool) ProtoMessage() {}
+func (*IncentivePool) ProtoMessage() {}
 
-// Deprecated: Use Pool.ProtoReflect.Descriptor instead.
-func (*Pool) Descriptor() ([]byte, []int) {
+// Deprecated: Use IncentivePool.ProtoReflect.Descriptor instead.
+func (*IncentivePool) Descriptor() ([]byte, []int) {
 	return file_nova_pool_v1_genesis_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *Pool) GetPoolId() string {
+func (x *IncentivePool) GetPoolId() string {
 	if x != nil {
 		return x.PoolId
 	}
 	return ""
 }
 
-func (x *Pool) GetPoolContractAddress() string {
+func (x *IncentivePool) GetPoolContractAddress() string {
 	if x != nil {
 		return x.PoolContractAddress
 	}
 	return ""
 }
 
-func (x *Pool) GetWeight() uint64 {
+func (x *IncentivePool) GetWeight() uint64 {
 	if x != nil {
 		return x.Weight
 	}
@@ -1759,39 +1908,45 @@ var file_nova_pool_v1_genesis_proto_rawDesc = []byte{
 	0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x1a, 0x19, 0x6e, 0x6f, 0x76, 0x61,
 	0x2f, 0x70, 0x6f, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x7d, 0x0a, 0x0c, 0x47,
-	0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x32, 0x0a, 0x06, 0x70,
-	0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x6e, 0x6f,
-	0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12,
-	0x39, 0x0a, 0x09, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x16, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x2e, 0x76,
-	0x31, 0x2e, 0x50, 0x6f, 0x6f, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00,
-	0x52, 0x08, 0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x57, 0x0a, 0x08, 0x50, 0x6f,
-	0x6f, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f,
-	0x77, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0b, 0x74, 0x6f,
-	0x74, 0x61, 0x6c, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x28, 0x0a, 0x05, 0x70, 0x6f, 0x6f,
-	0x6c, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x70, 0x6f, 0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x05, 0x70, 0x6f,
-	0x6f, 0x6c, 0x73, 0x22, 0x6b, 0x0a, 0x04, 0x50, 0x6f, 0x6f, 0x6c, 0x12, 0x17, 0x0a, 0x07, 0x70,
-	0x6f, 0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f,
-	0x6f, 0x6c, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x15, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x63, 0x6f, 0x6e,
-	0x74, 0x72, 0x61, 0x63, 0x74, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x13, 0x70, 0x6f, 0x6f, 0x6c, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63,
-	0x74, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x77, 0x65, 0x69, 0x67,
-	0x68, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74,
-	0x42, 0xa7, 0x01, 0x0a, 0x10, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f,
-	0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x50, 0x72,
-	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f,
-	0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x70, 0x6f, 0x6f, 0x6c,
-	0x2f, 0x76, 0x31, 0x3b, 0x70, 0x6f, 0x6f, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x50, 0x58,
-	0xaa, 0x02, 0x0c, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x50, 0x6f, 0x6f, 0x6c, 0x2e, 0x56, 0x31, 0xca,
-	0x02, 0x0c, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x50, 0x6f, 0x6f, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02,
-	0x18, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x50, 0x6f, 0x6f, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50,
-	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0e, 0x4e, 0x6f, 0x76, 0x61,
-	0x3a, 0x3a, 0x50, 0x6f, 0x6f, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xda, 0x01, 0x0a, 0x0c,
+	0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x32, 0x0a, 0x06,
+	0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x61, 0x72, 0x61,
+	0x6d, 0x73, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x12, 0x4a, 0x0a, 0x0f, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x5f, 0x70, 0x6f,
+	0x6f, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
+	0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69,
+	0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0e, 0x69, 0x6e,
+	0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x73, 0x12, 0x4a, 0x0a, 0x0f,
+	0x63, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x73, 0x18,
+	0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f,
+	0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f,
+	0x6f, 0x6c, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0e, 0x63, 0x61, 0x6e, 0x64, 0x69, 0x64,
+	0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x73, 0x22, 0x5c, 0x0a, 0x0d, 0x43, 0x61, 0x6e, 0x64,
+	0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f, 0x6f,
+	0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x6f, 0x6c,
+	0x49, 0x64, 0x12, 0x32, 0x0a, 0x15, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72,
+	0x61, 0x63, 0x74, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x13, 0x70, 0x6f, 0x6f, 0x6c, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x41,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x74, 0x0a, 0x0d, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74,
+	0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f, 0x6f, 0x6c, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x64,
+	0x12, 0x32, 0x0a, 0x15, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63,
+	0x74, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x13, 0x70, 0x6f, 0x6f, 0x6c, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x41, 0x64, 0x64,
+	0x72, 0x65, 0x73, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74, 0x42, 0xa7, 0x01, 0x0a,
+	0x10, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x2e, 0x76,
+	0x31, 0x42, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61,
+	0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61,
+	0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x70, 0x6f, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x3b,
+	0x70, 0x6f, 0x6f, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x50, 0x58, 0xaa, 0x02, 0x0c, 0x4e,
+	0x6f, 0x76, 0x61, 0x2e, 0x50, 0x6f, 0x6f, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0c, 0x4e, 0x6f,
+	0x76, 0x61, 0x5c, 0x50, 0x6f, 0x6f, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x18, 0x4e, 0x6f, 0x76,
+	0x61, 0x5c, 0x50, 0x6f, 0x6f, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0e, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x50, 0x6f,
+	0x6f, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1808,15 +1963,15 @@ func file_nova_pool_v1_genesis_proto_rawDescGZIP() []byte {
 
 var file_nova_pool_v1_genesis_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_nova_pool_v1_genesis_proto_goTypes = []interface{}{
-	(*GenesisState)(nil), // 0: nova.pool.v1.GenesisState
-	(*PoolInfo)(nil),     // 1: nova.pool.v1.PoolInfo
-	(*Pool)(nil),         // 2: nova.pool.v1.Pool
-	(*Params)(nil),       // 3: nova.pool.v1.Params
+	(*GenesisState)(nil),  // 0: nova.pool.v1.GenesisState
+	(*CandidatePool)(nil), // 1: nova.pool.v1.CandidatePool
+	(*IncentivePool)(nil), // 2: nova.pool.v1.IncentivePool
+	(*Params)(nil),        // 3: nova.pool.v1.Params
 }
 var file_nova_pool_v1_genesis_proto_depIdxs = []int32{
 	3, // 0: nova.pool.v1.GenesisState.params:type_name -> nova.pool.v1.Params
-	1, // 1: nova.pool.v1.GenesisState.pool_info:type_name -> nova.pool.v1.PoolInfo
-	2, // 2: nova.pool.v1.PoolInfo.pools:type_name -> nova.pool.v1.Pool
+	2, // 1: nova.pool.v1.GenesisState.incentive_pools:type_name -> nova.pool.v1.IncentivePool
+	1, // 2: nova.pool.v1.GenesisState.candidate_pools:type_name -> nova.pool.v1.CandidatePool
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
@@ -1844,7 +1999,7 @@ func file_nova_pool_v1_genesis_proto_init() {
 			}
 		}
 		file_nova_pool_v1_genesis_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PoolInfo); i {
+			switch v := v.(*CandidatePool); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1856,7 +2011,7 @@ func file_nova_pool_v1_genesis_proto_init() {
 			}
 		}
 		file_nova_pool_v1_genesis_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Pool); i {
+			switch v := v.(*IncentivePool); i {
 			case 0:
 				return &v.state
 			case 1:
