@@ -46,17 +46,15 @@ func (k Keeper) GetTotalWeight(ctx sdk.Context) (result uint64) {
 	return result
 }
 
-func (k Keeper) FindPoolById(ctx sdk.Context, poolId string) (result *types.Pool, ok bool) {
-	k.IteratePools(ctx, func(i int64, pool *types.Pool) bool {
-		if poolId == pool.PoolId {
-			result = pool
-			ok = true
-			return true
-		}
-		return false
-	})
+func (k Keeper) FindPoolById(ctx sdk.Context, poolId string) (*types.Pool, error) {
+	key := []byte(poolId)
+	result := &types.Pool{}
+	bytes := k.getPoolStore(ctx).Get(key)
+	if err := result.Unmarshal(bytes); err != nil {
+		return nil, err
+	}
 
-	return result, ok
+	return result, nil
 }
 
 func (k Keeper) IteratePools(ctx sdk.Context, cb func(i int64, pool *types.Pool) bool) {

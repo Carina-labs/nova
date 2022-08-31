@@ -10,10 +10,10 @@ const (
 var _ sdk.Msg = &MsgCreatePool{}
 var _ sdk.Msg = &MsgSetPoolWeight{}
 
-func NewMsgCreatePool(poolId string, poolAddress string) *MsgCreatePool {
+func NewMsgCreatePool(poolId string, poolContractAddress string) *MsgCreatePool {
 	return &MsgCreatePool{
-		PoolId:      poolId,
-		PoolAddress: poolAddress,
+		PoolId:              poolId,
+		PoolContractAddress: poolContractAddress,
 	}
 }
 
