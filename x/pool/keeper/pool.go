@@ -37,7 +37,29 @@ func (k Keeper) SetPoolWeight(ctx sdk.Context, poolId string, newWeight uint64) 
 	return nil
 }
 
-func (k Keeper) GetTotalWeight(ctx sdk.Context) uint64 {
+func (k Keeper) GetTotalWeight(ctx sdk.Context) (result uint64) {
+	k.IteratePools(ctx, func(i int64, pool *types.Pool) bool {
+		result += pool.Weight
+		return false
+	})
+
+	return result
+}
+
+func (k Keeper) FindPoolById(ctx sdk.Context, poolId string) (result *types.Pool, ok bool) {
+	k.IteratePools(ctx, func(i int64, pool *types.Pool) bool {
+		if poolId == pool.PoolId {
+			result = pool
+			ok = true
+			return true
+		}
+		return false
+	})
+
+	return result, ok
+}
+
+func (k Keeper) IteratePools(ctx sdk.Context, cb func(i int64, pool *types.Pool) bool) {
 	store := k.getPoolStore(ctx)
 	iterator := store.Iterator(nil, nil)
 	defer func() {
@@ -48,11 +70,26 @@ func (k Keeper) GetTotalWeight(ctx sdk.Context) uint64 {
 		}
 	}()
 
-	var result uint64 = 0
+	i := int64(0)
 	for ; iterator.Valid(); iterator.Next() {
-		value := types.Pool{}
-		result += value.Weight
+		value := &types.Pool{}
+		err := value.Unmarshal(iterator.Value())
+		if err != nil {
+			panic(fmt.Errorf("unable to unmarshal chain state: %v", err))
+		}
+
+		stop := cb(i, value)
+		if stop {
+			break
+		}
+		i++
 	}
-	
-	return result
+}
+
+func (k Keeper) ClearPools(ctx sdk.Context) {
+	k.IteratePools(ctx, func(i int64, pool *types.Pool) bool {
+		key := []byte(pool.PoolId)
+		k.getPoolStore(ctx).Delete(key)
+		return false
+	})
 }
