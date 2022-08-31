@@ -51,7 +51,6 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 		{
 			name:          "claimer3 claimable assets",
 			claimer:       claimer3,
-			result:        sdk.NewCoin(ibcDenom, sdk.NewInt(0)),
 			oracleVersion: 4,
 			err:           true,
 		},
@@ -76,8 +75,9 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 				suite.Require().Error(err)
 			} else {
 				suite.Require().NoError(err)
+				suite.Require().Equal(tc.result, *result)
 			}
-			suite.Require().Equal(tc.result, *result)
+
 		})
 	}
 
