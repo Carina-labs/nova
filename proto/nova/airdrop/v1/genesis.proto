@@ -15,6 +15,38 @@ message GenesisState {
 
   // states for the airdrop, how much coins are allocated for each address is must be pre-defined.
   repeated AirdropState states = 2;
+
+  // information for the airdrop
+  AirdropInfo airdropInfo = 3;
+}
+
+message AirdropInfo {
+  // The snapshot date based for the distribution of the airdrop.
+  google.protobuf.Timestamp snapshot_timestamp = 1 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false
+  ];
+
+  // THe time when you can claim your airdrop nova tokens.
+  google.protobuf.Timestamp airdrop_start_timestamp = 2 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false
+  ];
+
+  // THe time when the user no longer can claim the airdrop tokens.
+  google.protobuf.Timestamp airdrop_end_timestamp = 3 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false
+  ];
+
+  // The denom for the airdrop coin.
+  string airdrop_denom = 4;
+
+  // the number of quests user to do
+  int32 quests_count = 5;
+
+  // controller address is responsible to check the user has performed the social quest (e.g. twitter, facebook or etc)
+  string controller_address = 6;
 }
 
 enum QuestType {

@@ -68,9 +68,10 @@ func (x *_GenesisState_2_list) IsValid() bool {
 }
 
 var (
-	md_GenesisState        protoreflect.MessageDescriptor
-	fd_GenesisState_params protoreflect.FieldDescriptor
-	fd_GenesisState_states protoreflect.FieldDescriptor
+	md_GenesisState             protoreflect.MessageDescriptor
+	fd_GenesisState_params      protoreflect.FieldDescriptor
+	fd_GenesisState_states      protoreflect.FieldDescriptor
+	fd_GenesisState_airdropInfo protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -78,6 +79,7 @@ func init() {
 	md_GenesisState = File_nova_airdrop_v1_genesis_proto.Messages().ByName("GenesisState")
 	fd_GenesisState_params = md_GenesisState.Fields().ByName("params")
 	fd_GenesisState_states = md_GenesisState.Fields().ByName("states")
+	fd_GenesisState_airdropInfo = md_GenesisState.Fields().ByName("airdropInfo")
 }
 
 var _ protoreflect.Message = (*fastReflection_GenesisState)(nil)
@@ -157,6 +159,12 @@ func (x *fastReflection_GenesisState) Range(f func(protoreflect.FieldDescriptor,
 			return
 		}
 	}
+	if x.AirdropInfo != nil {
+		value := protoreflect.ValueOfMessage(x.AirdropInfo.ProtoReflect())
+		if !f(fd_GenesisState_airdropInfo, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -176,6 +184,8 @@ func (x *fastReflection_GenesisState) Has(fd protoreflect.FieldDescriptor) bool 
 		return x.Params != nil
 	case "nova.airdrop.v1.GenesisState.states":
 		return len(x.States) != 0
+	case "nova.airdrop.v1.GenesisState.airdropInfo":
+		return x.AirdropInfo != nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.GenesisState"))
@@ -196,6 +206,8 @@ func (x *fastReflection_GenesisState) Clear(fd protoreflect.FieldDescriptor) {
 		x.Params = nil
 	case "nova.airdrop.v1.GenesisState.states":
 		x.States = nil
+	case "nova.airdrop.v1.GenesisState.airdropInfo":
+		x.AirdropInfo = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.GenesisState"))
@@ -221,6 +233,9 @@ func (x *fastReflection_GenesisState) Get(descriptor protoreflect.FieldDescripto
 		}
 		listValue := &_GenesisState_2_list{list: &x.States}
 		return protoreflect.ValueOfList(listValue)
+	case "nova.airdrop.v1.GenesisState.airdropInfo":
+		value := x.AirdropInfo
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.GenesisState"))
@@ -247,6 +262,8 @@ func (x *fastReflection_GenesisState) Set(fd protoreflect.FieldDescriptor, value
 		lv := value.List()
 		clv := lv.(*_GenesisState_2_list)
 		x.States = *clv.list
+	case "nova.airdrop.v1.GenesisState.airdropInfo":
+		x.AirdropInfo = value.Message().Interface().(*AirdropInfo)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.GenesisState"))
@@ -278,6 +295,11 @@ func (x *fastReflection_GenesisState) Mutable(fd protoreflect.FieldDescriptor) p
 		}
 		value := &_GenesisState_2_list{list: &x.States}
 		return protoreflect.ValueOfList(value)
+	case "nova.airdrop.v1.GenesisState.airdropInfo":
+		if x.AirdropInfo == nil {
+			x.AirdropInfo = new(AirdropInfo)
+		}
+		return protoreflect.ValueOfMessage(x.AirdropInfo.ProtoReflect())
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.GenesisState"))
@@ -297,6 +319,9 @@ func (x *fastReflection_GenesisState) NewField(fd protoreflect.FieldDescriptor) 
 	case "nova.airdrop.v1.GenesisState.states":
 		list := []*AirdropState{}
 		return protoreflect.ValueOfList(&_GenesisState_2_list{list: &list})
+	case "nova.airdrop.v1.GenesisState.airdropInfo":
+		m := new(AirdropInfo)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.GenesisState"))
@@ -376,6 +401,10 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 				n += 1 + l + runtime.Sov(uint64(l))
 			}
 		}
+		if x.AirdropInfo != nil {
+			l = options.Size(x.AirdropInfo)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -404,6 +433,20 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.AirdropInfo != nil {
+			encoded, err := options.Marshal(x.AirdropInfo)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x1a
 		}
 		if len(x.States) > 0 {
 			for iNdEx := len(x.States) - 1; iNdEx >= 0; iNdEx-- {
@@ -554,6 +597,811 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AirdropInfo", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.AirdropInfo == nil {
+					x.AirdropInfo = &AirdropInfo{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.AirdropInfo); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_AirdropInfo                         protoreflect.MessageDescriptor
+	fd_AirdropInfo_snapshot_timestamp      protoreflect.FieldDescriptor
+	fd_AirdropInfo_airdrop_start_timestamp protoreflect.FieldDescriptor
+	fd_AirdropInfo_airdrop_end_timestamp   protoreflect.FieldDescriptor
+	fd_AirdropInfo_airdrop_denom           protoreflect.FieldDescriptor
+	fd_AirdropInfo_quests_count            protoreflect.FieldDescriptor
+	fd_AirdropInfo_controller_address      protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_airdrop_v1_genesis_proto_init()
+	md_AirdropInfo = File_nova_airdrop_v1_genesis_proto.Messages().ByName("AirdropInfo")
+	fd_AirdropInfo_snapshot_timestamp = md_AirdropInfo.Fields().ByName("snapshot_timestamp")
+	fd_AirdropInfo_airdrop_start_timestamp = md_AirdropInfo.Fields().ByName("airdrop_start_timestamp")
+	fd_AirdropInfo_airdrop_end_timestamp = md_AirdropInfo.Fields().ByName("airdrop_end_timestamp")
+	fd_AirdropInfo_airdrop_denom = md_AirdropInfo.Fields().ByName("airdrop_denom")
+	fd_AirdropInfo_quests_count = md_AirdropInfo.Fields().ByName("quests_count")
+	fd_AirdropInfo_controller_address = md_AirdropInfo.Fields().ByName("controller_address")
+}
+
+var _ protoreflect.Message = (*fastReflection_AirdropInfo)(nil)
+
+type fastReflection_AirdropInfo AirdropInfo
+
+func (x *AirdropInfo) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_AirdropInfo)(x)
+}
+
+func (x *AirdropInfo) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_AirdropInfo_messageType fastReflection_AirdropInfo_messageType
+var _ protoreflect.MessageType = fastReflection_AirdropInfo_messageType{}
+
+type fastReflection_AirdropInfo_messageType struct{}
+
+func (x fastReflection_AirdropInfo_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_AirdropInfo)(nil)
+}
+func (x fastReflection_AirdropInfo_messageType) New() protoreflect.Message {
+	return new(fastReflection_AirdropInfo)
+}
+func (x fastReflection_AirdropInfo_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_AirdropInfo
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_AirdropInfo) Descriptor() protoreflect.MessageDescriptor {
+	return md_AirdropInfo
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_AirdropInfo) Type() protoreflect.MessageType {
+	return _fastReflection_AirdropInfo_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_AirdropInfo) New() protoreflect.Message {
+	return new(fastReflection_AirdropInfo)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_AirdropInfo) Interface() protoreflect.ProtoMessage {
+	return (*AirdropInfo)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_AirdropInfo) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.SnapshotTimestamp != nil {
+		value := protoreflect.ValueOfMessage(x.SnapshotTimestamp.ProtoReflect())
+		if !f(fd_AirdropInfo_snapshot_timestamp, value) {
+			return
+		}
+	}
+	if x.AirdropStartTimestamp != nil {
+		value := protoreflect.ValueOfMessage(x.AirdropStartTimestamp.ProtoReflect())
+		if !f(fd_AirdropInfo_airdrop_start_timestamp, value) {
+			return
+		}
+	}
+	if x.AirdropEndTimestamp != nil {
+		value := protoreflect.ValueOfMessage(x.AirdropEndTimestamp.ProtoReflect())
+		if !f(fd_AirdropInfo_airdrop_end_timestamp, value) {
+			return
+		}
+	}
+	if x.AirdropDenom != "" {
+		value := protoreflect.ValueOfString(x.AirdropDenom)
+		if !f(fd_AirdropInfo_airdrop_denom, value) {
+			return
+		}
+	}
+	if x.QuestsCount != int32(0) {
+		value := protoreflect.ValueOfInt32(x.QuestsCount)
+		if !f(fd_AirdropInfo_quests_count, value) {
+			return
+		}
+	}
+	if x.ControllerAddress != "" {
+		value := protoreflect.ValueOfString(x.ControllerAddress)
+		if !f(fd_AirdropInfo_controller_address, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_AirdropInfo) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.AirdropInfo.snapshot_timestamp":
+		return x.SnapshotTimestamp != nil
+	case "nova.airdrop.v1.AirdropInfo.airdrop_start_timestamp":
+		return x.AirdropStartTimestamp != nil
+	case "nova.airdrop.v1.AirdropInfo.airdrop_end_timestamp":
+		return x.AirdropEndTimestamp != nil
+	case "nova.airdrop.v1.AirdropInfo.airdrop_denom":
+		return x.AirdropDenom != ""
+	case "nova.airdrop.v1.AirdropInfo.quests_count":
+		return x.QuestsCount != int32(0)
+	case "nova.airdrop.v1.AirdropInfo.controller_address":
+		return x.ControllerAddress != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.AirdropInfo"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.AirdropInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_AirdropInfo) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.AirdropInfo.snapshot_timestamp":
+		x.SnapshotTimestamp = nil
+	case "nova.airdrop.v1.AirdropInfo.airdrop_start_timestamp":
+		x.AirdropStartTimestamp = nil
+	case "nova.airdrop.v1.AirdropInfo.airdrop_end_timestamp":
+		x.AirdropEndTimestamp = nil
+	case "nova.airdrop.v1.AirdropInfo.airdrop_denom":
+		x.AirdropDenom = ""
+	case "nova.airdrop.v1.AirdropInfo.quests_count":
+		x.QuestsCount = int32(0)
+	case "nova.airdrop.v1.AirdropInfo.controller_address":
+		x.ControllerAddress = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.AirdropInfo"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.AirdropInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_AirdropInfo) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.airdrop.v1.AirdropInfo.snapshot_timestamp":
+		value := x.SnapshotTimestamp
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_start_timestamp":
+		value := x.AirdropStartTimestamp
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_end_timestamp":
+		value := x.AirdropEndTimestamp
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_denom":
+		value := x.AirdropDenom
+		return protoreflect.ValueOfString(value)
+	case "nova.airdrop.v1.AirdropInfo.quests_count":
+		value := x.QuestsCount
+		return protoreflect.ValueOfInt32(value)
+	case "nova.airdrop.v1.AirdropInfo.controller_address":
+		value := x.ControllerAddress
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.AirdropInfo"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.AirdropInfo does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_AirdropInfo) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.AirdropInfo.snapshot_timestamp":
+		x.SnapshotTimestamp = value.Message().Interface().(*timestamppb.Timestamp)
+	case "nova.airdrop.v1.AirdropInfo.airdrop_start_timestamp":
+		x.AirdropStartTimestamp = value.Message().Interface().(*timestamppb.Timestamp)
+	case "nova.airdrop.v1.AirdropInfo.airdrop_end_timestamp":
+		x.AirdropEndTimestamp = value.Message().Interface().(*timestamppb.Timestamp)
+	case "nova.airdrop.v1.AirdropInfo.airdrop_denom":
+		x.AirdropDenom = value.Interface().(string)
+	case "nova.airdrop.v1.AirdropInfo.quests_count":
+		x.QuestsCount = int32(value.Int())
+	case "nova.airdrop.v1.AirdropInfo.controller_address":
+		x.ControllerAddress = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.AirdropInfo"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.AirdropInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_AirdropInfo) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.AirdropInfo.snapshot_timestamp":
+		if x.SnapshotTimestamp == nil {
+			x.SnapshotTimestamp = new(timestamppb.Timestamp)
+		}
+		return protoreflect.ValueOfMessage(x.SnapshotTimestamp.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_start_timestamp":
+		if x.AirdropStartTimestamp == nil {
+			x.AirdropStartTimestamp = new(timestamppb.Timestamp)
+		}
+		return protoreflect.ValueOfMessage(x.AirdropStartTimestamp.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_end_timestamp":
+		if x.AirdropEndTimestamp == nil {
+			x.AirdropEndTimestamp = new(timestamppb.Timestamp)
+		}
+		return protoreflect.ValueOfMessage(x.AirdropEndTimestamp.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_denom":
+		panic(fmt.Errorf("field airdrop_denom of message nova.airdrop.v1.AirdropInfo is not mutable"))
+	case "nova.airdrop.v1.AirdropInfo.quests_count":
+		panic(fmt.Errorf("field quests_count of message nova.airdrop.v1.AirdropInfo is not mutable"))
+	case "nova.airdrop.v1.AirdropInfo.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.airdrop.v1.AirdropInfo is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.AirdropInfo"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.AirdropInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_AirdropInfo) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.AirdropInfo.snapshot_timestamp":
+		m := new(timestamppb.Timestamp)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_start_timestamp":
+		m := new(timestamppb.Timestamp)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_end_timestamp":
+		m := new(timestamppb.Timestamp)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	case "nova.airdrop.v1.AirdropInfo.airdrop_denom":
+		return protoreflect.ValueOfString("")
+	case "nova.airdrop.v1.AirdropInfo.quests_count":
+		return protoreflect.ValueOfInt32(int32(0))
+	case "nova.airdrop.v1.AirdropInfo.controller_address":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.AirdropInfo"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.AirdropInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_AirdropInfo) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.airdrop.v1.AirdropInfo", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_AirdropInfo) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_AirdropInfo) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_AirdropInfo) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_AirdropInfo) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*AirdropInfo)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.SnapshotTimestamp != nil {
+			l = options.Size(x.SnapshotTimestamp)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.AirdropStartTimestamp != nil {
+			l = options.Size(x.AirdropStartTimestamp)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.AirdropEndTimestamp != nil {
+			l = options.Size(x.AirdropEndTimestamp)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.AirdropDenom)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.QuestsCount != 0 {
+			n += 1 + runtime.Sov(uint64(x.QuestsCount))
+		}
+		l = len(x.ControllerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*AirdropInfo)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.ControllerAddress) > 0 {
+			i -= len(x.ControllerAddress)
+			copy(dAtA[i:], x.ControllerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ControllerAddress)))
+			i--
+			dAtA[i] = 0x32
+		}
+		if x.QuestsCount != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.QuestsCount))
+			i--
+			dAtA[i] = 0x28
+		}
+		if len(x.AirdropDenom) > 0 {
+			i -= len(x.AirdropDenom)
+			copy(dAtA[i:], x.AirdropDenom)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.AirdropDenom)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if x.AirdropEndTimestamp != nil {
+			encoded, err := options.Marshal(x.AirdropEndTimestamp)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if x.AirdropStartTimestamp != nil {
+			encoded, err := options.Marshal(x.AirdropStartTimestamp)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if x.SnapshotTimestamp != nil {
+			encoded, err := options.Marshal(x.SnapshotTimestamp)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*AirdropInfo)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: AirdropInfo: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: AirdropInfo: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field SnapshotTimestamp", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.SnapshotTimestamp == nil {
+					x.SnapshotTimestamp = &timestamppb.Timestamp{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.SnapshotTimestamp); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AirdropStartTimestamp", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.AirdropStartTimestamp == nil {
+					x.AirdropStartTimestamp = &timestamppb.Timestamp{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.AirdropStartTimestamp); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AirdropEndTimestamp", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.AirdropEndTimestamp == nil {
+					x.AirdropEndTimestamp = &timestamppb.Timestamp{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.AirdropEndTimestamp); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AirdropDenom", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.AirdropDenom = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 5:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field QuestsCount", wireType)
+				}
+				x.QuestsCount = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.QuestsCount |= int32(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 6:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ControllerAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -703,7 +1551,7 @@ func (x *AirdropState) ProtoReflect() protoreflect.Message {
 }
 
 func (x *AirdropState) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[1]
+	mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1409,7 +2257,7 @@ func (x *QuestState) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QuestState) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[2]
+	mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2076,6 +2924,8 @@ type GenesisState struct {
 	Params *Params `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
 	// states for the airdrop, how much coins are allocated for each address is must be pre-defined.
 	States []*AirdropState `protobuf:"bytes,2,rep,name=states,proto3" json:"states,omitempty"`
+	// information for the airdrop
+	AirdropInfo *AirdropInfo `protobuf:"bytes,3,opt,name=airdropInfo,proto3" json:"airdropInfo,omitempty"`
 }
 
 func (x *GenesisState) Reset() {
@@ -2112,6 +2962,94 @@ func (x *GenesisState) GetStates() []*AirdropState {
 	return nil
 }
 
+func (x *GenesisState) GetAirdropInfo() *AirdropInfo {
+	if x != nil {
+		return x.AirdropInfo
+	}
+	return nil
+}
+
+type AirdropInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The snapshot date based for the distribution of the airdrop.
+	SnapshotTimestamp *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=snapshot_timestamp,json=snapshotTimestamp,proto3" json:"snapshot_timestamp,omitempty"`
+	// THe time when you can claim your airdrop nova tokens.
+	AirdropStartTimestamp *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=airdrop_start_timestamp,json=airdropStartTimestamp,proto3" json:"airdrop_start_timestamp,omitempty"`
+	// THe time when the user no longer can claim the airdrop tokens.
+	AirdropEndTimestamp *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=airdrop_end_timestamp,json=airdropEndTimestamp,proto3" json:"airdrop_end_timestamp,omitempty"`
+	// The denom for the airdrop coin.
+	AirdropDenom string `protobuf:"bytes,4,opt,name=airdrop_denom,json=airdropDenom,proto3" json:"airdrop_denom,omitempty"`
+	// the number of quests user to do
+	QuestsCount int32 `protobuf:"varint,5,opt,name=quests_count,json=questsCount,proto3" json:"quests_count,omitempty"`
+	// controller address is responsible to check the user has performed the social quest (e.g. twitter, facebook or etc)
+	ControllerAddress string `protobuf:"bytes,6,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+}
+
+func (x *AirdropInfo) Reset() {
+	*x = AirdropInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AirdropInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AirdropInfo) ProtoMessage() {}
+
+// Deprecated: Use AirdropInfo.ProtoReflect.Descriptor instead.
+func (*AirdropInfo) Descriptor() ([]byte, []int) {
+	return file_nova_airdrop_v1_genesis_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *AirdropInfo) GetSnapshotTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.SnapshotTimestamp
+	}
+	return nil
+}
+
+func (x *AirdropInfo) GetAirdropStartTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.AirdropStartTimestamp
+	}
+	return nil
+}
+
+func (x *AirdropInfo) GetAirdropEndTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.AirdropEndTimestamp
+	}
+	return nil
+}
+
+func (x *AirdropInfo) GetAirdropDenom() string {
+	if x != nil {
+		return x.AirdropDenom
+	}
+	return ""
+}
+
+func (x *AirdropInfo) GetQuestsCount() int32 {
+	if x != nil {
+		return x.QuestsCount
+	}
+	return 0
+}
+
+func (x *AirdropInfo) GetControllerAddress() string {
+	if x != nil {
+		return x.ControllerAddress
+	}
+	return ""
+}
+
 type AirdropState struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2128,7 +3066,7 @@ type AirdropState struct {
 func (x *AirdropState) Reset() {
 	*x = AirdropState{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[1]
+		mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2142,7 +3080,7 @@ func (*AirdropState) ProtoMessage() {}
 
 // Deprecated: Use AirdropState.ProtoReflect.Descriptor instead.
 func (*AirdropState) Descriptor() ([]byte, []int) {
-	return file_nova_airdrop_v1_genesis_proto_rawDescGZIP(), []int{1}
+	return file_nova_airdrop_v1_genesis_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *AirdropState) GetRecipient() string {
@@ -2182,7 +3120,7 @@ type QuestState struct {
 func (x *QuestState) Reset() {
 	*x = QuestState{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[2]
+		mi := &file_nova_airdrop_v1_genesis_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2196,7 +3134,7 @@ func (*QuestState) ProtoMessage() {}
 
 // Deprecated: Use QuestState.ProtoReflect.Descriptor instead.
 func (*QuestState) Descriptor() ([]byte, []int) {
-	return file_nova_airdrop_v1_genesis_proto_rawDescGZIP(), []int{2}
+	return file_nova_airdrop_v1_genesis_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *QuestState) GetState() QuestStateType {
@@ -2233,71 +3171,100 @@ var file_nova_airdrop_v1_genesis_proto_rawDesc = []byte{
 	0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x76, 0x0a, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73,
-	0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x2f, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72,
-	0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x06,
-	0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x35, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73,
-	0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69,
-	0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
-	0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x22, 0xff, 0x01,
-	0x0a, 0x0c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x1c,
-	0x0a, 0x09, 0x72, 0x65, 0x63, 0x69, 0x70, 0x69, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x72, 0x65, 0x63, 0x69, 0x70, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x21, 0x0a, 0x0c,
-	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12,
-	0x51, 0x0a, 0x0c, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x18,
-	0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72,
-	0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x53,
-	0x74, 0x61, 0x74, 0x65, 0x2e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73,
-	0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x0b, 0x71, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74,
-	0x65, 0x73, 0x1a, 0x5b, 0x0a, 0x10, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65,
-	0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x05, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x31, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
-	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61,
-	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53,
-	0x74, 0x61, 0x74, 0x65, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22,
-	0xcf, 0x01, 0x0a, 0x0a, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x35,
-	0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1f, 0x2e,
-	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e,
-	0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x54, 0x79, 0x70, 0x65, 0x52, 0x05,
-	0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x45, 0x0a, 0x0b, 0x61, 0x63, 0x68, 0x69, 0x65, 0x76, 0x65,
-	0x64, 0x5f, 0x61, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xb6, 0x01, 0x0a, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69,
+	0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x2f, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69,
+	0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52,
+	0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x35, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x65,
+	0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61,
+	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f,
+	0x70, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x12, 0x3e,
+	0x0a, 0x0b, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72,
+	0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x0b, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x91,
+	0x03, 0x0a, 0x0b, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x53,
+	0x0a, 0x12, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
 	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
 	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01,
-	0x52, 0x0a, 0x61, 0x63, 0x68, 0x69, 0x65, 0x76, 0x65, 0x64, 0x41, 0x74, 0x12, 0x43, 0x0a, 0x0a,
-	0x63, 0x6c, 0x61, 0x69, 0x6d, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x52, 0x11, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x12, 0x5c, 0x0a, 0x17, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5f, 0x73,
+	0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
+	0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52, 0x15, 0x61, 0x69, 0x72, 0x64,
+	0x72, 0x6f, 0x70, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
+	0x70, 0x12, 0x58, 0x0a, 0x15, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5f, 0x65, 0x6e, 0x64,
+	0x5f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
 	0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
 	0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde,
-	0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52, 0x09, 0x63, 0x6c, 0x61, 0x69, 0x6d, 0x65, 0x64, 0x41,
-	0x74, 0x2a, 0x8a, 0x01, 0x0a, 0x09, 0x51, 0x75, 0x65, 0x73, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12,
-	0x17, 0x0a, 0x13, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x4e, 0x4f, 0x54, 0x48, 0x49, 0x4e, 0x47,
-	0x5f, 0x54, 0x4f, 0x5f, 0x44, 0x4f, 0x10, 0x00, 0x12, 0x10, 0x0a, 0x0c, 0x51, 0x55, 0x45, 0x53,
-	0x54, 0x5f, 0x53, 0x4f, 0x43, 0x49, 0x41, 0x4c, 0x10, 0x01, 0x12, 0x18, 0x0a, 0x14, 0x51, 0x55,
-	0x45, 0x53, 0x54, 0x5f, 0x53, 0x4e, 0x5f, 0x41, 0x53, 0x53, 0x45, 0x54, 0x5f, 0x43, 0x4c, 0x41,
-	0x49, 0x4d, 0x10, 0x02, 0x12, 0x1b, 0x0a, 0x17, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x50, 0x52,
-	0x4f, 0x56, 0x49, 0x44, 0x45, 0x5f, 0x4c, 0x49, 0x51, 0x55, 0x49, 0x44, 0x49, 0x54, 0x59, 0x10,
-	0x03, 0x12, 0x1b, 0x0a, 0x17, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x56, 0x4f, 0x54, 0x45, 0x5f,
-	0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x4f, 0x50, 0x4f, 0x53, 0x41, 0x4c, 0x53, 0x10, 0x04, 0x2a, 0x61,
-	0x0a, 0x0e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x54, 0x79, 0x70, 0x65,
-	0x12, 0x1b, 0x0a, 0x17, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f,
-	0x4e, 0x4f, 0x54, 0x5f, 0x53, 0x54, 0x41, 0x52, 0x54, 0x45, 0x44, 0x10, 0x00, 0x12, 0x19, 0x0a,
-	0x15, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x43, 0x4c, 0x41,
-	0x49, 0x4d, 0x41, 0x42, 0x4c, 0x45, 0x10, 0x01, 0x12, 0x17, 0x0a, 0x13, 0x51, 0x55, 0x45, 0x53,
-	0x54, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x43, 0x4c, 0x41, 0x49, 0x4d, 0x45, 0x44, 0x10,
-	0x02, 0x42, 0xbc, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61,
-	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x42, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73,
-	0x69, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62,
-	0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f,
-	0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2f, 0x76, 0x31, 0x3b, 0x61, 0x69, 0x72, 0x64, 0x72,
-	0x6f, 0x70, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x41, 0x58, 0xaa, 0x02, 0x0f, 0x4e, 0x6f, 0x76,
-	0x61, 0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0f, 0x4e,
-	0x6f, 0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31, 0xe2, 0x02,
-	0x1b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31,
-	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4e,
-	0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x3a, 0x3a, 0x56, 0x31,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52, 0x13, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x45,
+	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x23, 0x0a, 0x0d, 0x61,
+	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5f, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0c, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x44, 0x65, 0x6e, 0x6f, 0x6d,
+	0x12, 0x21, 0x0a, 0x0c, 0x71, 0x75, 0x65, 0x73, 0x74, 0x73, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x71, 0x75, 0x65, 0x73, 0x74, 0x73, 0x43, 0x6f,
+	0x75, 0x6e, 0x74, 0x12, 0x2d, 0x0a, 0x12, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65,
+	0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x22, 0xff, 0x01, 0x0a, 0x0c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x72, 0x65, 0x63, 0x69, 0x70, 0x69, 0x65, 0x6e, 0x74,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72, 0x65, 0x63, 0x69, 0x70, 0x69, 0x65, 0x6e,
+	0x74, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x6d,
+	0x6f, 0x75, 0x6e, 0x74, 0x12, 0x51, 0x0a, 0x0c, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x73, 0x74,
+	0x61, 0x74, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x69, 0x72,
+	0x64, 0x72, 0x6f, 0x70, 0x53, 0x74, 0x61, 0x74, 0x65, 0x2e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x0b, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x1a, 0x5b, 0x0a, 0x10, 0x51, 0x75, 0x65, 0x73, 0x74,
+	0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b,
+	0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x31, 0x0a,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51,
+	0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x3a, 0x02, 0x38, 0x01, 0x22, 0xcf, 0x01, 0x0a, 0x0a, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x12, 0x35, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0e, 0x32, 0x1f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f,
+	0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x54,
+	0x79, 0x70, 0x65, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x45, 0x0a, 0x0b, 0x61, 0x63,
+	0x68, 0x69, 0x65, 0x76, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
+	0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f,
+	0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52, 0x0a, 0x61, 0x63, 0x68, 0x69, 0x65, 0x76, 0x65, 0x64, 0x41,
+	0x74, 0x12, 0x43, 0x0a, 0x0a, 0x63, 0x6c, 0x61, 0x69, 0x6d, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
+	0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52, 0x09, 0x63, 0x6c, 0x61,
+	0x69, 0x6d, 0x65, 0x64, 0x41, 0x74, 0x2a, 0x8a, 0x01, 0x0a, 0x09, 0x51, 0x75, 0x65, 0x73, 0x74,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x17, 0x0a, 0x13, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x4e, 0x4f,
+	0x54, 0x48, 0x49, 0x4e, 0x47, 0x5f, 0x54, 0x4f, 0x5f, 0x44, 0x4f, 0x10, 0x00, 0x12, 0x10, 0x0a,
+	0x0c, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x53, 0x4f, 0x43, 0x49, 0x41, 0x4c, 0x10, 0x01, 0x12,
+	0x18, 0x0a, 0x14, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x53, 0x4e, 0x5f, 0x41, 0x53, 0x53, 0x45,
+	0x54, 0x5f, 0x43, 0x4c, 0x41, 0x49, 0x4d, 0x10, 0x02, 0x12, 0x1b, 0x0a, 0x17, 0x51, 0x55, 0x45,
+	0x53, 0x54, 0x5f, 0x50, 0x52, 0x4f, 0x56, 0x49, 0x44, 0x45, 0x5f, 0x4c, 0x49, 0x51, 0x55, 0x49,
+	0x44, 0x49, 0x54, 0x59, 0x10, 0x03, 0x12, 0x1b, 0x0a, 0x17, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f,
+	0x56, 0x4f, 0x54, 0x45, 0x5f, 0x4f, 0x4e, 0x5f, 0x50, 0x52, 0x4f, 0x50, 0x4f, 0x53, 0x41, 0x4c,
+	0x53, 0x10, 0x04, 0x2a, 0x61, 0x0a, 0x0e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74,
+	0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1b, 0x0a, 0x17, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x53,
+	0x54, 0x41, 0x54, 0x45, 0x5f, 0x4e, 0x4f, 0x54, 0x5f, 0x53, 0x54, 0x41, 0x52, 0x54, 0x45, 0x44,
+	0x10, 0x00, 0x12, 0x19, 0x0a, 0x15, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x53, 0x54, 0x41, 0x54,
+	0x45, 0x5f, 0x43, 0x4c, 0x41, 0x49, 0x4d, 0x41, 0x42, 0x4c, 0x45, 0x10, 0x01, 0x12, 0x17, 0x0a,
+	0x13, 0x51, 0x55, 0x45, 0x53, 0x54, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x45, 0x5f, 0x43, 0x4c, 0x41,
+	0x49, 0x4d, 0x45, 0x44, 0x10, 0x02, 0x42, 0xbc, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x42, 0x0c,
+	0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e,
+	0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2f, 0x76, 0x31, 0x3b,
+	0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x41, 0x58, 0xaa,
+	0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x56,
+	0x31, 0xca, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
+	0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72,
+	0x6f, 0x70, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0xea, 0x02, 0x11, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f,
+	0x70, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2313,30 +3280,35 @@ func file_nova_airdrop_v1_genesis_proto_rawDescGZIP() []byte {
 }
 
 var file_nova_airdrop_v1_genesis_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_nova_airdrop_v1_genesis_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_nova_airdrop_v1_genesis_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_nova_airdrop_v1_genesis_proto_goTypes = []interface{}{
 	(QuestType)(0),                // 0: nova.airdrop.v1.QuestType
 	(QuestStateType)(0),           // 1: nova.airdrop.v1.QuestStateType
 	(*GenesisState)(nil),          // 2: nova.airdrop.v1.GenesisState
-	(*AirdropState)(nil),          // 3: nova.airdrop.v1.AirdropState
-	(*QuestState)(nil),            // 4: nova.airdrop.v1.QuestState
-	nil,                           // 5: nova.airdrop.v1.AirdropState.QuestStatesEntry
-	(*Params)(nil),                // 6: nova.airdrop.v1.Params
-	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
+	(*AirdropInfo)(nil),           // 3: nova.airdrop.v1.AirdropInfo
+	(*AirdropState)(nil),          // 4: nova.airdrop.v1.AirdropState
+	(*QuestState)(nil),            // 5: nova.airdrop.v1.QuestState
+	nil,                           // 6: nova.airdrop.v1.AirdropState.QuestStatesEntry
+	(*Params)(nil),                // 7: nova.airdrop.v1.Params
+	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
 }
 var file_nova_airdrop_v1_genesis_proto_depIdxs = []int32{
-	6, // 0: nova.airdrop.v1.GenesisState.params:type_name -> nova.airdrop.v1.Params
-	3, // 1: nova.airdrop.v1.GenesisState.states:type_name -> nova.airdrop.v1.AirdropState
-	5, // 2: nova.airdrop.v1.AirdropState.quest_states:type_name -> nova.airdrop.v1.AirdropState.QuestStatesEntry
-	1, // 3: nova.airdrop.v1.QuestState.state:type_name -> nova.airdrop.v1.QuestStateType
-	7, // 4: nova.airdrop.v1.QuestState.achieved_at:type_name -> google.protobuf.Timestamp
-	7, // 5: nova.airdrop.v1.QuestState.claimed_at:type_name -> google.protobuf.Timestamp
-	4, // 6: nova.airdrop.v1.AirdropState.QuestStatesEntry.value:type_name -> nova.airdrop.v1.QuestState
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	7,  // 0: nova.airdrop.v1.GenesisState.params:type_name -> nova.airdrop.v1.Params
+	4,  // 1: nova.airdrop.v1.GenesisState.states:type_name -> nova.airdrop.v1.AirdropState
+	3,  // 2: nova.airdrop.v1.GenesisState.airdropInfo:type_name -> nova.airdrop.v1.AirdropInfo
+	8,  // 3: nova.airdrop.v1.AirdropInfo.snapshot_timestamp:type_name -> google.protobuf.Timestamp
+	8,  // 4: nova.airdrop.v1.AirdropInfo.airdrop_start_timestamp:type_name -> google.protobuf.Timestamp
+	8,  // 5: nova.airdrop.v1.AirdropInfo.airdrop_end_timestamp:type_name -> google.protobuf.Timestamp
+	6,  // 6: nova.airdrop.v1.AirdropState.quest_states:type_name -> nova.airdrop.v1.AirdropState.QuestStatesEntry
+	1,  // 7: nova.airdrop.v1.QuestState.state:type_name -> nova.airdrop.v1.QuestStateType
+	8,  // 8: nova.airdrop.v1.QuestState.achieved_at:type_name -> google.protobuf.Timestamp
+	8,  // 9: nova.airdrop.v1.QuestState.claimed_at:type_name -> google.protobuf.Timestamp
+	5,  // 10: nova.airdrop.v1.AirdropState.QuestStatesEntry.value:type_name -> nova.airdrop.v1.QuestState
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_nova_airdrop_v1_genesis_proto_init() }
@@ -2359,7 +3331,7 @@ func file_nova_airdrop_v1_genesis_proto_init() {
 			}
 		}
 		file_nova_airdrop_v1_genesis_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AirdropState); i {
+			switch v := v.(*AirdropInfo); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2371,6 +3343,18 @@ func file_nova_airdrop_v1_genesis_proto_init() {
 			}
 		}
 		file_nova_airdrop_v1_genesis_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AirdropState); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_airdrop_v1_genesis_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QuestState); i {
 			case 0:
 				return &v.state
@@ -2389,7 +3373,7 @@ func file_nova_airdrop_v1_genesis_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_airdrop_v1_genesis_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

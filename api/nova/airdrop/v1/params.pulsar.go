@@ -8,31 +8,19 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoiface "google.golang.org/protobuf/runtime/protoiface"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	reflect "reflect"
 	sync "sync"
 )
 
 var (
-	md_Params                       protoreflect.MessageDescriptor
-	fd_Params_snapshot_timestamp    protoreflect.FieldDescriptor
-	fd_Params_claimable_timestamp   protoreflect.FieldDescriptor
-	fd_Params_airdrop_end_timestamp protoreflect.FieldDescriptor
-	fd_Params_airdrop_denom         protoreflect.FieldDescriptor
-	fd_Params_quests_count          protoreflect.FieldDescriptor
-	fd_Params_controller_address    protoreflect.FieldDescriptor
+	md_Params protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_nova_airdrop_v1_params_proto_init()
 	md_Params = File_nova_airdrop_v1_params_proto.Messages().ByName("Params")
-	fd_Params_snapshot_timestamp = md_Params.Fields().ByName("snapshot_timestamp")
-	fd_Params_claimable_timestamp = md_Params.Fields().ByName("claimable_timestamp")
-	fd_Params_airdrop_end_timestamp = md_Params.Fields().ByName("airdrop_end_timestamp")
-	fd_Params_airdrop_denom = md_Params.Fields().ByName("airdrop_denom")
-	fd_Params_quests_count = md_Params.Fields().ByName("quests_count")
-	fd_Params_controller_address = md_Params.Fields().ByName("controller_address")
 }
 
 var _ protoreflect.Message = (*fastReflection_Params)(nil)
@@ -100,42 +88,6 @@ func (x *fastReflection_Params) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_Params) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.SnapshotTimestamp != nil {
-		value := protoreflect.ValueOfMessage(x.SnapshotTimestamp.ProtoReflect())
-		if !f(fd_Params_snapshot_timestamp, value) {
-			return
-		}
-	}
-	if x.ClaimableTimestamp != nil {
-		value := protoreflect.ValueOfMessage(x.ClaimableTimestamp.ProtoReflect())
-		if !f(fd_Params_claimable_timestamp, value) {
-			return
-		}
-	}
-	if x.AirdropEndTimestamp != nil {
-		value := protoreflect.ValueOfMessage(x.AirdropEndTimestamp.ProtoReflect())
-		if !f(fd_Params_airdrop_end_timestamp, value) {
-			return
-		}
-	}
-	if x.AirdropDenom != "" {
-		value := protoreflect.ValueOfString(x.AirdropDenom)
-		if !f(fd_Params_airdrop_denom, value) {
-			return
-		}
-	}
-	if x.QuestsCount != int32(0) {
-		value := protoreflect.ValueOfInt32(x.QuestsCount)
-		if !f(fd_Params_quests_count, value) {
-			return
-		}
-	}
-	if x.ControllerAddress != "" {
-		value := protoreflect.ValueOfString(x.ControllerAddress)
-		if !f(fd_Params_controller_address, value) {
-			return
-		}
-	}
 }
 
 // Has reports whether a field is populated.
@@ -151,18 +103,6 @@ func (x *fastReflection_Params) Range(f func(protoreflect.FieldDescriptor, proto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_Params) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.Params.snapshot_timestamp":
-		return x.SnapshotTimestamp != nil
-	case "nova.airdrop.v1.Params.claimable_timestamp":
-		return x.ClaimableTimestamp != nil
-	case "nova.airdrop.v1.Params.airdrop_end_timestamp":
-		return x.AirdropEndTimestamp != nil
-	case "nova.airdrop.v1.Params.airdrop_denom":
-		return x.AirdropDenom != ""
-	case "nova.airdrop.v1.Params.quests_count":
-		return x.QuestsCount != int32(0)
-	case "nova.airdrop.v1.Params.controller_address":
-		return x.ControllerAddress != ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.Params"))
@@ -179,18 +119,6 @@ func (x *fastReflection_Params) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Params) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.Params.snapshot_timestamp":
-		x.SnapshotTimestamp = nil
-	case "nova.airdrop.v1.Params.claimable_timestamp":
-		x.ClaimableTimestamp = nil
-	case "nova.airdrop.v1.Params.airdrop_end_timestamp":
-		x.AirdropEndTimestamp = nil
-	case "nova.airdrop.v1.Params.airdrop_denom":
-		x.AirdropDenom = ""
-	case "nova.airdrop.v1.Params.quests_count":
-		x.QuestsCount = int32(0)
-	case "nova.airdrop.v1.Params.controller_address":
-		x.ControllerAddress = ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.Params"))
@@ -207,24 +135,6 @@ func (x *fastReflection_Params) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_Params) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.airdrop.v1.Params.snapshot_timestamp":
-		value := x.SnapshotTimestamp
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.airdrop.v1.Params.claimable_timestamp":
-		value := x.ClaimableTimestamp
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.airdrop.v1.Params.airdrop_end_timestamp":
-		value := x.AirdropEndTimestamp
-		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.airdrop.v1.Params.airdrop_denom":
-		value := x.AirdropDenom
-		return protoreflect.ValueOfString(value)
-	case "nova.airdrop.v1.Params.quests_count":
-		value := x.QuestsCount
-		return protoreflect.ValueOfInt32(value)
-	case "nova.airdrop.v1.Params.controller_address":
-		value := x.ControllerAddress
-		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.Params"))
@@ -245,18 +155,6 @@ func (x *fastReflection_Params) Get(descriptor protoreflect.FieldDescriptor) pro
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Params) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.Params.snapshot_timestamp":
-		x.SnapshotTimestamp = value.Message().Interface().(*timestamppb.Timestamp)
-	case "nova.airdrop.v1.Params.claimable_timestamp":
-		x.ClaimableTimestamp = value.Message().Interface().(*timestamppb.Timestamp)
-	case "nova.airdrop.v1.Params.airdrop_end_timestamp":
-		x.AirdropEndTimestamp = value.Message().Interface().(*timestamppb.Timestamp)
-	case "nova.airdrop.v1.Params.airdrop_denom":
-		x.AirdropDenom = value.Interface().(string)
-	case "nova.airdrop.v1.Params.quests_count":
-		x.QuestsCount = int32(value.Int())
-	case "nova.airdrop.v1.Params.controller_address":
-		x.ControllerAddress = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.Params"))
@@ -277,27 +175,6 @@ func (x *fastReflection_Params) Set(fd protoreflect.FieldDescriptor, value proto
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Params) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.Params.snapshot_timestamp":
-		if x.SnapshotTimestamp == nil {
-			x.SnapshotTimestamp = new(timestamppb.Timestamp)
-		}
-		return protoreflect.ValueOfMessage(x.SnapshotTimestamp.ProtoReflect())
-	case "nova.airdrop.v1.Params.claimable_timestamp":
-		if x.ClaimableTimestamp == nil {
-			x.ClaimableTimestamp = new(timestamppb.Timestamp)
-		}
-		return protoreflect.ValueOfMessage(x.ClaimableTimestamp.ProtoReflect())
-	case "nova.airdrop.v1.Params.airdrop_end_timestamp":
-		if x.AirdropEndTimestamp == nil {
-			x.AirdropEndTimestamp = new(timestamppb.Timestamp)
-		}
-		return protoreflect.ValueOfMessage(x.AirdropEndTimestamp.ProtoReflect())
-	case "nova.airdrop.v1.Params.airdrop_denom":
-		panic(fmt.Errorf("field airdrop_denom of message nova.airdrop.v1.Params is not mutable"))
-	case "nova.airdrop.v1.Params.quests_count":
-		panic(fmt.Errorf("field quests_count of message nova.airdrop.v1.Params is not mutable"))
-	case "nova.airdrop.v1.Params.controller_address":
-		panic(fmt.Errorf("field controller_address of message nova.airdrop.v1.Params is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.Params"))
@@ -311,21 +188,6 @@ func (x *fastReflection_Params) Mutable(fd protoreflect.FieldDescriptor) protore
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_Params) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.Params.snapshot_timestamp":
-		m := new(timestamppb.Timestamp)
-		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.airdrop.v1.Params.claimable_timestamp":
-		m := new(timestamppb.Timestamp)
-		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.airdrop.v1.Params.airdrop_end_timestamp":
-		m := new(timestamppb.Timestamp)
-		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.airdrop.v1.Params.airdrop_denom":
-		return protoreflect.ValueOfString("")
-	case "nova.airdrop.v1.Params.quests_count":
-		return protoreflect.ValueOfInt32(int32(0))
-	case "nova.airdrop.v1.Params.controller_address":
-		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.Params"))
@@ -395,29 +257,6 @@ func (x *fastReflection_Params) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		if x.SnapshotTimestamp != nil {
-			l = options.Size(x.SnapshotTimestamp)
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.ClaimableTimestamp != nil {
-			l = options.Size(x.ClaimableTimestamp)
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.AirdropEndTimestamp != nil {
-			l = options.Size(x.AirdropEndTimestamp)
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.AirdropDenom)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		if x.QuestsCount != 0 {
-			n += 1 + runtime.Sov(uint64(x.QuestsCount))
-		}
-		l = len(x.ControllerAddress)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -446,67 +285,6 @@ func (x *fastReflection_Params) ProtoMethods() *protoiface.Methods {
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
-		}
-		if len(x.ControllerAddress) > 0 {
-			i -= len(x.ControllerAddress)
-			copy(dAtA[i:], x.ControllerAddress)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ControllerAddress)))
-			i--
-			dAtA[i] = 0x32
-		}
-		if x.QuestsCount != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.QuestsCount))
-			i--
-			dAtA[i] = 0x28
-		}
-		if len(x.AirdropDenom) > 0 {
-			i -= len(x.AirdropDenom)
-			copy(dAtA[i:], x.AirdropDenom)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.AirdropDenom)))
-			i--
-			dAtA[i] = 0x22
-		}
-		if x.AirdropEndTimestamp != nil {
-			encoded, err := options.Marshal(x.AirdropEndTimestamp)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-			i--
-			dAtA[i] = 0x1a
-		}
-		if x.ClaimableTimestamp != nil {
-			encoded, err := options.Marshal(x.ClaimableTimestamp)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if x.SnapshotTimestamp != nil {
-			encoded, err := options.Marshal(x.SnapshotTimestamp)
-			if err != nil {
-				return protoiface.MarshalOutput{
-					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
-					Buf:               input.Buf,
-				}, err
-			}
-			i -= len(encoded)
-			copy(dAtA[i:], encoded)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
-			i--
-			dAtA[i] = 0xa
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -557,197 +335,6 @@ func (x *fastReflection_Params) ProtoMethods() *protoiface.Methods {
 				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: Params: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
-			case 1:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field SnapshotTimestamp", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if x.SnapshotTimestamp == nil {
-					x.SnapshotTimestamp = &timestamppb.Timestamp{}
-				}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.SnapshotTimestamp); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ClaimableTimestamp", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if x.ClaimableTimestamp == nil {
-					x.ClaimableTimestamp = &timestamppb.Timestamp{}
-				}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.ClaimableTimestamp); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				iNdEx = postIndex
-			case 3:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AirdropEndTimestamp", wireType)
-				}
-				var msglen int
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					msglen |= int(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				if msglen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + msglen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				if x.AirdropEndTimestamp == nil {
-					x.AirdropEndTimestamp = &timestamppb.Timestamp{}
-				}
-				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.AirdropEndTimestamp); err != nil {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
-				}
-				iNdEx = postIndex
-			case 4:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AirdropDenom", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.AirdropDenom = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 5:
-				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field QuestsCount", wireType)
-				}
-				x.QuestsCount = 0
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					x.QuestsCount |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-			case 6:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.ControllerAddress = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -800,19 +387,6 @@ type Params struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	// The snapshot date based for the distribution of the airdrop.
-	SnapshotTimestamp *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=snapshot_timestamp,json=snapshotTimestamp,proto3" json:"snapshot_timestamp,omitempty"`
-	// THe time when you can claim your airdrop nova tokens.
-	ClaimableTimestamp *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=claimable_timestamp,json=claimableTimestamp,proto3" json:"claimable_timestamp,omitempty"`
-	// THe time when the user no longer can claim the airdrop tokens.
-	AirdropEndTimestamp *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=airdrop_end_timestamp,json=airdropEndTimestamp,proto3" json:"airdrop_end_timestamp,omitempty"`
-	// The denom for the airdrop coin.
-	AirdropDenom string `protobuf:"bytes,4,opt,name=airdrop_denom,json=airdropDenom,proto3" json:"airdrop_denom,omitempty"`
-	// the number of quests user to do
-	QuestsCount int32 `protobuf:"varint,5,opt,name=quests_count,json=questsCount,proto3" json:"quests_count,omitempty"`
-	// controller address is responsible to check the user has performed the social quest (e.g. twitter, facebook or etc)
-	ControllerAddress string `protobuf:"bytes,6,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
 }
 
 func (x *Params) Reset() {
@@ -835,48 +409,6 @@ func (*Params) Descriptor() ([]byte, []int) {
 	return file_nova_airdrop_v1_params_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Params) GetSnapshotTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.SnapshotTimestamp
-	}
-	return nil
-}
-
-func (x *Params) GetClaimableTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ClaimableTimestamp
-	}
-	return nil
-}
-
-func (x *Params) GetAirdropEndTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.AirdropEndTimestamp
-	}
-	return nil
-}
-
-func (x *Params) GetAirdropDenom() string {
-	if x != nil {
-		return x.AirdropDenom
-	}
-	return ""
-}
-
-func (x *Params) GetQuestsCount() int32 {
-	if x != nil {
-		return x.QuestsCount
-	}
-	return 0
-}
-
-func (x *Params) GetControllerAddress() string {
-	if x != nil {
-		return x.ControllerAddress
-	}
-	return ""
-}
-
 var File_nova_airdrop_v1_params_proto protoreflect.FileDescriptor
 
 var file_nova_airdrop_v1_params_proto_rawDesc = []byte{
@@ -886,44 +418,20 @@ var file_nova_airdrop_v1_params_proto_rawDesc = []byte{
 	0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x8b, 0x03, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x12, 0x53, 0x0a, 0x12, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x5f, 0x74, 0x69,
-	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
-	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
-	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90,
-	0xdf, 0x1f, 0x01, 0x52, 0x11, 0x73, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x55, 0x0a, 0x13, 0x63, 0x6c, 0x61, 0x69, 0x6d, 0x61,
-	0x62, 0x6c, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42,
-	0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90, 0xdf, 0x1f, 0x01, 0x52, 0x12, 0x63, 0x6c, 0x61, 0x69, 0x6d,
-	0x61, 0x62, 0x6c, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x58, 0x0a,
-	0x15, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5f, 0x65, 0x6e, 0x64, 0x5f, 0x74, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67,
-	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54,
-	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90, 0xdf,
-	0x1f, 0x01, 0x52, 0x13, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x45, 0x6e, 0x64, 0x54, 0x69,
-	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x23, 0x0a, 0x0d, 0x61, 0x69, 0x72, 0x64, 0x72,
-	0x6f, 0x70, 0x5f, 0x64, 0x65, 0x6e, 0x6f, 0x6d, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c,
-	0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x44, 0x65, 0x6e, 0x6f, 0x6d, 0x12, 0x21, 0x0a, 0x0c,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x73, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01,
-	0x28, 0x05, 0x52, 0x0b, 0x71, 0x75, 0x65, 0x73, 0x74, 0x73, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12,
-	0x2d, 0x0a, 0x12, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e,
-	0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x3a, 0x04,
-	0x98, 0xa0, 0x1f, 0x00, 0x42, 0xbb, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76,
-	0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x42, 0x0b, 0x50, 0x61,
-	0x72, 0x61, 0x6d, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c,
-	0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76,
-	0x61, 0x2f, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2f, 0x76, 0x31, 0x3b, 0x61, 0x69, 0x72,
-	0x64, 0x72, 0x6f, 0x70, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x41, 0x58, 0xaa, 0x02, 0x0f, 0x4e,
-	0x6f, 0x76, 0x61, 0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x56, 0x31, 0xca, 0x02,
-	0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31,
-	0xe2, 0x02, 0x1b, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c,
-	0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
-	0x11, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x3a, 0x3a,
-	0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x08, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x42, 0xbb, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69,
+	0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x42, 0x0b, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f,
+	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x69,
+	0x72, 0x64, 0x72, 0x6f, 0x70, 0x2f, 0x76, 0x31, 0x3b, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
+	0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x41, 0x58, 0xaa, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x2e,
+	0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0f, 0x4e, 0x6f, 0x76,
+	0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1b, 0x4e,
+	0x6f, 0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31, 0x5c, 0x47,
+	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4e, 0x6f, 0x76,
+	0x61, 0x3a, 0x3a, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -940,18 +448,14 @@ func file_nova_airdrop_v1_params_proto_rawDescGZIP() []byte {
 
 var file_nova_airdrop_v1_params_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_nova_airdrop_v1_params_proto_goTypes = []interface{}{
-	(*Params)(nil),                // 0: nova.airdrop.v1.Params
-	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
+	(*Params)(nil), // 0: nova.airdrop.v1.Params
 }
 var file_nova_airdrop_v1_params_proto_depIdxs = []int32{
-	1, // 0: nova.airdrop.v1.Params.snapshot_timestamp:type_name -> google.protobuf.Timestamp
-	1, // 1: nova.airdrop.v1.Params.claimable_timestamp:type_name -> google.protobuf.Timestamp
-	1, // 2: nova.airdrop.v1.Params.airdrop_end_timestamp:type_name -> google.protobuf.Timestamp
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	0, // [0:0] is the sub-list for method output_type
+	0, // [0:0] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_nova_airdrop_v1_params_proto_init() }
