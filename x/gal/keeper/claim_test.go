@@ -7,11 +7,79 @@ import (
 	"math/big"
 )
 
-func (suite *KeeperTestSuite) TestClaimShareToken() {
-
-}
-
 func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
+
+	claimer1 := suite.GenRandomAddress()
+	claimer2 := suite.GenRandomAddress()
+	claimer3 := suite.GenRandomAddress()
+
+	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	depositRecords := []*DepositRecord{
+		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(10000)), state: types.DelegateSuccess},
+		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(20000)), state: types.DelegateSuccess},
+		{zoneId: zoneId, claimer: claimer1, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(30000)), state: types.DepositSuccess},
+		{zoneId: zoneId, claimer: claimer1, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(40000)), state: types.DelegateRequest},
+
+		{zoneId: zoneId, claimer: claimer2, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(10000)), state: types.DelegateSuccess},
+		{zoneId: zoneId, claimer: claimer2, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(20000)), state: types.DelegateRequest},
+		{zoneId: zoneId, claimer: claimer2, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(30000)), state: types.DepositRequest},
+		{zoneId: zoneId, claimer: claimer2, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(40000)), state: types.DelegateSuccess},
+	}
+	suite.NewDepositRecords(depositRecords)
+
+	tcs := []struct {
+		name          string
+		claimer       sdk.AccAddress
+		result        sdk.Coin
+		oracleVersion uint64
+		err           bool
+	}{
+		{
+			name:          "claimer1 claimable assets",
+			claimer:       claimer1,
+			result:        sdk.NewCoin(ibcDenom, sdk.NewInt(30000)),
+			oracleVersion: 2,
+			err:           false,
+		},
+		{
+			name:          "claimer2 claimable assets",
+			claimer:       claimer2,
+			result:        sdk.NewCoin(ibcDenom, sdk.NewInt(50000)),
+			oracleVersion: 3,
+			err:           false,
+		},
+		{
+			name:          "claimer3 claimable assets",
+			claimer:       claimer3,
+			result:        sdk.NewCoin(ibcDenom, sdk.NewInt(0)),
+			oracleVersion: 4,
+			err:           true,
+		},
+		{
+			name:          "oracleVersion issue",
+			claimer:       claimer1,
+			result:        sdk.NewCoin(ibcDenom, sdk.NewInt(0)),
+			oracleVersion: 1,
+			err:           false,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			zone, ok := suite.App.IbcstakingKeeper.GetRegisteredZone(suite.Ctx, zoneId)
+			suite.Require().True(ok)
+
+			suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, zoneId, tc.oracleVersion)
+			result, err := suite.App.GalKeeper.TotalClaimableAssets(suite.Ctx, zone, tc.claimer)
+
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.Require().NoError(err)
+			}
+			suite.Require().Equal(tc.result, *result)
+		})
+	}
 
 }
 
@@ -64,10 +132,6 @@ func (suite *KeeperTestSuite) TestCalculateDepositAlpha() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestGetWithdrawAmt() {
-
-}
-
 func (suite *KeeperTestSuite) TestCalculateWithdrawAlpha() {
 	tcs := []struct {
 		userBurnStTokenAmt    int64
@@ -97,10 +161,6 @@ func (suite *KeeperTestSuite) TestCalculateWithdrawAlpha() {
 		res := suite.App.GalKeeper.CalculateWithdrawAlpha(big.NewInt(burnedAmount), big.NewInt(totalShareTokenSupply), big.NewInt(totalStakedAmount))
 		suite.Equal(tc.expected, res)
 	}
-}
-
-func (suite *KeeperTestSuite) TestGetSnDenomForIBCDenom() {
-
 }
 
 func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
@@ -207,9 +267,85 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 }
 
 func (suite *KeeperTestSuite) TestConvertWAssetToSnAssetDecimal() {
+	tcs := []struct {
+		name    string
+		amount  sdk.Coin
+		decimal int64
+		result  sdk.Coin
+	}{
+		{
+			name:    "success",
+			decimal: 6,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000)),
+			result:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000000000000000)),
+		},
+		{
+			name:    "success",
+			decimal: 6,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1300000)),
+			result:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1300000000000000000)),
+		},
+		{
+			name:    "success",
+			decimal: 7,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(150000000)),
+			result:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(15000000000000000000)),
+		},
+		{
+			name:    "success",
+			decimal: 18,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000000000000000)),
+			result:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000000000000000)),
+		},
+	}
 
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			result := suite.App.GalKeeper.ConvertWAssetToSnAssetDecimal(tc.amount.Amount.BigInt(), tc.decimal, "snuatom")
+
+			suite.Require().Equal(tc.result, result)
+		})
+	}
 }
 
 func (suite *KeeperTestSuite) TestConvertSnAssetToWAssetDecimal() {
+	tcs := []struct {
+		name    string
+		amount  sdk.Coin
+		decimal int64
+		result  sdk.Coin
+	}{
+		{
+			name:    "success",
+			decimal: 6,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000000000000000)),
+			result:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000)),
+		},
+		{
+			name:    "success",
+			decimal: 6,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1300000000000000000)),
+			result:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1300000)),
+		},
+		{
+			name:    "success",
+			decimal: 7,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(15000000000000000000)),
+			result:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(150000000)),
+		},
+		{
+			name:    "success",
+			decimal: 18,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000000000000000)),
+			result:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000000000000000)),
+		},
+	}
 
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			result := suite.App.GalKeeper.ConvertSnAssetToWAssetDecimal(tc.amount.Amount.BigInt(), tc.decimal, "snuatom")
+
+			suite.Require().Equal(tc.result, result)
+		})
+	}
 }

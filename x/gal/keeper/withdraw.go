@@ -125,6 +125,25 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 	})
 }
 
+// GetWithdrawAmt is used for calculating the amount of coin user can withdraw
+// after un-delegate. This function is executed when ICA un-delegate call executed,
+// and calculate using the balance of user's share coin.
+func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
+	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
+	totalSharedToken := k.bankKeeper.GetSupply(ctx, amt.Denom)
+	totalStakedAmount, err := k.oracleKeeper.GetChainState(ctx, baseDenom)
+	if err != nil {
+		return sdk.Coin{}, err
+	}
+
+	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
+
+	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), totalStakedAmount.Coin.Amount.BigInt())
+	wAsset := k.ConvertSnAssetToWAssetDecimal(withdrawAmt, zoneInfo.Decimal, baseDenom)
+
+	return wAsset, nil
+}
+
 func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
 	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
