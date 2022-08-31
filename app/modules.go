@@ -1,6 +1,8 @@
 package app
 
 import (
+	"github.com/Carina-labs/nova/x/airdrop"
+	airdroptypes "github.com/Carina-labs/nova/x/airdrop/types"
 	"github.com/Carina-labs/nova/x/gal"
 	ibcstaking "github.com/Carina-labs/nova/x/ibcstaking"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
@@ -81,6 +83,7 @@ func (app *NovaApp) GetModuleManager(
 		wasm.NewAppModule(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
 		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
+		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.AccountKeeper, app.BankKeeper),
 		ica.NewAppModule(app.ICAControllerKeeper, app.ICAHostKeeper),
 		ibcstaking.NewAppModule(appCodec, *app.IbcstakingKeeper, app.AccountKeeper),
 	}
@@ -109,6 +112,7 @@ func GetOrderInitGenesis() []string {
 		wasm.ModuleName,
 		gal.ModuleName,
 		oracletypes.ModuleName,
+		airdroptypes.ModuleName,
 		icatypes.ModuleName,
 		ibcstakingtypes.ModuleName,
 		authz.ModuleName,
@@ -138,6 +142,7 @@ func GetOrderBeginBlocker() []string {
 		wasm.ModuleName,
 		gal.ModuleName,
 		oracletypes.ModuleName,
+		airdroptypes.ModuleName,
 		icatypes.ModuleName,
 		ibcstakingtypes.ModuleName,
 		authzkeeper.StoreKey,
@@ -167,6 +172,7 @@ func GetOrderEndBlocker() []string {
 		wasm.ModuleName,
 		gal.ModuleName,
 		oracletypes.ModuleName,
+		airdroptypes.ModuleName,
 		icatypes.ModuleName,
 		ibcstakingtypes.ModuleName,
 		authzkeeper.StoreKey,

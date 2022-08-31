@@ -1,6 +1,7 @@
 package keepers
 
 import (
+	"github.com/Carina-labs/nova/x/airdrop"
 	"github.com/Carina-labs/nova/x/gal"
 	ibcstaking "github.com/Carina-labs/nova/x/ibcstaking"
 	"github.com/Carina-labs/nova/x/mint"
@@ -68,4 +69,5 @@ var AppModuleBasic = []module.AppModuleBasic{
 	authzmodule.AppModuleBasic{},
 	gal.AppModuleBasic{},
 	oracle.AppModuleBasic{},
+	airdrop.AppModuleBasic{},
 }

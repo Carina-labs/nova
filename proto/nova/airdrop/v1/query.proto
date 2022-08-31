@@ -35,7 +35,7 @@ message QueryParamsResponse {
 
 message QueryTotalAssetForAirdropRequest {
   // address of the airdrop recipient.
-  string address = 1 [ (gogoproto.nullable) = false ];
+  string address = 1;
 }
 
 message QueryTotalAssetForAirdropResponse {
@@ -48,8 +48,9 @@ message QueryTotalAssetForAirdropResponse {
 
 message QueryQuestStateRequest {
   // address of the airdrop recipient.
-  string address = 1 [ (gogoproto.nullable) = false ];
+  string address = 1;
 }
+
 message QueryQuestStateResponse {
-  map<int32, QuestState> quest_states = 1 [(gogoproto.nullable) = false];
+  map<int32, QuestState> quest_states = 1;
 }

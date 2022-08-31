@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/Carina-labs/nova/x/airdrop"
 	"github.com/gorilla/mux"
 	"github.com/rakyll/statik/fs"
 
@@ -288,6 +289,7 @@ func NewNovaApp(
 		transferModule,
 		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
+		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.AccountKeeper, app.BankKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
 

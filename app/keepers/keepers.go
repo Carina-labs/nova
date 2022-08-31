@@ -1,6 +1,9 @@
 package keepers
 
 import (
+	"github.com/Carina-labs/nova/x/airdrop"
+	airdropkeeper "github.com/Carina-labs/nova/x/airdrop/keeper"
+	airdroptypes "github.com/Carina-labs/nova/x/airdrop/types"
 	"github.com/Carina-labs/nova/x/gal"
 	galkeeper "github.com/Carina-labs/nova/x/gal/keeper"
 	galtypes "github.com/Carina-labs/nova/x/gal/types"
@@ -89,6 +92,7 @@ type AppKeepers struct {
 	GalKeeper        *galkeeper.Keeper
 	IbcstakingKeeper *ibcstakingkeeper.Keeper
 	OracleKeeper     *oraclekeeper.Keeper
+	AirdropKeeper    *airdropkeeper.Keeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper           capabilitykeeper.ScopedKeeper
@@ -206,6 +210,16 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appKeepers.GetSubspace(oracletypes.ModuleName),
 	)
 	appKeepers.OracleKeeper = &oracleKeeper
+
+	// Register AirdropKeeper
+	airdropKeeper := airdropkeeper.NewKeeper(
+		appCodec,
+		appKeepers.keys[airdroptypes.StoreKey],
+		appKeepers.GetSubspace(airdroptypes.ModuleName),
+		appKeepers.AccountKeeper,
+		appKeepers.BankKeeper,
+	)
+	appKeepers.AirdropKeeper = &airdropKeeper
 
 	// Register GAL module.
 	galKeeper := galkeeper.NewKeeper(
@@ -332,6 +346,7 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(ibcstakingtypes.ModuleName)
 	paramsKeeper.Subspace(oracle.ModuleName)
+	paramsKeeper.Subspace(airdrop.ModuleName)
 	paramsKeeper.Subspace(gal.ModuleName)
 
 	return paramsKeeper
@@ -360,5 +375,6 @@ func KVStoreKeys() []string {
 		ibcstakingtypes.StoreKey,
 		authzkeeper.StoreKey,
 		oracletypes.StoreKey,
+		airdroptypes.StoreKey,
 	}
 }
