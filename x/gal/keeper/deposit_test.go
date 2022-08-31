@@ -1,13 +1,43 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
+
+type DepositRecord struct {
+	zoneId    string
+	depositor sdk.AccAddress
+	claimer   sdk.AccAddress
+	amount    sdk.Coin
+	state     int64
+}
+
+func (suite *KeeperTestSuite) NewDepositRecords(records []*DepositRecord) {
+	for _, record := range records {
+		depositRecord, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, record.zoneId, record.claimer)
+		if !ok {
+			depositRecord = &types.DepositRecord{
+				ZoneId:  record.zoneId,
+				Claimer: record.claimer.String(),
+			}
+		}
+		recordContent := &types.DepositRecordContent{
+			Depositor:       record.depositor.String(),
+			Amount:          &record.amount,
+			State:           record.state,
+			OracleVersion:   1,
+			DelegateVersion: 1,
+		}
+
+		depositRecord.Records = append(depositRecord.Records, recordContent)
+
+		suite.App.GalKeeper.SetDepositRecord(suite.Ctx, depositRecord)
+	}
+}
 
 func (suite *KeeperTestSuite) TestDepositRecord() {
 	depositor := suite.GenRandomAddress()
@@ -30,7 +60,7 @@ func (suite *KeeperTestSuite) TestDepositRecord() {
 						Depositor: depositor.String(),
 						Amount: &sdk.Coin{
 							Amount: sdk.NewInt(10000),
-							Denom:  "stake",
+							Denom:  "base",
 						},
 						OracleVersion:   1,
 						DelegateVersion: 1,
@@ -40,7 +70,7 @@ func (suite *KeeperTestSuite) TestDepositRecord() {
 						Depositor: depositor.String(),
 						Amount: &sdk.Coin{
 							Amount: sdk.NewInt(20000),
-							Denom:  "stake",
+							Denom:  "base",
 						},
 						OracleVersion:   1,
 						DelegateVersion: 1,
@@ -388,8 +418,7 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForUserAddr() {
 			}
 
 			result := suite.App.GalKeeper.GetTotalDepositAmtForUserAddr(suite.Ctx, tc.depositor, tc.denom)
-			fmt.Println(result)
-			fmt.Println(tc.result)
+
 			suite.Require().Equal(tc.result, result)
 		})
 	}
@@ -923,7 +952,6 @@ func (suite *KeeperTestSuite) TestGetAllAmountNotMintShareToken() {
 				ZoneId: zoneId,
 				IcaAccount: &ibcstakingtypes.IcaAccount{
 					ControllerAddress: baseOwnerAcc.String(),
-					HostAddress:       baseHostAcc.String(),
 				},
 				IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
 					ConnectionId: icaConnection,
@@ -940,8 +968,6 @@ func (suite *KeeperTestSuite) TestGetAllAmountNotMintShareToken() {
 			result, err := suite.App.GalKeeper.GetAllAmountNotMintShareToken(suite.Ctx, &zone)
 			suite.Require().NoError(err)
 
-			fmt.Println(result)
-			fmt.Println(tc.result)
 			suite.Require().Equal(result, tc.result)
 		})
 	}

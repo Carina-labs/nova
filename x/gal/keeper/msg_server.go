@@ -355,7 +355,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
-	err = m.keeper.MintShareToken(ctx, claimerAddr, claimSnAsset)
+	err = m.keeper.MintTo(ctx, claimerAddr, claimSnAsset)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(err,
 			"account: %s", claimMsg.Claimer)

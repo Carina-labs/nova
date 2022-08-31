@@ -61,7 +61,7 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Query
 		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
 	}
 
-	assets, err := q.keeper.TotalClaimableAssets(ctx, zone, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, addr)
+	assets, err := q.keeper.TotalClaimableAssets(ctx, zone, addr)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(types.ErrUnknown, "failed to get total claimable assets: %s", err.Error())
 	}
