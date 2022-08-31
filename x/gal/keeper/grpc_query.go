@@ -28,32 +28,23 @@ func (q QueryServer) Params(goCtx context.Context, request *types.QueryParamsReq
 
 func (q QueryServer) EstimateSnAsset(goCtx context.Context, request *types.QueryEstimateSnAssetRequest) (*types.QueryEstimateSnAssetResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	snDenom, err := q.keeper.GetSnDenomForIBCDenom(ctx, request.Amount.Denom)
-	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrInvalidParameter, err.Error())
-	}
-
 	zone, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, "zone not found")
 	}
 
-	if zone.SnDenom != snDenom {
-		return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "given amount is not supported")
+	amt, ok := sdk.NewIntFromString(request.Amount)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrUnknown, "failed to get amount")
 	}
 
-	totalSnSupply := q.keeper.bankKeeper.GetSupply(ctx, snDenom)
-	totalStakedAmount, err := q.keeper.GetTotalStakedForLazyMinting(ctx, zone.BaseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId)
+	estimateAsset, err := q.keeper.ClaimShareToken(ctx, &zone, sdk.NewCoin(request.Denom, amt))
 	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrUnknown, "failed to get total staked amount")
+		return nil, sdkerrors.Wrap(types.ErrUnknown, "failed to get amount")
 	}
-
-	// convert decimal
-	snAsset := q.keeper.ConvertWAssetToSnAssetDecimal(request.Amount.Amount.BigInt(), zone.Decimal, snDenom)
-	mintAmt := q.keeper.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
 
 	return &types.QueryEstimateSnAssetResponse{
-		Amount: sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)),
+		Amount: estimateAsset,
 	}, nil
 }
 
@@ -103,7 +94,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 	}
 
 	for _, record := range withdrawRecord.Records {
-		if record.State == int64(WithdrawStatus_Registered) {
+		if record.State == types.WithdrawStatusRegistered {
 			amount.Amount = amount.Amount.Add(record.Amount)
 		}
 	}

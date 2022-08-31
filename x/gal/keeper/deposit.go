@@ -8,15 +8,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-type DepositState int64
-
-const (
-	DEPOSIT_REQUEST DepositState = iota + 1
-	DEPOSIT_SUCCESS
-	DELEGATE_REQUEST
-	DELEGATE_SUCCESS
-)
-
 // getDepositRecordStore returns "DepositRecord" store.
 // It is used for finding the amount of coin user deposit.
 func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
@@ -45,7 +36,7 @@ func (k Keeper) GetUserDepositRecord(ctx sdk.Context, zoneId string, claimer sdk
 	return &record, true
 }
 
-func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state DepositState) sdk.Coin {
+func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state types.DepositStatusType) sdk.Coin {
 	totalDepositAmt := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
 		Denom:  denom,
@@ -54,7 +45,7 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
-				if record.State == int64(state) {
+				if record.State == state && record.Amount.Denom == denom {
 					totalDepositAmt = totalDepositAmt.Add(*record.Amount)
 				}
 			}
@@ -65,12 +56,29 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 	return totalDepositAmt
 }
 
-func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state DepositState, oracleVersion uint64) {
+func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, userAddr, denom string) sdk.Coin {
+	totalDepositAmt := sdk.NewCoin(denom, sdk.NewInt(0))
+
+	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
+		if depositRecord.Claimer == userAddr {
+			for _, record := range depositRecord.Records {
+				if record.State == types.DepositSuccess && record.Amount.Denom == denom {
+					totalDepositAmt = totalDepositAmt.Add(*record.Amount)
+				}
+			}
+		}
+		return false
+	})
+
+	return totalDepositAmt
+}
+
+func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state types.DepositStatusType, oracleVersion uint64) {
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		isChanged := false
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
-				if record.State == int64(state) && record.OracleVersion == 0 {
+				if record.State == state && record.OracleVersion == 0 {
 					record.OracleVersion = oracleVersion
 					isChanged = true
 				}
@@ -86,15 +94,15 @@ func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state De
 
 }
 
-func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, postState DepositState) bool {
+func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, postState types.DepositStatusType) bool {
 	isChanged := false
 
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		stateCheck := false
 		if depositRecord.ZoneId == zoneId {
 			for _, record := range depositRecord.Records {
-				if record.State == int64(preState) {
-					record.State = int64(postState)
+				if record.State == preState {
+					record.State = postState
 					stateCheck = true
 				}
 			}
@@ -113,12 +121,12 @@ func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, pos
 	return true
 }
 
-func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state DepositState, version uint64) bool {
+func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state types.DepositStatusType, version uint64) bool {
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		if depositRecord.ZoneId == zoneId {
 			isChanged := false
 			for _, record := range depositRecord.Records {
-				if record.State == int64(state) {
+				if record.State == state {
 					isChanged = true
 					record.DelegateVersion = version
 				}
@@ -133,7 +141,7 @@ func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state D
 	return true
 }
 
-func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, depositor sdk.AccAddress, state DepositState) error {
+func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, depositor sdk.AccAddress, state types.DepositStatusType) error {
 	record, found := k.GetUserDepositRecord(ctx, zoneId, depositor)
 	if !found {
 		return types.ErrNoDepositRecord
@@ -141,7 +149,7 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 
 	var recordItems []*types.DepositRecordContent
 	for _, item := range record.Records {
-		if item.State != int64(state) {
+		if item.State != state {
 			recordItems = append(recordItems, item)
 		}
 	}
@@ -150,9 +158,10 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	if isDeleted {
 		record.Records = recordItems
 		k.SetDepositRecord(ctx, record)
+		return nil
 	}
 
-	return nil
+	return types.ErrNoDeleteRecord
 }
 
 func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone) (sdk.Coin, error) {
@@ -162,7 +171,7 @@ func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingt
 	k.IterateDepositRecord(ctx, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
 		if depositRecord.ZoneId == zone.ZoneId {
 			for _, record := range depositRecord.Records {
-				if record.State == int64(DELEGATE_SUCCESS) {
+				if record.State == types.DelegateSuccess {
 					res = res.Add(*record.Amount)
 				}
 			}

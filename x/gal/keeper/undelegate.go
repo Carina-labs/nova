@@ -7,13 +7,8 @@ import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-)
 
-type UndelegatedState int64
-
-const (
-	UNDELEGATE_REQUEST_USER UndelegatedState = iota + 1
-	UNDELEGATE_REQUEST_ICA
+	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 )
 
 // SetUndelegateRecord write undelegate record.
@@ -52,7 +47,7 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.
 }
 
 // GetUndelegateAmount returns the amount of undelegated coin.
-func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, zoneId string, version uint64, state UndelegatedState) (sdk.Coin, sdk.Int) {
+func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone ibcstakingtypes.RegisteredZone, version uint64, state types.UndelegatedStatusType) (sdk.Coin, sdk.Int) {
 
 	snAsset := sdk.Coin{
 		Amount: sdk.NewInt(0),
@@ -62,7 +57,7 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, 
 	wAsset := sdk.NewInt(0)
 
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
-		if undelegateRecord.ZoneId == zoneId {
+		if undelegateRecord.ZoneId == zone.ZoneId {
 			for _, record := range undelegateRecord.Records {
 				if record.OracleVersion < version {
 					withdrawAsset, err := k.GetWithdrawAmt(ctx, *record.SnAssetAmount)
@@ -71,7 +66,7 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, 
 					}
 					record.WithdrawAmount = withdrawAsset.Amount
 
-					record.State = int64(state)
+					record.State = state
 					wAsset = wAsset.Add(record.WithdrawAmount)
 					snAsset = snAsset.Add(*record.SnAssetAmount)
 				}
@@ -86,11 +81,11 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom, baseDenom string, 
 // ChangeUndelegateState changes undelegate record.
 // UNDELEGATE_REQUEST_USER : Just requested undelegate by user. It is not in undelegate period.
 // UNDELEGATE_REQUEST_ICA  : Requested by ICA, It is in undelegate period.
-func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state UndelegatedState) {
+func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			for _, record := range undelegateRecord.Records {
-				record.State = int64(state)
+				record.State = state
 			}
 			k.SetUndelegateRecord(ctx, undelegateRecord)
 		}
@@ -122,12 +117,12 @@ func (k Keeper) GetUndelegateVersion(ctx sdk.Context, zoneId string) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
 
-func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state UndelegatedState, version uint64) bool {
+func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType, version uint64) bool {
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			isChanged := false
 			for _, record := range undelegateRecord.Records {
-				if record.State == int64(state) {
+				if record.State == state {
 					isChanged = true
 					record.UndelegateVersion = version
 				}
@@ -143,12 +138,12 @@ func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state
 }
 
 // DeleteUndelegateRecords removes undelegate record.
-func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state UndelegatedState) {
+func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
 	var recordItems []*types.UndelegateRecordContent
 	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zoneId {
 			for _, record := range undelegateRecord.Records {
-				if record.State != int64(state) {
+				if record.State != state {
 					recordItems = append(recordItems, record)
 				}
 			}

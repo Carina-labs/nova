@@ -50,6 +50,7 @@ message QueryQuestStateRequest {
   // address of the airdrop recipient.
   string address = 1;
 }
+
 message QueryQuestStateResponse {
   map<int32, QuestState> quest_states = 1;
 }

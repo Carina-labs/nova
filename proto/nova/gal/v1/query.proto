@@ -17,11 +17,15 @@ service Query {
   }
 
   rpc EstimateSnAsset(QueryEstimateSnAssetRequest) returns (QueryEstimateSnAssetResponse) {
-    option (google.api.http).get = "/nova/gal/v1/estimate_sn_asset";
+    option (google.api.http).get = "/nova/gal/v1/estimate_sn_asset/{zone_id}";
   }
 
   rpc ClaimableAmount(QueryClaimableAmountRequest) returns (QueryClaimableAmountResponse) {
     option (google.api.http).get = "/nova/gal/v1/claimable_amount/{address}/{zone_id}";
+  }
+
+  rpc DepositAmount(QueryDepositAmountRequest) returns (QueryDepositAmountResponse) {
+    option (google.api.http).get = "/nova/gal/v1/deposit_amount/{address}/{zone_id}";
   }
 
   rpc PendingWithdrawals(QueryPendingWithdrawalsRequest) returns (QueryPendingWithdrawalsResponse) {
@@ -78,6 +82,17 @@ message QueryPendingWithdrawalsResponse {
   cosmos.base.v1beta1.Coin amount = 1 [(gogoproto.nullable) = false];
 }
 
+// QueryDepositAmountRequest is the request type for the Query/DepositAmount RPC method.
+message QueryDepositAmountRequest {
+  string zone_id = 1;
+  string address = 2;
+}
+
+// QueryDepositAmountResponse is the response type for the Query/DepositAmount RPC method.
+message QueryDepositAmountResponse {
+  cosmos.base.v1beta1.Coin amount = 1 [(gogoproto.nullable) = false];
+}
+
 // QueryActiveWithdrawalsRequest is the request type for the Query/ActiveWithdrawals RPC method.
 message QueryActiveWithdrawalsRequest {
   string zone_id = 1;
@@ -118,8 +133,8 @@ message QueryWithdrawRecordResponse {
 
 message QueryEstimateSnAssetRequest {
   string zone_id = 1;
-  cosmos.base.v1beta1.Coin amount = 2;
-  string address = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string amount = 2;
+  string denom = 3;
 }
 
 message QueryEstimateSnAssetResponse {

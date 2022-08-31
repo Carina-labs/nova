@@ -64,20 +64,6 @@ func (k Keeper) CreateLpIncentiveModuleAccount(ctx sdk.Context, amount sdk.Coin)
 	}
 }
 
-// CreateDeveloperVestingModuleAccount creates the module account for developer vesting.
-// Should only be called in initial genesis creation, never again.
-func (k Keeper) CreateStableGuaranteeIncentiveModuleAccount(ctx sdk.Context, amount sdk.Coin) {
-	moduleAcc := authtypes.NewEmptyModuleAccount(
-		types.StableGuaranteeIncentiveModuleAccName, authtypes.Minter)
-
-	k.accountKeeper.SetModuleAccount(ctx, moduleAcc)
-
-	err := k.bankKeeper.MintCoins(ctx, types.StableGuaranteeIncentiveModuleAccName, sdk.NewCoins(amount))
-	if err != nil {
-		panic(err)
-	}
-}
-
 // _____________________________________________________________________
 
 // Logger returns a module-specific logger.
@@ -145,7 +131,7 @@ func (k Keeper) AddCollectedFees(ctx sdk.Context, fees sdk.Coins) error {
 }
 
 // GetProportions gets the balance of the `MintedDenom` from minted coins and returns coins according to the `AllocationRatio`.
-func (k Keeper) GetProportions(ctx sdk.Context, mintedCoin sdk.Coin, ratio sdk.Dec) sdk.Coin {
+func (k Keeper) GetProportions(mintedCoin sdk.Coin, ratio sdk.Dec) sdk.Coin {
 	return sdk.NewCoin(mintedCoin.Denom, mintedCoin.Amount.ToDec().Mul(ratio).TruncateInt())
 }
 
@@ -155,31 +141,23 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 	proportions := params.DistributionProportions
 
 	// allocate staking incentives into fee collector account to be moved to on next begin blocker by staking module
-	stakingIncentivesCoins := sdk.NewCoins(k.GetProportions(ctx, mintedCoin, proportions.Staking))
+	stakingIncentivesCoins := sdk.NewCoins(k.GetProportions(mintedCoin, proportions.Staking))
 	err := k.bankKeeper.SendCoinsFromModuleToModule(ctx, types.ModuleName, k.feeCollectorName, stakingIncentivesCoins)
 	if err != nil {
 		return err
 	}
-	// fmt.Println("stakingInentivesCoins : ", stakingIncentivesCoins)
+	ctx.Logger().Info("Mint", "StakingIncentives", stakingIncentivesCoins)
 
-	lpIncentivesCoin := k.GetProportions(ctx, mintedCoin, proportions.LpIncentives)
-	// fmt.Println("lpIncentivesCoin : ", lpIncentivesCoin)
+	lpIncentivesCoin := k.GetProportions(mintedCoin, proportions.LpIncentives)
+	ctx.Logger().Info("Mint", "LpIncentives", lpIncentivesCoin)
 	lpIncentivesCoins := sdk.NewCoins(lpIncentivesCoin)
 	err = k.bankKeeper.SendCoinsFromModuleToModule(ctx, types.ModuleName, types.LpIncentiveModuleAccName, lpIncentivesCoins)
 	if err != nil {
 		return err
 	}
 
-	stableGuaranteeCoin := k.GetProportions(ctx, mintedCoin, proportions.StableGuaranteeIncentives)
-	stableGuaranteeCoins := sdk.NewCoins(stableGuaranteeCoin)
-	// fmt.Println("stableGuaranteeCoins", stableGuaranteeCoins)
-	err = k.bankKeeper.SendCoinsFromModuleToModule(ctx, types.ModuleName, types.StableGuaranteeIncentiveModuleAccName, stableGuaranteeCoins)
-	if err != nil {
-		return err
-	}
-
-	communityPoolCoins := sdk.NewCoins(mintedCoin).Sub(stakingIncentivesCoins).Sub(lpIncentivesCoins).Sub(stableGuaranteeCoins)
-	// fmt.Println("communityPoolCoins", communityPoolCoins)
+	communityPoolCoins := sdk.NewCoins(mintedCoin).Sub(stakingIncentivesCoins).Sub(lpIncentivesCoins)
+	ctx.Logger().Info("Mint", "CommunityPoolCoins", communityPoolCoins)
 	err = k.distrKeeper.FundCommunityPool(ctx, communityPoolCoins, k.accountKeeper.GetModuleAddress(types.ModuleName))
 	if err != nil {
 		return err
