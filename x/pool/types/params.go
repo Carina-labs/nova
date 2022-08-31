@@ -1,7 +1,9 @@
 package types
 
 import (
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
+	"github.com/ghodss/yaml"
 )
 
 func ParamKeyTable() paramtypes.KeyTable {
@@ -16,8 +18,18 @@ func DefaultParams() Params {
 	return Params{}
 }
 
-func (Params) Validate() error {
+func (p *Params) Validate() error {
+	for _, operator := range p.Operators {
+		if _, err := sdk.AccAddressFromBech32(operator); err != nil {
+			return err
+		}
+	}
 	return nil
+}
+
+func (p *Params) String() string {
+	out, _ := yaml.Marshal(p)
+	return string(out)
 }
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {

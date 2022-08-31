@@ -25,7 +25,7 @@ func (m msgServer) CreatePool(goCtx context.Context, msg *types.MsgCreatePool) (
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	pool := &types.Pool{
 		PoolId:              msg.PoolId,
-		PoolContractAddress: msg.PoolAddress,
+		PoolContractAddress: msg.PoolContractAddress,
 		Weight:              0,
 	}
 	err := m.keeper.CreatePool(ctx, pool)
@@ -40,7 +40,7 @@ func (m msgServer) CreatePool(goCtx context.Context, msg *types.MsgCreatePool) (
 // it set a weight of pool, and it is used for calculating portion of distribution for newly minted nova token.
 func (m msgServer) SetPoolWeight(goCtx context.Context, msg *types.MsgSetPoolWeight) (*types.MsgSetPoolWeightResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	ok := m.keeper.isValidOperator(msg)
+	ok := m.keeper.isValidOperator(ctx, msg.Operator)
 	if !ok {
 		return nil, fmt.Errorf("invalid controller address: %s", msg.Operator)
 	}
