@@ -1,8 +1,6 @@
 syntax = "proto3";
 package nova.airdrop.v1;
 
-import "nova/airdrop/v1/params.proto";
-
 import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/timestamp.proto";
@@ -10,14 +8,11 @@ import "google/protobuf/timestamp.proto";
 option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
 
 message GenesisState {
-  // params defines all the parameters of module.
-  Params params = 1;
-
   // states for the airdrop, how much coins are allocated for each address is must be pre-defined.
   repeated AirdropState states = 2;
 
   // information for the airdrop
-  AirdropInfo airdropInfo = 3;
+  AirdropInfo airdrop_info = 3;
 }
 
 message AirdropInfo {
@@ -47,6 +42,9 @@ message AirdropInfo {
 
   // controller address is responsible to check the user has performed the social quest (e.g. twitter, facebook or etc)
   string controller_address = 6;
+
+  // maximum token allocation for each user, an use cannot claim more than this amount;
+  string maximum_token_alloc_per_user = 7;
 }
 
 enum QuestType {
@@ -94,4 +92,7 @@ message QuestState {
     (gogoproto.stdtime) = true,
     (gogoproto.nullable) = false
   ];
+
+  // claimed amount, this field is empty if user not claimed for this quest yet
+  string claimed_amount = 4;
 }

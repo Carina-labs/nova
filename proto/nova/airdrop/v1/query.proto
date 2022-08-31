@@ -5,16 +5,13 @@ import "cosmos/base/v1beta1/coin.proto";
 import "google/api/annotations.proto";
 import "gogoproto/gogo.proto";
 
-import "nova/airdrop/v1/params.proto";
 import "nova/airdrop/v1/genesis.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
 
 service Query {
-  // Params returns the total set of minting parameters.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/nova/airdrop/v1/params";
-  }
+  // get airdrop info
+  rpc AirdropInfo(QueryAirdropInfoRequest) returns (QueryAirdropInfoResponse) {}
 
   // get total assets of the airdrop for a given address
   rpc TotalAssetForAirdrop(QueryTotalAssetForAirdropRequest) returns (QueryTotalAssetForAirdropResponse) {
@@ -27,10 +24,9 @@ service Query {
   }
 }
 
-message QueryParamsRequest {}
-message QueryParamsResponse {
-  // params defines the parameters of the module.
-  Params params = 1 [ (gogoproto.nullable) = false ];
+message QueryAirdropInfoRequest {}
+message QueryAirdropInfoResponse {
+  AirdropInfo airdrop_info = 1;
 }
 
 message QueryTotalAssetForAirdropRequest {
