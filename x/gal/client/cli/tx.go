@@ -218,7 +218,7 @@ func txPendingWithdrawCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgPendingWithdraw(zoneId, daomodifierAddr, portId, chanId, t)
+			msg := types.NewIcaWithdraw(zoneId, daomodifierAddr, portId, chanId, t)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
