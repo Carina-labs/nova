@@ -22,8 +22,10 @@ service Msg {
 }
 
 message MsgCreateCandidatePool {
+  option (cosmos.msg.v1.signer) = "creator";
   string pool_id = 1;
   string pool_contract_address = 2;
+  string creator = 3;
 }
 
 message MsgCreateCandidatePoolResponse {
