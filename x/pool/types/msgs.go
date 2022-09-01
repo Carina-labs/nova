@@ -38,7 +38,8 @@ func (m MsgCreateCandidatePool) GetSignBytes() []byte {
 }
 
 func (m MsgCreateCandidatePool) GetSigners() []sdk.AccAddress {
-	return nil
+	creator, _ := sdk.AccAddressFromBech32(m.Creator)
+	return []sdk.AccAddress{creator}
 }
 
 func NewMsgSetPoolWeight(poolId string, newWeight uint64, operator string) *MsgSetPoolWeight {
