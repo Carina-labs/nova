@@ -114,6 +114,7 @@ var (
 		wasm.ModuleName:                    {authtypes.Burner},
 		ibcstakingtypes.ModuleName:         {authtypes.Minter, authtypes.Burner},
 		gal.ModuleName:                     {authtypes.Minter, authtypes.Burner},
+		airdrop.ModuleName:                 {authtypes.Minter, authtypes.Burner},
 	}
 )
 

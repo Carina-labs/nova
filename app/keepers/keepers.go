@@ -284,7 +284,9 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appCodec, appKeepers.keys[govtypes.StoreKey], appKeepers.GetSubspace(govtypes.ModuleName), appKeepers.AccountKeeper, appKeepers.BankKeeper,
 		&stakingKeeper, govRouter,
 	)
-	appKeepers.GovKeeper = &govKeeper
+	appKeepers.GovKeeper = govKeeper.SetHooks(
+		govtypes.NewMultiGovHooks(appKeepers.AirdropKeeper.Hooks()),
+	)
 
 	// Create static IBC router, add transfer route, then set and seal it
 	ibcRouter := ibcporttypes.NewRouter()
