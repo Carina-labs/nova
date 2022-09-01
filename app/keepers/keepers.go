@@ -13,8 +13,8 @@ import (
 	"github.com/Carina-labs/nova/x/oracle"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
-	poolkeeper "github.com/Carina-labs/nova/x/pool/keeper"
-	pooltypes "github.com/Carina-labs/nova/x/pool/types"
+	poolincentivekeeper "github.com/Carina-labs/nova/x/poolincentive/keeper"
+	poolincentivetypes "github.com/Carina-labs/nova/x/poolincentive/types"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
 	"github.com/cosmos/cosmos-sdk/baseapp"
@@ -95,7 +95,7 @@ type AppKeepers struct {
 	IbcstakingKeeper *ibcstakingkeeper.Keeper
 	OracleKeeper     *oraclekeeper.Keeper
 	AirdropKeeper    *airdropkeeper.Keeper
-	PoolKeeper       *poolkeeper.Keeper
+	PoolKeeper       *poolincentivekeeper.Keeper
 
 	// make scoped keepers public for test purposes
 	ScopedIBCKeeper           capabilitykeeper.ScopedKeeper
@@ -215,10 +215,10 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	appKeepers.OracleKeeper = &oracleKeeper
 
 	// Register Pool module.
-	poolKeeper := poolkeeper.NewKeeper(
+	poolKeeper := poolincentivekeeper.NewKeeper(
 		appCodec,
-		appKeepers.keys[pooltypes.StoreKey],
-		appKeepers.GetSubspace(pooltypes.ModuleName),
+		appKeepers.keys[poolincentivetypes.StoreKey],
+		appKeepers.GetSubspace(poolincentivetypes.ModuleName),
 	)
 	appKeepers.PoolKeeper = &poolKeeper
 
@@ -360,7 +360,7 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 	paramsKeeper.Subspace(oracle.ModuleName)
 	paramsKeeper.Subspace(airdrop.ModuleName)
 	paramsKeeper.Subspace(gal.ModuleName)
-	paramsKeeper.Subspace(pooltypes.ModuleName)
+	paramsKeeper.Subspace(poolincentivetypes.ModuleName)
 
 	return paramsKeeper
 }
@@ -388,7 +388,7 @@ func KVStoreKeys() []string {
 		ibcstakingtypes.StoreKey,
 		authzkeeper.StoreKey,
 		oracletypes.StoreKey,
-		pooltypes.StoreKey,
+		poolincentivetypes.StoreKey,
 		airdroptypes.StoreKey,
 	}
 }

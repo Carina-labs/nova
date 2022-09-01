@@ -1,0 +1,11 @@
+syntax = "proto3";
+package nova.pool_incentive.v1;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/poolincentive/types";
+
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  repeated string operators = 1;
+}
