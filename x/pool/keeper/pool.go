@@ -80,6 +80,11 @@ func (k Keeper) FindIncentivePoolById(ctx sdk.Context, poolId string) (*types.In
 	return result, nil
 }
 
+func (k Keeper) IsIncentivePool(ctx sdk.Context, poolId string) bool {
+	key := []byte(poolId)
+	return k.getIncentivePoolStore(ctx).Has(key)
+}
+
 func (k Keeper) IterateCandidatePools(ctx sdk.Context, cb func(i int64, pool *types.CandidatePool) bool) {
 	store := k.getCandidatePoolStore(ctx)
 	iterator := store.Iterator(nil, nil)
