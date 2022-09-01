@@ -2,10 +2,11 @@ package types
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/Carina-labs/nova/app/params"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"time"
 )
 
 func NewGenesisState(state []*AirdropState, airdropInfo *AirdropInfo) *GenesisState {
@@ -31,23 +32,31 @@ func DefaultGenesis() *GenesisState {
 }
 
 func (gs GenesisState) Validate() error {
+	if gs.AirdropInfo == nil {
+		return sdkerrors.Wrap(sdkerrors.ErrNotFound, "airdrop info is required")
+	}
+
 	maxTokenAlloc, ok := sdk.NewIntFromString(gs.AirdropInfo.MaximumTokenAllocPerUser)
 	if !ok {
-		return sdkerrors.Wrap(ErrInvalidCoinAmount, fmt.Sprintf("maximum token alloc %s is invalid", gs.AirdropInfo.MaximumTokenAllocPerUser))
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, fmt.Sprintf("maximum token alloc %s is invalid", gs.AirdropInfo.MaximumTokenAllocPerUser))
+	}
+
+	if maxTokenAlloc.IsNegative() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, fmt.Sprintf("maximum token alloc should be posivie: %v", gs.AirdropInfo.MaximumTokenAllocPerUser))
 	}
 
 	for _, state := range gs.States {
 		tokenAlloc, ok := sdk.NewIntFromString(state.TotalAmount)
 		if !ok {
-			return sdkerrors.Wrap(ErrInvalidCoinAmount, fmt.Sprintf("token amount %s is invalid", state.TotalAmount))
+			return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, fmt.Sprintf("token amount %s is invalid", state.TotalAmount))
 		}
 
 		if tokenAlloc.IsNegative() {
-			return fmt.Errorf("token amount should be posivie: %v", state.TotalAmount)
+			return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, fmt.Sprintf("token amount should be posivie: %v", state.TotalAmount))
 		}
 
 		if tokenAlloc.GT(maxTokenAlloc) {
-			return fmt.Errorf("airdrop token allocation on each user must be less than or equal to maxTokenAllocPerUser")
+			return sdkerrors.Wrap(ErrTokenAllocCannotExceedMaxCap, fmt.Sprintf("airdrop token allocation on each user must be less than or equal to maxTokenAllocPerUser"))
 		}
 
 		// check recipient address is valid
@@ -58,11 +67,11 @@ func (gs GenesisState) Validate() error {
 	}
 
 	if !gs.AirdropInfo.SnapshotTimestamp.Before(gs.AirdropInfo.AirdropStartTimestamp) {
-		return fmt.Errorf("snpashot date must be before airdrop start date")
+		return sdkerrors.Wrap(ErrTimeConditionNotMet, fmt.Sprintf("snpashot date must be before airdrop start date"))
 	}
 
 	if !gs.AirdropInfo.AirdropStartTimestamp.Before(gs.AirdropInfo.AirdropEndTimestamp) {
-		return fmt.Errorf("airdrop start date must be before airdrop end date")
+		return sdkerrors.Wrap(ErrTimeConditionNotMet, fmt.Sprintf("airdrop start date must be before airdrop end date"))
 	}
 
 	if _, err := sdk.AccAddressFromBech32(gs.AirdropInfo.ControllerAddress); err != nil {
@@ -70,4 +79,17 @@ func (gs GenesisState) Validate() error {
 	}
 
 	return nil
+}
+
+// EmptyQuestState returns an empty quest state
+// the state must start from NotStarted
+// archivedAt & claimedAt must be zero
+// claimedAmount must be zero
+func EmptyQuestState() *QuestState {
+	return &QuestState{
+		State:         QuestStateType_QUEST_STATE_NOT_STARTED,
+		AchievedAt:    time.Time{},
+		ClaimedAt:     time.Time{},
+		ClaimedAmount: sdk.ZeroInt().String(),
+	}
 }
