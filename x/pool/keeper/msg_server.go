@@ -81,6 +81,12 @@ func (m msgServer) SetMultiplePoolWeight(goCtx context.Context, msg *types.MsgSe
 	}
 
 	for _, pool := range msg.NewPoolData {
+		ok := m.keeper.IsIncentivePool(ctx, pool.PoolId)
+		if !ok {
+			ctx.Logger().Info(fmt.Sprintf("pool id [%s] is not incentive pool", pool.PoolId))
+			continue
+		}
+
 		if err := m.keeper.SetPoolWeight(ctx, pool.PoolId, pool.NewWeight); err != nil {
 			return nil, err
 		}
