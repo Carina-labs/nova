@@ -40,7 +40,7 @@ func (m msgServer) CreateCandidatePool(goCtx context.Context, msg *types.MsgCrea
 // This message only can be handled by operator.
 func (m msgServer) CreateIncentivePool(goCtx context.Context, msg *types.MsgCreateIncentivePool) (*types.MsgCreateIncentivePoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	ok := m.keeper.isValidOperator(ctx, msg.Operator)
+	ok := m.keeper.isValidOperator(ctx, msg.GetSigners()[0].String())
 	if !ok {
 		return nil, fmt.Errorf("invalid controller address: %s", msg.Operator)
 	}

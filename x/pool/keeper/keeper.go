@@ -18,6 +18,10 @@ type Keeper struct {
 
 // NewKeeper returns a new instance of pool keeper.
 func NewKeeper(cdc codec.BinaryCodec, storeKey sdk.StoreKey, paramSpace paramtypes.Subspace) Keeper {
+	if !paramSpace.HasKeyTable() {
+		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())
+	}
+
 	return Keeper{
 		cdc:        cdc,
 		storeKey:   storeKey,

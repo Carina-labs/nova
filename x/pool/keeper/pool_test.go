@@ -6,21 +6,23 @@ import (
 
 func (suite *KeeperTestSuite) TestCreateCandidatePool() {
 	tcs := []struct {
-		name string
-		pool []types.CandidatePool
+		name      string
+		preset    []types.CandidatePool
+		pool      types.CandidatePool
+		shouldErr bool
 	}{
 		{
-			name: "valid case 1",
-			pool: []types.CandidatePool{
-				{
-					PoolId:              "1",
-					PoolContractAddress: "12345",
-				},
+			name:   "valid case 1",
+			preset: []types.CandidatePool{},
+			pool: types.CandidatePool{
+				PoolId:              "1",
+				PoolContractAddress: "12345",
 			},
+			shouldErr: false,
 		},
 		{
 			name: "valid case 1",
-			pool: []types.CandidatePool{
+			preset: []types.CandidatePool{
 				{
 					PoolId:              "1",
 					PoolContractAddress: "12345",
@@ -29,11 +31,30 @@ func (suite *KeeperTestSuite) TestCreateCandidatePool() {
 					PoolId:              "2",
 					PoolContractAddress: "abcde",
 				},
+			},
+			pool: types.CandidatePool{
+				PoolId:              "3",
+				PoolContractAddress: "zxcv12",
+			},
+			shouldErr: false,
+		},
+		{
+			name: "error case : duplicated pool id",
+			preset: []types.CandidatePool{
 				{
-					PoolId:              "3",
-					PoolContractAddress: "zxcv12",
+					PoolId:              "1",
+					PoolContractAddress: "12345",
+				},
+				{
+					PoolId:              "2",
+					PoolContractAddress: "abcde",
 				},
 			},
+			pool: types.CandidatePool{
+				PoolId:              "1",
+				PoolContractAddress: "abcde",
+			},
+			shouldErr: true,
 		},
 	}
 
@@ -41,23 +62,72 @@ func (suite *KeeperTestSuite) TestCreateCandidatePool() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			for _, p := range tc.pool {
+			// setup
+			for _, p := range tc.preset {
 				err := keeper.CreateCandidatePool(suite.Ctx, &p)
 				suite.NoError(err)
 			}
 
-			keeper.IterateCandidatePools(suite.Ctx, func(i int64, pool *types.CandidatePool) bool {
-				suite.Equal(tc.pool[i].PoolId, pool.PoolId)
-				suite.Equal(tc.pool[i].PoolContractAddress, pool.PoolContractAddress)
-				return false
-			})
+			err := keeper.CreateCandidatePool(suite.Ctx, &tc.pool)
+			if tc.shouldErr {
+				suite.Error(err)
+			} else {
+				suite.NoError(err)
+				candidatePool, err := keeper.FindCandidatePoolById(suite.Ctx, tc.pool.PoolId)
+				suite.NoError(err)
+				suite.Equal(tc.pool.PoolId, candidatePool.PoolId)
+				suite.Equal(tc.pool.PoolContractAddress, candidatePool.PoolContractAddress)
+			}
 
 			keeper.ClearCandidatePools(suite.Ctx)
 		})
 	}
 }
 
-// TODO : implements tc for msg_server, testing SetPoolWeight is called with valid operator.
+func (suite *KeeperTestSuite) TestCreateIncentivePool() {
+	tcs := []struct {
+		name      string
+		preset    []types.IncentivePool
+		pool      types.IncentivePool
+		shouldErr bool
+	}{
+		{
+			name:   "valid case",
+			preset: []types.IncentivePool{},
+			pool: types.IncentivePool{
+				PoolId:              "pool-1",
+				PoolContractAddress: "12345",
+				Weight:              0,
+			},
+			shouldErr: false,
+		},
+	}
+	keeper := suite.App.PoolKeeper
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			// setup
+			for i := range tc.preset {
+				err := keeper.CreateIncentivePool(suite.Ctx, &tc.preset[i])
+				suite.NoError(err)
+			}
+
+			err := keeper.CreateIncentivePool(suite.Ctx, &tc.pool)
+			if tc.shouldErr {
+				suite.Error(err)
+			} else {
+				suite.NoError(err)
+
+				incentivePool, err := keeper.FindIncentivePoolById(suite.Ctx, tc.pool.PoolId)
+				suite.NoError(err)
+				suite.Equal(tc.pool.PoolId, incentivePool.PoolId)
+				suite.Equal(tc.pool.PoolContractAddress, incentivePool.PoolContractAddress)
+				suite.Equal(tc.pool.Weight, incentivePool.Weight)
+			}
+		})
+	}
+}
+
 func (suite *KeeperTestSuite) TestSetPoolWeight() {
 	keeper := suite.App.PoolKeeper
 
