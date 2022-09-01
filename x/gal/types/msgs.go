@@ -226,7 +226,7 @@ func (msg MsgClaimSnAsset) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{claimer}
 }
 
-func NewMsgPendingWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId, chanId string, blockTime time.Time) *MsgIcaWithdraw {
+func NewIcaWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId, chanId string, blockTime time.Time) *MsgIcaWithdraw {
 	return &MsgIcaWithdraw{
 		ZoneId:               zoneId,
 		ControllerAddress:    controllerAddr.String(),
