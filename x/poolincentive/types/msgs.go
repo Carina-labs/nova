@@ -14,10 +14,11 @@ var _ sdk.Msg = &MsgSetPoolWeight{}
 var _ sdk.Msg = &MsgCreateIncentivePool{}
 var _ sdk.Msg = &MsgSetMultiplePoolWeight{}
 
-func NewMsgCreateCandidatePool(poolId string, poolContractAddress string) *MsgCreateCandidatePool {
+func NewMsgCreateCandidatePool(poolId string, poolContractAddress string, creator sdk.AccAddress) *MsgCreateCandidatePool {
 	return &MsgCreateCandidatePool{
 		PoolId:              poolId,
 		PoolContractAddress: poolContractAddress,
+		Creator:             creator.String(),
 	}
 }
 
@@ -42,11 +43,11 @@ func (m MsgCreateCandidatePool) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{creator}
 }
 
-func NewMsgSetPoolWeight(poolId string, newWeight uint64, operator string) *MsgSetPoolWeight {
+func NewMsgSetPoolWeight(poolId string, newWeight uint64, operator sdk.AccAddress) *MsgSetPoolWeight {
 	return &MsgSetPoolWeight{
 		PoolId:    poolId,
 		NewWeight: newWeight,
-		Operator:  operator,
+		Operator:  operator.String(),
 	}
 }
 
@@ -75,11 +76,11 @@ func (m MsgSetPoolWeight) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{controller}
 }
 
-func NewMsgCreateIncentivePool(poolId string, poolContractAddress string, operator string) *MsgCreateIncentivePool {
+func NewMsgCreateIncentivePool(poolId string, poolContractAddress string, operator sdk.AccAddress) *MsgCreateIncentivePool {
 	return &MsgCreateIncentivePool{
 		PoolId:              poolId,
 		PoolContractAddress: poolContractAddress,
-		Operator:            operator,
+		Operator:            operator.String(),
 	}
 }
 
@@ -108,10 +109,10 @@ func (m MsgCreateIncentivePool) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{controller}
 }
 
-func NewMsgSetMultipleWeight(newPoolData []NewPoolWeight, operator string) *MsgSetMultiplePoolWeight {
+func NewMsgSetMultipleWeight(newPoolData []NewPoolWeight, operator sdk.AccAddress) *MsgSetMultiplePoolWeight {
 	return &MsgSetMultiplePoolWeight{
 		NewPoolData: newPoolData,
-		Operator:    operator,
+		Operator:    operator.String(),
 	}
 }
 
