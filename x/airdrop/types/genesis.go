@@ -56,7 +56,7 @@ func (gs GenesisState) Validate() error {
 		}
 
 		if tokenAlloc.GT(maxTokenAlloc) {
-			return sdkerrors.Wrap(ErrTokenAllocCannotExceedMaxCap, fmt.Sprintf("airdrop token allocation on each user must be less than or equal to maxTokenAllocPerUser"))
+			return sdkerrors.Wrap(ErrTokenAllocCannotExceedMaxCap, "airdrop token allocation on each user must be less than or equal to maxTokenAllocPerUser")
 		}
 
 		// check recipient address is valid
@@ -67,11 +67,11 @@ func (gs GenesisState) Validate() error {
 	}
 
 	if !gs.AirdropInfo.SnapshotTimestamp.Before(gs.AirdropInfo.AirdropStartTimestamp) {
-		return sdkerrors.Wrap(ErrTimeConditionNotMet, fmt.Sprintf("snpashot date must be before airdrop start date"))
+		return sdkerrors.Wrap(ErrTimeConditionNotMet, "snapshot date must be before airdrop start date")
 	}
 
 	if !gs.AirdropInfo.AirdropStartTimestamp.Before(gs.AirdropInfo.AirdropEndTimestamp) {
-		return sdkerrors.Wrap(ErrTimeConditionNotMet, fmt.Sprintf("airdrop start date must be before airdrop end date"))
+		return sdkerrors.Wrap(ErrTimeConditionNotMet, "airdrop start date must be before airdrop end date")
 	}
 
 	if _, err := sdk.AccAddressFromBech32(gs.AirdropInfo.ControllerAddress); err != nil {
