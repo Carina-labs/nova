@@ -30,7 +30,7 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 	}
 
 	if !m.keeper.ValidClaimableDate(ctx) {
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrNotSupported, "this is not claimable date")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrNotSupported, "this is not claimable date")
 	}
 
 	if !m.keeper.IsEligible(ctx, userAddr) {

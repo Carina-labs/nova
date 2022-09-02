@@ -41,13 +41,13 @@ func (q Querier) TotalAssetForAirdrop(goCtx context.Context, request *types.Quer
 	state, err := q.keeper.GetAirdropState(ctx, userAddr)
 	if err != nil {
 		q.keeper.Logger(ctx).Error("cannot get airdrop state, this error must never happen", "err", err)
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "err", err)
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "err: %v", err)
 	}
 
 	amt, ok := sdk.NewIntFromString(state.TotalAmount)
 	if !ok {
 		q.keeper.Logger(ctx).Error("cannot parse total amount, this error must never happen", "err", err)
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "err", err)
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "err: %v", err)
 	}
 	asset := sdk.NewCoin(info.AirdropDenom, amt)
 
@@ -68,7 +68,7 @@ func (q Querier) QuestState(goCtx context.Context, request *types.QueryQuestStat
 
 	state, err := q.keeper.GetAirdropState(ctx, userAddr)
 	if err != nil {
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "err", err)
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "err: %v", err)
 	}
 
 	return &types.QueryQuestStateResponse{QuestStates: state.QuestStates}, nil
