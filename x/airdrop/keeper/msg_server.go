@@ -37,7 +37,7 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 		return nil, types.ErrUserNotEligible
 	}
 
-	userState, err := m.keeper.GetAirdropState(ctx, userAddr)
+	userState, err := m.keeper.GetUserState(ctx, userAddr)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 
 	quest.State = types.QuestStateType_QUEST_STATE_CLAIMED
 	quest.ClaimedAt = ctx.BlockTime()
-	if err = m.keeper.SetAirdropState(ctx, userAddr, userState); err != nil {
+	if err = m.keeper.SetUserState(ctx, userAddr, userState); err != nil {
 		m.keeper.Logger(ctx).Error("failed to mark user claimed airdrop", "user", userAddr, "quest", request.QuestType)
 		return nil, err
 	}
@@ -147,9 +147,7 @@ func (m msgServer) MarkSocialQuestPerformed(goCtx context.Context, request *type
 		}
 	}
 
-	return &types.MsgMarkSocialQuestPerformedResponse{
-		Succeeded: true, // TODO: delete this field
-	}, nil
+	return &types.MsgMarkSocialQuestPerformedResponse{}, nil
 }
 
 func (m msgServer) MarkUserProvidedLiquidity(goCtx context.Context, request *types.MsgMarkUserProvidedLiquidityRequest) (*types.MsgMarkUserProvidedLiquidityResponse, error) {
@@ -178,7 +176,5 @@ func (m msgServer) MarkUserProvidedLiquidity(goCtx context.Context, request *typ
 		}
 	}
 
-	return &types.MsgMarkUserProvidedLiquidityResponse{
-		Succeeded: true, // TODO: delete this field
-	}, nil
+	return &types.MsgMarkUserProvidedLiquidityResponse{}, nil
 }

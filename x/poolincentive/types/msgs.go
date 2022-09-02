@@ -14,7 +14,6 @@ var _ sdk.Msg = &MsgSetPoolWeight{}
 var _ sdk.Msg = &MsgCreateIncentivePool{}
 var _ sdk.Msg = &MsgSetMultiplePoolWeight{}
 
-
 func NewMsgCreateCandidatePool(poolId string, poolContractAddress string, creator sdk.AccAddress) *MsgCreateCandidatePool {
 	return &MsgCreateCandidatePool{
 		PoolId:              poolId,

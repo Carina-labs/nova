@@ -25,7 +25,7 @@ type QueryClient interface {
 	// get airdrop info
 	AirdropInfo(ctx context.Context, in *QueryAirdropInfoRequest, opts ...grpc.CallOption) (*QueryAirdropInfoResponse, error)
 	// get total assets of the airdrop for a given address
-	TotalAssetForAirdrop(ctx context.Context, in *QueryTotalAssetForAirdropRequest, opts ...grpc.CallOption) (*QueryTotalAssetForAirdropResponse, error)
+	TotalAllocatedAirdropToken(ctx context.Context, in *QueryTotalAllocatedAirdropTokenRequest, opts ...grpc.CallOption) (*QueryTotalAllocatedAirdropTokenResponse, error)
 	// query for state of quests
 	QuestState(ctx context.Context, in *QueryQuestStateRequest, opts ...grpc.CallOption) (*QueryQuestStateResponse, error)
 }
@@ -47,9 +47,9 @@ func (c *queryClient) AirdropInfo(ctx context.Context, in *QueryAirdropInfoReque
 	return out, nil
 }
 
-func (c *queryClient) TotalAssetForAirdrop(ctx context.Context, in *QueryTotalAssetForAirdropRequest, opts ...grpc.CallOption) (*QueryTotalAssetForAirdropResponse, error) {
-	out := new(QueryTotalAssetForAirdropResponse)
-	err := c.cc.Invoke(ctx, "/nova.airdrop.v1.Query/TotalAssetForAirdrop", in, out, opts...)
+func (c *queryClient) TotalAllocatedAirdropToken(ctx context.Context, in *QueryTotalAllocatedAirdropTokenRequest, opts ...grpc.CallOption) (*QueryTotalAllocatedAirdropTokenResponse, error) {
+	out := new(QueryTotalAllocatedAirdropTokenResponse)
+	err := c.cc.Invoke(ctx, "/nova.airdrop.v1.Query/TotalAllocatedAirdropToken", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ type QueryServer interface {
 	// get airdrop info
 	AirdropInfo(context.Context, *QueryAirdropInfoRequest) (*QueryAirdropInfoResponse, error)
 	// get total assets of the airdrop for a given address
-	TotalAssetForAirdrop(context.Context, *QueryTotalAssetForAirdropRequest) (*QueryTotalAssetForAirdropResponse, error)
+	TotalAllocatedAirdropToken(context.Context, *QueryTotalAllocatedAirdropTokenRequest) (*QueryTotalAllocatedAirdropTokenResponse, error)
 	// query for state of quests
 	QuestState(context.Context, *QueryQuestStateRequest) (*QueryQuestStateResponse, error)
 	mustEmbedUnimplementedQueryServer()
@@ -85,8 +85,8 @@ type UnimplementedQueryServer struct {
 func (UnimplementedQueryServer) AirdropInfo(context.Context, *QueryAirdropInfoRequest) (*QueryAirdropInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AirdropInfo not implemented")
 }
-func (UnimplementedQueryServer) TotalAssetForAirdrop(context.Context, *QueryTotalAssetForAirdropRequest) (*QueryTotalAssetForAirdropResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TotalAssetForAirdrop not implemented")
+func (UnimplementedQueryServer) TotalAllocatedAirdropToken(context.Context, *QueryTotalAllocatedAirdropTokenRequest) (*QueryTotalAllocatedAirdropTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TotalAllocatedAirdropToken not implemented")
 }
 func (UnimplementedQueryServer) QuestState(context.Context, *QueryQuestStateRequest) (*QueryQuestStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QuestState not implemented")
@@ -122,20 +122,20 @@ func _Query_AirdropInfo_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_TotalAssetForAirdrop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryTotalAssetForAirdropRequest)
+func _Query_TotalAllocatedAirdropToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryTotalAllocatedAirdropTokenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).TotalAssetForAirdrop(ctx, in)
+		return srv.(QueryServer).TotalAllocatedAirdropToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.airdrop.v1.Query/TotalAssetForAirdrop",
+		FullMethod: "/nova.airdrop.v1.Query/TotalAllocatedAirdropToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).TotalAssetForAirdrop(ctx, req.(*QueryTotalAssetForAirdropRequest))
+		return srv.(QueryServer).TotalAllocatedAirdropToken(ctx, req.(*QueryTotalAllocatedAirdropTokenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -170,8 +170,8 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Query_AirdropInfo_Handler,
 		},
 		{
-			MethodName: "TotalAssetForAirdrop",
-			Handler:    _Query_TotalAssetForAirdrop_Handler,
+			MethodName: "TotalAllocatedAirdropToken",
+			Handler:    _Query_TotalAllocatedAirdropToken_Handler,
 		},
 		{
 			MethodName: "QuestState",

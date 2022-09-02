@@ -14,7 +14,7 @@ func (k Keeper) PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress) {
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	userKey := types.GetKeyAirdropState(userAddr.String())
+	userKey := types.GetKeyUserState(userAddr.String())
 
 	// check if user is eligible
 	if !k.IsEligible(ctx, userAddr) {
@@ -22,7 +22,7 @@ func (k Keeper) PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress) {
 	}
 
 	bz := store.Get(userKey)
-	var userState types.AirdropState
+	var userState types.UserState
 	k.cdc.MustUnmarshal(bz, &userState)
 
 	// mark vote on proposal quest are performed
@@ -43,7 +43,7 @@ func (k Keeper) PostProposalVote(ctx sdk.Context, proposalID uint64, voterAddr s
 	}
 
 	store := ctx.KVStore(k.storeKey)
-	userKey := types.GetKeyAirdropState(voterAddr.String())
+	userKey := types.GetKeyUserState(voterAddr.String())
 
 	// check if user is eligible
 	if !k.IsEligible(ctx, voterAddr) {
@@ -51,7 +51,7 @@ func (k Keeper) PostProposalVote(ctx sdk.Context, proposalID uint64, voterAddr s
 	}
 
 	bz := store.Get(userKey)
-	var userState types.AirdropState
+	var userState types.UserState
 	k.cdc.MustUnmarshal(bz, &userState)
 
 	// mark vote on proposal quest are performed
@@ -69,7 +69,7 @@ func (k Keeper) PostProposalVote(ctx sdk.Context, proposalID uint64, voterAddr s
 // It fills user state with the achievement date
 func (k Keeper) MarkUserPerformedQuest(ctx sdk.Context, userAddr sdk.AccAddress, questType types.QuestType) error {
 	store := ctx.KVStore(k.storeKey)
-	userKey := types.GetKeyAirdropState(userAddr.String())
+	userKey := types.GetKeyUserState(userAddr.String())
 
 	// check if user is eligible
 	if !k.IsEligible(ctx, userAddr) {
@@ -77,7 +77,7 @@ func (k Keeper) MarkUserPerformedQuest(ctx sdk.Context, userAddr sdk.AccAddress,
 	}
 
 	bz := store.Get(userKey)
-	var userState types.AirdropState
+	var userState types.UserState
 	k.cdc.MustUnmarshal(bz, &userState)
 
 	// mark this quest as performed

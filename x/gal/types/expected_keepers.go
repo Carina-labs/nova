@@ -43,3 +43,8 @@ type AccountKeeper interface {
 	GetModuleAccount(ctx sdk.Context, moduleName string) types.ModuleAccountI
 	SetModuleAccount(ctx sdk.Context, macc types.ModuleAccountI)
 }
+
+// AirdropKeeper defines the contract needed to be fulfilled for airdrop dependencies.
+type AirdropKeeper interface {
+	PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress)
+}

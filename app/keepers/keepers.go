@@ -240,6 +240,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		ibcstakingKeeper,
 		transferKeeper,
 		oracleKeeper,
+		appKeepers.AirdropKeeper,
 	)
 	appKeepers.GalKeeper = &galKeeper
 

@@ -29,7 +29,6 @@ message MsgClaimAirdropRequest {
 }
 
 message MsgClaimAirdropResponse {
-  bool succeeded = 1;
 }
 
 // MsgMarkSocialQuestPerformedRequest the controller marks social quest performed for the users.
@@ -44,7 +43,6 @@ message MsgMarkSocialQuestPerformedRequest {
 }
 
 message MsgMarkSocialQuestPerformedResponse {
-  bool succeeded = 1;
 }
 
 message MsgMarkUserProvidedLiquidityRequest {
@@ -58,5 +56,4 @@ message MsgMarkUserProvidedLiquidityRequest {
 }
 
 message MsgMarkUserProvidedLiquidityResponse {
-  bool succeeded = 1;
 }

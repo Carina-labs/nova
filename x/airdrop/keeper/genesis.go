@@ -32,9 +32,9 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 
 	// iterate over all airdrop states
 	store := ctx.KVStore(k.storeKey)
-	iterator := sdk.KVStorePrefixIterator(store, types.KeyAirdropState)
+	iterator := sdk.KVStorePrefixIterator(store, types.KeyUserState)
 	for ; iterator.Valid(); iterator.Next() {
-		var userState types.AirdropState
+		var userState types.UserState
 		k.cdc.MustUnmarshal(iterator.Value(), &userState)
 		genState.States = append(genState.States, &userState)
 	}
@@ -44,9 +44,9 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 
 // SetInitialUserState is called from InitGenesis function.
 // it sets initial airdrop state for the user.
-func (k Keeper) SetInitialUserState(ctx sdk.Context, userAddr sdk.AccAddress, state *types.AirdropState) error {
+func (k Keeper) SetInitialUserState(ctx sdk.Context, userAddr sdk.AccAddress, state *types.UserState) error {
 	store := ctx.KVStore(k.storeKey)
-	userKey := types.GetKeyAirdropState(userAddr.String())
+	userKey := types.GetKeyUserState(userAddr.String())
 
 	if store.Has(userKey) {
 		ctx.Logger().Error("err: duplicated user was given when blockchain initializes genesis state", "user", userAddr)

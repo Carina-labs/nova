@@ -9,7 +9,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func NewGenesisState(state []*AirdropState, airdropInfo *AirdropInfo) *GenesisState {
+func NewGenesisState(state []*UserState, airdropInfo *AirdropInfo) *GenesisState {
 	return &GenesisState{
 		States:      state,
 		AirdropInfo: airdropInfo,

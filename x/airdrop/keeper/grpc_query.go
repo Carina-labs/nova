@@ -25,8 +25,7 @@ func (q Querier) AirdropInfo(goCtx context.Context, _ *types.QueryAirdropInfoReq
 	return &types.QueryAirdropInfoResponse{AirdropInfo: &info}, nil
 }
 
-// TODO: rename this method to TotalAllocatedAirropTokens
-func (q Querier) TotalAssetForAirdrop(goCtx context.Context, request *types.QueryTotalAssetForAirdropRequest) (*types.QueryTotalAssetForAirdropResponse, error) {
+func (q Querier) TotalAllocatedAirdropToken(goCtx context.Context, request *types.QueryTotalAllocatedAirdropTokenRequest) (*types.QueryTotalAllocatedAirdropTokenResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	userAddr, err := sdk.AccAddressFromBech32(request.Address)
 	info := q.keeper.GetAirdropInfo(ctx)
@@ -35,10 +34,10 @@ func (q Querier) TotalAssetForAirdrop(goCtx context.Context, request *types.Quer
 	}
 
 	if !q.keeper.IsEligible(ctx, userAddr) {
-		return &types.QueryTotalAssetForAirdropResponse{TotalAssets: sdk.NewCoin(info.AirdropDenom, sdk.ZeroInt())}, nil
+		return &types.QueryTotalAllocatedAirdropTokenResponse{TotalAssets: sdk.NewCoin(info.AirdropDenom, sdk.ZeroInt())}, nil
 	}
 
-	state, err := q.keeper.GetAirdropState(ctx, userAddr)
+	state, err := q.keeper.GetUserState(ctx, userAddr)
 	if err != nil {
 		q.keeper.Logger(ctx).Error("cannot get airdrop state, this error must never happen", "err", err)
 		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "err: %v", err)
@@ -51,7 +50,7 @@ func (q Querier) TotalAssetForAirdrop(goCtx context.Context, request *types.Quer
 	}
 	asset := sdk.NewCoin(info.AirdropDenom, amt)
 
-	return &types.QueryTotalAssetForAirdropResponse{TotalAssets: asset}, nil
+	return &types.QueryTotalAllocatedAirdropTokenResponse{TotalAssets: asset}, nil
 }
 
 // QuestState returns state of the quest for the given user
@@ -66,7 +65,7 @@ func (q Querier) QuestState(goCtx context.Context, request *types.QueryQuestStat
 		return nil, sdkerrors.ErrUnauthorized
 	}
 
-	state, err := q.keeper.GetAirdropState(ctx, userAddr)
+	state, err := q.keeper.GetUserState(ctx, userAddr)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "err: %v", err)
 	}
