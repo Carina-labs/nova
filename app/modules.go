@@ -10,8 +10,8 @@ import (
 	minttypes "github.com/Carina-labs/nova/x/mint/types"
 	"github.com/Carina-labs/nova/x/oracle"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
-	"github.com/Carina-labs/nova/x/poolincentive"
-	pooltypes "github.com/Carina-labs/nova/x/poolincentive/types"
+	"github.com/Carina-labs/nova/x/pool"
+	pooltypes "github.com/Carina-labs/nova/x/pool/types"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
@@ -88,7 +88,7 @@ func (app *NovaApp) GetModuleManager(
 		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.AccountKeeper, app.BankKeeper),
 		ica.NewAppModule(app.ICAControllerKeeper, app.ICAHostKeeper),
 		ibcstaking.NewAppModule(appCodec, *app.IbcstakingKeeper, app.AccountKeeper),
-		poolincentive.NewAppModule(appCodec, *app.PoolKeeper),
+		pool.NewAppModule(appCodec, *app.PoolKeeper),
 	}
 }
 

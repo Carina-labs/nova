@@ -6,6 +6,7 @@ import (
 	ibcstaking "github.com/Carina-labs/nova/x/ibcstaking"
 	"github.com/Carina-labs/nova/x/mint"
 	"github.com/Carina-labs/nova/x/oracle"
+	"github.com/Carina-labs/nova/x/pool"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	"github.com/cosmos/cosmos-sdk/types/module"
@@ -70,4 +71,5 @@ var AppModuleBasic = []module.AppModuleBasic{
 	gal.AppModuleBasic{},
 	oracle.AppModuleBasic{},
 	airdrop.AppModuleBasic{},
+	pool.AppModuleBasic{},
 }
