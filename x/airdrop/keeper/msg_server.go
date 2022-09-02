@@ -53,7 +53,7 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 	}
 
 	// check user already claimed airdrop tokens for given quest
-	if !userState.QuestStates[int32(request.QuestType)].ClaimedAt.IsZero() || quest.ClaimedAmount != "" {
+	if !quest.ClaimedAt.IsZero() || quest.ClaimedAmount != "" {
 		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "you already claimed for this airdrop quest: %v", types.QuestType_name[int32(request.QuestType)])
 	}
 
@@ -108,6 +108,13 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 	err = m.keeper.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, userAddr, sdk.NewCoins(airdropToken))
 	if err != nil {
 		m.keeper.Logger(ctx).Error("failed to send token", "module", types.ModuleName, "token", airdropToken)
+		return nil, err
+	}
+
+	quest.State = types.QuestStateType_QUEST_STATE_CLAIMED
+	quest.ClaimedAt = ctx.BlockTime()
+	if err = m.keeper.SetAirdropState(ctx, userAddr, userState); err != nil {
+		m.keeper.Logger(ctx).Error("failed to mark user claimed airdrop", "user", userAddr, "quest", request.QuestType)
 		return nil, err
 	}
 
