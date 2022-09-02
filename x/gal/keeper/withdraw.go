@@ -14,7 +14,7 @@ func (k Keeper) getWithdrawRecordStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawRecordInfo)
 }
 
-// SetWithdrawRecord writes withdraw record.
+// SetWithdrawRecord stores the withdraw record.
 func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record *types.WithdrawRecord) {
 	store := k.getWithdrawRecordStore(ctx)
 	bz := k.cdc.MustMarshal(record)
@@ -84,10 +84,12 @@ func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw *types.WithdrawRe
 	k.SetWithdrawRecord(ctx, withdraw)
 }
 
+// GetWithdrawVersionStore returns store for Withdraw-version.
 func (k Keeper) GetWithdrawVersionStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawVersion)
 }
 
+// SetWithdrawVersion set withdraw version for zone id.
 func (k Keeper) SetWithdrawVersion(ctx sdk.Context, zoneId string, version uint64) {
 	store := k.GetWithdrawVersionStore(ctx)
 	key := zoneId
@@ -96,6 +98,7 @@ func (k Keeper) SetWithdrawVersion(ctx sdk.Context, zoneId string, version uint6
 	store.Set([]byte(key), bz)
 }
 
+// GetWithdrawVersion returns current withdraw-version.
 func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) uint64 {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawVersion)
 	key := []byte(zoneId)
@@ -108,6 +111,7 @@ func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
 
+// SetWithdrawRecordVersion set new version to withdraw record corresponding to zoneId and state.
 func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state types.WithdrawStatusType, version uint64) {
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawRecord *types.WithdrawRecord) (stop bool) {
 		if withdrawRecord.ZoneId == zoneId {
@@ -123,6 +127,7 @@ func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state t
 	})
 }
 
+// GetWithdrawAmountForUser returns withdraw record corresponding to zone id and denom.
 func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
 	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
@@ -141,6 +146,7 @@ func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, 
 	return amount
 }
 
+// GetTotalWithdrawAmountForZoneId returns total withdraw amount corresponding to zone-id and denom.
 func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {
 	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
@@ -175,6 +181,11 @@ func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, from sdk.AccAddress, amt sdk.C
 	return balance.Amount.BigInt().Cmp(amt.Amount.BigInt()) >= 0
 }
 
+// ChangeWithdrawState changes each withdraw states.
+// WithdrawStatusRegistered : Withdrawal requests have been registered state of the user.
+// The property of this condition is not carried over from chain host.
+// WithdrawStatusTransferred : WithdrawStatusTransferred is a state in which assets are periodically transferred to the Supernova chain.
+// Assets in this state can be withdrawn by the user.
 func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState types.WithdrawStatusType) {
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
 		if withdrawInfo.ZoneId == zoneId {
@@ -189,7 +200,7 @@ func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, po
 	})
 }
 
-// IterateWithdrawRecords iterate
+// IterateWithdrawRecords iterate all withdraw records.
 func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool)) {
 	store := k.getWithdrawRecordStore(ctx)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
