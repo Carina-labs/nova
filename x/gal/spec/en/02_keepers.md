@@ -167,7 +167,7 @@ func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, 
 ---
 
 ## Claim
-`claim.go` is responsible for the logic of issuing the defosited asset as an snAsset.
+`claim.go` is responsible for the logic of issuing the deposited asset as an snAsset.
 
 
 ### ClaimShareToken
@@ -265,3 +265,113 @@ func (k Keeper) SetDelegateVersion(ctx sdk.Context, zoneId string, version uint6
 func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) uint64 {}
 ```
 `GetDelegateVersion` returns version for delegation corresponding to zone-id records.
+
+---
+## Withdraw
+`withdraw.go` is responsible for the logic of issuing the withdraw action.
+
+### SetWithdrawRecord
+```go
+func (k Keeper) SetWithdrawRecord(ctx sdk.Context, record *types.WithdrawRecord) {}
+```
+`SetWithdrawRecord` stores the withdraw record.
+
+
+### GetWithdrawRecord
+```go
+func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (result *types.WithdrawRecord, found bool) {}
+```
+`GetWithdrawRecord` returns withdraw record item by key.
+
+
+### DeleteWithdrawRecord
+```go
+func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw types.WithdrawRecord) {}
+```
+`DeleteWithdrawRecord` removes withdraw record.
+
+
+### GetWithdrawVersionStore
+```go
+func (k Keeper) GetWithdrawVersionStore(ctx sdk.Context) prefix.Store {}
+```
+`GetWithdrawVersionStore` returns store for Withdraw-version.
+
+
+### SetWithdrawVersion
+```go
+func (k Keeper) SetWithdrawVersion(ctx sdk.Context, zoneId string, version uint64) {}
+```
+`SetWithdrawVersion` set withdraw version for zone id.
+
+
+### GetWithdrawVersion
+```go
+func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) uint64 {}
+```
+`GetWithdrawVersion` returns current withdraw-version.
+
+
+### SetWithdrawRecordVersion
+```go
+func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state types.WithdrawStatusType, version uint64) bool {}
+```
+`SetWithdrawRecordVersion` set new version to withdraw record corresponding to zoneId and state.
+
+
+### SetWithdrawRecords
+```go
+func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Time) {}
+```
+`SetWithdrawRecords` write multiple withdraw record.
+
+
+### GetWithdrawAmt
+```go
+func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {}
+```
+`GetWithdrawAmt` is used for calculating the amount of coin user can withdraw after un-delegate. This function is executed 
+when ICA un-delegate call executed, and calculate using the balance of user's share coin.
+
+
+### GetWithdrawAmountForUser
+```go
+func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {}
+```
+`GetWithdrawAmountForUser` returns withdraw record corresponding to zone id and denom.
+
+
+### GetTotalWithdrawAmountForZoneId
+```go
+func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {}
+```
+`GetTotalWithdrawAmountForZoneId` returns total withdraw amount corresponding to zond id and denom.
+
+
+### ClaimWithdrawAsset
+```go
+func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, from sdk.AccAddress, withdrawer sdk.AccAddress, amt sdk.Coin) error {}
+```
+`ClaimWithdrawAsset` is used when user want to claim their asset which is after undeleagted.
+
+
+### IsAbleToWithdraw
+```go
+func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, from sdk.AccAddress, amt sdk.Coin) bool {}
+```
+`IsAbleToWithdraw` returns if user can withdraw their asset.
+It refers nova ICA account. If ICA account's balance is greater than user withdraw request amount, this function returns true.
+
+
+### IterateWithdrawRecords
+```go
+func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool)) {}
+```
+`IterateWithdrawRecords` iterate all withdraw records.
+
+
+### ChangeWithdrawState
+```go
+func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState types.WithdrawStatusType) {}
+```
+`ChangeWithdrawState` set new withdraw state from preState to postState.
