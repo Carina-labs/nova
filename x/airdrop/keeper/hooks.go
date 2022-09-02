@@ -15,12 +15,13 @@ func (k Keeper) Hooks() Hooks {
 	return Hooks{k}
 }
 
+// AfterProposalVote is executed from the gov module when a user votes on a proposal
 func (h Hooks) AfterProposalVote(ctx sdk.Context, proposalID uint64, voterAddr sdk.AccAddress) {
 	h.keeper.PostProposalVote(ctx, proposalID, voterAddr)
 }
 
 // ------------------------------
-// dismiss these following hooks
+// ignore these following hooks
 // ------------------------------
 
 func (h Hooks) AfterProposalSubmission(ctx sdk.Context, proposalID uint64) {

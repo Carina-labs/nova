@@ -25,8 +25,14 @@ func (k Keeper) GetAirdropInfo(ctx sdk.Context) types.AirdropInfo {
 	return info
 }
 
-// ValidAirdropDate returns true if we're in the airdrop period.
-func (k Keeper) ValidAirdropDate(ctx sdk.Context) bool {
+// ValidQuestDate returns true if the current time is valid for the user to perform quests
+func (k Keeper) ValidQuestDate(ctx sdk.Context) bool {
 	info := k.GetAirdropInfo(ctx)
-	return ctx.BlockTime().After(info.AirdropEndTimestamp)
+	return ctx.BlockTime().Before(info.AirdropEndTimestamp)
+}
+
+// ValidClaimableDate returns true if the current time is in airdrop period
+func (k Keeper) ValidClaimableDate(ctx sdk.Context) bool {
+	info := k.GetAirdropInfo(ctx)
+	return ctx.BlockTime().After(info.AirdropStartTimestamp) && ctx.BlockTime().Before(info.AirdropEndTimestamp)
 }

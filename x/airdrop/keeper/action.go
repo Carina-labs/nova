@@ -2,13 +2,14 @@ package keeper
 
 import (
 	"fmt"
+
 	"github.com/Carina-labs/nova/x/airdrop/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 // PostClaimedSnAsset is executed from the GAL module when a user claims an asset
 func (k Keeper) PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress) {
-	if !k.ValidAirdropDate(ctx) {
+	if !k.ValidQuestDate(ctx) {
 		return
 	}
 
@@ -37,7 +38,7 @@ func (k Keeper) PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress) {
 
 // PostProposalVote is executed from the gov module when a user votes on a proposal
 func (k Keeper) PostProposalVote(ctx sdk.Context, proposalID uint64, voterAddr sdk.AccAddress) {
-	if !k.ValidAirdropDate(ctx) {
+	if !k.ValidQuestDate(ctx) {
 		return
 	}
 
