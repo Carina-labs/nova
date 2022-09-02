@@ -242,3 +242,26 @@ func (k Keeper) ConvertWAssetToSnAssetDecimal(amount *big.Int, decimal int64, de
 func (k Keeper) ConvertSnAssetToWAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin {}
 ```
 `ConvertSnAssetToWAssetDecimal` changes snAsset to matching coin denim and decimal.
+
+---
+## Delegation
+
+### GetDelegateVersionStore
+```go
+func (k Keeper) GetDelegateVersionStore(ctx sdk.Context) prefix.Store {}
+```
+`GetDelegateVersionStore` returns store for delegation.
+
+
+### SetDelegateVersion
+```go
+func (k Keeper) SetDelegateVersion(ctx sdk.Context, zoneId string, version uint64) {}
+```
+`SetDelegateVersion` sets version for delegation corresponding to zone-id records.
+
+
+### GetDelegateVersion
+```go
+func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) uint64 {}
+```
+`GetDelegateVersion` returns version for delegation corresponding to zone-id records.
