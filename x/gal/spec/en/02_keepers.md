@@ -163,3 +163,82 @@ func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state ty
 func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool)) {}
 ```
 `IterateUndelegatedRecords` navigates de-delegation records.
+
+---
+
+## Claim
+`claim.go` is responsible for the logic of issuing the defosited asset as an snAsset.
+
+
+### ClaimShareToken
+```go
+func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone, asset sdk.Coin) (sdk.Coin, error) {}
+```
+`ClaimShareToken` is used when user want to claim their share token.
+It calculates user's share and the amount of claimable share token.
+
+
+### MintTo
+```go
+func (k Keeper) MintTo(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coin) error {}
+```
+`MintTo` mints sn-token(share token) regard with deposited token to claimer.
+
+
+### TotalClaimableAssets
+```go
+func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, claimer sdk.AccAddress) (*sdk.Coin, error) {}
+```
+`TotalClaimableAssets` returns the total amount of claimable snAsset.
+
+
+### CalculateDepositAlpha
+```go
+func (k Keeper) CalculateDepositAlpha(userDepositAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {}
+```
+`CalculateDepositAlpha` calculates alpha value.
+This function is used when calculating the amount of snAsset issued.
+
+DepositAlpha = userDepositAmount / totalStakedAmount
+
+Issued snAsset = Alpha * totalShareTokenSupply
+
+
+### CalculateWithdrawAlpha
+```go
+func (k Keeper) CalculateWithdrawAlpha(burnedStTokenAmt, totalShareTokenSupply, totalStakedAmount *big.Int) *big.Int {}
+```
+`CalculateWithdrawAlpha` calculates lambda value.
+This function is used when calculating the amount of native coin issued with burning snAsset.
+
+WithdrawAlpha = userWithdrawAmount / totalStakedAmount
+
+Issued coin = Lambda * totalShareTokenSupply
+
+
+### GetSnDenomForIBCDenom
+```go
+func (k Keeper) GetSnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string, error) {}
+```
+`GetSnDenomForIBCDenom` changes the `IBCDenom` to the appropriate `SnDenom`.
+
+
+### GetTotalStakedForLazyMinting
+```go
+func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPortId, transferChanId string) (sdk.Coin, error) {}
+```
+`GetTotalStakedForLazyMinting` returns the sum of coins delegated to the Host chain, which have not been issued snAsset.
+
+
+### ConvertWAssetToSnAssetDecimal
+```go
+func (k Keeper) ConvertWAssetToSnAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin {}
+```
+`ConvertWAssetToSnAssetDecimal` changes the common coin to snAsset's denom and decimal.
+
+
+### ConvertSnAssetToWAssetDecimal
+```go
+func (k Keeper) ConvertSnAssetToWAssetDecimal(amount *big.Int, decimal int64, denom string) sdk.Coin {}
+```
+`ConvertSnAssetToWAssetDecimal` changes snAsset to matching coin denim and decimal.
