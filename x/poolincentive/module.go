@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/Carina-labs/nova/x/poolincentive/client/cli"
 	"github.com/Carina-labs/nova/x/poolincentive/keeper"
 	"github.com/Carina-labs/nova/x/poolincentive/types"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -77,11 +78,13 @@ func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *r
 }
 
 // GetTxCmd returns no root tx command for the poolincentive module.
-func (AppModuleBasic) GetTxCmd() *cobra.Command { return nil }
+func (AppModuleBasic) GetTxCmd() *cobra.Command {
+	return cli.GetTxCmd()
+}
 
 // GetQueryCmd returns the root query command for the poolincentive module.
 func (AppModuleBasic) GetQueryCmd() *cobra.Command {
-	return nil
+	return cli.GetQueryCmd()
 }
 
 // AppModule implements an application module for the poolincentive module.
