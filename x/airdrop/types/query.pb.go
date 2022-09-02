@@ -110,23 +110,25 @@ func (m *QueryAirdropInfoResponse) GetAirdropInfo() *AirdropInfo {
 	return nil
 }
 
-type QueryTotalAssetForAirdropRequest struct {
+type QueryTotalAllocatedAirdropTokenRequest struct {
 	// address of the airdrop recipient.
 	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-func (m *QueryTotalAssetForAirdropRequest) Reset()         { *m = QueryTotalAssetForAirdropRequest{} }
-func (m *QueryTotalAssetForAirdropRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryTotalAssetForAirdropRequest) ProtoMessage()    {}
-func (*QueryTotalAssetForAirdropRequest) Descriptor() ([]byte, []int) {
+func (m *QueryTotalAllocatedAirdropTokenRequest) Reset() {
+	*m = QueryTotalAllocatedAirdropTokenRequest{}
+}
+func (m *QueryTotalAllocatedAirdropTokenRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryTotalAllocatedAirdropTokenRequest) ProtoMessage()    {}
+func (*QueryTotalAllocatedAirdropTokenRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5a3e67f3b02a569, []int{2}
 }
-func (m *QueryTotalAssetForAirdropRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryTotalAllocatedAirdropTokenRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryTotalAssetForAirdropRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryTotalAllocatedAirdropTokenRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryTotalAssetForAirdropRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryTotalAllocatedAirdropTokenRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -136,42 +138,44 @@ func (m *QueryTotalAssetForAirdropRequest) XXX_Marshal(b []byte, deterministic b
 		return b[:n], nil
 	}
 }
-func (m *QueryTotalAssetForAirdropRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryTotalAssetForAirdropRequest.Merge(m, src)
+func (m *QueryTotalAllocatedAirdropTokenRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryTotalAllocatedAirdropTokenRequest.Merge(m, src)
 }
-func (m *QueryTotalAssetForAirdropRequest) XXX_Size() int {
+func (m *QueryTotalAllocatedAirdropTokenRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryTotalAssetForAirdropRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryTotalAssetForAirdropRequest.DiscardUnknown(m)
+func (m *QueryTotalAllocatedAirdropTokenRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryTotalAllocatedAirdropTokenRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryTotalAssetForAirdropRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryTotalAllocatedAirdropTokenRequest proto.InternalMessageInfo
 
-func (m *QueryTotalAssetForAirdropRequest) GetAddress() string {
+func (m *QueryTotalAllocatedAirdropTokenRequest) GetAddress() string {
 	if m != nil {
 		return m.Address
 	}
 	return ""
 }
 
-type QueryTotalAssetForAirdropResponse struct {
+type QueryTotalAllocatedAirdropTokenResponse struct {
 	// total_asset_for_airdrop is the total asset for airdrop.
 	TotalAssets types.Coin `protobuf:"bytes,1,opt,name=total_assets,json=totalAssets,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"total_assets"`
 }
 
-func (m *QueryTotalAssetForAirdropResponse) Reset()         { *m = QueryTotalAssetForAirdropResponse{} }
-func (m *QueryTotalAssetForAirdropResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryTotalAssetForAirdropResponse) ProtoMessage()    {}
-func (*QueryTotalAssetForAirdropResponse) Descriptor() ([]byte, []int) {
+func (m *QueryTotalAllocatedAirdropTokenResponse) Reset() {
+	*m = QueryTotalAllocatedAirdropTokenResponse{}
+}
+func (m *QueryTotalAllocatedAirdropTokenResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryTotalAllocatedAirdropTokenResponse) ProtoMessage()    {}
+func (*QueryTotalAllocatedAirdropTokenResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b5a3e67f3b02a569, []int{3}
 }
-func (m *QueryTotalAssetForAirdropResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryTotalAllocatedAirdropTokenResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryTotalAssetForAirdropResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryTotalAllocatedAirdropTokenResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryTotalAssetForAirdropResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryTotalAllocatedAirdropTokenResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -181,19 +185,19 @@ func (m *QueryTotalAssetForAirdropResponse) XXX_Marshal(b []byte, deterministic 
 		return b[:n], nil
 	}
 }
-func (m *QueryTotalAssetForAirdropResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryTotalAssetForAirdropResponse.Merge(m, src)
+func (m *QueryTotalAllocatedAirdropTokenResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryTotalAllocatedAirdropTokenResponse.Merge(m, src)
 }
-func (m *QueryTotalAssetForAirdropResponse) XXX_Size() int {
+func (m *QueryTotalAllocatedAirdropTokenResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryTotalAssetForAirdropResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryTotalAssetForAirdropResponse.DiscardUnknown(m)
+func (m *QueryTotalAllocatedAirdropTokenResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryTotalAllocatedAirdropTokenResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryTotalAssetForAirdropResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryTotalAllocatedAirdropTokenResponse proto.InternalMessageInfo
 
-func (m *QueryTotalAssetForAirdropResponse) GetTotalAssets() types.Coin {
+func (m *QueryTotalAllocatedAirdropTokenResponse) GetTotalAssets() types.Coin {
 	if m != nil {
 		return m.TotalAssets
 	}
@@ -292,8 +296,8 @@ func (m *QueryQuestStateResponse) GetQuestStates() map[int32]*QuestState {
 func init() {
 	proto.RegisterType((*QueryAirdropInfoRequest)(nil), "nova.airdrop.v1.QueryAirdropInfoRequest")
 	proto.RegisterType((*QueryAirdropInfoResponse)(nil), "nova.airdrop.v1.QueryAirdropInfoResponse")
-	proto.RegisterType((*QueryTotalAssetForAirdropRequest)(nil), "nova.airdrop.v1.QueryTotalAssetForAirdropRequest")
-	proto.RegisterType((*QueryTotalAssetForAirdropResponse)(nil), "nova.airdrop.v1.QueryTotalAssetForAirdropResponse")
+	proto.RegisterType((*QueryTotalAllocatedAirdropTokenRequest)(nil), "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest")
+	proto.RegisterType((*QueryTotalAllocatedAirdropTokenResponse)(nil), "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse")
 	proto.RegisterType((*QueryQuestStateRequest)(nil), "nova.airdrop.v1.QueryQuestStateRequest")
 	proto.RegisterType((*QueryQuestStateResponse)(nil), "nova.airdrop.v1.QueryQuestStateResponse")
 	proto.RegisterMapType((map[int32]*QuestState)(nil), "nova.airdrop.v1.QueryQuestStateResponse.QuestStatesEntry")
@@ -302,43 +306,43 @@ func init() {
 func init() { proto.RegisterFile("nova/airdrop/v1/query.proto", fileDescriptor_b5a3e67f3b02a569) }
 
 var fileDescriptor_b5a3e67f3b02a569 = []byte{
-	// 568 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0xc1, 0x6b, 0x13, 0x4f,
-	0x14, 0xc7, 0xb3, 0x09, 0xf9, 0xfd, 0x70, 0x36, 0x60, 0x19, 0x8a, 0xa6, 0x69, 0xdc, 0xd6, 0x45,
-	0x70, 0x55, 0x3a, 0xd3, 0x8d, 0x17, 0x15, 0x41, 0xda, 0x52, 0xc1, 0x63, 0xa3, 0x27, 0x2b, 0x84,
-	0x49, 0x32, 0x59, 0x97, 0xa6, 0xf3, 0x92, 0x9d, 0x49, 0x30, 0x57, 0xc1, 0xbb, 0xd0, 0x3f, 0x42,
-	0xf0, 0xe2, 0xbf, 0xd1, 0x63, 0x41, 0x0f, 0x9e, 0x54, 0x12, 0xff, 0x10, 0x99, 0xd9, 0x49, 0x13,
-	0x92, 0xb5, 0xad, 0xa7, 0x9d, 0x7d, 0xef, 0x7d, 0xdf, 0x7c, 0xe6, 0xbd, 0x37, 0x83, 0xd6, 0x05,
-	0x0c, 0x19, 0x65, 0x71, 0xd2, 0x4e, 0xa0, 0x47, 0x87, 0x21, 0xed, 0x0f, 0x78, 0x32, 0x22, 0xbd,
-	0x04, 0x14, 0xe0, 0xeb, 0xda, 0x49, 0xac, 0x93, 0x0c, 0xc3, 0x8a, 0xd7, 0x02, 0x79, 0x0c, 0x92,
-	0x36, 0x99, 0xe4, 0x74, 0x18, 0x36, 0xb9, 0x62, 0x21, 0x6d, 0x41, 0x2c, 0x52, 0x41, 0xa5, 0x1a,
-	0x01, 0x44, 0x5d, 0x4e, 0x59, 0x2f, 0xa6, 0x4c, 0x08, 0x50, 0x4c, 0xc5, 0x20, 0xa4, 0xf5, 0xae,
-	0x46, 0x10, 0x81, 0x59, 0x52, 0xbd, 0xb2, 0xd6, 0x5b, 0x8b, 0x04, 0x11, 0x17, 0x5c, 0xc6, 0x56,
-	0xe4, 0xaf, 0xa1, 0x9b, 0x07, 0x1a, 0x69, 0x27, 0x0d, 0x78, 0x21, 0x3a, 0x50, 0xe7, 0xfd, 0x01,
-	0x97, 0xca, 0x3f, 0x44, 0xe5, 0x65, 0x97, 0xec, 0x81, 0x90, 0x1c, 0x3f, 0x43, 0x25, 0x9b, 0xb2,
-	0x11, 0x8b, 0x0e, 0x94, 0x9d, 0x4d, 0x27, 0x70, 0x6b, 0x55, 0xb2, 0x70, 0x22, 0x32, 0xaf, 0x75,
-	0xd9, 0xec, 0xc7, 0x7f, 0x8a, 0x36, 0x4d, 0xf2, 0x57, 0xa0, 0x58, 0x77, 0x47, 0x4a, 0xae, 0x9e,
-	0x43, 0x62, 0xa3, 0x2d, 0x00, 0x2e, 0xa3, 0xff, 0x59, 0xbb, 0x9d, 0x70, 0x29, 0x4d, 0xfe, 0x6b,
-	0xf5, 0xe9, 0xaf, 0x7f, 0xe2, 0xa0, 0xdb, 0x17, 0xc8, 0x2d, 0xa4, 0x40, 0x25, 0xa5, 0xfd, 0x0d,
-	0xa6, 0x03, 0xa4, 0x85, 0x5c, 0x23, 0x69, 0x95, 0x89, 0xae, 0x32, 0xb1, 0x55, 0x26, 0x7b, 0x10,
-	0x8b, 0xdd, 0xed, 0xd3, 0x1f, 0x1b, 0xb9, 0xcf, 0x3f, 0x37, 0x82, 0x28, 0x56, 0x6f, 0x07, 0x4d,
-	0xd2, 0x82, 0x63, 0x6a, 0x5b, 0x92, 0x7e, 0xb6, 0x64, 0xfb, 0x88, 0xaa, 0x51, 0x8f, 0x4b, 0x23,
-	0x90, 0x75, 0x57, 0x9d, 0x03, 0x48, 0xbf, 0x86, 0x6e, 0x18, 0xa8, 0x03, 0x4d, 0xff, 0x52, 0x31,
-	0xc5, 0x2f, 0x3f, 0xc9, 0x37, 0xc7, 0x36, 0x60, 0x5e, 0x64, 0xf9, 0xdf, 0xa0, 0x92, 0x91, 0x37,
-	0xa4, 0x36, 0x6b, 0x69, 0x21, 0x70, 0x6b, 0x8f, 0x97, 0x8a, 0xfc, 0x17, 0x3d, 0x99, 0x99, 0xe4,
-	0xbe, 0x50, 0xc9, 0xa8, 0xee, 0xf6, 0x67, 0x96, 0xca, 0x21, 0x5a, 0x59, 0x0c, 0xc0, 0x2b, 0xa8,
-	0x70, 0xc4, 0x47, 0x86, 0xb1, 0x58, 0xd7, 0x4b, 0x1c, 0xa2, 0xe2, 0x90, 0x75, 0x07, 0xbc, 0x9c,
-	0x37, 0xc5, 0x5b, 0xcf, 0xda, 0x7c, 0xba, 0x6f, 0x1a, 0xf9, 0x24, 0xff, 0xc8, 0xa9, 0x7d, 0x2a,
-	0xa0, 0xa2, 0xc1, 0xc2, 0x6d, 0xe4, 0xce, 0x0d, 0x01, 0x0e, 0xb2, 0xe9, 0x97, 0xc7, 0xaf, 0x72,
-	0xef, 0x0a, 0x91, 0xe9, 0x41, 0xfd, 0x1c, 0xfe, 0xe2, 0xa0, 0xd5, 0xac, 0x59, 0xc0, 0x61, 0x76,
-	0x96, 0x0b, 0xc6, 0xae, 0x52, 0xfb, 0x17, 0x89, 0x25, 0xd8, 0x7e, 0xff, 0xf5, 0xf7, 0x49, 0xfe,
-	0x3e, 0x0e, 0xe8, 0xe2, 0x75, 0x9b, 0x9b, 0xc0, 0x46, 0x07, 0x92, 0x86, 0x75, 0xe1, 0x0f, 0x0e,
-	0x42, 0xb3, 0xda, 0xe1, 0xbb, 0x97, 0x77, 0x35, 0xa5, 0x0b, 0xae, 0xda, 0x7e, 0xff, 0x8e, 0x61,
-	0xf2, 0x70, 0x95, 0x66, 0x3c, 0x42, 0xd3, 0xa9, 0xda, 0xdd, 0x3f, 0x1d, 0x7b, 0xce, 0xd9, 0xd8,
-	0x73, 0x7e, 0x8d, 0x3d, 0xe7, 0xe3, 0xc4, 0xcb, 0x9d, 0x4d, 0xbc, 0xdc, 0xf7, 0x89, 0x97, 0x7b,
-	0xfd, 0x60, 0xee, 0x16, 0xec, 0xb1, 0x24, 0x16, 0x6c, 0xab, 0xcb, 0x9a, 0x32, 0xcd, 0xf6, 0xee,
-	0x3c, 0x9f, 0xb9, 0x0e, 0xcd, 0xff, 0xcc, 0x73, 0xf2, 0xf0, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff,
-	0xa4, 0x34, 0xa6, 0x94, 0xf1, 0x04, 0x00, 0x00,
+	// 575 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xc1, 0x6f, 0xd3, 0x3e,
+	0x14, 0x6e, 0x56, 0xf5, 0xf7, 0x13, 0x4e, 0x25, 0x26, 0x0b, 0x41, 0x97, 0x95, 0x0c, 0x45, 0x88,
+	0x05, 0xd0, 0xec, 0xb5, 0x1c, 0x18, 0x5c, 0x50, 0x3b, 0xed, 0xc0, 0x71, 0x65, 0x27, 0x86, 0x54,
+	0xb9, 0x8d, 0x1b, 0xa2, 0x66, 0x7e, 0x6d, 0xec, 0x56, 0xf4, 0x8a, 0xc4, 0x1d, 0x89, 0x13, 0xff,
+	0x02, 0xff, 0x01, 0x47, 0x6e, 0x3b, 0x4e, 0x82, 0x03, 0x27, 0x40, 0x2d, 0x7f, 0x08, 0x8a, 0xe3,
+	0xd2, 0xaa, 0xed, 0xd4, 0x71, 0x8a, 0xe3, 0xf7, 0xbe, 0xef, 0x7d, 0xef, 0xf9, 0xb3, 0xd1, 0xb6,
+	0x80, 0x21, 0xa3, 0x2c, 0x4a, 0x82, 0x04, 0x7a, 0x74, 0x58, 0xa1, 0xfd, 0x01, 0x4f, 0x46, 0xa4,
+	0x97, 0x80, 0x02, 0x7c, 0x3d, 0x0d, 0x12, 0x13, 0x24, 0xc3, 0x8a, 0xe3, 0xb6, 0x41, 0x9e, 0x81,
+	0xa4, 0x2d, 0x26, 0x39, 0x1d, 0x56, 0x5a, 0x5c, 0xb1, 0x0a, 0x6d, 0x43, 0x24, 0x32, 0x80, 0x53,
+	0x0e, 0x01, 0xc2, 0x98, 0x53, 0xd6, 0x8b, 0x28, 0x13, 0x02, 0x14, 0x53, 0x11, 0x08, 0x69, 0xa2,
+	0x37, 0x42, 0x08, 0x41, 0x2f, 0x69, 0xba, 0x32, 0xbb, 0xb7, 0x17, 0x15, 0x84, 0x5c, 0x70, 0x19,
+	0x19, 0x90, 0xb7, 0x85, 0x6e, 0x1d, 0xa7, 0x92, 0x6a, 0x59, 0xc2, 0x73, 0xd1, 0x81, 0x06, 0xef,
+	0x0f, 0xb8, 0x54, 0xde, 0x29, 0x2a, 0x2d, 0x87, 0x64, 0x0f, 0x84, 0xe4, 0xf8, 0x19, 0x2a, 0x1a,
+	0xca, 0x66, 0x24, 0x3a, 0x50, 0xb2, 0xee, 0x58, 0xbe, 0x5d, 0x2d, 0x93, 0x85, 0x8e, 0xc8, 0x3c,
+	0xd6, 0x66, 0xb3, 0x1f, 0xaf, 0x8e, 0xee, 0x69, 0xf2, 0x13, 0x50, 0x2c, 0xae, 0xc5, 0x31, 0xb4,
+	0x99, 0xe2, 0x81, 0x49, 0x3f, 0x81, 0x2e, 0x17, 0x46, 0x06, 0x2e, 0xa1, 0xff, 0x59, 0x10, 0x24,
+	0x5c, 0x4a, 0x5d, 0xe5, 0x5a, 0x63, 0xfa, 0xeb, 0x7d, 0xb4, 0xd0, 0xee, 0x5a, 0x12, 0x23, 0x58,
+	0xa0, 0xa2, 0x4a, 0xb3, 0x9a, 0x4c, 0x4a, 0xae, 0xa4, 0x11, 0xbc, 0x45, 0xb2, 0x89, 0x93, 0x74,
+	0xe2, 0xc4, 0x4c, 0x9c, 0x1c, 0x42, 0x24, 0xea, 0xfb, 0xe7, 0x3f, 0x76, 0x72, 0x9f, 0x7e, 0xee,
+	0xf8, 0x61, 0xa4, 0x5e, 0x0f, 0x5a, 0xa4, 0x0d, 0x67, 0xd4, 0x1c, 0x4f, 0xf6, 0xd9, 0x93, 0x41,
+	0x97, 0xaa, 0x51, 0x8f, 0x4b, 0x0d, 0x90, 0x0d, 0x5b, 0x17, 0xa8, 0x69, 0x7e, 0xaf, 0x8a, 0x6e,
+	0x6a, 0x69, 0xc7, 0x69, 0x0f, 0x2f, 0x14, 0x53, 0x7c, 0x7d, 0x3f, 0xdf, 0x2c, 0x73, 0x18, 0xf3,
+	0x20, 0xa3, 0xff, 0x15, 0x2a, 0x6a, 0x78, 0x53, 0xa6, 0xdb, 0x29, 0x34, 0xef, 0xdb, 0xd5, 0x27,
+	0x4b, 0x03, 0xbf, 0x04, 0x4f, 0x66, 0x5b, 0xf2, 0x48, 0xa8, 0x64, 0xd4, 0xb0, 0xfb, 0xb3, 0x1d,
+	0xe7, 0x14, 0x6d, 0x2e, 0x26, 0xe0, 0x4d, 0x94, 0xef, 0xf2, 0x91, 0xd6, 0x58, 0x68, 0xa4, 0x4b,
+	0x5c, 0x41, 0x85, 0x21, 0x8b, 0x07, 0xbc, 0xb4, 0xa1, 0x87, 0xb7, 0xbd, 0xaa, 0xf8, 0xb4, 0x6e,
+	0x96, 0xf9, 0x74, 0xe3, 0xc0, 0xaa, 0x7e, 0xce, 0xa3, 0x82, 0x96, 0x85, 0x03, 0x64, 0xcf, 0x19,
+	0x02, 0xfb, 0xab, 0xd5, 0x2f, 0x5b, 0xd1, 0xb9, 0x7f, 0x85, 0xcc, 0xac, 0x51, 0x2f, 0x87, 0xbf,
+	0x58, 0xc8, 0xb9, 0xdc, 0x11, 0xf8, 0xf1, 0x6a, 0xae, 0xb5, 0x46, 0x74, 0x0e, 0xfe, 0x1d, 0x68,
+	0x34, 0xed, 0xbf, 0xfd, 0xfa, 0xfb, 0xc3, 0xc6, 0x03, 0xec, 0xd3, 0xc5, 0xcb, 0x38, 0xe7, 0xc9,
+	0x66, 0x07, 0x92, 0xa6, 0x09, 0xe1, 0x77, 0x16, 0x42, 0xb3, 0x69, 0xe2, 0xdd, 0xf5, 0xe7, 0x9c,
+	0x69, 0xf4, 0xaf, 0x6a, 0x08, 0xef, 0xae, 0xd6, 0xe4, 0xe2, 0x32, 0x5d, 0xf1, 0x44, 0x4d, 0x7d,
+	0x56, 0x3f, 0x3a, 0x1f, 0xbb, 0xd6, 0xc5, 0xd8, 0xb5, 0x7e, 0x8d, 0x5d, 0xeb, 0xfd, 0xc4, 0xcd,
+	0x5d, 0x4c, 0xdc, 0xdc, 0xf7, 0x89, 0x9b, 0x7b, 0xf9, 0x70, 0xee, 0x5e, 0x1c, 0xb2, 0x24, 0x12,
+	0x6c, 0x2f, 0x66, 0x2d, 0x99, 0xb1, 0xbd, 0xf9, 0xcb, 0xa7, 0x2f, 0x48, 0xeb, 0x3f, 0xfd, 0xd8,
+	0x3c, 0xfa, 0x13, 0x00, 0x00, 0xff, 0xff, 0xb3, 0xc7, 0x51, 0x28, 0x0f, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -356,7 +360,7 @@ type QueryClient interface {
 	// get airdrop info
 	AirdropInfo(ctx context.Context, in *QueryAirdropInfoRequest, opts ...grpc.CallOption) (*QueryAirdropInfoResponse, error)
 	// get total assets of the airdrop for a given address
-	TotalAssetForAirdrop(ctx context.Context, in *QueryTotalAssetForAirdropRequest, opts ...grpc.CallOption) (*QueryTotalAssetForAirdropResponse, error)
+	TotalAllocatedAirdropToken(ctx context.Context, in *QueryTotalAllocatedAirdropTokenRequest, opts ...grpc.CallOption) (*QueryTotalAllocatedAirdropTokenResponse, error)
 	// query for state of quests
 	QuestState(ctx context.Context, in *QueryQuestStateRequest, opts ...grpc.CallOption) (*QueryQuestStateResponse, error)
 }
@@ -378,9 +382,9 @@ func (c *queryClient) AirdropInfo(ctx context.Context, in *QueryAirdropInfoReque
 	return out, nil
 }
 
-func (c *queryClient) TotalAssetForAirdrop(ctx context.Context, in *QueryTotalAssetForAirdropRequest, opts ...grpc.CallOption) (*QueryTotalAssetForAirdropResponse, error) {
-	out := new(QueryTotalAssetForAirdropResponse)
-	err := c.cc.Invoke(ctx, "/nova.airdrop.v1.Query/TotalAssetForAirdrop", in, out, opts...)
+func (c *queryClient) TotalAllocatedAirdropToken(ctx context.Context, in *QueryTotalAllocatedAirdropTokenRequest, opts ...grpc.CallOption) (*QueryTotalAllocatedAirdropTokenResponse, error) {
+	out := new(QueryTotalAllocatedAirdropTokenResponse)
+	err := c.cc.Invoke(ctx, "/nova.airdrop.v1.Query/TotalAllocatedAirdropToken", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -401,7 +405,7 @@ type QueryServer interface {
 	// get airdrop info
 	AirdropInfo(context.Context, *QueryAirdropInfoRequest) (*QueryAirdropInfoResponse, error)
 	// get total assets of the airdrop for a given address
-	TotalAssetForAirdrop(context.Context, *QueryTotalAssetForAirdropRequest) (*QueryTotalAssetForAirdropResponse, error)
+	TotalAllocatedAirdropToken(context.Context, *QueryTotalAllocatedAirdropTokenRequest) (*QueryTotalAllocatedAirdropTokenResponse, error)
 	// query for state of quests
 	QuestState(context.Context, *QueryQuestStateRequest) (*QueryQuestStateResponse, error)
 }
@@ -413,8 +417,8 @@ type UnimplementedQueryServer struct {
 func (*UnimplementedQueryServer) AirdropInfo(ctx context.Context, req *QueryAirdropInfoRequest) (*QueryAirdropInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AirdropInfo not implemented")
 }
-func (*UnimplementedQueryServer) TotalAssetForAirdrop(ctx context.Context, req *QueryTotalAssetForAirdropRequest) (*QueryTotalAssetForAirdropResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TotalAssetForAirdrop not implemented")
+func (*UnimplementedQueryServer) TotalAllocatedAirdropToken(ctx context.Context, req *QueryTotalAllocatedAirdropTokenRequest) (*QueryTotalAllocatedAirdropTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TotalAllocatedAirdropToken not implemented")
 }
 func (*UnimplementedQueryServer) QuestState(ctx context.Context, req *QueryQuestStateRequest) (*QueryQuestStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QuestState not implemented")
@@ -442,20 +446,20 @@ func _Query_AirdropInfo_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_TotalAssetForAirdrop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryTotalAssetForAirdropRequest)
+func _Query_TotalAllocatedAirdropToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryTotalAllocatedAirdropTokenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).TotalAssetForAirdrop(ctx, in)
+		return srv.(QueryServer).TotalAllocatedAirdropToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.airdrop.v1.Query/TotalAssetForAirdrop",
+		FullMethod: "/nova.airdrop.v1.Query/TotalAllocatedAirdropToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).TotalAssetForAirdrop(ctx, req.(*QueryTotalAssetForAirdropRequest))
+		return srv.(QueryServer).TotalAllocatedAirdropToken(ctx, req.(*QueryTotalAllocatedAirdropTokenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -487,8 +491,8 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Query_AirdropInfo_Handler,
 		},
 		{
-			MethodName: "TotalAssetForAirdrop",
-			Handler:    _Query_TotalAssetForAirdrop_Handler,
+			MethodName: "TotalAllocatedAirdropToken",
+			Handler:    _Query_TotalAllocatedAirdropToken_Handler,
 		},
 		{
 			MethodName: "QuestState",
@@ -557,7 +561,7 @@ func (m *QueryAirdropInfoResponse) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryTotalAssetForAirdropRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryTotalAllocatedAirdropTokenRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -567,12 +571,12 @@ func (m *QueryTotalAssetForAirdropRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryTotalAssetForAirdropRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryTotalAllocatedAirdropTokenRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryTotalAssetForAirdropRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryTotalAllocatedAirdropTokenRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -587,7 +591,7 @@ func (m *QueryTotalAssetForAirdropRequest) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryTotalAssetForAirdropResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryTotalAllocatedAirdropTokenResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -597,12 +601,12 @@ func (m *QueryTotalAssetForAirdropResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryTotalAssetForAirdropResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryTotalAllocatedAirdropTokenResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryTotalAssetForAirdropResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryTotalAllocatedAirdropTokenResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -730,7 +734,7 @@ func (m *QueryAirdropInfoResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryTotalAssetForAirdropRequest) Size() (n int) {
+func (m *QueryTotalAllocatedAirdropTokenRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -743,7 +747,7 @@ func (m *QueryTotalAssetForAirdropRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryTotalAssetForAirdropResponse) Size() (n int) {
+func (m *QueryTotalAllocatedAirdropTokenResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -931,7 +935,7 @@ func (m *QueryAirdropInfoResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryTotalAssetForAirdropRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryTotalAllocatedAirdropTokenRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -954,10 +958,10 @@ func (m *QueryTotalAssetForAirdropRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryTotalAssetForAirdropRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryTotalAllocatedAirdropTokenRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryTotalAssetForAirdropRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryTotalAllocatedAirdropTokenRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1013,7 +1017,7 @@ func (m *QueryTotalAssetForAirdropRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryTotalAssetForAirdropResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryTotalAllocatedAirdropTokenResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1036,10 +1040,10 @@ func (m *QueryTotalAssetForAirdropResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryTotalAssetForAirdropResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryTotalAllocatedAirdropTokenResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryTotalAssetForAirdropResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryTotalAllocatedAirdropTokenResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

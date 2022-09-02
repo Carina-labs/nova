@@ -9,7 +9,7 @@ option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
 
 message GenesisState {
   // states for the airdrop, how much coins are allocated for each address is must be pre-defined.
-  repeated AirdropState states = 2;
+  repeated UserState states = 2;
 
   // information for the airdrop
   AirdropInfo airdrop_info = 3;
@@ -66,7 +66,7 @@ enum QuestStateType {
   QUEST_STATE_CLAIMED = 2;
 };
 
-message AirdropState {
+message UserState {
   // address of the airdrop recipient.
   string recipient = 1;
 

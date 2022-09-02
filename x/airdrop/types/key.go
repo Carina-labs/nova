@@ -8,5 +8,14 @@ const (
 )
 
 var (
-	KeyAirdropState = []byte{0x00}
+	KeyAirdropInfo = []byte{0x00}
+	KeyUserState   = []byte{0x01}
 )
+
+func GetKeyAirdropInfo() []byte {
+	return KeyAirdropInfo
+}
+
+func GetKeyUserState(user string) []byte {
+	return append(KeyUserState, []byte(user)...)
+}

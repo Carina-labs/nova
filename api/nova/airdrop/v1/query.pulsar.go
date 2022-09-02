@@ -808,25 +808,25 @@ func (x *fastReflection_QueryAirdropInfoResponse) ProtoMethods() *protoiface.Met
 }
 
 var (
-	md_QueryTotalAssetForAirdropRequest         protoreflect.MessageDescriptor
-	fd_QueryTotalAssetForAirdropRequest_address protoreflect.FieldDescriptor
+	md_QueryTotalAllocatedAirdropTokenRequest         protoreflect.MessageDescriptor
+	fd_QueryTotalAllocatedAirdropTokenRequest_address protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_airdrop_v1_query_proto_init()
-	md_QueryTotalAssetForAirdropRequest = File_nova_airdrop_v1_query_proto.Messages().ByName("QueryTotalAssetForAirdropRequest")
-	fd_QueryTotalAssetForAirdropRequest_address = md_QueryTotalAssetForAirdropRequest.Fields().ByName("address")
+	md_QueryTotalAllocatedAirdropTokenRequest = File_nova_airdrop_v1_query_proto.Messages().ByName("QueryTotalAllocatedAirdropTokenRequest")
+	fd_QueryTotalAllocatedAirdropTokenRequest_address = md_QueryTotalAllocatedAirdropTokenRequest.Fields().ByName("address")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryTotalAssetForAirdropRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryTotalAllocatedAirdropTokenRequest)(nil)
 
-type fastReflection_QueryTotalAssetForAirdropRequest QueryTotalAssetForAirdropRequest
+type fastReflection_QueryTotalAllocatedAirdropTokenRequest QueryTotalAllocatedAirdropTokenRequest
 
-func (x *QueryTotalAssetForAirdropRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryTotalAssetForAirdropRequest)(x)
+func (x *QueryTotalAllocatedAirdropTokenRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryTotalAllocatedAirdropTokenRequest)(x)
 }
 
-func (x *QueryTotalAssetForAirdropRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryTotalAllocatedAirdropTokenRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_airdrop_v1_query_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -838,43 +838,43 @@ func (x *QueryTotalAssetForAirdropRequest) slowProtoReflect() protoreflect.Messa
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryTotalAssetForAirdropRequest_messageType fastReflection_QueryTotalAssetForAirdropRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryTotalAssetForAirdropRequest_messageType{}
+var _fastReflection_QueryTotalAllocatedAirdropTokenRequest_messageType fastReflection_QueryTotalAllocatedAirdropTokenRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryTotalAllocatedAirdropTokenRequest_messageType{}
 
-type fastReflection_QueryTotalAssetForAirdropRequest_messageType struct{}
+type fastReflection_QueryTotalAllocatedAirdropTokenRequest_messageType struct{}
 
-func (x fastReflection_QueryTotalAssetForAirdropRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryTotalAssetForAirdropRequest)(nil)
+func (x fastReflection_QueryTotalAllocatedAirdropTokenRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryTotalAllocatedAirdropTokenRequest)(nil)
 }
-func (x fastReflection_QueryTotalAssetForAirdropRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryTotalAssetForAirdropRequest)
+func (x fastReflection_QueryTotalAllocatedAirdropTokenRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryTotalAllocatedAirdropTokenRequest)
 }
-func (x fastReflection_QueryTotalAssetForAirdropRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryTotalAssetForAirdropRequest
+func (x fastReflection_QueryTotalAllocatedAirdropTokenRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryTotalAllocatedAirdropTokenRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryTotalAssetForAirdropRequest
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryTotalAllocatedAirdropTokenRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryTotalAssetForAirdropRequest_messageType
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryTotalAllocatedAirdropTokenRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryTotalAssetForAirdropRequest)
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryTotalAllocatedAirdropTokenRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryTotalAssetForAirdropRequest)(x)
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryTotalAllocatedAirdropTokenRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -882,10 +882,10 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) Interface() protorefle
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.Address != "" {
 		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryTotalAssetForAirdropRequest_address, value) {
+		if !f(fd_QueryTotalAllocatedAirdropTokenRequest_address, value) {
 			return
 		}
 	}
@@ -902,15 +902,15 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) Range(f func(protorefl
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropRequest.address":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest.address":
 		return x.Address != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -920,15 +920,15 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) Has(fd protoreflect.Fi
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropRequest.address":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest.address":
 		x.Address = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -938,16 +938,16 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) Clear(fd protoreflect.
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropRequest.address":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -961,15 +961,15 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) Get(descriptor protore
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropRequest.address":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest.address":
 		x.Address = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -983,40 +983,40 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) Set(fd protoreflect.Fi
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropRequest.address":
-		panic(fmt.Errorf("field address of message nova.airdrop.v1.QueryTotalAssetForAirdropRequest is not mutable"))
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest.address":
+		panic(fmt.Errorf("field address of message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropRequest.address":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest.address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.airdrop.v1.QueryTotalAssetForAirdropRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1024,7 +1024,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) WhichOneof(d protorefl
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1035,7 +1035,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) GetUnknown() protorefl
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1047,7 +1047,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) SetUnknown(fields prot
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) IsValid() bool {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -1057,9 +1057,9 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryTotalAssetForAirdropRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryTotalAssetForAirdropRequest)
+		x := input.Message.Interface().(*QueryTotalAllocatedAirdropTokenRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1085,7 +1085,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) ProtoMethods() *protoi
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryTotalAssetForAirdropRequest)
+		x := input.Message.Interface().(*QueryTotalAllocatedAirdropTokenRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1122,7 +1122,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) ProtoMethods() *protoi
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryTotalAssetForAirdropRequest)
+		x := input.Message.Interface().(*QueryTotalAllocatedAirdropTokenRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1154,10 +1154,10 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) ProtoMethods() *protoi
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryTotalAssetForAirdropRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryTotalAllocatedAirdropTokenRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryTotalAssetForAirdropRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryTotalAllocatedAirdropTokenRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -1228,25 +1228,25 @@ func (x *fastReflection_QueryTotalAssetForAirdropRequest) ProtoMethods() *protoi
 }
 
 var (
-	md_QueryTotalAssetForAirdropResponse              protoreflect.MessageDescriptor
-	fd_QueryTotalAssetForAirdropResponse_total_assets protoreflect.FieldDescriptor
+	md_QueryTotalAllocatedAirdropTokenResponse              protoreflect.MessageDescriptor
+	fd_QueryTotalAllocatedAirdropTokenResponse_total_assets protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_airdrop_v1_query_proto_init()
-	md_QueryTotalAssetForAirdropResponse = File_nova_airdrop_v1_query_proto.Messages().ByName("QueryTotalAssetForAirdropResponse")
-	fd_QueryTotalAssetForAirdropResponse_total_assets = md_QueryTotalAssetForAirdropResponse.Fields().ByName("total_assets")
+	md_QueryTotalAllocatedAirdropTokenResponse = File_nova_airdrop_v1_query_proto.Messages().ByName("QueryTotalAllocatedAirdropTokenResponse")
+	fd_QueryTotalAllocatedAirdropTokenResponse_total_assets = md_QueryTotalAllocatedAirdropTokenResponse.Fields().ByName("total_assets")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryTotalAssetForAirdropResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryTotalAllocatedAirdropTokenResponse)(nil)
 
-type fastReflection_QueryTotalAssetForAirdropResponse QueryTotalAssetForAirdropResponse
+type fastReflection_QueryTotalAllocatedAirdropTokenResponse QueryTotalAllocatedAirdropTokenResponse
 
-func (x *QueryTotalAssetForAirdropResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryTotalAssetForAirdropResponse)(x)
+func (x *QueryTotalAllocatedAirdropTokenResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryTotalAllocatedAirdropTokenResponse)(x)
 }
 
-func (x *QueryTotalAssetForAirdropResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryTotalAllocatedAirdropTokenResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_airdrop_v1_query_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1258,43 +1258,43 @@ func (x *QueryTotalAssetForAirdropResponse) slowProtoReflect() protoreflect.Mess
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryTotalAssetForAirdropResponse_messageType fastReflection_QueryTotalAssetForAirdropResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryTotalAssetForAirdropResponse_messageType{}
+var _fastReflection_QueryTotalAllocatedAirdropTokenResponse_messageType fastReflection_QueryTotalAllocatedAirdropTokenResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryTotalAllocatedAirdropTokenResponse_messageType{}
 
-type fastReflection_QueryTotalAssetForAirdropResponse_messageType struct{}
+type fastReflection_QueryTotalAllocatedAirdropTokenResponse_messageType struct{}
 
-func (x fastReflection_QueryTotalAssetForAirdropResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryTotalAssetForAirdropResponse)(nil)
+func (x fastReflection_QueryTotalAllocatedAirdropTokenResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryTotalAllocatedAirdropTokenResponse)(nil)
 }
-func (x fastReflection_QueryTotalAssetForAirdropResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryTotalAssetForAirdropResponse)
+func (x fastReflection_QueryTotalAllocatedAirdropTokenResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryTotalAllocatedAirdropTokenResponse)
 }
-func (x fastReflection_QueryTotalAssetForAirdropResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryTotalAssetForAirdropResponse
+func (x fastReflection_QueryTotalAllocatedAirdropTokenResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryTotalAllocatedAirdropTokenResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryTotalAssetForAirdropResponse
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryTotalAllocatedAirdropTokenResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryTotalAssetForAirdropResponse_messageType
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryTotalAllocatedAirdropTokenResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryTotalAssetForAirdropResponse)
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryTotalAllocatedAirdropTokenResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryTotalAssetForAirdropResponse)(x)
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryTotalAllocatedAirdropTokenResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1302,10 +1302,10 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) Interface() protorefl
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.TotalAssets != nil {
 		value := protoreflect.ValueOfMessage(x.TotalAssets.ProtoReflect())
-		if !f(fd_QueryTotalAssetForAirdropResponse_total_assets, value) {
+		if !f(fd_QueryTotalAllocatedAirdropTokenResponse_total_assets, value) {
 			return
 		}
 	}
@@ -1322,15 +1322,15 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) Range(f func(protoref
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropResponse.total_assets":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse.total_assets":
 		return x.TotalAssets != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1340,15 +1340,15 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) Has(fd protoreflect.F
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropResponse.total_assets":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse.total_assets":
 		x.TotalAssets = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1358,16 +1358,16 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) Clear(fd protoreflect
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropResponse.total_assets":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse.total_assets":
 		value := x.TotalAssets
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1381,15 +1381,15 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) Get(descriptor protor
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropResponse.total_assets":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse.total_assets":
 		x.TotalAssets = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1403,44 +1403,44 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) Set(fd protoreflect.F
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropResponse.total_assets":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse.total_assets":
 		if x.TotalAssets == nil {
 			x.TotalAssets = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.TotalAssets.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.airdrop.v1.QueryTotalAssetForAirdropResponse.total_assets":
+	case "nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse.total_assets":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAssetForAirdropResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse"))
 		}
-		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAssetForAirdropResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.airdrop.v1.QueryTotalAssetForAirdropResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1448,7 +1448,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) WhichOneof(d protoref
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1459,7 +1459,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) GetUnknown() protoref
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1471,7 +1471,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) SetUnknown(fields pro
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) IsValid() bool {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -1481,9 +1481,9 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryTotalAssetForAirdropResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryTotalAllocatedAirdropTokenResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryTotalAssetForAirdropResponse)
+		x := input.Message.Interface().(*QueryTotalAllocatedAirdropTokenResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1509,7 +1509,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) ProtoMethods() *proto
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryTotalAssetForAirdropResponse)
+		x := input.Message.Interface().(*QueryTotalAllocatedAirdropTokenResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1553,7 +1553,7 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) ProtoMethods() *proto
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryTotalAssetForAirdropResponse)
+		x := input.Message.Interface().(*QueryTotalAllocatedAirdropTokenResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1585,10 +1585,10 @@ func (x *fastReflection_QueryTotalAssetForAirdropResponse) ProtoMethods() *proto
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryTotalAssetForAirdropResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryTotalAllocatedAirdropTokenResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryTotalAssetForAirdropResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryTotalAllocatedAirdropTokenResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -2824,7 +2824,7 @@ func (x *QueryAirdropInfoResponse) GetAirdropInfo() *AirdropInfo {
 	return nil
 }
 
-type QueryTotalAssetForAirdropRequest struct {
+type QueryTotalAllocatedAirdropTokenRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -2833,8 +2833,8 @@ type QueryTotalAssetForAirdropRequest struct {
 	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-func (x *QueryTotalAssetForAirdropRequest) Reset() {
-	*x = QueryTotalAssetForAirdropRequest{}
+func (x *QueryTotalAllocatedAirdropTokenRequest) Reset() {
+	*x = QueryTotalAllocatedAirdropTokenRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_airdrop_v1_query_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2842,25 +2842,25 @@ func (x *QueryTotalAssetForAirdropRequest) Reset() {
 	}
 }
 
-func (x *QueryTotalAssetForAirdropRequest) String() string {
+func (x *QueryTotalAllocatedAirdropTokenRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryTotalAssetForAirdropRequest) ProtoMessage() {}
+func (*QueryTotalAllocatedAirdropTokenRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryTotalAssetForAirdropRequest.ProtoReflect.Descriptor instead.
-func (*QueryTotalAssetForAirdropRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryTotalAllocatedAirdropTokenRequest.ProtoReflect.Descriptor instead.
+func (*QueryTotalAllocatedAirdropTokenRequest) Descriptor() ([]byte, []int) {
 	return file_nova_airdrop_v1_query_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *QueryTotalAssetForAirdropRequest) GetAddress() string {
+func (x *QueryTotalAllocatedAirdropTokenRequest) GetAddress() string {
 	if x != nil {
 		return x.Address
 	}
 	return ""
 }
 
-type QueryTotalAssetForAirdropResponse struct {
+type QueryTotalAllocatedAirdropTokenResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -2869,8 +2869,8 @@ type QueryTotalAssetForAirdropResponse struct {
 	TotalAssets *v1beta1.Coin `protobuf:"bytes,1,opt,name=total_assets,json=totalAssets,proto3" json:"total_assets,omitempty"`
 }
 
-func (x *QueryTotalAssetForAirdropResponse) Reset() {
-	*x = QueryTotalAssetForAirdropResponse{}
+func (x *QueryTotalAllocatedAirdropTokenResponse) Reset() {
+	*x = QueryTotalAllocatedAirdropTokenResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_airdrop_v1_query_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2878,18 +2878,18 @@ func (x *QueryTotalAssetForAirdropResponse) Reset() {
 	}
 }
 
-func (x *QueryTotalAssetForAirdropResponse) String() string {
+func (x *QueryTotalAllocatedAirdropTokenResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryTotalAssetForAirdropResponse) ProtoMessage() {}
+func (*QueryTotalAllocatedAirdropTokenResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryTotalAssetForAirdropResponse.ProtoReflect.Descriptor instead.
-func (*QueryTotalAssetForAirdropResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryTotalAllocatedAirdropTokenResponse.ProtoReflect.Descriptor instead.
+func (*QueryTotalAllocatedAirdropTokenResponse) Descriptor() ([]byte, []int) {
 	return file_nova_airdrop_v1_query_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *QueryTotalAssetForAirdropResponse) GetTotalAssets() *v1beta1.Coin {
+func (x *QueryTotalAllocatedAirdropTokenResponse) GetTotalAssets() *v1beta1.Coin {
 	if x != nil {
 		return x.TotalAssets
 	}
@@ -2987,76 +2987,78 @@ var file_nova_airdrop_v1_query_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x70, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c,
 	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31,
 	0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x0b, 0x61, 0x69,
-	0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x3c, 0x0a, 0x20, 0x51, 0x75, 0x65,
-	0x72, 0x79, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x73, 0x73, 0x65, 0x74, 0x46, 0x6f, 0x72, 0x41,
-	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a,
-	0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
-	0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x93, 0x01, 0x0a, 0x21, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x73, 0x73, 0x65, 0x74, 0x46, 0x6f, 0x72, 0x41, 0x69,
-	0x72, 0x64, 0x72, 0x6f, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x6e, 0x0a,
-	0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73,
-	0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30,
-	0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
-	0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73,
-	0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x73, 0x73, 0x65, 0x74, 0x73, 0x22, 0x32, 0x0a,
-	0x16, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65,
-	0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x22, 0xd4, 0x01, 0x0a, 0x17, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x65, 0x73, 0x74,
-	0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5c, 0x0a,
-	0x0c, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x39, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72,
-	0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x65, 0x73, 0x74,
-	0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x51, 0x75,
-	0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x0b,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x1a, 0x5b, 0x0a, 0x10, 0x51,
-	0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12,
-	0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x6b, 0x65,
-	0x79, 0x12, 0x31, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x1b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e,
-	0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05, 0x76,
-	0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x32, 0xa7, 0x03, 0x0a, 0x05, 0x51, 0x75, 0x65,
-	0x72, 0x79, 0x12, 0x64, 0x0a, 0x0b, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66,
-	0x6f, 0x12, 0x28, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
-	0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
-	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x6e, 0x6f,
-	0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0xaf, 0x01, 0x0a, 0x14, 0x54, 0x6f, 0x74,
-	0x61, 0x6c, 0x41, 0x73, 0x73, 0x65, 0x74, 0x46, 0x6f, 0x72, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f,
-	0x70, 0x12, 0x31, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
-	0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x73,
-	0x73, 0x65, 0x74, 0x46, 0x6f, 0x72, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x32, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64,
-	0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x54, 0x6f, 0x74, 0x61,
-	0x6c, 0x41, 0x73, 0x73, 0x65, 0x74, 0x46, 0x6f, 0x72, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x30, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2a,
-	0x12, 0x28, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2f,
-	0x76, 0x31, 0x2f, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74, 0x5f, 0x66,
-	0x6f, 0x72, 0x5f, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x12, 0x85, 0x01, 0x0a, 0x0a, 0x51,
-	0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
-	0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x28, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f,
-	0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53,
-	0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x24, 0x82, 0xd3,
-	0xe4, 0x93, 0x02, 0x1e, 0x12, 0x1c, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x69, 0x72, 0x64,
-	0x72, 0x6f, 0x70, 0x2f, 0x76, 0x31, 0x2f, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x73, 0x74, 0x61,
-	0x74, 0x65, 0x42, 0xba, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73,
-	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61,
-	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2f, 0x76, 0x31, 0x3b, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f,
-	0x70, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x41, 0x58, 0xaa, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61,
-	0x2e, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0f, 0x4e, 0x6f,
-	0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1b,
-	0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31, 0x5c,
-	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4e, 0x6f,
-	0x76, 0x61, 0x3a, 0x3a, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x3a, 0x3a, 0x56, 0x31, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x42, 0x0a, 0x26, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x6c, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x65, 0x64,
+	0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x99, 0x01,
+	0x0a, 0x27, 0x51, 0x75, 0x65, 0x72, 0x79, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x6c, 0x6c, 0x6f,
+	0x63, 0x61, 0x74, 0x65, 0x64, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x54, 0x6f, 0x6b, 0x65,
+	0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x6e, 0x0a, 0x0c, 0x74, 0x6f, 0x74,
+	0x61, 0x6c, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31,
+	0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x30, 0xc8, 0xde, 0x1f, 0x00,
+	0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63,
+	0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b,
+	0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x52, 0x0b, 0x74, 0x6f,
+	0x74, 0x61, 0x6c, 0x41, 0x73, 0x73, 0x65, 0x74, 0x73, 0x22, 0x32, 0x0a, 0x16, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0xd4, 0x01,
+	0x0a, 0x17, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5c, 0x0a, 0x0c, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x39, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76,
+	0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x0b, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x1a, 0x5b, 0x0a, 0x10, 0x51, 0x75, 0x65, 0x73, 0x74,
+	0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b,
+	0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x31, 0x0a,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51,
+	0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x3a, 0x02, 0x38, 0x01, 0x32, 0xb9, 0x03, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x64,
+	0x0a, 0x0b, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x28, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61,
+	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41,
+	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x12, 0xc1, 0x01, 0x0a, 0x1a, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x6c,
+	0x6c, 0x6f, 0x63, 0x61, 0x74, 0x65, 0x64, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x54, 0x6f,
+	0x6b, 0x65, 0x6e, 0x12, 0x37, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72,
+	0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x54, 0x6f, 0x74, 0x61, 0x6c,
+	0x41, 0x6c, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x65, 0x64, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
+	0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x38, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51,
+	0x75, 0x65, 0x72, 0x79, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x6c, 0x6c, 0x6f, 0x63, 0x61, 0x74,
+	0x65, 0x64, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x30, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2a, 0x12, 0x28,
+	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2f, 0x76, 0x31,
+	0x2f, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74, 0x5f, 0x66, 0x6f, 0x72,
+	0x5f, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x12, 0x85, 0x01, 0x0a, 0x0a, 0x51, 0x75, 0x65,
+	0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61,
+	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51,
+	0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x28, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e,
+	0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x65, 0x73, 0x74, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x24, 0x82, 0xd3, 0xe4, 0x93,
+	0x02, 0x1e, 0x12, 0x1c, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f,
+	0x70, 0x2f, 0x76, 0x31, 0x2f, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65,
+	0x42, 0xba, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69,
+	0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50,
+	0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e,
+	0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x69, 0x72,
+	0x64, 0x72, 0x6f, 0x70, 0x2f, 0x76, 0x31, 0x3b, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x76,
+	0x31, 0xa2, 0x02, 0x03, 0x4e, 0x41, 0x58, 0xaa, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x41,
+	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0f, 0x4e, 0x6f, 0x76, 0x61,
+	0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1b, 0x4e, 0x6f,
+	0x76, 0x61, 0x5c, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50,
+	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x4e, 0x6f, 0x76, 0x61,
+	0x3a, 0x3a, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3073,27 +3075,27 @@ func file_nova_airdrop_v1_query_proto_rawDescGZIP() []byte {
 
 var file_nova_airdrop_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_nova_airdrop_v1_query_proto_goTypes = []interface{}{
-	(*QueryAirdropInfoRequest)(nil),           // 0: nova.airdrop.v1.QueryAirdropInfoRequest
-	(*QueryAirdropInfoResponse)(nil),          // 1: nova.airdrop.v1.QueryAirdropInfoResponse
-	(*QueryTotalAssetForAirdropRequest)(nil),  // 2: nova.airdrop.v1.QueryTotalAssetForAirdropRequest
-	(*QueryTotalAssetForAirdropResponse)(nil), // 3: nova.airdrop.v1.QueryTotalAssetForAirdropResponse
-	(*QueryQuestStateRequest)(nil),            // 4: nova.airdrop.v1.QueryQuestStateRequest
-	(*QueryQuestStateResponse)(nil),           // 5: nova.airdrop.v1.QueryQuestStateResponse
-	nil,                                       // 6: nova.airdrop.v1.QueryQuestStateResponse.QuestStatesEntry
-	(*AirdropInfo)(nil),                       // 7: nova.airdrop.v1.AirdropInfo
-	(*v1beta1.Coin)(nil),                      // 8: cosmos.base.v1beta1.Coin
-	(*QuestState)(nil),                        // 9: nova.airdrop.v1.QuestState
+	(*QueryAirdropInfoRequest)(nil),                 // 0: nova.airdrop.v1.QueryAirdropInfoRequest
+	(*QueryAirdropInfoResponse)(nil),                // 1: nova.airdrop.v1.QueryAirdropInfoResponse
+	(*QueryTotalAllocatedAirdropTokenRequest)(nil),  // 2: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest
+	(*QueryTotalAllocatedAirdropTokenResponse)(nil), // 3: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse
+	(*QueryQuestStateRequest)(nil),                  // 4: nova.airdrop.v1.QueryQuestStateRequest
+	(*QueryQuestStateResponse)(nil),                 // 5: nova.airdrop.v1.QueryQuestStateResponse
+	nil,                                             // 6: nova.airdrop.v1.QueryQuestStateResponse.QuestStatesEntry
+	(*AirdropInfo)(nil),                             // 7: nova.airdrop.v1.AirdropInfo
+	(*v1beta1.Coin)(nil),                            // 8: cosmos.base.v1beta1.Coin
+	(*QuestState)(nil),                              // 9: nova.airdrop.v1.QuestState
 }
 var file_nova_airdrop_v1_query_proto_depIdxs = []int32{
 	7, // 0: nova.airdrop.v1.QueryAirdropInfoResponse.airdrop_info:type_name -> nova.airdrop.v1.AirdropInfo
-	8, // 1: nova.airdrop.v1.QueryTotalAssetForAirdropResponse.total_assets:type_name -> cosmos.base.v1beta1.Coin
+	8, // 1: nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse.total_assets:type_name -> cosmos.base.v1beta1.Coin
 	6, // 2: nova.airdrop.v1.QueryQuestStateResponse.quest_states:type_name -> nova.airdrop.v1.QueryQuestStateResponse.QuestStatesEntry
 	9, // 3: nova.airdrop.v1.QueryQuestStateResponse.QuestStatesEntry.value:type_name -> nova.airdrop.v1.QuestState
 	0, // 4: nova.airdrop.v1.Query.AirdropInfo:input_type -> nova.airdrop.v1.QueryAirdropInfoRequest
-	2, // 5: nova.airdrop.v1.Query.TotalAssetForAirdrop:input_type -> nova.airdrop.v1.QueryTotalAssetForAirdropRequest
+	2, // 5: nova.airdrop.v1.Query.TotalAllocatedAirdropToken:input_type -> nova.airdrop.v1.QueryTotalAllocatedAirdropTokenRequest
 	4, // 6: nova.airdrop.v1.Query.QuestState:input_type -> nova.airdrop.v1.QueryQuestStateRequest
 	1, // 7: nova.airdrop.v1.Query.AirdropInfo:output_type -> nova.airdrop.v1.QueryAirdropInfoResponse
-	3, // 8: nova.airdrop.v1.Query.TotalAssetForAirdrop:output_type -> nova.airdrop.v1.QueryTotalAssetForAirdropResponse
+	3, // 8: nova.airdrop.v1.Query.TotalAllocatedAirdropToken:output_type -> nova.airdrop.v1.QueryTotalAllocatedAirdropTokenResponse
 	5, // 9: nova.airdrop.v1.Query.QuestState:output_type -> nova.airdrop.v1.QueryQuestStateResponse
 	7, // [7:10] is the sub-list for method output_type
 	4, // [4:7] is the sub-list for method input_type
@@ -3134,7 +3136,7 @@ func file_nova_airdrop_v1_query_proto_init() {
 			}
 		}
 		file_nova_airdrop_v1_query_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryTotalAssetForAirdropRequest); i {
+			switch v := v.(*QueryTotalAllocatedAirdropTokenRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3146,7 +3148,7 @@ func file_nova_airdrop_v1_query_proto_init() {
 			}
 		}
 		file_nova_airdrop_v1_query_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryTotalAssetForAirdropResponse); i {
+			switch v := v.(*QueryTotalAllocatedAirdropTokenResponse); i {
 			case 0:
 				return &v.state
 			case 1:

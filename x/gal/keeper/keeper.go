@@ -22,6 +22,7 @@ type Keeper struct {
 	ibcstakingKeeper  ibcstakingKeeper.Keeper
 	ibcTransferKeeper transfer.Keeper
 	oracleKeeper      oraclekeeper.Keeper
+	airdropKeeper     types.AirdropKeeper
 }
 
 func NewKeeper(cdc codec.BinaryCodec,
@@ -31,7 +32,8 @@ func NewKeeper(cdc codec.BinaryCodec,
 	accountKeeper types.AccountKeeper,
 	ibcstakingKeeper ibcstakingKeeper.Keeper,
 	ibcTransferKeeper transfer.Keeper,
-	oracleKeeper oraclekeeper.Keeper) Keeper {
+	oracleKeeper oraclekeeper.Keeper,
+	airdropKeeper types.AirdropKeeper) Keeper {
 
 	if !paramSpace.HasKeyTable() {
 		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())

@@ -367,6 +367,9 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
+	// mark user performed claim action
+	m.keeper.airdropKeeper.PostClaimedSnAsset(ctx, claimerAddr)
+
 	return &types.MsgClaimSnAssetResponse{
 		Claimer: claimMsg.Claimer,
 		Minted:  claimSnAsset,

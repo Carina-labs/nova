@@ -14,7 +14,7 @@ service Query {
   rpc AirdropInfo(QueryAirdropInfoRequest) returns (QueryAirdropInfoResponse) {}
 
   // get total assets of the airdrop for a given address
-  rpc TotalAssetForAirdrop(QueryTotalAssetForAirdropRequest) returns (QueryTotalAssetForAirdropResponse) {
+  rpc TotalAllocatedAirdropToken(QueryTotalAllocatedAirdropTokenRequest) returns (QueryTotalAllocatedAirdropTokenResponse) {
     option (google.api.http).get = "/nova/airdrop/v1/total_asset_for_airdrop";
   }
 
@@ -29,12 +29,12 @@ message QueryAirdropInfoResponse {
   AirdropInfo airdrop_info = 1;
 }
 
-message QueryTotalAssetForAirdropRequest {
+message QueryTotalAllocatedAirdropTokenRequest {
   // address of the airdrop recipient.
   string address = 1;
 }
 
-message QueryTotalAssetForAirdropResponse {
+message QueryTotalAllocatedAirdropTokenResponse {
   // total_asset_for_airdrop is the total asset for airdrop.
   cosmos.base.v1beta1.Coin total_assets = 1 [
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
