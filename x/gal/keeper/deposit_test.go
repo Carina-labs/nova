@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
@@ -115,8 +114,6 @@ func (suite *KeeperTestSuite) TestDepositRecord() {
 
 			result, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, zoneId, tc.depositor)
 			suite.Require().True(ok)
-			fmt.Println(*result)
-			fmt.Println(tc.result)
 			suite.Require().Equal(tc.result, *result)
 		})
 	}

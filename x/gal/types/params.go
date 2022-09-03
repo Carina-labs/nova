@@ -19,6 +19,7 @@ func NewParams(snTokenDenoms map[string]string) Params {
 	}
 }
 
+// Key관리
 func DefaultParams() Params {
 	return Params{
 		WhiteListedTokenDenoms: map[string]string{
