@@ -106,5 +106,6 @@ func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
 		ValidatorAddress: "",
 		BaseDenom:        baseDenom,
 		SnDenom:          baseSnDenom,
+		Decimal:          0,
 	}
 }
