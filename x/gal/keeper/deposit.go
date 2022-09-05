@@ -56,13 +56,13 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 	return totalDepositAmt
 }
 
-func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, userAddr, denom string) sdk.Coin {
+func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, zoneId, userAddr, denom string) sdk.Coin {
 	totalDepositAmt := sdk.NewCoin(denom, sdk.NewInt(0))
 
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
-		if depositRecord.Claimer == userAddr {
+		if depositRecord.ZoneId == zoneId && depositRecord.Claimer == userAddr {
 			for _, record := range depositRecord.Records {
-				if record.State == types.DepositSuccess && record.Amount.Denom == denom {
+				if record.State == types.DepositSuccess && record.Amount.Denom == denom{
 					totalDepositAmt = totalDepositAmt.Add(*record.Amount)
 				}
 			}

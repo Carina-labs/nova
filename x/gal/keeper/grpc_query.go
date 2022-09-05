@@ -71,6 +71,21 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Query
 	}, nil
 }
 
+func (q QueryServer) DepositAmount(goCtx context.Context, request *types.QueryDepositAmountRequest) (*types.QueryDepositAmountResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	zoneInfo, ok := q.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
+	}
+
+	ibcDenom := q.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	amt := q.keeper.GetTotalDepositAmtForUserAddr(ctx, request.ZoneId, request.Address, ibcDenom)
+
+	return &types.QueryDepositAmountResponse{
+		Amount: amt,
+	}, nil
+}
+
 func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.QueryPendingWithdrawalsRequest) (*types.QueryPendingWithdrawalsResponse, error) {
 	// return sum of all withdraw-able assets with WithdrawStatus_Registered status
 	ctx := sdk.UnwrapSDKContext(goCtx)
