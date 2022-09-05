@@ -5,46 +5,27 @@ import (
 	"github.com/ghodss/yaml"
 )
 
-var (
-	KeyWhiteListedTokenDenoms = []byte("whiteListedTokenDenoms")
-)
-
 func ParamKeyTable() paramtypes.KeyTable {
 	return paramtypes.NewKeyTable().RegisterParamSet(&Params{})
 }
 
-func NewParams(snAssetDenoms map[string]string) Params {
-	return Params{
-		WhiteListedTokenDenoms: snAssetDenoms,
-	}
+func NewParams() Params {
+	return Params{}
 }
 
-// Key관리
 func DefaultParams() Params {
-	return Params{
-		WhiteListedTokenDenoms: map[string]string{
-			"uatom": "statom",
-			"ujuno": "stjuno",
-			"uosmo": "stosmo",
-		},
-	}
+	return Params{}
 }
 
-func (Params) Validate() error {
+func (p *Params) Validate() error {
 	return nil
 }
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
-	return paramtypes.ParamSetPairs{
-		paramtypes.NewParamSetPair(KeyWhiteListedTokenDenoms, &p.WhiteListedTokenDenoms, validateSnAssetDenoms),
-	}
+	return paramtypes.ParamSetPairs{}
 }
 
 func (p *Params) String() string {
 	out, _ := yaml.Marshal(p)
 	return string(out)
-}
-
-func validateSnAssetDenoms(i interface{}) error {
-	return nil
 }
