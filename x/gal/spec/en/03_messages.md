@@ -82,3 +82,47 @@ message MsgWithdrawResponse {
 }
 ```
 `MsgWithdrawResponse` is a message used response for `MsgWithdraw`
+
+## MsgClaimSnAsset
+
+---
+```protobuf
+message MsgClaimSnAsset {
+  string zone_id = 1;
+  string claimer = 2;
+}
+```
+`MsgClaimSnAsset` receives the snAsset, which is the equity token for the assets deposited.
+
+## MsgClaimSnAssetResponse
+
+---
+```protobuf
+message MsgClaimSnAssetResponse {
+  string claimer = 1;
+  cosmos.base.v1beta1.Coin minted = 2;
+}
+```
+
+## MsgIcaWithdraw
+
+---
+```protobuf
+message MsgIcaWithdraw {
+  string zone_id = 1;
+  string controller_address = 2;
+  string ica_transfer_port_id = 3;
+  string ica_transfer_channel_id = 4;
+  google.protobuf.Timestamp chain_time = 5;
+}
+```
+`MsgIcaWithdraw` remotely transfers the undelegated assets in the other zone to the Supernova chain.
+
+## MsgIcaWithdrawResponse
+
+---
+```protobuf
+message MsgIcaWithdrawResponse {
+  
+}
+```
