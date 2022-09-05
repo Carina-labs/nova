@@ -238,11 +238,6 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
 	}
 
-	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, zoneInfo.ZoneId, withdraw.Withdrawer)
-	if !found {
-		return nil, types.ErrNoWithdrawRecord
-	}
-
 	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 
 	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.ControllerAddress)
@@ -265,7 +260,12 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, err
 	}
 
-	m.keeper.DeleteWithdrawRecord(ctx, *withdrawRecord)
+	withdrawRecord, found := m.keeper.GetWithdrawRecord(ctx, zoneInfo.ZoneId, withdraw.Withdrawer)
+	if !found {
+		return nil, types.ErrNoWithdrawRecord
+	}
+
+	m.keeper.DeleteWithdrawRecord(ctx, withdrawRecord)
 
 	return &types.MsgWithdrawResponse{
 		Withdrawer:     withdraw.Withdrawer,

@@ -36,10 +36,52 @@ func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (r
 	return &record, true
 }
 
+// SetWithdrawRecords write multiple withdraw record.
+func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Time) {
+	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool) {
+		if undelegateInfo.ZoneId == zoneId {
+			for _, items := range undelegateInfo.Records {
+				if items.State == types.UndelegateRequestIca {
+					withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, items.Withdrawer)
+					if !found {
+						withdrawRecord = &types.WithdrawRecord{
+							ZoneId:     zoneId,
+							Withdrawer: items.Withdrawer,
+						}
+						withdrawRecord.Records = make(map[types.UndelegateVersion]*types.WithdrawRecordContent)
+					}
+
+					withdrawRecordContent, found := withdrawRecord.Records[items.UndelegateVersion]
+
+					if !found {
+						withdrawRecordContent = &types.WithdrawRecordContent{
+							State:           types.WithdrawStatusRegistered,
+							WithdrawVersion: items.UndelegateVersion,
+							Amount:          items.WithdrawAmount,
+							CompletionTime:  time,
+						}
+
+					} else {
+						withdrawRecordContent.Amount = items.WithdrawAmount.Add(withdrawRecordContent.Amount)
+					}
+					withdrawRecord.Records[items.UndelegateVersion] = withdrawRecordContent
+
+					k.SetWithdrawRecord(ctx, withdrawRecord)
+				}
+			}
+		}
+		return false
+	})
+}
+
 // DeleteWithdrawRecord removes withdraw record.
-func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw types.WithdrawRecord) {
-	store := k.getWithdrawRecordStore(ctx)
-	store.Delete([]byte(withdraw.ZoneId + withdraw.Withdrawer))
+func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw *types.WithdrawRecord) {
+	for key, record := range withdraw.Records {
+		if record.State == types.WithdrawStatusTransferred {
+			delete(withdraw.Records, key)
+		}
+	}
+	k.SetWithdrawRecord(ctx, withdraw)
 }
 
 func (k Keeper) GetWithdrawVersionStore(ctx sdk.Context) prefix.Store {
@@ -66,60 +108,16 @@ func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) uint64 {
 	return binary.BigEndian.Uint64(bz)
 }
 
-func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state types.WithdrawStatusType, version uint64) bool {
+func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state types.WithdrawStatusType, version uint64) {
 	k.IterateWithdrawRecords(ctx, func(index int64, withdrawRecord *types.WithdrawRecord) (stop bool) {
 		if withdrawRecord.ZoneId == zoneId {
-			isChanged := false
-			for _, record := range withdrawRecord.Records {
+			for key, record := range withdrawRecord.Records {
 				if record.State == state {
-					isChanged = true
-					record.WithdrawVersion = version
+					withdrawRecord.Records[key].WithdrawVersion = version
+
 				}
 			}
-			if isChanged {
-				k.SetWithdrawRecord(ctx, withdrawRecord)
-			}
-		}
-		return false
-	})
-
-	return true
-}
-
-// SetWithdrawRecords write multiple withdraw record.
-func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Time) {
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool) {
-		if undelegateInfo.ZoneId == zoneId {
-			for _, items := range undelegateInfo.Records {
-				if items.State == types.UndelegateRequestIca {
-					withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, items.Withdrawer)
-					if !found {
-						withdrawRecord = &types.WithdrawRecord{
-							ZoneId:     zoneId,
-							Withdrawer: items.Withdrawer,
-						}
-						withdrawRecord.Records = make(map[uint64]*types.WithdrawRecordContent)
-					}
-
-					withdrawRecordContent, found := withdrawRecord.Records[items.UndelegateVersion]
-
-					if !found {
-						withdrawRecordContent = &types.WithdrawRecordContent{
-							State:           types.WithdrawStatusRegistered,
-							WithdrawVersion: items.UndelegateVersion,
-							Amount:          items.WithdrawAmount,
-							CompletionTime:  time,
-						}
-
-					} else {
-						withdrawRecordContent.Amount = items.WithdrawAmount.Add(withdrawRecordContent.Amount)
-					}
-					withdrawRecord.Records[items.UndelegateVersion] = withdrawRecordContent
-
-					k.SetWithdrawRecord(ctx, withdrawRecord)
-				}
-			}
-
+			k.SetWithdrawRecord(ctx, withdrawRecord)
 		}
 		return false
 	})
@@ -177,6 +175,20 @@ func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, from sdk.AccAddress, amt sdk.C
 	return balance.Amount.BigInt().Cmp(amt.Amount.BigInt()) >= 0
 }
 
+func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState types.WithdrawStatusType) {
+	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
+		if withdrawInfo.ZoneId == zoneId {
+			for _, record := range withdrawInfo.Records {
+				if record.State == preState {
+					record.State = postState
+				}
+				k.SetWithdrawRecord(ctx, withdrawInfo)
+			}
+		}
+		return false
+	})
+}
+
 // IterateWithdrawRecords iterate
 func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool)) {
 	store := k.getWithdrawRecordStore(ctx)
@@ -201,18 +213,4 @@ func (k Keeper) IterateWithdrawRecords(ctx sdk.Context, fn func(index int64, wit
 		}
 		i++
 	}
-}
-
-func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState types.WithdrawStatusType) {
-	k.IterateWithdrawRecords(ctx, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
-		if withdrawInfo.ZoneId == zoneId {
-			for _, record := range withdrawInfo.Records {
-				if record.State == preState {
-					record.State = postState
-				}
-				k.SetWithdrawRecord(ctx, withdrawInfo)
-			}
-		}
-		return false
-	})
 }
