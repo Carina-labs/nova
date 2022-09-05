@@ -48,10 +48,9 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.Registere
 	}
 
 	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
-
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
-
 	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId)
+
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -59,7 +58,6 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.Registere
 	// convert decimal
 	snAsset := k.ConvertWAssetToSnAssetDecimal(asset.Amount.BigInt(), zone.Decimal, snDenom)
 	mintAmt := k.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
-
 	return sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)), nil
 }
 
@@ -156,7 +154,6 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPor
 
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChanId, denom)
 	chainBalanceWithIbcDenom := sdk.NewCoin(ibcDenom, chainInfo.Coin.Amount)
-
 	if chainBalanceWithIbcDenom.Sub(unMintedAmount).IsZero() {
 		return unMintedAmount, nil
 	}

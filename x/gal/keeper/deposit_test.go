@@ -417,7 +417,7 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForUserAddr() {
 				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, record)
 			}
 
-			result := suite.App.GalKeeper.GetTotalDepositAmtForUserAddr(suite.Ctx, tc.depositor, tc.denom)
+			result := suite.App.GalKeeper.GetTotalDepositAmtForUserAddr(suite.Ctx, tc.zoneId, tc.depositor, tc.denom)
 
 			suite.Require().Equal(tc.result, result)
 		})
