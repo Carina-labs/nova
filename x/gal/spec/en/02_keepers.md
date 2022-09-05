@@ -4,6 +4,9 @@
 
 ## Deposit
 `deposit.go` is responsible for recording and managing the user's deposit behavior.
+The assets that the user deposited are not immediately transferred to the other zone, 
+but are transferred to the ibc-controller address between the supernova and the other zone. 
+These assets are periodically transferred to the ibc-host address of the other zone and deposited automatically.
 
 ### SetDepositRecord
 ```go
