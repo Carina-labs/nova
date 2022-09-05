@@ -74,7 +74,9 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	withdrawVersion := h.k.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
 
 	h.k.SetWithdrawVersion(ctx, zoneInfo.ZoneId, withdrawVersion+1)
+	h.k.SetWithdrawRecordVersion(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, withdrawVersion+1)
 	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
+
 }
 
 func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {

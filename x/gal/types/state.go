@@ -21,4 +21,6 @@ type (
 	WithdrawStatusType    = int64
 	DepositStatusType     = int64
 	UndelegatedStatusType = int64
+
+	UndelegateVersion = uint64
 )
