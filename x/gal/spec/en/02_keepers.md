@@ -82,7 +82,11 @@ func (k Keeper) IterateDepositRecord(ctx sdk.Context, fn func(index int64, depos
 
 ## Undelegate
 `undelegate.go` is responsible for recording and managing the user's undelegation behavior.
+Undelegate takes more than a few weeks to complete.
 
+In addition, cosmos chains have a limit on the number of undelegate requests that can be applied at once.
+Therefore, the Undelegate request requested by the user is saved as `PendingUndelegate`.
+Once every few days, we collect the PendingUndelegate request and request to release the delegation.
 
 ### SetUndelegateRecord
 ```go
@@ -248,6 +252,8 @@ func (k Keeper) ConvertSnAssetToWAssetDecimal(amount *big.Int, decimal int64, de
 
 ---
 ## Delegation
+`delegation.go` manages metadata for periodic remote delegations. 
+Because remote delegation occurs once in a few days, it manages the last remote delegation version.
 
 ### GetDelegateVersionStore
 ```go
@@ -272,6 +278,10 @@ func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) uint64 {}
 ---
 ## Withdraw
 `withdraw.go` is responsible for the logic of issuing the withdraw action.
+
+`IcaWithdraw` uses ICA to release the delegation and imports the assets in Zone's vault to Supernova.
+
+`Withdraw` withdraws assets transferred to Supernova via IcaWithdraw.
 
 ### SetWithdrawRecord
 ```go
