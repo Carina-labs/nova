@@ -64,9 +64,7 @@ func TestGenesis_ValidateState(t *testing.T) {
 		return &types.UserState{
 			Recipient:   sdk.AccAddress{0x1}.String(),
 			TotalAmount: maxCap.String(),
-			QuestStates: map[int32]*types.QuestState{
-				int32(types.QuestType_QUEST_NOTHING_TO_DO): types.EmptyQuestState(),
-			},
+			QuestStates: types.EmptyQuestState(time.Time{}),
 		}
 	}
 
