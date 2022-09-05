@@ -291,7 +291,7 @@ func NewNovaApp(
 		transferModule,
 		gal.NewAppModule(appCodec, *app.GalKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
-		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.AccountKeeper, app.BankKeeper),
+		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.BankKeeper),
 		poolincentive.NewAppModule(appCodec, *app.PoolKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
