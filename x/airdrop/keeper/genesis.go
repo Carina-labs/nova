@@ -28,7 +28,7 @@ func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 
 	// get airdrop info
 	info := k.GetAirdropInfo(ctx)
-	genState.AirdropInfo = &info
+	genState.AirdropInfo = info
 
 	// iterate over all airdrop states
 	store := ctx.KVStore(k.storeKey)

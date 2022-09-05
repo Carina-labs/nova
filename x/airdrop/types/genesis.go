@@ -20,9 +20,9 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		States: nil,
 		AirdropInfo: &AirdropInfo{
-			SnapshotTimestamp:        time.Now(),
-			AirdropStartTimestamp:    time.Now().Add(time.Hour * 24 * 7),
-			AirdropEndTimestamp:      time.Now().Add(time.Hour * 24 * 31),
+			SnapshotTimestamp:        time.Now().UTC(),
+			AirdropStartTimestamp:    time.Now().UTC().Add(time.Hour * 24 * 7),
+			AirdropEndTimestamp:      time.Now().UTC().Add(time.Hour * 24 * 31),
 			AirdropDenom:             params.BaseCoinUnit,
 			QuestsCount:              5,
 			ControllerAddress:        sdk.AccAddress([]byte{0x1}).String(),

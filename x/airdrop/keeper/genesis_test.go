@@ -7,7 +7,7 @@ import (
 	"sort"
 )
 
-func (s KeeperTestSuite) TestInitGenesis() {
+func (s KeeperTestSuite) TestGenesis() {
 	airdropKeeper := s.App.AirdropKeeper
 	genesis := types.DefaultGenesis()
 	genesis.States = []*types.UserState{}
