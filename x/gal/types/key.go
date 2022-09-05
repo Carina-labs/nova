@@ -31,5 +31,5 @@ var (
 
 	KeyDelegateVersion   = []byte{0x08}
 	KeyUndelegateVersion = []byte{0x09}
-	KeyWithdrawVersion   = []byte{0x1}
+	KeyWithdrawVersion   = []byte{0x10}
 )
