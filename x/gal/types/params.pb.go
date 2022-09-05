@@ -25,10 +25,6 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // Params defines the parameters for the gal module.
 type Params struct {
-	// white-listed tokens in nova
-	WhiteListedTokenDenoms map[string]string `protobuf:"bytes,1,rep,name=white_listed_token_denoms,json=whiteListedTokenDenoms,proto3" json:"white_listed_token_denoms,omitempty" yaml:"white_listed_token_denoms" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// expected blocks per year
-	BlocksPerYear uint64 `protobuf:"varint,2,opt,name=blocks_per_year,json=blocksPerYear,proto3" json:"blocks_per_year,omitempty" yaml:"blocks_per_year"`
 }
 
 func (m *Params) Reset()      { *m = Params{} }
@@ -63,50 +59,24 @@ func (m *Params) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Params proto.InternalMessageInfo
 
-func (m *Params) GetWhiteListedTokenDenoms() map[string]string {
-	if m != nil {
-		return m.WhiteListedTokenDenoms
-	}
-	return nil
-}
-
-func (m *Params) GetBlocksPerYear() uint64 {
-	if m != nil {
-		return m.BlocksPerYear
-	}
-	return 0
-}
-
 func init() {
 	proto.RegisterType((*Params)(nil), "nova.gal.v1.Params")
-	proto.RegisterMapType((map[string]string)(nil), "nova.gal.v1.Params.WhiteListedTokenDenomsEntry")
 }
 
 func init() { proto.RegisterFile("nova/gal/v1/params.proto", fileDescriptor_dba4ed8e1176824a) }
 
 var fileDescriptor_dba4ed8e1176824a = []byte{
-	// 328 bytes of a gzipped FileDescriptorProto
+	// 155 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xc8, 0xcb, 0x2f, 0x4b,
 	0xd4, 0x4f, 0x4f, 0xcc, 0xd1, 0x2f, 0x33, 0xd4, 0x2f, 0x48, 0x2c, 0x4a, 0xcc, 0x2d, 0xd6, 0x2b,
 	0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x06, 0xc9, 0xe8, 0xa5, 0x27, 0xe6, 0xe8, 0x95, 0x19, 0x4a,
-	0x89, 0xa4, 0xe7, 0xa7, 0xe7, 0x83, 0xc5, 0xf5, 0x41, 0x2c, 0x88, 0x12, 0xa5, 0x0d, 0x4c, 0x5c,
-	0x6c, 0x01, 0x60, 0x3d, 0x42, 0x13, 0x18, 0xb9, 0x24, 0xcb, 0x33, 0x32, 0x4b, 0x52, 0xe3, 0x73,
-	0x32, 0x8b, 0x4b, 0x52, 0x53, 0xe2, 0x4b, 0xf2, 0xb3, 0x53, 0xf3, 0xe2, 0x53, 0x52, 0xf3, 0xf2,
-	0x73, 0x8b, 0x25, 0x18, 0x15, 0x98, 0x35, 0xb8, 0x8d, 0xf4, 0xf5, 0x90, 0x8c, 0xd4, 0x83, 0x68,
-	0xd4, 0x0b, 0x07, 0x69, 0xf2, 0x01, 0xeb, 0x09, 0x01, 0x69, 0x71, 0x01, 0xeb, 0x70, 0xcd, 0x2b,
-	0x29, 0xaa, 0x74, 0x52, 0xf9, 0x74, 0x4f, 0x5e, 0xa1, 0x32, 0x31, 0x37, 0xc7, 0x4a, 0x09, 0xa7,
-	0xd9, 0x4a, 0x41, 0x62, 0xe5, 0x58, 0x8d, 0x10, 0x72, 0xe2, 0xe2, 0x4f, 0xca, 0xc9, 0x4f, 0xce,
-	0x2e, 0x8e, 0x2f, 0x48, 0x2d, 0x8a, 0xaf, 0x4c, 0x4d, 0x2c, 0x92, 0x60, 0x52, 0x60, 0xd4, 0x60,
-	0x71, 0x92, 0xfa, 0x74, 0x4f, 0x5e, 0x0c, 0x62, 0x2c, 0x9a, 0x02, 0xa5, 0x20, 0x5e, 0x88, 0x48,
-	0x40, 0x6a, 0x51, 0x64, 0x6a, 0x62, 0x91, 0x94, 0x27, 0x97, 0x34, 0x1e, 0x07, 0x0a, 0x09, 0x70,
-	0x31, 0x67, 0xa7, 0x56, 0x4a, 0x30, 0x2a, 0x30, 0x6a, 0x70, 0x06, 0x81, 0x98, 0x42, 0x22, 0x5c,
-	0xac, 0x65, 0x89, 0x39, 0xa5, 0xa9, 0x60, 0xab, 0x38, 0x83, 0x20, 0x1c, 0x2b, 0x26, 0x0b, 0x46,
-	0x2b, 0x96, 0x19, 0x0b, 0xe4, 0x19, 0x9c, 0x1c, 0x4f, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e,
-	0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x09, 0x8f, 0xe5, 0x18, 0x2e, 0x3c, 0x96, 0x63, 0xb8, 0xf1, 0x58,
-	0x8e, 0x21, 0x4a, 0x3d, 0x3d, 0xb3, 0x24, 0xa3, 0x34, 0x49, 0x2f, 0x39, 0x3f, 0x57, 0xdf, 0x39,
-	0xb1, 0x28, 0x33, 0x2f, 0x51, 0x37, 0x27, 0x31, 0xa9, 0x58, 0x1f, 0x1c, 0x41, 0x15, 0xe0, 0x28,
-	0x2a, 0xa9, 0x2c, 0x48, 0x2d, 0x4e, 0x62, 0x03, 0x07, 0xbe, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff,
-	0x3c, 0x5e, 0xdb, 0x8c, 0xbb, 0x01, 0x00, 0x00,
+	0x89, 0xa4, 0xe7, 0xa7, 0xe7, 0x83, 0xc5, 0xf5, 0x41, 0x2c, 0x88, 0x12, 0x25, 0x3e, 0x2e, 0xb6,
+	0x00, 0xb0, 0x16, 0x2b, 0x96, 0x19, 0x0b, 0xe4, 0x19, 0x9c, 0x1c, 0x4f, 0x3c, 0x92, 0x63, 0xbc,
+	0xf0, 0x48, 0x8e, 0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x09, 0x8f, 0xe5, 0x18, 0x2e, 0x3c, 0x96, 0x63,
+	0xb8, 0xf1, 0x58, 0x8e, 0x21, 0x4a, 0x3d, 0x3d, 0xb3, 0x24, 0xa3, 0x34, 0x49, 0x2f, 0x39, 0x3f,
+	0x57, 0xdf, 0x39, 0xb1, 0x28, 0x33, 0x2f, 0x51, 0x37, 0x27, 0x31, 0xa9, 0x58, 0x1f, 0x6c, 0x7b,
+	0x05, 0xd8, 0xfe, 0x92, 0xca, 0x82, 0xd4, 0xe2, 0x24, 0x36, 0xb0, 0xc9, 0xc6, 0x80, 0x00, 0x00,
+	0x00, 0xff, 0xff, 0x1b, 0xa2, 0x93, 0xec, 0x98, 0x00, 0x00, 0x00,
 }
 
 func (m *Params) Marshal() (dAtA []byte, err error) {
@@ -129,30 +99,6 @@ func (m *Params) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.BlocksPerYear != 0 {
-		i = encodeVarintParams(dAtA, i, uint64(m.BlocksPerYear))
-		i--
-		dAtA[i] = 0x10
-	}
-	if len(m.WhiteListedTokenDenoms) > 0 {
-		for k := range m.WhiteListedTokenDenoms {
-			v := m.WhiteListedTokenDenoms[k]
-			baseI := i
-			i -= len(v)
-			copy(dAtA[i:], v)
-			i = encodeVarintParams(dAtA, i, uint64(len(v)))
-			i--
-			dAtA[i] = 0x12
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = encodeVarintParams(dAtA, i, uint64(len(k)))
-			i--
-			dAtA[i] = 0xa
-			i = encodeVarintParams(dAtA, i, uint64(baseI-i))
-			i--
-			dAtA[i] = 0xa
-		}
-	}
 	return len(dAtA) - i, nil
 }
 
@@ -173,17 +119,6 @@ func (m *Params) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if len(m.WhiteListedTokenDenoms) > 0 {
-		for k, v := range m.WhiteListedTokenDenoms {
-			_ = k
-			_ = v
-			mapEntrySize := 1 + len(k) + sovParams(uint64(len(k))) + 1 + len(v) + sovParams(uint64(len(v)))
-			n += mapEntrySize + 1 + sovParams(uint64(mapEntrySize))
-		}
-	}
-	if m.BlocksPerYear != 0 {
-		n += 1 + sovParams(uint64(m.BlocksPerYear))
-	}
 	return n
 }
 
@@ -222,152 +157,6 @@ func (m *Params) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: Params: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field WhiteListedTokenDenoms", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowParams
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthParams
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthParams
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.WhiteListedTokenDenoms == nil {
-				m.WhiteListedTokenDenoms = make(map[string]string)
-			}
-			var mapkey string
-			var mapvalue string
-			for iNdEx < postIndex {
-				entryPreIndex := iNdEx
-				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowParams
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				fieldNum := int32(wire >> 3)
-				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowParams
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapkey |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return ErrInvalidLengthParams
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return ErrInvalidLengthParams
-					}
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
-					iNdEx = postStringIndexmapkey
-				} else if fieldNum == 2 {
-					var stringLenmapvalue uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowParams
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapvalue |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					intStringLenmapvalue := int(stringLenmapvalue)
-					if intStringLenmapvalue < 0 {
-						return ErrInvalidLengthParams
-					}
-					postStringIndexmapvalue := iNdEx + intStringLenmapvalue
-					if postStringIndexmapvalue < 0 {
-						return ErrInvalidLengthParams
-					}
-					if postStringIndexmapvalue > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapvalue = string(dAtA[iNdEx:postStringIndexmapvalue])
-					iNdEx = postStringIndexmapvalue
-				} else {
-					iNdEx = entryPreIndex
-					skippy, err := skipParams(dAtA[iNdEx:])
-					if err != nil {
-						return err
-					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return ErrInvalidLengthParams
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
-				}
-			}
-			m.WhiteListedTokenDenoms[mapkey] = mapvalue
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BlocksPerYear", wireType)
-			}
-			m.BlocksPerYear = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowParams
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.BlocksPerYear |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipParams(dAtA[iNdEx:])
