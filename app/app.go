@@ -289,7 +289,7 @@ func NewNovaApp(
 		wasm.NewAppModule(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
-		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper, app.BankKeeper),
+		gal.NewAppModule(appCodec, *app.GalKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
 		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.AccountKeeper, app.BankKeeper),
 		poolincentive.NewAppModule(appCodec, *app.PoolKeeper),

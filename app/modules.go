@@ -83,7 +83,7 @@ func (app *NovaApp) GetModuleManager(
 		params.NewAppModule(*app.ParamsKeeper),
 		transferModule,
 		wasm.NewAppModule(appCodec, app.WasmKeeper, app.StakingKeeper, app.AccountKeeper, app.BankKeeper),
-		gal.NewAppModule(appCodec, *app.GalKeeper, app.AccountKeeper, app.BankKeeper),
+		gal.NewAppModule(appCodec, *app.GalKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
 		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.AccountKeeper, app.BankKeeper),
 		ica.NewAppModule(app.ICAControllerKeeper, app.ICAHostKeeper),

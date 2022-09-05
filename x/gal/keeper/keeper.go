@@ -18,7 +18,6 @@ type Keeper struct {
 	paramSpace paramtypes.Subspace
 
 	bankKeeper        types.BankKeeper
-	accountKeeper     types.AccountKeeper
 	ibcstakingKeeper  ibcstakingKeeper.Keeper
 	ibcTransferKeeper transfer.Keeper
 	oracleKeeper      oraclekeeper.Keeper
@@ -29,7 +28,6 @@ func NewKeeper(cdc codec.BinaryCodec,
 	key sdk.StoreKey,
 	paramSpace paramtypes.Subspace,
 	bankKeeper types.BankKeeper,
-	accountKeeper types.AccountKeeper,
 	ibcstakingKeeper ibcstakingKeeper.Keeper,
 	ibcTransferKeeper transfer.Keeper,
 	oracleKeeper oraclekeeper.Keeper,
@@ -43,7 +41,6 @@ func NewKeeper(cdc codec.BinaryCodec,
 		cdc:               cdc,
 		storeKey:          key,
 		bankKeeper:        bankKeeper,
-		accountKeeper:     accountKeeper,
 		paramSpace:        paramSpace,
 		ibcstakingKeeper:  ibcstakingKeeper,
 		ibcTransferKeeper: ibcTransferKeeper,
