@@ -83,6 +83,11 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		return nil, err
 	}
 
+	if err = ctx.EventManager().EmitTypedEvent(
+		types.NewEventDeposit(deposit.Depositor, deposit.Claimer, &deposit.Amount)); err != nil {
+		return nil, err
+	}
+
 	return &types.MsgDepositResponse{
 		Depositor:       deposit.Depositor,
 		Receiver:        deposit.Claimer,
@@ -116,6 +121,16 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, types.ErrDelegateFail
+	}
+
+	if err := ctx.EventManager().EmitTypedEvent(
+		types.NewEventDelegate(
+			zoneInfo.IcaAccount.HostAddress,
+			zoneInfo.ValidatorAddress,
+			&delegateAmt,
+			zoneInfo.TransferInfo.ChannelId,
+			zoneInfo.TransferInfo.PortId)); err != nil {
+		return nil, err
 	}
 
 	return &types.MsgDelegateResponse{}, nil
@@ -168,6 +183,15 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 		return nil, err
 	}
 
+	if err := ctx.EventManager().EmitTypedEvent(
+		types.NewEventPendingUndelegate(undelegate.ZoneId,
+			undelegate.Delegator,
+			undelegate.Withdrawer,
+			&snAssetAmt,
+			&undelegate.Amount)); err != nil {
+		return nil, err
+	}
+
 	return &types.MsgPendingUndelegateResponse{
 		ZoneId:     undelegate.ZoneId,
 		Delegator:  undelegate.Delegator,
@@ -205,7 +229,6 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	undelegateAmt := sdk.NewCoin(zoneInfo.BaseDenom, undelegateAssets)
 
 	var msgs []sdk.Msg
-
 	msgs = append(msgs, &stakingtype.MsgUndelegate{
 		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
@@ -218,6 +241,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
 		sdk.Coins{sdk.Coin{Denom: burnAssets.Denom, Amount: burnAssets.Amount}}); err != nil {
+		return nil, err
+	}
+
+	if err := ctx.EventManager().EmitTypedEvent(
+		types.NewEventUndelegate(zoneInfo.ZoneId, &burnAssets, &undelegateAmt)); err != nil {
 		return nil, err
 	}
 
@@ -267,6 +295,11 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	m.keeper.DeleteWithdrawRecord(ctx, withdrawRecord)
 
+	if err := ctx.EventManager().EmitTypedEvent(
+		types.NewEventWithdraw(zoneInfo.ZoneId, withdraw.Withdrawer, &withdrawAmt)); err != nil {
+		return nil, err
+	}
+
 	return &types.MsgWithdrawResponse{
 		Withdrawer:     withdraw.Withdrawer,
 		WithdrawAmount: withdrawAmt.Amount,
@@ -293,7 +326,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	var msgs []sdk.Msg
 
 	//transfer msg
-	//sourceport, Source channel, Token, Sender, receiver, TimeoutHeight, TimeoutTimestamp
+	//Source Port, Source channel, Token, Sender, receiver, TimeoutHeight, TimeoutTimestamp
 	msgs = append(msgs, &ibctransfertypes.MsgTransfer{
 		SourcePort:    msg.IcaTransferPortId,
 		SourceChannel: msg.IcaTransferChannelId,
@@ -310,6 +343,16 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	err := m.keeper.ibcstakingKeeper.SendIcaTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, errors.New("PendingWithdraw transaction failed to send")
+	}
+
+	if err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaWithdraw(
+		zoneInfo.IcaAccount.HostAddress,
+		zoneInfo.IcaAccount.ControllerAddress,
+		&withdrawAmount,
+		zoneInfo.IcaConnectionInfo.ConnectionId,
+		msg.IcaTransferChannelId,
+		msg.IcaTransferPortId)); err != nil {
+		return nil, err
 	}
 
 	return &types.MsgIcaWithdrawResponse{}, nil
@@ -340,7 +383,6 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 
 	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	for _, record := range records.Records {
-
 		if record.OracleVersion >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
@@ -369,6 +411,10 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 
 	// mark user performed claim action
 	//m.keeper.airdropKeeper.PostClaimedSnAsset(ctx, claimerAddr)
+	if err = ctx.EventManager().EmitTypedEvent(
+		types.NewEventClaimSnToken(claimMsg.Claimer, &claimSnAsset, oracleVersion)); err != nil {
+		return nil, err
+	}
 
 	return &types.MsgClaimSnAssetResponse{
 		Claimer: claimMsg.Claimer,
