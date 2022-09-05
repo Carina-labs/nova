@@ -19,4 +19,4 @@ we calculate the total amount of tokens that the user can receive.
 3. [Messages](03_messages.md)
 4. [Events](04_events.md)
 5. [Parameters](05_params.md)
-6. [Client](06_client.md)
+6. [Client](05_client.md)
