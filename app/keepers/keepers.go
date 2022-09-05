@@ -227,7 +227,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	airdropKeeper := airdropkeeper.NewKeeper(
 		appCodec,
 		appKeepers.keys[airdroptypes.StoreKey],
-		appKeepers.AccountKeeper,
 		appKeepers.BankKeeper,
 	)
 	appKeepers.AirdropKeeper = &airdropKeeper
