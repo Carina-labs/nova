@@ -11,7 +11,7 @@ import (
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
 )
 
-func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg) error {
+func (k Keeper) SendTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg) error {
 	portID, err := icatypes.NewControllerPortID(controllerId)
 	if err != nil {
 		return err
