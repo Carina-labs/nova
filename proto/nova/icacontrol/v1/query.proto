@@ -1,0 +1,24 @@
+syntax = "proto3";
+package nova.ibcstaking.v1;
+
+import "gogoproto/gogo.proto";
+import "nova/icacontrol/v1/genesis.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // AllZones returns all the zones registered.
+  rpc AllZones(QueryAllZonesRequest) returns (QueryAllZonesResponse) {
+    option (google.api.http).get = "/nova/icacontrol/v1/zones/all";
+  }
+}
+
+// QueryAllZonesRequest is the request type for Query/AllZones.
+message QueryAllZonesRequest { };
+
+// QueryAllZonesResponse is the response type for Query/AllZones.
+message QueryAllZonesResponse {
+  repeated RegisteredZone zones = 1;
+}

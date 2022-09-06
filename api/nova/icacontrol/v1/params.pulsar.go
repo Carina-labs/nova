@@ -117,8 +117,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_params_proto_init()
-	md_Params = File_nova_ibcstaking_v1_params_proto.Messages().ByName("Params")
+	file_nova_icacontrol_v1_params_proto_init()
+	md_Params = File_nova_icacontrol_v1_params_proto.Messages().ByName("Params")
 	fd_Params_dao_modifiers = md_Params.Fields().ByName("dao_modifiers")
 	fd_Params_commission = md_Params.Fields().ByName("commission")
 }
@@ -132,7 +132,7 @@ func (x *Params) ProtoReflect() protoreflect.Message {
 }
 
 func (x *Params) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_params_proto_msgTypes[0]
+	mi := &file_nova_icacontrol_v1_params_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -215,15 +215,15 @@ func (x *fastReflection_Params) Range(f func(protoreflect.FieldDescriptor, proto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_Params) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.Params.dao_modifiers":
+	case "nova.ibcstaking.v1.Params.dao_modifiers":
 		return len(x.DaoModifiers) != 0
-	case "nova.icacontrol.v1.Params.commission":
+	case "nova.ibcstaking.v1.Params.commission":
 		return len(x.Commission) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.Params"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.Params"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.Params does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.Params does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -235,15 +235,15 @@ func (x *fastReflection_Params) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Params) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.Params.dao_modifiers":
+	case "nova.ibcstaking.v1.Params.dao_modifiers":
 		x.DaoModifiers = nil
-	case "nova.icacontrol.v1.Params.commission":
+	case "nova.ibcstaking.v1.Params.commission":
 		x.Commission = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.Params"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.Params"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.Params does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.Params does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -255,13 +255,13 @@ func (x *fastReflection_Params) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_Params) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.Params.dao_modifiers":
+	case "nova.ibcstaking.v1.Params.dao_modifiers":
 		if len(x.DaoModifiers) == 0 {
 			return protoreflect.ValueOfList(&_Params_1_list{})
 		}
 		listValue := &_Params_1_list{list: &x.DaoModifiers}
 		return protoreflect.ValueOfList(listValue)
-	case "nova.icacontrol.v1.Params.commission":
+	case "nova.ibcstaking.v1.Params.commission":
 		if len(x.Commission) == 0 {
 			return protoreflect.ValueOfList(&_Params_2_list{})
 		}
@@ -269,9 +269,9 @@ func (x *fastReflection_Params) Get(descriptor protoreflect.FieldDescriptor) pro
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.Params"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.Params"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.Params does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.Params does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -287,19 +287,19 @@ func (x *fastReflection_Params) Get(descriptor protoreflect.FieldDescriptor) pro
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Params) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.Params.dao_modifiers":
+	case "nova.ibcstaking.v1.Params.dao_modifiers":
 		lv := value.List()
 		clv := lv.(*_Params_1_list)
 		x.DaoModifiers = *clv.list
-	case "nova.icacontrol.v1.Params.commission":
+	case "nova.ibcstaking.v1.Params.commission":
 		lv := value.List()
 		clv := lv.(*_Params_2_list)
 		x.Commission = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.Params"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.Params"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.Params does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.Params does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -315,13 +315,13 @@ func (x *fastReflection_Params) Set(fd protoreflect.FieldDescriptor, value proto
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Params) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.Params.dao_modifiers":
+	case "nova.ibcstaking.v1.Params.dao_modifiers":
 		if x.DaoModifiers == nil {
 			x.DaoModifiers = []string{}
 		}
 		value := &_Params_1_list{list: &x.DaoModifiers}
 		return protoreflect.ValueOfList(value)
-	case "nova.icacontrol.v1.Params.commission":
+	case "nova.ibcstaking.v1.Params.commission":
 		if x.Commission == nil {
 			x.Commission = []*CommissionInfo{}
 		}
@@ -329,9 +329,9 @@ func (x *fastReflection_Params) Mutable(fd protoreflect.FieldDescriptor) protore
 		return protoreflect.ValueOfList(value)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.Params"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.Params"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.Params does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.Params does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -340,17 +340,17 @@ func (x *fastReflection_Params) Mutable(fd protoreflect.FieldDescriptor) protore
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_Params) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.Params.dao_modifiers":
+	case "nova.ibcstaking.v1.Params.dao_modifiers":
 		list := []string{}
 		return protoreflect.ValueOfList(&_Params_1_list{list: &list})
-	case "nova.icacontrol.v1.Params.commission":
+	case "nova.ibcstaking.v1.Params.commission":
 		list := []*CommissionInfo{}
 		return protoreflect.ValueOfList(&_Params_2_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.Params"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.Params"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.Params does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.Params does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -360,7 +360,7 @@ func (x *fastReflection_Params) NewField(fd protoreflect.FieldDescriptor) protor
 func (x *fastReflection_Params) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.Params", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.Params", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -638,8 +638,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_params_proto_init()
-	md_CommissionInfo = File_nova_ibcstaking_v1_params_proto.Messages().ByName("CommissionInfo")
+	file_nova_icacontrol_v1_params_proto_init()
+	md_CommissionInfo = File_nova_icacontrol_v1_params_proto.Messages().ByName("CommissionInfo")
 	fd_CommissionInfo_treasury_address = md_CommissionInfo.Fields().ByName("treasury_address")
 	fd_CommissionInfo_commission_rate = md_CommissionInfo.Fields().ByName("commission_rate")
 }
@@ -653,7 +653,7 @@ func (x *CommissionInfo) ProtoReflect() protoreflect.Message {
 }
 
 func (x *CommissionInfo) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_params_proto_msgTypes[1]
+	mi := &file_nova_icacontrol_v1_params_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -736,15 +736,15 @@ func (x *fastReflection_CommissionInfo) Range(f func(protoreflect.FieldDescripto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_CommissionInfo) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.CommissionInfo.treasury_address":
+	case "nova.ibcstaking.v1.CommissionInfo.treasury_address":
 		return x.TreasuryAddress != ""
-	case "nova.icacontrol.v1.CommissionInfo.commission_rate":
+	case "nova.ibcstaking.v1.CommissionInfo.commission_rate":
 		return x.CommissionRate != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.CommissionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.CommissionInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.CommissionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.CommissionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -756,15 +756,15 @@ func (x *fastReflection_CommissionInfo) Has(fd protoreflect.FieldDescriptor) boo
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_CommissionInfo) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.CommissionInfo.treasury_address":
+	case "nova.ibcstaking.v1.CommissionInfo.treasury_address":
 		x.TreasuryAddress = ""
-	case "nova.icacontrol.v1.CommissionInfo.commission_rate":
+	case "nova.ibcstaking.v1.CommissionInfo.commission_rate":
 		x.CommissionRate = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.CommissionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.CommissionInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.CommissionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.CommissionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -776,17 +776,17 @@ func (x *fastReflection_CommissionInfo) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_CommissionInfo) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.CommissionInfo.treasury_address":
+	case "nova.ibcstaking.v1.CommissionInfo.treasury_address":
 		value := x.TreasuryAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.CommissionInfo.commission_rate":
+	case "nova.ibcstaking.v1.CommissionInfo.commission_rate":
 		value := x.CommissionRate
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.CommissionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.CommissionInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.CommissionInfo does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.CommissionInfo does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -802,15 +802,15 @@ func (x *fastReflection_CommissionInfo) Get(descriptor protoreflect.FieldDescrip
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_CommissionInfo) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.CommissionInfo.treasury_address":
+	case "nova.ibcstaking.v1.CommissionInfo.treasury_address":
 		x.TreasuryAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.CommissionInfo.commission_rate":
+	case "nova.ibcstaking.v1.CommissionInfo.commission_rate":
 		x.CommissionRate = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.CommissionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.CommissionInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.CommissionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.CommissionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -826,15 +826,15 @@ func (x *fastReflection_CommissionInfo) Set(fd protoreflect.FieldDescriptor, val
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_CommissionInfo) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.CommissionInfo.treasury_address":
-		panic(fmt.Errorf("field treasury_address of message nova.icacontrol.v1.CommissionInfo is not mutable"))
-	case "nova.icacontrol.v1.CommissionInfo.commission_rate":
-		panic(fmt.Errorf("field commission_rate of message nova.icacontrol.v1.CommissionInfo is not mutable"))
+	case "nova.ibcstaking.v1.CommissionInfo.treasury_address":
+		panic(fmt.Errorf("field treasury_address of message nova.ibcstaking.v1.CommissionInfo is not mutable"))
+	case "nova.ibcstaking.v1.CommissionInfo.commission_rate":
+		panic(fmt.Errorf("field commission_rate of message nova.ibcstaking.v1.CommissionInfo is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.CommissionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.CommissionInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.CommissionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.CommissionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -843,15 +843,15 @@ func (x *fastReflection_CommissionInfo) Mutable(fd protoreflect.FieldDescriptor)
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_CommissionInfo) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.CommissionInfo.treasury_address":
+	case "nova.ibcstaking.v1.CommissionInfo.treasury_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.CommissionInfo.commission_rate":
+	case "nova.ibcstaking.v1.CommissionInfo.commission_rate":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.CommissionInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.CommissionInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.CommissionInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.CommissionInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -861,7 +861,7 @@ func (x *fastReflection_CommissionInfo) NewField(fd protoreflect.FieldDescriptor
 func (x *fastReflection_CommissionInfo) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.CommissionInfo", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.CommissionInfo", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1141,7 +1141,7 @@ type Params struct {
 func (x *Params) Reset() {
 	*x = Params{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_params_proto_msgTypes[0]
+		mi := &file_nova_icacontrol_v1_params_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1155,7 +1155,7 @@ func (*Params) ProtoMessage() {}
 
 // Deprecated: Use Params.ProtoReflect.Descriptor instead.
 func (*Params) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_params_proto_rawDescGZIP(), []int{0}
+	return file_nova_icacontrol_v1_params_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Params) GetDaoModifiers() []string {
@@ -1184,7 +1184,7 @@ type CommissionInfo struct {
 func (x *CommissionInfo) Reset() {
 	*x = CommissionInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_params_proto_msgTypes[1]
+		mi := &file_nova_icacontrol_v1_params_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1198,7 +1198,7 @@ func (*CommissionInfo) ProtoMessage() {}
 
 // Deprecated: Use CommissionInfo.ProtoReflect.Descriptor instead.
 func (*CommissionInfo) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_params_proto_rawDescGZIP(), []int{1}
+	return file_nova_icacontrol_v1_params_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CommissionInfo) GetTreasuryAddress() string {
@@ -1215,11 +1215,11 @@ func (x *CommissionInfo) GetCommissionRate() string {
 	return ""
 }
 
-var File_nova_ibcstaking_v1_params_proto protoreflect.FileDescriptor
+var File_nova_icacontrol_v1_params_proto protoreflect.FileDescriptor
 
-var file_nova_ibcstaking_v1_params_proto_rawDesc = []byte{
-	0x0a, 0x1f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+var file_nova_icacontrol_v1_params_proto_rawDesc = []byte{
+	0x0a, 0x1f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x12, 0x12, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69,
 	0x6e, 0x67, 0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x8b, 0x01, 0x0a, 0x06,
@@ -1247,7 +1247,7 @@ var file_nova_ibcstaking_v1_params_proto_rawDesc = []byte{
 	0x0b, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3f,
 	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e,
 	0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f,
+	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2f,
 	0x76, 0x31, 0x3b, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x76, 0x31, 0xa2,
 	0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x49, 0x62, 0x63,
 	0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x12, 0x4e, 0x6f, 0x76,
@@ -1259,24 +1259,24 @@ var file_nova_ibcstaking_v1_params_proto_rawDesc = []byte{
 }
 
 var (
-	file_nova_ibcstaking_v1_params_proto_rawDescOnce sync.Once
-	file_nova_ibcstaking_v1_params_proto_rawDescData = file_nova_ibcstaking_v1_params_proto_rawDesc
+	file_nova_icacontrol_v1_params_proto_rawDescOnce sync.Once
+	file_nova_icacontrol_v1_params_proto_rawDescData = file_nova_icacontrol_v1_params_proto_rawDesc
 )
 
-func file_nova_ibcstaking_v1_params_proto_rawDescGZIP() []byte {
-	file_nova_ibcstaking_v1_params_proto_rawDescOnce.Do(func() {
-		file_nova_ibcstaking_v1_params_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_ibcstaking_v1_params_proto_rawDescData)
+func file_nova_icacontrol_v1_params_proto_rawDescGZIP() []byte {
+	file_nova_icacontrol_v1_params_proto_rawDescOnce.Do(func() {
+		file_nova_icacontrol_v1_params_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_icacontrol_v1_params_proto_rawDescData)
 	})
-	return file_nova_ibcstaking_v1_params_proto_rawDescData
+	return file_nova_icacontrol_v1_params_proto_rawDescData
 }
 
-var file_nova_ibcstaking_v1_params_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_nova_ibcstaking_v1_params_proto_goTypes = []interface{}{
-	(*Params)(nil),         // 0: nova.icacontrol.v1.Params
-	(*CommissionInfo)(nil), // 1: nova.icacontrol.v1.CommissionInfo
+var file_nova_icacontrol_v1_params_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_nova_icacontrol_v1_params_proto_goTypes = []interface{}{
+	(*Params)(nil),         // 0: nova.ibcstaking.v1.Params
+	(*CommissionInfo)(nil), // 1: nova.ibcstaking.v1.CommissionInfo
 }
-var file_nova_ibcstaking_v1_params_proto_depIdxs = []int32{
-	1, // 0: nova.icacontrol.v1.Params.commission:type_name -> nova.icacontrol.v1.CommissionInfo
+var file_nova_icacontrol_v1_params_proto_depIdxs = []int32{
+	1, // 0: nova.ibcstaking.v1.Params.commission:type_name -> nova.ibcstaking.v1.CommissionInfo
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -1284,13 +1284,13 @@ var file_nova_ibcstaking_v1_params_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_nova_ibcstaking_v1_params_proto_init() }
-func file_nova_ibcstaking_v1_params_proto_init() {
-	if File_nova_ibcstaking_v1_params_proto != nil {
+func init() { file_nova_icacontrol_v1_params_proto_init() }
+func file_nova_icacontrol_v1_params_proto_init() {
+	if File_nova_icacontrol_v1_params_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_nova_ibcstaking_v1_params_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_params_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Params); i {
 			case 0:
 				return &v.state
@@ -1302,7 +1302,7 @@ func file_nova_ibcstaking_v1_params_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_params_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_params_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CommissionInfo); i {
 			case 0:
 				return &v.state
@@ -1319,18 +1319,18 @@ func file_nova_ibcstaking_v1_params_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_nova_ibcstaking_v1_params_proto_rawDesc,
+			RawDescriptor: file_nova_icacontrol_v1_params_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_nova_ibcstaking_v1_params_proto_goTypes,
-		DependencyIndexes: file_nova_ibcstaking_v1_params_proto_depIdxs,
-		MessageInfos:      file_nova_ibcstaking_v1_params_proto_msgTypes,
+		GoTypes:           file_nova_icacontrol_v1_params_proto_goTypes,
+		DependencyIndexes: file_nova_icacontrol_v1_params_proto_depIdxs,
+		MessageInfos:      file_nova_icacontrol_v1_params_proto_msgTypes,
 	}.Build()
-	File_nova_ibcstaking_v1_params_proto = out.File
-	file_nova_ibcstaking_v1_params_proto_rawDesc = nil
-	file_nova_ibcstaking_v1_params_proto_goTypes = nil
-	file_nova_ibcstaking_v1_params_proto_depIdxs = nil
+	File_nova_icacontrol_v1_params_proto = out.File
+	file_nova_icacontrol_v1_params_proto_rawDesc = nil
+	file_nova_icacontrol_v1_params_proto_goTypes = nil
+	file_nova_icacontrol_v1_params_proto_depIdxs = nil
 }

@@ -27,8 +27,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgRegisterZone = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgRegisterZone")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgRegisterZone = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgRegisterZone")
 	fd_MsgRegisterZone_zone_id = md_MsgRegisterZone.Fields().ByName("zone_id")
 	fd_MsgRegisterZone_ica_info = md_MsgRegisterZone.Fields().ByName("ica_info")
 	fd_MsgRegisterZone_ica_account = md_MsgRegisterZone.Fields().ByName("ica_account")
@@ -47,7 +47,7 @@ func (x *MsgRegisterZone) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgRegisterZone) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[0]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -160,25 +160,25 @@ func (x *fastReflection_MsgRegisterZone) Range(f func(protoreflect.FieldDescript
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgRegisterZone) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgRegisterZone.zone_id":
+	case "nova.ibcstaking.v1.MsgRegisterZone.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_info":
 		return x.IcaInfo != nil
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_account":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_account":
 		return x.IcaAccount != nil
-	case "nova.icacontrol.v1.MsgRegisterZone.transfer_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.transfer_info":
 		return x.TransferInfo != nil
-	case "nova.icacontrol.v1.MsgRegisterZone.validator_address":
+	case "nova.ibcstaking.v1.MsgRegisterZone.validator_address":
 		return x.ValidatorAddress != ""
-	case "nova.icacontrol.v1.MsgRegisterZone.base_denom":
+	case "nova.ibcstaking.v1.MsgRegisterZone.base_denom":
 		return x.BaseDenom != ""
-	case "nova.icacontrol.v1.MsgRegisterZone.decimal":
+	case "nova.ibcstaking.v1.MsgRegisterZone.decimal":
 		return x.Decimal != int64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -190,25 +190,25 @@ func (x *fastReflection_MsgRegisterZone) Has(fd protoreflect.FieldDescriptor) bo
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgRegisterZone) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgRegisterZone.zone_id":
+	case "nova.ibcstaking.v1.MsgRegisterZone.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_info":
 		x.IcaInfo = nil
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_account":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_account":
 		x.IcaAccount = nil
-	case "nova.icacontrol.v1.MsgRegisterZone.transfer_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.transfer_info":
 		x.TransferInfo = nil
-	case "nova.icacontrol.v1.MsgRegisterZone.validator_address":
+	case "nova.ibcstaking.v1.MsgRegisterZone.validator_address":
 		x.ValidatorAddress = ""
-	case "nova.icacontrol.v1.MsgRegisterZone.base_denom":
+	case "nova.ibcstaking.v1.MsgRegisterZone.base_denom":
 		x.BaseDenom = ""
-	case "nova.icacontrol.v1.MsgRegisterZone.decimal":
+	case "nova.ibcstaking.v1.MsgRegisterZone.decimal":
 		x.Decimal = int64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -220,32 +220,32 @@ func (x *fastReflection_MsgRegisterZone) Clear(fd protoreflect.FieldDescriptor) 
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgRegisterZone) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgRegisterZone.zone_id":
+	case "nova.ibcstaking.v1.MsgRegisterZone.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_info":
 		value := x.IcaInfo
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_account":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_account":
 		value := x.IcaAccount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.transfer_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.transfer_info":
 		value := x.TransferInfo
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.validator_address":
+	case "nova.ibcstaking.v1.MsgRegisterZone.validator_address":
 		value := x.ValidatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgRegisterZone.base_denom":
+	case "nova.ibcstaking.v1.MsgRegisterZone.base_denom":
 		value := x.BaseDenom
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgRegisterZone.decimal":
+	case "nova.ibcstaking.v1.MsgRegisterZone.decimal":
 		value := x.Decimal
 		return protoreflect.ValueOfInt64(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZone does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZone does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -261,25 +261,25 @@ func (x *fastReflection_MsgRegisterZone) Get(descriptor protoreflect.FieldDescri
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgRegisterZone) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgRegisterZone.zone_id":
+	case "nova.ibcstaking.v1.MsgRegisterZone.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_info":
 		x.IcaInfo = value.Message().Interface().(*IcaConnectionInfo)
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_account":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_account":
 		x.IcaAccount = value.Message().Interface().(*IcaAccount)
-	case "nova.icacontrol.v1.MsgRegisterZone.transfer_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.transfer_info":
 		x.TransferInfo = value.Message().Interface().(*TransferConnectionInfo)
-	case "nova.icacontrol.v1.MsgRegisterZone.validator_address":
+	case "nova.ibcstaking.v1.MsgRegisterZone.validator_address":
 		x.ValidatorAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgRegisterZone.base_denom":
+	case "nova.ibcstaking.v1.MsgRegisterZone.base_denom":
 		x.BaseDenom = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgRegisterZone.decimal":
+	case "nova.ibcstaking.v1.MsgRegisterZone.decimal":
 		x.Decimal = value.Int()
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -295,34 +295,34 @@ func (x *fastReflection_MsgRegisterZone) Set(fd protoreflect.FieldDescriptor, va
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgRegisterZone) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_info":
 		if x.IcaInfo == nil {
 			x.IcaInfo = new(IcaConnectionInfo)
 		}
 		return protoreflect.ValueOfMessage(x.IcaInfo.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_account":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_account":
 		if x.IcaAccount == nil {
 			x.IcaAccount = new(IcaAccount)
 		}
 		return protoreflect.ValueOfMessage(x.IcaAccount.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.transfer_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.transfer_info":
 		if x.TransferInfo == nil {
 			x.TransferInfo = new(TransferConnectionInfo)
 		}
 		return protoreflect.ValueOfMessage(x.TransferInfo.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgRegisterZone is not mutable"))
-	case "nova.icacontrol.v1.MsgRegisterZone.validator_address":
-		panic(fmt.Errorf("field validator_address of message nova.icacontrol.v1.MsgRegisterZone is not mutable"))
-	case "nova.icacontrol.v1.MsgRegisterZone.base_denom":
-		panic(fmt.Errorf("field base_denom of message nova.icacontrol.v1.MsgRegisterZone is not mutable"))
-	case "nova.icacontrol.v1.MsgRegisterZone.decimal":
-		panic(fmt.Errorf("field decimal of message nova.icacontrol.v1.MsgRegisterZone is not mutable"))
+	case "nova.ibcstaking.v1.MsgRegisterZone.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgRegisterZone is not mutable"))
+	case "nova.ibcstaking.v1.MsgRegisterZone.validator_address":
+		panic(fmt.Errorf("field validator_address of message nova.ibcstaking.v1.MsgRegisterZone is not mutable"))
+	case "nova.ibcstaking.v1.MsgRegisterZone.base_denom":
+		panic(fmt.Errorf("field base_denom of message nova.ibcstaking.v1.MsgRegisterZone is not mutable"))
+	case "nova.ibcstaking.v1.MsgRegisterZone.decimal":
+		panic(fmt.Errorf("field decimal of message nova.ibcstaking.v1.MsgRegisterZone is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -331,28 +331,28 @@ func (x *fastReflection_MsgRegisterZone) Mutable(fd protoreflect.FieldDescriptor
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgRegisterZone) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgRegisterZone.zone_id":
+	case "nova.ibcstaking.v1.MsgRegisterZone.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_info":
 		m := new(IcaConnectionInfo)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.ica_account":
+	case "nova.ibcstaking.v1.MsgRegisterZone.ica_account":
 		m := new(IcaAccount)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.transfer_info":
+	case "nova.ibcstaking.v1.MsgRegisterZone.transfer_info":
 		m := new(TransferConnectionInfo)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.icacontrol.v1.MsgRegisterZone.validator_address":
+	case "nova.ibcstaking.v1.MsgRegisterZone.validator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgRegisterZone.base_denom":
+	case "nova.ibcstaking.v1.MsgRegisterZone.base_denom":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgRegisterZone.decimal":
+	case "nova.ibcstaking.v1.MsgRegisterZone.decimal":
 		return protoreflect.ValueOfInt64(int64(0))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -362,7 +362,7 @@ func (x *fastReflection_MsgRegisterZone) NewField(fd protoreflect.FieldDescripto
 func (x *fastReflection_MsgRegisterZone) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgRegisterZone", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgRegisterZone", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -853,8 +853,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgRegisterZoneResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgRegisterZoneResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgRegisterZoneResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgRegisterZoneResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgRegisterZoneResponse)(nil)
@@ -866,7 +866,7 @@ func (x *MsgRegisterZoneResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgRegisterZoneResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[1]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -939,9 +939,9 @@ func (x *fastReflection_MsgRegisterZoneResponse) Has(fd protoreflect.FieldDescri
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -955,9 +955,9 @@ func (x *fastReflection_MsgRegisterZoneResponse) Clear(fd protoreflect.FieldDesc
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -971,9 +971,9 @@ func (x *fastReflection_MsgRegisterZoneResponse) Get(descriptor protoreflect.Fie
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZoneResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZoneResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -991,9 +991,9 @@ func (x *fastReflection_MsgRegisterZoneResponse) Set(fd protoreflect.FieldDescri
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1011,9 +1011,9 @@ func (x *fastReflection_MsgRegisterZoneResponse) Mutable(fd protoreflect.FieldDe
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1024,9 +1024,9 @@ func (x *fastReflection_MsgRegisterZoneResponse) NewField(fd protoreflect.FieldD
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgRegisterZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgRegisterZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgRegisterZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1036,7 +1036,7 @@ func (x *fastReflection_MsgRegisterZoneResponse) NewField(fd protoreflect.FieldD
 func (x *fastReflection_MsgRegisterZoneResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgRegisterZoneResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgRegisterZoneResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1216,8 +1216,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgChangeRegisteredZoneInfo = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgChangeRegisteredZoneInfo")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgChangeRegisteredZoneInfo = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgChangeRegisteredZoneInfo")
 	fd_MsgChangeRegisteredZoneInfo_zone_id = md_MsgChangeRegisteredZoneInfo.Fields().ByName("zone_id")
 	fd_MsgChangeRegisteredZoneInfo_ica_info = md_MsgChangeRegisteredZoneInfo.Fields().ByName("ica_info")
 	fd_MsgChangeRegisteredZoneInfo_ica_account = md_MsgChangeRegisteredZoneInfo.Fields().ByName("ica_account")
@@ -1236,7 +1236,7 @@ func (x *MsgChangeRegisteredZoneInfo) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgChangeRegisteredZoneInfo) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[2]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1349,25 +1349,25 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfo) Range(f func(protoreflect.F
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgChangeRegisteredZoneInfo) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.zone_id":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info":
 		return x.IcaInfo != nil
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_account":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account":
 		return x.IcaAccount != nil
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.transfer_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info":
 		return x.TransferInfo != nil
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.validator_address":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.validator_address":
 		return x.ValidatorAddress != ""
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.base_denom":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.base_denom":
 		return x.BaseDenom != ""
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.decimal":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.decimal":
 		return x.Decimal != int64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1379,25 +1379,25 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfo) Has(fd protoreflect.FieldDe
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgChangeRegisteredZoneInfo) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.zone_id":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info":
 		x.IcaInfo = nil
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_account":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account":
 		x.IcaAccount = nil
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.transfer_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info":
 		x.TransferInfo = nil
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.validator_address":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.validator_address":
 		x.ValidatorAddress = ""
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.base_denom":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.base_denom":
 		x.BaseDenom = ""
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.decimal":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.decimal":
 		x.Decimal = int64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1409,32 +1409,32 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfo) Clear(fd protoreflect.Field
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgChangeRegisteredZoneInfo) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.zone_id":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info":
 		value := x.IcaInfo
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_account":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account":
 		value := x.IcaAccount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.transfer_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info":
 		value := x.TransferInfo
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.validator_address":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.validator_address":
 		value := x.ValidatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.base_denom":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.base_denom":
 		value := x.BaseDenom
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.decimal":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.decimal":
 		value := x.Decimal
 		return protoreflect.ValueOfInt64(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1450,25 +1450,25 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfo) Get(descriptor protoreflect
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgChangeRegisteredZoneInfo) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.zone_id":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info":
 		x.IcaInfo = value.Message().Interface().(*IcaConnectionInfo)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_account":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account":
 		x.IcaAccount = value.Message().Interface().(*IcaAccount)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.transfer_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info":
 		x.TransferInfo = value.Message().Interface().(*TransferConnectionInfo)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.validator_address":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.validator_address":
 		x.ValidatorAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.base_denom":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.base_denom":
 		x.BaseDenom = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.decimal":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.decimal":
 		x.Decimal = value.Int()
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1484,34 +1484,34 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfo) Set(fd protoreflect.FieldDe
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgChangeRegisteredZoneInfo) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info":
 		if x.IcaInfo == nil {
 			x.IcaInfo = new(IcaConnectionInfo)
 		}
 		return protoreflect.ValueOfMessage(x.IcaInfo.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_account":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account":
 		if x.IcaAccount == nil {
 			x.IcaAccount = new(IcaAccount)
 		}
 		return protoreflect.ValueOfMessage(x.IcaAccount.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.transfer_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info":
 		if x.TransferInfo == nil {
 			x.TransferInfo = new(TransferConnectionInfo)
 		}
 		return protoreflect.ValueOfMessage(x.TransferInfo.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo is not mutable"))
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.validator_address":
-		panic(fmt.Errorf("field validator_address of message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo is not mutable"))
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.base_denom":
-		panic(fmt.Errorf("field base_denom of message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo is not mutable"))
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.decimal":
-		panic(fmt.Errorf("field decimal of message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo is not mutable"))
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo is not mutable"))
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.validator_address":
+		panic(fmt.Errorf("field validator_address of message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo is not mutable"))
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.base_denom":
+		panic(fmt.Errorf("field base_denom of message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo is not mutable"))
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.decimal":
+		panic(fmt.Errorf("field decimal of message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1520,28 +1520,28 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfo) Mutable(fd protoreflect.Fie
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgChangeRegisteredZoneInfo) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.zone_id":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info":
 		m := new(IcaConnectionInfo)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_account":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account":
 		m := new(IcaAccount)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.transfer_info":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info":
 		m := new(TransferConnectionInfo)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.validator_address":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.validator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.base_denom":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.base_denom":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.decimal":
+	case "nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.decimal":
 		return protoreflect.ValueOfInt64(int64(0))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1551,7 +1551,7 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfo) NewField(fd protoreflect.Fi
 func (x *fastReflection_MsgChangeRegisteredZoneInfo) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgChangeRegisteredZoneInfo", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2042,8 +2042,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgChangeRegisteredZoneInfoResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgChangeRegisteredZoneInfoResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgChangeRegisteredZoneInfoResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgChangeRegisteredZoneInfoResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgChangeRegisteredZoneInfoResponse)(nil)
@@ -2055,7 +2055,7 @@ func (x *MsgChangeRegisteredZoneInfoResponse) ProtoReflect() protoreflect.Messag
 }
 
 func (x *MsgChangeRegisteredZoneInfoResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[3]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2128,9 +2128,9 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfoResponse) Has(fd protoreflect
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2144,9 +2144,9 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfoResponse) Clear(fd protorefle
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2160,9 +2160,9 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfoResponse) Get(descriptor prot
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2180,9 +2180,9 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfoResponse) Set(fd protoreflect
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2200,9 +2200,9 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfoResponse) Mutable(fd protoref
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2213,9 +2213,9 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfoResponse) NewField(fd protore
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2225,7 +2225,7 @@ func (x *fastReflection_MsgChangeRegisteredZoneInfoResponse) NewField(fd protore
 func (x *fastReflection_MsgChangeRegisteredZoneInfoResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2400,8 +2400,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgDeleteRegisteredZone = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgDeleteRegisteredZone")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgDeleteRegisteredZone = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgDeleteRegisteredZone")
 	fd_MsgDeleteRegisteredZone_zone_id = md_MsgDeleteRegisteredZone.Fields().ByName("zone_id")
 	fd_MsgDeleteRegisteredZone_controller_address = md_MsgDeleteRegisteredZone.Fields().ByName("controller_address")
 }
@@ -2415,7 +2415,7 @@ func (x *MsgDeleteRegisteredZone) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgDeleteRegisteredZone) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[4]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2498,15 +2498,15 @@ func (x *fastReflection_MsgDeleteRegisteredZone) Range(f func(protoreflect.Field
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgDeleteRegisteredZone) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.zone_id":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.controller_address":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.controller_address":
 		return x.ControllerAddress != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2518,15 +2518,15 @@ func (x *fastReflection_MsgDeleteRegisteredZone) Has(fd protoreflect.FieldDescri
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgDeleteRegisteredZone) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.zone_id":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.controller_address":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.controller_address":
 		x.ControllerAddress = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2538,17 +2538,17 @@ func (x *fastReflection_MsgDeleteRegisteredZone) Clear(fd protoreflect.FieldDesc
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgDeleteRegisteredZone) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.zone_id":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.controller_address":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.controller_address":
 		value := x.ControllerAddress
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZone does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZone does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2564,15 +2564,15 @@ func (x *fastReflection_MsgDeleteRegisteredZone) Get(descriptor protoreflect.Fie
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgDeleteRegisteredZone) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.zone_id":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.controller_address":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.controller_address":
 		x.ControllerAddress = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2588,15 +2588,15 @@ func (x *fastReflection_MsgDeleteRegisteredZone) Set(fd protoreflect.FieldDescri
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgDeleteRegisteredZone) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgDeleteRegisteredZone is not mutable"))
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.controller_address":
-		panic(fmt.Errorf("field controller_address of message nova.icacontrol.v1.MsgDeleteRegisteredZone is not mutable"))
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgDeleteRegisteredZone is not mutable"))
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.ibcstaking.v1.MsgDeleteRegisteredZone is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2605,15 +2605,15 @@ func (x *fastReflection_MsgDeleteRegisteredZone) Mutable(fd protoreflect.FieldDe
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgDeleteRegisteredZone) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.zone_id":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgDeleteRegisteredZone.controller_address":
+	case "nova.ibcstaking.v1.MsgDeleteRegisteredZone.controller_address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZone"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZone"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZone does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2623,7 +2623,7 @@ func (x *fastReflection_MsgDeleteRegisteredZone) NewField(fd protoreflect.FieldD
 func (x *fastReflection_MsgDeleteRegisteredZone) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgDeleteRegisteredZone", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgDeleteRegisteredZone", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2882,8 +2882,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgDeleteRegisteredZoneResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgDeleteRegisteredZoneResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgDeleteRegisteredZoneResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgDeleteRegisteredZoneResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgDeleteRegisteredZoneResponse)(nil)
@@ -2895,7 +2895,7 @@ func (x *MsgDeleteRegisteredZoneResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgDeleteRegisteredZoneResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[5]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2968,9 +2968,9 @@ func (x *fastReflection_MsgDeleteRegisteredZoneResponse) Has(fd protoreflect.Fie
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2984,9 +2984,9 @@ func (x *fastReflection_MsgDeleteRegisteredZoneResponse) Clear(fd protoreflect.F
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3000,9 +3000,9 @@ func (x *fastReflection_MsgDeleteRegisteredZoneResponse) Get(descriptor protoref
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -3020,9 +3020,9 @@ func (x *fastReflection_MsgDeleteRegisteredZoneResponse) Set(fd protoreflect.Fie
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3040,9 +3040,9 @@ func (x *fastReflection_MsgDeleteRegisteredZoneResponse) Mutable(fd protoreflect
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3053,9 +3053,9 @@ func (x *fastReflection_MsgDeleteRegisteredZoneResponse) NewField(fd protoreflec
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3065,7 +3065,7 @@ func (x *fastReflection_MsgDeleteRegisteredZoneResponse) NewField(fd protoreflec
 func (x *fastReflection_MsgDeleteRegisteredZoneResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -3242,8 +3242,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaDelegate = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaDelegate")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaDelegate = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaDelegate")
 	fd_MsgIcaDelegate_zone_id = md_MsgIcaDelegate.Fields().ByName("zone_id")
 	fd_MsgIcaDelegate_host_address = md_MsgIcaDelegate.Fields().ByName("host_address")
 	fd_MsgIcaDelegate_controller_address = md_MsgIcaDelegate.Fields().ByName("controller_address")
@@ -3259,7 +3259,7 @@ func (x *MsgIcaDelegate) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaDelegate) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[6]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3354,19 +3354,19 @@ func (x *fastReflection_MsgIcaDelegate) Range(f func(protoreflect.FieldDescripto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgIcaDelegate) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaDelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgIcaDelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.host_address":
 		return x.HostAddress != ""
-	case "nova.icacontrol.v1.MsgIcaDelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.controller_address":
 		return x.ControllerAddress != ""
-	case "nova.icacontrol.v1.MsgIcaDelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.amount":
 		return x.Amount != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3378,19 +3378,19 @@ func (x *fastReflection_MsgIcaDelegate) Has(fd protoreflect.FieldDescriptor) boo
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaDelegate) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaDelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgIcaDelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.host_address":
 		x.HostAddress = ""
-	case "nova.icacontrol.v1.MsgIcaDelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.controller_address":
 		x.ControllerAddress = ""
-	case "nova.icacontrol.v1.MsgIcaDelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3402,23 +3402,23 @@ func (x *fastReflection_MsgIcaDelegate) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgIcaDelegate) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgIcaDelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaDelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.host_address":
 		value := x.HostAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaDelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.controller_address":
 		value := x.ControllerAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaDelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.amount":
 		value := x.Amount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegate does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegate does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -3434,19 +3434,19 @@ func (x *fastReflection_MsgIcaDelegate) Get(descriptor protoreflect.FieldDescrip
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaDelegate) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaDelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaDelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.host_address":
 		x.HostAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaDelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.controller_address":
 		x.ControllerAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaDelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3462,22 +3462,22 @@ func (x *fastReflection_MsgIcaDelegate) Set(fd protoreflect.FieldDescriptor, val
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaDelegate) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaDelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.amount":
 		if x.Amount == nil {
 			x.Amount = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.icacontrol.v1.MsgIcaDelegate.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgIcaDelegate is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaDelegate.host_address":
-		panic(fmt.Errorf("field host_address of message nova.icacontrol.v1.MsgIcaDelegate is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaDelegate.controller_address":
-		panic(fmt.Errorf("field controller_address of message nova.icacontrol.v1.MsgIcaDelegate is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaDelegate.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgIcaDelegate is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaDelegate.host_address":
+		panic(fmt.Errorf("field host_address of message nova.ibcstaking.v1.MsgIcaDelegate is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaDelegate.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.ibcstaking.v1.MsgIcaDelegate is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3486,20 +3486,20 @@ func (x *fastReflection_MsgIcaDelegate) Mutable(fd protoreflect.FieldDescriptor)
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgIcaDelegate) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaDelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaDelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.host_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaDelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.controller_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaDelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaDelegate.amount":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3509,7 +3509,7 @@ func (x *fastReflection_MsgIcaDelegate) NewField(fd protoreflect.FieldDescriptor
 func (x *fastReflection_MsgIcaDelegate) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaDelegate", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaDelegate", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -3865,8 +3865,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaDelegateResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaDelegateResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaDelegateResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaDelegateResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgIcaDelegateResponse)(nil)
@@ -3878,7 +3878,7 @@ func (x *MsgIcaDelegateResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaDelegateResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[7]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3951,9 +3951,9 @@ func (x *fastReflection_MsgIcaDelegateResponse) Has(fd protoreflect.FieldDescrip
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3967,9 +3967,9 @@ func (x *fastReflection_MsgIcaDelegateResponse) Clear(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3983,9 +3983,9 @@ func (x *fastReflection_MsgIcaDelegateResponse) Get(descriptor protoreflect.Fiel
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegateResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegateResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -4003,9 +4003,9 @@ func (x *fastReflection_MsgIcaDelegateResponse) Set(fd protoreflect.FieldDescrip
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4023,9 +4023,9 @@ func (x *fastReflection_MsgIcaDelegateResponse) Mutable(fd protoreflect.FieldDes
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4036,9 +4036,9 @@ func (x *fastReflection_MsgIcaDelegateResponse) NewField(fd protoreflect.FieldDe
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaDelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaDelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaDelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4048,7 +4048,7 @@ func (x *fastReflection_MsgIcaDelegateResponse) NewField(fd protoreflect.FieldDe
 func (x *fastReflection_MsgIcaDelegateResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaDelegateResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaDelegateResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -4225,8 +4225,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaUndelegate = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaUndelegate")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaUndelegate = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaUndelegate")
 	fd_MsgIcaUndelegate_zone_id = md_MsgIcaUndelegate.Fields().ByName("zone_id")
 	fd_MsgIcaUndelegate_host_address = md_MsgIcaUndelegate.Fields().ByName("host_address")
 	fd_MsgIcaUndelegate_controller_address = md_MsgIcaUndelegate.Fields().ByName("controller_address")
@@ -4242,7 +4242,7 @@ func (x *MsgIcaUndelegate) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaUndelegate) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[8]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4337,19 +4337,19 @@ func (x *fastReflection_MsgIcaUndelegate) Range(f func(protoreflect.FieldDescrip
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgIcaUndelegate) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaUndelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgIcaUndelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.host_address":
 		return x.HostAddress != ""
-	case "nova.icacontrol.v1.MsgIcaUndelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.controller_address":
 		return x.ControllerAddress != ""
-	case "nova.icacontrol.v1.MsgIcaUndelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.amount":
 		return x.Amount != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4361,19 +4361,19 @@ func (x *fastReflection_MsgIcaUndelegate) Has(fd protoreflect.FieldDescriptor) b
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaUndelegate) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaUndelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgIcaUndelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.host_address":
 		x.HostAddress = ""
-	case "nova.icacontrol.v1.MsgIcaUndelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.controller_address":
 		x.ControllerAddress = ""
-	case "nova.icacontrol.v1.MsgIcaUndelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4385,23 +4385,23 @@ func (x *fastReflection_MsgIcaUndelegate) Clear(fd protoreflect.FieldDescriptor)
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgIcaUndelegate) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgIcaUndelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaUndelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.host_address":
 		value := x.HostAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaUndelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.controller_address":
 		value := x.ControllerAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaUndelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.amount":
 		value := x.Amount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegate does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegate does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -4417,19 +4417,19 @@ func (x *fastReflection_MsgIcaUndelegate) Get(descriptor protoreflect.FieldDescr
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaUndelegate) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaUndelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaUndelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.host_address":
 		x.HostAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaUndelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.controller_address":
 		x.ControllerAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaUndelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4445,22 +4445,22 @@ func (x *fastReflection_MsgIcaUndelegate) Set(fd protoreflect.FieldDescriptor, v
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaUndelegate) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaUndelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.amount":
 		if x.Amount == nil {
 			x.Amount = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.icacontrol.v1.MsgIcaUndelegate.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgIcaUndelegate is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaUndelegate.host_address":
-		panic(fmt.Errorf("field host_address of message nova.icacontrol.v1.MsgIcaUndelegate is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaUndelegate.controller_address":
-		panic(fmt.Errorf("field controller_address of message nova.icacontrol.v1.MsgIcaUndelegate is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgIcaUndelegate is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.host_address":
+		panic(fmt.Errorf("field host_address of message nova.ibcstaking.v1.MsgIcaUndelegate is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.ibcstaking.v1.MsgIcaUndelegate is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4469,20 +4469,20 @@ func (x *fastReflection_MsgIcaUndelegate) Mutable(fd protoreflect.FieldDescripto
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgIcaUndelegate) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaUndelegate.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaUndelegate.host_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.host_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaUndelegate.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.controller_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaUndelegate.amount":
+	case "nova.ibcstaking.v1.MsgIcaUndelegate.amount":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegate"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegate"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegate does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4492,7 +4492,7 @@ func (x *fastReflection_MsgIcaUndelegate) NewField(fd protoreflect.FieldDescript
 func (x *fastReflection_MsgIcaUndelegate) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaUndelegate", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaUndelegate", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -4848,8 +4848,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaUndelegateResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaUndelegateResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaUndelegateResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaUndelegateResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgIcaUndelegateResponse)(nil)
@@ -4861,7 +4861,7 @@ func (x *MsgIcaUndelegateResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaUndelegateResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[9]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4934,9 +4934,9 @@ func (x *fastReflection_MsgIcaUndelegateResponse) Has(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4950,9 +4950,9 @@ func (x *fastReflection_MsgIcaUndelegateResponse) Clear(fd protoreflect.FieldDes
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -4966,9 +4966,9 @@ func (x *fastReflection_MsgIcaUndelegateResponse) Get(descriptor protoreflect.Fi
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegateResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegateResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -4986,9 +4986,9 @@ func (x *fastReflection_MsgIcaUndelegateResponse) Set(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5006,9 +5006,9 @@ func (x *fastReflection_MsgIcaUndelegateResponse) Mutable(fd protoreflect.FieldD
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5019,9 +5019,9 @@ func (x *fastReflection_MsgIcaUndelegateResponse) NewField(fd protoreflect.Field
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaUndelegateResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaUndelegateResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaUndelegateResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5031,7 +5031,7 @@ func (x *fastReflection_MsgIcaUndelegateResponse) NewField(fd protoreflect.Field
 func (x *fastReflection_MsgIcaUndelegateResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaUndelegateResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaUndelegateResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -5208,8 +5208,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaAutoStaking = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAutoStaking")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaAutoStaking = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaAutoStaking")
 	fd_MsgIcaAutoStaking_zone_id = md_MsgIcaAutoStaking.Fields().ByName("zone_id")
 	fd_MsgIcaAutoStaking_host_address = md_MsgIcaAutoStaking.Fields().ByName("host_address")
 	fd_MsgIcaAutoStaking_daomodifier_address = md_MsgIcaAutoStaking.Fields().ByName("daomodifier_address")
@@ -5225,7 +5225,7 @@ func (x *MsgIcaAutoStaking) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAutoStaking) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[10]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5320,19 +5320,19 @@ func (x *fastReflection_MsgIcaAutoStaking) Range(f func(protoreflect.FieldDescri
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgIcaAutoStaking) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.host_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.host_address":
 		return x.HostAddress != ""
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.daomodifier_address":
 		return x.DaomodifierAddress != ""
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.amount":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.amount":
 		return x.Amount != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStaking"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5344,19 +5344,19 @@ func (x *fastReflection_MsgIcaAutoStaking) Has(fd protoreflect.FieldDescriptor) 
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAutoStaking) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.host_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.host_address":
 		x.HostAddress = ""
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.daomodifier_address":
 		x.DaomodifierAddress = ""
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.amount":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStaking"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5368,23 +5368,23 @@ func (x *fastReflection_MsgIcaAutoStaking) Clear(fd protoreflect.FieldDescriptor
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgIcaAutoStaking) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.host_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.host_address":
 		value := x.HostAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.daomodifier_address":
 		value := x.DaomodifierAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.amount":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.amount":
 		value := x.Amount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStaking"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStaking does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStaking does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -5400,19 +5400,19 @@ func (x *fastReflection_MsgIcaAutoStaking) Get(descriptor protoreflect.FieldDesc
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAutoStaking) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.host_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.host_address":
 		x.HostAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.daomodifier_address":
 		x.DaomodifierAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.amount":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStaking"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5428,22 +5428,22 @@ func (x *fastReflection_MsgIcaAutoStaking) Set(fd protoreflect.FieldDescriptor, 
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAutoStaking) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.amount":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.amount":
 		if x.Amount == nil {
 			x.Amount = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgIcaAutoStaking is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.host_address":
-		panic(fmt.Errorf("field host_address of message nova.icacontrol.v1.MsgIcaAutoStaking is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.daomodifier_address":
-		panic(fmt.Errorf("field daomodifier_address of message nova.icacontrol.v1.MsgIcaAutoStaking is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgIcaAutoStaking is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.host_address":
+		panic(fmt.Errorf("field host_address of message nova.ibcstaking.v1.MsgIcaAutoStaking is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.daomodifier_address":
+		panic(fmt.Errorf("field daomodifier_address of message nova.ibcstaking.v1.MsgIcaAutoStaking is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStaking"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5452,20 +5452,20 @@ func (x *fastReflection_MsgIcaAutoStaking) Mutable(fd protoreflect.FieldDescript
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgIcaAutoStaking) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.host_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.host_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.daomodifier_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAutoStaking.amount":
+	case "nova.ibcstaking.v1.MsgIcaAutoStaking.amount":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStaking"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStaking"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStaking does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5475,7 +5475,7 @@ func (x *fastReflection_MsgIcaAutoStaking) NewField(fd protoreflect.FieldDescrip
 func (x *fastReflection_MsgIcaAutoStaking) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaAutoStaking", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAutoStaking", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -5831,8 +5831,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaAutoStakingResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAutoStakingResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaAutoStakingResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaAutoStakingResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgIcaAutoStakingResponse)(nil)
@@ -5844,7 +5844,7 @@ func (x *MsgIcaAutoStakingResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAutoStakingResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[11]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5917,9 +5917,9 @@ func (x *fastReflection_MsgIcaAutoStakingResponse) Has(fd protoreflect.FieldDesc
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStakingResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5933,9 +5933,9 @@ func (x *fastReflection_MsgIcaAutoStakingResponse) Clear(fd protoreflect.FieldDe
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStakingResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5949,9 +5949,9 @@ func (x *fastReflection_MsgIcaAutoStakingResponse) Get(descriptor protoreflect.F
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStakingResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStakingResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStakingResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -5969,9 +5969,9 @@ func (x *fastReflection_MsgIcaAutoStakingResponse) Set(fd protoreflect.FieldDesc
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStakingResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -5989,9 +5989,9 @@ func (x *fastReflection_MsgIcaAutoStakingResponse) Mutable(fd protoreflect.Field
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStakingResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6002,9 +6002,9 @@ func (x *fastReflection_MsgIcaAutoStakingResponse) NewField(fd protoreflect.Fiel
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAutoStakingResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAutoStakingResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAutoStakingResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6014,7 +6014,7 @@ func (x *fastReflection_MsgIcaAutoStakingResponse) NewField(fd protoreflect.Fiel
 func (x *fastReflection_MsgIcaAutoStakingResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaAutoStakingResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAutoStakingResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -6194,8 +6194,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaTransfer = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaTransfer")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaTransfer = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaTransfer")
 	fd_MsgIcaTransfer_zone_id = md_MsgIcaTransfer.Fields().ByName("zone_id")
 	fd_MsgIcaTransfer_host_address = md_MsgIcaTransfer.Fields().ByName("host_address")
 	fd_MsgIcaTransfer_daomodifier_address = md_MsgIcaTransfer.Fields().ByName("daomodifier_address")
@@ -6214,7 +6214,7 @@ func (x *MsgIcaTransfer) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaTransfer) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[12]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6327,25 +6327,25 @@ func (x *fastReflection_MsgIcaTransfer) Range(f func(protoreflect.FieldDescripto
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgIcaTransfer) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaTransfer.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.host_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.host_address":
 		return x.HostAddress != ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.daomodifier_address":
 		return x.DaomodifierAddress != ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.receiver_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.receiver_address":
 		return x.ReceiverAddress != ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_port_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_port_id":
 		return x.IcaTransferPortId != ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_channel_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_channel_id":
 		return x.IcaTransferChannelId != ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.amount":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.amount":
 		return x.Amount != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransfer"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransfer"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6357,25 +6357,25 @@ func (x *fastReflection_MsgIcaTransfer) Has(fd protoreflect.FieldDescriptor) boo
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaTransfer) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaTransfer.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.host_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.host_address":
 		x.HostAddress = ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.daomodifier_address":
 		x.DaomodifierAddress = ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.receiver_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.receiver_address":
 		x.ReceiverAddress = ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_port_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_port_id":
 		x.IcaTransferPortId = ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_channel_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_channel_id":
 		x.IcaTransferChannelId = ""
-	case "nova.icacontrol.v1.MsgIcaTransfer.amount":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransfer"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransfer"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6387,32 +6387,32 @@ func (x *fastReflection_MsgIcaTransfer) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgIcaTransfer) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgIcaTransfer.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaTransfer.host_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.host_address":
 		value := x.HostAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaTransfer.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.daomodifier_address":
 		value := x.DaomodifierAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaTransfer.receiver_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.receiver_address":
 		value := x.ReceiverAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_port_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_port_id":
 		value := x.IcaTransferPortId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_channel_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_channel_id":
 		value := x.IcaTransferChannelId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaTransfer.amount":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.amount":
 		value := x.Amount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransfer"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransfer"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransfer does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransfer does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -6428,25 +6428,25 @@ func (x *fastReflection_MsgIcaTransfer) Get(descriptor protoreflect.FieldDescrip
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaTransfer) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaTransfer.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaTransfer.host_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.host_address":
 		x.HostAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaTransfer.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.daomodifier_address":
 		x.DaomodifierAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaTransfer.receiver_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.receiver_address":
 		x.ReceiverAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_port_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_port_id":
 		x.IcaTransferPortId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_channel_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_channel_id":
 		x.IcaTransferChannelId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaTransfer.amount":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransfer"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransfer"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6462,28 +6462,28 @@ func (x *fastReflection_MsgIcaTransfer) Set(fd protoreflect.FieldDescriptor, val
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaTransfer) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaTransfer.amount":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.amount":
 		if x.Amount == nil {
 			x.Amount = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.icacontrol.v1.MsgIcaTransfer.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgIcaTransfer is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaTransfer.host_address":
-		panic(fmt.Errorf("field host_address of message nova.icacontrol.v1.MsgIcaTransfer is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaTransfer.daomodifier_address":
-		panic(fmt.Errorf("field daomodifier_address of message nova.icacontrol.v1.MsgIcaTransfer is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaTransfer.receiver_address":
-		panic(fmt.Errorf("field receiver_address of message nova.icacontrol.v1.MsgIcaTransfer is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_port_id":
-		panic(fmt.Errorf("field ica_transfer_port_id of message nova.icacontrol.v1.MsgIcaTransfer is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_channel_id":
-		panic(fmt.Errorf("field ica_transfer_channel_id of message nova.icacontrol.v1.MsgIcaTransfer is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaTransfer.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgIcaTransfer is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaTransfer.host_address":
+		panic(fmt.Errorf("field host_address of message nova.ibcstaking.v1.MsgIcaTransfer is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaTransfer.daomodifier_address":
+		panic(fmt.Errorf("field daomodifier_address of message nova.ibcstaking.v1.MsgIcaTransfer is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaTransfer.receiver_address":
+		panic(fmt.Errorf("field receiver_address of message nova.ibcstaking.v1.MsgIcaTransfer is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_port_id":
+		panic(fmt.Errorf("field ica_transfer_port_id of message nova.ibcstaking.v1.MsgIcaTransfer is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_channel_id":
+		panic(fmt.Errorf("field ica_transfer_channel_id of message nova.ibcstaking.v1.MsgIcaTransfer is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransfer"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransfer"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6492,26 +6492,26 @@ func (x *fastReflection_MsgIcaTransfer) Mutable(fd protoreflect.FieldDescriptor)
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgIcaTransfer) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaTransfer.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaTransfer.host_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.host_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaTransfer.daomodifier_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.daomodifier_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaTransfer.receiver_address":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.receiver_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_port_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_port_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaTransfer.ica_transfer_channel_id":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.ica_transfer_channel_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaTransfer.amount":
+	case "nova.ibcstaking.v1.MsgIcaTransfer.amount":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransfer"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransfer"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransfer does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6521,7 +6521,7 @@ func (x *fastReflection_MsgIcaTransfer) NewField(fd protoreflect.FieldDescriptor
 func (x *fastReflection_MsgIcaTransfer) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaTransfer", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaTransfer", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -7006,8 +7006,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaTransferResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaTransferResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaTransferResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaTransferResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgIcaTransferResponse)(nil)
@@ -7019,7 +7019,7 @@ func (x *MsgIcaTransferResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaTransferResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[13]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7092,9 +7092,9 @@ func (x *fastReflection_MsgIcaTransferResponse) Has(fd protoreflect.FieldDescrip
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransferResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransferResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7108,9 +7108,9 @@ func (x *fastReflection_MsgIcaTransferResponse) Clear(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransferResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransferResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7124,9 +7124,9 @@ func (x *fastReflection_MsgIcaTransferResponse) Get(descriptor protoreflect.Fiel
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransferResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransferResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransferResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransferResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -7144,9 +7144,9 @@ func (x *fastReflection_MsgIcaTransferResponse) Set(fd protoreflect.FieldDescrip
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransferResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransferResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7164,9 +7164,9 @@ func (x *fastReflection_MsgIcaTransferResponse) Mutable(fd protoreflect.FieldDes
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransferResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransferResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7177,9 +7177,9 @@ func (x *fastReflection_MsgIcaTransferResponse) NewField(fd protoreflect.FieldDe
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaTransferResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaTransferResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaTransferResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7189,7 +7189,7 @@ func (x *fastReflection_MsgIcaTransferResponse) NewField(fd protoreflect.FieldDe
 func (x *fastReflection_MsgIcaTransferResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaTransferResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaTransferResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -7366,8 +7366,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaAuthzGrant = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAuthzGrant")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaAuthzGrant = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaAuthzGrant")
 	fd_MsgIcaAuthzGrant_zone_id = md_MsgIcaAuthzGrant.Fields().ByName("zone_id")
 	fd_MsgIcaAuthzGrant_grantee = md_MsgIcaAuthzGrant.Fields().ByName("grantee")
 	fd_MsgIcaAuthzGrant_controller_address = md_MsgIcaAuthzGrant.Fields().ByName("controller_address")
@@ -7383,7 +7383,7 @@ func (x *MsgIcaAuthzGrant) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAuthzGrant) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[14]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7478,19 +7478,19 @@ func (x *fastReflection_MsgIcaAuthzGrant) Range(f func(protoreflect.FieldDescrip
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgIcaAuthzGrant) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
 		return x.Grantee != ""
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
 		return x.ControllerAddress != ""
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grant":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
 		return x.Grant != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrant"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7502,19 +7502,19 @@ func (x *fastReflection_MsgIcaAuthzGrant) Has(fd protoreflect.FieldDescriptor) b
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAuthzGrant) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
 		x.Grantee = ""
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
 		x.ControllerAddress = ""
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grant":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
 		x.Grant = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrant"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7526,23 +7526,23 @@ func (x *fastReflection_MsgIcaAuthzGrant) Clear(fd protoreflect.FieldDescriptor)
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgIcaAuthzGrant) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
 		value := x.Grantee
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
 		value := x.ControllerAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grant":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
 		value := x.Grant
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrant"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrant does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -7558,19 +7558,19 @@ func (x *fastReflection_MsgIcaAuthzGrant) Get(descriptor protoreflect.FieldDescr
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAuthzGrant) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
 		x.Grantee = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
 		x.ControllerAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grant":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
 		x.Grant = value.Message().Interface().(*v1beta11.Grant)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrant"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7586,22 +7586,22 @@ func (x *fastReflection_MsgIcaAuthzGrant) Set(fd protoreflect.FieldDescriptor, v
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAuthzGrant) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grant":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
 		if x.Grant == nil {
 			x.Grant = new(v1beta11.Grant)
 		}
 		return protoreflect.ValueOfMessage(x.Grant.ProtoReflect())
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgIcaAuthzGrant is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grantee":
-		panic(fmt.Errorf("field grantee of message nova.icacontrol.v1.MsgIcaAuthzGrant is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.controller_address":
-		panic(fmt.Errorf("field controller_address of message nova.icacontrol.v1.MsgIcaAuthzGrant is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgIcaAuthzGrant is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
+		panic(fmt.Errorf("field grantee of message nova.ibcstaking.v1.MsgIcaAuthzGrant is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.ibcstaking.v1.MsgIcaAuthzGrant is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrant"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7610,20 +7610,20 @@ func (x *fastReflection_MsgIcaAuthzGrant) Mutable(fd protoreflect.FieldDescripto
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgIcaAuthzGrant) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grantee":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.controller_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAuthzGrant.grant":
+	case "nova.ibcstaking.v1.MsgIcaAuthzGrant.grant":
 		m := new(v1beta11.Grant)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrant"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrant"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrant does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7633,7 +7633,7 @@ func (x *fastReflection_MsgIcaAuthzGrant) NewField(fd protoreflect.FieldDescript
 func (x *fastReflection_MsgIcaAuthzGrant) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaAuthzGrant", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAuthzGrant", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -7989,8 +7989,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaAuthzGrantResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAuthzGrantResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaAuthzGrantResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaAuthzGrantResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgIcaAuthzGrantResponse)(nil)
@@ -8002,7 +8002,7 @@ func (x *MsgIcaAuthzGrantResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAuthzGrantResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[15]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8075,9 +8075,9 @@ func (x *fastReflection_MsgIcaAuthzGrantResponse) Has(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrantResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8091,9 +8091,9 @@ func (x *fastReflection_MsgIcaAuthzGrantResponse) Clear(fd protoreflect.FieldDes
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrantResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8107,9 +8107,9 @@ func (x *fastReflection_MsgIcaAuthzGrantResponse) Get(descriptor protoreflect.Fi
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrantResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrantResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -8127,9 +8127,9 @@ func (x *fastReflection_MsgIcaAuthzGrantResponse) Set(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrantResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8147,9 +8147,9 @@ func (x *fastReflection_MsgIcaAuthzGrantResponse) Mutable(fd protoreflect.FieldD
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrantResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8160,9 +8160,9 @@ func (x *fastReflection_MsgIcaAuthzGrantResponse) NewField(fd protoreflect.Field
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzGrantResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzGrantResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8172,7 +8172,7 @@ func (x *fastReflection_MsgIcaAuthzGrantResponse) NewField(fd protoreflect.Field
 func (x *fastReflection_MsgIcaAuthzGrantResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaAuthzGrantResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAuthzGrantResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -8349,8 +8349,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaAuthzRevoke = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAuthzRevoke")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaAuthzRevoke = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaAuthzRevoke")
 	fd_MsgIcaAuthzRevoke_zone_id = md_MsgIcaAuthzRevoke.Fields().ByName("zone_id")
 	fd_MsgIcaAuthzRevoke_grantee = md_MsgIcaAuthzRevoke.Fields().ByName("grantee")
 	fd_MsgIcaAuthzRevoke_controller_address = md_MsgIcaAuthzRevoke.Fields().ByName("controller_address")
@@ -8366,7 +8366,7 @@ func (x *MsgIcaAuthzRevoke) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAuthzRevoke) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[16]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8461,19 +8461,19 @@ func (x *fastReflection_MsgIcaAuthzRevoke) Range(f func(protoreflect.FieldDescri
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgIcaAuthzRevoke) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
 		return x.ZoneId != ""
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
 		return x.Grantee != ""
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
 		return x.ControllerAddress != ""
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.msg_type_url":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
 		return x.MsgTypeUrl != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevoke"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8485,19 +8485,19 @@ func (x *fastReflection_MsgIcaAuthzRevoke) Has(fd protoreflect.FieldDescriptor) 
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAuthzRevoke) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
 		x.ZoneId = ""
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
 		x.Grantee = ""
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
 		x.ControllerAddress = ""
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.msg_type_url":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
 		x.MsgTypeUrl = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevoke"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8509,23 +8509,23 @@ func (x *fastReflection_MsgIcaAuthzRevoke) Clear(fd protoreflect.FieldDescriptor
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgIcaAuthzRevoke) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
 		value := x.Grantee
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
 		value := x.ControllerAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.msg_type_url":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
 		value := x.MsgTypeUrl
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevoke"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevoke does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -8541,19 +8541,19 @@ func (x *fastReflection_MsgIcaAuthzRevoke) Get(descriptor protoreflect.FieldDesc
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAuthzRevoke) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
 		x.Grantee = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
 		x.ControllerAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.msg_type_url":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
 		x.MsgTypeUrl = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevoke"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8569,19 +8569,19 @@ func (x *fastReflection_MsgIcaAuthzRevoke) Set(fd protoreflect.FieldDescriptor, 
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgIcaAuthzRevoke) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.MsgIcaAuthzRevoke is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.grantee":
-		panic(fmt.Errorf("field grantee of message nova.icacontrol.v1.MsgIcaAuthzRevoke is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.controller_address":
-		panic(fmt.Errorf("field controller_address of message nova.icacontrol.v1.MsgIcaAuthzRevoke is not mutable"))
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.msg_type_url":
-		panic(fmt.Errorf("field msg_type_url of message nova.icacontrol.v1.MsgIcaAuthzRevoke is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.ibcstaking.v1.MsgIcaAuthzRevoke is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
+		panic(fmt.Errorf("field grantee of message nova.ibcstaking.v1.MsgIcaAuthzRevoke is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.ibcstaking.v1.MsgIcaAuthzRevoke is not mutable"))
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
+		panic(fmt.Errorf("field msg_type_url of message nova.ibcstaking.v1.MsgIcaAuthzRevoke is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevoke"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8590,19 +8590,19 @@ func (x *fastReflection_MsgIcaAuthzRevoke) Mutable(fd protoreflect.FieldDescript
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgIcaAuthzRevoke) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.zone_id":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.grantee":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.grantee":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.controller_address":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.controller_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.MsgIcaAuthzRevoke.msg_type_url":
+	case "nova.ibcstaking.v1.MsgIcaAuthzRevoke.msg_type_url":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevoke"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevoke"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevoke does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -8612,7 +8612,7 @@ func (x *fastReflection_MsgIcaAuthzRevoke) NewField(fd protoreflect.FieldDescrip
 func (x *fastReflection_MsgIcaAuthzRevoke) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaAuthzRevoke", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAuthzRevoke", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -8957,8 +8957,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_tx_proto_init()
-	md_MsgIcaAuthzRevokeResponse = File_nova_ibcstaking_v1_tx_proto.Messages().ByName("MsgIcaAuthzRevokeResponse")
+	file_nova_icacontrol_v1_tx_proto_init()
+	md_MsgIcaAuthzRevokeResponse = File_nova_icacontrol_v1_tx_proto.Messages().ByName("MsgIcaAuthzRevokeResponse")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgIcaAuthzRevokeResponse)(nil)
@@ -8970,7 +8970,7 @@ func (x *MsgIcaAuthzRevokeResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *MsgIcaAuthzRevokeResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[17]
+	mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9043,9 +9043,9 @@ func (x *fastReflection_MsgIcaAuthzRevokeResponse) Has(fd protoreflect.FieldDesc
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevokeResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -9059,9 +9059,9 @@ func (x *fastReflection_MsgIcaAuthzRevokeResponse) Clear(fd protoreflect.FieldDe
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevokeResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -9075,9 +9075,9 @@ func (x *fastReflection_MsgIcaAuthzRevokeResponse) Get(descriptor protoreflect.F
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevokeResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevokeResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -9095,9 +9095,9 @@ func (x *fastReflection_MsgIcaAuthzRevokeResponse) Set(fd protoreflect.FieldDesc
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevokeResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -9115,9 +9115,9 @@ func (x *fastReflection_MsgIcaAuthzRevokeResponse) Mutable(fd protoreflect.Field
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevokeResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -9128,9 +9128,9 @@ func (x *fastReflection_MsgIcaAuthzRevokeResponse) NewField(fd protoreflect.Fiel
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.MsgIcaAuthzRevokeResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -9140,7 +9140,7 @@ func (x *fastReflection_MsgIcaAuthzRevokeResponse) NewField(fd protoreflect.Fiel
 func (x *fastReflection_MsgIcaAuthzRevokeResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.MsgIcaAuthzRevokeResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -9339,7 +9339,7 @@ type MsgRegisterZone struct {
 func (x *MsgRegisterZone) Reset() {
 	*x = MsgRegisterZone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[0]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9353,7 +9353,7 @@ func (*MsgRegisterZone) ProtoMessage() {}
 
 // Deprecated: Use MsgRegisterZone.ProtoReflect.Descriptor instead.
 func (*MsgRegisterZone) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{0}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *MsgRegisterZone) GetZoneId() string {
@@ -9414,7 +9414,7 @@ type MsgRegisterZoneResponse struct {
 func (x *MsgRegisterZoneResponse) Reset() {
 	*x = MsgRegisterZoneResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[1]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9428,7 +9428,7 @@ func (*MsgRegisterZoneResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgRegisterZoneResponse.ProtoReflect.Descriptor instead.
 func (*MsgRegisterZoneResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{1}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{1}
 }
 
 type MsgChangeRegisteredZoneInfo struct {
@@ -9448,7 +9448,7 @@ type MsgChangeRegisteredZoneInfo struct {
 func (x *MsgChangeRegisteredZoneInfo) Reset() {
 	*x = MsgChangeRegisteredZoneInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[2]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9462,7 +9462,7 @@ func (*MsgChangeRegisteredZoneInfo) ProtoMessage() {}
 
 // Deprecated: Use MsgChangeRegisteredZoneInfo.ProtoReflect.Descriptor instead.
 func (*MsgChangeRegisteredZoneInfo) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{2}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *MsgChangeRegisteredZoneInfo) GetZoneId() string {
@@ -9523,7 +9523,7 @@ type MsgChangeRegisteredZoneInfoResponse struct {
 func (x *MsgChangeRegisteredZoneInfoResponse) Reset() {
 	*x = MsgChangeRegisteredZoneInfoResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[3]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9537,7 +9537,7 @@ func (*MsgChangeRegisteredZoneInfoResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgChangeRegisteredZoneInfoResponse.ProtoReflect.Descriptor instead.
 func (*MsgChangeRegisteredZoneInfoResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{3}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{3}
 }
 
 type MsgDeleteRegisteredZone struct {
@@ -9552,7 +9552,7 @@ type MsgDeleteRegisteredZone struct {
 func (x *MsgDeleteRegisteredZone) Reset() {
 	*x = MsgDeleteRegisteredZone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[4]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9566,7 +9566,7 @@ func (*MsgDeleteRegisteredZone) ProtoMessage() {}
 
 // Deprecated: Use MsgDeleteRegisteredZone.ProtoReflect.Descriptor instead.
 func (*MsgDeleteRegisteredZone) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{4}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *MsgDeleteRegisteredZone) GetZoneId() string {
@@ -9592,7 +9592,7 @@ type MsgDeleteRegisteredZoneResponse struct {
 func (x *MsgDeleteRegisteredZoneResponse) Reset() {
 	*x = MsgDeleteRegisteredZoneResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[5]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9606,7 +9606,7 @@ func (*MsgDeleteRegisteredZoneResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgDeleteRegisteredZoneResponse.ProtoReflect.Descriptor instead.
 func (*MsgDeleteRegisteredZoneResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{5}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{5}
 }
 
 type MsgIcaDelegate struct {
@@ -9623,7 +9623,7 @@ type MsgIcaDelegate struct {
 func (x *MsgIcaDelegate) Reset() {
 	*x = MsgIcaDelegate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[6]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9637,7 +9637,7 @@ func (*MsgIcaDelegate) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaDelegate.ProtoReflect.Descriptor instead.
 func (*MsgIcaDelegate) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{6}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *MsgIcaDelegate) GetZoneId() string {
@@ -9677,7 +9677,7 @@ type MsgIcaDelegateResponse struct {
 func (x *MsgIcaDelegateResponse) Reset() {
 	*x = MsgIcaDelegateResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[7]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9691,7 +9691,7 @@ func (*MsgIcaDelegateResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaDelegateResponse.ProtoReflect.Descriptor instead.
 func (*MsgIcaDelegateResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{7}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{7}
 }
 
 type MsgIcaUndelegate struct {
@@ -9708,7 +9708,7 @@ type MsgIcaUndelegate struct {
 func (x *MsgIcaUndelegate) Reset() {
 	*x = MsgIcaUndelegate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[8]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9722,7 +9722,7 @@ func (*MsgIcaUndelegate) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaUndelegate.ProtoReflect.Descriptor instead.
 func (*MsgIcaUndelegate) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{8}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *MsgIcaUndelegate) GetZoneId() string {
@@ -9762,7 +9762,7 @@ type MsgIcaUndelegateResponse struct {
 func (x *MsgIcaUndelegateResponse) Reset() {
 	*x = MsgIcaUndelegateResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[9]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9776,7 +9776,7 @@ func (*MsgIcaUndelegateResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaUndelegateResponse.ProtoReflect.Descriptor instead.
 func (*MsgIcaUndelegateResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{9}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{9}
 }
 
 type MsgIcaAutoStaking struct {
@@ -9793,7 +9793,7 @@ type MsgIcaAutoStaking struct {
 func (x *MsgIcaAutoStaking) Reset() {
 	*x = MsgIcaAutoStaking{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[10]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9807,7 +9807,7 @@ func (*MsgIcaAutoStaking) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAutoStaking.ProtoReflect.Descriptor instead.
 func (*MsgIcaAutoStaking) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{10}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *MsgIcaAutoStaking) GetZoneId() string {
@@ -9847,7 +9847,7 @@ type MsgIcaAutoStakingResponse struct {
 func (x *MsgIcaAutoStakingResponse) Reset() {
 	*x = MsgIcaAutoStakingResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[11]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9861,7 +9861,7 @@ func (*MsgIcaAutoStakingResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAutoStakingResponse.ProtoReflect.Descriptor instead.
 func (*MsgIcaAutoStakingResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{11}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{11}
 }
 
 type MsgIcaTransfer struct {
@@ -9881,7 +9881,7 @@ type MsgIcaTransfer struct {
 func (x *MsgIcaTransfer) Reset() {
 	*x = MsgIcaTransfer{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[12]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9895,7 +9895,7 @@ func (*MsgIcaTransfer) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaTransfer.ProtoReflect.Descriptor instead.
 func (*MsgIcaTransfer) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{12}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *MsgIcaTransfer) GetZoneId() string {
@@ -9956,7 +9956,7 @@ type MsgIcaTransferResponse struct {
 func (x *MsgIcaTransferResponse) Reset() {
 	*x = MsgIcaTransferResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[13]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9970,7 +9970,7 @@ func (*MsgIcaTransferResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaTransferResponse.ProtoReflect.Descriptor instead.
 func (*MsgIcaTransferResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{13}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{13}
 }
 
 type MsgIcaAuthzGrant struct {
@@ -9987,7 +9987,7 @@ type MsgIcaAuthzGrant struct {
 func (x *MsgIcaAuthzGrant) Reset() {
 	*x = MsgIcaAuthzGrant{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[14]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10001,7 +10001,7 @@ func (*MsgIcaAuthzGrant) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAuthzGrant.ProtoReflect.Descriptor instead.
 func (*MsgIcaAuthzGrant) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{14}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *MsgIcaAuthzGrant) GetZoneId() string {
@@ -10041,7 +10041,7 @@ type MsgIcaAuthzGrantResponse struct {
 func (x *MsgIcaAuthzGrantResponse) Reset() {
 	*x = MsgIcaAuthzGrantResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[15]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10055,7 +10055,7 @@ func (*MsgIcaAuthzGrantResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAuthzGrantResponse.ProtoReflect.Descriptor instead.
 func (*MsgIcaAuthzGrantResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{15}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{15}
 }
 
 type MsgIcaAuthzRevoke struct {
@@ -10072,7 +10072,7 @@ type MsgIcaAuthzRevoke struct {
 func (x *MsgIcaAuthzRevoke) Reset() {
 	*x = MsgIcaAuthzRevoke{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[16]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10086,7 +10086,7 @@ func (*MsgIcaAuthzRevoke) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAuthzRevoke.ProtoReflect.Descriptor instead.
 func (*MsgIcaAuthzRevoke) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{16}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *MsgIcaAuthzRevoke) GetZoneId() string {
@@ -10126,7 +10126,7 @@ type MsgIcaAuthzRevokeResponse struct {
 func (x *MsgIcaAuthzRevokeResponse) Reset() {
 	*x = MsgIcaAuthzRevokeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_tx_proto_msgTypes[17]
+		mi := &file_nova_icacontrol_v1_tx_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -10140,18 +10140,18 @@ func (*MsgIcaAuthzRevokeResponse) ProtoMessage() {}
 
 // Deprecated: Use MsgIcaAuthzRevokeResponse.ProtoReflect.Descriptor instead.
 func (*MsgIcaAuthzRevokeResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_tx_proto_rawDescGZIP(), []int{17}
+	return file_nova_icacontrol_v1_tx_proto_rawDescGZIP(), []int{17}
 }
 
-var File_nova_ibcstaking_v1_tx_proto protoreflect.FileDescriptor
+var File_nova_icacontrol_v1_tx_proto protoreflect.FileDescriptor
 
-var file_nova_ibcstaking_v1_tx_proto_rawDesc = []byte{
-	0x0a, 0x1b, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x2f, 0x76, 0x31, 0x2f, 0x74, 0x78, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x12, 0x6e,
+var file_nova_icacontrol_v1_tx_proto_rawDesc = []byte{
+	0x0a, 0x1b, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x74, 0x78, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x12, 0x6e,
 	0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76,
 	0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67,
-	0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x20, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62,
-	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x6e, 0x65,
+	0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x20, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63,
+	0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x6e, 0x65,
 	0x73, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
 	0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f, 0x63,
 	0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x20, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
@@ -10367,7 +10367,7 @@ var file_nova_ibcstaking_v1_tx_proto_rawDesc = []byte{
 	0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68,
 	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61,
 	0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
-	0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x3b, 0x69,
+	0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x69,
 	0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49,
 	0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b,
 	0x69, 0x6e, 0x67, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62,
@@ -10379,73 +10379,73 @@ var file_nova_ibcstaking_v1_tx_proto_rawDesc = []byte{
 }
 
 var (
-	file_nova_ibcstaking_v1_tx_proto_rawDescOnce sync.Once
-	file_nova_ibcstaking_v1_tx_proto_rawDescData = file_nova_ibcstaking_v1_tx_proto_rawDesc
+	file_nova_icacontrol_v1_tx_proto_rawDescOnce sync.Once
+	file_nova_icacontrol_v1_tx_proto_rawDescData = file_nova_icacontrol_v1_tx_proto_rawDesc
 )
 
-func file_nova_ibcstaking_v1_tx_proto_rawDescGZIP() []byte {
-	file_nova_ibcstaking_v1_tx_proto_rawDescOnce.Do(func() {
-		file_nova_ibcstaking_v1_tx_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_ibcstaking_v1_tx_proto_rawDescData)
+func file_nova_icacontrol_v1_tx_proto_rawDescGZIP() []byte {
+	file_nova_icacontrol_v1_tx_proto_rawDescOnce.Do(func() {
+		file_nova_icacontrol_v1_tx_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_icacontrol_v1_tx_proto_rawDescData)
 	})
-	return file_nova_ibcstaking_v1_tx_proto_rawDescData
+	return file_nova_icacontrol_v1_tx_proto_rawDescData
 }
 
-var file_nova_ibcstaking_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
-var file_nova_ibcstaking_v1_tx_proto_goTypes = []interface{}{
-	(*MsgRegisterZone)(nil),                     // 0: nova.icacontrol.v1.MsgRegisterZone
-	(*MsgRegisterZoneResponse)(nil),             // 1: nova.icacontrol.v1.MsgRegisterZoneResponse
-	(*MsgChangeRegisteredZoneInfo)(nil),         // 2: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo
-	(*MsgChangeRegisteredZoneInfoResponse)(nil), // 3: nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse
-	(*MsgDeleteRegisteredZone)(nil),             // 4: nova.icacontrol.v1.MsgDeleteRegisteredZone
-	(*MsgDeleteRegisteredZoneResponse)(nil),     // 5: nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse
-	(*MsgIcaDelegate)(nil),                      // 6: nova.icacontrol.v1.MsgIcaDelegate
-	(*MsgIcaDelegateResponse)(nil),              // 7: nova.icacontrol.v1.MsgIcaDelegateResponse
-	(*MsgIcaUndelegate)(nil),                    // 8: nova.icacontrol.v1.MsgIcaUndelegate
-	(*MsgIcaUndelegateResponse)(nil),            // 9: nova.icacontrol.v1.MsgIcaUndelegateResponse
-	(*MsgIcaAutoStaking)(nil),                   // 10: nova.icacontrol.v1.MsgIcaAutoStaking
-	(*MsgIcaAutoStakingResponse)(nil),           // 11: nova.icacontrol.v1.MsgIcaAutoStakingResponse
-	(*MsgIcaTransfer)(nil),                      // 12: nova.icacontrol.v1.MsgIcaTransfer
-	(*MsgIcaTransferResponse)(nil),              // 13: nova.icacontrol.v1.MsgIcaTransferResponse
-	(*MsgIcaAuthzGrant)(nil),                    // 14: nova.icacontrol.v1.MsgIcaAuthzGrant
-	(*MsgIcaAuthzGrantResponse)(nil),            // 15: nova.icacontrol.v1.MsgIcaAuthzGrantResponse
-	(*MsgIcaAuthzRevoke)(nil),                   // 16: nova.icacontrol.v1.MsgIcaAuthzRevoke
-	(*MsgIcaAuthzRevokeResponse)(nil),           // 17: nova.icacontrol.v1.MsgIcaAuthzRevokeResponse
-	(*IcaConnectionInfo)(nil),                   // 18: nova.icacontrol.v1.IcaConnectionInfo
-	(*IcaAccount)(nil),                          // 19: nova.icacontrol.v1.IcaAccount
-	(*TransferConnectionInfo)(nil),              // 20: nova.icacontrol.v1.TransferConnectionInfo
+var file_nova_icacontrol_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_nova_icacontrol_v1_tx_proto_goTypes = []interface{}{
+	(*MsgRegisterZone)(nil),                     // 0: nova.ibcstaking.v1.MsgRegisterZone
+	(*MsgRegisterZoneResponse)(nil),             // 1: nova.ibcstaking.v1.MsgRegisterZoneResponse
+	(*MsgChangeRegisteredZoneInfo)(nil),         // 2: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo
+	(*MsgChangeRegisteredZoneInfoResponse)(nil), // 3: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse
+	(*MsgDeleteRegisteredZone)(nil),             // 4: nova.ibcstaking.v1.MsgDeleteRegisteredZone
+	(*MsgDeleteRegisteredZoneResponse)(nil),     // 5: nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse
+	(*MsgIcaDelegate)(nil),                      // 6: nova.ibcstaking.v1.MsgIcaDelegate
+	(*MsgIcaDelegateResponse)(nil),              // 7: nova.ibcstaking.v1.MsgIcaDelegateResponse
+	(*MsgIcaUndelegate)(nil),                    // 8: nova.ibcstaking.v1.MsgIcaUndelegate
+	(*MsgIcaUndelegateResponse)(nil),            // 9: nova.ibcstaking.v1.MsgIcaUndelegateResponse
+	(*MsgIcaAutoStaking)(nil),                   // 10: nova.ibcstaking.v1.MsgIcaAutoStaking
+	(*MsgIcaAutoStakingResponse)(nil),           // 11: nova.ibcstaking.v1.MsgIcaAutoStakingResponse
+	(*MsgIcaTransfer)(nil),                      // 12: nova.ibcstaking.v1.MsgIcaTransfer
+	(*MsgIcaTransferResponse)(nil),              // 13: nova.ibcstaking.v1.MsgIcaTransferResponse
+	(*MsgIcaAuthzGrant)(nil),                    // 14: nova.ibcstaking.v1.MsgIcaAuthzGrant
+	(*MsgIcaAuthzGrantResponse)(nil),            // 15: nova.ibcstaking.v1.MsgIcaAuthzGrantResponse
+	(*MsgIcaAuthzRevoke)(nil),                   // 16: nova.ibcstaking.v1.MsgIcaAuthzRevoke
+	(*MsgIcaAuthzRevokeResponse)(nil),           // 17: nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse
+	(*IcaConnectionInfo)(nil),                   // 18: nova.ibcstaking.v1.IcaConnectionInfo
+	(*IcaAccount)(nil),                          // 19: nova.ibcstaking.v1.IcaAccount
+	(*TransferConnectionInfo)(nil),              // 20: nova.ibcstaking.v1.TransferConnectionInfo
 	(*v1beta1.Coin)(nil),                        // 21: cosmos.base.v1beta1.Coin
 	(*v1beta11.Grant)(nil),                      // 22: cosmos.authz.v1beta1.Grant
 }
-var file_nova_ibcstaking_v1_tx_proto_depIdxs = []int32{
-	18, // 0: nova.icacontrol.v1.MsgRegisterZone.ica_info:type_name -> nova.icacontrol.v1.IcaConnectionInfo
-	19, // 1: nova.icacontrol.v1.MsgRegisterZone.ica_account:type_name -> nova.icacontrol.v1.IcaAccount
-	20, // 2: nova.icacontrol.v1.MsgRegisterZone.transfer_info:type_name -> nova.icacontrol.v1.TransferConnectionInfo
-	18, // 3: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_info:type_name -> nova.icacontrol.v1.IcaConnectionInfo
-	19, // 4: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.ica_account:type_name -> nova.icacontrol.v1.IcaAccount
-	20, // 5: nova.icacontrol.v1.MsgChangeRegisteredZoneInfo.transfer_info:type_name -> nova.icacontrol.v1.TransferConnectionInfo
-	21, // 6: nova.icacontrol.v1.MsgIcaDelegate.amount:type_name -> cosmos.base.v1beta1.Coin
-	21, // 7: nova.icacontrol.v1.MsgIcaUndelegate.amount:type_name -> cosmos.base.v1beta1.Coin
-	21, // 8: nova.icacontrol.v1.MsgIcaAutoStaking.amount:type_name -> cosmos.base.v1beta1.Coin
-	21, // 9: nova.icacontrol.v1.MsgIcaTransfer.amount:type_name -> cosmos.base.v1beta1.Coin
-	22, // 10: nova.icacontrol.v1.MsgIcaAuthzGrant.grant:type_name -> cosmos.authz.v1beta1.Grant
-	0,  // 11: nova.icacontrol.v1.Msg.RegisterZone:input_type -> nova.icacontrol.v1.MsgRegisterZone
-	6,  // 12: nova.icacontrol.v1.Msg.IcaDelegate:input_type -> nova.icacontrol.v1.MsgIcaDelegate
-	8,  // 13: nova.icacontrol.v1.Msg.IcaUndelegate:input_type -> nova.icacontrol.v1.MsgIcaUndelegate
-	12, // 14: nova.icacontrol.v1.Msg.IcaTransfer:input_type -> nova.icacontrol.v1.MsgIcaTransfer
-	10, // 15: nova.icacontrol.v1.Msg.IcaAutoStaking:input_type -> nova.icacontrol.v1.MsgIcaAutoStaking
-	14, // 16: nova.icacontrol.v1.Msg.IcaAuthzGrant:input_type -> nova.icacontrol.v1.MsgIcaAuthzGrant
-	16, // 17: nova.icacontrol.v1.Msg.IcaAuthzRevoke:input_type -> nova.icacontrol.v1.MsgIcaAuthzRevoke
-	4,  // 18: nova.icacontrol.v1.Msg.DeleteRegisteredZone:input_type -> nova.icacontrol.v1.MsgDeleteRegisteredZone
-	2,  // 19: nova.icacontrol.v1.Msg.ChangeRegisteredZoneInfo:input_type -> nova.icacontrol.v1.MsgChangeRegisteredZoneInfo
-	1,  // 20: nova.icacontrol.v1.Msg.RegisterZone:output_type -> nova.icacontrol.v1.MsgRegisterZoneResponse
-	7,  // 21: nova.icacontrol.v1.Msg.IcaDelegate:output_type -> nova.icacontrol.v1.MsgIcaDelegateResponse
-	9,  // 22: nova.icacontrol.v1.Msg.IcaUndelegate:output_type -> nova.icacontrol.v1.MsgIcaUndelegateResponse
-	13, // 23: nova.icacontrol.v1.Msg.IcaTransfer:output_type -> nova.icacontrol.v1.MsgIcaTransferResponse
-	11, // 24: nova.icacontrol.v1.Msg.IcaAutoStaking:output_type -> nova.icacontrol.v1.MsgIcaAutoStakingResponse
-	15, // 25: nova.icacontrol.v1.Msg.IcaAuthzGrant:output_type -> nova.icacontrol.v1.MsgIcaAuthzGrantResponse
-	17, // 26: nova.icacontrol.v1.Msg.IcaAuthzRevoke:output_type -> nova.icacontrol.v1.MsgIcaAuthzRevokeResponse
-	5,  // 27: nova.icacontrol.v1.Msg.DeleteRegisteredZone:output_type -> nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse
-	3,  // 28: nova.icacontrol.v1.Msg.ChangeRegisteredZoneInfo:output_type -> nova.icacontrol.v1.MsgChangeRegisteredZoneInfoResponse
+var file_nova_icacontrol_v1_tx_proto_depIdxs = []int32{
+	18, // 0: nova.ibcstaking.v1.MsgRegisterZone.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
+	19, // 1: nova.ibcstaking.v1.MsgRegisterZone.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
+	20, // 2: nova.ibcstaking.v1.MsgRegisterZone.transfer_info:type_name -> nova.ibcstaking.v1.TransferConnectionInfo
+	18, // 3: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_info:type_name -> nova.ibcstaking.v1.IcaConnectionInfo
+	19, // 4: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.ica_account:type_name -> nova.ibcstaking.v1.IcaAccount
+	20, // 5: nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo.transfer_info:type_name -> nova.ibcstaking.v1.TransferConnectionInfo
+	21, // 6: nova.ibcstaking.v1.MsgIcaDelegate.amount:type_name -> cosmos.base.v1beta1.Coin
+	21, // 7: nova.ibcstaking.v1.MsgIcaUndelegate.amount:type_name -> cosmos.base.v1beta1.Coin
+	21, // 8: nova.ibcstaking.v1.MsgIcaAutoStaking.amount:type_name -> cosmos.base.v1beta1.Coin
+	21, // 9: nova.ibcstaking.v1.MsgIcaTransfer.amount:type_name -> cosmos.base.v1beta1.Coin
+	22, // 10: nova.ibcstaking.v1.MsgIcaAuthzGrant.grant:type_name -> cosmos.authz.v1beta1.Grant
+	0,  // 11: nova.ibcstaking.v1.Msg.RegisterZone:input_type -> nova.ibcstaking.v1.MsgRegisterZone
+	6,  // 12: nova.ibcstaking.v1.Msg.IcaDelegate:input_type -> nova.ibcstaking.v1.MsgIcaDelegate
+	8,  // 13: nova.ibcstaking.v1.Msg.IcaUndelegate:input_type -> nova.ibcstaking.v1.MsgIcaUndelegate
+	12, // 14: nova.ibcstaking.v1.Msg.IcaTransfer:input_type -> nova.ibcstaking.v1.MsgIcaTransfer
+	10, // 15: nova.ibcstaking.v1.Msg.IcaAutoStaking:input_type -> nova.ibcstaking.v1.MsgIcaAutoStaking
+	14, // 16: nova.ibcstaking.v1.Msg.IcaAuthzGrant:input_type -> nova.ibcstaking.v1.MsgIcaAuthzGrant
+	16, // 17: nova.ibcstaking.v1.Msg.IcaAuthzRevoke:input_type -> nova.ibcstaking.v1.MsgIcaAuthzRevoke
+	4,  // 18: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:input_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZone
+	2,  // 19: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:input_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfo
+	1,  // 20: nova.ibcstaking.v1.Msg.RegisterZone:output_type -> nova.ibcstaking.v1.MsgRegisterZoneResponse
+	7,  // 21: nova.ibcstaking.v1.Msg.IcaDelegate:output_type -> nova.ibcstaking.v1.MsgIcaDelegateResponse
+	9,  // 22: nova.ibcstaking.v1.Msg.IcaUndelegate:output_type -> nova.ibcstaking.v1.MsgIcaUndelegateResponse
+	13, // 23: nova.ibcstaking.v1.Msg.IcaTransfer:output_type -> nova.ibcstaking.v1.MsgIcaTransferResponse
+	11, // 24: nova.ibcstaking.v1.Msg.IcaAutoStaking:output_type -> nova.ibcstaking.v1.MsgIcaAutoStakingResponse
+	15, // 25: nova.ibcstaking.v1.Msg.IcaAuthzGrant:output_type -> nova.ibcstaking.v1.MsgIcaAuthzGrantResponse
+	17, // 26: nova.ibcstaking.v1.Msg.IcaAuthzRevoke:output_type -> nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse
+	5,  // 27: nova.ibcstaking.v1.Msg.DeleteRegisteredZone:output_type -> nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse
+	3,  // 28: nova.ibcstaking.v1.Msg.ChangeRegisteredZoneInfo:output_type -> nova.ibcstaking.v1.MsgChangeRegisteredZoneInfoResponse
 	20, // [20:29] is the sub-list for method output_type
 	11, // [11:20] is the sub-list for method input_type
 	11, // [11:11] is the sub-list for extension type_name
@@ -10453,14 +10453,14 @@ var file_nova_ibcstaking_v1_tx_proto_depIdxs = []int32{
 	0,  // [0:11] is the sub-list for field type_name
 }
 
-func init() { file_nova_ibcstaking_v1_tx_proto_init() }
-func file_nova_ibcstaking_v1_tx_proto_init() {
-	if File_nova_ibcstaking_v1_tx_proto != nil {
+func init() { file_nova_icacontrol_v1_tx_proto_init() }
+func file_nova_icacontrol_v1_tx_proto_init() {
+	if File_nova_icacontrol_v1_tx_proto != nil {
 		return
 	}
-	file_nova_ibcstaking_v1_genesis_proto_init()
+	file_nova_icacontrol_v1_genesis_proto_init()
 	if !protoimpl.UnsafeEnabled {
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgRegisterZone); i {
 			case 0:
 				return &v.state
@@ -10472,7 +10472,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgRegisterZoneResponse); i {
 			case 0:
 				return &v.state
@@ -10484,7 +10484,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgChangeRegisteredZoneInfo); i {
 			case 0:
 				return &v.state
@@ -10496,7 +10496,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgChangeRegisteredZoneInfoResponse); i {
 			case 0:
 				return &v.state
@@ -10508,7 +10508,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgDeleteRegisteredZone); i {
 			case 0:
 				return &v.state
@@ -10520,7 +10520,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgDeleteRegisteredZoneResponse); i {
 			case 0:
 				return &v.state
@@ -10532,7 +10532,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaDelegate); i {
 			case 0:
 				return &v.state
@@ -10544,7 +10544,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaDelegateResponse); i {
 			case 0:
 				return &v.state
@@ -10556,7 +10556,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaUndelegate); i {
 			case 0:
 				return &v.state
@@ -10568,7 +10568,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaUndelegateResponse); i {
 			case 0:
 				return &v.state
@@ -10580,7 +10580,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAutoStaking); i {
 			case 0:
 				return &v.state
@@ -10592,7 +10592,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAutoStakingResponse); i {
 			case 0:
 				return &v.state
@@ -10604,7 +10604,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaTransfer); i {
 			case 0:
 				return &v.state
@@ -10616,7 +10616,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaTransferResponse); i {
 			case 0:
 				return &v.state
@@ -10628,7 +10628,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAuthzGrant); i {
 			case 0:
 				return &v.state
@@ -10640,7 +10640,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAuthzGrantResponse); i {
 			case 0:
 				return &v.state
@@ -10652,7 +10652,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAuthzRevoke); i {
 			case 0:
 				return &v.state
@@ -10664,7 +10664,7 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_tx_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_tx_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MsgIcaAuthzRevokeResponse); i {
 			case 0:
 				return &v.state
@@ -10681,18 +10681,18 @@ func file_nova_ibcstaking_v1_tx_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_nova_ibcstaking_v1_tx_proto_rawDesc,
+			RawDescriptor: file_nova_icacontrol_v1_tx_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_nova_ibcstaking_v1_tx_proto_goTypes,
-		DependencyIndexes: file_nova_ibcstaking_v1_tx_proto_depIdxs,
-		MessageInfos:      file_nova_ibcstaking_v1_tx_proto_msgTypes,
+		GoTypes:           file_nova_icacontrol_v1_tx_proto_goTypes,
+		DependencyIndexes: file_nova_icacontrol_v1_tx_proto_depIdxs,
+		MessageInfos:      file_nova_icacontrol_v1_tx_proto_msgTypes,
 	}.Build()
-	File_nova_ibcstaking_v1_tx_proto = out.File
-	file_nova_ibcstaking_v1_tx_proto_rawDesc = nil
-	file_nova_ibcstaking_v1_tx_proto_goTypes = nil
-	file_nova_ibcstaking_v1_tx_proto_depIdxs = nil
+	File_nova_icacontrol_v1_tx_proto = out.File
+	file_nova_icacontrol_v1_tx_proto_rawDesc = nil
+	file_nova_icacontrol_v1_tx_proto_goTypes = nil
+	file_nova_icacontrol_v1_tx_proto_depIdxs = nil
 }

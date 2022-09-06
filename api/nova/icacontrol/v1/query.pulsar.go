@@ -19,8 +19,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_query_proto_init()
-	md_QueryAllZonesRequest = File_nova_ibcstaking_v1_query_proto.Messages().ByName("QueryAllZonesRequest")
+	file_nova_icacontrol_v1_query_proto_init()
+	md_QueryAllZonesRequest = File_nova_icacontrol_v1_query_proto.Messages().ByName("QueryAllZonesRequest")
 }
 
 var _ protoreflect.Message = (*fastReflection_QueryAllZonesRequest)(nil)
@@ -32,7 +32,7 @@ func (x *QueryAllZonesRequest) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QueryAllZonesRequest) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_query_proto_msgTypes[0]
+	mi := &file_nova_icacontrol_v1_query_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -105,9 +105,9 @@ func (x *fastReflection_QueryAllZonesRequest) Has(fd protoreflect.FieldDescripto
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -121,9 +121,9 @@ func (x *fastReflection_QueryAllZonesRequest) Clear(fd protoreflect.FieldDescrip
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -137,9 +137,9 @@ func (x *fastReflection_QueryAllZonesRequest) Get(descriptor protoreflect.FieldD
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -157,9 +157,9 @@ func (x *fastReflection_QueryAllZonesRequest) Set(fd protoreflect.FieldDescripto
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -177,9 +177,9 @@ func (x *fastReflection_QueryAllZonesRequest) Mutable(fd protoreflect.FieldDescr
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -190,9 +190,9 @@ func (x *fastReflection_QueryAllZonesRequest) NewField(fd protoreflect.FieldDesc
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesRequest"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -202,7 +202,7 @@ func (x *fastReflection_QueryAllZonesRequest) NewField(fd protoreflect.FieldDesc
 func (x *fastReflection_QueryAllZonesRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.QueryAllZonesRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.QueryAllZonesRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -427,8 +427,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_query_proto_init()
-	md_QueryAllZonesResponse = File_nova_ibcstaking_v1_query_proto.Messages().ByName("QueryAllZonesResponse")
+	file_nova_icacontrol_v1_query_proto_init()
+	md_QueryAllZonesResponse = File_nova_icacontrol_v1_query_proto.Messages().ByName("QueryAllZonesResponse")
 	fd_QueryAllZonesResponse_zones = md_QueryAllZonesResponse.Fields().ByName("zones")
 }
 
@@ -441,7 +441,7 @@ func (x *QueryAllZonesResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QueryAllZonesResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_query_proto_msgTypes[1]
+	mi := &file_nova_icacontrol_v1_query_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -518,13 +518,13 @@ func (x *fastReflection_QueryAllZonesResponse) Range(f func(protoreflect.FieldDe
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_QueryAllZonesResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.QueryAllZonesResponse.zones":
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
 		return len(x.Zones) != 0
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -536,13 +536,13 @@ func (x *fastReflection_QueryAllZonesResponse) Has(fd protoreflect.FieldDescript
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryAllZonesResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.QueryAllZonesResponse.zones":
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
 		x.Zones = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -554,7 +554,7 @@ func (x *fastReflection_QueryAllZonesResponse) Clear(fd protoreflect.FieldDescri
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_QueryAllZonesResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.QueryAllZonesResponse.zones":
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
 		if len(x.Zones) == 0 {
 			return protoreflect.ValueOfList(&_QueryAllZonesResponse_1_list{})
 		}
@@ -562,9 +562,9 @@ func (x *fastReflection_QueryAllZonesResponse) Get(descriptor protoreflect.Field
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -580,15 +580,15 @@ func (x *fastReflection_QueryAllZonesResponse) Get(descriptor protoreflect.Field
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryAllZonesResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.QueryAllZonesResponse.zones":
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
 		lv := value.List()
 		clv := lv.(*_QueryAllZonesResponse_1_list)
 		x.Zones = *clv.list
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -604,7 +604,7 @@ func (x *fastReflection_QueryAllZonesResponse) Set(fd protoreflect.FieldDescript
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryAllZonesResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.QueryAllZonesResponse.zones":
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
 		if x.Zones == nil {
 			x.Zones = []*RegisteredZone{}
 		}
@@ -612,9 +612,9 @@ func (x *fastReflection_QueryAllZonesResponse) Mutable(fd protoreflect.FieldDesc
 		return protoreflect.ValueOfList(value)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -623,14 +623,14 @@ func (x *fastReflection_QueryAllZonesResponse) Mutable(fd protoreflect.FieldDesc
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_QueryAllZonesResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.QueryAllZonesResponse.zones":
+	case "nova.ibcstaking.v1.QueryAllZonesResponse.zones":
 		list := []*RegisteredZone{}
 		return protoreflect.ValueOfList(&_QueryAllZonesResponse_1_list{list: &list})
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.QueryAllZonesResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.QueryAllZonesResponse"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.QueryAllZonesResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -640,7 +640,7 @@ func (x *fastReflection_QueryAllZonesResponse) NewField(fd protoreflect.FieldDes
 func (x *fastReflection_QueryAllZonesResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.QueryAllZonesResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.QueryAllZonesResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -887,7 +887,7 @@ type QueryAllZonesRequest struct {
 func (x *QueryAllZonesRequest) Reset() {
 	*x = QueryAllZonesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_query_proto_msgTypes[0]
+		mi := &file_nova_icacontrol_v1_query_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -901,7 +901,7 @@ func (*QueryAllZonesRequest) ProtoMessage() {}
 
 // Deprecated: Use QueryAllZonesRequest.ProtoReflect.Descriptor instead.
 func (*QueryAllZonesRequest) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_query_proto_rawDescGZIP(), []int{0}
+	return file_nova_icacontrol_v1_query_proto_rawDescGZIP(), []int{0}
 }
 
 // QueryAllZonesResponse is the response type for Query/AllZones.
@@ -916,7 +916,7 @@ type QueryAllZonesResponse struct {
 func (x *QueryAllZonesResponse) Reset() {
 	*x = QueryAllZonesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_query_proto_msgTypes[1]
+		mi := &file_nova_icacontrol_v1_query_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -930,7 +930,7 @@ func (*QueryAllZonesResponse) ProtoMessage() {}
 
 // Deprecated: Use QueryAllZonesResponse.ProtoReflect.Descriptor instead.
 func (*QueryAllZonesResponse) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_query_proto_rawDescGZIP(), []int{1}
+	return file_nova_icacontrol_v1_query_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *QueryAllZonesResponse) GetZones() []*RegisteredZone {
@@ -940,15 +940,15 @@ func (x *QueryAllZonesResponse) GetZones() []*RegisteredZone {
 	return nil
 }
 
-var File_nova_ibcstaking_v1_query_proto protoreflect.FileDescriptor
+var File_nova_icacontrol_v1_query_proto protoreflect.FileDescriptor
 
-var file_nova_ibcstaking_v1_query_proto_rawDesc = []byte{
-	0x0a, 0x1e, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x2f, 0x76, 0x31, 0x2f, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+var file_nova_icacontrol_v1_query_proto_rawDesc = []byte{
+	0x0a, 0x1e, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x12, 0x12, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
 	0x67, 0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f,
 	0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x20, 0x6e, 0x6f, 0x76, 0x61,
-	0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x2f, 0x67,
+	0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x67,
 	0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f,
 	0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74,
 	0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x16, 0x0a, 0x14, 0x51, 0x75,
@@ -966,14 +966,14 @@ var file_nova_ibcstaking_v1_query_proto_rawDesc = []byte{
 	0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72,
 	0x79, 0x41, 0x6c, 0x6c, 0x5a, 0x6f, 0x6e, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x22, 0x25, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1f, 0x12, 0x1d, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
-	0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x2f, 0x7a,
+	0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x7a,
 	0x6f, 0x6e, 0x65, 0x73, 0x2f, 0x61, 0x6c, 0x6c, 0x42, 0xcf, 0x01, 0x0a, 0x16, 0x63, 0x6f, 0x6d,
 	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
 	0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
 	0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61,
 	0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69,
-	0x6e, 0x67, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
+	0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72,
+	0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
 	0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x2e,
 	0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x12,
 	0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x5c,
@@ -985,27 +985,27 @@ var file_nova_ibcstaking_v1_query_proto_rawDesc = []byte{
 }
 
 var (
-	file_nova_ibcstaking_v1_query_proto_rawDescOnce sync.Once
-	file_nova_ibcstaking_v1_query_proto_rawDescData = file_nova_ibcstaking_v1_query_proto_rawDesc
+	file_nova_icacontrol_v1_query_proto_rawDescOnce sync.Once
+	file_nova_icacontrol_v1_query_proto_rawDescData = file_nova_icacontrol_v1_query_proto_rawDesc
 )
 
-func file_nova_ibcstaking_v1_query_proto_rawDescGZIP() []byte {
-	file_nova_ibcstaking_v1_query_proto_rawDescOnce.Do(func() {
-		file_nova_ibcstaking_v1_query_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_ibcstaking_v1_query_proto_rawDescData)
+func file_nova_icacontrol_v1_query_proto_rawDescGZIP() []byte {
+	file_nova_icacontrol_v1_query_proto_rawDescOnce.Do(func() {
+		file_nova_icacontrol_v1_query_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_icacontrol_v1_query_proto_rawDescData)
 	})
-	return file_nova_ibcstaking_v1_query_proto_rawDescData
+	return file_nova_icacontrol_v1_query_proto_rawDescData
 }
 
-var file_nova_ibcstaking_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_nova_ibcstaking_v1_query_proto_goTypes = []interface{}{
-	(*QueryAllZonesRequest)(nil),  // 0: nova.icacontrol.v1.QueryAllZonesRequest
-	(*QueryAllZonesResponse)(nil), // 1: nova.icacontrol.v1.QueryAllZonesResponse
-	(*RegisteredZone)(nil),        // 2: nova.icacontrol.v1.RegisteredZone
+var file_nova_icacontrol_v1_query_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_nova_icacontrol_v1_query_proto_goTypes = []interface{}{
+	(*QueryAllZonesRequest)(nil),  // 0: nova.ibcstaking.v1.QueryAllZonesRequest
+	(*QueryAllZonesResponse)(nil), // 1: nova.ibcstaking.v1.QueryAllZonesResponse
+	(*RegisteredZone)(nil),        // 2: nova.ibcstaking.v1.RegisteredZone
 }
-var file_nova_ibcstaking_v1_query_proto_depIdxs = []int32{
-	2, // 0: nova.icacontrol.v1.QueryAllZonesResponse.zones:type_name -> nova.icacontrol.v1.RegisteredZone
-	0, // 1: nova.icacontrol.v1.Query.AllZones:input_type -> nova.icacontrol.v1.QueryAllZonesRequest
-	1, // 2: nova.icacontrol.v1.Query.AllZones:output_type -> nova.icacontrol.v1.QueryAllZonesResponse
+var file_nova_icacontrol_v1_query_proto_depIdxs = []int32{
+	2, // 0: nova.ibcstaking.v1.QueryAllZonesResponse.zones:type_name -> nova.ibcstaking.v1.RegisteredZone
+	0, // 1: nova.ibcstaking.v1.Query.AllZones:input_type -> nova.ibcstaking.v1.QueryAllZonesRequest
+	1, // 2: nova.ibcstaking.v1.Query.AllZones:output_type -> nova.ibcstaking.v1.QueryAllZonesResponse
 	2, // [2:3] is the sub-list for method output_type
 	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -1013,14 +1013,14 @@ var file_nova_ibcstaking_v1_query_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_nova_ibcstaking_v1_query_proto_init() }
-func file_nova_ibcstaking_v1_query_proto_init() {
-	if File_nova_ibcstaking_v1_query_proto != nil {
+func init() { file_nova_icacontrol_v1_query_proto_init() }
+func file_nova_icacontrol_v1_query_proto_init() {
+	if File_nova_icacontrol_v1_query_proto != nil {
 		return
 	}
-	file_nova_ibcstaking_v1_genesis_proto_init()
+	file_nova_icacontrol_v1_genesis_proto_init()
 	if !protoimpl.UnsafeEnabled {
-		file_nova_ibcstaking_v1_query_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_query_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryAllZonesRequest); i {
 			case 0:
 				return &v.state
@@ -1032,7 +1032,7 @@ func file_nova_ibcstaking_v1_query_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_query_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_query_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryAllZonesResponse); i {
 			case 0:
 				return &v.state
@@ -1049,18 +1049,18 @@ func file_nova_ibcstaking_v1_query_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_nova_ibcstaking_v1_query_proto_rawDesc,
+			RawDescriptor: file_nova_icacontrol_v1_query_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_nova_ibcstaking_v1_query_proto_goTypes,
-		DependencyIndexes: file_nova_ibcstaking_v1_query_proto_depIdxs,
-		MessageInfos:      file_nova_ibcstaking_v1_query_proto_msgTypes,
+		GoTypes:           file_nova_icacontrol_v1_query_proto_goTypes,
+		DependencyIndexes: file_nova_icacontrol_v1_query_proto_depIdxs,
+		MessageInfos:      file_nova_icacontrol_v1_query_proto_msgTypes,
 	}.Build()
-	File_nova_ibcstaking_v1_query_proto = out.File
-	file_nova_ibcstaking_v1_query_proto_rawDesc = nil
-	file_nova_ibcstaking_v1_query_proto_goTypes = nil
-	file_nova_ibcstaking_v1_query_proto_depIdxs = nil
+	File_nova_icacontrol_v1_query_proto = out.File
+	file_nova_icacontrol_v1_query_proto_rawDesc = nil
+	file_nova_icacontrol_v1_query_proto_goTypes = nil
+	file_nova_icacontrol_v1_query_proto_depIdxs = nil
 }

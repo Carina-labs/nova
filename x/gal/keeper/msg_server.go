@@ -20,7 +20,7 @@ type msgServer struct {
 	keeper *Keeper
 }
 
-// NewMsgServerImpl creates and returns a new types.MsgServer, fulfilling the ibcstaking Msg service interface
+// NewMsgServerImpl creates and returns a new types.MsgServer, fulfilling the icacontrol Msg service interface
 func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 	return &msgServer{keeper: keeper}
 }

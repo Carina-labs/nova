@@ -3,7 +3,7 @@ package keeper
 import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"math/big"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
