@@ -33,7 +33,7 @@ Example Output:
 ```
 
 #### Pending Withdrawals
-
+`pending_withdrawals` returns the amount of pending withdrawal asset of user corresponding to zone-id.
 ```shell
 novad query gal pending_withdrawals [zone-id] [address]
 ```
@@ -52,7 +52,7 @@ Example Output:
 ```
 
 #### Active Withdrawals
-
+`active_withdrawals` returns the amount of active withdrawal asset of user corresponding to zone-id.
 ```shell
 novad query gal active_withdrawals [zone-id] [address]
 ```
@@ -71,7 +71,7 @@ Example Output:
 ```
 
 ### Deposit Records
-
+`deposit_records` returns the records of deposit for user corresponding to zone-id.
 ```shell
 novad query gal deposit_records [zone-id] [address]
 ```
@@ -102,6 +102,7 @@ Example Output:
 ```
 
 #### Undelegate Records
+`undelegate_records` returns the records of undelegation for user corresponding to zond-id.
 
 ```shell
 novad query gal undelegate_records [zone-id] [address]
@@ -135,6 +136,7 @@ Example Output:
 ```
 
 #### Withdraw Records
+`withdraw_records` returns the records of withdraw for user corresponding to zond-id.
 
 ```shell
 novad query withdraw_records [zone-id] [address]
@@ -170,4 +172,76 @@ Example Output:
     }
   }
 }
+```
+
+### Transaction
+
+#### Deposit
+```shell
+novad tx gal deposit [zone-id] [depositor] [clamier] [amount]
+```
+
+Example:
+```shell
+novad tx gal deposit cosmoshub-1 nova1a2b... nova1a2b... 10000uatom
+```
+
+#### Pending Undelegate
+```shell
+novad tx gal pendingundelegate [zone-id] [delegator] [withdrawer] [amount]
+```
+
+Example:
+```shell
+novad tx gal pendingundelegate cosmoshub-1 nova1a2b... nova9a8b... 10000uatom
+```
+
+#### Undelegate
+```shell
+novad tx gal undelegate [zone-id] [controller-address]
+```
+
+Example:
+```shell
+novad tx gal undelegate cosmoshub-1 nova7ba2...
+```
+
+#### Withdraw
+```shell
+novad tx gal withdraw [zone-id] [withdrawer]
+```
+
+Example:
+```shell
+novad tx gal withdraw cosmoshub-1 nova1a2b...
+```
+
+#### Claim sn-Token
+```shell
+novad tx gal claimsntoken [zone-id] [claimer-address]
+```
+
+Example:
+```shell
+novad tx gal claimsntoken cosmoshub-1 nova1a2b...
+```
+
+#### Pending Withdraw
+```shell
+novad tx gal pendingwithdraw [zone-id] [controller-address] [ica-transfer-port-id]
+```
+
+Example:
+```shell
+novad tx gal pendingwithdraw cosmoshub-1 nova1a2b... port-1
+```
+
+#### Delegate
+```shell
+novad tx gal delegate [zone-id] [controller-address]
+```
+
+Example:
+```shell
+novad tx gal delegate cosmoshub-1 nova1a2b...
 ```
