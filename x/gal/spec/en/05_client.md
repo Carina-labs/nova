@@ -245,3 +245,50 @@ Example:
 ```shell
 novad tx gal delegate cosmoshub-1 nova1a2b...
 ```
+
+## gRPC
+
+---
+A user can query the `gal` module using gRPC endpoints.
+
+### Estimate sn-Asset
+The `estimate_sn_asset` endpoint allows user to calculate the amount of asset if they deposit their asset.
+```
+nova.gal.v1.Query/estimate_sn_asset
+```
+
+### Claimable Amount
+The `claimable_amount` endpoint allows user to query the amount of sn-asset they can claim.
+```
+nova.gal.v1.Query/claimable_amount
+```
+
+### Pending Withdrawal
+The `pending_withdrawal` endpoint allows user to query the amount of pending withdraw.
+```
+nova.gal.v1.Query/pending_withdrawals
+```
+
+### Active Withdrawal
+The `active_withdrawals` endpoint allows user to query the amount of active withdraw.
+```
+nova.gal.v1.Query/active_withdrawals
+```
+
+### Deposit Records
+The `deposit_records` endpoint allows user to query the deposit records of user.
+```
+nova.gal.v1.Query/deposit_records
+```
+
+### Undelegate Records
+The `undelegate_records` endpoint allows user to query the undelegate records of user.
+```
+nova.gal.v1.Query/undelegate_records
+```
+
+### Withdraw Records
+The `withdraw_records` endpoint allows user to query the withdraw records of user.
+```
+nova.gal.v1.Query/withdraw_records
+```
