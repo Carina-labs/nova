@@ -25,7 +25,7 @@ service Msg {
   rpc IcaAuthzGrant(MsgIcaAuthzGrant) returns (MsgIcaAuthzGrantResponse);
   rpc IcaAuthzRevoke(MsgIcaAuthzRevoke) returns (MsgIcaAuthzRevokeResponse);
   rpc DeleteRegisteredZone(MsgDeleteRegisteredZone) returns (MsgDeleteRegisteredZoneResponse);
-  rpc ChangeRegisteredZoneInfo(MsgChangeRegisteredZoneInfo) returns (MsgChangeRegisteredZoneInfoResponse);
+  rpc ChangeRegisteredZoneInfo(MsgChangeRegisteredZone) returns (MsgChangeRegisteredZoneResponse);
 }
 
 // MsgRegisterZone is the message you use to register a new zone.
@@ -42,10 +42,19 @@ message MsgRegisterZone {
 }
 
 // MsgRegisterZoneResponse is a response message for MsgRegisterZone
-message MsgRegisterZoneResponse {}
+message MsgRegisterZoneResponse {
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
+}
 
 // MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
-message MsgChangeRegisteredZoneInfo{
+message MsgChangeRegisteredZone{
   option (gogoproto.equal) = false;
 
   string zone_id = 1;
@@ -55,10 +64,20 @@ message MsgChangeRegisteredZoneInfo{
   string validator_address = 5;
   string base_denom = 6;
   int64 decimal = 7;
+
 }
 
 // MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
-message MsgChangeRegisteredZoneInfoResponse{}
+message MsgChangeRegisteredZoneResponse{
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
+}
 
 // MsgDeleteRegisteredZone deletes registered Zone information.
 message MsgDeleteRegisteredZone{
@@ -121,7 +140,7 @@ message MsgIcaAuthzGrant{
   string zone_id = 1;
   string grantee = 2;
   string controller_address = 3;
-  cosmos.authz.v1beta1.Grant grant = 4 [(gogoproto.nullable) = false];
+  cosmos.authz.v1beta1.Grant grant = 4[(gogoproto.nullable) = false];
 }
 
 // MsgIcaAuthzGrantResponse is a response messasge for MsgIcaAuthzGrant.
