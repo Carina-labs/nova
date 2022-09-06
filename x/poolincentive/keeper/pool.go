@@ -6,7 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// CreateCandidatePool stores information of poolincentive to the store of keeper.
+// CreateCandidatePool creates a new candidate pool and stores its information.
 func (k Keeper) CreateCandidatePool(ctx sdk.Context, pool *types.CandidatePool) error {
 	store := k.getCandidatePoolStore(ctx)
 	key := []byte(pool.PoolId)
@@ -19,6 +19,7 @@ func (k Keeper) CreateCandidatePool(ctx sdk.Context, pool *types.CandidatePool) 
 	return nil
 }
 
+// CreateIncentivePool creates a new incentive pool and stores its information.
 func (k Keeper) CreateIncentivePool(ctx sdk.Context, pool *types.IncentivePool) error {
 	store := k.getIncentivePoolStore(ctx)
 	key := []byte(pool.PoolId)
@@ -31,7 +32,7 @@ func (k Keeper) CreateIncentivePool(ctx sdk.Context, pool *types.IncentivePool) 
 	return nil
 }
 
-// SetPoolWeight stores a new weight of poolincentive.
+// SetPoolWeight sets the weight of the intensive pool.
 func (k Keeper) SetPoolWeight(ctx sdk.Context, poolId string, newWeight uint64) error {
 	store := k.getIncentivePoolStore(ctx)
 	key := []byte(poolId)
@@ -49,6 +50,7 @@ func (k Keeper) SetPoolWeight(ctx sdk.Context, poolId string, newWeight uint64) 
 	return nil
 }
 
+// GetTotalWeight calculate the value of total weight of all incentive pools.
 func (k Keeper) GetTotalWeight(ctx sdk.Context) (result uint64) {
 	k.IterateIncentivePools(ctx, func(i int64, pool *types.IncentivePool) bool {
 		result += pool.Weight
@@ -58,6 +60,7 @@ func (k Keeper) GetTotalWeight(ctx sdk.Context) (result uint64) {
 	return result
 }
 
+// FindCandidatePoolById searches for candidate pools based on poolId.
 func (k Keeper) FindCandidatePoolById(ctx sdk.Context, poolId string) (*types.CandidatePool, error) {
 	key := []byte(poolId)
 	result := &types.CandidatePool{}
@@ -69,6 +72,7 @@ func (k Keeper) FindCandidatePoolById(ctx sdk.Context, poolId string) (*types.Ca
 	return result, nil
 }
 
+// FindIncentivePoolById searches for incentive pools based on poolId.
 func (k Keeper) FindIncentivePoolById(ctx sdk.Context, poolId string) (*types.IncentivePool, error) {
 	key := []byte(poolId)
 	result := &types.IncentivePool{}
@@ -80,11 +84,13 @@ func (k Keeper) FindIncentivePoolById(ctx sdk.Context, poolId string) (*types.In
 	return result, nil
 }
 
+// IsIncentivePool searches if the entered poolId is an incentive pool.
 func (k Keeper) IsIncentivePool(ctx sdk.Context, poolId string) bool {
 	key := []byte(poolId)
 	return k.getIncentivePoolStore(ctx).Has(key)
 }
 
+// IterateCandidatePools explores all candidate pools.
 func (k Keeper) IterateCandidatePools(ctx sdk.Context, cb func(i int64, pool *types.CandidatePool) bool) {
 	store := k.getCandidatePoolStore(ctx)
 	iterator := store.Iterator(nil, nil)
@@ -112,6 +118,7 @@ func (k Keeper) IterateCandidatePools(ctx sdk.Context, cb func(i int64, pool *ty
 	}
 }
 
+// IterateIncentivePools explores all incentive pools.
 func (k Keeper) IterateIncentivePools(ctx sdk.Context, cb func(i int64, pool *types.IncentivePool) bool) {
 	store := k.getIncentivePoolStore(ctx)
 	iterator := store.Iterator(nil, nil)
@@ -139,6 +146,8 @@ func (k Keeper) IterateIncentivePools(ctx sdk.Context, cb func(i int64, pool *ty
 	}
 }
 
+// ClearCandidatePools deletes all candidate pools.
+// WARNING : Use this function only for testing!
 func (k Keeper) ClearCandidatePools(ctx sdk.Context) {
 	k.IterateCandidatePools(ctx, func(i int64, pool *types.CandidatePool) bool {
 		key := []byte(pool.PoolId)
@@ -147,6 +156,8 @@ func (k Keeper) ClearCandidatePools(ctx sdk.Context) {
 	})
 }
 
+// ClearIncentivePools deletes all incentive pools.
+// WARNING : Use this function only for testing!
 func (k Keeper) ClearIncentivePools(ctx sdk.Context) {
 	k.IterateIncentivePools(ctx, func(i int64, pool *types.IncentivePool) bool {
 		key := []byte(pool.PoolId)
