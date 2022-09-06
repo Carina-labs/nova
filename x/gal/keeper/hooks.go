@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
-	icatypes "github.com/Carina-labs/nova/x/ibcstaking/types"
+	icatypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"

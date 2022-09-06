@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
 )
 
 // GetUndelegateVersionStore returns the store that stores the UndelegateVersion data.

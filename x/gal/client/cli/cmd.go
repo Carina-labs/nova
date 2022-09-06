@@ -30,7 +30,7 @@ func GetTxCmd() *cobra.Command {
 	return cmd
 }
 
-// GetQueryCmd creates and returns the ibcstaking query command
+// GetQueryCmd creates and returns the icacontrol query command
 func GetQueryCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,

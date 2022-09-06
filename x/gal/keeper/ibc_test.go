@@ -2,7 +2,7 @@ package keeper_test
 
 import (
 	novatesting "github.com/Carina-labs/nova/testing"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
+	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"

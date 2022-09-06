@@ -24,8 +24,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_event_proto_init()
-	md_EventDelegateFail = File_nova_ibcstaking_v1_event_proto.Messages().ByName("EventDelegateFail")
+	file_nova_icacontrol_v1_event_proto_init()
+	md_EventDelegateFail = File_nova_icacontrol_v1_event_proto.Messages().ByName("EventDelegateFail")
 	fd_EventDelegateFail_msg_type_url = md_EventDelegateFail.Fields().ByName("msg_type_url")
 	fd_EventDelegateFail_delegator_address = md_EventDelegateFail.Fields().ByName("delegator_address")
 	fd_EventDelegateFail_validator_address = md_EventDelegateFail.Fields().ByName("validator_address")
@@ -41,7 +41,7 @@ func (x *EventDelegateFail) ProtoReflect() protoreflect.Message {
 }
 
 func (x *EventDelegateFail) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_event_proto_msgTypes[0]
+	mi := &file_nova_icacontrol_v1_event_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -136,19 +136,19 @@ func (x *fastReflection_EventDelegateFail) Range(f func(protoreflect.FieldDescri
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_EventDelegateFail) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventDelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventDelegateFail.msg_type_url":
 		return x.MsgTypeUrl != ""
-	case "nova.icacontrol.v1.EventDelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.delegator_address":
 		return x.DelegatorAddress != ""
-	case "nova.icacontrol.v1.EventDelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.validator_address":
 		return x.ValidatorAddress != ""
-	case "nova.icacontrol.v1.EventDelegateFail.amount":
+	case "nova.ibcstaking.v1.EventDelegateFail.amount":
 		return x.Amount != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventDelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventDelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventDelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventDelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -160,19 +160,19 @@ func (x *fastReflection_EventDelegateFail) Has(fd protoreflect.FieldDescriptor) 
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventDelegateFail) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventDelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventDelegateFail.msg_type_url":
 		x.MsgTypeUrl = ""
-	case "nova.icacontrol.v1.EventDelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.delegator_address":
 		x.DelegatorAddress = ""
-	case "nova.icacontrol.v1.EventDelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.validator_address":
 		x.ValidatorAddress = ""
-	case "nova.icacontrol.v1.EventDelegateFail.amount":
+	case "nova.ibcstaking.v1.EventDelegateFail.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventDelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventDelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventDelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventDelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -184,23 +184,23 @@ func (x *fastReflection_EventDelegateFail) Clear(fd protoreflect.FieldDescriptor
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_EventDelegateFail) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.EventDelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventDelegateFail.msg_type_url":
 		value := x.MsgTypeUrl
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventDelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.delegator_address":
 		value := x.DelegatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventDelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.validator_address":
 		value := x.ValidatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventDelegateFail.amount":
+	case "nova.ibcstaking.v1.EventDelegateFail.amount":
 		value := x.Amount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventDelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventDelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventDelegateFail does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventDelegateFail does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -216,19 +216,19 @@ func (x *fastReflection_EventDelegateFail) Get(descriptor protoreflect.FieldDesc
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventDelegateFail) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventDelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventDelegateFail.msg_type_url":
 		x.MsgTypeUrl = value.Interface().(string)
-	case "nova.icacontrol.v1.EventDelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.delegator_address":
 		x.DelegatorAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.EventDelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.validator_address":
 		x.ValidatorAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.EventDelegateFail.amount":
+	case "nova.ibcstaking.v1.EventDelegateFail.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventDelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventDelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventDelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventDelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -244,22 +244,22 @@ func (x *fastReflection_EventDelegateFail) Set(fd protoreflect.FieldDescriptor, 
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventDelegateFail) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventDelegateFail.amount":
+	case "nova.ibcstaking.v1.EventDelegateFail.amount":
 		if x.Amount == nil {
 			x.Amount = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.icacontrol.v1.EventDelegateFail.msg_type_url":
-		panic(fmt.Errorf("field msg_type_url of message nova.icacontrol.v1.EventDelegateFail is not mutable"))
-	case "nova.icacontrol.v1.EventDelegateFail.delegator_address":
-		panic(fmt.Errorf("field delegator_address of message nova.icacontrol.v1.EventDelegateFail is not mutable"))
-	case "nova.icacontrol.v1.EventDelegateFail.validator_address":
-		panic(fmt.Errorf("field validator_address of message nova.icacontrol.v1.EventDelegateFail is not mutable"))
+	case "nova.ibcstaking.v1.EventDelegateFail.msg_type_url":
+		panic(fmt.Errorf("field msg_type_url of message nova.ibcstaking.v1.EventDelegateFail is not mutable"))
+	case "nova.ibcstaking.v1.EventDelegateFail.delegator_address":
+		panic(fmt.Errorf("field delegator_address of message nova.ibcstaking.v1.EventDelegateFail is not mutable"))
+	case "nova.ibcstaking.v1.EventDelegateFail.validator_address":
+		panic(fmt.Errorf("field validator_address of message nova.ibcstaking.v1.EventDelegateFail is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventDelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventDelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventDelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventDelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -268,20 +268,20 @@ func (x *fastReflection_EventDelegateFail) Mutable(fd protoreflect.FieldDescript
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_EventDelegateFail) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventDelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventDelegateFail.msg_type_url":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventDelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.delegator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventDelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventDelegateFail.validator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventDelegateFail.amount":
+	case "nova.ibcstaking.v1.EventDelegateFail.amount":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventDelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventDelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventDelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventDelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -291,7 +291,7 @@ func (x *fastReflection_EventDelegateFail) NewField(fd protoreflect.FieldDescrip
 func (x *fastReflection_EventDelegateFail) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.EventDelegateFail", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.EventDelegateFail", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -651,8 +651,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_event_proto_init()
-	md_EventUndelegateFail = File_nova_ibcstaking_v1_event_proto.Messages().ByName("EventUndelegateFail")
+	file_nova_icacontrol_v1_event_proto_init()
+	md_EventUndelegateFail = File_nova_icacontrol_v1_event_proto.Messages().ByName("EventUndelegateFail")
 	fd_EventUndelegateFail_msg_type_url = md_EventUndelegateFail.Fields().ByName("msg_type_url")
 	fd_EventUndelegateFail_delegator_address = md_EventUndelegateFail.Fields().ByName("delegator_address")
 	fd_EventUndelegateFail_validator_address = md_EventUndelegateFail.Fields().ByName("validator_address")
@@ -668,7 +668,7 @@ func (x *EventUndelegateFail) ProtoReflect() protoreflect.Message {
 }
 
 func (x *EventUndelegateFail) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_event_proto_msgTypes[1]
+	mi := &file_nova_icacontrol_v1_event_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -763,19 +763,19 @@ func (x *fastReflection_EventUndelegateFail) Range(f func(protoreflect.FieldDesc
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_EventUndelegateFail) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventUndelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventUndelegateFail.msg_type_url":
 		return x.MsgTypeUrl != ""
-	case "nova.icacontrol.v1.EventUndelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.delegator_address":
 		return x.DelegatorAddress != ""
-	case "nova.icacontrol.v1.EventUndelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.validator_address":
 		return x.ValidatorAddress != ""
-	case "nova.icacontrol.v1.EventUndelegateFail.amount":
+	case "nova.ibcstaking.v1.EventUndelegateFail.amount":
 		return x.Amount != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventUndelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventUndelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -787,19 +787,19 @@ func (x *fastReflection_EventUndelegateFail) Has(fd protoreflect.FieldDescriptor
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventUndelegateFail) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventUndelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventUndelegateFail.msg_type_url":
 		x.MsgTypeUrl = ""
-	case "nova.icacontrol.v1.EventUndelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.delegator_address":
 		x.DelegatorAddress = ""
-	case "nova.icacontrol.v1.EventUndelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.validator_address":
 		x.ValidatorAddress = ""
-	case "nova.icacontrol.v1.EventUndelegateFail.amount":
+	case "nova.ibcstaking.v1.EventUndelegateFail.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventUndelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventUndelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -811,23 +811,23 @@ func (x *fastReflection_EventUndelegateFail) Clear(fd protoreflect.FieldDescript
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_EventUndelegateFail) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.EventUndelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventUndelegateFail.msg_type_url":
 		value := x.MsgTypeUrl
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventUndelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.delegator_address":
 		value := x.DelegatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventUndelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.validator_address":
 		value := x.ValidatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventUndelegateFail.amount":
+	case "nova.ibcstaking.v1.EventUndelegateFail.amount":
 		value := x.Amount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventUndelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventUndelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventUndelegateFail does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventUndelegateFail does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -843,19 +843,19 @@ func (x *fastReflection_EventUndelegateFail) Get(descriptor protoreflect.FieldDe
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventUndelegateFail) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventUndelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventUndelegateFail.msg_type_url":
 		x.MsgTypeUrl = value.Interface().(string)
-	case "nova.icacontrol.v1.EventUndelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.delegator_address":
 		x.DelegatorAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.EventUndelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.validator_address":
 		x.ValidatorAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.EventUndelegateFail.amount":
+	case "nova.ibcstaking.v1.EventUndelegateFail.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventUndelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventUndelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -871,22 +871,22 @@ func (x *fastReflection_EventUndelegateFail) Set(fd protoreflect.FieldDescriptor
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventUndelegateFail) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventUndelegateFail.amount":
+	case "nova.ibcstaking.v1.EventUndelegateFail.amount":
 		if x.Amount == nil {
 			x.Amount = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.icacontrol.v1.EventUndelegateFail.msg_type_url":
-		panic(fmt.Errorf("field msg_type_url of message nova.icacontrol.v1.EventUndelegateFail is not mutable"))
-	case "nova.icacontrol.v1.EventUndelegateFail.delegator_address":
-		panic(fmt.Errorf("field delegator_address of message nova.icacontrol.v1.EventUndelegateFail is not mutable"))
-	case "nova.icacontrol.v1.EventUndelegateFail.validator_address":
-		panic(fmt.Errorf("field validator_address of message nova.icacontrol.v1.EventUndelegateFail is not mutable"))
+	case "nova.ibcstaking.v1.EventUndelegateFail.msg_type_url":
+		panic(fmt.Errorf("field msg_type_url of message nova.ibcstaking.v1.EventUndelegateFail is not mutable"))
+	case "nova.ibcstaking.v1.EventUndelegateFail.delegator_address":
+		panic(fmt.Errorf("field delegator_address of message nova.ibcstaking.v1.EventUndelegateFail is not mutable"))
+	case "nova.ibcstaking.v1.EventUndelegateFail.validator_address":
+		panic(fmt.Errorf("field validator_address of message nova.ibcstaking.v1.EventUndelegateFail is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventUndelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventUndelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -895,20 +895,20 @@ func (x *fastReflection_EventUndelegateFail) Mutable(fd protoreflect.FieldDescri
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_EventUndelegateFail) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventUndelegateFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventUndelegateFail.msg_type_url":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventUndelegateFail.delegator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.delegator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventUndelegateFail.validator_address":
+	case "nova.ibcstaking.v1.EventUndelegateFail.validator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventUndelegateFail.amount":
+	case "nova.ibcstaking.v1.EventUndelegateFail.amount":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventUndelegateFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventUndelegateFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventUndelegateFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -918,7 +918,7 @@ func (x *fastReflection_EventUndelegateFail) NewField(fd protoreflect.FieldDescr
 func (x *fastReflection_EventUndelegateFail) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.EventUndelegateFail", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.EventUndelegateFail", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1278,8 +1278,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_event_proto_init()
-	md_EventAutostakingFail = File_nova_ibcstaking_v1_event_proto.Messages().ByName("EventAutostakingFail")
+	file_nova_icacontrol_v1_event_proto_init()
+	md_EventAutostakingFail = File_nova_icacontrol_v1_event_proto.Messages().ByName("EventAutostakingFail")
 	fd_EventAutostakingFail_msg_type_url = md_EventAutostakingFail.Fields().ByName("msg_type_url")
 	fd_EventAutostakingFail_delegator_address = md_EventAutostakingFail.Fields().ByName("delegator_address")
 	fd_EventAutostakingFail_validator_address = md_EventAutostakingFail.Fields().ByName("validator_address")
@@ -1295,7 +1295,7 @@ func (x *EventAutostakingFail) ProtoReflect() protoreflect.Message {
 }
 
 func (x *EventAutostakingFail) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_event_proto_msgTypes[2]
+	mi := &file_nova_icacontrol_v1_event_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1390,19 +1390,19 @@ func (x *fastReflection_EventAutostakingFail) Range(f func(protoreflect.FieldDes
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_EventAutostakingFail) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventAutostakingFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventAutostakingFail.msg_type_url":
 		return x.MsgTypeUrl != ""
-	case "nova.icacontrol.v1.EventAutostakingFail.delegator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.delegator_address":
 		return x.DelegatorAddress != ""
-	case "nova.icacontrol.v1.EventAutostakingFail.validator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.validator_address":
 		return x.ValidatorAddress != ""
-	case "nova.icacontrol.v1.EventAutostakingFail.amount":
+	case "nova.ibcstaking.v1.EventAutostakingFail.amount":
 		return x.Amount != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventAutostakingFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventAutostakingFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1414,19 +1414,19 @@ func (x *fastReflection_EventAutostakingFail) Has(fd protoreflect.FieldDescripto
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventAutostakingFail) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventAutostakingFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventAutostakingFail.msg_type_url":
 		x.MsgTypeUrl = ""
-	case "nova.icacontrol.v1.EventAutostakingFail.delegator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.delegator_address":
 		x.DelegatorAddress = ""
-	case "nova.icacontrol.v1.EventAutostakingFail.validator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.validator_address":
 		x.ValidatorAddress = ""
-	case "nova.icacontrol.v1.EventAutostakingFail.amount":
+	case "nova.ibcstaking.v1.EventAutostakingFail.amount":
 		x.Amount = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventAutostakingFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventAutostakingFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1438,23 +1438,23 @@ func (x *fastReflection_EventAutostakingFail) Clear(fd protoreflect.FieldDescrip
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_EventAutostakingFail) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.EventAutostakingFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventAutostakingFail.msg_type_url":
 		value := x.MsgTypeUrl
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventAutostakingFail.delegator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.delegator_address":
 		value := x.DelegatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventAutostakingFail.validator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.validator_address":
 		value := x.ValidatorAddress
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventAutostakingFail.amount":
+	case "nova.ibcstaking.v1.EventAutostakingFail.amount":
 		value := x.Amount
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventAutostakingFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventAutostakingFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventAutostakingFail does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventAutostakingFail does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1470,19 +1470,19 @@ func (x *fastReflection_EventAutostakingFail) Get(descriptor protoreflect.FieldD
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventAutostakingFail) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventAutostakingFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventAutostakingFail.msg_type_url":
 		x.MsgTypeUrl = value.Interface().(string)
-	case "nova.icacontrol.v1.EventAutostakingFail.delegator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.delegator_address":
 		x.DelegatorAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.EventAutostakingFail.validator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.validator_address":
 		x.ValidatorAddress = value.Interface().(string)
-	case "nova.icacontrol.v1.EventAutostakingFail.amount":
+	case "nova.ibcstaking.v1.EventAutostakingFail.amount":
 		x.Amount = value.Message().Interface().(*v1beta1.Coin)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventAutostakingFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventAutostakingFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1498,22 +1498,22 @@ func (x *fastReflection_EventAutostakingFail) Set(fd protoreflect.FieldDescripto
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventAutostakingFail) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventAutostakingFail.amount":
+	case "nova.ibcstaking.v1.EventAutostakingFail.amount":
 		if x.Amount == nil {
 			x.Amount = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Amount.ProtoReflect())
-	case "nova.icacontrol.v1.EventAutostakingFail.msg_type_url":
-		panic(fmt.Errorf("field msg_type_url of message nova.icacontrol.v1.EventAutostakingFail is not mutable"))
-	case "nova.icacontrol.v1.EventAutostakingFail.delegator_address":
-		panic(fmt.Errorf("field delegator_address of message nova.icacontrol.v1.EventAutostakingFail is not mutable"))
-	case "nova.icacontrol.v1.EventAutostakingFail.validator_address":
-		panic(fmt.Errorf("field validator_address of message nova.icacontrol.v1.EventAutostakingFail is not mutable"))
+	case "nova.ibcstaking.v1.EventAutostakingFail.msg_type_url":
+		panic(fmt.Errorf("field msg_type_url of message nova.ibcstaking.v1.EventAutostakingFail is not mutable"))
+	case "nova.ibcstaking.v1.EventAutostakingFail.delegator_address":
+		panic(fmt.Errorf("field delegator_address of message nova.ibcstaking.v1.EventAutostakingFail is not mutable"))
+	case "nova.ibcstaking.v1.EventAutostakingFail.validator_address":
+		panic(fmt.Errorf("field validator_address of message nova.ibcstaking.v1.EventAutostakingFail is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventAutostakingFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventAutostakingFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1522,20 +1522,20 @@ func (x *fastReflection_EventAutostakingFail) Mutable(fd protoreflect.FieldDescr
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_EventAutostakingFail) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventAutostakingFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventAutostakingFail.msg_type_url":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventAutostakingFail.delegator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.delegator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventAutostakingFail.validator_address":
+	case "nova.ibcstaking.v1.EventAutostakingFail.validator_address":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventAutostakingFail.amount":
+	case "nova.ibcstaking.v1.EventAutostakingFail.amount":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventAutostakingFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventAutostakingFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventAutostakingFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1545,7 +1545,7 @@ func (x *fastReflection_EventAutostakingFail) NewField(fd protoreflect.FieldDesc
 func (x *fastReflection_EventAutostakingFail) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.EventAutostakingFail", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.EventAutostakingFail", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1909,8 +1909,8 @@ var (
 )
 
 func init() {
-	file_nova_ibcstaking_v1_event_proto_init()
-	md_EventTransferFail = File_nova_ibcstaking_v1_event_proto.Messages().ByName("EventTransferFail")
+	file_nova_icacontrol_v1_event_proto_init()
+	md_EventTransferFail = File_nova_icacontrol_v1_event_proto.Messages().ByName("EventTransferFail")
 	fd_EventTransferFail_msg_type_url = md_EventTransferFail.Fields().ByName("msg_type_url")
 	fd_EventTransferFail_source_port = md_EventTransferFail.Fields().ByName("source_port")
 	fd_EventTransferFail_source_channel = md_EventTransferFail.Fields().ByName("source_channel")
@@ -1930,7 +1930,7 @@ func (x *EventTransferFail) ProtoReflect() protoreflect.Message {
 }
 
 func (x *EventTransferFail) slowProtoReflect() protoreflect.Message {
-	mi := &file_nova_ibcstaking_v1_event_proto_msgTypes[3]
+	mi := &file_nova_icacontrol_v1_event_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2049,27 +2049,27 @@ func (x *fastReflection_EventTransferFail) Range(f func(protoreflect.FieldDescri
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_EventTransferFail) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventTransferFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventTransferFail.msg_type_url":
 		return x.MsgTypeUrl != ""
-	case "nova.icacontrol.v1.EventTransferFail.source_port":
+	case "nova.ibcstaking.v1.EventTransferFail.source_port":
 		return x.SourcePort != ""
-	case "nova.icacontrol.v1.EventTransferFail.source_channel":
+	case "nova.ibcstaking.v1.EventTransferFail.source_channel":
 		return x.SourceChannel != ""
-	case "nova.icacontrol.v1.EventTransferFail.token":
+	case "nova.ibcstaking.v1.EventTransferFail.token":
 		return x.Token != nil
-	case "nova.icacontrol.v1.EventTransferFail.sender":
+	case "nova.ibcstaking.v1.EventTransferFail.sender":
 		return x.Sender != ""
-	case "nova.icacontrol.v1.EventTransferFail.receiver":
+	case "nova.ibcstaking.v1.EventTransferFail.receiver":
 		return x.Receiver != ""
-	case "nova.icacontrol.v1.EventTransferFail.timeout_height":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_height":
 		return x.TimeoutHeight != ""
-	case "nova.icacontrol.v1.EventTransferFail.timeout_timestamp":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_timestamp":
 		return x.TimeoutTimestamp != uint64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventTransferFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventTransferFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventTransferFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventTransferFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2081,27 +2081,27 @@ func (x *fastReflection_EventTransferFail) Has(fd protoreflect.FieldDescriptor) 
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventTransferFail) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventTransferFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventTransferFail.msg_type_url":
 		x.MsgTypeUrl = ""
-	case "nova.icacontrol.v1.EventTransferFail.source_port":
+	case "nova.ibcstaking.v1.EventTransferFail.source_port":
 		x.SourcePort = ""
-	case "nova.icacontrol.v1.EventTransferFail.source_channel":
+	case "nova.ibcstaking.v1.EventTransferFail.source_channel":
 		x.SourceChannel = ""
-	case "nova.icacontrol.v1.EventTransferFail.token":
+	case "nova.ibcstaking.v1.EventTransferFail.token":
 		x.Token = nil
-	case "nova.icacontrol.v1.EventTransferFail.sender":
+	case "nova.ibcstaking.v1.EventTransferFail.sender":
 		x.Sender = ""
-	case "nova.icacontrol.v1.EventTransferFail.receiver":
+	case "nova.ibcstaking.v1.EventTransferFail.receiver":
 		x.Receiver = ""
-	case "nova.icacontrol.v1.EventTransferFail.timeout_height":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_height":
 		x.TimeoutHeight = ""
-	case "nova.icacontrol.v1.EventTransferFail.timeout_timestamp":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_timestamp":
 		x.TimeoutTimestamp = uint64(0)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventTransferFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventTransferFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventTransferFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventTransferFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2113,35 +2113,35 @@ func (x *fastReflection_EventTransferFail) Clear(fd protoreflect.FieldDescriptor
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_EventTransferFail) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.icacontrol.v1.EventTransferFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventTransferFail.msg_type_url":
 		value := x.MsgTypeUrl
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventTransferFail.source_port":
+	case "nova.ibcstaking.v1.EventTransferFail.source_port":
 		value := x.SourcePort
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventTransferFail.source_channel":
+	case "nova.ibcstaking.v1.EventTransferFail.source_channel":
 		value := x.SourceChannel
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventTransferFail.token":
+	case "nova.ibcstaking.v1.EventTransferFail.token":
 		value := x.Token
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
-	case "nova.icacontrol.v1.EventTransferFail.sender":
+	case "nova.ibcstaking.v1.EventTransferFail.sender":
 		value := x.Sender
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventTransferFail.receiver":
+	case "nova.ibcstaking.v1.EventTransferFail.receiver":
 		value := x.Receiver
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventTransferFail.timeout_height":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_height":
 		value := x.TimeoutHeight
 		return protoreflect.ValueOfString(value)
-	case "nova.icacontrol.v1.EventTransferFail.timeout_timestamp":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_timestamp":
 		value := x.TimeoutTimestamp
 		return protoreflect.ValueOfUint64(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventTransferFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventTransferFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventTransferFail does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventTransferFail does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2157,27 +2157,27 @@ func (x *fastReflection_EventTransferFail) Get(descriptor protoreflect.FieldDesc
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventTransferFail) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventTransferFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventTransferFail.msg_type_url":
 		x.MsgTypeUrl = value.Interface().(string)
-	case "nova.icacontrol.v1.EventTransferFail.source_port":
+	case "nova.ibcstaking.v1.EventTransferFail.source_port":
 		x.SourcePort = value.Interface().(string)
-	case "nova.icacontrol.v1.EventTransferFail.source_channel":
+	case "nova.ibcstaking.v1.EventTransferFail.source_channel":
 		x.SourceChannel = value.Interface().(string)
-	case "nova.icacontrol.v1.EventTransferFail.token":
+	case "nova.ibcstaking.v1.EventTransferFail.token":
 		x.Token = value.Message().Interface().(*v1beta1.Coin)
-	case "nova.icacontrol.v1.EventTransferFail.sender":
+	case "nova.ibcstaking.v1.EventTransferFail.sender":
 		x.Sender = value.Interface().(string)
-	case "nova.icacontrol.v1.EventTransferFail.receiver":
+	case "nova.ibcstaking.v1.EventTransferFail.receiver":
 		x.Receiver = value.Interface().(string)
-	case "nova.icacontrol.v1.EventTransferFail.timeout_height":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_height":
 		x.TimeoutHeight = value.Interface().(string)
-	case "nova.icacontrol.v1.EventTransferFail.timeout_timestamp":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_timestamp":
 		x.TimeoutTimestamp = value.Uint()
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventTransferFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventTransferFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventTransferFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventTransferFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2193,30 +2193,30 @@ func (x *fastReflection_EventTransferFail) Set(fd protoreflect.FieldDescriptor, 
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_EventTransferFail) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventTransferFail.token":
+	case "nova.ibcstaking.v1.EventTransferFail.token":
 		if x.Token == nil {
 			x.Token = new(v1beta1.Coin)
 		}
 		return protoreflect.ValueOfMessage(x.Token.ProtoReflect())
-	case "nova.icacontrol.v1.EventTransferFail.msg_type_url":
-		panic(fmt.Errorf("field msg_type_url of message nova.icacontrol.v1.EventTransferFail is not mutable"))
-	case "nova.icacontrol.v1.EventTransferFail.source_port":
-		panic(fmt.Errorf("field source_port of message nova.icacontrol.v1.EventTransferFail is not mutable"))
-	case "nova.icacontrol.v1.EventTransferFail.source_channel":
-		panic(fmt.Errorf("field source_channel of message nova.icacontrol.v1.EventTransferFail is not mutable"))
-	case "nova.icacontrol.v1.EventTransferFail.sender":
-		panic(fmt.Errorf("field sender of message nova.icacontrol.v1.EventTransferFail is not mutable"))
-	case "nova.icacontrol.v1.EventTransferFail.receiver":
-		panic(fmt.Errorf("field receiver of message nova.icacontrol.v1.EventTransferFail is not mutable"))
-	case "nova.icacontrol.v1.EventTransferFail.timeout_height":
-		panic(fmt.Errorf("field timeout_height of message nova.icacontrol.v1.EventTransferFail is not mutable"))
-	case "nova.icacontrol.v1.EventTransferFail.timeout_timestamp":
-		panic(fmt.Errorf("field timeout_timestamp of message nova.icacontrol.v1.EventTransferFail is not mutable"))
+	case "nova.ibcstaking.v1.EventTransferFail.msg_type_url":
+		panic(fmt.Errorf("field msg_type_url of message nova.ibcstaking.v1.EventTransferFail is not mutable"))
+	case "nova.ibcstaking.v1.EventTransferFail.source_port":
+		panic(fmt.Errorf("field source_port of message nova.ibcstaking.v1.EventTransferFail is not mutable"))
+	case "nova.ibcstaking.v1.EventTransferFail.source_channel":
+		panic(fmt.Errorf("field source_channel of message nova.ibcstaking.v1.EventTransferFail is not mutable"))
+	case "nova.ibcstaking.v1.EventTransferFail.sender":
+		panic(fmt.Errorf("field sender of message nova.ibcstaking.v1.EventTransferFail is not mutable"))
+	case "nova.ibcstaking.v1.EventTransferFail.receiver":
+		panic(fmt.Errorf("field receiver of message nova.ibcstaking.v1.EventTransferFail is not mutable"))
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_height":
+		panic(fmt.Errorf("field timeout_height of message nova.ibcstaking.v1.EventTransferFail is not mutable"))
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_timestamp":
+		panic(fmt.Errorf("field timeout_timestamp of message nova.ibcstaking.v1.EventTransferFail is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventTransferFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventTransferFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventTransferFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventTransferFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2225,28 +2225,28 @@ func (x *fastReflection_EventTransferFail) Mutable(fd protoreflect.FieldDescript
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_EventTransferFail) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.EventTransferFail.msg_type_url":
+	case "nova.ibcstaking.v1.EventTransferFail.msg_type_url":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventTransferFail.source_port":
+	case "nova.ibcstaking.v1.EventTransferFail.source_port":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventTransferFail.source_channel":
+	case "nova.ibcstaking.v1.EventTransferFail.source_channel":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventTransferFail.token":
+	case "nova.ibcstaking.v1.EventTransferFail.token":
 		m := new(v1beta1.Coin)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
-	case "nova.icacontrol.v1.EventTransferFail.sender":
+	case "nova.ibcstaking.v1.EventTransferFail.sender":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventTransferFail.receiver":
+	case "nova.ibcstaking.v1.EventTransferFail.receiver":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventTransferFail.timeout_height":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_height":
 		return protoreflect.ValueOfString("")
-	case "nova.icacontrol.v1.EventTransferFail.timeout_timestamp":
+	case "nova.ibcstaking.v1.EventTransferFail.timeout_timestamp":
 		return protoreflect.ValueOfUint64(uint64(0))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.EventTransferFail"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.ibcstaking.v1.EventTransferFail"))
 		}
-		panic(fmt.Errorf("message nova.icacontrol.v1.EventTransferFail does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.ibcstaking.v1.EventTransferFail does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2256,7 +2256,7 @@ func (x *fastReflection_EventTransferFail) NewField(fd protoreflect.FieldDescrip
 func (x *fastReflection_EventTransferFail) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.EventTransferFail", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.ibcstaking.v1.EventTransferFail", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2790,7 +2790,7 @@ type EventDelegateFail struct {
 func (x *EventDelegateFail) Reset() {
 	*x = EventDelegateFail{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_event_proto_msgTypes[0]
+		mi := &file_nova_icacontrol_v1_event_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2804,7 +2804,7 @@ func (*EventDelegateFail) ProtoMessage() {}
 
 // Deprecated: Use EventDelegateFail.ProtoReflect.Descriptor instead.
 func (*EventDelegateFail) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_event_proto_rawDescGZIP(), []int{0}
+	return file_nova_icacontrol_v1_event_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *EventDelegateFail) GetMsgTypeUrl() string {
@@ -2849,7 +2849,7 @@ type EventUndelegateFail struct {
 func (x *EventUndelegateFail) Reset() {
 	*x = EventUndelegateFail{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_event_proto_msgTypes[1]
+		mi := &file_nova_icacontrol_v1_event_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2863,7 +2863,7 @@ func (*EventUndelegateFail) ProtoMessage() {}
 
 // Deprecated: Use EventUndelegateFail.ProtoReflect.Descriptor instead.
 func (*EventUndelegateFail) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_event_proto_rawDescGZIP(), []int{1}
+	return file_nova_icacontrol_v1_event_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *EventUndelegateFail) GetMsgTypeUrl() string {
@@ -2908,7 +2908,7 @@ type EventAutostakingFail struct {
 func (x *EventAutostakingFail) Reset() {
 	*x = EventAutostakingFail{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_event_proto_msgTypes[2]
+		mi := &file_nova_icacontrol_v1_event_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2922,7 +2922,7 @@ func (*EventAutostakingFail) ProtoMessage() {}
 
 // Deprecated: Use EventAutostakingFail.ProtoReflect.Descriptor instead.
 func (*EventAutostakingFail) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_event_proto_rawDescGZIP(), []int{2}
+	return file_nova_icacontrol_v1_event_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *EventAutostakingFail) GetMsgTypeUrl() string {
@@ -2971,7 +2971,7 @@ type EventTransferFail struct {
 func (x *EventTransferFail) Reset() {
 	*x = EventTransferFail{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_nova_ibcstaking_v1_event_proto_msgTypes[3]
+		mi := &file_nova_icacontrol_v1_event_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2985,7 +2985,7 @@ func (*EventTransferFail) ProtoMessage() {}
 
 // Deprecated: Use EventTransferFail.ProtoReflect.Descriptor instead.
 func (*EventTransferFail) Descriptor() ([]byte, []int) {
-	return file_nova_ibcstaking_v1_event_proto_rawDescGZIP(), []int{3}
+	return file_nova_icacontrol_v1_event_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *EventTransferFail) GetMsgTypeUrl() string {
@@ -3044,19 +3044,19 @@ func (x *EventTransferFail) GetTimeoutTimestamp() uint64 {
 	return 0
 }
 
-var File_nova_ibcstaking_v1_event_proto protoreflect.FileDescriptor
+var File_nova_icacontrol_v1_event_proto protoreflect.FileDescriptor
 
-var file_nova_ibcstaking_v1_event_proto_rawDesc = []byte{
-	0x0a, 0x1e, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
-	0x67, 0x2f, 0x76, 0x31, 0x2f, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+var file_nova_icacontrol_v1_event_proto_rawDesc = []byte{
+	0x0a, 0x1e, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x12, 0x12, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
 	0x67, 0x2e, 0x76, 0x31, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f,
 	0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x63, 0x6f, 0x73, 0x6d,
 	0x6f, 0x73, 0x5f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61,
 	0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73,
-	0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63,
+	0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xf4, 0x01, 0x0a, 0x11, 0x45, 0x76, 0x65, 0x6e, 0x74,
 	0x44, 0x65, 0x6c, 0x65, 0x67, 0x61, 0x74, 0x65, 0x46, 0x61, 0x69, 0x6c, 0x12, 0x20, 0x0a, 0x0c,
 	0x6d, 0x73, 0x67, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01,
@@ -3129,8 +3129,8 @@ var file_nova_ibcstaking_v1_event_proto_rawDesc = []byte{
 	0x67, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f,
 	0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43,
 	0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f,
-	0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b,
-	0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
+	0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74,
+	0x72, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e,
 	0x67, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61,
 	0x2e, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67, 0x2e, 0x56, 0x31, 0xca, 0x02,
 	0x12, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x62, 0x63, 0x73, 0x74, 0x61, 0x6b, 0x69, 0x6e, 0x67,
@@ -3142,30 +3142,30 @@ var file_nova_ibcstaking_v1_event_proto_rawDesc = []byte{
 }
 
 var (
-	file_nova_ibcstaking_v1_event_proto_rawDescOnce sync.Once
-	file_nova_ibcstaking_v1_event_proto_rawDescData = file_nova_ibcstaking_v1_event_proto_rawDesc
+	file_nova_icacontrol_v1_event_proto_rawDescOnce sync.Once
+	file_nova_icacontrol_v1_event_proto_rawDescData = file_nova_icacontrol_v1_event_proto_rawDesc
 )
 
-func file_nova_ibcstaking_v1_event_proto_rawDescGZIP() []byte {
-	file_nova_ibcstaking_v1_event_proto_rawDescOnce.Do(func() {
-		file_nova_ibcstaking_v1_event_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_ibcstaking_v1_event_proto_rawDescData)
+func file_nova_icacontrol_v1_event_proto_rawDescGZIP() []byte {
+	file_nova_icacontrol_v1_event_proto_rawDescOnce.Do(func() {
+		file_nova_icacontrol_v1_event_proto_rawDescData = protoimpl.X.CompressGZIP(file_nova_icacontrol_v1_event_proto_rawDescData)
 	})
-	return file_nova_ibcstaking_v1_event_proto_rawDescData
+	return file_nova_icacontrol_v1_event_proto_rawDescData
 }
 
-var file_nova_ibcstaking_v1_event_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_nova_ibcstaking_v1_event_proto_goTypes = []interface{}{
-	(*EventDelegateFail)(nil),    // 0: nova.icacontrol.v1.EventDelegateFail
-	(*EventUndelegateFail)(nil),  // 1: nova.icacontrol.v1.EventUndelegateFail
-	(*EventAutostakingFail)(nil), // 2: nova.icacontrol.v1.EventAutostakingFail
-	(*EventTransferFail)(nil),    // 3: nova.icacontrol.v1.EventTransferFail
+var file_nova_icacontrol_v1_event_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_nova_icacontrol_v1_event_proto_goTypes = []interface{}{
+	(*EventDelegateFail)(nil),    // 0: nova.ibcstaking.v1.EventDelegateFail
+	(*EventUndelegateFail)(nil),  // 1: nova.ibcstaking.v1.EventUndelegateFail
+	(*EventAutostakingFail)(nil), // 2: nova.ibcstaking.v1.EventAutostakingFail
+	(*EventTransferFail)(nil),    // 3: nova.ibcstaking.v1.EventTransferFail
 	(*v1beta1.Coin)(nil),         // 4: cosmos.base.v1beta1.Coin
 }
-var file_nova_ibcstaking_v1_event_proto_depIdxs = []int32{
-	4, // 0: nova.icacontrol.v1.EventDelegateFail.amount:type_name -> cosmos.base.v1beta1.Coin
-	4, // 1: nova.icacontrol.v1.EventUndelegateFail.amount:type_name -> cosmos.base.v1beta1.Coin
-	4, // 2: nova.icacontrol.v1.EventAutostakingFail.amount:type_name -> cosmos.base.v1beta1.Coin
-	4, // 3: nova.icacontrol.v1.EventTransferFail.token:type_name -> cosmos.base.v1beta1.Coin
+var file_nova_icacontrol_v1_event_proto_depIdxs = []int32{
+	4, // 0: nova.ibcstaking.v1.EventDelegateFail.amount:type_name -> cosmos.base.v1beta1.Coin
+	4, // 1: nova.ibcstaking.v1.EventUndelegateFail.amount:type_name -> cosmos.base.v1beta1.Coin
+	4, // 2: nova.ibcstaking.v1.EventAutostakingFail.amount:type_name -> cosmos.base.v1beta1.Coin
+	4, // 3: nova.ibcstaking.v1.EventTransferFail.token:type_name -> cosmos.base.v1beta1.Coin
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
@@ -3173,14 +3173,14 @@ var file_nova_ibcstaking_v1_event_proto_depIdxs = []int32{
 	0, // [0:4] is the sub-list for field type_name
 }
 
-func init() { file_nova_ibcstaking_v1_event_proto_init() }
-func file_nova_ibcstaking_v1_event_proto_init() {
-	if File_nova_ibcstaking_v1_event_proto != nil {
+func init() { file_nova_icacontrol_v1_event_proto_init() }
+func file_nova_icacontrol_v1_event_proto_init() {
+	if File_nova_icacontrol_v1_event_proto != nil {
 		return
 	}
-	file_nova_ibcstaking_v1_params_proto_init()
+	file_nova_icacontrol_v1_params_proto_init()
 	if !protoimpl.UnsafeEnabled {
-		file_nova_ibcstaking_v1_event_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_event_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventDelegateFail); i {
 			case 0:
 				return &v.state
@@ -3192,7 +3192,7 @@ func file_nova_ibcstaking_v1_event_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_event_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_event_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventUndelegateFail); i {
 			case 0:
 				return &v.state
@@ -3204,7 +3204,7 @@ func file_nova_ibcstaking_v1_event_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_event_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_event_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventAutostakingFail); i {
 			case 0:
 				return &v.state
@@ -3216,7 +3216,7 @@ func file_nova_ibcstaking_v1_event_proto_init() {
 				return nil
 			}
 		}
-		file_nova_ibcstaking_v1_event_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_nova_icacontrol_v1_event_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EventTransferFail); i {
 			case 0:
 				return &v.state
@@ -3233,18 +3233,18 @@ func file_nova_ibcstaking_v1_event_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_nova_ibcstaking_v1_event_proto_rawDesc,
+			RawDescriptor: file_nova_icacontrol_v1_event_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_nova_ibcstaking_v1_event_proto_goTypes,
-		DependencyIndexes: file_nova_ibcstaking_v1_event_proto_depIdxs,
-		MessageInfos:      file_nova_ibcstaking_v1_event_proto_msgTypes,
+		GoTypes:           file_nova_icacontrol_v1_event_proto_goTypes,
+		DependencyIndexes: file_nova_icacontrol_v1_event_proto_depIdxs,
+		MessageInfos:      file_nova_icacontrol_v1_event_proto_msgTypes,
 	}.Build()
-	File_nova_ibcstaking_v1_event_proto = out.File
-	file_nova_ibcstaking_v1_event_proto_rawDesc = nil
-	file_nova_ibcstaking_v1_event_proto_goTypes = nil
-	file_nova_ibcstaking_v1_event_proto_depIdxs = nil
+	File_nova_icacontrol_v1_event_proto = out.File
+	file_nova_icacontrol_v1_event_proto_rawDesc = nil
+	file_nova_icacontrol_v1_event_proto_goTypes = nil
+	file_nova_icacontrol_v1_event_proto_depIdxs = nil
 }

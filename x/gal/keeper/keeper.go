@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
-	ibcstakingKeeper "github.com/Carina-labs/nova/x/ibcstaking/keeper"
+	ibcstakingKeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
