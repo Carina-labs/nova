@@ -11,14 +11,14 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// RegisterZone
+// RegisterZone stores metadata for the new zone.
 func (k Keeper) RegisterZone(ctx sdk.Context, zone *types.RegisteredZone) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	bz := k.cdc.MustMarshal(zone)
 	store.Set([]byte(zone.ZoneId), bz)
 }
 
-// GetRegisteredZone
+// GetRegisteredZone gets information about the stored zone that fits the zoneId.
 func (k Keeper) GetRegisteredZone(ctx sdk.Context, zoneId string) (types.RegisteredZone, bool) {
 	zone := types.RegisteredZone{}
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
@@ -32,14 +32,14 @@ func (k Keeper) GetRegisteredZone(ctx sdk.Context, zoneId string) (types.Registe
 	return zone, true
 }
 
-// DeleteRegisteredZone delete zone info
+// DeleteRegisteredZone deletes zone information corresponding to zoneId.
 func (k Keeper) DeleteRegisteredZone(ctx sdk.Context, zoneId string) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	ctx.Logger().Error(fmt.Sprintf("Removing chain: %s", zoneId))
 	store.Delete([]byte(zoneId))
 }
 
-// IterateRegisteredZones iterate through zones
+// IterateRegisteredZones navigates all registered zones.
 func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zoneInfo types.RegisteredZone) (stop bool)) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefixZone)
 	iterator := sdk.KVStorePrefixIterator(store, nil)
@@ -64,6 +64,7 @@ func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zon
 	}
 }
 
+// GetRegisteredZoneForValidatorAddr returns information about the correct zone using the validator address of the counterpart chain.
 func (k Keeper) GetRegisteredZoneForValidatorAddr(ctx sdk.Context, validatorAddr string) *types.RegisteredZone {
 	var zone *types.RegisteredZone
 
@@ -77,6 +78,7 @@ func (k Keeper) GetRegisteredZoneForValidatorAddr(ctx sdk.Context, validatorAddr
 	return zone
 }
 
+// GetZoneForDenom returns information about the zone that matches denom.
 func (k Keeper) GetZoneForDenom(ctx sdk.Context, denom string) *types.RegisteredZone {
 	var zone *types.RegisteredZone
 
@@ -91,6 +93,7 @@ func (k Keeper) GetZoneForDenom(ctx sdk.Context, denom string) *types.Registered
 	return zone
 }
 
+// GetRegisterZoneForPortId returns the appropriate Zone information for portid.
 func (k Keeper) GetRegisterZoneForPortId(ctx sdk.Context, portId string) (*types.RegisteredZone, bool) {
 	var zone *types.RegisteredZone
 	ok := false
@@ -106,6 +109,7 @@ func (k Keeper) GetRegisterZoneForPortId(ctx sdk.Context, portId string) (*types
 	return zone, ok
 }
 
+// GetsnDenomForBaseDenom returns an appropriate pair of sn-Token denom for BaseDenom.
 func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, baseDenom string) string {
 	var snDenom string
 
@@ -120,6 +124,7 @@ func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, baseDenom string) string
 	return snDenom
 }
 
+// GetBaseDenomForSnDenom returns an appropriate pair of BaseDenom for snDenom.
 func (k Keeper) GetBaseDenomForSnDenom(ctx sdk.Context, snDenom string) string {
 	var baseDenom string
 
@@ -133,6 +138,7 @@ func (k Keeper) GetBaseDenomForSnDenom(ctx sdk.Context, snDenom string) string {
 	return baseDenom
 }
 
+// GetIBCHashDenom uses baseDenom and portId and channelId to create the appropriate IBCdenom.
 func (k Keeper) GetIBCHashDenom(ctx sdk.Context, portId, chanId, baseDenom string) string {
 	var path string
 

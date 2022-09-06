@@ -1,14 +1,9 @@
-syntax = "proto3";
-package nova.ibcstaking.v1;
+# Events
 
-import "gogoproto/gogo.proto";
-import "cosmos_proto/cosmos.proto";
-import "cosmos/base/v1beta1/coin.proto";
-import "nova/ibcstaking/v1/params.proto";
+---
 
-option go_package = "github.com/Carina-labs/nova/x/ibcstaking/types";
-
-// EventDelegateFail is an event that occurs when a remote delegation fails.
+## EventDelegateFail
+```protobuf
 message EventDelegateFail {
   string msg_type_url = 1;
   string delegator_address = 2;
@@ -18,8 +13,12 @@ message EventDelegateFail {
         (gogoproto.nullable) = false
     ];
 }
+```
 
-// EventUndelegateFail is an event that occurs when a remote delegation fails.
+`EventDelegateFail` is an event that occurs when a remote delegation fails.
+
+## EventUndelegateFail
+```protobuf
 message EventUndelegateFail {
   string msg_type_url = 1;
   string delegator_address = 2;
@@ -29,8 +28,12 @@ message EventUndelegateFail {
         (gogoproto.nullable) = false
     ];
 }
+```
 
-// EventAutostakingFail is an event that occurs when auto-compounding fails.
+`EventUndelegateFail` is an event that occurs when a remote delegation fails.
+
+## EventAutostakingFail
+```protobuf
 message EventAutostakingFail {
     string msg_type_url = 1;
     string delegator_address = 2;
@@ -40,8 +43,12 @@ message EventAutostakingFail {
         (gogoproto.nullable) = false
     ];
 }
+```
 
-// EventTransferFail is an event that occurs when an asset transfer between chains fails.
+`EventAutostakingFail` is an event that occurs when auto-compounding fails.
+
+## EventTransferFail
+```protobuf
 message EventTransferFail {
   option (gogoproto.equal)           = false;
   option (gogoproto.goproto_getters) = false;
@@ -56,3 +63,6 @@ message EventTransferFail {
   uint64 timeout_timestamp = 8;
 }
 
+```
+
+`EventTransferFail` is an event that occurs when an asset transfer between chains fails.
