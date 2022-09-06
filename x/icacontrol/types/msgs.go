@@ -22,7 +22,7 @@ var (
 
 	//modify
 	_ sdk.Msg = &MsgDeleteRegisteredZone{}
-	_ sdk.Msg = &MsgChangeRegisteredZoneInfo{}
+	_ sdk.Msg = &MsgChangeRegisteredZone{}
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
@@ -288,8 +288,8 @@ func (msg MsgDeleteRegisteredZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress, icaConnectionId, transferPortId, transferChanId, validatorAddress, baseDenom string, decimal int64) *MsgChangeRegisteredZoneInfo {
-	return &MsgChangeRegisteredZoneInfo{
+func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress, icaConnectionId, transferPortId, transferChanId, validatorAddress, baseDenom string, decimal int64) *MsgChangeRegisteredZone {
+	return &MsgChangeRegisteredZone{
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
 			ConnectionId: icaConnectionId,
@@ -310,7 +310,7 @@ func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress
 }
 
 // ValidateBasic implements sdk.Msg
-func (msg MsgChangeRegisteredZoneInfo) ValidateBasic() error {
+func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
@@ -320,7 +320,7 @@ func (msg MsgChangeRegisteredZoneInfo) ValidateBasic() error {
 }
 
 // GetSigners implements sdk.Msg
-func (msg MsgChangeRegisteredZoneInfo) GetSigners() []sdk.AccAddress {
+func (msg MsgChangeRegisteredZone) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
 
 	if err != nil {

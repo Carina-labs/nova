@@ -63,7 +63,15 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		return nil, err
 	}
 
-	return &types.MsgRegisterZoneResponse{}, nil
+	return &types.MsgRegisterZoneResponse{
+		ZoneId:           zoneInfo.ZoneId,
+		IcaInfo:          zoneInfo.IcaConnectionInfo,
+		TransferInfo:     zoneInfo.TransferInfo,
+		ValidatorAddress: zoneInfo.ValidatorAddress,
+		BaseDenom:        zoneInfo.BaseDenom,
+		SnDenom:          zoneInfo.BaseDenom,
+		Decimal:          zoneInfo.Decimal,
+	}, nil
 }
 
 // DeleteRegisteredZone implements the Msg/MsgDeleteRegisteredZone interface
@@ -84,7 +92,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 }
 
 // ChangeRegisteredZoneInfo implements the Msg/MsgChangeRegisteredZoneInfo interface
-func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZoneInfo) (*types.MsgChangeRegisteredZoneInfoResponse, error) {
+func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZone) (*types.MsgChangeRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
@@ -111,7 +119,15 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 	}
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
-	return &types.MsgChangeRegisteredZoneInfoResponse{}, nil
+	return &types.MsgChangeRegisteredZoneResponse{
+		ZoneId:           zoneInfo.ZoneId,
+		IcaInfo:          zoneInfo.IcaConnectionInfo,
+		TransferInfo:     zoneInfo.TransferInfo,
+		ValidatorAddress: zoneInfo.ValidatorAddress,
+		BaseDenom:        zoneInfo.BaseDenom,
+		SnDenom:          zoneInfo.BaseDenom,
+		Decimal:          zoneInfo.Decimal,
+	}, nil
 }
 
 // IcaDelegate implements the Msg/MsgIcaDelegate interface
