@@ -16,6 +16,8 @@ message GenesisState {
   repeated ChainInfo states = 2 [(gogoproto.nullable) = false];
 }
 
+// ChainInfo refers to the state of the counterpart chain to be stored on the Oracle module.
+// Status includes the amount of coins delegated to Zone, AppHash, and block height.
 message ChainInfo {
   // coin refers to the sum of owned, staked and claimable quantity of the coin
   cosmos.base.v1beta1.Coin coin = 1 [
