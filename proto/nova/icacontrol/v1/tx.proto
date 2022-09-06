@@ -2,11 +2,11 @@ syntax = "proto3";
 package nova.ibcstaking.v1;
 
 import "gogoproto/gogo.proto";
-import "nova/icacontrol/v1/genesis.proto";
+import "nova/ibcstaking/v1/genesis.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/authz/v1beta1/authz.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
+option go_package = "github.com/Carina-labs/nova/x/ibcstaking/types";
 option (gogoproto.goproto_getters_all) = false;
 
 // Msg defines the ibcstaking Msg service.
@@ -25,7 +25,7 @@ service Msg {
   rpc IcaAuthzGrant(MsgIcaAuthzGrant) returns (MsgIcaAuthzGrantResponse);
   rpc IcaAuthzRevoke(MsgIcaAuthzRevoke) returns (MsgIcaAuthzRevokeResponse);
   rpc DeleteRegisteredZone(MsgDeleteRegisteredZone) returns (MsgDeleteRegisteredZoneResponse);
-  rpc ChangeRegisteredZoneInfo(MsgChangeRegisteredZone) returns (MsgChangeRegisteredZoneResponse);
+  rpc ChangeRegisteredZoneInfo(MsgChangeRegisteredZoneInfo) returns (MsgChangeRegisteredZoneInfoResponse);
 }
 
 // MsgRegisterZone is the message you use to register a new zone.
@@ -42,19 +42,10 @@ message MsgRegisterZone {
 }
 
 // MsgRegisterZoneResponse is a response message for MsgRegisterZone
-message MsgRegisterZoneResponse {
-  string zone_id = 1;
-  IcaConnectionInfo ica_info = 2;
-  IcaAccount ica_account = 3;
-  TransferConnectionInfo transfer_info = 4;
-  string validator_address = 5;
-  string base_denom = 6;
-  string sn_denom = 7;
-  int64 decimal = 8;
-}
+message MsgRegisterZoneResponse {}
 
 // MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
-message MsgChangeRegisteredZone{
+message MsgChangeRegisteredZoneInfo{
   option (gogoproto.equal) = false;
 
   string zone_id = 1;
@@ -64,20 +55,10 @@ message MsgChangeRegisteredZone{
   string validator_address = 5;
   string base_denom = 6;
   int64 decimal = 7;
-
 }
 
 // MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
-message MsgChangeRegisteredZoneResponse{
-  string zone_id = 1;
-  IcaConnectionInfo ica_info = 2;
-  IcaAccount ica_account = 3;
-  TransferConnectionInfo transfer_info = 4;
-  string validator_address = 5;
-  string base_denom = 6;
-  string sn_denom = 7;
-  int64 decimal = 8;
-}
+message MsgChangeRegisteredZoneInfoResponse{}
 
 // MsgDeleteRegisteredZone deletes registered Zone information.
 message MsgDeleteRegisteredZone{
@@ -140,7 +121,7 @@ message MsgIcaAuthzGrant{
   string zone_id = 1;
   string grantee = 2;
   string controller_address = 3;
-  cosmos.authz.v1beta1.Grant grant = 4[(gogoproto.nullable) = false];
+  cosmos.authz.v1beta1.Grant grant = 4 [(gogoproto.nullable) = false];
 }
 
 // MsgIcaAuthzGrantResponse is a response messasge for MsgIcaAuthzGrant.

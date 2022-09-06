@@ -64,7 +64,7 @@ func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zon
 	}
 }
 
-// GetRegisteredZoneForValidatorAddr returns information about the correct zone using the validator address of the counterparty chain.
+// GetRegisteredZoneForValidatorAddr returns information about the correct zone using the validator address of the counterpart chain.
 func (k Keeper) GetRegisteredZoneForValidatorAddr(ctx sdk.Context, validatorAddr string) *types.RegisteredZone {
 	var zone *types.RegisteredZone
 
@@ -109,7 +109,7 @@ func (k Keeper) GetRegisterZoneForPortId(ctx sdk.Context, portId string) (*types
 	return zone, ok
 }
 
-// GetsnDenomForBaseDenom returns an appropriate pair of sn-asset denom for BaseDenom.
+// GetsnDenomForBaseDenom returns an appropriate pair of sn-Token denom for BaseDenom.
 func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, baseDenom string) string {
 	var snDenom string
 
