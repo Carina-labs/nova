@@ -5,13 +5,13 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// SetAirdropInfo sets airdrop info
+// SetAirdropInfo sets airdrop info.
 func (k Keeper) SetAirdropInfo(ctx sdk.Context, info *types.AirdropInfo) {
 	store := ctx.KVStore(k.storeKey)
 	store.Set(types.GetKeyAirdropInfo(), k.cdc.MustMarshal(info))
 }
 
-// GetAirdropInfo returns airdrop info
+// GetAirdropInfo returns airdrop info.
 func (k Keeper) GetAirdropInfo(ctx sdk.Context) types.AirdropInfo {
 	store := ctx.KVStore(k.storeKey)
 
