@@ -42,8 +42,8 @@ func GetQueryCmd() *cobra.Command {
 
 	cmd.AddCommand(queryParams())
 	cmd.AddCommand(queryClaimableAsset())
-	cmd.AddCommand(queryPendingWithdrawals())
-	cmd.AddCommand(queryActiveWithdrawals())
+	cmd.AddCommand(queryPendingWithdrawal())
+	cmd.AddCommand(queryActiveWithdrawal())
 	cmd.AddCommand(queryDepositRecords())
 	cmd.AddCommand(queryUndelegateRecords())
 	cmd.AddCommand(queryWithdrawRecords())
