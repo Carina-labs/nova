@@ -54,9 +54,10 @@ func GetTxCmd() *cobra.Command {
 	return cmd
 }
 
+// txRegisterZoneCmd is a transaction that registers new Zone information. This transaction can only be submitted by a given signatory.
 func txRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "registerzone [zone-id] [controller-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
+		Use:  "register-zone [zone-id] [controller-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
 		Args: cobra.ExactArgs(8),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -94,9 +95,10 @@ func txRegisterZoneCmd() *cobra.Command {
 	return cmd
 }
 
+// txDelegateTxCmd is a transaction used for remote delegation using ICA. This transaction can only be submitted by a given signatory.
 func txDelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "icadelegate [zone-id] [controller-address] [host-address] [amount]",
+		Use:  "ica-delegate [zone-id] [controller-address] [host-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -127,9 +129,10 @@ func txDelegateTxCmd() *cobra.Command {
 	return cmd
 }
 
+// txUndelegateTxCmd is a transaction used for remote de-delegation using ICA. This transaction can only be submitted by a given signatory.
 func txUndelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "icaundelegate [zone-id] [controller-address] [host-address] [amount]",
+		Use:  "ica-undelegate [zone-id] [controller-address] [host-address] [amount]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -155,9 +158,10 @@ func txUndelegateTxCmd() *cobra.Command {
 	return cmd
 }
 
+// txAutoStakingTxCmd is a transaction used for auto-compounding using ICA. This transaction can only be submitted by a given signatory.
 func txAutoStakingTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "icaautostaking [zone-id] [controller-address] [amount]",
+		Use:  "ica-auto-staking [zone-id] [controller-address] [amount]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -185,9 +189,10 @@ func txAutoStakingTxCmd() *cobra.Command {
 	return cmd
 }
 
+// txTransferTxCmd is a transaction used to transfer assets between chains using ICA. This transaction can only be submitted by a given signatory.
 func txTransferTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "icatransfer [zone-id] [controller-address] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
+		Use:  "ica-transfer [zone-id] [controller-address] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
 		Args: cobra.ExactArgs(7),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -220,9 +225,10 @@ func txTransferTxCmd() *cobra.Command {
 	return cmd
 }
 
+// txDeleteZoneTxCmd is a transaction that deletes the registered zone. This transaction can only be submitted by a given signatory.
 func txDeleteZoneTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "icadeletezone [zone-id] [controller-address]",
+		Use:  "delete-zone [zone-id] [controller-address]",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -246,9 +252,10 @@ func txDeleteZoneTxCmd() *cobra.Command {
 	return cmd
 }
 
+// txChangeZoneInfoTxCmd is a transaction that modifies the registered zone. This transaction can only be submitted by a given signatory.
 func txChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "changezoneinfo [zone-id] [host-address] [controller-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
+		Use:  "change-zone [zone-id] [host-address] [controller-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
 		Args: cobra.ExactArgs(9),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -286,9 +293,11 @@ func txChangeZoneInfoTxCmd() *cobra.Command {
 
 	return cmd
 }
+
+// txAuthzGrantTxCmd is a transaction used to transfer permissions between accounts using ICA. This transaction can only be submitted by a given signatory.
 func txAuthzGrantTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "icagrant [zone-id] [grantee-address] [authorization-type]  --from [granter]",
+		Use:  "ica-authz-grant [zone-id] [grantee-address] [authorization-type] --from [granter]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
@@ -407,9 +416,10 @@ func txAuthzGrantTxCmd() *cobra.Command {
 	return cmd
 }
 
+// txAuthzRevokeTxCmd is a transaction used to execute transferred permissions between accounts using ICA. This transaction can only be submitted by a given signatory.
 func txAuthzRevokeTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "icarevoke [zone-id] [grantee-address] [msg_type]  --from [controller-address]",
+		Use: "ica-authz-revoke [zone-id] [grantee-address] [msg_type]  --from [controller-address]",
 
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {

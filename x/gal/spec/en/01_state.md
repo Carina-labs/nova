@@ -2,9 +2,9 @@
 ---
 
 ## Overview
+This document describes the states used by the `GAL` module.
 
 ---
-
 
 ### DepositAccount
 ```protobuf
