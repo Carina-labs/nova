@@ -4,7 +4,7 @@
 ## Overview
 
 ---
-The **gal(general asset liquidation)** module is a module that stores and manages the status of asset deposits and withdrawals through the Supernova service. The gal module allows the user to remotely delegate or undelegate assets that exist in the Supernova chain.
+
 
 ### DepositAccount
 ```protobuf
