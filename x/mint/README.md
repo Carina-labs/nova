@@ -1,11 +1,12 @@
-# Pool-Incentive
+# Mint
 
 ---
 
 ## Abstract
 
+The `mint` module is involved in the new issue of Supernova's governance coin Nova.
+
 ---
-The Supernova protocol provides Staked-swap for seamless exchange between equity tokens and assets. And to assign some of the newly issued Nova coins to the liquidity pool, we use the Pool-Incentive module.
 
 ## Content
 

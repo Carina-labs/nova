@@ -71,7 +71,7 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
-// get the minter
+// GetMinter returns current minter.
 func (k Keeper) GetMinter(ctx sdk.Context) (minter types.Minter) {
 	store := ctx.KVStore(k.storeKey)
 	b := store.Get(types.MinterKey)
@@ -83,7 +83,7 @@ func (k Keeper) GetMinter(ctx sdk.Context) (minter types.Minter) {
 	return
 }
 
-// set the minter
+// SetMinter sets new minter.
 func (k Keeper) SetMinter(ctx sdk.Context, minter types.Minter) {
 	store := ctx.KVStore(k.storeKey)
 	b := k.cdc.MustMarshal(&minter)
@@ -135,7 +135,7 @@ func (k Keeper) GetProportions(mintedCoin sdk.Coin, ratio sdk.Dec) sdk.Coin {
 	return sdk.NewCoin(mintedCoin.Denom, mintedCoin.Amount.ToDec().Mul(ratio).TruncateInt())
 }
 
-// DistributeMintedCoins implements distribution of minted coins from mint to external modules.
+// DistributeMintedCoin implements distribution of minted coins from mint to external modules.
 func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error {
 	params := k.GetParams(ctx)
 	proportions := params.DistributionProportions
