@@ -173,10 +173,14 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 
 func (k Keeper) distributeLPIncentivePools(ctx sdk.Context, denom string) error {
 	pools := k.PoolIncentiveKeeper.GetAllIncentivePool(ctx)
+	if len(pools) == 0 {
+		return nil
+	}
+
 	totalWeight := k.PoolIncentiveKeeper.GetTotalWeight(ctx)
 	moduleAddr := k.accountKeeper.GetModuleAddress(types.LpIncentiveModuleAccName)
-
 	lpIncentiveCoin := k.bankKeeper.GetBalance(ctx, moduleAddr, denom)
+
 	for _, pool := range pools {
 		poolWeight := sdk.NewDecFromInt(sdk.NewIntFromUint64(pool.Weight)).Quo(sdk.NewDecFromInt(sdk.NewIntFromUint64(totalWeight)))
 
