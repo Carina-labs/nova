@@ -62,9 +62,9 @@ func queryClaimableAsset() *cobra.Command {
 	return cmd
 }
 
-func queryPendingWithdrawal() *cobra.Command {
+func queryIcaWithdrawal() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "pending-withdrawal [zone-id] [address]",
+		Use:  "ica-withdrawal [zone-id] [address]",
 		Long: "Query for pending withdrawals",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {

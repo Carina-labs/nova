@@ -163,10 +163,10 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 	return cmd
 }
 
-func txClaimSnTokenCmd() *cobra.Command {
+func txClaimSnAssetCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "claim [zone-id] [claimer-address]",
-		Short: "claim wrapped token to nova",
+		Short: "claim wrapped coin to nova",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
