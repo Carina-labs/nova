@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"github.com/Carina-labs/nova/x/mint/types"
 	pooltypes "github.com/Carina-labs/nova/x/poolincentive/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	"testing"
@@ -71,7 +72,7 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 		},
 		{
 			PoolId:              "juno",
-			Weight:              1,
+			Weight:              2,
 			PoolContractAddress: junoAddr,
 		},
 	}
@@ -88,6 +89,10 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
 	suite.NoError(err)
 
+	lpModuleAddr := suite.App.AccountKeeper.GetModuleAddress(types.LpIncentiveModuleAccName)
+	lpModuleBalances := suite.App.BankKeeper.GetBalance(suite.Ctx, lpModuleAddr, "nova")
+	suite.Require().Equal(lpModuleBalances, sdk.NewCoin("nova", sdk.NewInt(0)))
+
 	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, *suite.App.DistrKeeper)
 
 	feePool := suite.App.DistrKeeper.GetFeePool(suite.Ctx)
@@ -99,6 +104,16 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 	suite.Equal(
 		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.CommunityPool),
 		feePool.CommunityPool.AmountOf("nova"))
+	suite.App.PoolKeeper.ClearIncentivePools(suite.Ctx)
+
+	// pool does not exist
+	suite.App.PoolKeeper.ClearIncentivePools(suite.Ctx)
+	err = mintKeeper.MintCoins(suite.Ctx, mintCoins)
+	suite.NoError(err)
+	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
+	suite.NoError(err)
+	lpModuleBalances = suite.App.BankKeeper.GetBalance(suite.Ctx, lpModuleAddr, "nova")
+	suite.Require().Equal(lpModuleBalances, sdk.NewCoin("nova", sdk.NewInt(40000)))
 }
 
 func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
