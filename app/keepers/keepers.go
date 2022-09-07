@@ -12,6 +12,7 @@ import (
 	"github.com/Carina-labs/nova/x/oracle"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
+	"github.com/Carina-labs/nova/x/poolincentive"
 	poolincentivekeeper "github.com/Carina-labs/nova/x/poolincentive/keeper"
 	poolincentivetypes "github.com/Carina-labs/nova/x/poolincentive/types"
 	"github.com/CosmWasm/wasmd/x/wasm"
@@ -173,13 +174,22 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appCodec, appKeepers.keys[ibchost.StoreKey], appKeepers.GetSubspace(ibchost.ModuleName), appKeepers.StakingKeeper, appKeepers.UpgradeKeeper, appKeepers.ScopedIBCKeeper,
 	)
 
+	// Register Pool module.
+	poolKeeper := poolincentivekeeper.NewKeeper(
+		appCodec,
+		appKeepers.keys[poolincentivetypes.StoreKey],
+		appKeepers.GetSubspace(poolincentivetypes.ModuleName),
+	)
+	appKeepers.PoolKeeper = &poolKeeper
+
 	// register the proposal types
 	govRouter := govtypes.NewRouter()
 	govRouter.AddRoute(govtypes.RouterKey, govtypes.ProposalHandler).
 		AddRoute(paramproposal.RouterKey, params.NewParamChangeProposalHandler(*appKeepers.ParamsKeeper)).
 		AddRoute(distrtypes.RouterKey, distr.NewCommunityPoolSpendProposalHandler(*appKeepers.DistrKeeper)).
 		AddRoute(upgradetypes.RouterKey, upgrade.NewSoftwareUpgradeProposalHandler(*appKeepers.UpgradeKeeper)).
-		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(appKeepers.IBCKeeper.ClientKeeper))
+		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(appKeepers.IBCKeeper.ClientKeeper)).
+		AddRoute(poolincentivetypes.RouterKey, poolincentive.NewPoolIncentivesProposalHandler(*appKeepers.PoolKeeper))
 
 	icaControllerKeeper := icacontrollerkeeper.NewKeeper(
 		appCodec, appKeepers.keys[icacontrollertypes.StoreKey], appKeepers.GetSubspace(icacontrollertypes.SubModuleName),
@@ -212,14 +222,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appKeepers.GetSubspace(oracletypes.ModuleName),
 	)
 	appKeepers.OracleKeeper = &oracleKeeper
-
-	// Register Pool module.
-	poolKeeper := poolincentivekeeper.NewKeeper(
-		appCodec,
-		appKeepers.keys[poolincentivetypes.StoreKey],
-		appKeepers.GetSubspace(poolincentivetypes.ModuleName),
-	)
-	appKeepers.PoolKeeper = &poolKeeper
 
 	// Register AirdropKeeper
 	airdropKeeper := airdropkeeper.NewKeeper(

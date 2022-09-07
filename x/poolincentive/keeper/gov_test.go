@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/x/poolincentive/types"
 )
 
@@ -140,6 +139,11 @@ func (suite *KeeperTestSuite) TestHandleUpdatePoolIncentivesProposal() {
 					PoolContractAddress: "contract-3",
 					Weight:              2,
 				},
+				{
+					PoolId:              "pool-6",
+					PoolContractAddress: "contract-6",
+					Weight:              12,
+				},
 			},
 			shouldErr: false,
 		},
@@ -161,11 +165,6 @@ func (suite *KeeperTestSuite) TestHandleUpdatePoolIncentivesProposal() {
 
 			err := suite.App.PoolKeeper.HandleUpdatePoolIncentivesProposal(suite.Ctx, &msg)
 			suite.NoError(err)
-
-			suite.App.PoolKeeper.IterateIncentivePools(suite.Ctx, func(i int64, pool *types.IncentivePool) bool {
-				fmt.Printf("pool: %s\n", pool)
-				return false
-			})
 
 			if !tc.shouldErr {
 				for _, item := range tc.expected {

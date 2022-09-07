@@ -8,8 +8,8 @@ import (
 
 func (k Keeper) InitGenesis(ctx sdk.Context, genesisState *types.GenesisState) {
 	k.SetParams(ctx, genesisState.Params)
-	for i := range genesisState.CandidatePools {
-		if err := k.CreateCandidatePool(ctx, &genesisState.CandidatePools[i]); err != nil {
+	for i := range genesisState.CandidatePoolInfo.CandidatePools {
+		if err := k.CreateCandidatePool(ctx, genesisState.CandidatePoolInfo.CandidatePools[i]); err != nil {
 			panic(fmt.Errorf("failed to initialize genesis state at %s, err: %v", types.ModuleName, err))
 		}
 	}
@@ -23,23 +23,25 @@ func (k Keeper) InitGenesis(ctx sdk.Context, genesisState *types.GenesisState) {
 
 func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
 	result := &types.GenesisState{
-		Params:         k.GetParams(ctx),
-		CandidatePools: []types.CandidatePool{},
+		Params: k.GetParams(ctx),
+		CandidatePoolInfo: types.CandidatePoolInfo{
+			CandidatePools: []*types.CandidatePool{},
+		},
 		IncentivePoolInfo: types.IncentivePoolInfo{
 			TotalWeight:    0,
 			IncentivePools: []*types.IncentivePool{},
 		},
 	}
 
-	k.IterateCandidatePools(ctx, func(i int64, pool *types.CandidatePool) bool {
-		result.CandidatePools = append(result.CandidatePools, *pool)
-		return false
-	})
+	candidatePools := k.GetAllCandidatePool(ctx)
+	for i := range candidatePools {
+		result.CandidatePoolInfo.CandidatePools = append(result.CandidatePoolInfo.CandidatePools, candidatePools[i])
+	}
 
-	k.IterateIncentivePools(ctx, func(i int64, pool *types.IncentivePool) bool {
-		result.IncentivePoolInfo.IncentivePools = append(result.IncentivePoolInfo.IncentivePools, pool)
-		return false
-	})
+	incentivePools := k.GetAllIncentivePool(ctx)
+	for i := range incentivePools {
+		result.IncentivePoolInfo.IncentivePools = append(result.IncentivePoolInfo.IncentivePools, incentivePools[i])
+	}
 
 	return result
 }
