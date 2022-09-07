@@ -1,5 +1,5 @@
 syntax = "proto3";
-package nova.pool_incentive.v1;
+package nova.poolincentive.v1;
 
 import "nova/poolincentive/v1/params.proto";
 import "gogoproto/gogo.proto";
