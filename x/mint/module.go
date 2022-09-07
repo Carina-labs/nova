@@ -92,15 +92,17 @@ type AppModule struct {
 	keeper     keeper.Keeper
 	authKeeper types.AccountKeeper
 	bankKeeper types.BankKeeper
+	poolKeeper types.PoolKeeper
 }
 
 // NewAppModule creates a new AppModule object
-func NewAppModule(cdc codec.Codec, keeper keeper.Keeper, ak types.AccountKeeper, bk types.BankKeeper) AppModule {
+func NewAppModule(cdc codec.Codec, keeper keeper.Keeper, ak types.AccountKeeper, bk types.BankKeeper, pk types.PoolKeeper) AppModule {
 	return AppModule{
 		AppModuleBasic: AppModuleBasic{cdc: cdc},
 		keeper:         keeper,
 		authKeeper:     ak,
 		bankKeeper:     bk,
+		poolKeeper:     pk,
 	}
 }
 

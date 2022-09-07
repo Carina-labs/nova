@@ -1,6 +1,7 @@
 package types
 
 import (
+	pooltypes "github.com/Carina-labs/nova/x/poolincentive/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 )
@@ -25,9 +26,15 @@ type BankKeeper interface {
 	SendCoinsFromModuleToAccount(ctx sdk.Context, senderModule string, recipientAddr sdk.AccAddress, amt sdk.Coins) error
 	SendCoinsFromModuleToModule(ctx sdk.Context, senderModule, recipientModule string, amt sdk.Coins) error
 	MintCoins(ctx sdk.Context, name string, amt sdk.Coins) error
+	GetBalance(ctx sdk.Context, addr sdk.AccAddress, denom string) sdk.Coin
 }
 
 // DistrKeeper defines the contract needed to be fulfilled for distribution keeper.
 type DistrKeeper interface {
 	FundCommunityPool(ctx sdk.Context, amount sdk.Coins, sender sdk.AccAddress) error
+}
+
+type PoolKeeper interface {
+	GetTotalWeight(ctx sdk.Context) uint64
+	GetAllIncentivePool(ctx sdk.Context) []*pooltypes.IncentivePool
 }
