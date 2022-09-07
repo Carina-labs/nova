@@ -64,7 +64,7 @@ func (k Keeper) IterateRegisteredZones(ctx sdk.Context, fn func(index int64, zon
 	}
 }
 
-// GetRegisteredZoneForValidatorAddr returns information about the correct zone using the validator address of the counterpart chain.
+// GetRegisteredZoneForValidatorAddr returns information about the correct zone using the validator address of the counterparty chain.
 func (k Keeper) GetRegisteredZoneForValidatorAddr(ctx sdk.Context, validatorAddr string) *types.RegisteredZone {
 	var zone *types.RegisteredZone
 
