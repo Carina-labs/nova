@@ -10,18 +10,28 @@ message GenesisState {
   Params params = 1 [ (gogoproto.nullable) = false ];
 
   // incentive_pools holds incentive pool list.
-  repeated IncentivePool incentive_pools = 2 [ (gogoproto.nullable) = false ];
+  // repeated IncentivePool incentive_pools = 2 [ (gogoproto.nullable) = false ];
+  IncentivePoolInfo incentive_pool_info = 2 [ (gogoproto.nullable) = false ];
 
   // candidate_pools holds incentive pool list and total weight
   repeated CandidatePool candidate_pools = 3 [ (gogoproto.nullable) = false ];
 }
 
 message CandidatePool {
+  option (gogoproto.equal) = true;
+
   string pool_id = 1;
   string pool_contract_address = 2;
 }
 
+message IncentivePoolInfo {
+  uint64 total_weight = 1;
+  repeated IncentivePool incentive_pools = 2;
+}
+
 message IncentivePool {
+  option (gogoproto.equal) = true;
+
   string pool_id = 1;
   string pool_contract_address = 2;
   uint64 weight = 3;
