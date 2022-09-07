@@ -23,7 +23,7 @@ func GetTxCmd() *cobra.Command {
 		txWithdrawCmd(),
 		txUndelegateRequestCmd(),
 		txUndelegateCmd(),
-		txClaimSnTokenCmd(),
+		txClaimSnAssetCmd(),
 		txPendingWithdrawCmd(),
 	)
 
@@ -42,7 +42,7 @@ func GetQueryCmd() *cobra.Command {
 
 	cmd.AddCommand(queryParams())
 	cmd.AddCommand(queryClaimableAsset())
-	cmd.AddCommand(queryPendingWithdrawal())
+	cmd.AddCommand(queryIcaWithdrawal())
 	cmd.AddCommand(queryActiveWithdrawal())
 	cmd.AddCommand(queryDepositRecords())
 	cmd.AddCommand(queryUndelegateRecords())

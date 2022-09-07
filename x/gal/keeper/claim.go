@@ -61,7 +61,7 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.Registere
 	return sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)), nil
 }
 
-// MintTo mints sn-token(share token) regard with deposited token to claimer.
+// MintTo mints sn-asset(share token) regard with deposited token to claimer.
 func (k Keeper) MintTo(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coin) error {
 	if err := k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(mintCoin)); err != nil {
 		return err
