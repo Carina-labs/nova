@@ -14,7 +14,12 @@ message GenesisState {
   IncentivePoolInfo incentive_pool_info = 2 [ (gogoproto.nullable) = false ];
 
   // candidate_pools holds incentive pool list and total weight
-  repeated CandidatePool candidate_pools = 3 [ (gogoproto.nullable) = false ];
+  // repeated CandidatePool candidate_pools = 3 [ (gogoproto.nullable) = false ];
+  CandidatePoolInfo candidate_pool_info = 3 [ (gogoproto.nullable) = false ];
+}
+
+message CandidatePoolInfo {
+  repeated CandidatePool candidate_pools = 1;
 }
 
 message CandidatePool {

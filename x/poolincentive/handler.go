@@ -5,27 +5,18 @@ import (
 	"github.com/Carina-labs/nova/x/poolincentive/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 )
 
-func NewHandler(k *keeper.Keeper) sdk.Handler {
-	msgServer := keeper.NewMsgServerImpl(k)
-
-	return func(ctx sdk.Context, msg sdk.Msg) (*sdk.Result, error) {
-		switch msg := msg.(type) {
-		case *types.MsgCreateCandidatePool:
-			res, err := msgServer.CreateCandidatePool(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgCreateIncentivePool:
-			res, err := msgServer.CreateIncentivePool(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgSetPoolWeight:
-			res, err := msgServer.SetPoolWeight(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgSetMultiplePoolWeight:
-			res, err := msgServer.SetMultiplePoolWeight(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
+func NewPoolIncentivesProposalHandler(k keeper.Keeper) govtypes.Handler {
+	return func(ctx sdk.Context, content govtypes.Content) error {
+		switch c := content.(type) {
+		case *types.ReplacePoolIncentivesProposal:
+			return k.HandleReplacePoolIncentivesProposal(ctx, c)
+		case *types.UpdatePoolIncentivesProposal:
+			return k.HandleUpdatePoolIncentivesProposal(ctx, c)
 		default:
-			return nil, sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized %s message type: %T", types.ModuleName, msg)
+			return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized pool incentives proposal content type: %T", c)
 		}
 	}
 }

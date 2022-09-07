@@ -63,11 +63,13 @@ func (suite *KeeperTestSuite) TestCreateCandidatePool() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			// setup
+			suite.App.PoolKeeper.SetCandidatePoolInfo(suite.Ctx, types.CandidatePoolInfo{})
 			for _, p := range tc.preset {
 				err := keeper.CreateCandidatePool(suite.Ctx, &p)
 				suite.NoError(err)
 			}
 
+			// execute
 			err := keeper.CreateCandidatePool(suite.Ctx, &tc.pool)
 			if tc.shouldErr {
 				suite.Error(err)
@@ -78,8 +80,6 @@ func (suite *KeeperTestSuite) TestCreateCandidatePool() {
 				suite.Equal(tc.pool.PoolId, candidatePool.PoolId)
 				suite.Equal(tc.pool.PoolContractAddress, candidatePool.PoolContractAddress)
 			}
-
-			keeper.ClearCandidatePools(suite.Ctx)
 		})
 	}
 }
@@ -124,71 +124,6 @@ func (suite *KeeperTestSuite) TestCreateIncentivePool() {
 				suite.Equal(tc.pool.PoolContractAddress, incentivePool.PoolContractAddress)
 				suite.Equal(tc.pool.Weight, incentivePool.Weight)
 			}
-		})
-	}
-}
-
-func (suite *KeeperTestSuite) TestSetPoolWeight() {
-	keeper := suite.App.PoolKeeper
-
-	tcs := []struct {
-		name      string
-		preset    []*types.IncentivePool
-		targetId  string
-		newWeight uint64
-	}{
-		{
-			name: "valid case 1",
-			preset: []*types.IncentivePool{
-				{
-					PoolId:              "poolincentive-1",
-					PoolContractAddress: "12345",
-					Weight:              0,
-				},
-			},
-			targetId:  "poolincentive-1",
-			newWeight: 10,
-		},
-		{
-			name: "valid case 2",
-			preset: []*types.IncentivePool{
-				{
-					PoolId:              "poolincentive-1",
-					PoolContractAddress: "12345",
-					Weight:              5,
-				},
-				{
-					PoolId:              "poolincentive-2",
-					PoolContractAddress: "abcde",
-					Weight:              3,
-				},
-				{
-					PoolId:              "poolincentive-3",
-					PoolContractAddress: "abcde12345",
-					Weight:              2,
-				},
-			},
-			targetId:  "poolincentive-3",
-			newWeight: 1,
-		},
-	}
-
-	for _, tc := range tcs {
-		suite.Run(tc.name, func() {
-			// create poolincentive with presets
-			for _, p := range tc.preset {
-				err := keeper.CreateIncentivePool(suite.Ctx, p)
-				suite.NoError(err)
-			}
-
-			err := keeper.SetPoolWeight(suite.Ctx, tc.targetId, tc.newWeight)
-			suite.NoError(err)
-
-			pool, err := keeper.FindIncentivePoolById(suite.Ctx, tc.targetId)
-			suite.NoError(err)
-			suite.Equal(tc.newWeight, pool.Weight)
-
-			keeper.ClearIncentivePools(suite.Ctx)
 		})
 	}
 }
@@ -241,6 +176,8 @@ func (suite *KeeperTestSuite) TestGetTotalWeight() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
+			// setup
+			keeper.SetIncentivePoolInfo(suite.Ctx, types.IncentivePoolInfo{})
 			// create poolincentive with presets
 			for _, p := range tc.preset {
 				err := keeper.CreateIncentivePool(suite.Ctx, p)
@@ -249,8 +186,6 @@ func (suite *KeeperTestSuite) TestGetTotalWeight() {
 
 			totalWeight := keeper.GetTotalWeight(suite.Ctx)
 			suite.Equal(tc.expectedTotalWeight, totalWeight)
-
-			keeper.ClearIncentivePools(suite.Ctx)
 		})
 	}
 }

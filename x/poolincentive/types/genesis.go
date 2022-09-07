@@ -20,3 +20,8 @@ func ValidateGenesis(gs GenesisState) error {
 	}
 	return nil
 }
+
+func (ip IncentivePool) ValidateBasic() error {
+	// TODO : validate contract address is a valid cosm-wasm contract address.
+	return nil
+}

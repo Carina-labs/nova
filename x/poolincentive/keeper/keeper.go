@@ -43,6 +43,10 @@ func (k Keeper) getIncentivePoolStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyIncentivePool)
 }
 
+func (k Keeper) getIncentivePoolInfoStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyIncentivePoolInfo)
+}
+
 // isValidOperator checks if signer of msg is valid.
 func (k Keeper) isValidOperator(ctx sdk.Context, operatorAddress string) bool {
 	params := k.GetParams(ctx)
