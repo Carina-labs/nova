@@ -24,13 +24,14 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type ReplacePoolIncentivesProposal struct {
-	Title       string          `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
-	Description string          `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	Weights     []NewPoolWeight `protobuf:"bytes,3,rep,name=weights,proto3" json:"weights"`
+	Title         string          `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	Description   string          `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	NewIncentives []IncentivePool `protobuf:"bytes,3,rep,name=newIncentives,proto3" json:"newIncentives"`
 }
 
-func (m *ReplacePoolIncentivesProposal) Reset()      { *m = ReplacePoolIncentivesProposal{} }
-func (*ReplacePoolIncentivesProposal) ProtoMessage() {}
+func (m *ReplacePoolIncentivesProposal) Reset()         { *m = ReplacePoolIncentivesProposal{} }
+func (m *ReplacePoolIncentivesProposal) String() string { return proto.CompactTextString(m) }
+func (*ReplacePoolIncentivesProposal) ProtoMessage()    {}
 func (*ReplacePoolIncentivesProposal) Descriptor() ([]byte, []int) {
 	return fileDescriptor_aa2da588d08e9bf7, []int{0}
 }
@@ -62,13 +63,14 @@ func (m *ReplacePoolIncentivesProposal) XXX_DiscardUnknown() {
 var xxx_messageInfo_ReplacePoolIncentivesProposal proto.InternalMessageInfo
 
 type UpdatePoolIncentivesProposal struct {
-	Title       string          `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
-	Description string          `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	Weights     []NewPoolWeight `protobuf:"bytes,3,rep,name=weights,proto3" json:"weights"`
+	Title             string          `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	Description       string          `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	UpdatedIncentives []IncentivePool `protobuf:"bytes,3,rep,name=updatedIncentives,proto3" json:"updatedIncentives"`
 }
 
-func (m *UpdatePoolIncentivesProposal) Reset()      { *m = UpdatePoolIncentivesProposal{} }
-func (*UpdatePoolIncentivesProposal) ProtoMessage() {}
+func (m *UpdatePoolIncentivesProposal) Reset()         { *m = UpdatePoolIncentivesProposal{} }
+func (m *UpdatePoolIncentivesProposal) String() string { return proto.CompactTextString(m) }
+func (*UpdatePoolIncentivesProposal) ProtoMessage()    {}
 func (*UpdatePoolIncentivesProposal) Descriptor() ([]byte, []int) {
 	return fileDescriptor_aa2da588d08e9bf7, []int{1}
 }
@@ -107,26 +109,26 @@ func init() {
 func init() { proto.RegisterFile("nova/poolincentive/v1/gov.proto", fileDescriptor_aa2da588d08e9bf7) }
 
 var fileDescriptor_aa2da588d08e9bf7 = []byte{
-	// 292 bytes of a gzipped FileDescriptorProto
+	// 301 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcf, 0xcb, 0x2f, 0x4b,
 	0xd4, 0x2f, 0xc8, 0xcf, 0xcf, 0xc9, 0xcc, 0x4b, 0x4e, 0xcd, 0x2b, 0xc9, 0x2c, 0x4b, 0xd5, 0x2f,
 	0x33, 0xd4, 0x4f, 0xcf, 0x2f, 0xd3, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x05, 0x29, 0xd0,
 	0x43, 0x51, 0xa0, 0x57, 0x66, 0x28, 0x25, 0x92, 0x9e, 0x9f, 0x9e, 0x0f, 0x56, 0xa1, 0x0f, 0x62,
-	0x41, 0x14, 0x4b, 0xc9, 0x61, 0x37, 0xad, 0xa4, 0x02, 0x22, 0xaf, 0xb4, 0x9a, 0x91, 0x4b, 0x36,
-	0x28, 0xb5, 0x20, 0x27, 0x31, 0x39, 0x35, 0x20, 0x3f, 0x3f, 0xc7, 0x13, 0xa6, 0xa8, 0x38, 0xa0,
-	0x28, 0xbf, 0x20, 0xbf, 0x38, 0x31, 0x47, 0x48, 0x84, 0x8b, 0xb5, 0x24, 0xb3, 0x24, 0x27, 0x55,
-	0x82, 0x51, 0x81, 0x51, 0x83, 0x33, 0x08, 0xc2, 0x11, 0x52, 0xe0, 0xe2, 0x4e, 0x49, 0x2d, 0x4e,
-	0x2e, 0xca, 0x2c, 0x28, 0xc9, 0xcc, 0xcf, 0x93, 0x60, 0x02, 0xcb, 0x21, 0x0b, 0x09, 0xb9, 0x70,
-	0xb1, 0x97, 0xa7, 0x66, 0xa6, 0x67, 0x94, 0x14, 0x4b, 0x30, 0x2b, 0x30, 0x6b, 0x70, 0x1b, 0xa9,
-	0xe8, 0x61, 0x75, 0xb8, 0x9e, 0x5f, 0x6a, 0x39, 0xc8, 0xea, 0x70, 0xb0, 0x62, 0x27, 0x96, 0x13,
-	0xf7, 0xe4, 0x19, 0x82, 0x60, 0x5a, 0xad, 0x78, 0x3a, 0x16, 0xc8, 0x33, 0xcc, 0x58, 0x20, 0xcf,
-	0xf0, 0x62, 0x81, 0x3c, 0xa3, 0xd2, 0x2a, 0x46, 0x2e, 0x99, 0xd0, 0x82, 0x94, 0xc4, 0x92, 0x21,
-	0xe0, 0x58, 0x27, 0xef, 0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e,
-	0x71, 0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5, 0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88, 0x32, 0x4c,
-	0xcf, 0x2c, 0xc9, 0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5, 0x77, 0x4e, 0x2c, 0xca, 0xcc, 0x4b,
-	0xd4, 0xcd, 0x49, 0x4c, 0x2a, 0xd6, 0x07, 0xc7, 0x55, 0x05, 0x5a, 0x6c, 0x95, 0x54, 0x16, 0xa4,
-	0x16, 0x27, 0xb1, 0x81, 0xa3, 0xcb, 0x18, 0x10, 0x00, 0x00, 0xff, 0xff, 0x4c, 0x54, 0xd6, 0x38,
-	0x1e, 0x02, 0x00, 0x00,
+	0x41, 0x14, 0x4b, 0x29, 0xe3, 0x30, 0x2d, 0x35, 0x2f, 0xb5, 0x38, 0xb3, 0x18, 0xa2, 0x48, 0x69,
+	0x33, 0x23, 0x97, 0x6c, 0x50, 0x6a, 0x41, 0x4e, 0x62, 0x72, 0x6a, 0x40, 0x7e, 0x7e, 0x8e, 0x27,
+	0x4c, 0x65, 0x71, 0x40, 0x51, 0x7e, 0x41, 0x7e, 0x71, 0x62, 0x8e, 0x90, 0x08, 0x17, 0x6b, 0x49,
+	0x66, 0x49, 0x4e, 0xaa, 0x04, 0xa3, 0x02, 0xa3, 0x06, 0x67, 0x10, 0x84, 0x23, 0xa4, 0xc0, 0xc5,
+	0x9d, 0x92, 0x5a, 0x9c, 0x5c, 0x94, 0x59, 0x50, 0x92, 0x99, 0x9f, 0x27, 0xc1, 0x04, 0x96, 0x43,
+	0x16, 0x12, 0x0a, 0xe0, 0xe2, 0xcd, 0x4b, 0x2d, 0x47, 0x18, 0x28, 0xc1, 0xac, 0xc0, 0xac, 0xc1,
+	0x6d, 0xa4, 0xa2, 0x87, 0xd5, 0x0f, 0x7a, 0x70, 0x85, 0x20, 0x67, 0x38, 0xb1, 0x9c, 0xb8, 0x27,
+	0xcf, 0x10, 0x84, 0x6a, 0x80, 0x15, 0x47, 0xc7, 0x02, 0x79, 0x86, 0x17, 0x0b, 0xe4, 0x19, 0x95,
+	0x76, 0x31, 0x72, 0xc9, 0x84, 0x16, 0xa4, 0x24, 0x96, 0x50, 0xdb, 0xd1, 0x11, 0x5c, 0x82, 0xa5,
+	0x60, 0x73, 0x53, 0x28, 0x72, 0x38, 0xa6, 0x21, 0x08, 0xc7, 0x3b, 0x79, 0x9f, 0x78, 0x24, 0xc7,
+	0x78, 0xe1, 0x91, 0x1c, 0xe3, 0x83, 0x47, 0x72, 0x8c, 0x13, 0x1e, 0xcb, 0x31, 0x5c, 0x78, 0x2c,
+	0xc7, 0x70, 0xe3, 0xb1, 0x1c, 0x43, 0x94, 0x61, 0x7a, 0x66, 0x49, 0x46, 0x69, 0x92, 0x5e, 0x72,
+	0x7e, 0xae, 0xbe, 0x73, 0x62, 0x51, 0x66, 0x5e, 0xa2, 0x6e, 0x4e, 0x62, 0x52, 0xb1, 0x3e, 0x38,
+	0x22, 0x2b, 0xd0, 0xa2, 0xb2, 0xa4, 0xb2, 0x20, 0xb5, 0x38, 0x89, 0x0d, 0x1c, 0x8d, 0xc6, 0x80,
+	0x00, 0x00, 0x00, 0xff, 0xff, 0x73, 0x95, 0x7f, 0x09, 0x3b, 0x02, 0x00, 0x00,
 }
 
 func (this *ReplacePoolIncentivesProposal) Equal(that interface{}) bool {
@@ -154,11 +156,11 @@ func (this *ReplacePoolIncentivesProposal) Equal(that interface{}) bool {
 	if this.Description != that1.Description {
 		return false
 	}
-	if len(this.Weights) != len(that1.Weights) {
+	if len(this.NewIncentives) != len(that1.NewIncentives) {
 		return false
 	}
-	for i := range this.Weights {
-		if !this.Weights[i].Equal(&that1.Weights[i]) {
+	for i := range this.NewIncentives {
+		if !this.NewIncentives[i].Equal(&that1.NewIncentives[i]) {
 			return false
 		}
 	}
@@ -189,11 +191,11 @@ func (this *UpdatePoolIncentivesProposal) Equal(that interface{}) bool {
 	if this.Description != that1.Description {
 		return false
 	}
-	if len(this.Weights) != len(that1.Weights) {
+	if len(this.UpdatedIncentives) != len(that1.UpdatedIncentives) {
 		return false
 	}
-	for i := range this.Weights {
-		if !this.Weights[i].Equal(&that1.Weights[i]) {
+	for i := range this.UpdatedIncentives {
+		if !this.UpdatedIncentives[i].Equal(&that1.UpdatedIncentives[i]) {
 			return false
 		}
 	}
@@ -219,10 +221,10 @@ func (m *ReplacePoolIncentivesProposal) MarshalToSizedBuffer(dAtA []byte) (int, 
 	_ = i
 	var l int
 	_ = l
-	if len(m.Weights) > 0 {
-		for iNdEx := len(m.Weights) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.NewIncentives) > 0 {
+		for iNdEx := len(m.NewIncentives) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.Weights[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.NewIncentives[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -270,10 +272,10 @@ func (m *UpdatePoolIncentivesProposal) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
-	if len(m.Weights) > 0 {
-		for iNdEx := len(m.Weights) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.UpdatedIncentives) > 0 {
+		for iNdEx := len(m.UpdatedIncentives) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.Weights[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.UpdatedIncentives[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -326,8 +328,8 @@ func (m *ReplacePoolIncentivesProposal) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovGov(uint64(l))
 	}
-	if len(m.Weights) > 0 {
-		for _, e := range m.Weights {
+	if len(m.NewIncentives) > 0 {
+		for _, e := range m.NewIncentives {
 			l = e.Size()
 			n += 1 + l + sovGov(uint64(l))
 		}
@@ -349,8 +351,8 @@ func (m *UpdatePoolIncentivesProposal) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovGov(uint64(l))
 	}
-	if len(m.Weights) > 0 {
-		for _, e := range m.Weights {
+	if len(m.UpdatedIncentives) > 0 {
+		for _, e := range m.UpdatedIncentives {
 			l = e.Size()
 			n += 1 + l + sovGov(uint64(l))
 		}
@@ -459,7 +461,7 @@ func (m *ReplacePoolIncentivesProposal) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Weights", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field NewIncentives", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -486,8 +488,8 @@ func (m *ReplacePoolIncentivesProposal) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Weights = append(m.Weights, NewPoolWeight{})
-			if err := m.Weights[len(m.Weights)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.NewIncentives = append(m.NewIncentives, IncentivePool{})
+			if err := m.NewIncentives[len(m.NewIncentives)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -607,7 +609,7 @@ func (m *UpdatePoolIncentivesProposal) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Weights", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedIncentives", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -634,8 +636,8 @@ func (m *UpdatePoolIncentivesProposal) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Weights = append(m.Weights, NewPoolWeight{})
-			if err := m.Weights[len(m.Weights)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.UpdatedIncentives = append(m.UpdatedIncentives, IncentivePool{})
+			if err := m.UpdatedIncentives[len(m.UpdatedIncentives)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
