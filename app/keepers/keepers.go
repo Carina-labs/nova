@@ -1,7 +1,6 @@
 package keepers
 
 import (
-	"github.com/Carina-labs/nova/x/airdrop"
 	airdropkeeper "github.com/Carina-labs/nova/x/airdrop/keeper"
 	airdroptypes "github.com/Carina-labs/nova/x/airdrop/types"
 	"github.com/Carina-labs/nova/x/gal"
@@ -359,7 +358,6 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(ibcstakingtypes.ModuleName)
 	paramsKeeper.Subspace(oracle.ModuleName)
-	paramsKeeper.Subspace(airdrop.ModuleName)
 	paramsKeeper.Subspace(gal.ModuleName)
 	paramsKeeper.Subspace(poolincentivetypes.ModuleName)
 

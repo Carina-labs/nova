@@ -1,9 +1,10 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/x/airdrop/types"
 	"reflect"
 	"time"
+
+	"github.com/Carina-labs/nova/x/airdrop/types"
 )
 
 func (suite *KeeperTestSuite) TestSetAirdropInfo() {

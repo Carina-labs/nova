@@ -83,21 +83,21 @@ func (gs GenesisState) Validate() error {
 
 // EmptyQuestState returns initial state of quest.
 func EmptyQuestState(blockTime time.Time) map[int32]*QuestState {
-	initialQuestState := func() *QuestState {
+	defaultQuestState := func() *QuestState {
 		return &QuestState{
 			State:         QuestStateType_QUEST_STATE_NOT_STARTED,
 			AchievedAt:    time.Time{},
 			ClaimedAt:     time.Time{},
-			ClaimedAmount: sdk.ZeroInt().String(),
+			ClaimedAmount: "", // claimed amount should be empty string
 		}
 	}
 
 	result := map[int32]*QuestState{
-		int32(QuestType_QUEST_NOTHING_TO_DO):     initialQuestState(),
-		int32(QuestType_QUEST_SOCIAL):            initialQuestState(),
-		int32(QuestType_QUEST_PROVIDE_LIQUIDITY): initialQuestState(),
-		int32(QuestType_QUEST_SN_ASSET_CLAIM):    initialQuestState(),
-		int32(QuestType_QUEST_VOTE_ON_PROPOSALS): initialQuestState(),
+		int32(QuestType_QUEST_NOTHING_TO_DO):     defaultQuestState(),
+		int32(QuestType_QUEST_SOCIAL):            defaultQuestState(),
+		int32(QuestType_QUEST_PROVIDE_LIQUIDITY): defaultQuestState(),
+		int32(QuestType_QUEST_SN_ASSET_CLAIM):    defaultQuestState(),
+		int32(QuestType_QUEST_VOTE_ON_PROPOSALS): defaultQuestState(),
 	}
 
 	// All user starts with the empty quests except for one quest.

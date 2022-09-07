@@ -1,13 +1,14 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/x/airdrop/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"reflect"
 	"sort"
+
+	"github.com/Carina-labs/nova/x/airdrop/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-func (s KeeperTestSuite) TestGenesis() {
+func (s *KeeperTestSuite) TestGenesis() {
 	airdropKeeper := s.App.AirdropKeeper
 	genesis := types.DefaultGenesis()
 	genesis.States = []*types.UserState{}

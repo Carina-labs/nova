@@ -58,46 +58,14 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 	}
 
 	// calculate claimable amount
-	// TODO: Refactoring this codes
 	info := m.keeper.GetAirdropInfo(ctx)
-	getTotalClaimed := func() (claimedCnt int32, claimed sdk.Int) {
-		claimedCnt = 0
-		claimed = sdk.ZeroInt()
-
-		for _, v := range userState.QuestStates {
-			if !v.ClaimedAt.IsZero() {
-				amt, ok := sdk.NewIntFromString(v.ClaimedAmount)
-				if !ok {
-					m.keeper.Logger(ctx).Error("failed to parse claimed amount, this is not intended..", "amount", v.ClaimedAmount)
-					panic("invalid claimed amount")
-				}
-
-				claimedCnt += 1
-				claimed = claimed.Add(amt)
-			}
-		}
-
-		return claimedCnt, claimed
-	}
-	getClaimAmount := func() sdk.Int {
-		cnt, amt := getTotalClaimed()
-		total, ok := sdk.NewIntFromString(userState.TotalAmount)
-		if !ok {
-			panic("invalid total amount")
-		}
-
-		onlyOneRemained := cnt == info.QuestsCount-1
-		if onlyOneRemained {
-			// if only one quest remained, claim all remaining amount
-			return total.Sub(amt)
-		}
-
-		// if not, claim fixed rate amount
-		return total.QuoRaw(int64(info.QuestsCount))
+	amount, _, _ := m.keeper.CalcClaimableAmount(ctx, userAddr)
+	if amount.IsZero() {
+		m.keeper.Logger(ctx).Error("claimable amount is zero | this is an unexpected error", "user", userAddr)
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "claimable amount is zero")
 	}
 
 	// mint and send airdrop tokens to the user
-	amount := getClaimAmount()
 	airdropToken := sdk.NewCoin(info.AirdropDenom, amount)
 	err = m.keeper.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(airdropToken))
 	if err != nil {
@@ -130,7 +98,7 @@ func (m msgServer) MarkSocialQuestPerformed(goCtx context.Context, request *type
 		return nil, types.ErrAirdropWasOver
 	}
 
-	if !m.keeper.IsValidControllerAddr(ctx, signer) {
+	if !m.keeper.isValidControllerAddr(ctx, signer) {
 		ctx.Logger().Debug("invalid controller address", "addr", signer)
 		return nil, sdkerrors.ErrUnauthorized
 	}
@@ -141,7 +109,7 @@ func (m msgServer) MarkSocialQuestPerformed(goCtx context.Context, request *type
 			return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "addr: %v", addr)
 		}
 
-		err = m.keeper.MarkUserPerformedQuest(ctx, addr, types.QuestType_QUEST_SOCIAL)
+		err = m.keeper.markUserPerformedQuest(ctx, addr, types.QuestType_QUEST_SOCIAL)
 		if err != nil {
 			return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, "addr: %v, err: %v", addr, err)
 		}
@@ -159,7 +127,7 @@ func (m msgServer) MarkUserProvidedLiquidity(goCtx context.Context, request *typ
 		return nil, types.ErrAirdropWasOver
 	}
 
-	if !m.keeper.IsValidControllerAddr(ctx, signer) {
+	if !m.keeper.isValidControllerAddr(ctx, signer) {
 		ctx.Logger().Debug("invalid controller address", "addr", signer)
 		return nil, sdkerrors.ErrUnauthorized
 	}
@@ -170,7 +138,7 @@ func (m msgServer) MarkUserProvidedLiquidity(goCtx context.Context, request *typ
 			return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "addr: %v", addr)
 		}
 
-		err = m.keeper.MarkUserPerformedQuest(ctx, addr, types.QuestType_QUEST_PROVIDE_LIQUIDITY)
+		err = m.keeper.markUserPerformedQuest(ctx, addr, types.QuestType_QUEST_PROVIDE_LIQUIDITY)
 		if err != nil {
 			return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, "addr: %v, err: %v", addr, err)
 		}

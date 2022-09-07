@@ -7,8 +7,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// PostClaimedSnAsset is executed from the GAL module when a user claims an asset
-func (k Keeper) PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress) {
+// postActionHook is a hook that is executed after a user performs some action
+// this turns the quest into a claimable state if given user is eligible for airdrop.
+func (k Keeper) postActionHook(ctx sdk.Context, userAddr sdk.AccAddress, questType types.QuestType) {
 	if !k.ValidQuestDate(ctx) {
 		return
 	}
@@ -26,7 +27,7 @@ func (k Keeper) PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress) {
 	k.cdc.MustUnmarshal(bz, &userState)
 
 	// mark vote on proposal quest are performed
-	quest := userState.QuestStates[int32(types.QuestType_QUEST_VOTE_ON_PROPOSALS)]
+	quest := userState.QuestStates[int32(questType)]
 	if quest.State != types.QuestStateType_QUEST_STATE_NOT_STARTED || !quest.AchievedAt.IsZero() {
 		return
 	}
@@ -34,46 +35,27 @@ func (k Keeper) PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress) {
 	quest.State = types.QuestStateType_QUEST_STATE_CLAIMABLE
 	quest.AchievedAt = ctx.BlockTime()
 	store.Set(userKey, k.cdc.MustMarshal(&userState))
+}
+
+// PostClaimedSnAsset is executed from the GAL module when a user claims an asset
+func (k Keeper) PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress) {
+	k.postActionHook(ctx, userAddr, types.QuestType(QuestTypeSnAssetClaim))
 }
 
 // PostProposalVote is executed from the gov module when a user votes on a proposal
 func (k Keeper) PostProposalVote(ctx sdk.Context, proposalID uint64, voterAddr sdk.AccAddress) {
-	if !k.ValidQuestDate(ctx) {
-		return
-	}
-
-	store := ctx.KVStore(k.storeKey)
-	userKey := types.GetKeyUserState(voterAddr.String())
-
-	// check if user is eligible
-	if !k.IsEligible(ctx, voterAddr) {
-		return
-	}
-
-	bz := store.Get(userKey)
-	var userState types.UserState
-	k.cdc.MustUnmarshal(bz, &userState)
-
-	// mark vote on proposal quest are performed
-	quest := userState.QuestStates[int32(types.QuestType_QUEST_VOTE_ON_PROPOSALS)]
-	if quest.State != types.QuestStateType_QUEST_STATE_NOT_STARTED || !quest.AchievedAt.IsZero() {
-		return
-	}
-
-	quest.State = types.QuestStateType_QUEST_STATE_CLAIMABLE
-	quest.AchievedAt = ctx.BlockTime()
-	store.Set(userKey, k.cdc.MustMarshal(&userState))
+	k.postActionHook(ctx, voterAddr, types.QuestType(QuestTypeVoteOnProposals))
 }
 
-// MarkUserPerformedQuest marks a user performed some quest
+// markUserPerformedQuest marks a user performed some quest
 // It fills user state with the achievement date
-func (k Keeper) MarkUserPerformedQuest(ctx sdk.Context, userAddr sdk.AccAddress, questType types.QuestType) error {
+func (k Keeper) markUserPerformedQuest(ctx sdk.Context, userAddr sdk.AccAddress, questType types.QuestType) error {
 	store := ctx.KVStore(k.storeKey)
 	userKey := types.GetKeyUserState(userAddr.String())
 
 	// check if user is eligible
 	if !k.IsEligible(ctx, userAddr) {
-		return fmt.Errorf("this user is not eligible for airdrop: %v", userAddr)
+		return fmt.Errorf("this user is not eligible for airdrop: %v", userAddr.String())
 	}
 
 	bz := store.Get(userKey)
