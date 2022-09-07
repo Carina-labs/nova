@@ -156,7 +156,7 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 	if err != nil {
 		return err
 	}
-	k.distributeLPIncentivePools(ctx, lpIncentivesCoin.Denom)
+	err = k.distributeLPIncentivePools(ctx, lpIncentivesCoin.Denom)
 	if err != nil {
 		return err
 	}
