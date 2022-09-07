@@ -12,20 +12,21 @@ import (
 
 // Keeper of the mint store
 type Keeper struct {
-	cdc              codec.BinaryCodec
-	storeKey         sdk.StoreKey
-	paramSpace       paramtypes.Subspace
-	distrKeeper      types.DistrKeeper
-	stakingKeeper    types.StakingKeeper
-	accountKeeper    types.AccountKeeper
-	bankKeeper       types.BankKeeper
-	feeCollectorName string
+	cdc                 codec.BinaryCodec
+	storeKey            sdk.StoreKey
+	paramSpace          paramtypes.Subspace
+	distrKeeper         types.DistrKeeper
+	stakingKeeper       types.StakingKeeper
+	accountKeeper       types.AccountKeeper
+	bankKeeper          types.BankKeeper
+	PoolIncentiveKeeper types.PoolKeeper
+	feeCollectorName    string
 }
 
 // NewKeeper creates a new mint Keeper instance
 func NewKeeper(
 	cdc codec.BinaryCodec, key sdk.StoreKey, paramSpace paramtypes.Subspace,
-	sk types.StakingKeeper, ak types.AccountKeeper, bk types.BankKeeper, dk types.DistrKeeper,
+	sk types.StakingKeeper, ak types.AccountKeeper, bk types.BankKeeper, dk types.DistrKeeper, pk types.PoolKeeper,
 	feeCollectorName string,
 ) Keeper {
 	// ensure mint module account is set
@@ -39,14 +40,15 @@ func NewKeeper(
 	}
 
 	return Keeper{
-		cdc:              cdc,
-		storeKey:         key,
-		paramSpace:       paramSpace,
-		stakingKeeper:    sk,
-		accountKeeper:    ak,
-		bankKeeper:       bk,
-		distrKeeper:      dk,
-		feeCollectorName: feeCollectorName,
+		cdc:                 cdc,
+		storeKey:            key,
+		paramSpace:          paramSpace,
+		stakingKeeper:       sk,
+		accountKeeper:       ak,
+		bankKeeper:          bk,
+		distrKeeper:         dk,
+		PoolIncentiveKeeper: pk,
+		feeCollectorName:    feeCollectorName,
 	}
 }
 
@@ -150,13 +152,16 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 
 	lpIncentivesCoin := k.GetProportions(mintedCoin, proportions.LpIncentives)
 	ctx.Logger().Info("Mint", "LpIncentives", lpIncentivesCoin)
-	lpIncentivesCoins := sdk.NewCoins(lpIncentivesCoin)
-	err = k.bankKeeper.SendCoinsFromModuleToModule(ctx, types.ModuleName, types.LpIncentiveModuleAccName, lpIncentivesCoins)
+	err = k.bankKeeper.SendCoinsFromModuleToModule(ctx, types.ModuleName, types.LpIncentiveModuleAccName, sdk.NewCoins(lpIncentivesCoin))
+	if err != nil {
+		return err
+	}
+	k.distributeLPIncentivePools(ctx, lpIncentivesCoin.Denom)
 	if err != nil {
 		return err
 	}
 
-	communityPoolCoins := sdk.NewCoins(mintedCoin).Sub(stakingIncentivesCoins).Sub(lpIncentivesCoins)
+	communityPoolCoins := sdk.NewCoins(mintedCoin).Sub(stakingIncentivesCoins).Sub(sdk.NewCoins(lpIncentivesCoin))
 	ctx.Logger().Info("Mint", "CommunityPoolCoins", communityPoolCoins)
 	err = k.distrKeeper.FundCommunityPool(ctx, communityPoolCoins, k.accountKeeper.GetModuleAddress(types.ModuleName))
 	if err != nil {
@@ -164,4 +169,29 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 	}
 
 	return err
+}
+
+func (k Keeper) distributeLPIncentivePools(ctx sdk.Context, denom string) error {
+	pools := k.PoolIncentiveKeeper.GetAllIncentivePool(ctx)
+	totalWeight := k.PoolIncentiveKeeper.GetTotalWeight(ctx)
+	moduleAddr := k.accountKeeper.GetModuleAddress(types.LpIncentiveModuleAccName)
+
+	lpIncentiveCoin := k.bankKeeper.GetBalance(ctx, moduleAddr, denom)
+	for _, pool := range pools {
+		poolWeight := sdk.NewDecFromInt(sdk.NewIntFromUint64(pool.Weight)).Quo(sdk.NewDecFromInt(sdk.NewIntFromUint64(totalWeight)))
+
+		incentive := sdk.NewDecFromInt(lpIncentiveCoin.Amount).Mul(poolWeight)
+		incentivesCoins := sdk.NewCoins(sdk.NewCoin(lpIncentiveCoin.Denom, incentive.TruncateInt()))
+
+		poolAddr, err := sdk.AccAddressFromBech32(pool.PoolContractAddress)
+		if err != nil {
+			return err
+		}
+
+		err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.LpIncentiveModuleAccName, poolAddr, incentivesCoins)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

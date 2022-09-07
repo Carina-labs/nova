@@ -1,6 +1,8 @@
 package keeper_test
 
 import (
+	pooltypes "github.com/Carina-labs/nova/x/poolincentive/types"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
@@ -52,6 +54,31 @@ func (suite *KeeperTestSuite) TestMintCoinsToFeeCollectorAndGetProportions() {
 func (suite *KeeperTestSuite) TestMintIncentives() {
 	mintKeeper := suite.App.MintKeeper
 
+	gaiaAddr := suite.GenRandomAddress().String()
+	osmoAddr := suite.GenRandomAddress().String()
+	junoAddr := suite.GenRandomAddress().String()
+
+	pools := []*pooltypes.IncentivePool{
+		{
+			PoolId:              "gaia",
+			Weight:              5,
+			PoolContractAddress: gaiaAddr,
+		},
+		{
+			PoolId:              "osmo",
+			Weight:              3,
+			PoolContractAddress: osmoAddr,
+		},
+		{
+			PoolId:              "juno",
+			Weight:              1,
+			PoolContractAddress: junoAddr,
+		},
+	}
+	for _, pool := range pools {
+		suite.App.PoolKeeper.CreateIncentivePool(suite.Ctx, pool)
+	}
+
 	params := suite.App.MintKeeper.GetParams(suite.Ctx)
 	// At this time, there is no distr record, so the asset should be allocated to the community pool.
 	mintCoin := sdk.NewCoin("nova", sdk.NewInt(100000))
@@ -72,4 +99,10 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 	suite.Equal(
 		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.CommunityPool),
 		feePool.CommunityPool.AmountOf("nova"))
+}
+
+func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
+	key := secp256k1.GenPrivKey()
+	acc := authtypes.NewBaseAccount(key.PubKey().Address().Bytes(), key.PubKey(), 0, 0)
+	return acc.GetAddress()
 }

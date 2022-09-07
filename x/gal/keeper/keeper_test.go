@@ -8,7 +8,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
-	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	"github.com/stretchr/testify/suite"
 	"testing"
 )
@@ -65,14 +64,6 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 func TestKeeperTestSuite(t *testing.T) {
 	suite.Run(t, new(KeeperTestSuite))
-}
-
-func parseAddressToIbcAddress(destPort string, destChannel string, denom string) string {
-	sourcePrefix := transfertypes.GetDenomPrefix(destPort, destChannel)
-	prefixedDenom := sourcePrefix + denom
-	denomTrace := transfertypes.ParseDenomTrace(prefixedDenom)
-	voucherDenom := denomTrace.IBCDenom()
-	return voucherDenom
 }
 
 func (suite *KeeperTestSuite) GetControllerAddr() string {

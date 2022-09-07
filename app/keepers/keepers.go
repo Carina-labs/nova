@@ -148,9 +148,17 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 	appKeepers.DistrKeeper = &distrKeeper
 
+	// Register Pool module.
+	poolKeeper := poolincentivekeeper.NewKeeper(
+		appCodec,
+		appKeepers.keys[poolincentivetypes.StoreKey],
+		appKeepers.GetSubspace(poolincentivetypes.ModuleName),
+	)
+	appKeepers.PoolKeeper = &poolKeeper
+
 	mintKeeper := mintkeeper.NewKeeper(
 		appCodec, appKeepers.keys[minttypes.StoreKey], appKeepers.GetSubspace(minttypes.ModuleName), &stakingKeeper,
-		appKeepers.AccountKeeper, appKeepers.BankKeeper, appKeepers.DistrKeeper, authtypes.FeeCollectorName,
+		appKeepers.AccountKeeper, appKeepers.BankKeeper, appKeepers.DistrKeeper, appKeepers.PoolKeeper, authtypes.FeeCollectorName,
 	)
 	appKeepers.MintKeeper = &mintKeeper
 

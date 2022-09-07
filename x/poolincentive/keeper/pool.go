@@ -68,6 +68,15 @@ func (k Keeper) SetIncentivePoolInfo(ctx sdk.Context, incentivePoolInfo types.In
 	store.Set(types.KeyIncentivePoolInfo, bz)
 }
 
+func (k Keeper) GetAllIncentivePool(ctx sdk.Context) []*types.IncentivePool {
+	var pools []*types.IncentivePool
+	k.IterateIncentivePools(ctx, func(i int64, pool *types.IncentivePool) bool {
+		pools = append(pools, pool)
+		return false
+	})
+	return pools
+}
+
 // FindCandidatePoolById searches for candidate pools based on poolId.
 func (k Keeper) FindCandidatePoolById(ctx sdk.Context, poolId string) (*types.CandidatePool, error) {
 	pools := k.GetCandidatePoolInfo(ctx).CandidatePools
