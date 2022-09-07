@@ -109,7 +109,7 @@ func (k Keeper) GetRegisterZoneForPortId(ctx sdk.Context, portId string) (*types
 	return zone, ok
 }
 
-// GetsnDenomForBaseDenom returns an appropriate pair of sn-Token denom for BaseDenom.
+// GetsnDenomForBaseDenom returns an appropriate pair of sn-asset denom for BaseDenom.
 func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, baseDenom string) string {
 	var snDenom string
 
