@@ -5,7 +5,12 @@
 ## Abstract
 
 ---
-The Supernova protocol provides Staked-swap for seamless exchange between equity tokens and assets. And to assign some of the newly issued Nova coins to the liquidity pool, we use the Pool-Incentive module.
+The Supernova protocol provides swap for seamless exchange between equity tokens and assets. 
+And to assign some of the newly issued Nova coins to the liquidity pool, we use the Pool-Incentive module.
+
+Staked swap is developed in the near future, and we are currently using common amm swaps.
+
+For more information about staked swaps, see the [WhitePaper](https://www.supernovaprotocol.xyz/whitepaper.pdf).
 
 ## Content
 
