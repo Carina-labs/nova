@@ -11,8 +11,8 @@ func (k Keeper) SetAirdropInfo(ctx sdk.Context, info *types.AirdropInfo) {
 	store.Set(types.GetKeyAirdropInfo(), k.cdc.MustMarshal(info))
 }
 
-// GetAirdropInfo returns airdrop info.
-func (k Keeper) GetAirdropInfo(ctx sdk.Context) types.AirdropInfo {
+// GetAirdropInfo returns airdrop info
+func (k Keeper) GetAirdropInfo(ctx sdk.Context) *types.AirdropInfo {
 	store := ctx.KVStore(k.storeKey)
 
 	if !store.Has(types.GetKeyAirdropInfo()) {
@@ -22,7 +22,13 @@ func (k Keeper) GetAirdropInfo(ctx sdk.Context) types.AirdropInfo {
 	bz := store.Get(types.GetKeyAirdropInfo())
 	var info types.AirdropInfo
 	k.cdc.MustUnmarshal(bz, &info)
-	return info
+	return &info
+}
+
+// DeleteAirdropInfo delete airdrop info
+func (k Keeper) DeleteAirdropInfo(ctx sdk.Context) {
+	store := ctx.KVStore(k.storeKey)
+	store.Delete(types.GetKeyAirdropInfo())
 }
 
 // ValidQuestDate returns true if the current time is valid for the user to perform quests

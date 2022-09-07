@@ -20,9 +20,9 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		States: nil,
 		AirdropInfo: &AirdropInfo{
-			SnapshotTimestamp:        time.Now(),
-			AirdropStartTimestamp:    time.Now().Add(time.Hour * 24 * 7),
-			AirdropEndTimestamp:      time.Now().Add(time.Hour * 24 * 31),
+			SnapshotTimestamp:        time.Now().UTC(),
+			AirdropStartTimestamp:    time.Now().UTC().Add(time.Hour * 24 * 7),
+			AirdropEndTimestamp:      time.Now().UTC().Add(time.Hour * 24 * 31),
 			AirdropDenom:             params.BaseCoinUnit,
 			QuestsCount:              5,
 			ControllerAddress:        sdk.AccAddress([]byte{0x1}).String(),
@@ -81,15 +81,29 @@ func (gs GenesisState) Validate() error {
 	return nil
 }
 
-// EmptyQuestState returns an empty quest state
-// the state must start from NotStarted
-// archivedAt & claimedAt must be zero
-// claimedAmount must be zero
-func EmptyQuestState() *QuestState {
-	return &QuestState{
-		State:         QuestStateType_QUEST_STATE_NOT_STARTED,
-		AchievedAt:    time.Time{},
-		ClaimedAt:     time.Time{},
-		ClaimedAmount: sdk.ZeroInt().String(),
+// EmptyQuestState returns initial state of quest.
+func EmptyQuestState(blockTime time.Time) map[int32]*QuestState {
+	defaultQuestState := func() *QuestState {
+		return &QuestState{
+			State:         QuestStateType_QUEST_STATE_NOT_STARTED,
+			AchievedAt:    time.Time{},
+			ClaimedAt:     time.Time{},
+			ClaimedAmount: "", // claimed amount should be empty string
+		}
 	}
+
+	result := map[int32]*QuestState{
+		int32(QuestType_QUEST_NOTHING_TO_DO):     defaultQuestState(),
+		int32(QuestType_QUEST_SOCIAL):            defaultQuestState(),
+		int32(QuestType_QUEST_PROVIDE_LIQUIDITY): defaultQuestState(),
+		int32(QuestType_QUEST_SN_ASSET_CLAIM):    defaultQuestState(),
+		int32(QuestType_QUEST_VOTE_ON_PROPOSALS): defaultQuestState(),
+	}
+
+	// All user starts with the empty quests except for one quest.
+	// This quest is the one that allows the user to claim 20% of the airdrop.
+	result[int32(QuestType_QUEST_NOTHING_TO_DO)].State = QuestStateType_QUEST_STATE_CLAIMABLE
+	result[int32(QuestType_QUEST_NOTHING_TO_DO)].AchievedAt = blockTime
+
+	return result
 }

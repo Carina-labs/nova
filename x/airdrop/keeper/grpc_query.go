@@ -22,7 +22,7 @@ func NewQuerier(k Keeper) Querier {
 func (q Querier) AirdropInfo(goCtx context.Context, _ *types.QueryAirdropInfoRequest) (*types.QueryAirdropInfoResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	info := q.keeper.GetAirdropInfo(ctx)
-	return &types.QueryAirdropInfoResponse{AirdropInfo: &info}, nil
+	return &types.QueryAirdropInfoResponse{AirdropInfo: info}, nil
 }
 
 func (q Querier) TotalAllocatedAirdropToken(goCtx context.Context, request *types.QueryTotalAllocatedAirdropTokenRequest) (*types.QueryTotalAllocatedAirdropTokenResponse, error) {
