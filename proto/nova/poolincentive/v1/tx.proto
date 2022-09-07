@@ -1,11 +1,11 @@
 syntax = "proto3";
-package nova.pool_incentive.v1;
+package nova.poolincentive.v1;
 
 import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/msg/v1/msg.proto";
 
-option go_package = "github.com/carina-labs/nova/x/poolincentive/types";
+option go_package = "github.com/Carina-labs/nova/x/poolincentive/types";
 
 service Msg {
   // CreateCandidatePool creates new "candidate" pool, which can be created by anyone

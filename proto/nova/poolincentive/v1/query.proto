@@ -1,5 +1,5 @@
 syntax = "proto3";
-package nova.pool_incentive.v1;
+package nova.poolincentive.v1;
 
 option go_package = "github.com/Carina-labs/nova/x/poolincentive/types";
 

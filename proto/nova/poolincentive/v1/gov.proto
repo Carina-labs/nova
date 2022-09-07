@@ -1,0 +1,27 @@
+syntax = "proto3";
+package nova.poolincentive.v1;
+
+import "gogoproto/gogo.proto";
+import "nova/poolincentive/v1/tx.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/poolincentive/types";
+
+message ReplacePoolIncentivesProposal {
+  option (gogoproto.equal) = true;
+  option (gogoproto.goproto_getters) = false;
+  option (gogoproto.goproto_stringer) = false;
+
+  string title = 1;
+  string description = 2;
+  repeated NewPoolWeight weights = 3 [ (gogoproto.nullable) = false ];
+}
+
+message UpdatePoolIncentivesProposal {
+  option (gogoproto.equal) = true;
+  option (gogoproto.goproto_getters) = false;
+  option (gogoproto.goproto_stringer) = false;
+
+  string title = 1;
+  string description = 2;
+  repeated NewPoolWeight weights = 3 [ (gogoproto.nullable) = false ];
+}
