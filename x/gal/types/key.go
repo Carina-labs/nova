@@ -16,17 +16,17 @@ const (
 
 // KVStore keys
 var (
-	// KeySupply defines key to store the total supply of snTokens.
+	// KeySupply defines key to store the total supply of sn-assets.
 	KeySupply = []byte{0x00}
-	// KeyDepositInfo defines key to store deposit information of snTokens.
+	// KeyDepositInfo defines key to store deposit information of sn-assets.
 	KeyDepositInfo = []byte{0x01}
-	// KeyWithdrawRecordInfo defines key to store withdraw record information of snTokens.
+	// KeyWithdrawRecordInfo defines key to store withdraw record information of sn-assets.
 	KeyWithdrawRecordInfo = []byte{0x02}
 	// KeyUndelegateRecordInfo defines key to store undelegate record information of wAsset.
 	KeyUndelegateRecordInfo = []byte{0x03}
-	// KeyShare defines key to store deposit information of snTokens.
+	// KeyShare defines key to store deposit information of sn-assets.
 	KeyShare = []byte{0x06}
-	// KeyWithdrawInfo defines key to store withdraw information of snTokens.
+	// KeyWithdrawInfo defines key to store withdraw information of sn-assets.
 	KeyWithdrawInfo = []byte{0x07}
 
 	KeyDelegateVersion   = []byte{0x08}

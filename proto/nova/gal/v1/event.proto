@@ -1,0 +1,62 @@
+syntax = "proto3";
+package nova.gal.v1;
+
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/Carina-labs/nova/x/gal/types";
+
+// EventDeposit is emitted when user deposit their asset.
+message EventDeposit {
+  string depositor = 1;
+  string claimer = 2;
+  cosmos.base.v1beta1.Coin deposit_amount = 3;
+}
+
+// EventDelegate is emitted when service bot delegates accumulated asset.
+message EventDelegate {
+  string host_address = 1;
+  string validator_address = 2;
+  string channel_id = 3;
+  string port_id = 4;
+  cosmos.base.v1beta1.Coin delegated_amount = 5;
+}
+
+// EventPendingUndelegate is emitted when pending undelegate message is submitted.
+message EventPendingUndelegate {
+  string zone_id = 1;
+  string delegator = 2;
+  string withdrawer = 3;
+  cosmos.base.v1beta1.Coin burned_amount = 4;
+  cosmos.base.v1beta1.Coin undelegated_amount = 5;
+}
+
+// EventUndelegate is emitted when remote undelegate message is submitted.
+message EventUndelegate {
+  string zone_id = 1;
+  cosmos.base.v1beta1.Coin burned_amount = 2;
+  cosmos.base.v1beta1.Coin undelegated_amount = 3;
+}
+
+// EventWithdraw is emitted when withdraw message is submitted.
+message EventWithdraw {
+  string zone_id = 1;
+  string withdrawer = 2;
+  cosmos.base.v1beta1.Coin withdrawn_amount = 3;
+}
+
+// EventClaimSnToken is emitted when snAsset is minted.
+message EventClaimSnToken {
+  string claimer = 1;
+  cosmos.base.v1beta1.Coin claimed_token = 2;
+  uint64 oracle_version = 3;
+}
+
+// EventIcaWithdraw is emitted when ica withdraw action is success.
+message EventIcaWithdraw {
+  string host_address = 1;
+  string controller_address = 2;
+  string connection_id = 3;
+  string channel_id = 4;
+  string port_id = 5;
+  cosmos.base.v1beta1.Coin withdrawn_token = 6;
+}

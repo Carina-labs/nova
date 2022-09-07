@@ -34,7 +34,7 @@ func queryParams() *cobra.Command {
 
 func queryClaimableAsset() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "claimable_asset [zone-id] [address]",
+		Use:  "claimable [zone-id] [address]",
 		Long: "Query for claimable snAssets",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -62,9 +62,9 @@ func queryClaimableAsset() *cobra.Command {
 	return cmd
 }
 
-func queryPendingWithdrawals() *cobra.Command {
+func queryIcaWithdrawal() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "pending_withdrawals [zone-id] [address]",
+		Use:  "ica-withdrawal [zone-id] [address]",
 		Long: "Query for pending withdrawals",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -92,9 +92,9 @@ func queryPendingWithdrawals() *cobra.Command {
 	return cmd
 }
 
-func queryActiveWithdrawals() *cobra.Command {
+func queryActiveWithdrawal() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "active_withdrawals [zone-id] [address]",
+		Use:  "active-withdrawal [zone-id] [address]",
 		Long: "Query for pending withdrawals",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -124,7 +124,7 @@ func queryActiveWithdrawals() *cobra.Command {
 
 func queryDepositRecords() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "deposit_records [zone-id] [address]",
+		Use:  "deposit-records [zone-id] [address]",
 		Long: "Query for deposit records",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -158,7 +158,7 @@ func queryDepositRecords() *cobra.Command {
 
 func queryUndelegateRecords() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegate_records [zone-id] [address]",
+		Use:  "undelegate-records [zone-id] [address]",
 		Long: "Query for undelegate records",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -191,7 +191,7 @@ func queryUndelegateRecords() *cobra.Command {
 
 func queryWithdrawRecords() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "withdraw_records [zone-id] [address]",
+		Use:  "withdraw-records [zone-id] [address]",
 		Long: "Query for withdraw records",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {

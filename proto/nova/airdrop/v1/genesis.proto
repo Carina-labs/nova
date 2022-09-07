@@ -15,6 +15,7 @@ message GenesisState {
   AirdropInfo airdrop_info = 3;
 }
 
+// AirdropInfo stores metadata related to airdrop. This includes airdrop start and end times, maximum acceptable quantity, etc.
 message AirdropInfo {
   // The snapshot date based for the distribution of the airdrop.
   google.protobuf.Timestamp snapshot_timestamp = 1 [
@@ -66,6 +67,7 @@ enum QuestStateType {
   QUEST_STATE_CLAIMED = 2;
 };
 
+// UserState indicates the status of the user performing the quest.
 message UserState {
   // address of the airdrop recipient.
   string recipient = 1;
@@ -77,6 +79,7 @@ message UserState {
   map<int32, QuestState> quest_states = 3;
 }
 
+// QuestState indicates the status of the quest that users perform.
 message QuestState {
   // state to indicate that quest is not started, claimable or claimed.
   QuestStateType state = 1;

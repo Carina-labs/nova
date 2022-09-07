@@ -35,6 +35,7 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
+// UpdateChainState updates the status of the zones stored in Oracle with a new status.
 func (k Keeper) UpdateChainState(ctx sdk.Context, chainInfo *types.ChainInfo) error {
 	if !k.IsValidOperator(ctx, chainInfo.OperatorAddress) {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, chainInfo.OperatorAddress)
@@ -46,6 +47,7 @@ func (k Keeper) UpdateChainState(ctx sdk.Context, chainInfo *types.ChainInfo) er
 	return nil
 }
 
+// GetChainState returns the status of the Zone stored in Oracle. This result is used to calculate the equity token.
 func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.ChainInfo, error) {
 	chainInfo := types.ChainInfo{}
 	store := ctx.KVStore(k.storeKey)
@@ -61,6 +63,7 @@ func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.ChainI
 	return &chainInfo, nil
 }
 
+// IsValidOperator verifies that the parameter address is the correct controller address.
 func (k Keeper) IsValidOperator(ctx sdk.Context, operatorAddress string) bool {
 	params := k.GetParams(ctx)
 

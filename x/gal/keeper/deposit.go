@@ -36,6 +36,7 @@ func (k Keeper) GetUserDepositRecord(ctx sdk.Context, zoneId string, claimer sdk
 	return &record, true
 }
 
+// GetTotalDepositAmtForZoneId returns the sum of all Deposit coins corresponding to a specified zoneId.
 func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state types.DepositStatusType) sdk.Coin {
 	totalDepositAmt := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
@@ -56,6 +57,8 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 	return totalDepositAmt
 }
 
+// GetTotalDepositAmtForUserAddr returns the sum of the user's address entered as input
+// and the deposit coin corresponding to the coin denom.
 func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, userAddr, denom string) sdk.Coin {
 	totalDepositAmt := sdk.NewCoin(denom, sdk.NewInt(0))
 
@@ -73,6 +76,8 @@ func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, userAddr, denom s
 	return totalDepositAmt
 }
 
+// SetDepositOracleVersion updates the Oracle version for recorded Deposit requests.
+// This action is required for the correct equity calculation.
 func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state types.DepositStatusType, oracleVersion uint64) {
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		isChanged := false
@@ -94,6 +99,8 @@ func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state ty
 
 }
 
+// ChangeDepositState updates the deposit records corresponding to the preState to postState.
+// This operation runs in the hook after the remote deposit is run.
 func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, postState types.DepositStatusType) bool {
 	isChanged := false
 
@@ -121,6 +128,7 @@ func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, pos
 	return true
 }
 
+// SetDelegateRecordVersion updates the deposit version performed by the bot for the state of the deposit records corresponding to zoneId.
 func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state types.DepositStatusType, version uint64) bool {
 	k.IterateDepositRecord(ctx, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		if depositRecord.ZoneId == zoneId {
@@ -141,6 +149,7 @@ func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state t
 	return true
 }
 
+// DeleteRecordedDepositItem deletes the records corresponding to state among the defositor's assets deposited in the zone corresponding to zoneId.
 func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, depositor sdk.AccAddress, state types.DepositStatusType) error {
 	record, found := k.GetUserDepositRecord(ctx, zoneId, depositor)
 	if !found {
@@ -164,6 +173,7 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	return types.ErrNoDeleteRecord
 }
 
+// GetAllAmountNotMintShareToken returns the sum of assets that have not yet been issued by the user among the assets that have been deposited.
 func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone) (sdk.Coin, error) {
 	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 
@@ -182,6 +192,7 @@ func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingt
 	return res, nil
 }
 
+// IterateDepositRecord navigates all deposit requests.
 func (k Keeper) IterateDepositRecord(ctx sdk.Context, fn func(index int64, depositRecord types.DepositRecord) (stop bool)) {
 	store := k.getDepositRecordStore(ctx)
 	iterator := sdk.KVStorePrefixIterator(store, nil)

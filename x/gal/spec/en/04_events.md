@@ -1,1 +1,85 @@
 # Events
+
+## EventDeposit
+
+---
+```protobuf
+message EventDeposit {
+  string depositor = 1;
+  string claimer = 2;
+  cosmos.base.v1beta1.Coin deposit_amount = 3;
+}
+```
+
+## EventDelegate
+
+---
+```protobuf
+message EventDelegate {
+  string host_address = 1;
+  string validator_address = 2;
+  string channel_id = 3;
+  string port_id = 4;
+  cosmos.base.v1beta1.Coin delegated_amount = 5;
+}
+```
+
+## EventPendingUndelegate
+
+---
+```protobuf
+message EventPendingUndelegate {
+  string zone_id = 1;
+  string delegator = 2;
+  string withdrawer = 3;
+  cosmos.base.v1beta1.Coin burned_amount = 4;
+  cosmos.base.v1beta1.Coin undelegated_amount = 5;
+}
+```
+
+## EventUndelegate
+
+---
+```protobuf
+message EventUndelegate {
+  string zone_id = 1;
+  cosmos.base.v1beta1.Coin burned_amount = 2;
+  cosmos.base.v1beta1.Coin undelegated_amount = 3;
+}
+```
+
+## EventWithdraw
+
+---
+```protobuf
+message EventWithdraw {
+  string zone_id = 1;
+  string withdrawer = 2;
+  cosmos.base.v1beta1.Coin withdrawn_amount = 3;
+}
+```
+
+## EventClaimSnToken
+
+---
+```protobuf
+message EventClaimSnToken {
+  string claimer = 1;
+  cosmos.base.v1beta1.Coin claimed_token = 2;
+  uint64 oracle_version = 3;
+}
+```
+
+## EventIcaWithdraw
+
+---
+```protobuf
+message EventIcaWithdraw {
+  string host_address = 1;
+  string controller_address = 2;
+  string connection_id = 3;
+  string channel_id = 4;
+  string port_id = 5;
+  cosmos.base.v1beta1.Coin withdrawn_token = 6;
+}
+```

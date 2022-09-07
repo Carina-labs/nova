@@ -10,6 +10,7 @@ service Msg {
   rpc UpdateChainState(MsgUpdateChainState) returns (MsgUpdateChainStateResponse);
 }
 
+// MsgUpdateChainState is the message used to update the status of the zone stored in Oracle.
 message MsgUpdateChainState {
   // coin refers to the sum of owned, staked and claimable quantity of the coin
   cosmos.base.v1beta1.Coin coin = 1 [
@@ -30,6 +31,8 @@ message MsgUpdateChainState {
   string chain_id = 5;
 }
 
+// MsgUpdateChainStateResponse is a response message for MsgUpdateChainState.
+// If updating is success, the value of success is true.
 message MsgUpdateChainStateResponse {
   bool success = 1;
 }

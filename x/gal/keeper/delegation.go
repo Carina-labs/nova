@@ -7,10 +7,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+// GetDelegateVersionStore returns store for delegation.
 func (k Keeper) GetDelegateVersionStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyDelegateVersion)
 }
 
+// SetDelegateVersion sets version for delegation corresponding to zone-id records.
 func (k Keeper) SetDelegateVersion(ctx sdk.Context, zoneId string, version uint64) {
 	store := k.GetDelegateVersionStore(ctx)
 	key := zoneId
@@ -19,6 +21,7 @@ func (k Keeper) SetDelegateVersion(ctx sdk.Context, zoneId string, version uint6
 	store.Set([]byte(key), bz)
 }
 
+// GetDelegateVersion returns version for delegation corresponding to zone-id records.
 func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) uint64 {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyDelegateVersion)
 	key := []byte(zoneId)

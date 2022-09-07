@@ -13,12 +13,13 @@ func ParamKeyTable() paramtypes.KeyTable {
 	return paramtypes.NewKeyTable().RegisterParamSet(&Params{})
 }
 
-func NewParams(snTokenDenoms map[string]string) Params {
+func NewParams(snAssetDenoms map[string]string) Params {
 	return Params{
-		WhiteListedTokenDenoms: snTokenDenoms,
+		WhiteListedTokenDenoms: snAssetDenoms,
 	}
 }
 
+// Key관리
 func DefaultParams() Params {
 	return Params{
 		WhiteListedTokenDenoms: map[string]string{
@@ -35,7 +36,7 @@ func (Params) Validate() error {
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
-		paramtypes.NewParamSetPair(KeyWhiteListedTokenDenoms, &p.WhiteListedTokenDenoms, validateSnTokenDenoms),
+		paramtypes.NewParamSetPair(KeyWhiteListedTokenDenoms, &p.WhiteListedTokenDenoms, validateSnAssetDenoms),
 	}
 }
 
@@ -44,6 +45,6 @@ func (p *Params) String() string {
 	return string(out)
 }
 
-func validateSnTokenDenoms(i interface{}) error {
+func validateSnAssetDenoms(i interface{}) error {
 	return nil
 }

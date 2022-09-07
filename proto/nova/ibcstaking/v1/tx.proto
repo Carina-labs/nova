@@ -28,7 +28,7 @@ service Msg {
   rpc ChangeRegisteredZoneInfo(MsgChangeRegisteredZoneInfo) returns (MsgChangeRegisteredZoneInfoResponse);
 }
 
-// MsgRegisterZone defines the payload for Msg/RegisterZone
+// MsgRegisterZone is the message you use to register a new zone.
 message MsgRegisterZone {
   option (gogoproto.equal) = false;
 
@@ -41,8 +41,10 @@ message MsgRegisterZone {
   int64 decimal = 7;
 }
 
+// MsgRegisterZoneResponse is a response message for MsgRegisterZone
 message MsgRegisterZoneResponse {}
 
+// MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
 message MsgChangeRegisteredZoneInfo{
   option (gogoproto.equal) = false;
 
@@ -53,17 +55,21 @@ message MsgChangeRegisteredZoneInfo{
   string validator_address = 5;
   string base_denom = 6;
   int64 decimal = 7;
-
 }
+
+// MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
 message MsgChangeRegisteredZoneInfoResponse{}
 
+// MsgDeleteRegisteredZone deletes registered Zone information.
 message MsgDeleteRegisteredZone{
   string zone_id = 1;
   string controller_address = 2;
 }
 
+// MsgDeleteRegisteredZoneResponse is a response message for MsgDeleteRegisteredZone.
 message MsgDeleteRegisteredZoneResponse{}
 
+// MsgIcaDelegate is a message used for remote delegation using ICA.
 message MsgIcaDelegate{
   string zone_id = 1;
   string host_address = 2;
@@ -71,8 +77,10 @@ message MsgIcaDelegate{
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
+// MsgIcaDelegateResponse is a response message for MsgIcaDelegate.
 message MsgIcaDelegateResponse{}
 
+// MsgIcaUndelegate is a message used to de-delegate remote using ICA.
 message MsgIcaUndelegate{
   string zone_id = 1;
   string host_address = 2;
@@ -80,8 +88,10 @@ message MsgIcaUndelegate{
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
+// MsgIcaUndelegateResponse is a response message for MsgIcaUndelegate.
 message MsgIcaUndelegateResponse{}
 
+// MsgIcaAutoStaking is a message for remote auto-compound using ICA.
 message MsgIcaAutoStaking{
   string zone_id = 1;
   string host_address = 2;
@@ -89,8 +99,10 @@ message MsgIcaAutoStaking{
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
+// MsgIcaAutoStakingResponse is a response message for MsgIcaAutoStaking.
 message MsgIcaAutoStakingResponse{}
 
+// MsgIcaTransfer is a message for IBC transfer from the counterpart to the Supernova chain using ICA.
 message MsgIcaTransfer{
   string zone_id = 1;
   string host_address = 2;
@@ -101,8 +113,10 @@ message MsgIcaTransfer{
   cosmos.base.v1beta1.Coin amount = 7[(gogoproto.nullable) = false];
 }
 
+// MsgIcaTransferResponse is a response message for MsgIcaTransfer.
 message MsgIcaTransferResponse{}
 
+// MsgIcaAuthzGrant is a message used to transfer authority through authz between two accounts in the other chain using ICA.
 message MsgIcaAuthzGrant{
   string zone_id = 1;
   string grantee = 2;
@@ -110,8 +124,10 @@ message MsgIcaAuthzGrant{
   cosmos.authz.v1beta1.Grant grant = 4 [(gogoproto.nullable) = false];
 }
 
+// MsgIcaAuthzGrantResponse is a response messasge for MsgIcaAuthzGrant.
 message MsgIcaAuthzGrantResponse{}
 
+// MsgIcaAuthzRevoke is a message used for proxy execution between accounts linked to authz via ICA.
 message MsgIcaAuthzRevoke{
   string zone_id = 1;
   string grantee = 2;
@@ -119,4 +135,5 @@ message MsgIcaAuthzRevoke{
   string msg_type_url = 4;
 }
 
+// MsgIcaAuthzRevokeResponse is a response message for MsgIcaAuthzRevoke.
 message MsgIcaAuthzRevokeResponse{}

@@ -26,6 +26,7 @@ func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, ms
 	if !found {
 		return sdkerrors.Wrap(channeltypes.ErrChannelCapabilityNotFound, "module does not own channel capability")
 	}
+
 	data, err := icatypes.SerializeCosmosTx(k.cdc, msgs)
 	if err != nil {
 		return err
