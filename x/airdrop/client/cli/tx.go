@@ -2,7 +2,6 @@ package cli
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/Carina-labs/nova/x/airdrop/types"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -40,19 +39,19 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			questType, err := strconv.Atoi(args[0])
-			if err != nil {
-				return err
+			questType, ok := sdk.NewIntFromString(args[0])
+			if !ok {
+				return fmt.Errorf("invalid integer for quest type")
 			}
 
-			_, ok := types.QuestType_name[int32(questType)]
-			if !ok {
-				return fmt.Errorf("quest type %d is not supported", questType)
+			// check questType is smaller than maximum int32
+			if questType.Int64() < 0 || questType.Int64() > 4 {
+				return fmt.Errorf("invalid quest type")
 			}
 
 			msg := &types.MsgClaimAirdropRequest{
 				UserAddress: context.GetFromAddress().String(),
-				QuestType:   types.QuestType(int32(questType)),
+				QuestType:   types.QuestType(int32(questType.Int64())),
 			}
 
 			return tx.GenerateOrBroadcastTxCLI(context, cmd.Flags(), msg)
