@@ -149,12 +149,12 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 			zoneId := args[0]
 
-			withrawer, err := sdk.AccAddressFromBech32(args[1])
+			withdrawer, err := sdk.AccAddressFromBech32(args[1])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgWithdraw(zoneId, withrawer)
+			msg := types.NewMsgWithdraw(zoneId, withdrawer)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
