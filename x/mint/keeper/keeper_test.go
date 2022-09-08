@@ -59,6 +59,33 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 	osmoAddr := suite.GenRandomAddress().String()
 	junoAddr := suite.GenRandomAddress().String()
 
+	params := suite.App.MintKeeper.GetParams(suite.Ctx)
+	// At this time, there is no distr record, so the asset should be allocated to the community pool.
+	mintCoin := sdk.NewCoin("nova", sdk.NewInt(100000))
+	mintCoins := sdk.Coins{mintCoin}
+	err := mintKeeper.MintCoins(suite.Ctx, mintCoins)
+	suite.NoError(err)
+	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
+	suite.NoError(err)
+
+	lpModuleAddr := suite.App.AccountKeeper.GetModuleAddress(types.LpIncentiveModuleAccName)
+	lpModuleBalances := suite.App.BankKeeper.GetBalance(suite.Ctx, lpModuleAddr, "nova")
+	suite.Require().Equal(lpModuleBalances, sdk.NewCoin("nova", sdk.NewInt(40000)))
+
+	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, *suite.App.DistrKeeper)
+
+	// pool does not exist
+	feePool := suite.App.DistrKeeper.GetFeePool(suite.Ctx)
+	feeCollector := suite.App.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName)
+
+	suite.Equal(
+		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.Staking).TruncateInt(),
+		suite.App.BankKeeper.GetBalance(suite.Ctx, feeCollector, "nova").Amount)
+	suite.Equal(
+		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.CommunityPool),
+		feePool.CommunityPool.AmountOf("nova"))
+
+	// set pool
 	pools := []*pooltypes.IncentivePool{
 		{
 			PoolId:              "gaia",
@@ -80,40 +107,12 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 		suite.App.PoolKeeper.CreateIncentivePool(suite.Ctx, pool)
 	}
 
-	params := suite.App.MintKeeper.GetParams(suite.Ctx)
-	// At this time, there is no distr record, so the asset should be allocated to the community pool.
-	mintCoin := sdk.NewCoin("nova", sdk.NewInt(100000))
-	mintCoins := sdk.Coins{mintCoin}
-	err := mintKeeper.MintCoins(suite.Ctx, mintCoins)
-	suite.NoError(err)
-	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
-	suite.NoError(err)
-
-	lpModuleAddr := suite.App.AccountKeeper.GetModuleAddress(types.LpIncentiveModuleAccName)
-	lpModuleBalances := suite.App.BankKeeper.GetBalance(suite.Ctx, lpModuleAddr, "nova")
-	suite.Require().Equal(lpModuleBalances, sdk.NewCoin("nova", sdk.NewInt(0)))
-
-	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, *suite.App.DistrKeeper)
-
-	feePool := suite.App.DistrKeeper.GetFeePool(suite.Ctx)
-	feeCollector := suite.App.AccountKeeper.GetModuleAddress(authtypes.FeeCollectorName)
-
-	suite.Equal(
-		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.Staking).TruncateInt(),
-		suite.App.BankKeeper.GetBalance(suite.Ctx, feeCollector, "nova").Amount)
-	suite.Equal(
-		mintCoins[0].Amount.ToDec().Mul(params.DistributionProportions.CommunityPool),
-		feePool.CommunityPool.AmountOf("nova"))
-	suite.App.PoolKeeper.ClearIncentivePools(suite.Ctx)
-
-	// pool does not exist
-	suite.App.PoolKeeper.ClearIncentivePools(suite.Ctx)
 	err = mintKeeper.MintCoins(suite.Ctx, mintCoins)
 	suite.NoError(err)
 	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
 	suite.NoError(err)
 	lpModuleBalances = suite.App.BankKeeper.GetBalance(suite.Ctx, lpModuleAddr, "nova")
-	suite.Require().Equal(lpModuleBalances, sdk.NewCoin("nova", sdk.NewInt(40000)))
+	suite.Require().Equal(lpModuleBalances, sdk.NewCoin("nova", sdk.NewInt(0)))
 }
 
 func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
