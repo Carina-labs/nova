@@ -182,14 +182,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appCodec, appKeepers.keys[ibchost.StoreKey], appKeepers.GetSubspace(ibchost.ModuleName), appKeepers.StakingKeeper, appKeepers.UpgradeKeeper, appKeepers.ScopedIBCKeeper,
 	)
 
-	// Register Pool module.
-	poolKeeper := poolincentivekeeper.NewKeeper(
-		appCodec,
-		appKeepers.keys[poolincentivetypes.StoreKey],
-		appKeepers.GetSubspace(poolincentivetypes.ModuleName),
-	)
-	appKeepers.PoolKeeper = &poolKeeper
-
 	// register the proposal types
 	govRouter := govtypes.NewRouter()
 	govRouter.AddRoute(govtypes.RouterKey, govtypes.ProposalHandler).

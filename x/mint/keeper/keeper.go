@@ -187,7 +187,6 @@ func (k Keeper) distributeLPIncentivePools(ctx sdk.Context, denom string) error 
 
 		incentive := sdk.NewDecFromInt(lpIncentiveCoin.Amount).Mul(poolWeight)
 		incentivesCoins := sdk.NewCoins(sdk.NewCoin(lpIncentiveCoin.Denom, incentive.TruncateInt()))
-
 		poolAddr, err := sdk.AccAddressFromBech32(pool.PoolContractAddress)
 		if err != nil {
 			return err
