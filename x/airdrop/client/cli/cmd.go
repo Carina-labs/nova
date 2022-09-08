@@ -16,6 +16,8 @@ func GetTxCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(txClaim())
+	cmd.AddCommand(txMarkSocialQuest())
+	cmd.AddCommand(txMarkProvideLiquidity())
 
 	return cmd
 }
