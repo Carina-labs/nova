@@ -8,6 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
 )
 
@@ -52,6 +53,78 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 			msg := &types.MsgClaimAirdropRequest{
 				UserAddress: context.GetFromAddress().String(),
 				QuestType:   types.QuestType(int32(questType)),
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(context, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func txMarkSocialQuest() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "mark-social-quest [user-address]",
+		Short: "Mark that the user has completed social quest",
+		Long: `Mark that the user has completed social quest.
+Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
+When using '--dry-run' a key name cannot be used, only a bech32 address.`,
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[0]); err != nil {
+				return err
+			}
+
+			context, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			_, err = sdk.AccAddressFromBech32(args[0])
+			if err != nil {
+				return err
+			}
+
+			msg := &types.MsgMarkSocialQuestPerformedRequest{
+				ControllerAddress: context.GetFromAddress().String(),
+				UserAddresses:     []string{args[0]},
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(context, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func txMarkProvideLiquidity() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "mark-provide-liquidity [user-address]",
+		Short: "Mark that the user has completed providing liquidity quest",
+		Long: `Mark that the user has completed providing liquidity quest.
+Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
+When using '--dry-run' a key name cannot be used, only a bech32 address.`,
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[0]); err != nil {
+				return err
+			}
+
+			context, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			_, err = sdk.AccAddressFromBech32(args[0])
+			if err != nil {
+				return err
+			}
+
+			msg := &types.MsgMarkUserProvidedLiquidityRequest{
+				ControllerAddress: context.GetFromAddress().String(),
+				UserAddresses:     []string{args[0]},
 			}
 
 			return tx.GenerateOrBroadcastTxCLI(context, cmd.Flags(), msg)
