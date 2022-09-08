@@ -15,6 +15,8 @@ func GetTxCmd() *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
+	cmd.AddCommand(txClaim())
+
 	return cmd
 }
 
@@ -26,6 +28,10 @@ func GetQueryCmd() *cobra.Command {
 		SuggestionsMinimumDistance: 2,
 		RunE:                       client.ValidateCmd,
 	}
+
+	cmd.AddCommand(queryAirdropInfo())
+	cmd.AddCommand(queryTotalAirdropToken())
+	cmd.AddCommand(queryQuestState())
 
 	return cmd
 }

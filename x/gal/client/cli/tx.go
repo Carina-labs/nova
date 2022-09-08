@@ -27,7 +27,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 			zoneId := args[0]
 
-			depositor, err := client.GetClientTxContext(cmd)
+			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
@@ -42,9 +42,9 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			msg := types.NewMsgDeposit(zoneId, depositor.GetFromAddress(), claimer, coin)
+			msg := types.NewMsgDeposit(zoneId, clientCtx.GetFromAddress(), claimer, coin)
 
-			return tx.GenerateOrBroadcastTxCLI(depositor, cmd.Flags(), msg)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
