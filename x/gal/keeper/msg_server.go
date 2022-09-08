@@ -147,6 +147,9 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	if !found {
 		return nil, types.ErrNotFoundZoneInfo
 	}
+	if zoneInfo.SnDenom != undelegate.Amount.Denom {
+		return nil, types.ErrInvalidDenom
+	}
 
 	//send stAsset to GAL moduleAccount
 	delegatorAcc, err := sdk.AccAddressFromBech32(undelegate.Delegator)
