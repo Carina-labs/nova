@@ -1,5 +1,7 @@
 # Supernova Protocol
 
+<img src="https://miro.medium.com/max/1400/0*UoQOj4_aoZO69oWP">
+
 ---
 
 ## Overview
