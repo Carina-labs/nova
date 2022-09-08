@@ -47,3 +47,28 @@ For more information, see [Mint SPEC](x/mint/README.md).
 ### Airdrop
 
 The Airdrop module is a module that manages information to incentivize early participants in Supernova.
+
+---
+
+## Scripts
+
+### Build
+If you want to build nova, use `make` scripts.
+
+### Build Proto
+If you want to build proto, use `make protogen-all` scripts.
+
+### For testing
+If you want to test nova, use `scripts/genesis_setup.sh` scripts.
+This will create 3 validators with test genesis file.
+
+---
+
+## Community
+
+Join our community!
+
+|         |                                                        |
+|---------|--------------------------------------------------------|
+| Discord | [Go to Discord](https://discord.com/invite/2gj8fScWqD) |
+| Twitter | [Go to Twitter](https://twitter.com/Supernovazone)     |
