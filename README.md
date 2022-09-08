@@ -68,9 +68,10 @@ This will create 3 validators with test genesis file.
 
 ## Community
 
-Join our community!
+Join our community, enjoy with Novatic!
 
 |         |                                                        |
 |---------|--------------------------------------------------------|
 | Discord | [Go to Discord](https://discord.com/invite/2gj8fScWqD) |
 | Twitter | [Go to Twitter](https://twitter.com/Supernovazone)     |
+
