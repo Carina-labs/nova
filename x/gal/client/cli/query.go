@@ -11,7 +11,7 @@ func queryParams() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "params",
 		Long: "Query for parameter",
-		Args: cobra.ExactArgs(4),
+		Args: cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
