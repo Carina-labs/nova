@@ -183,8 +183,7 @@ func (k Keeper) distributeLPIncentivePools(ctx sdk.Context, denom string) error 
 	lpIncentiveCoin := k.bankKeeper.GetBalance(ctx, moduleAddr, denom)
 
 	for _, pool := range pools {
-		poolWeight := sdk.NewDecFromInt(sdk.NewIntFromUint64(pool.Weight)).Quo(sdk.NewDecFromInt(sdk.NewIntFromUint64(totalWeight)))
-
+		poolWeight := sdk.NewIntFromUint64(pool.Weight).ToDec().Quo(sdk.NewIntFromUint64(totalWeight).ToDec())
 		incentive := sdk.NewDecFromInt(lpIncentiveCoin.Amount).Mul(poolWeight)
 		incentivesCoins := sdk.NewCoins(sdk.NewCoin(lpIncentiveCoin.Denom, incentive.TruncateInt()))
 		poolAddr, err := sdk.AccAddressFromBech32(pool.PoolContractAddress)
