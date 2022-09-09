@@ -255,7 +255,7 @@ func txDeleteZoneTxCmd() *cobra.Command {
 // txChangeZoneInfoTxCmd is a transaction that modifies the registered zone. This transaction can only be submitted by a given signatory.
 func txChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "change-zone [zone-id] [host-address] [controller-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
+		Use:  "change-zone [zone-id] [host-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
 		Args: cobra.ExactArgs(9),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
@@ -300,7 +300,6 @@ func txAuthzGrantTxCmd() *cobra.Command {
 		Use:  "ica-authz-grant [zone-id] [grantee-address] [authorization-type] --from [granter]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -419,7 +418,7 @@ func txAuthzGrantTxCmd() *cobra.Command {
 // txAuthzRevokeTxCmd is a transaction used to execute transferred permissions between accounts using ICA. This transaction can only be submitted by a given signatory.
 func txAuthzRevokeTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "ica-authz-revoke [zone-id] [grantee-address] [msg_type]  --from [controller-address]",
+		Use: "ica-authz-revoke [zone-id] [grantee-address] [msg_type]",
 
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {

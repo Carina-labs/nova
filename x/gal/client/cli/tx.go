@@ -228,23 +228,17 @@ func txPendingWithdrawCmd() *cobra.Command {
 }
 func txDelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "delegate [zone-id] [controller-address]",
+		Use:  "delegate [zone-id]",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
-
 			clientCtx, err := client.GetClientTxContext(cmd)
-
 			if err != nil {
 				return err
 			}
 
 			zoneId := args[0]
-			controllerAddr := clientCtx.GetFromAddress()
 
-			msg := types.NewMsgDelegate(zoneId, controllerAddr)
+			msg := types.NewMsgDelegate(zoneId, clientCtx.GetFromAddress())
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
