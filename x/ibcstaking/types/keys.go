@@ -20,6 +20,10 @@ const (
 	prefixConnectionInfo = iota + 1
 )
 
+const (
+	PrefixSnAsset = "sn"
+)
+
 var (
 	KeyPrefixZone           = []byte{prefixZone}
 	KeyPrefixConnectionInfo = []byte{prefixConnectionInfo}
