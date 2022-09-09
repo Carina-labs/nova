@@ -2,7 +2,7 @@ package keeper_test
 
 import (
 	novatesting "github.com/Carina-labs/nova/testing"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
@@ -88,18 +88,18 @@ func registerInterchainAccount(e *novatesting.Endpoint, owner string) error {
 }
 
 // newBaseRegisteredZone returns a new zone info for testing purpose only
-func newBaseRegisteredZone() *ibcstakingtypes.RegisteredZone {
+func newBaseRegisteredZone() *icacontroltypes.RegisteredZone {
 	icaControllerPort := zoneId + "." + baseOwnerAcc.String()
-	return &ibcstakingtypes.RegisteredZone{
+	return &icacontroltypes.RegisteredZone{
 		ZoneId: zoneId,
-		IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
+		IcaConnectionInfo: &icacontroltypes.IcaConnectionInfo{
 			ConnectionId: icaConnection,
 			PortId:       icaControllerPort,
 		},
-		IcaAccount: &ibcstakingtypes.IcaAccount{
+		IcaAccount: &icacontroltypes.IcaAccount{
 			ControllerAddress: baseOwnerAcc.String(),
 		},
-		TransferInfo: &ibcstakingtypes.TransferConnectionInfo{
+		TransferInfo: &icacontroltypes.TransferConnectionInfo{
 			PortId:    transferPort,
 			ChannelId: transferChannel,
 		},

@@ -3,7 +3,7 @@ package keepers
 import (
 	"github.com/Carina-labs/nova/x/airdrop"
 	"github.com/Carina-labs/nova/x/gal"
-	ibcstaking "github.com/Carina-labs/nova/x/icacontrol"
+	icacontrol "github.com/Carina-labs/nova/x/icacontrol"
 	"github.com/Carina-labs/nova/x/mint"
 	"github.com/Carina-labs/nova/x/oracle"
 	"github.com/Carina-labs/nova/x/poolincentive"
@@ -66,7 +66,7 @@ var AppModuleBasic = []module.AppModuleBasic{
 	wasm.AppModuleBasic{},
 	ica.AppModuleBasic{},
 	gal.AppModuleBasic{},
-	ibcstaking.AppModuleBasic{},
+	icacontrol.AppModuleBasic{},
 	authzmodule.AppModuleBasic{},
 	gal.AppModuleBasic{},
 	oracle.AppModuleBasic{},

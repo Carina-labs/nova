@@ -13,7 +13,7 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 	claimer2 := suite.GenRandomAddress()
 	claimer3 := suite.GenRandomAddress()
 
-	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
 	depositRecords := []*DepositRecord{
 		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(10000)), state: types.DelegateSuccess},
 		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(20000)), state: types.DelegateSuccess},
@@ -65,7 +65,7 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			zone, ok := suite.App.IbcstakingKeeper.GetRegisteredZone(suite.Ctx, zoneId)
+			zone, ok := suite.App.IcaControlKeeper.GetRegisteredZone(suite.Ctx, zoneId)
 			suite.Require().True(ok)
 
 			suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, zoneId, tc.oracleVersion)
@@ -169,7 +169,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 		amount  sdk.Coin
 	}
 
-	ibcDenom := suite.App.IbcstakingKeeper.GetIBCHashDenom(suite.Ctx, "transfer", "channel-0", "stake")
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, "transfer", "channel-0", "stake")
 	tcs := []struct {
 		name         string
 		stakedAmount sdk.Coin
@@ -240,7 +240,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 			baseTestZone.ZoneId = "stake-1"
 			baseTestZone.BaseDenom = "stake"
 			baseTestZone.SnDenom = "snstake"
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, baseTestZone)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, baseTestZone)
 
 			for _, item := range tc.depositInfo {
 				ibcAmount := sdk.NewInt64Coin(ibcDenom, item.amount.Amount.Int64())

@@ -3,7 +3,7 @@ package keeper
 import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -174,8 +174,8 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 }
 
 // GetAllAmountNotMintShareToken returns the sum of assets that have not yet been issued by the user among the assets that have been deposited.
-func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone) (sdk.Coin, error) {
-	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
+func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *icacontroltypes.RegisteredZone) (sdk.Coin, error) {
+	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 
 	res := sdk.NewInt64Coin(ibcDenom, 0)
 	k.IterateDepositRecord(ctx, func(_ int64, depositRecord types.DepositRecord) (stop bool) {

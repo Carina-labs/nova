@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	ibcstakingkeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	icacontrolkeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	bank "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -26,13 +26,13 @@ func (suite *KeeperTestSuite) setControllerAddr(address string) {
 	var addresses []string
 	addr1 := address
 	addresses = append(addresses, addr1)
-	params := ibcstakingtypes.Params{
+	params := icacontroltypes.Params{
 		DaoModifiers: addresses,
 	}
-	suite.chainA.App.IbcstakingKeeper.SetParams(suite.chainA.GetContext(), params)
+	suite.chainA.App.IcaControlKeeper.SetParams(suite.chainA.GetContext(), params)
 }
 
-func (suite *KeeperTestSuite) getGrantMsg(msg, zoneId, grantee string, controllerAddr sdk.AccAddress) ibcstakingtypes.MsgIcaAuthzGrant {
+func (suite *KeeperTestSuite) getGrantMsg(msg, zoneId, grantee string, controllerAddr sdk.AccAddress) icacontroltypes.MsgIcaAuthzGrant {
 	var authorization authz.Authorization
 	var allowed []sdk.ValAddress
 	var denied []sdk.ValAddress
@@ -65,7 +65,7 @@ func (suite *KeeperTestSuite) getGrantMsg(msg, zoneId, grantee string, controlle
 	}
 
 	time := time.Now().AddDate(2, 0, 0).UTC()
-	grantMsg, _ := ibcstakingtypes.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, time)
+	grantMsg, _ := icacontroltypes.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, time)
 
 	return *grantMsg
 }
@@ -78,7 +78,7 @@ func (suite *KeeperTestSuite) TestAuthzGrant() {
 
 	tcs := []struct {
 		name      string
-		grantMsg  ibcstakingtypes.MsgIcaAuthzGrant
+		grantMsg  icacontroltypes.MsgIcaAuthzGrant
 		shouldErr bool
 	}{
 		{
@@ -105,7 +105,7 @@ func (suite *KeeperTestSuite) TestAuthzGrant() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			msgServer := ibcstakingkeeper.NewMsgServerImpl(*suite.chainA.App.IbcstakingKeeper)
+			msgServer := icacontrolkeeper.NewMsgServerImpl(*suite.chainA.App.IcaControlKeeper)
 			_, err := msgServer.IcaAuthzGrant(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.grantMsg)
 			if tc.shouldErr {
 				suite.Require().Error(err)

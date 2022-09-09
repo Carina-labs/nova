@@ -120,7 +120,7 @@ func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state type
 // after un-delegate. This function is executed when ICA un-delegate call executed,
 // and calculate using the balance of user's share coin.
 func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
-	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
+	baseDenom := k.icaControlKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
 	totalSharedToken := k.bankKeeper.GetSupply(ctx, amt.Denom)
 
 	oracleInfo, err := k.oracleKeeper.GetChainState(ctx, baseDenom)
@@ -128,7 +128,7 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 		return sdk.Coin{}, err
 	}
 
-	zoneInfo := k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
+	zoneInfo := k.icaControlKeeper.GetZoneForDenom(ctx, baseDenom)
 
 	convOracleAmt := k.ConvertWAssetToSnAssetDecimal(oracleInfo.Coin.Amount.BigInt(), zoneInfo.Decimal, zoneInfo.BaseDenom)
 	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), convOracleAmt.Amount.BigInt())

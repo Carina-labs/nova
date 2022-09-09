@@ -132,7 +132,7 @@ func (suite *KeeperTestSuite) GetMsgs(msg string) *sdk.MsgData {
 }
 func (suite *KeeperTestSuite) TestHandleMsgData() {
 	zone := suite.setZone(1)
-	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &zone[0])
+	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &zone[0])
 
 	var msgs []sdk.Msg
 	undelegateMsg := &stakingtypes.MsgUndelegate{
@@ -211,7 +211,7 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			res, err := suite.App.IbcstakingKeeper.HandleAckMsgData(suite.Ctx, tc.packet, tc.args)
+			res, err := suite.App.IcaControlKeeper.HandleAckMsgData(suite.Ctx, tc.packet, tc.args)
 			suite.NoError(err)
 
 			if tc.err == nil {
@@ -225,7 +225,7 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 
 func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 	zone := suite.setZone(1)
-	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &zone[0])
+	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &zone[0])
 
 	packetData := channeltypes.Packet{
 		Sequence:           1,
@@ -287,7 +287,7 @@ func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			packetData.Data = tc.args.GetBytes()
-			err := suite.App.IbcstakingKeeper.HandleTimeoutPacket(suite.Ctx, packetData)
+			err := suite.App.IcaControlKeeper.HandleTimeoutPacket(suite.Ctx, packetData)
 			if tc.err {
 				suite.Require().Error(err)
 			} else {

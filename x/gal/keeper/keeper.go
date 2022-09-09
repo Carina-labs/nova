@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
-	ibcstakingKeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
+	icacontrolkeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -18,7 +18,7 @@ type Keeper struct {
 	paramSpace paramtypes.Subspace
 
 	bankKeeper        types.BankKeeper
-	ibcstakingKeeper  ibcstakingKeeper.Keeper
+	icaControlKeeper  icacontrolkeeper.Keeper
 	ibcTransferKeeper transfer.Keeper
 	oracleKeeper      oraclekeeper.Keeper
 	airdropKeeper     types.AirdropKeeper
@@ -28,7 +28,7 @@ func NewKeeper(cdc codec.BinaryCodec,
 	key sdk.StoreKey,
 	paramSpace paramtypes.Subspace,
 	bankKeeper types.BankKeeper,
-	ibcstakingKeeper ibcstakingKeeper.Keeper,
+	icaControlKeeper icacontrolkeeper.Keeper,
 	ibcTransferKeeper transfer.Keeper,
 	oracleKeeper oraclekeeper.Keeper,
 	airdropKeeper types.AirdropKeeper) Keeper {
@@ -42,7 +42,7 @@ func NewKeeper(cdc codec.BinaryCodec,
 		storeKey:          key,
 		bankKeeper:        bankKeeper,
 		paramSpace:        paramSpace,
-		ibcstakingKeeper:  ibcstakingKeeper,
+		icaControlKeeper:  icaControlKeeper,
 		ibcTransferKeeper: ibcTransferKeeper,
 		oracleKeeper:      oracleKeeper,
 	}
