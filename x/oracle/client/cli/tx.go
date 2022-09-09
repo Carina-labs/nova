@@ -27,15 +27,11 @@ func GetTxCmd() *cobra.Command {
 
 func NewUpdateStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update_state [from_key_or_address] [amount] [block_height] [app_hash] [chain_id]",
+		Use:   "update_state [amount] [block_height] [app_hash] [chain_id]",
 		Short: "",
 		Long:  "",
 		Args:  cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[0]); err != nil {
-				return err
-			}
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
