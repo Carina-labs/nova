@@ -45,7 +45,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		},
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
-		SnDenom:          appendSnPrefix(zone.BaseDenom),
+		SnDenom:          appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
 	}
 
 	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
@@ -107,7 +107,7 @@ func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.M
 		},
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
-		SnDenom:          appendSnPrefix(zone.BaseDenom),
+		SnDenom:          appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
 	}
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)

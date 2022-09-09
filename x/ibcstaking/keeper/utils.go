@@ -1,5 +1,5 @@
 package keeper
 
-func appendSnPrefix(baseDenom string) string {
-	return "sn" + baseDenom
+func appendSnPrefix(prefix string, baseDenom string) string {
+	return prefix + baseDenom
 }
