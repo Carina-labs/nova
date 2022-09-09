@@ -280,7 +280,3 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 
 	return &types.MsgIcaAuthzRevokeResponse{}, nil
 }
-
-func appendSnPrefix(baseDenom string) string {
-	return "sn" + baseDenom
-}
