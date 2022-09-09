@@ -211,7 +211,7 @@ func (suite *KeeperTestSuite) TestGetUndelegateAmount() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			zone, ok := suite.App.IbcstakingKeeper.GetRegisteredZone(suite.Ctx, tc.zoneId)
+			zone, ok := suite.App.IcaControlKeeper.GetRegisteredZone(suite.Ctx, tc.zoneId)
 			suite.Require().True(ok)
 			chainInfo := oracletypes.ChainInfo{
 				ChainId:         tc.zoneId,

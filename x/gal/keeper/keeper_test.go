@@ -55,8 +55,8 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.coordinator.SetupConnections(suite.icaPath)
 	suite.icaOwnerAddr = baseOwnerAcc
 
-	suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, newBaseRegisteredZone())
-	suite.chainA.GetApp().IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
+	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, newBaseRegisteredZone())
+	suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
 
 	err := setupIcaPath(suite.icaPath, zoneId+"."+suite.icaOwnerAddr.String())
 	suite.Require().NoError(err)

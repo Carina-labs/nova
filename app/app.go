@@ -15,7 +15,7 @@ import (
 	"github.com/Carina-labs/nova/app/keepers"
 	_ "github.com/Carina-labs/nova/client/docs/statik"
 	gal "github.com/Carina-labs/nova/x/gal"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/Carina-labs/nova/x/mint"
 	minttypes "github.com/Carina-labs/nova/x/mint/types"
 	"github.com/Carina-labs/nova/x/oracle"
@@ -112,7 +112,7 @@ var (
 		govtypes.ModuleName:                {authtypes.Burner},
 		ibctransfertypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
 		wasm.ModuleName:                    {authtypes.Burner},
-		ibcstakingtypes.ModuleName:         {authtypes.Minter, authtypes.Burner},
+		icacontroltypes.ModuleName:         {authtypes.Minter, authtypes.Burner},
 		gal.ModuleName:                     {authtypes.Minter, authtypes.Burner},
 		airdrop.ModuleName:                 {authtypes.Minter, authtypes.Burner},
 	}

@@ -31,9 +31,9 @@ func (suite *KeeperTestSuite) TestRegisterZoneInfo() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, tc.args)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.args)
 
-			_, ok := suite.App.IbcstakingKeeper.GetRegisteredZone(suite.Ctx, tc.args.ZoneId)
+			_, ok := suite.App.IcaControlKeeper.GetRegisteredZone(suite.Ctx, tc.args.ZoneId)
 
 			suite.Require().Equal(ok, tc.expect)
 		})
@@ -71,9 +71,9 @@ func (suite *KeeperTestSuite) TestGetRegisterZoneInfo() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, tc.zone)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.zone)
 
-			res, ok := suite.App.IbcstakingKeeper.GetRegisteredZone(suite.Ctx, tc.zoneId)
+			res, ok := suite.App.IcaControlKeeper.GetRegisteredZone(suite.Ctx, tc.zoneId)
 
 			suite.Require().Equal(ok, tc.result)
 
@@ -120,10 +120,10 @@ func (suite *KeeperTestSuite) TestDeleteRegisteredZone() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &tc.zone)
-			suite.App.IbcstakingKeeper.DeleteRegisteredZone(suite.Ctx, tc.zoneId)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &tc.zone)
+			suite.App.IcaControlKeeper.DeleteRegisteredZone(suite.Ctx, tc.zoneId)
 
-			_, ok := suite.App.IbcstakingKeeper.GetRegisteredZone(suite.Ctx, tc.zoneId)
+			_, ok := suite.App.IcaControlKeeper.GetRegisteredZone(suite.Ctx, tc.zoneId)
 
 			suite.Require().Equal(ok, tc.result)
 		})
@@ -154,9 +154,9 @@ func (suite *KeeperTestSuite) TestGetZoneForDenom() {
 	}
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, tc.zone)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.zone)
 
-			res := suite.App.IbcstakingKeeper.GetZoneForDenom(suite.Ctx, tc.denom)
+			res := suite.App.IcaControlKeeper.GetZoneForDenom(suite.Ctx, tc.denom)
 
 			suite.Require().Equal(res, tc.result)
 		})
@@ -187,9 +187,9 @@ func (suite *KeeperTestSuite) GetRegisteredZoneForPortId() {
 	}
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, tc.zone)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.zone)
 
-			res := suite.App.IbcstakingKeeper.GetZoneForDenom(suite.Ctx, tc.portId)
+			res := suite.App.IcaControlKeeper.GetZoneForDenom(suite.Ctx, tc.portId)
 
 			suite.Require().Equal(res, tc.result)
 		})
@@ -220,8 +220,8 @@ func (suite *KeeperTestSuite) TestGetsnDenomForBaseDenom() {
 	}
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, tc.zone)
-			res := suite.App.IbcstakingKeeper.GetsnDenomForBaseDenom(suite.Ctx, tc.baseDenom)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.zone)
+			res := suite.App.IcaControlKeeper.GetsnDenomForBaseDenom(suite.Ctx, tc.baseDenom)
 			suite.Require().Equal(res, tc.result)
 		})
 	}
@@ -245,9 +245,9 @@ func (suite *KeeperTestSuite) TestGetBaseDenomForSnDenom() {
 	}
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, tc.zone)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.zone)
 
-			res := suite.App.IbcstakingKeeper.GetBaseDenomForSnDenom(suite.Ctx, tc.snDenom)
+			res := suite.App.IcaControlKeeper.GetBaseDenomForSnDenom(suite.Ctx, tc.snDenom)
 
 			suite.Require().Equal(res, tc.result)
 		})
@@ -290,8 +290,8 @@ func (suite *KeeperTestSuite) TestGetIBCDenomForBaseDenom() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &tc.zoneInfo)
-			res := suite.App.IbcstakingKeeper.GetIBCHashDenom(suite.Ctx, tc.portId, tc.chanId, tc.zoneInfo.BaseDenom)
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &tc.zoneInfo)
+			res := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, tc.portId, tc.chanId, tc.zoneInfo.BaseDenom)
 
 			suite.Require().Equal(res, tc.expect)
 		})

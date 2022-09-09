@@ -1,6 +1,6 @@
 # Keeper
 
-This document describes the keeper interface of the `ibcstaking` module.
+This document describes the keeper interface of the `icacontrol` module.
 
 ---
 

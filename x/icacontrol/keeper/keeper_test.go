@@ -147,8 +147,8 @@ func (suite *KeeperTestSuite) SetupTest() {
 	zones := suite.setZone(1)
 
 	for _, zone := range zones {
-		suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &zone)
-		suite.chainA.GetApp().IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), &zone)
+		suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &zone)
+		suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &zone)
 		err := suite.SetupICAPath(suite.icaPath, zone.ZoneId+"."+zone.IcaAccount.ControllerAddress)
 		suite.Require().NoError(err)
 	}
@@ -157,7 +157,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []ibcstakingtypes.RegisteredZone) {
 	for _, msg := range zoneMsgs {
-		suite.App.IbcstakingKeeper.RegisterZone(suite.Ctx, &msg)
+		suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &msg)
 	}
 }
 
@@ -175,7 +175,7 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 		DaoModifiers: addresses,
 	}
 
-	suite.App.IbcstakingKeeper.SetParams(suite.Ctx, params)
+	suite.App.IcaControlKeeper.SetParams(suite.Ctx, params)
 
 	tcs := []struct {
 		name   string
@@ -211,7 +211,7 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			ok := suite.App.IbcstakingKeeper.IsValidDaoModifier(suite.Ctx, tc.addr)
+			ok := suite.App.IcaControlKeeper.IsValidDaoModifier(suite.Ctx, tc.addr)
 
 			suite.Require().Equal(ok, tc.expect)
 		})

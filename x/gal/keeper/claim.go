@@ -3,7 +3,7 @@ package keeper
 import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	icacontrolkeeper "github.com/Carina-labs/nova/x/icacontrol/types"
 	"math/big"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -41,13 +41,13 @@ func calcPrecisionMultiplier(prec int64) *big.Int {
 
 // ClaimShareToken is used when user want to claim their share token.
 // It calculates user's share and the amount of claimable share token.
-func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone, asset sdk.Coin) (sdk.Coin, error) {
+func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.RegisteredZone, asset sdk.Coin) (sdk.Coin, error) {
 	snDenom, err := k.GetSnDenomForIBCDenom(ctx, asset.Denom)
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
-	baseDenom := k.ibcstakingKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
+	baseDenom := k.icaControlKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
 	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId)
 
@@ -75,8 +75,8 @@ func (k Keeper) MintTo(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coi
 }
 
 // TotalClaimableAssets returns the total amount of claimable snAsset.
-func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, claimer sdk.AccAddress) (*sdk.Coin, error) {
-	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
+func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone icacontrolkeeper.RegisteredZone, claimer sdk.AccAddress) (*sdk.Coin, error) {
+	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 	result := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
@@ -131,14 +131,14 @@ func (k Keeper) GetSnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string,
 
 	denomTrace := transfertypes.ParseDenomTrace(denom)
 
-	snDenom := k.ibcstakingKeeper.GetsnDenomForBaseDenom(ctx, denomTrace.BaseDenom)
+	snDenom := k.icaControlKeeper.GetsnDenomForBaseDenom(ctx, denomTrace.BaseDenom)
 
 	return snDenom, nil
 }
 
 // GetTotalStakedForLazyMinting returns the sum of coins delegated to the Host chain, which have not been issued snAsset.
 func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPortId, transferChanId string) (sdk.Coin, error) {
-	zone := k.ibcstakingKeeper.GetZoneForDenom(ctx, denom)
+	zone := k.icaControlKeeper.GetZoneForDenom(ctx, denom)
 	if zone == nil {
 		return sdk.Coin{}, fmt.Errorf("cannot find zone denom : %s", denom)
 	}
@@ -153,7 +153,7 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPor
 		return sdk.Coin{}, err
 	}
 
-	ibcDenom := k.ibcstakingKeeper.GetIBCHashDenom(ctx, transferPortId, transferChanId, denom)
+	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(ctx, transferPortId, transferChanId, denom)
 	chainBalanceWithIbcDenom := sdk.NewCoin(ibcDenom, chainInfo.Coin.Amount)
 	if chainBalanceWithIbcDenom.Sub(unMintedAmount).IsZero() {
 		return unMintedAmount, nil

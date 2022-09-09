@@ -3,7 +3,7 @@
 ---
 
 ## Overview
-This document describes the states used by the `ibcstaking` module.
+This document describes the states used by the `icacontrol` module.
 
 ---
 

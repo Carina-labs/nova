@@ -32,7 +32,7 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*types.MsgDepositResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, deposit.ZoneId)
 	if !ok {
 		return nil, fmt.Errorf("can't find valid IBC zone, input zoneId: %s", deposit.ZoneId)
 	}
@@ -48,7 +48,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	// check IBC denom
-	if deposit.Amount.Denom != m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom) {
+	if deposit.Amount.Denom != m.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom) {
 		return nil, types.ErrInvalidDenom
 	}
 
@@ -98,11 +98,11 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) (*types.MsgDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, delegate.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, delegate.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
 	}
 
-	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, delegate.ZoneId)
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, delegate.ZoneId)
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
@@ -111,14 +111,14 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 		return nil, types.ErrCanNotChangeState
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, types.DelegateRequest)
 	delegateAmt.Denom = zoneInfo.BaseDenom
 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: delegateAmt})
 
-	err := m.keeper.ibcstakingKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, types.ErrDelegateFail
 	}
@@ -143,7 +143,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// change undelegate State
-	zoneInfo, found := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
+	zoneInfo, found := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
 	if !found {
 		return nil, types.ErrNotFoundZoneInfo
 	}
@@ -210,11 +210,11 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
-	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
 		return nil, errors.New("zone is not found")
 	}
@@ -236,7 +236,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
 		ValidatorAddress: zoneInfo.ValidatorAddress,
 		Amount:           undelegateAmt})
-	err := m.keeper.ibcstakingKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
@@ -264,12 +264,12 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
 	if !ok {
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 
 	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.ControllerAddress)
 	if err != nil {
@@ -312,11 +312,11 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.ibcstakingKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
-	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, msg.ZoneId)
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
@@ -343,7 +343,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
 	})
 
-	err := m.keeper.ibcstakingKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, errors.New("PendingWithdraw transaction failed to send")
 	}
@@ -373,12 +373,12 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		return nil, types.ErrNoDepositRecord
 	}
 
-	zoneInfo, ok := m.keeper.ibcstakingKeeper.GetRegisteredZone(ctx, records.ZoneId)
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, records.ZoneId)
 	if !ok {
 		return nil, fmt.Errorf("cannot find zone id : %s", records.ZoneId)
 	}
 
-	ibcDenom := m.keeper.ibcstakingKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	totalClaimAsset := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
 		Denom:  ibcDenom,

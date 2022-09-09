@@ -24,7 +24,7 @@ func (k Keeper) Hooks() Hooks {
 // It will be used in share token minting process.
 func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, baseDenom string) {
 
-	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, baseDenom)
+	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, baseDenom)
 	// if zoneInfo == nil, it may be a test situation.
 	if zoneInfo == nil {
 		h.k.Logger(ctx).Error("Zone id is not found", "Denom", data.Denom, "hook", "AfterTransferEnd")
@@ -41,7 +41,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 // delegateAddr(controllerAddr), validatorAddr, delegateAmt
 func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	// getZoneInfoForValidatorAddr
-	zoneInfo := h.k.ibcstakingKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
+	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
 
 	oracleVersion := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
 
@@ -59,7 +59,7 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	asset := transferMsg.Token
 
-	zoneInfo := h.k.ibcstakingKeeper.GetZoneForDenom(ctx, asset.Denom)
+	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, asset.Denom)
 	if transferMsg.Receiver != zoneInfo.IcaAccount.ControllerAddress {
 		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zoneInfo.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
 		return
@@ -87,7 +87,7 @@ func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
 // 2. It saves undelegation finish time to store.
 func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate, msg *stakingtypes.MsgUndelegateResponse) {
 	// get zone info from the validator address
-	zoneInfo := h.k.ibcstakingKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
+	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
 	if zoneInfo == nil {
 		h.k.Logger(ctx).Error("Zone id is not found", "validatorAddress", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
 		return
