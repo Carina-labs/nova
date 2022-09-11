@@ -219,15 +219,13 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("zone is not found")
 	}
 
-	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestIca)
-
 	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
-
 	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo, oracleVersion)
-
 	if burnAssets.IsZero() || undelegateAssets.IsZero() {
 		return nil, errors.New("no coins to undelegate")
 	}
+
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestIca)
 
 	undelegateAmt := sdk.NewCoin(zoneInfo.BaseDenom, undelegateAssets)
 
@@ -335,7 +333,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		SourceChannel: msg.IcaTransferChannelId,
 		Token:         withdrawAmount,
 		Sender:        zoneInfo.IcaAccount.HostAddress,
-		Receiver:      msg.ControllerAddress,
+		Receiver:      zoneInfo.IcaAccount.ControllerAddress,
 		TimeoutHeight: ibcclienttypes.Height{
 			RevisionHeight: 0,
 			RevisionNumber: 0,

@@ -172,7 +172,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 
 	// register the staking hooks
 	// NOTE: stakingKeeper above is passed by reference, so that it will contain these hooks
-
 	appKeepers.StakingKeeper = stakingKeeper.SetHooks(
 		stakingtypes.NewMultiStakingHooks(appKeepers.DistrKeeper.Hooks(), appKeepers.SlashingKeeper.Hooks()),
 	)

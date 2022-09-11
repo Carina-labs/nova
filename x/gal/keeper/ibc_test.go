@@ -3,10 +3,10 @@ package keeper_test
 import (
 	novatesting "github.com/Carina-labs/nova/testing"
 	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
-	"github.com/tendermint/tendermint/crypto/ed25519"
 )
 
 var (
@@ -15,9 +15,9 @@ var (
 	icaConnection   = "connection-1"
 
 	zoneId       = "baseZone"
-	baseOwnerAcc = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
-	baseDenom    = "base"
-	baseSnDenom  = "snbase"
+	baseOwnerAcc = sdk.AccAddress(secp256k1.GenPrivKey().PubKey().Address())
+	baseDenom    = "stake"
+	baseSnDenom  = "snstake"
 )
 
 func NewIbcTransferPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
@@ -103,9 +103,8 @@ func newBaseRegisteredZone() *icacontroltypes.RegisteredZone {
 			PortId:    transferPort,
 			ChannelId: transferChannel,
 		},
-		ValidatorAddress: "",
-		BaseDenom:        baseDenom,
-		SnDenom:          baseSnDenom,
-		Decimal:          0,
+		BaseDenom: baseDenom,
+		SnDenom:   baseSnDenom,
+		Decimal:   0,
 	}
 }

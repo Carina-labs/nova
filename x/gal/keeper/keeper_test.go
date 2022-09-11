@@ -50,7 +50,6 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 	suite.transferPath = NewIbcTransferPath(suite.chainA, suite.chainB)
 	suite.coordinator.Setup(suite.transferPath)
-
 	suite.icaPath = newIcaPath(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
 	suite.icaOwnerAddr = baseOwnerAcc
