@@ -4,7 +4,7 @@ import (
 	"github.com/Carina-labs/nova/app"
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"
-	ibcstakingtypes "github.com/Carina-labs/nova/x/ibcstaking/types"
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	minttypes "github.com/Carina-labs/nova/x/mint/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -41,8 +41,8 @@ func (suite *KeeperTestSuite) InitICA() {
 		},
 	})
 	suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), zoneId, 1)
-	suite.chainA.GetApp().IbcstakingKeeper.InitGenesis(suite.chainA.GetContext(), &ibcstakingtypes.GenesisState{
-		Params: ibcstakingtypes.Params{
+	suite.chainA.GetApp().IbcstakingKeeper.InitGenesis(suite.chainA.GetContext(), &icacontroltypes.GenesisState{
+		Params: icacontroltypes.Params{
 			DaoModifiers: []string{
 				baseOwnerAcc.String(),
 			},
