@@ -43,8 +43,7 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	// getZoneInfoForValidatorAddr
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
 
-	oracleVersion := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.BaseDenom)
-
+	oracleVersion := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	// get delegateVersion
 	delegateVersion := h.k.GetDelegateVersion(ctx, zoneInfo.ZoneId)
 	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, delegateVersion+1)

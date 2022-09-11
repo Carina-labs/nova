@@ -134,7 +134,6 @@ func (im IBCModule) OnAcknowledgementPacket(
 	if err := channeltypes.SubModuleCdc.UnmarshalJSON(acknowledgement, &ack); err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "cannot unmarshal ICS-27 packet acknowledgement: %v", err)
 	}
-
 	txMsgData := &sdk.TxMsgData{}
 	if err := proto.Unmarshal(ack.GetResult(), txMsgData); err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "cannot unmarshal ICS-27 tx message data: %v", err)
@@ -142,7 +141,6 @@ func (im IBCModule) OnAcknowledgementPacket(
 
 	switch len(txMsgData.Data) {
 	case 0:
-		// TODO: handle for sdk 0.46.x
 		return nil
 	default:
 		for _, msgData := range txMsgData.Data {
