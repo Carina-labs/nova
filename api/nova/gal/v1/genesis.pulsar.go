@@ -7318,7 +7318,7 @@ func (x *GenesisState) GetRecordInfo() []*RecordInfo {
 	return nil
 }
 
-// DepositAccount defines total share of sn-asset and deposit information.
+// DepositAccount defines snToken's total share and deposit information.
 type DepositAccount struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

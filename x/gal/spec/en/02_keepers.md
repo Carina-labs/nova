@@ -64,7 +64,7 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 
 ### GetAllAmountNotMintShareToken
 ```go
-func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone) (sdk.Coin, error) {}
+func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *icacontroltypes.RegisteredZone) (sdk.Coin, error) {}
 ```
 `GetAllAmountNotMintShareToken` returns the sum of assets that have not yet been issued by the user among the assets that have been deposited.
 
@@ -104,7 +104,7 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.
 
 ### GetUndelegateAmount
 ```go
-func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone ibcstakingtypes.RegisteredZone, version uint64, state types.UndelegatedStatusType) (sdk.Coin, sdk.Int) {}
+func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone icacontroltypes.RegisteredZone, version uint64, state types.UndelegatedStatusType) (sdk.Coin, sdk.Int) {}
 ```
 `GetUndelegateAmount` gets the information that corresponds to the zone during the de-delegation history.
 

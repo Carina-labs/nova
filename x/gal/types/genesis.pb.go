@@ -100,7 +100,7 @@ func (m *GenesisState) GetRecordInfo() []*RecordInfo {
 	return nil
 }
 
-// DepositAccount defines total share of snAsset and deposit information.
+// DepositAccount defines snToken's total share and deposit information.
 type DepositAccount struct {
 	Denom           string         `protobuf:"bytes,1,opt,name=denom,proto3" json:"denom,omitempty"`
 	DepositInfos    []*DepositInfo `protobuf:"bytes,2,rep,name=deposit_infos,json=depositInfos,proto3" json:"deposit_infos,omitempty"`

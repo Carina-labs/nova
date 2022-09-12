@@ -6,7 +6,7 @@
 
 ---
 
-`ibcstaking` module manages information about the Supernova protocol and the chain that connects to the IBC, 
+`icacontrol` module manages information about the Supernova protocol and the chain that connects to the IBC, 
 and generates IBC and ICA messages.
 
 ## Content

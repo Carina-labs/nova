@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 )
 
 // GetUndelegateVersionStore returns the store that stores the UndelegateVersion data.
@@ -75,21 +75,21 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.
 }
 
 // GetUndelegateAmount gets the information that corresponds to the zone during the de-delegation history.
-func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone ibcstakingtypes.RegisteredZone, version uint64) (sdk.Coin, sdk.Int) {
+func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone icacontroltypes.RegisteredZone, version uint64) (sdk.Coin, sdk.Int) {
 	snAsset := sdk.NewCoin(snDenom, sdk.NewInt(0))
 	wAsset := sdk.NewInt(0)
 
 	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		if undelegateRecord.ZoneId == zone.ZoneId {
 			for _, record := range undelegateRecord.Records {
-				if record.OracleVersion < version && record.State == types.UndelegateRequestUser {
+				if record.OracleVersion < version && record.State == types.UndelegateRequestByUser {
 					withdrawAsset, err := k.GetWithdrawAmt(ctx, *record.SnAssetAmount)
 					if err != nil {
 						return false
 					}
 					record.WithdrawAmount = withdrawAsset.Amount
 
-					record.State = types.UndelegateRequestIca
+					record.State = types.UndelegateRequestByIca
 					wAsset = wAsset.Add(record.WithdrawAmount)
 					snAsset = snAsset.Add(*record.SnAssetAmount)
 				}

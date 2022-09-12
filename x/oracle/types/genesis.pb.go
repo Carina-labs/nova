@@ -78,6 +78,8 @@ func (m *GenesisState) GetStates() []ChainInfo {
 	return nil
 }
 
+// ChainInfo refers to the state of the counterpart chain to be stored on the Oracle module.
+// Status includes the amount of coins delegated to Zone, AppHash, and block height.
 type ChainInfo struct {
 	// coin refers to the sum of owned, staked and claimable quantity of the coin
 	Coin types.Coin `protobuf:"bytes,1,opt,name=coin,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"coin" yaml:"coin"`

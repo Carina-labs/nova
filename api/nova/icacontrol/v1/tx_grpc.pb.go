@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: nova/icacontrol/v1/tx.proto
 
-package ibcstakingv1
+package icacontrolv1
 
 import (
 	context "context"
@@ -36,7 +36,7 @@ type MsgClient interface {
 	IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opts ...grpc.CallOption) (*MsgIcaAuthzGrantResponse, error)
 	IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, opts ...grpc.CallOption) (*MsgIcaAuthzRevokeResponse, error)
 	DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error)
-	ChangeRegisteredZoneInfo(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error)
+	ChangeRegisteredZone(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error)
 }
 
 type msgClient struct {
@@ -49,7 +49,7 @@ func NewMsgClient(cc grpc.ClientConnInterface) MsgClient {
 
 func (c *msgClient) RegisterZone(ctx context.Context, in *MsgRegisterZone, opts ...grpc.CallOption) (*MsgRegisterZoneResponse, error) {
 	out := new(MsgRegisterZoneResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/RegisterZone", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/RegisterZone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (c *msgClient) RegisterZone(ctx context.Context, in *MsgRegisterZone, opts 
 
 func (c *msgClient) IcaDelegate(ctx context.Context, in *MsgIcaDelegate, opts ...grpc.CallOption) (*MsgIcaDelegateResponse, error) {
 	out := new(MsgIcaDelegateResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaDelegate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaDelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func (c *msgClient) IcaDelegate(ctx context.Context, in *MsgIcaDelegate, opts ..
 
 func (c *msgClient) IcaUndelegate(ctx context.Context, in *MsgIcaUndelegate, opts ...grpc.CallOption) (*MsgIcaUndelegateResponse, error) {
 	out := new(MsgIcaUndelegateResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaUndelegate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaUndelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (c *msgClient) IcaUndelegate(ctx context.Context, in *MsgIcaUndelegate, opt
 
 func (c *msgClient) IcaTransfer(ctx context.Context, in *MsgIcaTransfer, opts ...grpc.CallOption) (*MsgIcaTransferResponse, error) {
 	out := new(MsgIcaTransferResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaTransfer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaTransfer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func (c *msgClient) IcaTransfer(ctx context.Context, in *MsgIcaTransfer, opts ..
 
 func (c *msgClient) IcaAutoStaking(ctx context.Context, in *MsgIcaAutoStaking, opts ...grpc.CallOption) (*MsgIcaAutoStakingResponse, error) {
 	out := new(MsgIcaAutoStakingResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAutoStaking", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaAutoStaking", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (c *msgClient) IcaAutoStaking(ctx context.Context, in *MsgIcaAutoStaking, o
 
 func (c *msgClient) IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opts ...grpc.CallOption) (*MsgIcaAuthzGrantResponse, error) {
 	out := new(MsgIcaAuthzGrantResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAuthzGrant", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaAuthzGrant", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (c *msgClient) IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opt
 
 func (c *msgClient) IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, opts ...grpc.CallOption) (*MsgIcaAuthzRevokeResponse, error) {
 	out := new(MsgIcaAuthzRevokeResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAuthzRevoke", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaAuthzRevoke", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,16 +112,16 @@ func (c *msgClient) IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, o
 
 func (c *msgClient) DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error) {
 	out := new(MsgDeleteRegisteredZoneResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/DeleteRegisteredZone", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/DeleteRegisteredZone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *msgClient) ChangeRegisteredZoneInfo(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error) {
+func (c *msgClient) ChangeRegisteredZone(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error) {
 	out := new(MsgChangeRegisteredZoneResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/ChangeRegisteredZoneInfo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/ChangeRegisteredZone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ type MsgServer interface {
 	IcaAuthzGrant(context.Context, *MsgIcaAuthzGrant) (*MsgIcaAuthzGrantResponse, error)
 	IcaAuthzRevoke(context.Context, *MsgIcaAuthzRevoke) (*MsgIcaAuthzRevokeResponse, error)
 	DeleteRegisteredZone(context.Context, *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error)
-	ChangeRegisteredZoneInfo(context.Context, *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error)
+	ChangeRegisteredZone(context.Context, *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -178,8 +178,8 @@ func (UnimplementedMsgServer) IcaAuthzRevoke(context.Context, *MsgIcaAuthzRevoke
 func (UnimplementedMsgServer) DeleteRegisteredZone(context.Context, *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRegisteredZone not implemented")
 }
-func (UnimplementedMsgServer) ChangeRegisteredZoneInfo(context.Context, *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangeRegisteredZoneInfo not implemented")
+func (UnimplementedMsgServer) ChangeRegisteredZone(context.Context, *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeRegisteredZone not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -204,7 +204,7 @@ func _Msg_RegisterZone_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/RegisterZone",
+		FullMethod: "/nova.icacontrol.v1.Msg/RegisterZone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).RegisterZone(ctx, req.(*MsgRegisterZone))
@@ -222,7 +222,7 @@ func _Msg_IcaDelegate_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaDelegate",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaDelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaDelegate(ctx, req.(*MsgIcaDelegate))
@@ -240,7 +240,7 @@ func _Msg_IcaUndelegate_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaUndelegate",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaUndelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaUndelegate(ctx, req.(*MsgIcaUndelegate))
@@ -258,7 +258,7 @@ func _Msg_IcaTransfer_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaTransfer",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaTransfer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaTransfer(ctx, req.(*MsgIcaTransfer))
@@ -276,7 +276,7 @@ func _Msg_IcaAutoStaking_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaAutoStaking",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaAutoStaking",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaAutoStaking(ctx, req.(*MsgIcaAutoStaking))
@@ -294,7 +294,7 @@ func _Msg_IcaAuthzGrant_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaAuthzGrant",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaAuthzGrant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaAuthzGrant(ctx, req.(*MsgIcaAuthzGrant))
@@ -312,7 +312,7 @@ func _Msg_IcaAuthzRevoke_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaAuthzRevoke",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaAuthzRevoke",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaAuthzRevoke(ctx, req.(*MsgIcaAuthzRevoke))
@@ -330,7 +330,7 @@ func _Msg_DeleteRegisteredZone_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/DeleteRegisteredZone",
+		FullMethod: "/nova.icacontrol.v1.Msg/DeleteRegisteredZone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).DeleteRegisteredZone(ctx, req.(*MsgDeleteRegisteredZone))
@@ -338,20 +338,20 @@ func _Msg_DeleteRegisteredZone_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_ChangeRegisteredZoneInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Msg_ChangeRegisteredZone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MsgChangeRegisteredZone)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).ChangeRegisteredZoneInfo(ctx, in)
+		return srv.(MsgServer).ChangeRegisteredZone(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/ChangeRegisteredZoneInfo",
+		FullMethod: "/nova.icacontrol.v1.Msg/ChangeRegisteredZone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).ChangeRegisteredZoneInfo(ctx, req.(*MsgChangeRegisteredZone))
+		return srv.(MsgServer).ChangeRegisteredZone(ctx, req.(*MsgChangeRegisteredZone))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -360,7 +360,7 @@ func _Msg_ChangeRegisteredZoneInfo_Handler(srv interface{}, ctx context.Context,
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Msg_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "nova.ibcstaking.v1.Msg",
+	ServiceName: "nova.icacontrol.v1.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -396,8 +396,8 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_DeleteRegisteredZone_Handler,
 		},
 		{
-			MethodName: "ChangeRegisteredZoneInfo",
-			Handler:    _Msg_ChangeRegisteredZoneInfo_Handler,
+			MethodName: "ChangeRegisteredZone",
+			Handler:    _Msg_ChangeRegisteredZone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

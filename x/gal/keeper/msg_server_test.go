@@ -17,9 +17,6 @@ import (
 	icahosttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
-	//"github.com/tendermint/tendermint/types/time"
-
-	//"github.com/tendermint/tendermint/types/time"
 	"time"
 )
 
@@ -41,9 +38,9 @@ func (suite *KeeperTestSuite) InitICA() {
 		},
 	})
 	suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), zoneId, 1)
-	suite.chainA.GetApp().IbcstakingKeeper.InitGenesis(suite.chainA.GetContext(), &icacontroltypes.GenesisState{
+	suite.chainA.GetApp().IcaControlKeeper.InitGenesis(suite.chainA.GetContext(), &icacontroltypes.GenesisState{
 		Params: icacontroltypes.Params{
-			DaoModifiers: []string{
+			ControllerAddress: []string{
 				baseOwnerAcc.String(),
 			},
 		},
@@ -110,7 +107,7 @@ func (suite *KeeperTestSuite) icaRelay(ctx sdk.Context) {
 }
 
 func (suite *KeeperTestSuite) setHostAddr(zoneId string) sdk.AccAddress {
-	zone, ok := suite.chainA.GetApp().IbcstakingKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
+	zone, ok := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
 	suite.Require().True(ok)
 
 	hostAddrStr, ok := suite.chainB.GetApp().ICAHostKeeper.GetInterchainAccountAddress(suite.chainB.GetContext(), suite.icaPath.EndpointA.ConnectionID, suite.icaPath.EndpointA.ChannelConfig.PortID)
@@ -120,7 +117,7 @@ func (suite *KeeperTestSuite) setHostAddr(zoneId string) sdk.AccAddress {
 	suite.Require().NoError(err)
 
 	zone.IcaAccount.HostAddress = hostAddrStr
-	suite.chainA.GetApp().IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), &zone)
+	suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &zone)
 
 	return hostAddr
 }
@@ -136,19 +133,19 @@ func (suite *KeeperTestSuite) setDenomTrace(portId, chanId, denom string) transf
 }
 
 func (suite *KeeperTestSuite) setValidator() string {
-	zone, ok := suite.chainA.GetApp().IbcstakingKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
+	zone, ok := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
 	suite.Require().True(ok)
 
 	validatorAddr := suite.chainB.App.StakingKeeper.GetValidators(suite.chainB.GetContext(), 1)[0].OperatorAddress
 	zone.ValidatorAddress = validatorAddr
-	suite.chainA.GetApp().IbcstakingKeeper.RegisterZone(suite.chainA.GetContext(), &zone)
+	suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &zone)
 
 	return validatorAddr
 }
 
 func (suite *KeeperTestSuite) TestDeposit() {
 	depositor := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IbcstakingKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 
 	tcs := []struct {
 		name      string
@@ -190,7 +187,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		suite.Run(tc.name, func() {
 			suite.setDenomTrace(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
 
-			ibcDenom := suite.chainA.App.IbcstakingKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
+			ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
 
 			suite.mintCoin(suite.chainA.GetContext(), suite.chainA.GetApp(), ibcDenom, sdk.NewInt(10000000), tc.depositor)
 
@@ -209,7 +206,7 @@ func (suite *KeeperTestSuite) TestDelegate() {
 	suite.InitICA()
 
 	depositor := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IbcstakingKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 
 	tcs := []struct {
 		name          string
@@ -268,7 +265,7 @@ func (suite *KeeperTestSuite) TestDelegate() {
 			suite.setValidator()
 			hostAddr := suite.setHostAddr(tc.zoneId)
 
-			ibcDenom := suite.chainA.App.IbcstakingKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
+			ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
 
 			suite.chainA.GetApp().GalKeeper.SetDepositRecord(suite.chainA.GetContext(), &tc.depositRecord)
 			mintAmt := suite.chainA.GetApp().GalKeeper.GetTotalDepositAmtForZoneId(suite.chainA.GetContext(), tc.zoneId, ibcDenom, types.DepositSuccess)
@@ -325,7 +322,7 @@ func (suite *KeeperTestSuite) TestPendingUndelegate() {
 								Amount: sdk.NewIntWithDecimal(10000, 18),
 							},
 							WithdrawAmount:    sdk.NewInt(0),
-							State:             types.UndelegateRequestUser,
+							State:             types.UndelegateRequestByUser,
 							OracleVersion:     1,
 							UndelegateVersion: 0,
 						},
@@ -387,7 +384,7 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 								Amount: sdk.NewIntWithDecimal(10000, 18),
 							},
 							WithdrawAmount:    sdk.NewInt(0),
-							State:             types.UndelegateRequestUser,
+							State:             types.UndelegateRequestByUser,
 							OracleVersion:     1,
 							UndelegateVersion: 0,
 						},
@@ -414,7 +411,7 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 								Amount: sdk.NewIntWithDecimal(10000, 18),
 							},
 							WithdrawAmount:    sdk.NewInt(10000),
-							State:             types.UndelegateRequestIca,
+							State:             types.UndelegateRequestByIca,
 							OracleVersion:     1,
 							UndelegateVersion: 0,
 						},
@@ -491,7 +488,7 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 
 func (suite *KeeperTestSuite) TestWithdraw() {
 	withdrawer1 := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IbcstakingKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 
 	tcs := []struct {
 		name            string
@@ -562,7 +559,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 
 func (suite *KeeperTestSuite) TestClaimSnAsset() {
 	claimer := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IbcstakingKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 
 	tcs := []struct {
 		name          string

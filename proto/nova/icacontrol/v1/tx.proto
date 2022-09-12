@@ -1,15 +1,15 @@
 syntax = "proto3";
-package nova.ibcstaking.v1;
+package nova.icacontrol.v1;
 
 import "gogoproto/gogo.proto";
-import "nova/ibcstaking/v1/genesis.proto";
+import "nova/icacontrol/v1/genesis.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/authz/v1beta1/authz.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/ibcstaking/types";
+option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
 option (gogoproto.goproto_getters_all) = false;
 
-// Msg defines the ibcstaking Msg service.
+// Msg defines the icacontrol Msg service.
 service Msg {
   // RegisterZone defines a rpc handler for MsgRegisterZone
   rpc RegisterZone(MsgRegisterZone) returns (MsgRegisterZoneResponse);
@@ -25,7 +25,7 @@ service Msg {
   rpc IcaAuthzGrant(MsgIcaAuthzGrant) returns (MsgIcaAuthzGrantResponse);
   rpc IcaAuthzRevoke(MsgIcaAuthzRevoke) returns (MsgIcaAuthzRevokeResponse);
   rpc DeleteRegisteredZone(MsgDeleteRegisteredZone) returns (MsgDeleteRegisteredZoneResponse);
-  rpc ChangeRegisteredZoneInfo(MsgChangeRegisteredZoneInfo) returns (MsgChangeRegisteredZoneInfoResponse);
+  rpc ChangeRegisteredZone(MsgChangeRegisteredZone) returns (MsgChangeRegisteredZoneResponse);
 }
 
 // MsgRegisterZone is the message you use to register a new zone.
@@ -42,10 +42,19 @@ message MsgRegisterZone {
 }
 
 // MsgRegisterZoneResponse is a response message for MsgRegisterZone
-message MsgRegisterZoneResponse {}
+message MsgRegisterZoneResponse {
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
+}
 
 // MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
-message MsgChangeRegisteredZoneInfo{
+message MsgChangeRegisteredZone{
   option (gogoproto.equal) = false;
 
   string zone_id = 1;
@@ -58,7 +67,16 @@ message MsgChangeRegisteredZoneInfo{
 }
 
 // MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
-message MsgChangeRegisteredZoneInfoResponse{}
+message MsgChangeRegisteredZoneResponse{
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
+}
 
 // MsgDeleteRegisteredZone deletes registered Zone information.
 message MsgDeleteRegisteredZone{
@@ -95,7 +113,7 @@ message MsgIcaUndelegateResponse{}
 message MsgIcaAutoStaking{
   string zone_id = 1;
   string host_address = 2;
-  string daomodifier_address = 3;
+  string controller_address = 3;
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
 }
 
@@ -106,7 +124,7 @@ message MsgIcaAutoStakingResponse{}
 message MsgIcaTransfer{
   string zone_id = 1;
   string host_address = 2;
-  string daomodifier_address = 3;
+  string controller_address = 3;
   string receiver_address = 4;
   string ica_transfer_port_id = 5;
   string ica_transfer_channel_id = 6;

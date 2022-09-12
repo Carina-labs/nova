@@ -39,8 +39,7 @@ message MsgDelegate {
   string controller_address = 2;
 }
 
-message MsgDelegateResponse {
-}
+message MsgDelegateResponse {}
 
 message MsgUndelegate {
   string zone_id = 1;

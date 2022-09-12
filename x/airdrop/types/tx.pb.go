@@ -31,6 +31,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// MsgClaimAirdropRequest is an airdrop volume request message.
 type MsgClaimAirdropRequest struct {
 	// address of the airdrop recipient.
 	UserAddress string `protobuf:"bytes,1,opt,name=user_address,json=userAddress,proto3" json:"user_address,omitempty"`
@@ -85,6 +86,7 @@ func (m *MsgClaimAirdropRequest) GetQuestType() QuestType {
 	return QuestType_QUEST_NOTHING_TO_DO
 }
 
+// MsgClaimAirdropResponse is a response message for MsgClaimAirdropRequest.
 type MsgClaimAirdropResponse struct {
 }
 
@@ -176,6 +178,7 @@ func (m *MsgMarkSocialQuestPerformedRequest) GetUserAddresses() []string {
 	return nil
 }
 
+// MsgMarkSocialQuestPerformedResponse is a response message for MsgMarkSocialQuestPerformedRequest.
 type MsgMarkSocialQuestPerformedResponse struct {
 }
 
@@ -212,6 +215,7 @@ func (m *MsgMarkSocialQuestPerformedResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgMarkSocialQuestPerformedResponse proto.InternalMessageInfo
 
+// MsgMarkUserProvidedLiquidityRequest is a message that marks a particular user as having provided liquidity to Supernova.
 type MsgMarkUserProvidedLiquidityRequest struct {
 	// controller address for the airdrop module.
 	ControllerAddress string `protobuf:"bytes,1,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
@@ -266,6 +270,7 @@ func (m *MsgMarkUserProvidedLiquidityRequest) GetUserAddresses() []string {
 	return nil
 }
 
+// MsgMarkUserProvidedLiquidityResponse is a response message for MsgMarkUserProvidedLiquidityRequest.
 type MsgMarkUserProvidedLiquidityResponse struct {
 }
 

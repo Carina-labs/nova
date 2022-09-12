@@ -1,5 +1,5 @@
 syntax = "proto3";
-package nova.ibcstaking.v1;
+package nova.icacontrol.v1;
 
 import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";

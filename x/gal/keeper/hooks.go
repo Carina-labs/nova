@@ -93,12 +93,12 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	}
 
 	undelegateVersion := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
-	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, types.UndelegateRequestIca, undelegateVersion+1)
+	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca, undelegateVersion+1)
 
 	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
 	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, undelegateVersion+1)
 
-	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, types.UndelegateRequestIca)
+	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
 }
 
 func (h Hooks) AfterAutoStakingEnd() {

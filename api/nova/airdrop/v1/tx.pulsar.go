@@ -2653,6 +2653,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// MsgClaimAirdropRequest is an airdrop volume request message.
 type MsgClaimAirdropRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2698,6 +2699,7 @@ func (x *MsgClaimAirdropRequest) GetQuestType() QuestType {
 	return QuestType_QUEST_NOTHING_TO_DO
 }
 
+// MsgClaimAirdropResponse is a response message for MsgClaimAirdropRequest.
 type MsgClaimAirdropResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2770,6 +2772,7 @@ func (x *MsgMarkSocialQuestPerformedRequest) GetUserAddresses() []string {
 	return nil
 }
 
+// MsgMarkSocialQuestPerformedResponse is a response message for MsgMarkSocialQuestPerformedRequest.
 type MsgMarkSocialQuestPerformedResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2796,6 +2799,7 @@ func (*MsgMarkSocialQuestPerformedResponse) Descriptor() ([]byte, []int) {
 	return file_nova_airdrop_v1_tx_proto_rawDescGZIP(), []int{3}
 }
 
+// MsgMarkUserProvidedLiquidityRequest is a message that marks a particular user as having provided liquidity to Supernova.
 type MsgMarkUserProvidedLiquidityRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2841,6 +2845,7 @@ func (x *MsgMarkUserProvidedLiquidityRequest) GetUserAddresses() []string {
 	return nil
 }
 
+// MsgMarkUserProvidedLiquidityResponse is a response message for MsgMarkUserProvidedLiquidityRequest.
 type MsgMarkUserProvidedLiquidityResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

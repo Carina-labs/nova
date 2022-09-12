@@ -147,6 +147,7 @@ func (m *GenesisState) GetAirdropInfo() *AirdropInfo {
 	return nil
 }
 
+// AirdropInfo stores metadata related to airdrop. This includes airdrop start and end times, maximum acceptable quantity, etc.
 type AirdropInfo struct {
 	// The snapshot date based for the distribution of the airdrop.
 	SnapshotTimestamp time.Time `protobuf:"bytes,1,opt,name=snapshot_timestamp,json=snapshotTimestamp,proto3,stdtime" json:"snapshot_timestamp"`
@@ -246,6 +247,7 @@ func (m *AirdropInfo) GetMaximumTokenAllocPerUser() string {
 	return ""
 }
 
+// UserState indicates the status of the user performing the quest.
 type UserState struct {
 	// address of the airdrop recipient.
 	Recipient string `protobuf:"bytes,1,opt,name=recipient,proto3" json:"recipient,omitempty"`
@@ -309,6 +311,7 @@ func (m *UserState) GetQuestStates() map[int32]*QuestState {
 	return nil
 }
 
+// QuestState indicates the status of the quest that users perform.
 type QuestState struct {
 	// state to indicate that quest is not started, claimable or claimed.
 	State QuestStateType `protobuf:"varint,1,opt,name=state,proto3,enum=nova.airdrop.v1.QuestStateType" json:"state,omitempty"`

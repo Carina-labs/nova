@@ -3,7 +3,7 @@ package types
 const (
 	ModuleName = "icacontrol"
 
-	StoreKey = "storeibcstaking"
+	StoreKey = "storeIcaControl"
 
 	RouterKey = ModuleName
 
