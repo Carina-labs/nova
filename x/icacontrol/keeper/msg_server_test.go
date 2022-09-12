@@ -27,7 +27,7 @@ func (suite *KeeperTestSuite) setControllerAddr(address string) {
 	addr1 := address
 	addresses = append(addresses, addr1)
 	params := icacontroltypes.Params{
-		DaoModifiers: addresses,
+		ControllerAddress: addresses,
 	}
 	suite.chainA.App.IcaControlKeeper.SetParams(suite.chainA.GetContext(), params)
 }
