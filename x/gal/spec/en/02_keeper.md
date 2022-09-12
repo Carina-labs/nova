@@ -67,7 +67,7 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 
 ### GetAllAmountNotMintShareToken
 ```go
-func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone) (sdk.Coin, error) {}
+func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *icacontroltypes.RegisteredZone) (sdk.Coin, error) {}
 ```
 `GetAllAmountNotMintShareToken` returns the sum of assets that have not yet been issued by the user among the assets that have been deposited.
 
@@ -111,7 +111,7 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.
 
 ### GetUndelegateAmount
 ```go
-func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone ibcstakingtypes.RegisteredZone, version uint64, state types.UndelegatedStatusType) (sdk.Coin, sdk.Int) {}
+func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone icacontroltypes.RegisteredZone, version uint64, state types.UndelegatedStatusType) (sdk.Coin, sdk.Int) {}
 ```
 `GetUndelegateAmount` gets the information that corresponds to the zone during the de-delegation history.
 
@@ -179,7 +179,7 @@ func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, 
 
 ### ClaimShareToken
 ```go
-func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *ibcstakingtypes.RegisteredZone, asset sdk.Coin) (sdk.Coin, error) {}
+func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *icacontroltypes.RegisteredZone, asset sdk.Coin) (sdk.Coin, error) {}
 ```
 `ClaimShareToken` is used when user want to claim their share token.
 It calculates user's share and the amount of claimable share token.
@@ -194,7 +194,7 @@ func (k Keeper) MintTo(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coi
 
 ### TotalClaimableAssets
 ```go
-func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone ibcstakingtypes.RegisteredZone, claimer sdk.AccAddress) (*sdk.Coin, error) {}
+func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone icacontroltypes.RegisteredZone, claimer sdk.AccAddress) (*sdk.Coin, error) {}
 ```
 `TotalClaimableAssets` returns the total amount of claimable snAsset.
 

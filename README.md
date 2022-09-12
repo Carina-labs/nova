@@ -28,7 +28,7 @@ For more information, see [GAL SPEC](x/gal/README.md).
 ### IcaControl
 
 The IcaControl module manages the Interchain Account (ICA) required to ensure accurate operation of the liquid stacking.
-For more information, see [IcaControl SPEC](x/ibcstaking/README.md).
+For more information, see [IcaControl SPEC](x/icacontrol/README.md).
 
 ### Oracle
 

@@ -92,7 +92,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 }
 
 // ChangeRegisteredZoneInfo implements the Msg/MsgChangeRegisteredZoneInfo interface
-func (k msgServer) ChangeRegisteredZoneInfo(goCtx context.Context, zone *types.MsgChangeRegisteredZone) (*types.MsgChangeRegisteredZoneResponse, error) {
+func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgChangeRegisteredZone) (*types.MsgChangeRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
@@ -184,8 +184,8 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoStaking) (*types.MsgIcaAutoStakingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.DaomodifierAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
+	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -210,8 +210,8 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer) (*types.MsgIcaTransferResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.DaomodifierAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.DaomodifierAddress)
+	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)

@@ -168,9 +168,9 @@ func (msg MsgIcaUndelegate) GetSigners() []sdk.AccAddress {
 
 func NewMsgIcaAutoStaking(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaAutoStaking {
 	return &MsgIcaAutoStaking{
-		ZoneId:             zoneId,
-		DaomodifierAddress: controllerAddr.String(),
-		Amount:             amount,
+		ZoneId:            zoneId,
+		ControllerAddress: controllerAddr.String(),
+		Amount:            amount,
 	}
 }
 
@@ -180,7 +180,7 @@ func (msg MsgIcaAutoStaking) ValidateBasic() error {
 		return errors.New("missing zone name")
 	}
 
-	_, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
+	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
@@ -202,7 +202,7 @@ func (msg MsgIcaAutoStaking) ValidateBasic() error {
 
 // GetSigners implements sdk.Msg
 func (msg MsgIcaAutoStaking) GetSigners() []sdk.AccAddress {
-	accAddr, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
+	accAddr, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 
 	if err != nil {
 		panic(err)
@@ -215,7 +215,7 @@ func NewMsgIcaTransfer(zoneId, hostAddr string, controllerAddr sdk.AccAddress, r
 	return &MsgIcaTransfer{
 		ZoneId:               zoneId,
 		HostAddress:          hostAddr,
-		DaomodifierAddress:   controllerAddr.String(),
+		ControllerAddress:    controllerAddr.String(),
 		ReceiverAddress:      receiver,
 		IcaTransferPortId:    portId,
 		IcaTransferChannelId: chanId,
@@ -229,7 +229,7 @@ func (msg MsgIcaTransfer) ValidateBasic() error {
 		return errors.New("missing zone name")
 	}
 
-	_, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
+	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
@@ -251,7 +251,7 @@ func (msg MsgIcaTransfer) ValidateBasic() error {
 
 // GetSigners implements sdk.Msg
 func (msg MsgIcaTransfer) GetSigners() []sdk.AccAddress {
-	accAddr, err := sdk.AccAddressFromBech32(msg.DaomodifierAddress)
+	accAddr, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 
 	if err != nil {
 		panic(err)

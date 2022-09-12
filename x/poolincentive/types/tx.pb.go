@@ -30,6 +30,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// MsgCreateCandidatePool is used to create a new candidate pool.
+// In order to make pool, we need the contract address of pool id and pool.
 type MsgCreateCandidatePool struct {
 	PoolId              string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
 	PoolContractAddress string `protobuf:"bytes,2,opt,name=pool_contract_address,json=poolContractAddress,proto3" json:"pool_contract_address,omitempty"`
@@ -90,6 +92,7 @@ func (m *MsgCreateCandidatePool) GetCreator() string {
 	return ""
 }
 
+// MsgCreateCandidatePoolResponse is a response message for MsgCreateCandidatePool.
 type MsgCreateCandidatePoolResponse struct {
 }
 
@@ -126,6 +129,8 @@ func (m *MsgCreateCandidatePoolResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgCreateCandidatePoolResponse proto.InternalMessageInfo
 
+// MsgCreateIncentivePool is used to create a new incentive pool.
+// In order to make pool, we need the contract address of pool id and pool, and valid operator.
 type MsgCreateIncentivePool struct {
 	PoolId              string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
 	PoolContractAddress string `protobuf:"bytes,2,opt,name=pool_contract_address,json=poolContractAddress,proto3" json:"pool_contract_address,omitempty"`
@@ -186,6 +191,7 @@ func (m *MsgCreateIncentivePool) GetOperator() string {
 	return ""
 }
 
+// MsgCreateIncentivePoolResponse is a response message for MsgCreateIncentivePool.
 type MsgCreateIncentivePoolResponse struct {
 }
 
@@ -222,6 +228,8 @@ func (m *MsgCreateIncentivePoolResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgCreateIncentivePoolResponse proto.InternalMessageInfo
 
+// MsgSetPoolWeight is a message used to modify the weight of the incentive pool.
+// It can only be submitted by the correct controller.
 type MsgSetPoolWeight struct {
 	PoolId    string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
 	NewWeight uint64 `protobuf:"varint,2,opt,name=new_weight,json=newWeight,proto3" json:"new_weight,omitempty"`
@@ -282,6 +290,7 @@ func (m *MsgSetPoolWeight) GetOperator() string {
 	return ""
 }
 
+// MsgSetPoolWeightResponse is a response message for MsgSetPoolWeight.
 type MsgSetPoolWeightResponse struct {
 }
 
@@ -318,6 +327,8 @@ func (m *MsgSetPoolWeightResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgSetPoolWeightResponse proto.InternalMessageInfo
 
+// MsgSetMultiplePoolWeight is a message used to modify the weight of several incentive pools at once.
+// It can only be submitted by the correct controller.
 type MsgSetMultiplePoolWeight struct {
 	NewPoolData []NewPoolWeight `protobuf:"bytes,1,rep,name=new_pool_data,json=newPoolData,proto3" json:"new_pool_data"`
 	Operator    string          `protobuf:"bytes,2,opt,name=operator,proto3" json:"operator,omitempty"`
@@ -370,6 +381,7 @@ func (m *MsgSetMultiplePoolWeight) GetOperator() string {
 	return ""
 }
 
+// NewPoolWeight is a structure consisting of pool id and weight.
 type NewPoolWeight struct {
 	PoolId    string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
 	NewWeight uint64 `protobuf:"varint,2,opt,name=new_weight,json=newWeight,proto3" json:"new_weight,omitempty"`
@@ -422,6 +434,7 @@ func (m *NewPoolWeight) GetNewWeight() uint64 {
 	return 0
 }
 
+// MsgSetMultiplePoolWeightResponse is a response message for MsgSetMultiplePoolWeight.
 type MsgSetMultiplePoolWeightResponse struct {
 }
 

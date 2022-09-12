@@ -1370,6 +1370,8 @@ func (x *GenesisState) GetStates() []*ChainInfo {
 	return nil
 }
 
+// ChainInfo refers to the state of the counterpart chain to be stored on the Oracle module.
+// Status includes the amount of coins delegated to Zone, AppHash, and block height.
 type ChainInfo struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

@@ -162,7 +162,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	newRecord := types.UndelegateRecordContent{
 		Withdrawer:    undelegate.Withdrawer,
 		SnAssetAmount: &undelegate.Amount,
-		State:         types.UndelegateRequestUser,
+		State:         types.UndelegateRequestByUser,
 		OracleVersion: oracleVersion,
 	}
 
@@ -225,7 +225,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("no coins to undelegate")
 	}
 
-	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestIca)
+	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
 
 	undelegateAmt := sdk.NewCoin(zoneInfo.BaseDenom, undelegateAssets)
 

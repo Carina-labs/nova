@@ -1114,6 +1114,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// MsgUpdateChainState is the message used to update the status of the zone stored in Oracle.
 type MsgUpdateChainState struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1186,6 +1187,8 @@ func (x *MsgUpdateChainState) GetChainId() string {
 	return ""
 }
 
+// MsgUpdateChainStateResponse is a response message for MsgUpdateChainState.
+// If updating is success, the value of success is true.
 type MsgUpdateChainStateResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

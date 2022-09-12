@@ -67,8 +67,8 @@ func (k *Keeper) SetHooks(eh types.ICAHooks) *Keeper {
 
 func (k Keeper) IsValidDaoModifier(ctx sdk.Context, daoModifier string) bool {
 	params := k.GetParams(ctx)
-	for i := range params.DaoModifiers {
-		if params.DaoModifiers[i] == daoModifier {
+	for i := range params.ControllerAddress {
+		if params.ControllerAddress[i] == daoModifier {
 			return true
 		}
 	}

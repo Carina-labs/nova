@@ -251,9 +251,9 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		icacontroltypes.NewMultiICAHooks(appKeepers.GalKeeper.Hooks()),
 	)
 
-	ibcstakingIBCModule := icacontrol.NewIBCModule(*appKeepers.IcaControlKeeper)
+	icaControlIBCModule := icacontrol.NewIBCModule(*appKeepers.IcaControlKeeper)
 
-	icaControllerIBCModule := icacontroller.NewIBCModule(*appKeepers.ICAControllerKeeper, ibcstakingIBCModule)
+	icaControllerIBCModule := icacontroller.NewIBCModule(*appKeepers.ICAControllerKeeper, icaControlIBCModule)
 	icaHostIBCModule := icahost.NewIBCModule(*appKeepers.ICAHostKeeper)
 
 	transferIBCModule := transfer.NewIBCModule(*appKeepers.TransferKeeper)

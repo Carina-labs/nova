@@ -10,13 +10,11 @@ import (
 
 var (
 	KeyDaoModifierAddress = []byte("DaoModifierAddress")
-	KeyCommissionInfo     = []byte("Commission")
 )
 
-func NewParams(daomodifierAddrs []string, commission []*CommissionInfo) Params {
+func NewParams(daomodifierAddrs []string) Params {
 	return Params{
-		DaoModifiers: daomodifierAddrs,
-		Commission:   commission,
+		ControllerAddress: daomodifierAddrs,
 	}
 }
 
@@ -26,8 +24,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 
 func DefaultParams() Params {
 	return Params{
-		DaoModifiers: []string{},
-		Commission:   []*CommissionInfo{},
+		ControllerAddress: []string{},
 	}
 }
 
@@ -38,17 +35,12 @@ func (p *Params) String() string {
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
-		paramtypes.NewParamSetPair(KeyDaoModifierAddress, &p.DaoModifiers, validateDaoModifierAddress),
-		paramtypes.NewParamSetPair(KeyCommissionInfo, &p.Commission, validateCommission),
+		paramtypes.NewParamSetPair(KeyDaoModifierAddress, &p.ControllerAddress, validateDaoModifierAddress),
 	}
 }
 
 func (p *Params) Validate() error {
-	if err := validateDaoModifierAddress(p.DaoModifiers); err != nil {
-		return err
-	}
-
-	if err := validateCommission(p.Commission); err != nil {
+	if err := validateDaoModifierAddress(p.ControllerAddress); err != nil {
 		return err
 	}
 
@@ -70,44 +62,5 @@ func validateDaoModifierAddress(i interface{}) error {
 		}
 	}
 
-	return nil
-}
-
-func validateCommission(i interface{}) error {
-	params, ok := i.([]*CommissionInfo)
-
-	if !ok {
-		return fmt.Errorf("invalid parameter type: %T", i)
-	}
-
-	// ensure each commission info is only registered one time.
-	registered := make(map[string]bool)
-	for _, p := range params {
-		if _, exists := registered[p.TreasuryAddress]; exists {
-			return fmt.Errorf("duplicate treasury address parameter found: '%s'", p.TreasuryAddress)
-		}
-
-		if err := validateCommissionInfo(*p); err != nil {
-			return err
-		}
-		registered[p.TreasuryAddress] = true
-	}
-
-	return nil
-}
-
-func validateCommissionInfo(i interface{}) error {
-	param, ok := i.(CommissionInfo)
-	if !ok {
-		return fmt.Errorf("invalid parameter type: %T", i)
-	}
-
-	if param.CommissionRate.IsNegative() {
-		return fmt.Errorf("commission rate cannot be negative: %s", param.CommissionRate)
-	}
-
-	if param.CommissionRate.GT(sdk.OneDec()) {
-		return fmt.Errorf("commission rate is too large: %s", param.CommissionRate)
-	}
 	return nil
 }

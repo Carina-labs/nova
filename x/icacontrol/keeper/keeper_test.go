@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	ibcstakingtypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -43,24 +43,24 @@ func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
 	return acc.GetAddress()
 }
 
-func (suite *KeeperTestSuite) setZone(num int) []ibcstakingtypes.RegisteredZone {
+func (suite *KeeperTestSuite) setZone(num int) []icacontroltypes.RegisteredZone {
 
 	addr := make([]sdk.AccAddress, 0)
-	zones := make([]ibcstakingtypes.RegisteredZone, 0)
+	zones := make([]icacontroltypes.RegisteredZone, 0)
 
 	for i := 0; i < num; i++ {
 		addr = append(addr, suite.GenRandomAddress())
-		zones = append(zones, ibcstakingtypes.RegisteredZone{
+		zones = append(zones, icacontroltypes.RegisteredZone{
 			ZoneId: "gaia" + strconv.Itoa(i),
-			IcaConnectionInfo: &ibcstakingtypes.IcaConnectionInfo{
+			IcaConnectionInfo: &icacontroltypes.IcaConnectionInfo{
 				ConnectionId: "connection-" + strconv.Itoa(i),
 				PortId:       "gaia" + strconv.Itoa(i) + "." + addr[i].String(),
 			},
-			IcaAccount: &ibcstakingtypes.IcaAccount{
+			IcaAccount: &icacontroltypes.IcaAccount{
 				ControllerAddress: addr[i].String(),
 				HostAddress:       addr[i].String(),
 			},
-			TransferInfo: &ibcstakingtypes.TransferConnectionInfo{
+			TransferInfo: &icacontroltypes.TransferConnectionInfo{
 				PortId:    "transfer",
 				ChannelId: "channel-" + strconv.Itoa(i),
 			},
@@ -155,7 +155,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 
 }
 
-func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []ibcstakingtypes.RegisteredZone) {
+func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []icacontroltypes.RegisteredZone) {
 	for _, msg := range zoneMsgs {
 		suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &msg)
 	}
@@ -171,8 +171,8 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 	addresses = append(addresses, addr1)
 	addresses = append(addresses, addr2)
 
-	params := ibcstakingtypes.Params{
-		DaoModifiers: addresses,
+	params := icacontroltypes.Params{
+		ControllerAddress: addresses,
 	}
 
 	suite.App.IcaControlKeeper.SetParams(suite.Ctx, params)

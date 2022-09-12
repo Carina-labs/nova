@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: nova/icacontrol/v1/query.proto
 
-package ibcstakingv1
+package icacontrolv1
 
 import (
 	context "context"
@@ -36,7 +36,7 @@ func NewQueryClient(cc grpc.ClientConnInterface) QueryClient {
 
 func (c *queryClient) AllZones(ctx context.Context, in *QueryAllZonesRequest, opts ...grpc.CallOption) (*QueryAllZonesResponse, error) {
 	out := new(QueryAllZonesResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Query/AllZones", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Query/AllZones", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func _Query_AllZones_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Query/AllZones",
+		FullMethod: "/nova.icacontrol.v1.Query/AllZones",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).AllZones(ctx, req.(*QueryAllZonesRequest))
@@ -94,7 +94,7 @@ func _Query_AllZones_Handler(srv interface{}, ctx context.Context, dec func(inte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Query_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "nova.ibcstaking.v1.Query",
+	ServiceName: "nova.icacontrol.v1.Query",
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

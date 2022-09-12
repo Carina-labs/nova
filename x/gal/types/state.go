@@ -13,8 +13,8 @@ const (
 )
 
 const (
-	UndelegateRequestUser UndelegatedStatusType = iota + 1
-	UndelegateRequestIca
+	UndelegateRequestByUser UndelegatedStatusType = iota + 1
+	UndelegateRequestByIca
 )
 
 type (

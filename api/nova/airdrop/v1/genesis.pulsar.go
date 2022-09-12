@@ -3009,6 +3009,7 @@ func (x *GenesisState) GetAirdropInfo() *AirdropInfo {
 	return nil
 }
 
+// AirdropInfo stores metadata related to airdrop. This includes airdrop start and end times, maximum acceptable quantity, etc.
 type AirdropInfo struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3099,6 +3100,7 @@ func (x *AirdropInfo) GetMaximumTokenAllocPerUser() string {
 	return ""
 }
 
+// UserState indicates the status of the user performing the quest.
 type UserState struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3153,6 +3155,7 @@ func (x *UserState) GetQuestStates() map[int32]*QuestState {
 	return nil
 }
 
+// QuestState indicates the status of the quest that users perform.
 type QuestState struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

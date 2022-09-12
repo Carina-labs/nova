@@ -30,7 +30,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// MsgRegisterZone defines the payload for Msg/RegisterZone
+// MsgRegisterZone is the message you use to register a new zone.
 type MsgRegisterZone struct {
 	ZoneId           string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	IcaInfo          *IcaConnectionInfo      `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
@@ -74,6 +74,7 @@ func (m *MsgRegisterZone) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgRegisterZone proto.InternalMessageInfo
 
+// MsgRegisterZoneResponse is a response message for MsgRegisterZone
 type MsgRegisterZoneResponse struct {
 	ZoneId           string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	IcaInfo          *IcaConnectionInfo      `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
@@ -118,6 +119,7 @@ func (m *MsgRegisterZoneResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgRegisterZoneResponse proto.InternalMessageInfo
 
+// MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
 type MsgChangeRegisteredZone struct {
 	ZoneId           string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	IcaInfo          *IcaConnectionInfo      `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
@@ -161,6 +163,7 @@ func (m *MsgChangeRegisteredZone) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgChangeRegisteredZone proto.InternalMessageInfo
 
+// MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
 type MsgChangeRegisteredZoneResponse struct {
 	ZoneId           string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	IcaInfo          *IcaConnectionInfo      `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
@@ -205,6 +208,7 @@ func (m *MsgChangeRegisteredZoneResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgChangeRegisteredZoneResponse proto.InternalMessageInfo
 
+// MsgDeleteRegisteredZone deletes registered Zone information.
 type MsgDeleteRegisteredZone struct {
 	ZoneId            string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	ControllerAddress string `protobuf:"bytes,2,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
@@ -243,6 +247,7 @@ func (m *MsgDeleteRegisteredZone) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteRegisteredZone proto.InternalMessageInfo
 
+// MsgDeleteRegisteredZoneResponse is a response message for MsgDeleteRegisteredZone.
 type MsgDeleteRegisteredZoneResponse struct {
 }
 
@@ -279,6 +284,7 @@ func (m *MsgDeleteRegisteredZoneResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteRegisteredZoneResponse proto.InternalMessageInfo
 
+// MsgIcaDelegate is a message used for remote delegation using ICA.
 type MsgIcaDelegate struct {
 	ZoneId            string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	HostAddress       string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
@@ -319,6 +325,7 @@ func (m *MsgIcaDelegate) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaDelegate proto.InternalMessageInfo
 
+// MsgIcaDelegateResponse is a response message for MsgIcaDelegate.
 type MsgIcaDelegateResponse struct {
 }
 
@@ -355,6 +362,7 @@ func (m *MsgIcaDelegateResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaDelegateResponse proto.InternalMessageInfo
 
+// MsgIcaUndelegate is a message used to de-delegate remote using ICA.
 type MsgIcaUndelegate struct {
 	ZoneId            string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	HostAddress       string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
@@ -395,6 +403,7 @@ func (m *MsgIcaUndelegate) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaUndelegate proto.InternalMessageInfo
 
+// MsgIcaUndelegateResponse is a response message for MsgIcaUndelegate.
 type MsgIcaUndelegateResponse struct {
 }
 
@@ -431,11 +440,12 @@ func (m *MsgIcaUndelegateResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaUndelegateResponse proto.InternalMessageInfo
 
+// MsgIcaAutoStaking is a message for remote auto-compound using ICA.
 type MsgIcaAutoStaking struct {
-	ZoneId             string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	HostAddress        string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
-	DaomodifierAddress string     `protobuf:"bytes,3,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
-	Amount             types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
+	ZoneId            string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	HostAddress       string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
+	ControllerAddress string     `protobuf:"bytes,3,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	Amount            types.Coin `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount"`
 }
 
 func (m *MsgIcaAutoStaking) Reset()         { *m = MsgIcaAutoStaking{} }
@@ -471,6 +481,7 @@ func (m *MsgIcaAutoStaking) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaAutoStaking proto.InternalMessageInfo
 
+// MsgIcaAutoStakingResponse is a response message for MsgIcaAutoStaking.
 type MsgIcaAutoStakingResponse struct {
 }
 
@@ -507,10 +518,11 @@ func (m *MsgIcaAutoStakingResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaAutoStakingResponse proto.InternalMessageInfo
 
+// MsgIcaTransfer is a message for IBC transfer from the counterpart to the Supernova chain using ICA.
 type MsgIcaTransfer struct {
 	ZoneId               string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	HostAddress          string     `protobuf:"bytes,2,opt,name=host_address,json=hostAddress,proto3" json:"host_address,omitempty"`
-	DaomodifierAddress   string     `protobuf:"bytes,3,opt,name=daomodifier_address,json=daomodifierAddress,proto3" json:"daomodifier_address,omitempty"`
+	ControllerAddress    string     `protobuf:"bytes,3,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
 	ReceiverAddress      string     `protobuf:"bytes,4,opt,name=receiver_address,json=receiverAddress,proto3" json:"receiver_address,omitempty"`
 	IcaTransferPortId    string     `protobuf:"bytes,5,opt,name=ica_transfer_port_id,json=icaTransferPortId,proto3" json:"ica_transfer_port_id,omitempty"`
 	IcaTransferChannelId string     `protobuf:"bytes,6,opt,name=ica_transfer_channel_id,json=icaTransferChannelId,proto3" json:"ica_transfer_channel_id,omitempty"`
@@ -550,6 +562,7 @@ func (m *MsgIcaTransfer) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaTransfer proto.InternalMessageInfo
 
+// MsgIcaTransferResponse is a response message for MsgIcaTransfer.
 type MsgIcaTransferResponse struct {
 }
 
@@ -586,6 +599,7 @@ func (m *MsgIcaTransferResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaTransferResponse proto.InternalMessageInfo
 
+// MsgIcaAuthzGrant is a message used to transfer authority through authz between two accounts in the other chain using ICA.
 type MsgIcaAuthzGrant struct {
 	ZoneId            string      `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	Grantee           string      `protobuf:"bytes,2,opt,name=grantee,proto3" json:"grantee,omitempty"`
@@ -626,6 +640,7 @@ func (m *MsgIcaAuthzGrant) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaAuthzGrant proto.InternalMessageInfo
 
+// MsgIcaAuthzGrantResponse is a response messasge for MsgIcaAuthzGrant.
 type MsgIcaAuthzGrantResponse struct {
 }
 
@@ -662,6 +677,7 @@ func (m *MsgIcaAuthzGrantResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaAuthzGrantResponse proto.InternalMessageInfo
 
+// MsgIcaAuthzRevoke is a message used for proxy execution between accounts linked to authz via ICA.
 type MsgIcaAuthzRevoke struct {
 	ZoneId            string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	Grantee           string `protobuf:"bytes,2,opt,name=grantee,proto3" json:"grantee,omitempty"`
@@ -702,6 +718,7 @@ func (m *MsgIcaAuthzRevoke) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaAuthzRevoke proto.InternalMessageInfo
 
+// MsgIcaAuthzRevokeResponse is a response message for MsgIcaAuthzRevoke.
 type MsgIcaAuthzRevokeResponse struct {
 }
 
@@ -739,93 +756,91 @@ func (m *MsgIcaAuthzRevokeResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgIcaAuthzRevokeResponse proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*MsgRegisterZone)(nil), "nova.ibcstaking.v1.MsgRegisterZone")
-	proto.RegisterType((*MsgRegisterZoneResponse)(nil), "nova.ibcstaking.v1.MsgRegisterZoneResponse")
-	proto.RegisterType((*MsgChangeRegisteredZone)(nil), "nova.ibcstaking.v1.MsgChangeRegisteredZone")
-	proto.RegisterType((*MsgChangeRegisteredZoneResponse)(nil), "nova.ibcstaking.v1.MsgChangeRegisteredZoneResponse")
-	proto.RegisterType((*MsgDeleteRegisteredZone)(nil), "nova.ibcstaking.v1.MsgDeleteRegisteredZone")
-	proto.RegisterType((*MsgDeleteRegisteredZoneResponse)(nil), "nova.ibcstaking.v1.MsgDeleteRegisteredZoneResponse")
-	proto.RegisterType((*MsgIcaDelegate)(nil), "nova.ibcstaking.v1.MsgIcaDelegate")
-	proto.RegisterType((*MsgIcaDelegateResponse)(nil), "nova.ibcstaking.v1.MsgIcaDelegateResponse")
-	proto.RegisterType((*MsgIcaUndelegate)(nil), "nova.ibcstaking.v1.MsgIcaUndelegate")
-	proto.RegisterType((*MsgIcaUndelegateResponse)(nil), "nova.ibcstaking.v1.MsgIcaUndelegateResponse")
-	proto.RegisterType((*MsgIcaAutoStaking)(nil), "nova.ibcstaking.v1.MsgIcaAutoStaking")
-	proto.RegisterType((*MsgIcaAutoStakingResponse)(nil), "nova.ibcstaking.v1.MsgIcaAutoStakingResponse")
-	proto.RegisterType((*MsgIcaTransfer)(nil), "nova.ibcstaking.v1.MsgIcaTransfer")
-	proto.RegisterType((*MsgIcaTransferResponse)(nil), "nova.ibcstaking.v1.MsgIcaTransferResponse")
-	proto.RegisterType((*MsgIcaAuthzGrant)(nil), "nova.ibcstaking.v1.MsgIcaAuthzGrant")
-	proto.RegisterType((*MsgIcaAuthzGrantResponse)(nil), "nova.ibcstaking.v1.MsgIcaAuthzGrantResponse")
-	proto.RegisterType((*MsgIcaAuthzRevoke)(nil), "nova.ibcstaking.v1.MsgIcaAuthzRevoke")
-	proto.RegisterType((*MsgIcaAuthzRevokeResponse)(nil), "nova.ibcstaking.v1.MsgIcaAuthzRevokeResponse")
+	proto.RegisterType((*MsgRegisterZone)(nil), "nova.icacontrol.v1.MsgRegisterZone")
+	proto.RegisterType((*MsgRegisterZoneResponse)(nil), "nova.icacontrol.v1.MsgRegisterZoneResponse")
+	proto.RegisterType((*MsgChangeRegisteredZone)(nil), "nova.icacontrol.v1.MsgChangeRegisteredZone")
+	proto.RegisterType((*MsgChangeRegisteredZoneResponse)(nil), "nova.icacontrol.v1.MsgChangeRegisteredZoneResponse")
+	proto.RegisterType((*MsgDeleteRegisteredZone)(nil), "nova.icacontrol.v1.MsgDeleteRegisteredZone")
+	proto.RegisterType((*MsgDeleteRegisteredZoneResponse)(nil), "nova.icacontrol.v1.MsgDeleteRegisteredZoneResponse")
+	proto.RegisterType((*MsgIcaDelegate)(nil), "nova.icacontrol.v1.MsgIcaDelegate")
+	proto.RegisterType((*MsgIcaDelegateResponse)(nil), "nova.icacontrol.v1.MsgIcaDelegateResponse")
+	proto.RegisterType((*MsgIcaUndelegate)(nil), "nova.icacontrol.v1.MsgIcaUndelegate")
+	proto.RegisterType((*MsgIcaUndelegateResponse)(nil), "nova.icacontrol.v1.MsgIcaUndelegateResponse")
+	proto.RegisterType((*MsgIcaAutoStaking)(nil), "nova.icacontrol.v1.MsgIcaAutoStaking")
+	proto.RegisterType((*MsgIcaAutoStakingResponse)(nil), "nova.icacontrol.v1.MsgIcaAutoStakingResponse")
+	proto.RegisterType((*MsgIcaTransfer)(nil), "nova.icacontrol.v1.MsgIcaTransfer")
+	proto.RegisterType((*MsgIcaTransferResponse)(nil), "nova.icacontrol.v1.MsgIcaTransferResponse")
+	proto.RegisterType((*MsgIcaAuthzGrant)(nil), "nova.icacontrol.v1.MsgIcaAuthzGrant")
+	proto.RegisterType((*MsgIcaAuthzGrantResponse)(nil), "nova.icacontrol.v1.MsgIcaAuthzGrantResponse")
+	proto.RegisterType((*MsgIcaAuthzRevoke)(nil), "nova.icacontrol.v1.MsgIcaAuthzRevoke")
+	proto.RegisterType((*MsgIcaAuthzRevokeResponse)(nil), "nova.icacontrol.v1.MsgIcaAuthzRevokeResponse")
 }
 
 func init() { proto.RegisterFile("nova/icacontrol/v1/tx.proto", fileDescriptor_27d7493cc67bb856) }
 
 var fileDescriptor_27d7493cc67bb856 = []byte{
-	// 995 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x58, 0x41, 0x6f, 0x1b, 0x45,
-	0x14, 0xf6, 0xda, 0x69, 0x9c, 0xbe, 0xa4, 0x6d, 0xb2, 0x44, 0x64, 0xe3, 0x88, 0x8d, 0x6b, 0x1a,
-	0x29, 0xb4, 0x64, 0x57, 0x69, 0x85, 0x90, 0xb8, 0x40, 0xea, 0x4a, 0xc8, 0x12, 0x11, 0xc8, 0xb4,
-	0x97, 0x4a, 0xc8, 0x8c, 0x77, 0xc7, 0xeb, 0x51, 0xd7, 0x33, 0xd6, 0xce, 0xd8, 0x4a, 0x23, 0xee,
-	0x1c, 0xe1, 0xc6, 0x95, 0x3f, 0xc0, 0x0d, 0x81, 0xf8, 0x07, 0xe1, 0xd6, 0x23, 0x27, 0x04, 0xc9,
-	0x05, 0x71, 0xe4, 0x17, 0xa0, 0x9d, 0xd9, 0x5d, 0xaf, 0xd7, 0xbb, 0x4e, 0xda, 0x8a, 0xa2, 0x4a,
-	0xb9, 0xed, 0xcc, 0xfb, 0xde, 0x9b, 0xf7, 0xbd, 0x79, 0xef, 0xcd, 0xb3, 0x61, 0x8b, 0xb2, 0x31,
-	0xb2, 0x89, 0x83, 0x1c, 0x46, 0x45, 0xc0, 0x7c, 0x7b, 0xbc, 0x6f, 0x8b, 0x23, 0x6b, 0x18, 0x30,
-	0xc1, 0x74, 0x3d, 0x14, 0x5a, 0xa4, 0xeb, 0x70, 0x81, 0x9e, 0x10, 0xea, 0x59, 0xe3, 0xfd, 0xda,
-	0xba, 0xc7, 0x3c, 0x26, 0xc5, 0x76, 0xf8, 0xa5, 0x90, 0xb5, 0x7a, 0x8e, 0x19, 0x0f, 0x53, 0xcc,
-	0x09, 0x8f, 0x10, 0xa6, 0xc3, 0xf8, 0x80, 0x71, 0xbb, 0x8b, 0x38, 0xb6, 0xc7, 0xfb, 0x5d, 0x2c,
-	0xd0, 0xbe, 0xed, 0x30, 0x42, 0x63, 0x0b, 0x91, 0x1c, 0x8d, 0x44, 0xff, 0x38, 0x01, 0xc8, 0x95,
-	0x42, 0x34, 0xfe, 0x2e, 0xc3, 0x8d, 0x43, 0xee, 0xb5, 0xb1, 0x47, 0xb8, 0xc0, 0xc1, 0x63, 0x46,
-	0xb1, 0xbe, 0x01, 0xd5, 0x63, 0x46, 0x71, 0x87, 0xb8, 0x86, 0x56, 0xd7, 0x76, 0xaf, 0xb6, 0x17,
-	0xc3, 0x65, 0xcb, 0xd5, 0x3f, 0x82, 0x25, 0xe2, 0xa0, 0x0e, 0xa1, 0x3d, 0x66, 0x94, 0xeb, 0xda,
-	0xee, 0xf2, 0xdd, 0x1d, 0x6b, 0x96, 0x8d, 0xd5, 0x72, 0x50, 0x93, 0x51, 0x8a, 0x1d, 0x41, 0x18,
-	0x6d, 0xd1, 0x1e, 0x6b, 0x57, 0x89, 0x83, 0xc2, 0x0f, 0xfd, 0x43, 0x58, 0x0e, 0x2d, 0x20, 0xc7,
-	0x61, 0x23, 0x2a, 0x8c, 0x8a, 0x34, 0x62, 0x16, 0x18, 0x39, 0x50, 0xa8, 0x36, 0x90, 0xe4, 0x5b,
-	0xff, 0x14, 0xae, 0x89, 0x00, 0x51, 0xde, 0xc3, 0x81, 0xf2, 0x63, 0x41, 0x9a, 0xb8, 0x9d, 0x67,
-	0xe2, 0x61, 0x04, 0xcc, 0x38, 0xb3, 0x12, 0x1b, 0x90, 0x1e, 0xdd, 0x81, 0xb5, 0x31, 0xf2, 0x89,
-	0x8b, 0x04, 0x0b, 0x3a, 0xc8, 0x75, 0x03, 0xcc, 0xb9, 0x71, 0x45, 0xd2, 0x5e, 0x4d, 0x04, 0x07,
-	0x6a, 0x5f, 0x7f, 0x0b, 0x20, 0x0c, 0x75, 0xc7, 0xc5, 0x94, 0x0d, 0x8c, 0x45, 0x89, 0xba, 0x1a,
-	0xee, 0x3c, 0x08, 0x37, 0x74, 0x03, 0xaa, 0x2e, 0x76, 0xc8, 0x00, 0xf9, 0x46, 0xb5, 0xae, 0xed,
-	0x56, 0xda, 0xf1, 0xf2, 0x83, 0x85, 0xbf, 0xbe, 0xdf, 0x2e, 0x35, 0xbe, 0xae, 0xc0, 0x46, 0x26,
-	0xd8, 0x6d, 0xcc, 0x87, 0x8c, 0xf2, 0xcb, 0xa0, 0xbf, 0x70, 0xd0, 0x37, 0x61, 0x89, 0xd3, 0x48,
-	0x58, 0x95, 0xc2, 0x2a, 0xa7, 0x33, 0xf7, 0xb1, 0x34, 0x75, 0x1f, 0x8d, 0x7f, 0xca, 0xf2, 0x26,
-	0x9a, 0x7d, 0x44, 0x3d, 0x1c, 0xdf, 0x07, 0x76, 0x2f, 0xd3, 0xff, 0xbf, 0x4c, 0xff, 0x6f, 0x2a,
-	0xb0, 0x5d, 0x10, 0xf4, 0xcb, 0x32, 0xf8, 0x5f, 0xca, 0x00, 0xc9, 0x2a, 0x78, 0x80, 0x7d, 0x2c,
-	0x2e, 0x5c, 0x05, 0x7b, 0xa0, 0x47, 0xef, 0x91, 0x8f, 0x27, 0x5e, 0x97, 0x25, 0x66, 0x6d, 0x22,
-	0x89, 0xdc, 0x6e, 0xdc, 0x94, 0x77, 0x9e, 0x77, 0x44, 0x7c, 0xe7, 0x8d, 0x1f, 0x35, 0xb8, 0x7e,
-	0xc8, 0xbd, 0x96, 0x83, 0x42, 0x98, 0x87, 0xc4, 0x9c, 0xd3, 0x6f, 0xc2, 0x4a, 0x9f, 0x71, 0x91,
-	0x39, 0x77, 0x39, 0xdc, 0x8b, 0x03, 0x95, 0xef, 0x60, 0xa5, 0xc0, 0x41, 0xfd, 0x7d, 0x58, 0x44,
-	0x03, 0x99, 0x11, 0xea, 0x3a, 0x37, 0x2d, 0xf5, 0x68, 0x5a, 0x61, 0x6c, 0xad, 0xe8, 0xcd, 0xb4,
-	0x9a, 0x8c, 0xd0, 0xfb, 0x0b, 0x27, 0xbf, 0x6f, 0x97, 0xda, 0x11, 0xbc, 0x61, 0xc0, 0x9b, 0xd3,
-	0x5e, 0x27, 0x84, 0x7e, 0xd2, 0x60, 0x55, 0x89, 0x1e, 0x51, 0xf7, 0x75, 0xa2, 0x54, 0x03, 0x23,
-	0xeb, 0x77, 0x42, 0xea, 0x17, 0x0d, 0xd6, 0x94, 0xf0, 0x60, 0x24, 0xd8, 0xe7, 0x2a, 0xd5, 0x5f,
-	0x8a, 0x95, 0x0d, 0x6f, 0xb8, 0x88, 0x0d, 0x98, 0x4b, 0x7a, 0x64, 0x86, 0x96, 0x9e, 0x12, 0xbd,
-	0x34, 0xaf, 0x2d, 0xd8, 0x9c, 0x71, 0x3d, 0x21, 0xf6, 0x6b, 0x39, 0x4e, 0xbf, 0xb8, 0x68, 0x5f,
-	0x2d, 0xab, 0x77, 0x60, 0x35, 0xc0, 0x0e, 0x26, 0xe3, 0x14, 0x7a, 0x41, 0xa2, 0x6f, 0xc4, 0xfb,
-	0x13, 0xdb, 0xeb, 0x61, 0x0b, 0x4b, 0xba, 0xd0, 0x90, 0x05, 0x22, 0x74, 0x52, 0xf5, 0x8c, 0x35,
-	0x32, 0xa1, 0xf0, 0x19, 0x0b, 0x44, 0xcb, 0xd5, 0xdf, 0x83, 0x8d, 0x29, 0x05, 0xa7, 0x8f, 0x28,
-	0xc5, 0x7e, 0xa8, 0xa3, 0x3a, 0xc8, 0x7a, 0x4a, 0xa7, 0xa9, 0x84, 0x2d, 0x37, 0x15, 0xe8, 0xea,
-	0x0b, 0xd6, 0x44, 0x6c, 0x33, 0x89, 0xf2, 0x0f, 0x49, 0x4d, 0x1c, 0x84, 0xe3, 0xe7, 0xc7, 0x01,
-	0xa2, 0xa2, 0x38, 0xce, 0x06, 0x54, 0xbd, 0x10, 0x81, 0x71, 0x14, 0xe2, 0x78, 0xf9, 0xfc, 0xa5,
-	0x70, 0x45, 0x6a, 0x46, 0x19, 0xb3, 0x15, 0x13, 0x51, 0x33, 0x70, 0xcc, 0x44, 0x7a, 0x13, 0x51,
-	0x51, 0xf8, 0x49, 0x29, 0x4c, 0xdc, 0x4d, 0xb8, 0x7c, 0x97, 0x2e, 0x85, 0xfe, 0x71, 0x1b, 0x8f,
-	0xd9, 0x13, 0xfc, 0x0a, 0xc8, 0xd4, 0x61, 0x65, 0xc0, 0xbd, 0x8e, 0x78, 0x3a, 0xc4, 0x9d, 0x51,
-	0xe0, 0x47, 0x59, 0x02, 0x03, 0xee, 0x3d, 0x7c, 0x3a, 0xc4, 0x8f, 0x02, 0x7f, 0x2a, 0xd1, 0x63,
-	0xc7, 0x62, 0xb7, 0xef, 0xfe, 0x5c, 0x85, 0xca, 0x21, 0xf7, 0xf4, 0x2f, 0x61, 0x65, 0x6a, 0xde,
-	0x7f, 0x3b, 0xef, 0x01, 0xcb, 0xcc, 0xa9, 0xb5, 0x3b, 0x17, 0x00, 0x25, 0xaf, 0xf8, 0x17, 0xb0,
-	0x9c, 0xee, 0xe6, 0x8d, 0x02, 0xdd, 0x14, 0xa6, 0x76, 0xfb, 0x7c, 0x4c, 0x62, 0xde, 0x81, 0x6b,
-	0xd3, 0xbd, 0xf5, 0x56, 0xb1, 0xf2, 0x04, 0x55, 0x7b, 0xf7, 0x22, 0xa8, 0x0c, 0x87, 0xa4, 0x25,
-	0xcc, 0xe1, 0x10, 0x63, 0xe6, 0x71, 0xc8, 0xd6, 0x83, 0xde, 0x83, 0xeb, 0x99, 0x56, 0xba, 0x53,
-	0xac, 0x9d, 0x82, 0xd5, 0xf6, 0x2e, 0x04, 0xcb, 0xc4, 0x2a, 0x55, 0x73, 0xb7, 0xe6, 0xea, 0x47,
-	0xa8, 0x79, 0xb1, 0x9a, 0x2d, 0x88, 0x09, 0x99, 0xa4, 0x18, 0x76, 0xce, 0xd1, 0x57, 0xb0, 0x73,
-	0xc8, 0x64, 0x33, 0x58, 0x3f, 0x82, 0xf5, 0xdc, 0x61, 0xa5, 0x28, 0x39, 0xf3, 0xc0, 0xb5, 0x7b,
-	0xcf, 0x01, 0x4e, 0x4e, 0xfe, 0x0a, 0x8c, 0xbc, 0xb9, 0x55, 0x8d, 0x71, 0x05, 0x06, 0xf3, 0x14,
-	0x0a, 0x4f, 0x9f, 0x37, 0x15, 0xdf, 0xff, 0xe4, 0xe4, 0x4f, 0xb3, 0x74, 0x72, 0x6a, 0x6a, 0xcf,
-	0x4e, 0x4d, 0xed, 0x8f, 0x53, 0x53, 0xfb, 0xf6, 0xcc, 0x2c, 0x3d, 0x3b, 0x33, 0x4b, 0xbf, 0x9d,
-	0x99, 0xa5, 0xc7, 0x96, 0x47, 0x44, 0x7f, 0xd4, 0xb5, 0x1c, 0x36, 0xb0, 0x9b, 0x28, 0x20, 0x14,
-	0xed, 0xf9, 0xa8, 0xcb, 0x6d, 0xf9, 0xf7, 0xc1, 0x51, 0xfa, 0x0f, 0x84, 0xb0, 0x73, 0xf0, 0xee,
-	0xa2, 0xfc, 0xe9, 0x7f, 0xef, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x17, 0xc4, 0x2d, 0xe3, 0xa7,
-	0x10, 0x00, 0x00,
+	// 970 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x58, 0x41, 0x6f, 0xdc, 0x44,
+	0x14, 0x5e, 0xef, 0xa6, 0x71, 0xfa, 0x92, 0xb6, 0x89, 0x15, 0x11, 0x67, 0x23, 0x9c, 0xed, 0xd2,
+	0x48, 0xa1, 0x25, 0xb6, 0xd2, 0x0a, 0x21, 0x71, 0x81, 0x74, 0x2b, 0xa1, 0x95, 0x88, 0x40, 0x4b,
+	0x7b, 0xa9, 0x84, 0x96, 0x59, 0x7b, 0xe2, 0x1d, 0xd5, 0x3b, 0xb3, 0xf2, 0xcc, 0xae, 0xd2, 0xfc,
+	0x01, 0x8e, 0x70, 0xe3, 0xca, 0x1f, 0xe0, 0x04, 0x82, 0x9f, 0x40, 0x8e, 0x3d, 0x72, 0x42, 0x90,
+	0x5c, 0x10, 0x47, 0x7e, 0x01, 0xf2, 0xd8, 0xe3, 0xf5, 0x3a, 0xf6, 0x66, 0x5b, 0x89, 0xa2, 0x4a,
+	0xb9, 0xd9, 0xf3, 0xbe, 0xf7, 0xe6, 0xfb, 0xde, 0xbc, 0xf7, 0x3c, 0xbb, 0xb0, 0x45, 0xd9, 0x18,
+	0x39, 0xc4, 0x45, 0x2e, 0xa3, 0x22, 0x64, 0x81, 0x33, 0xde, 0x77, 0xc4, 0xb1, 0x3d, 0x0c, 0x99,
+	0x60, 0x86, 0x11, 0x19, 0xed, 0x89, 0xd1, 0x1e, 0xef, 0xd7, 0xd7, 0x7d, 0xe6, 0x33, 0x69, 0x76,
+	0xa2, 0xa7, 0x18, 0x59, 0x6f, 0x14, 0x84, 0xf1, 0x31, 0xc5, 0x9c, 0xf0, 0x04, 0x61, 0xb9, 0x8c,
+	0x0f, 0x18, 0x77, 0x7a, 0x88, 0x63, 0x67, 0xbc, 0xdf, 0xc3, 0x02, 0xed, 0x3b, 0x2e, 0x23, 0x54,
+	0x45, 0x48, 0xec, 0x68, 0x24, 0xfa, 0x27, 0x29, 0x40, 0xbe, 0xc5, 0x88, 0xe6, 0xdf, 0x55, 0xb8,
+	0x75, 0xc8, 0xfd, 0x0e, 0xf6, 0x09, 0x17, 0x38, 0x7c, 0xca, 0x28, 0x36, 0x36, 0x40, 0x3f, 0x61,
+	0x14, 0x77, 0x89, 0x67, 0x6a, 0x0d, 0x6d, 0xf7, 0x7a, 0x67, 0x31, 0x7a, 0x6d, 0x7b, 0xc6, 0xc7,
+	0xb0, 0x44, 0x5c, 0xd4, 0x25, 0xf4, 0x88, 0x99, 0xd5, 0x86, 0xb6, 0xbb, 0x7c, 0x7f, 0xc7, 0xbe,
+	0xa8, 0xc6, 0x6e, 0xbb, 0xa8, 0xc5, 0x28, 0xc5, 0xae, 0x20, 0x8c, 0xb6, 0xe9, 0x11, 0xeb, 0xe8,
+	0xc4, 0x45, 0xd1, 0x83, 0xf1, 0x11, 0x2c, 0x47, 0x11, 0x90, 0xeb, 0xb2, 0x11, 0x15, 0x66, 0x4d,
+	0x06, 0xb1, 0x4a, 0x82, 0x1c, 0xc4, 0xa8, 0x0e, 0x90, 0xf4, 0xd9, 0xf8, 0x0c, 0x6e, 0x88, 0x10,
+	0x51, 0x7e, 0x84, 0xc3, 0x98, 0xc7, 0x82, 0x0c, 0x71, 0xb7, 0x28, 0xc4, 0xe3, 0x04, 0x98, 0x23,
+	0xb3, 0xa2, 0x02, 0x48, 0x46, 0xf7, 0x60, 0x6d, 0x8c, 0x02, 0xe2, 0x21, 0xc1, 0xc2, 0x2e, 0xf2,
+	0xbc, 0x10, 0x73, 0x6e, 0x5e, 0x93, 0xb2, 0x57, 0x53, 0xc3, 0x41, 0xbc, 0x6e, 0xbc, 0x0d, 0x10,
+	0xa5, 0xba, 0xeb, 0x61, 0xca, 0x06, 0xe6, 0xa2, 0x44, 0x5d, 0x8f, 0x56, 0x1e, 0x45, 0x0b, 0x86,
+	0x09, 0xba, 0x87, 0x5d, 0x32, 0x40, 0x81, 0xa9, 0x37, 0xb4, 0xdd, 0x5a, 0x47, 0xbd, 0x7e, 0xb8,
+	0xf0, 0xd7, 0xf7, 0xdb, 0x95, 0xe6, 0xd7, 0x35, 0xd8, 0xc8, 0x25, 0xbb, 0x83, 0xf9, 0x90, 0x51,
+	0x7e, 0x95, 0xf4, 0x57, 0x4e, 0xfa, 0x26, 0x2c, 0x71, 0x9a, 0x18, 0x75, 0x69, 0xd4, 0x39, 0xbd,
+	0x70, 0x1e, 0x4b, 0x53, 0xe7, 0xd1, 0xfc, 0xa7, 0x2a, 0x4f, 0xa2, 0xd5, 0x47, 0xd4, 0xc7, 0xea,
+	0x3c, 0xb0, 0x77, 0x55, 0xfe, 0xff, 0x65, 0xf9, 0x7f, 0x53, 0x83, 0xed, 0x92, 0xa4, 0x5f, 0xb5,
+	0xc1, 0xff, 0xd2, 0x06, 0x48, 0x76, 0xc1, 0x23, 0x1c, 0x60, 0x31, 0x77, 0x17, 0xec, 0x81, 0x91,
+	0xe8, 0x0c, 0xf0, 0x84, 0x75, 0x55, 0x62, 0xd6, 0x26, 0x96, 0x84, 0x76, 0xf3, 0xb6, 0x3c, 0xf3,
+	0xa2, 0x2d, 0xd4, 0x99, 0x37, 0x7f, 0xd2, 0xe0, 0xe6, 0x21, 0xf7, 0xdb, 0x2e, 0x8a, 0x60, 0x3e,
+	0x12, 0x33, 0x76, 0xbf, 0x0d, 0x2b, 0x7d, 0xc6, 0x45, 0x6e, 0xdf, 0xe5, 0x68, 0x4d, 0x25, 0xaa,
+	0x98, 0x60, 0xad, 0x84, 0xa0, 0xf1, 0x01, 0x2c, 0xa2, 0x81, 0xac, 0x88, 0xf8, 0x38, 0x37, 0xed,
+	0xf8, 0xa3, 0x69, 0x47, 0xb9, 0xb5, 0x93, 0x6f, 0xa6, 0xdd, 0x62, 0x84, 0x3e, 0x5c, 0x38, 0xfd,
+	0x7d, 0xbb, 0xd2, 0x49, 0xe0, 0x4d, 0x13, 0xde, 0x9a, 0x66, 0x9d, 0x0a, 0xfa, 0x59, 0x83, 0xd5,
+	0xd8, 0xf4, 0x84, 0x7a, 0x6f, 0x92, 0xa4, 0x3a, 0x98, 0x79, 0xde, 0xa9, 0xa8, 0x5f, 0x34, 0x58,
+	0x8b, 0x8d, 0x07, 0x23, 0xc1, 0xbe, 0x10, 0xe8, 0x19, 0xa1, 0xfe, 0x1b, 0xa1, 0x6a, 0x0b, 0x36,
+	0x2f, 0x10, 0x4f, 0x65, 0xfd, 0x5a, 0x55, 0xc5, 0xa7, 0x5a, 0xf6, 0x75, 0x6a, 0x7a, 0x17, 0x56,
+	0x43, 0xec, 0x62, 0x32, 0xce, 0x80, 0x17, 0x24, 0xf8, 0x96, 0x5a, 0x57, 0x50, 0x07, 0xd6, 0xa3,
+	0xf1, 0x95, 0x4e, 0xa0, 0x21, 0x0b, 0x45, 0x44, 0x31, 0x9e, 0x17, 0x6b, 0x64, 0x22, 0xe0, 0x73,
+	0x16, 0x8a, 0xb6, 0x67, 0xbc, 0x0f, 0x1b, 0x53, 0x0e, 0x6e, 0x1f, 0x51, 0x8a, 0x83, 0xc8, 0x27,
+	0x9e, 0x1e, 0xeb, 0x19, 0x9f, 0x56, 0x6c, 0x6c, 0x7b, 0x99, 0x34, 0xeb, 0xaf, 0xd8, 0x0f, 0x2a,
+	0x66, 0x9a, 0xe3, 0x1f, 0xd2, 0x7e, 0x38, 0x88, 0xae, 0x9e, 0x9f, 0x84, 0x88, 0x8a, 0xf2, 0x2c,
+	0x9b, 0xa0, 0xfb, 0x11, 0x02, 0xe3, 0x24, 0xc1, 0xea, 0xf5, 0xe5, 0x0b, 0xe6, 0x9a, 0xf4, 0x4c,
+	0xea, 0x65, 0x4b, 0x09, 0x89, 0xef, 0xbf, 0x4a, 0x89, 0x64, 0x93, 0x48, 0x89, 0xf1, 0x93, 0x36,
+	0x98, 0xd0, 0x4d, 0xb5, 0x7c, 0x97, 0x6d, 0x83, 0xfe, 0x49, 0x07, 0x8f, 0xd9, 0x33, 0xfc, 0x1a,
+	0xc4, 0x34, 0x60, 0x65, 0xc0, 0xfd, 0xae, 0x78, 0x3e, 0xc4, 0xdd, 0x51, 0x18, 0x24, 0x55, 0x02,
+	0x03, 0xee, 0x3f, 0x7e, 0x3e, 0xc4, 0x4f, 0xc2, 0x60, 0xaa, 0xcc, 0x15, 0x31, 0x45, 0xfb, 0xfe,
+	0x8f, 0x3a, 0xd4, 0x0e, 0xb9, 0x6f, 0x7c, 0x05, 0x2b, 0x53, 0x77, 0xfd, 0x77, 0x8a, 0x3e, 0x5e,
+	0xb9, 0x3b, 0x6a, 0xfd, 0xde, 0x1c, 0xa0, 0xf4, 0x0b, 0xfe, 0x25, 0x2c, 0x67, 0x27, 0x79, 0xb3,
+	0xc4, 0x37, 0x83, 0xa9, 0xdf, 0xbd, 0x1c, 0x93, 0x86, 0x77, 0xe1, 0xc6, 0xf4, 0x5c, 0xbd, 0x53,
+	0xee, 0x3c, 0x41, 0xd5, 0xdf, 0x9b, 0x07, 0x95, 0xd3, 0x90, 0x0e, 0x84, 0x19, 0x1a, 0x14, 0x66,
+	0x96, 0x86, 0x7c, 0x3f, 0x18, 0x47, 0x70, 0x33, 0x37, 0x46, 0x77, 0xca, 0xbd, 0x33, 0xb0, 0xfa,
+	0xde, 0x5c, 0xb0, 0x5c, 0xae, 0x32, 0x3d, 0x77, 0x67, 0xa6, 0x7f, 0x82, 0x9a, 0x95, 0xab, 0x8b,
+	0x0d, 0x31, 0x11, 0x93, 0x36, 0xc3, 0xce, 0x25, 0xfe, 0x31, 0xec, 0x12, 0x31, 0xf9, 0x0a, 0x36,
+	0x8e, 0x61, 0xbd, 0xf0, 0xa2, 0x52, 0x56, 0x9c, 0x45, 0xe0, 0xfa, 0x83, 0x97, 0x00, 0x67, 0x77,
+	0x2e, 0xfc, 0xa1, 0x50, 0xb6, 0x73, 0x11, 0xb8, 0x74, 0xe7, 0x59, 0xb7, 0xe1, 0x87, 0x9f, 0x9e,
+	0xfe, 0x69, 0x55, 0x4e, 0xcf, 0x2c, 0xed, 0xc5, 0x99, 0xa5, 0xfd, 0x71, 0x66, 0x69, 0xdf, 0x9e,
+	0x5b, 0x95, 0x17, 0xe7, 0x56, 0xe5, 0xb7, 0x73, 0xab, 0xf2, 0xd4, 0xf6, 0x89, 0xe8, 0x8f, 0x7a,
+	0xb6, 0xcb, 0x06, 0x4e, 0x0b, 0x85, 0x84, 0xa2, 0xbd, 0x00, 0xf5, 0xb8, 0x23, 0xff, 0x36, 0x38,
+	0xce, 0xfe, 0x71, 0x10, 0x4d, 0x0d, 0xde, 0x5b, 0x94, 0x3f, 0xf9, 0x1f, 0xfc, 0x1b, 0x00, 0x00,
+	0xff, 0xff, 0xbc, 0x73, 0x27, 0x63, 0x9f, 0x10, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -854,7 +869,7 @@ type MsgClient interface {
 	IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opts ...grpc.CallOption) (*MsgIcaAuthzGrantResponse, error)
 	IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, opts ...grpc.CallOption) (*MsgIcaAuthzRevokeResponse, error)
 	DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error)
-	ChangeRegisteredZoneInfo(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error)
+	ChangeRegisteredZone(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error)
 }
 
 type msgClient struct {
@@ -867,7 +882,7 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 
 func (c *msgClient) RegisterZone(ctx context.Context, in *MsgRegisterZone, opts ...grpc.CallOption) (*MsgRegisterZoneResponse, error) {
 	out := new(MsgRegisterZoneResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/RegisterZone", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/RegisterZone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -876,7 +891,7 @@ func (c *msgClient) RegisterZone(ctx context.Context, in *MsgRegisterZone, opts 
 
 func (c *msgClient) IcaDelegate(ctx context.Context, in *MsgIcaDelegate, opts ...grpc.CallOption) (*MsgIcaDelegateResponse, error) {
 	out := new(MsgIcaDelegateResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaDelegate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaDelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -885,7 +900,7 @@ func (c *msgClient) IcaDelegate(ctx context.Context, in *MsgIcaDelegate, opts ..
 
 func (c *msgClient) IcaUndelegate(ctx context.Context, in *MsgIcaUndelegate, opts ...grpc.CallOption) (*MsgIcaUndelegateResponse, error) {
 	out := new(MsgIcaUndelegateResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaUndelegate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaUndelegate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -894,7 +909,7 @@ func (c *msgClient) IcaUndelegate(ctx context.Context, in *MsgIcaUndelegate, opt
 
 func (c *msgClient) IcaTransfer(ctx context.Context, in *MsgIcaTransfer, opts ...grpc.CallOption) (*MsgIcaTransferResponse, error) {
 	out := new(MsgIcaTransferResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaTransfer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaTransfer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -903,7 +918,7 @@ func (c *msgClient) IcaTransfer(ctx context.Context, in *MsgIcaTransfer, opts ..
 
 func (c *msgClient) IcaAutoStaking(ctx context.Context, in *MsgIcaAutoStaking, opts ...grpc.CallOption) (*MsgIcaAutoStakingResponse, error) {
 	out := new(MsgIcaAutoStakingResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAutoStaking", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaAutoStaking", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -912,7 +927,7 @@ func (c *msgClient) IcaAutoStaking(ctx context.Context, in *MsgIcaAutoStaking, o
 
 func (c *msgClient) IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opts ...grpc.CallOption) (*MsgIcaAuthzGrantResponse, error) {
 	out := new(MsgIcaAuthzGrantResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAuthzGrant", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaAuthzGrant", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -921,7 +936,7 @@ func (c *msgClient) IcaAuthzGrant(ctx context.Context, in *MsgIcaAuthzGrant, opt
 
 func (c *msgClient) IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, opts ...grpc.CallOption) (*MsgIcaAuthzRevokeResponse, error) {
 	out := new(MsgIcaAuthzRevokeResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/IcaAuthzRevoke", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/IcaAuthzRevoke", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -930,16 +945,16 @@ func (c *msgClient) IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, o
 
 func (c *msgClient) DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error) {
 	out := new(MsgDeleteRegisteredZoneResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/DeleteRegisteredZone", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/DeleteRegisteredZone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *msgClient) ChangeRegisteredZoneInfo(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error) {
+func (c *msgClient) ChangeRegisteredZone(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error) {
 	out := new(MsgChangeRegisteredZoneResponse)
-	err := c.cc.Invoke(ctx, "/nova.ibcstaking.v1.Msg/ChangeRegisteredZoneInfo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/ChangeRegisteredZone", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -962,7 +977,7 @@ type MsgServer interface {
 	IcaAuthzGrant(context.Context, *MsgIcaAuthzGrant) (*MsgIcaAuthzGrantResponse, error)
 	IcaAuthzRevoke(context.Context, *MsgIcaAuthzRevoke) (*MsgIcaAuthzRevokeResponse, error)
 	DeleteRegisteredZone(context.Context, *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error)
-	ChangeRegisteredZoneInfo(context.Context, *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error)
+	ChangeRegisteredZone(context.Context, *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -993,8 +1008,8 @@ func (*UnimplementedMsgServer) IcaAuthzRevoke(ctx context.Context, req *MsgIcaAu
 func (*UnimplementedMsgServer) DeleteRegisteredZone(ctx context.Context, req *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRegisteredZone not implemented")
 }
-func (*UnimplementedMsgServer) ChangeRegisteredZoneInfo(ctx context.Context, req *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangeRegisteredZoneInfo not implemented")
+func (*UnimplementedMsgServer) ChangeRegisteredZone(ctx context.Context, req *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeRegisteredZone not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -1011,7 +1026,7 @@ func _Msg_RegisterZone_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/RegisterZone",
+		FullMethod: "/nova.icacontrol.v1.Msg/RegisterZone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).RegisterZone(ctx, req.(*MsgRegisterZone))
@@ -1029,7 +1044,7 @@ func _Msg_IcaDelegate_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaDelegate",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaDelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaDelegate(ctx, req.(*MsgIcaDelegate))
@@ -1047,7 +1062,7 @@ func _Msg_IcaUndelegate_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaUndelegate",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaUndelegate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaUndelegate(ctx, req.(*MsgIcaUndelegate))
@@ -1065,7 +1080,7 @@ func _Msg_IcaTransfer_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaTransfer",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaTransfer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaTransfer(ctx, req.(*MsgIcaTransfer))
@@ -1083,7 +1098,7 @@ func _Msg_IcaAutoStaking_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaAutoStaking",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaAutoStaking",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaAutoStaking(ctx, req.(*MsgIcaAutoStaking))
@@ -1101,7 +1116,7 @@ func _Msg_IcaAuthzGrant_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaAuthzGrant",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaAuthzGrant",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaAuthzGrant(ctx, req.(*MsgIcaAuthzGrant))
@@ -1119,7 +1134,7 @@ func _Msg_IcaAuthzRevoke_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/IcaAuthzRevoke",
+		FullMethod: "/nova.icacontrol.v1.Msg/IcaAuthzRevoke",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).IcaAuthzRevoke(ctx, req.(*MsgIcaAuthzRevoke))
@@ -1137,7 +1152,7 @@ func _Msg_DeleteRegisteredZone_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/DeleteRegisteredZone",
+		FullMethod: "/nova.icacontrol.v1.Msg/DeleteRegisteredZone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).DeleteRegisteredZone(ctx, req.(*MsgDeleteRegisteredZone))
@@ -1145,26 +1160,26 @@ func _Msg_DeleteRegisteredZone_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_ChangeRegisteredZoneInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Msg_ChangeRegisteredZone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MsgChangeRegisteredZone)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).ChangeRegisteredZoneInfo(ctx, in)
+		return srv.(MsgServer).ChangeRegisteredZone(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.ibcstaking.v1.Msg/ChangeRegisteredZoneInfo",
+		FullMethod: "/nova.icacontrol.v1.Msg/ChangeRegisteredZone",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).ChangeRegisteredZoneInfo(ctx, req.(*MsgChangeRegisteredZone))
+		return srv.(MsgServer).ChangeRegisteredZone(ctx, req.(*MsgChangeRegisteredZone))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 var _Msg_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "nova.ibcstaking.v1.Msg",
+	ServiceName: "nova.icacontrol.v1.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -1200,8 +1215,8 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_DeleteRegisteredZone_Handler,
 		},
 		{
-			MethodName: "ChangeRegisteredZoneInfo",
-			Handler:    _Msg_ChangeRegisteredZoneInfo_Handler,
+			MethodName: "ChangeRegisteredZone",
+			Handler:    _Msg_ChangeRegisteredZone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1806,10 +1821,10 @@ func (m *MsgIcaAutoStaking) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0x22
-	if len(m.DaomodifierAddress) > 0 {
-		i -= len(m.DaomodifierAddress)
-		copy(dAtA[i:], m.DaomodifierAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.DaomodifierAddress)))
+	if len(m.ControllerAddress) > 0 {
+		i -= len(m.ControllerAddress)
+		copy(dAtA[i:], m.ControllerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ControllerAddress)))
 		i--
 		dAtA[i] = 0x1a
 	}
@@ -1904,10 +1919,10 @@ func (m *MsgIcaTransfer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x22
 	}
-	if len(m.DaomodifierAddress) > 0 {
-		i -= len(m.DaomodifierAddress)
-		copy(dAtA[i:], m.DaomodifierAddress)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.DaomodifierAddress)))
+	if len(m.ControllerAddress) > 0 {
+		i -= len(m.ControllerAddress)
+		copy(dAtA[i:], m.ControllerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ControllerAddress)))
 		i--
 		dAtA[i] = 0x1a
 	}
@@ -2369,7 +2384,7 @@ func (m *MsgIcaAutoStaking) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.DaomodifierAddress)
+	l = len(m.ControllerAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -2401,7 +2416,7 @@ func (m *MsgIcaTransfer) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.DaomodifierAddress)
+	l = len(m.ControllerAddress)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -4376,7 +4391,7 @@ func (m *MsgIcaAutoStaking) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -4404,7 +4419,7 @@ func (m *MsgIcaAutoStaking) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
+			m.ControllerAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -4605,7 +4620,7 @@ func (m *MsgIcaTransfer) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DaomodifierAddress", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -4633,7 +4648,7 @@ func (m *MsgIcaTransfer) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DaomodifierAddress = string(dAtA[iNdEx:postIndex])
+			m.ControllerAddress = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {

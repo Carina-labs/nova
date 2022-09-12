@@ -29,6 +29,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// MsgUpdateChainState is the message used to update the status of the zone stored in Oracle.
 type MsgUpdateChainState struct {
 	// coin refers to the sum of owned, staked and claimable quantity of the coin
 	Coin types.Coin `protobuf:"bytes,1,opt,name=coin,proto3,castrepeated=github.com/cosmos/cosmos-sdk/types.Coins" json:"coin"`
@@ -110,6 +111,8 @@ func (m *MsgUpdateChainState) GetChainId() string {
 	return ""
 }
 
+// MsgUpdateChainStateResponse is a response message for MsgUpdateChainState.
+// If updating is success, the value of success is true.
 type MsgUpdateChainStateResponse struct {
 	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 }

@@ -4106,6 +4106,8 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// MsgCreateCandidatePool is used to create a new candidate pool.
+// In order to make pool, we need the contract address of pool id and pool.
 type MsgCreateCandidatePool struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4157,6 +4159,7 @@ func (x *MsgCreateCandidatePool) GetCreator() string {
 	return ""
 }
 
+// MsgCreateCandidatePoolResponse is a response message for MsgCreateCandidatePool.
 type MsgCreateCandidatePoolResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4183,6 +4186,8 @@ func (*MsgCreateCandidatePoolResponse) Descriptor() ([]byte, []int) {
 	return file_nova_poolincentive_v1_tx_proto_rawDescGZIP(), []int{1}
 }
 
+// MsgCreateIncentivePool is used to create a new incentive pool.
+// In order to make pool, we need the contract address of pool id and pool, and valid operator.
 type MsgCreateIncentivePool struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4234,6 +4239,7 @@ func (x *MsgCreateIncentivePool) GetOperator() string {
 	return ""
 }
 
+// MsgCreateIncentivePoolResponse is a response message for MsgCreateIncentivePool.
 type MsgCreateIncentivePoolResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4260,6 +4266,8 @@ func (*MsgCreateIncentivePoolResponse) Descriptor() ([]byte, []int) {
 	return file_nova_poolincentive_v1_tx_proto_rawDescGZIP(), []int{3}
 }
 
+// MsgSetPoolWeight is a message used to modify the weight of the incentive pool.
+// It can only be submitted by the correct controller.
 type MsgSetPoolWeight struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4311,6 +4319,7 @@ func (x *MsgSetPoolWeight) GetOperator() string {
 	return ""
 }
 
+// MsgSetPoolWeightResponse is a response message for MsgSetPoolWeight.
 type MsgSetPoolWeightResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4337,6 +4346,8 @@ func (*MsgSetPoolWeightResponse) Descriptor() ([]byte, []int) {
 	return file_nova_poolincentive_v1_tx_proto_rawDescGZIP(), []int{5}
 }
 
+// MsgSetMultiplePoolWeight is a message used to modify the weight of several incentive pools at once.
+// It can only be submitted by the correct controller.
 type MsgSetMultiplePoolWeight struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4380,6 +4391,7 @@ func (x *MsgSetMultiplePoolWeight) GetOperator() string {
 	return ""
 }
 
+// NewPoolWeight is a structure consisting of pool id and weight.
 type NewPoolWeight struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4423,6 +4435,7 @@ func (x *NewPoolWeight) GetNewWeight() uint64 {
 	return 0
 }
 
+// MsgSetMultiplePoolWeightResponse is a response message for MsgSetMultiplePoolWeight.
 type MsgSetMultiplePoolWeightResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
