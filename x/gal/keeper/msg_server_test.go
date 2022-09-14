@@ -161,7 +161,7 @@ func (suite *KeeperTestSuite) setValidator() string {
 
 func (suite *KeeperTestSuite) TestDeposit() {
 	depositor := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 
 	tcs := []struct {
 		name      string
@@ -203,7 +203,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		suite.Run(tc.name, func() {
 			suite.setDenomTrace(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
 
-			ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
+			ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
 
 			suite.mintCoin(suite.chainA.GetContext(), suite.chainA.GetApp(), ibcDenom, sdk.NewInt(10000000), tc.depositor)
 
@@ -222,7 +222,7 @@ func (suite *KeeperTestSuite) TestDelegate() {
 	suite.InitICA()
 
 	depositor := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 
 	tcs := []struct {
 		name          string
@@ -281,7 +281,7 @@ func (suite *KeeperTestSuite) TestDelegate() {
 			suite.setValidator()
 			hostAddr := suite.setHostAddr(tc.zoneId)
 
-			ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
+			ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
 
 			suite.chainA.GetApp().GalKeeper.SetDepositRecord(suite.chainA.GetContext(), &tc.depositRecord)
 			mintAmt := suite.chainA.GetApp().GalKeeper.GetTotalDepositAmtForZoneId(suite.chainA.GetContext(), tc.zoneId, ibcDenom, types.DepositSuccess)
@@ -591,7 +591,7 @@ func (suite *KeeperTestSuite) TestTransferWithdraw() {
 
 	portId := suite.transferPath.EndpointA.ChannelConfig.PortID
 	chanId := suite.transferPath.EndpointA.ChannelID
-	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), portId, chanId, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(portId, chanId, baseDenom)
 
 	tcs := []struct {
 		name           string
@@ -662,7 +662,7 @@ func (suite *KeeperTestSuite) TestTransferWithdraw() {
 
 func (suite *KeeperTestSuite) TestWithdraw() {
 	withdrawer1 := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 
 	tcs := []struct {
 		name            string
@@ -733,7 +733,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 
 func (suite *KeeperTestSuite) TestClaimSnAsset() {
 	claimer := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 
 	tcs := []struct {
 		name          string

@@ -4,7 +4,7 @@ import (
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 )
 
-func (suite *KeeperTestSuite) TestRegisterZoneInfo() {
+func (suite *KeeperTestSuite) TestRegisterZone() {
 	zoneInfo := suite.setZone(3)
 
 	tcs := []struct {
@@ -40,7 +40,7 @@ func (suite *KeeperTestSuite) TestRegisterZoneInfo() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestGetRegisterZoneInfo() {
+func (suite *KeeperTestSuite) TestGetRegisterZone() {
 	zoneInfo := suite.setZone(3)
 
 	tcs := []struct {
@@ -142,7 +142,7 @@ func (suite *KeeperTestSuite) TestGetZoneForDenom() {
 		{
 			name:   "should get gaia for denom",
 			zone:   &zoneInfo[0],
-			denom:  "atom",
+			denom:  zoneInfo[0].BaseDenom,
 			result: &zoneInfo[0],
 		},
 		{
@@ -152,18 +152,18 @@ func (suite *KeeperTestSuite) TestGetZoneForDenom() {
 			result: nil,
 		},
 	}
+
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.zone)
 
 			res := suite.App.IcaControlKeeper.GetZoneForDenom(suite.Ctx, tc.denom)
-
 			suite.Require().Equal(res, tc.result)
 		})
 	}
 }
 
-func (suite *KeeperTestSuite) GetRegisteredZoneForPortId() {
+func (suite *KeeperTestSuite) TestGetRegisteredZoneForPortId() {
 	zoneInfo := suite.setZone(2)
 
 	tcs := []struct {
@@ -175,13 +175,13 @@ func (suite *KeeperTestSuite) GetRegisteredZoneForPortId() {
 		{
 			name:   "should get gaia for port id",
 			zone:   &zoneInfo[0],
-			portId: zoneInfo[0].IcaConnectionInfo.PortId,
+			portId: "icacontroller-" + zoneInfo[0].IcaConnectionInfo.PortId,
 			result: &zoneInfo[0],
 		},
 		{
 			name:   "should not get osmo for port id",
 			zone:   &zoneInfo[1],
-			portId: zoneInfo[0].IcaConnectionInfo.PortId,
+			portId: "icacontroller-" + "testPortId",
 			result: nil,
 		},
 	}
@@ -189,8 +189,7 @@ func (suite *KeeperTestSuite) GetRegisteredZoneForPortId() {
 		suite.Run(tc.name, func() {
 			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.zone)
 
-			res := suite.App.IcaControlKeeper.GetZoneForDenom(suite.Ctx, tc.portId)
-
+			res, _ := suite.App.IcaControlKeeper.GetRegisterZoneForPortId(suite.Ctx, tc.portId)
 			suite.Require().Equal(res, tc.result)
 		})
 	}
@@ -291,10 +290,42 @@ func (suite *KeeperTestSuite) TestGetIBCDenomForBaseDenom() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &tc.zoneInfo)
-			res := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, tc.portId, tc.chanId, tc.zoneInfo.BaseDenom)
+			res := suite.App.IcaControlKeeper.GetIBCHashDenom(tc.portId, tc.chanId, tc.zoneInfo.BaseDenom)
 
 			suite.Require().Equal(res, tc.expect)
 		})
 	}
+}
 
+func (suite *KeeperTestSuite) TestGetRegisteredZoneForValidatorAddr() {
+	zoneInfo := suite.setZone(2)
+
+	tcs := []struct {
+		name          string
+		zone          *types.RegisteredZone
+		result        *types.RegisteredZone
+		validatorAddr string
+	}{
+		{
+			name:          "should get zone for validator address",
+			zone:          &zoneInfo[0],
+			validatorAddr: zoneInfo[0].ValidatorAddress,
+			result:        &zoneInfo[0],
+		},
+		{
+			name:          "should not get zone for validator address",
+			zone:          &zoneInfo[1],
+			validatorAddr: "validator address",
+			result:        nil,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, tc.zone)
+
+			res := suite.App.IcaControlKeeper.GetRegisteredZoneForValidatorAddr(suite.Ctx, tc.validatorAddr)
+			suite.Require().Equal(res, tc.result)
+		})
+	}
 }

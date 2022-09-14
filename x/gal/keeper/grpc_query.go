@@ -79,7 +79,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
 	}
 
-	ibcDenom := q.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	ibcDenom := q.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	amount := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
 	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
@@ -114,7 +114,7 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Que
 	// sum of all pending withdrawals
 	// if the user has no pending withdrawals (when transfer success record doesn't exist), return 0
 	withdrawAmt := q.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, zoneInfo.BaseDenom, request.Address)
-	ibcDenom := q.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	ibcDenom := q.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	withdrawAmount := sdk.NewInt64Coin(ibcDenom, withdrawAmt.Amount.Int64())
 
 	return &types.QueryActiveWithdrawalsResponse{

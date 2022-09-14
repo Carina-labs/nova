@@ -19,7 +19,7 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	oracleKeeper := suite.App.OracleKeeper
 	ctx := suite.Ctx
 
-	denom := icaControlKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, baseDenom)
+	denom := icaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	amount := sdk.NewInt(1000_000000)
 	coin := sdk.NewCoin(denom, amount)
 
@@ -54,7 +54,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	queryClient := suite.queryClient
 	ctx := suite.Ctx
 	galKeeper := suite.App.GalKeeper
-	denom := suite.App.IcaControlKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, baseDenom)
+	denom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 
 	// query with invalid zone
 	_, err := queryClient.PendingWithdrawals(ctx.Context(), &types.QueryPendingWithdrawalsRequest{
@@ -112,7 +112,7 @@ func (suite *KeeperTestSuite) TestQueryActiveWithdrawals() {
 	queryClient := suite.queryClient
 	ctx := suite.Ctx
 	galKeeper := suite.App.GalKeeper
-	denom := suite.App.IcaControlKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, baseDenom)
+	denom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 
 	// query with invalid zone
 	_, err := queryClient.ActiveWithdrawals(ctx.Context(), &types.QueryActiveWithdrawalsRequest{
@@ -260,7 +260,7 @@ func (suite *KeeperTestSuite) TestQueryUndelegateRecord() {
 	suite.Require().Error(err)
 
 	// save the undelegate recod to the keeper
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	snAsset := sdk.NewInt64Coin(ibcDenom, 100)
 	withdrawAmount := sdk.NewInt(150)
 

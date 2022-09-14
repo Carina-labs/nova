@@ -75,8 +75,8 @@ func (im IBCModule) OnChanOpenAck(
 		return types.ErrNotFoundHostAddr
 	}
 
-	zoneInfo, found := im.keeper.GetRegisterZoneForPortId(ctx, portID)
-	if !found {
+	zoneInfo, ok := im.keeper.GetRegisterZoneForPortId(ctx, portID)
+	if !ok {
 		return types.ErrNotFoundZoneInfo
 	}
 

@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
@@ -115,8 +114,6 @@ func (suite *KeeperTestSuite) TestDepositRecord() {
 
 			result, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, zoneId, tc.depositor)
 			suite.Require().True(ok)
-			fmt.Println(*result)
-			fmt.Println(tc.result)
 			suite.Require().Equal(tc.result, *result)
 		})
 	}
@@ -124,7 +121,7 @@ func (suite *KeeperTestSuite) TestDepositRecord() {
 
 func (suite *KeeperTestSuite) TestTotalDepositAmtForZoneId() {
 	depositor := suite.GenRandomAddress().String()
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	tcs := []struct {
 		name      string
 		depositor string
@@ -322,7 +319,7 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForUserAddr() {
 	depositor2 := suite.GenRandomAddress().String()
 	testUser := suite.GenRandomAddress().String()
 
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	tcs := []struct {
 		name      string
 		depositor string
@@ -430,7 +427,7 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForUserAddr() {
 func (suite *KeeperTestSuite) TestDepositOracleVersion() {
 	depositor := suite.GenRandomAddress()
 
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	tcs := []struct {
 		name          string
 		zoneId        string
@@ -532,7 +529,7 @@ func (suite *KeeperTestSuite) TestDepositOracleVersion() {
 func (suite *KeeperTestSuite) TestChangeDepositState() {
 	depositor := suite.GenRandomAddress()
 
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	tcs := []struct {
 		name      string
 		zoneId    string
@@ -633,7 +630,7 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 func (suite *KeeperTestSuite) TestDelegateRecordVersion() {
 	depositor := suite.GenRandomAddress()
 
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	tcs := []struct {
 		name            string
 		zoneId          string
@@ -878,7 +875,7 @@ func (suite *KeeperTestSuite) TestGetAllAmountNotMintShareToken() {
 	depositor1 := suite.GenRandomAddress()
 	depositor2 := suite.GenRandomAddress()
 
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	tcs := []struct {
 		name   string
 		zoneId string
