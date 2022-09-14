@@ -58,25 +58,6 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		}
 		k.AfterUndelegateEnd(ctx, *undelegateMsg, msgResponse)
 		return msgResponse.String(), nil
-	case sdk.MsgTypeURL(&transfertypes.MsgTransfer{}): // withdraw(transfer)
-		var data ibcaccounttypes.InterchainAccountPacketData
-		err := ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data)
-		if err != nil {
-			return "", err
-		}
-
-		packetData, err := ibcaccounttypes.DeserializeCosmosTx(k.cdc, data.Data)
-		if err != nil {
-			return "", err
-		}
-
-		transferMsg, ok := packetData[0].(*transfertypes.MsgTransfer)
-		if !ok {
-			return "", err
-		}
-
-		k.AfterWithdrawEnd(ctx, *transferMsg)
-		return "", nil
 	default:
 		return "", nil
 	}

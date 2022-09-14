@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"github.com/Carina-labs/nova/app"
+	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/keeper"
 	"github.com/Carina-labs/nova/x/gal/types"
 	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
@@ -16,6 +17,8 @@ import (
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	icahosttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
+	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	ibctesting "github.com/cosmos/ibc-go/v3/testing"
 	"time"
 )
@@ -87,7 +90,7 @@ func (suite *KeeperTestSuite) mintCoinToModule(ctx sdk.Context, app *app.NovaApp
 	suite.Require().NoError(err)
 }
 
-func (suite *KeeperTestSuite) icaRelay(ctx sdk.Context) {
+func (suite *KeeperTestSuite) icaRelay(ctx sdk.Context) []byte {
 	em := ctx.EventManager()
 	packet, err := ibctesting.ParsePacketFromEvents(em.Events())
 
@@ -104,6 +107,19 @@ func (suite *KeeperTestSuite) icaRelay(ctx sdk.Context) {
 
 	err = suite.icaPath.EndpointA.AcknowledgePacket(packet, ack)
 	suite.Require().NoError(err)
+
+	return ack
+}
+
+func (suite *KeeperTestSuite) transferRelay(ctx sdk.Context, fromChain, toChain *novatesting.TestChain) {
+	em := ctx.EventManager()
+	p, err := ibctesting.ParsePacketFromEvents(em.Events())
+	suite.Require().NoError(err)
+	fromChain.NextBlock()
+
+	err = suite.transferPath.RelayPacket(p)
+	suite.Require().NoError(err)
+	toChain.NextBlock()
 }
 
 func (suite *KeeperTestSuite) setHostAddr(zoneId string) sdk.AccAddress {
@@ -482,6 +498,164 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 					suite.Require().Equal(withdrawRecord.Records[key].WithdrawVersion, value.WithdrawVersion)
 				}
 			}
+		})
+	}
+}
+
+func (suite *KeeperTestSuite) TestIcaWithdraw() {
+	// IcaWithdraw가 성공적으로 진행 되었는지 확인 - ack의 err여부만 확인
+	// 1. ICA에 성공(Transfer state 성공)
+	// 2. ICA에 실패(Transfer state 실패)
+
+	withdrawAddr := suite.GenRandomAddress()
+
+	suite.InitICA()
+	_ = suite.setValidator()
+	hostAddr := suite.setHostAddr(zoneId)
+
+	icaPortId := suite.transferPath.EndpointB.ChannelConfig.PortID
+	icaChanId := suite.transferPath.EndpointB.ChannelID
+	tcs := []struct {
+		name           string
+		zoneId         string
+		withdrawAddr   sdk.AccAddress
+		withdrawRecord types.WithdrawRecord
+		msg            types.MsgIcaWithdraw
+		denom          string
+		result         bool
+	}{
+		{
+			name:         "success",
+			zoneId:       zoneId,
+			withdrawAddr: withdrawAddr,
+			withdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusRegistered,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime(),
+					},
+				},
+			},
+			msg: types.MsgIcaWithdraw{
+				ZoneId:               zoneId,
+				ControllerAddress:    baseOwnerAcc.String(),
+				IcaTransferPortId:    icaPortId,
+				IcaTransferChannelId: icaChanId,
+				ChainTime:            suite.chainA.GetContext().BlockTime().Add(time.Hour),
+			},
+			denom:  baseDenom,
+			result: true,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			excCtxA := suite.chainA.GetContext()
+
+			suite.chainA.GetApp().GalKeeper.SetWithdrawRecord(suite.chainA.GetContext(), &tc.withdrawRecord)
+			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), baseDenom, sdk.NewInt(10000), hostAddr)
+
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
+			_, err := msgServer.IcaWithdraw(sdk.WrapSDKContext(excCtxA), &tc.msg)
+			suite.Require().NoError(err)
+
+			res := suite.icaRelay(excCtxA)
+
+			var ack channeltypes.Acknowledgement
+			err = channeltypes.SubModuleCdc.UnmarshalJSON(res, &ack)
+			suite.Require().NoError(err)
+			suite.Require().Equal(tc.result, ack.Success())
+
+			resultRecords, ok := suite.chainA.GetApp().GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), tc.zoneId, tc.withdrawAddr.String())
+			suite.Require().True(ok)
+			suite.Require().Equal(tc.withdrawRecord, *resultRecords)
+		})
+	}
+}
+
+// icaWithdraw 성공케이스
+func (suite *KeeperTestSuite) TestTransferWithdraw() {
+
+	// ICA withdraw는 당연히 성공 했고, chainB에서 transfer성공 여부
+	// transfer - get timeout packet, get ack result is err
+	withdrawAddr := suite.GenRandomAddress()
+
+	suite.InitICA()
+	_ = suite.setValidator()
+	hostAddr := suite.setHostAddr(zoneId)
+
+	portId := suite.transferPath.EndpointA.ChannelConfig.PortID
+	chanId := suite.transferPath.EndpointA.ChannelID
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.chainA.GetContext(), portId, chanId, baseDenom)
+
+	tcs := []struct {
+		name           string
+		zoneId         string
+		withdrawAddr   sdk.AccAddress
+		withdrawRecord types.WithdrawRecord
+		denom          string
+		resultAmount   sdk.Coin
+		resultRecord   types.WithdrawRecord
+	}{
+		{
+			name:         "success",
+			zoneId:       zoneId,
+			withdrawAddr: withdrawAddr,
+			withdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusRegistered,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime(),
+					},
+				},
+			},
+			denom:        baseDenom,
+			resultAmount: sdk.NewCoin(baseIbcDenom, sdk.NewInt(10000)),
+			resultRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusTransferred,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime(),
+					},
+				},
+			},
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+
+			suite.chainA.GetApp().GalKeeper.SetWithdrawRecord(suite.chainA.GetContext(), &tc.withdrawRecord)
+			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), tc.denom, tc.resultAmount.Amount, hostAddr)
+			excCtxB := suite.chainB.GetContext()
+
+			timeoutHeight := ibcclienttypes.Height{RevisionHeight: 0, RevisionNumber: 0}
+			TimeoutTimestamp := uint64(excCtxB.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds())
+
+			transferAmt := sdk.NewCoin(tc.denom, tc.resultAmount.Amount)
+			err := suite.chainB.GetApp().TransferKeeper.SendTransfer(excCtxB, suite.transferPath.EndpointB.ChannelConfig.PortID, suite.transferPath.EndpointB.ChannelID, transferAmt, hostAddr, baseOwnerAcc.String(), timeoutHeight, TimeoutTimestamp)
+			suite.Require().NoError(err)
+
+			suite.transferRelay(excCtxB, suite.chainB, suite.chainA)
+
+			resultRecords, ok := suite.chainA.GetApp().GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), tc.zoneId, tc.withdrawAddr.String())
+			suite.Require().True(ok)
+			suite.Require().Equal(tc.resultRecord, *resultRecords)
 		})
 	}
 }
