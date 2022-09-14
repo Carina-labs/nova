@@ -48,7 +48,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	// check IBC denom
-	if deposit.Amount.Denom != m.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom) {
+	if deposit.Amount.Denom != m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom) {
 		return nil, types.ErrInvalidDenom
 	}
 
@@ -111,7 +111,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 		return nil, types.ErrCanNotChangeState
 	}
 
-	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, types.DelegateRequest)
 	delegateAmt.Denom = zoneInfo.BaseDenom
 
@@ -267,7 +267,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
 	}
 
-	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 
 	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.ControllerAddress)
 	if err != nil {
@@ -376,7 +376,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		return nil, fmt.Errorf("cannot find zone id : %s", records.ZoneId)
 	}
 
-	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(ctx, zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	totalClaimAsset := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
 		Denom:  ibcDenom,

@@ -139,7 +139,7 @@ func (k Keeper) GetBaseDenomForSnDenom(ctx sdk.Context, snDenom string) string {
 }
 
 // GetIBCHashDenom uses baseDenom and portId and channelId to create the appropriate IBCdenom.
-func (k Keeper) GetIBCHashDenom(ctx sdk.Context, portId, chanId, baseDenom string) string {
+func (k Keeper) GetIBCHashDenom(portId, chanId, baseDenom string) string {
 	var path string
 
 	if portId == "" || chanId == "" {

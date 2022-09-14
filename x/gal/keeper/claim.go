@@ -76,7 +76,7 @@ func (k Keeper) MintTo(ctx sdk.Context, claimer sdk.AccAddress, mintCoin sdk.Coi
 
 // TotalClaimableAssets returns the total amount of claimable snAsset.
 func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone icacontrolkeeper.RegisteredZone, claimer sdk.AccAddress) (*sdk.Coin, error) {
-	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(ctx, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
+	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 	result := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
 	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
@@ -153,7 +153,7 @@ func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPor
 		return sdk.Coin{}, err
 	}
 
-	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(ctx, transferPortId, transferChanId, denom)
+	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(transferPortId, transferChanId, denom)
 	chainBalanceWithIbcDenom := sdk.NewCoin(ibcDenom, chainInfo.Coin.Amount)
 	if chainBalanceWithIbcDenom.Sub(unMintedAmount).IsZero() {
 		return unMintedAmount, nil

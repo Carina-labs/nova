@@ -75,7 +75,7 @@ For example, snatom -> uatom.
 
 ### GetIBCHashDenom
 ```go
-func (k Keeper) GetIBCHashDenom(ctx sdk.Context, portId, chanId, baseDenom string) string {}
+func (k Keeper) GetIBCHashDenom(portId, chanId, baseDenom string) string {}
 ```
 
 `GetIBCHashDenom` uses baseDenom and portId and channelId to create the appropriate IBCdenom.

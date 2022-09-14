@@ -13,7 +13,7 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 	claimer2 := suite.GenRandomAddress()
 	claimer3 := suite.GenRandomAddress()
 
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	depositRecords := []*DepositRecord{
 		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(10000)), state: types.DelegateSuccess},
 		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(20000)), state: types.DelegateSuccess},
@@ -169,7 +169,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 		amount  sdk.Coin
 	}
 
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, "transfer", "channel-0", "stake")
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom("transfer", "channel-0", "stake")
 	tcs := []struct {
 		name         string
 		stakedAmount sdk.Coin
