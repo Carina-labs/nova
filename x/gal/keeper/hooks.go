@@ -23,11 +23,10 @@ func (k Keeper) Hooks() Hooks {
 // AfterTransferEnd coins user deposit information.
 // It will be used in share token minting process.
 func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, baseDenom string) {
-
 	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, baseDenom)
 	// if zoneInfo == nil, it may be a test situation.
 	if zoneInfo == nil {
-		h.k.Logger(ctx).Error("Zone id is not found", "Denom", data.Denom, "hook", "AfterTransferEnd")
+		h.k.Logger(ctx).Error("AfterTransferEnd", "err", "Zone id is not found", "Denom", data.Denom)
 		return
 	}
 
@@ -36,6 +35,44 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	}
 
 	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DepositRequest, types.DepositSuccess)
+}
+
+func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTokenPacketData) {
+	// denom check : denom으로 zone 정보 불러오고
+	zone := h.k.icaControlKeeper.GetZoneForDenom(ctx, data.Denom)
+	if zone == nil {
+		h.k.Logger(ctx).Error("AfterOnRecvPacket",  "err", "Zone id is not found", "Denom", data.Denom)
+		return
+	}
+
+	// check receiveAddr == controllerAddr && receiver == hostAddr
+	if data.Sender != zone.IcaAccount.HostAddress {
+		h.k.Logger(ctx).Error("AfterOnRecvPacket", "err", "The sender address is different from the registered host address", "hostAddr", zone.IcaAccount.HostAddress, "senderAddr", data.Sender)
+		return
+	}
+
+	if data.Receiver != zone.IcaAccount.ControllerAddress {
+		h.k.Logger(ctx).Error("AfterOnRecvPacket", "err", "The sender address is different from the registered host address", "hostAddr", zone.IcaAccount.HostAddress, "senderAddr", data.Sender)
+		return
+	}
+
+	asset, ok := sdk.NewIntFromString(data.Amount)
+	if !ok {
+		h.k.Logger(ctx).Error("")
+		return
+	}
+
+	if asset.IsZero() || asset.IsNil() {
+		h.k.Logger(ctx).Error("")
+		return
+	}
+
+	// get withdrawVersion
+	withdrawVersion := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
+
+	h.k.SetWithdrawVersion(ctx, zone.ZoneId, withdrawVersion+1)
+	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusRegistered, withdrawVersion+1)
+	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
 }
 
 // delegateAddr(controllerAddr), validatorAddr, delegateAmt
@@ -52,33 +89,6 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DelegateRequest, types.DelegateSuccess)
 	h.k.SetDepositOracleVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, oracleVersion)
 	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, delegateVersion+1)
-}
-
-// ica transfer
-func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
-	asset := transferMsg.Token
-
-	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, asset.Denom)
-	if transferMsg.Receiver != zoneInfo.IcaAccount.ControllerAddress {
-		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zoneInfo.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
-		return
-	}
-
-	if asset.Amount.IsZero() || asset.Amount.IsNil() {
-		// TODO: withdraw fail event
-		return
-	}
-
-	// get withdrawVersion
-	withdrawVersion := h.k.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
-
-	h.k.SetWithdrawVersion(ctx, zoneInfo.ZoneId, withdrawVersion+1)
-	h.k.SetWithdrawRecordVersion(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, withdrawVersion+1)
-	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
-
-}
-
-func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
 }
 
 // AfterUndelegateEnd is executed when ICA undelegation request finished.
