@@ -300,7 +300,7 @@ func (suite *KeeperTestSuite) TestGetWithdrawAmountForUser() {
 
 	suite.NewWithdrawRecords(records)
 
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(suite.Ctx, transferPort, transferChannel, baseDenom)
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	tcs := []struct {
 		name         string
 		zoneId       string
