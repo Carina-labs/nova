@@ -16,7 +16,6 @@ const (
 )
 
 var _ sdk.Msg = &MsgDeposit{}
-
 var _ sdk.Msg = &MsgDelegate{}
 var _ sdk.Msg = &MsgUndelegate{}
 var _ sdk.Msg = &MsgPendingUndelegate{}
@@ -45,11 +44,24 @@ func (msg MsgDeposit) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.Depositor); err != nil {
 		return err
 	}
+
+	if _, err := sdk.AccAddressFromBech32(msg.Claimer); err != nil {
+		return err
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
 	if !msg.Amount.IsValid() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
-	if !msg.Amount.IsPositive() {
+	if msg.Amount.IsNegative() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if msg.Amount.IsZero() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
@@ -65,10 +77,10 @@ func (msg MsgDeposit) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{depositor}
 }
 
-func NewMsgDelegate(zoneId string, daomodifierAddr sdk.AccAddress) *MsgDelegate {
+func NewMsgDelegate(zoneId string, controllerAddr sdk.AccAddress) *MsgDelegate {
 	return &MsgDelegate{
 		ZoneId:            zoneId,
-		ControllerAddress: daomodifierAddr.String(),
+		ControllerAddress: controllerAddr.String(),
 	}
 }
 
@@ -78,7 +90,7 @@ func (msg MsgDelegate) ValidateBasic() error {
 	}
 
 	if msg.ZoneId == "" {
-		return errors.New("zone id is not found")
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
 	}
 
 	return nil
@@ -114,7 +126,7 @@ func (msg MsgUndelegate) ValidateBasic() error {
 	}
 
 	if msg.ZoneId == "" {
-		return errors.New("zone id is not found")
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
 	}
 	return nil
 }
@@ -150,6 +162,14 @@ func (msg MsgPendingUndelegate) ValidateBasic() error {
 		return err
 	}
 
+	if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
+		return err
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
 	if !msg.Amount.IsValid() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
@@ -166,8 +186,8 @@ func (msg MsgPendingUndelegate) GetSignBytes() []byte {
 }
 
 func (msg MsgPendingUndelegate) GetSigners() []sdk.AccAddress {
-	withdrawer, _ := sdk.AccAddressFromBech32(msg.Delegator)
-	return []sdk.AccAddress{withdrawer}
+	delegator, _ := sdk.AccAddressFromBech32(msg.Delegator)
+	return []sdk.AccAddress{delegator}
 }
 
 func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress) *MsgWithdraw {
@@ -188,6 +208,10 @@ func (msg MsgWithdraw) Type() string {
 func (msg MsgWithdraw) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Withdrawer)
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
 	}
 
 	return nil
@@ -212,6 +236,10 @@ func NewMsgClaimSnAsset(zoneId string, claimer sdk.AccAddress) *MsgClaimSnAsset 
 func (msg MsgClaimSnAsset) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.Claimer); err != nil {
 		return err
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
 	}
 
 	return nil
@@ -243,6 +271,18 @@ func (msg MsgIcaWithdraw) Route() string {
 func (msg MsgIcaWithdraw) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
+	if msg.IcaTransferChannelId == "" {
+		return sdkerrors.Wrap(ErrTransferInfoNotFound, "transfer channel id is not nil")
+	}
+
+	if msg.IcaTransferPortId == "" {
+		return sdkerrors.Wrap(ErrTransferInfoNotFound, "transfer port id is not nil")
 	}
 
 	if msg.ChainTime.IsZero() {

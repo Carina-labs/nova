@@ -103,6 +103,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	}
 
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, delegate.ZoneId)
+
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
