@@ -50,14 +50,15 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.Register
 	baseDenom := k.icaControlKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
 	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId)
-
 	if err != nil {
 		return sdk.Coin{}, err
 	}
 
 	// convert decimal
 	snAsset := k.ConvertWAssetToSnAssetDecimal(asset.Amount.BigInt(), zone.Decimal, snDenom)
-	mintAmt := k.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), totalStakedAmount.Amount.BigInt())
+	convertTotalStakedAmount := k.ConvertWAssetToSnAssetDecimal(totalStakedAmount.Amount.BigInt(), zone.Decimal, baseDenom)
+	mintAmt := k.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), convertTotalStakedAmount.Amount.BigInt())
+
 	return sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt)), nil
 }
 
