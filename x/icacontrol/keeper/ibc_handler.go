@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"errors"
-
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	proto "github.com/gogo/protobuf/proto"
 
@@ -29,7 +28,7 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 
 		delegateMsg, ok := packetData[0].(*stakingtypes.MsgDelegate)
 		if !ok {
-			return "", err
+			return "", types.ErrMsgNotFound
 		}
 
 		k.AfterDelegateEnd(ctx, *delegateMsg)
@@ -54,7 +53,7 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 
 		undelegateMsg, ok := packetData[0].(*stakingtypes.MsgUndelegate)
 		if !ok {
-			return "", err
+			return "", types.ErrMsgNotFound
 		}
 		k.AfterUndelegateEnd(ctx, *undelegateMsg, msgResponse)
 		return msgResponse.String(), nil

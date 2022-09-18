@@ -14,21 +14,13 @@ const (
 	Version = "ics27-1"
 )
 
-// prefix bytes for the epoch persistent store
-const (
-	prefixZone           = iota + 1
-	prefixConnectionInfo = iota + 1
-)
-
 const (
 	PrefixSnAsset = "sn"
 )
 
 var (
-	KeyPrefixZone           = []byte{prefixZone}
-	KeyPrefixConnectionInfo = []byte{prefixConnectionInfo}
-)
+	KeyPrefixZone           = []byte{0x01}
+	KeyPrefixConnectionInfo = []byte{0x02}
 
-func KeyPrefix(p string) []byte {
-	return []byte(p)
-}
+	KeyAutoStakingVersion = []byte{0x03}
+)
