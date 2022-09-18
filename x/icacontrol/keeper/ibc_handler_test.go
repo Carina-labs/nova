@@ -38,11 +38,17 @@ func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.Registere
 		msgs = append(msgs, undelegateMsg)
 		break
 	case "autostaking":
-		autostakingMsg := &distributiontype.MsgWithdrawDelegatorReward{
-			DelegatorAddress: "test",
+		distMsg := &distributiontype.MsgWithdrawDelegatorReward{
+			DelegatorAddress: zoneInfo[0].IcaAccount.HostAddress,
 			ValidatorAddress: zoneInfo[0].ValidatorAddress,
 		}
-		msgs = append(msgs, autostakingMsg)
+		msgs = append(msgs, distMsg)
+
+		delegateMsg := &stakingtypes.MsgDelegate{
+			DelegatorAddress: zoneInfo[0].IcaAccount.HostAddress,
+			ValidatorAddress: zoneInfo[0].ValidatorAddress,
+		}
+		msgs = append(msgs, delegateMsg)
 		break
 	case "transfer":
 		transferMsg := &transfertypes.MsgTransfer{
