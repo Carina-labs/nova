@@ -111,14 +111,18 @@ func (suite *KeeperTestSuite) icaRelay(ctx sdk.Context) []byte {
 	return ack
 }
 
-func (suite *KeeperTestSuite) transferRelay(ctx sdk.Context, fromChain, toChain *novatesting.TestChain) {
+func (suite *KeeperTestSuite) transferRelay(ctx sdk.Context, fromChain, toChain *novatesting.TestChain, timeout bool) {
 	em := ctx.EventManager()
 	p, err := ibctesting.ParsePacketFromEvents(em.Events())
 	suite.Require().NoError(err)
 	fromChain.NextBlock()
 
 	err = suite.transferPath.RelayPacket(p)
-	suite.Require().NoError(err)
+	if timeout {
+		suite.Require().Error(err)
+	} else {
+		suite.Require().NoError(err)
+	}
 	toChain.NextBlock()
 }
 
@@ -161,8 +165,13 @@ func (suite *KeeperTestSuite) setValidator() string {
 
 func (suite *KeeperTestSuite) TestDeposit() {
 	depositor := suite.GenRandomAddress()
-	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
-	invalidDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom("channel", "port", baseDenom)
+
+	suite.InitICA()
+	_ = suite.setValidator()
+	hostAddr := suite.setHostAddr(zoneId)
+
+	baseIbcDenom := suite.chainA.GetApp().IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	invalidDenom := suite.chainA.GetApp().IcaControlKeeper.GetIBCHashDenom("channel", "port", baseDenom)
 
 	tcs := []struct {
 		name      string
@@ -171,6 +180,7 @@ func (suite *KeeperTestSuite) TestDeposit() {
 		denom     string
 		depositor sdk.AccAddress
 		result    types.DepositRecord
+		resultAmt sdk.Coin
 		err       bool
 	}{
 		{
@@ -194,11 +204,12 @@ func (suite *KeeperTestSuite) TestDeposit() {
 							Denom:  baseIbcDenom,
 							Amount: sdk.NewInt(10000),
 						},
-						State: types.DepositRequest,
+						State: types.DepositSuccess,
 					},
 				},
 			},
-			err: false,
+			resultAmt: sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
+			err:       false,
 		},
 		{
 			name: "fail case 1 - zone not found",
@@ -249,18 +260,28 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			suite.setDenomTrace(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
 
 			ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
-
 			suite.mintCoin(suite.chainA.GetContext(), suite.chainA.GetApp(), ibcDenom, sdk.NewInt(10000), tc.depositor)
 
-			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
-			_, err := msgServer.Deposit(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
+			escrowAddr := transfertypes.GetEscrowAddress(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID)
+			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), tc.denom, sdk.NewInt(10000), escrowAddr)
+
+			ctxA := suite.chainA.GetContext()
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().GalKeeper)
+			_, err := msgServer.Deposit(sdk.WrapSDKContext(ctxA), &tc.msg)
+
 			if tc.err {
 				suite.Require().Error(err)
 			} else {
-				suite.Require().NoError(err)
-				result, ok := suite.chainA.App.GalKeeper.GetUserDepositRecord(suite.chainA.GetContext(), tc.zoneId, tc.depositor)
+				balance := suite.chainA.GetApp().BankKeeper.GetBalance(ctxA, depositor, ibcDenom)
+
+				suite.transferRelay(ctxA, suite.chainA, suite.chainB, false)
+
+				result, ok := suite.chainA.GetApp().GalKeeper.GetUserDepositRecord(suite.chainA.GetContext(), tc.zoneId, tc.depositor)
 				suite.Require().True(ok)
 				suite.Require().Equal(tc.result, *result)
+
+				balance = suite.chainB.GetApp().BankKeeper.GetBalance(suite.chainB.GetContext(), hostAddr, tc.denom)
+				suite.Require().Equal(tc.resultAmt, balance)
 			}
 
 		})
@@ -766,10 +787,6 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 }
 
 func (suite *KeeperTestSuite) TestIcaWithdraw() {
-	// IcaWithdraw가 성공적으로 진행 되었는지 확인 - ack의 err여부만 확인
-	// 1. ICA에 성공(Transfer state 성공)
-	// 2. ICA에 실패(Transfer state 실패)
-
 	withdrawAddr := suite.GenRandomAddress()
 
 	suite.InitICA()
@@ -786,6 +803,7 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 		msg            types.MsgIcaWithdraw
 		denom          string
 		result         bool
+		err            bool
 	}{
 		{
 			name:         "success",
@@ -813,6 +831,91 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 			},
 			denom:  baseDenom,
 			result: true,
+			err:    false,
+		},
+		{
+			name:         "fail case 1 - sender address is not the controller address ",
+			zoneId:       zoneId,
+			withdrawAddr: withdrawAddr,
+			withdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusRegistered,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime(),
+					},
+				},
+			},
+			msg: types.MsgIcaWithdraw{
+				ZoneId:               zoneId,
+				ControllerAddress:    withdrawAddr.String(),
+				IcaTransferPortId:    icaPortId,
+				IcaTransferChannelId: icaChanId,
+				ChainTime:            suite.chainA.GetContext().BlockTime().Add(time.Hour),
+			},
+			denom:  baseDenom,
+			result: true,
+			err:    true,
+		},
+		{
+			name:         "fail case 2 - ack result is fail",
+			zoneId:       zoneId,
+			withdrawAddr: withdrawAddr,
+			withdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusRegistered,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime(),
+					},
+				},
+			},
+			msg: types.MsgIcaWithdraw{
+				ZoneId:               zoneId,
+				ControllerAddress:    baseOwnerAcc.String(),
+				IcaTransferPortId:    "transfer",
+				IcaTransferChannelId: "channel-1000",
+				ChainTime:            suite.chainA.GetContext().BlockTime().Add(time.Hour),
+			},
+			denom:  baseDenom,
+			result: false,
+			err:    false,
+		},
+		{
+			name:         "fail case 3 - time",
+			zoneId:       zoneId,
+			withdrawAddr: withdrawAddr,
+			withdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusRegistered,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime().Add(time.Hour),
+					},
+				},
+			},
+			msg: types.MsgIcaWithdraw{
+				ZoneId:               zoneId,
+				ControllerAddress:    baseOwnerAcc.String(),
+				IcaTransferPortId:    icaPortId,
+				IcaTransferChannelId: icaChanId,
+				ChainTime:            suite.chainA.GetContext().BlockTime(),
+			},
+			denom:  baseDenom,
+			result: false,
+			err:    true,
 		},
 	}
 
@@ -825,18 +928,21 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
 			_, err := msgServer.IcaWithdraw(sdk.WrapSDKContext(excCtxA), &tc.msg)
-			suite.Require().NoError(err)
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.Require().NoError(err)
+				res := suite.icaRelay(excCtxA)
 
-			res := suite.icaRelay(excCtxA)
+				var ack channeltypes.Acknowledgement
+				err = channeltypes.SubModuleCdc.UnmarshalJSON(res, &ack)
+				suite.Require().NoError(err)
+				suite.Require().Equal(tc.result, ack.Success())
 
-			var ack channeltypes.Acknowledgement
-			err = channeltypes.SubModuleCdc.UnmarshalJSON(res, &ack)
-			suite.Require().NoError(err)
-			suite.Require().Equal(tc.result, ack.Success())
-
-			resultRecords, ok := suite.chainA.GetApp().GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), tc.zoneId, tc.withdrawAddr.String())
-			suite.Require().True(ok)
-			suite.Require().Equal(tc.withdrawRecord, *resultRecords)
+				resultRecords, ok := suite.chainA.GetApp().GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), tc.zoneId, tc.withdrawAddr.String())
+				suite.Require().True(ok)
+				suite.Require().Equal(tc.withdrawRecord, *resultRecords)
+			}
 		})
 	}
 }
@@ -860,7 +966,10 @@ func (suite *KeeperTestSuite) TestTransferWithdraw() {
 		withdrawRecord types.WithdrawRecord
 		denom          string
 		resultAmount   sdk.Coin
+		timestamp      uint64
 		resultRecord   types.WithdrawRecord
+		timeout        bool
+		err            bool
 	}{
 		{
 			name:         "success",
@@ -894,6 +1003,9 @@ func (suite *KeeperTestSuite) TestTransferWithdraw() {
 					},
 				},
 			},
+			timestamp: uint64(suite.chainB.GetContext().BlockTime().Add(time.Hour).UnixNano()),
+			timeout:   false,
+			err:       false,
 		},
 	}
 
@@ -905,17 +1017,22 @@ func (suite *KeeperTestSuite) TestTransferWithdraw() {
 			excCtxB := suite.chainB.GetContext()
 
 			timeoutHeight := ibcclienttypes.Height{RevisionHeight: 0, RevisionNumber: 0}
-			TimeoutTimestamp := uint64(excCtxB.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds())
+			TimeoutTimestamp := tc.timestamp
 
 			transferAmt := sdk.NewCoin(tc.denom, tc.resultAmount.Amount)
 			err := suite.chainB.GetApp().TransferKeeper.SendTransfer(excCtxB, suite.transferPath.EndpointB.ChannelConfig.PortID, suite.transferPath.EndpointB.ChannelID, transferAmt, hostAddr, baseOwnerAcc.String(), timeoutHeight, TimeoutTimestamp)
-			suite.Require().NoError(err)
 
-			suite.transferRelay(excCtxB, suite.chainB, suite.chainA)
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.Require().NoError(err)
 
-			resultRecords, ok := suite.chainA.GetApp().GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), tc.zoneId, tc.withdrawAddr.String())
-			suite.Require().True(ok)
-			suite.Require().Equal(tc.resultRecord, *resultRecords)
+				suite.transferRelay(excCtxB, suite.chainB, suite.chainA, tc.timeout)
+
+				resultRecords, ok := suite.chainA.GetApp().GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), tc.zoneId, tc.withdrawAddr.String())
+				suite.Require().True(ok)
+				suite.Require().Equal(tc.resultRecord, *resultRecords)
+			}
 		})
 	}
 }
