@@ -90,6 +90,34 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, delegateVersion+1)
 }
 
+// ica transfer
+func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+	asset := transferMsg.Token
+
+	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, asset.Denom)
+
+	if transferMsg.Receiver != zoneInfo.IcaAccount.ControllerAddress {
+		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zoneInfo.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
+		return
+	}
+
+	if asset.Amount.IsZero() || asset.Amount.IsNil() {
+		// TODO: withdraw fail event
+		return
+	}
+
+	// get withdrawVersion
+	withdrawVersion := h.k.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
+
+	h.k.SetWithdrawVersion(ctx, zoneInfo.ZoneId, withdrawVersion+1)
+	h.k.SetWithdrawRecordVersion(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, withdrawVersion+1)
+	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
+
+}
+
+func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
+}
+
 // AfterUndelegateEnd is executed when ICA undelegation request finished.
 // 1. It removes undelegation history in store.
 // 2. It saves undelegation finish time to store.

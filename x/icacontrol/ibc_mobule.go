@@ -1,6 +1,8 @@
 package icacontrol
 
 import (
+	distributiontype "github.com/cosmos/cosmos-sdk/x/distribution/types"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	proto "github.com/gogo/protobuf/proto"
 
 	"github.com/Carina-labs/nova/x/icacontrol/keeper"
@@ -140,16 +142,24 @@ func (im IBCModule) OnAcknowledgementPacket(
 	}
 
 	switch len(txMsgData.Data) {
-	case 0:
+	case 1: // Delegate, Undelegate, IcaWithdraw
+		response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
+		if err != nil {
+			return err
+		}
+		im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
 		return nil
-	default:
-		for _, msgData := range txMsgData.Data {
-			response, err := im.keeper.HandleAckMsgData(ctx, packet, msgData)
+	case 2: // AutoStaking
+		if txMsgData.Data[0].MsgType == sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{}) &&
+			txMsgData.Data[1].MsgType == sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}) {
+			response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
 			if err != nil {
 				return err
 			}
 			im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
 		}
+		return nil
+	default:
 		return nil
 	}
 }
