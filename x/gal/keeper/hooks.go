@@ -38,7 +38,6 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 }
 
 func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTokenPacketData) {
-	// denom check : denom으로 zone 정보 불러오고
 	zone := h.k.icaControlKeeper.GetZoneForDenom(ctx, data.Denom)
 	if zone == nil {
 		h.k.Logger(ctx).Error("AfterOnRecvPacket", "err", "Zone id is not found", "Denom", data.Denom)
