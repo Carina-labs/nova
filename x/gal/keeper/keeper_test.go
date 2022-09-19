@@ -36,7 +36,6 @@ type KeeperTestSuite struct {
 	ctxB         sdk.Context
 	transferPath *novatesting.Path
 	icaPath      *novatesting.Path
-	icaOwnerAddr sdk.AccAddress
 }
 
 func (suite *KeeperTestSuite) SetupTest() {
@@ -52,12 +51,11 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.coordinator.Setup(suite.transferPath)
 	suite.icaPath = newIcaPath(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
-	suite.icaOwnerAddr = baseOwnerAcc
 
 	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, newBaseRegisteredZone())
 	suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
 
-	err := setupIcaPath(suite.icaPath, zoneId+"."+suite.icaOwnerAddr.String())
+	err := setupIcaPath(suite.icaPath, zoneId+"."+baseOwnerAcc.String())
 	suite.Require().NoError(err)
 }
 
