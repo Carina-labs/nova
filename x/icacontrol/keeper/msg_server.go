@@ -19,11 +19,11 @@ import (
 var _ types.MsgServer = msgServer{}
 
 type msgServer struct {
-	Keeper
+	*Keeper
 }
 
 // NewMsgServerImpl creates and returns a new types.MsgServer, fulfilling the icacontrol Msg service interface
-func NewMsgServerImpl(keeper Keeper) types.MsgServer {
+func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 	return &msgServer{Keeper: keeper}
 }
 

@@ -234,6 +234,11 @@ func (msg MsgIcaTransfer) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
+	_, err = sdk.AccAddressFromBech32(msg.ReceiverAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid receiver address")
+	}
+
 	if strings.TrimSpace(msg.HostAddress) == "" {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid host address")
 	}

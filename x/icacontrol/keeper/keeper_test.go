@@ -24,13 +24,14 @@ var (
 type KeeperTestSuite struct {
 	apptesting.KeeperTestHelper
 
-	coordinator *novatesting.Coordinator
-	chainA      *novatesting.TestChain
-	chainB      *novatesting.TestChain
-	ctxA        sdk.Context
-	ctxB        sdk.Context
-	path        *novatesting.Path
-	icaPath     *novatesting.Path
+	coordinator  *novatesting.Coordinator
+	chainA       *novatesting.TestChain
+	chainB       *novatesting.TestChain
+	ctxA         sdk.Context
+	ctxB         sdk.Context
+	path         *novatesting.Path
+	icaPath      *novatesting.Path
+	transferPath *novatesting.Path
 }
 
 func TestKeeperTestSuite(t *testing.T) {
@@ -72,45 +73,6 @@ func (suite *KeeperTestSuite) setZone(num int) []icacontroltypes.RegisteredZone 
 	return zones
 }
 
-func NewICAPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {
-	path := novatesting.NewPath(chainA, chainB)
-	path.EndpointA.ChannelConfig.PortID = icatypes.PortID
-	path.EndpointB.ChannelConfig.PortID = icatypes.PortID
-	path.EndpointA.ChannelConfig.Order = ibcchanneltypes.ORDERED
-	path.EndpointB.ChannelConfig.Order = ibcchanneltypes.ORDERED
-	version := string(icatypes.ModuleCdc.MustMarshalJSON(&icatypes.Metadata{
-		Version:                "ics27-1",
-		ControllerConnectionId: "connection-0",
-		HostConnectionId:       "connection-0",
-		Encoding:               "proto3",
-		TxType:                 "sdk_multi_msg",
-	}))
-	path.EndpointA.ChannelConfig.Version = version
-	path.EndpointB.ChannelConfig.Version = version
-	return path
-}
-
-// SetupICAPath invokes the InterchainAccounts entrypoint and subsequent channel handshake handlers
-func (suite *KeeperTestSuite) SetupICAPath(path *novatesting.Path, owner string) error {
-	if err := suite.RegisterInterchainAccount(path.EndpointA, owner); err != nil {
-		return err
-	}
-
-	if err := path.EndpointB.ChanOpenTry(); err != nil {
-		return err
-	}
-
-	if err := path.EndpointA.ChanOpenAck(); err != nil {
-		return err
-	}
-
-	if err := path.EndpointB.ChanOpenConfirm(); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 // RegisterInterchainAccount is a helper function for starting the channel handshake
 func (suite *KeeperTestSuite) RegisterInterchainAccount(endpoint *novatesting.Endpoint, owner string) error {
 	portID, err := icatypes.NewControllerPortID(owner)
@@ -136,22 +98,19 @@ func (suite *KeeperTestSuite) RegisterInterchainAccount(endpoint *novatesting.En
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
 
-	//Coordinator is a testing struct which contains N TestChain's
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
 	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
 	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))
 
-	suite.icaPath = NewICAPath(suite.chainA, suite.chainB)
+	suite.transferPath = NewIbcTransferPath(suite.chainA, suite.chainB)
+	suite.coordinator.Setup(suite.transferPath)
+	suite.icaPath = newIcaPath(suite.chainA, suite.chainB)
 	suite.coordinator.SetupConnections(suite.icaPath)
-	zones := suite.setZone(1)
 
-	for _, zone := range zones {
-		suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &zone)
-		suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &zone)
-		err := suite.SetupICAPath(suite.icaPath, zone.ZoneId+"."+zone.IcaAccount.ControllerAddress)
-		suite.Require().NoError(err)
-	}
+	suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), newBaseRegisteredZone())
 
+	err := setupIcaPath(suite.icaPath, zoneId+"."+baseOwnerAcc.String())
+	suite.Require().NoError(err)
 }
 
 func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []icacontroltypes.RegisteredZone) {
