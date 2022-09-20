@@ -57,6 +57,31 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		}
 		k.AfterUndelegateEnd(ctx, *undelegateMsg, msgResponse)
 		return msgResponse.String(), nil
+	case sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{}): // AutoStaking
+		var data ibcaccounttypes.InterchainAccountPacketData
+		err := ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data)
+		if err != nil {
+			return "", err
+		}
+
+		packetData, err := ibcaccounttypes.DeserializeCosmosTx(k.cdc, data.Data)
+		if err != nil {
+			return "", err
+		}
+
+		rewardMsg, ok := packetData[0].(*distributiontype.MsgWithdrawDelegatorReward)
+		if !ok {
+			return "", types.ErrMsgNotFound
+		}
+
+		zone := k.GetRegisteredZoneForValidatorAddr(ctx, rewardMsg.ValidatorAddress)
+		if zone == nil {
+			return "", types.ErrMsgNotFound
+		}
+
+		version := k.GetAutoStakingVersion(ctx, zone.ZoneId)
+		k.SetAutoStakingVersion(ctx, zone.ZoneId, version+1)
+		return "", nil
 	default:
 		return "", nil
 	}
