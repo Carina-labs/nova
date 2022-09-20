@@ -27,10 +27,6 @@ message RegisteredZone {
 message IcaAccount {
   string controller_address = 1;
   string host_address = 2;
-  cosmos.base.v1beta1.Coin balance = 3 [
-    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
-    (gogoproto.nullable) = false
-  ];
 }
 
 //zone name, connection id, portID(owner address)

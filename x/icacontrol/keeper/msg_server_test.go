@@ -203,9 +203,118 @@ func (suite *KeeperTestSuite) setValidator() string {
 }
 
 func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
+	suite.InitICA()
+	zone := suite.setZone(3)
+	hostAddr := suite.setHostAddr(zoneId)
+	valAddr := suite.setValidator()
 
-	// register zone - chain A
-	//
+	tcs := []struct {
+		name   string
+		zoneId string
+		zone   types.RegisteredZone
+		msg    types.MsgChangeRegisteredZone
+		result types.RegisteredZone
+	}{
+		{
+			name:   "should set zone 1",
+			zoneId: zoneId,
+			zone:   zone[0],
+			msg: types.MsgChangeRegisteredZone{
+				ZoneId: zoneId,
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				BaseDenom:        baseDenom,
+				Decimal:          baseDecimal,
+			},
+			result: types.RegisteredZone{
+				ZoneId: zoneId,
+				IcaConnectionInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				SnDenom:          baseSnDenom,
+				BaseDenom:        baseDenom,
+				Decimal:          baseDecimal,
+			},
+		},
+		{
+			name:   "should set zone 2",
+			zoneId: "osmo",
+			zone:   zone[1],
+			msg: types.MsgChangeRegisteredZone{
+				ZoneId: "osmo",
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				BaseDenom:        baseDenom,
+				Decimal:          baseDecimal,
+			},
+			result: types.RegisteredZone{
+				ZoneId: "osmo",
+				IcaConnectionInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				SnDenom:          baseSnDenom,
+				BaseDenom:        baseDenom,
+				Decimal:          baseDecimal,
+			},
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &tc.zone)
+
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
+			_, err := msgServer.ChangeRegisteredZone(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
+			suite.Require().NoError(err)
+
+			result, ok := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), tc.zoneId)
+			suite.Require().True(ok)
+
+			suite.Require().Equal(tc.result, result)
+		})
+	}
 
 }
 
