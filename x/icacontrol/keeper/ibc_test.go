@@ -18,6 +18,7 @@ var (
 	baseOwnerAcc = sdk.AccAddress(secp256k1.GenPrivKey().PubKey().Address())
 	baseDenom    = "stake"
 	baseSnDenom  = "snstake"
+	baseDecimal  = int64(6)
 )
 
 func NewIbcTransferPath(chainA, chainB *novatesting.TestChain) *novatesting.Path {

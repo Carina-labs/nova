@@ -46,6 +46,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
 		SnDenom:          appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
+		Decimal:          zone.Decimal,
 	}
 
 	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
@@ -116,6 +117,7 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 		ValidatorAddress: zone.ValidatorAddress,
 		BaseDenom:        zone.BaseDenom,
 		SnDenom:          appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
+		Decimal:          zone.Decimal,
 	}
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
