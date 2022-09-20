@@ -19,6 +19,10 @@ import (
 var (
 	key1 = secp256k1.GenPrivKey()
 	acc1 = authtypes.NewBaseAccount(key1.PubKey().Address().Bytes(), key1.PubKey(), 0, 0)
+	key2 = secp256k1.GenPrivKey()
+	acc2 = authtypes.NewBaseAccount(key2.PubKey().Address().Bytes(), key2.PubKey(), 0, 0)
+	key3 = secp256k1.GenPrivKey()
+	acc3 = authtypes.NewBaseAccount(key3.PubKey().Address().Bytes(), key3.PubKey(), 0, 0)
 )
 
 type KeeperTestSuite struct {

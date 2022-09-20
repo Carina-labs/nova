@@ -445,8 +445,14 @@ func (suite *KeeperTestSuite) TestIcaTransfer() {
 func (suite *KeeperTestSuite) TestAuthzGrant() {
 	suite.InitICA()
 	hostAddr := suite.setHostAddr(zoneId)
-	granteeAddr := acc1.GetAddress()
+	granteeAddr1 := acc1.GetAddress()
+	granteeAddr2 := acc2.GetAddress()
+	granteeAddr3 := acc3.GetAddress()
 	randAddr := suite.GenRandomAddress()
+
+	suite.chainB.GetApp().AccountKeeper.SetAccount(suite.chainB.GetContext(), acc1)
+	suite.chainB.GetApp().AccountKeeper.SetAccount(suite.chainB.GetContext(), acc2)
+	suite.chainB.GetApp().AccountKeeper.SetAccount(suite.chainB.GetContext(), acc3)
 
 	tcs := []struct {
 		name    string
@@ -459,46 +465,44 @@ func (suite *KeeperTestSuite) TestAuthzGrant() {
 		{
 			name:    "success - send",
 			granter: hostAddr,
-			grantee: granteeAddr,
-			msg:     suite.getGrantMsg("send", zoneId, granteeAddr.String(), baseOwnerAcc),
+			grantee: granteeAddr1,
+			msg:     suite.getGrantMsg("send", zoneId, granteeAddr1.String(), baseOwnerAcc),
 			result:  sdk.MsgTypeURL(&banktypes.MsgSend{}),
 			err:     false,
 		},
 		{
 			name:    "success - delegate",
 			granter: hostAddr,
-			grantee: granteeAddr,
-			msg:     suite.getGrantMsg("delegate", zoneId, granteeAddr.String(), baseOwnerAcc),
+			grantee: granteeAddr2,
+			msg:     suite.getGrantMsg("delegate", zoneId, granteeAddr2.String(), baseOwnerAcc),
 			result:  sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
 			err:     false,
 		},
 		{
 			name:    "success - undelegate",
 			granter: hostAddr,
-			grantee: granteeAddr,
-			msg:     suite.getGrantMsg("undelegate", zoneId, granteeAddr.String(), baseOwnerAcc),
+			grantee: granteeAddr3,
+			msg:     suite.getGrantMsg("undelegate", zoneId, granteeAddr3.String(), baseOwnerAcc),
 			result:  sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}),
 			err:     false,
 		},
 		{
 			name:    "fail case 1 - zone not found",
 			granter: hostAddr,
-			grantee: granteeAddr,
-			msg:     suite.getGrantMsg("delegate", "test", granteeAddr.String(), baseOwnerAcc),
+			grantee: granteeAddr1,
+			msg:     suite.getGrantMsg("delegate", "test", granteeAddr1.String(), baseOwnerAcc),
 			err:     true,
 		},
 		{
 			name:    "fail - invalid controller address",
 			granter: hostAddr,
-			grantee: granteeAddr,
-			msg:     suite.getGrantMsg("delegate", zoneId, granteeAddr.String(), randAddr),
+			grantee: granteeAddr1,
+			msg:     suite.getGrantMsg("delegate", zoneId, granteeAddr1.String(), randAddr),
 			err:     true,
 		},
 	}
 
 	for _, tc := range tcs {
-		suite.chainB.GetApp().AccountKeeper.SetAccount(suite.chainB.GetContext(), acc1)
-
 		exeCtxA := suite.chainA.GetContext()
 		msgServer := keeper.NewMsgServerImpl(suite.chainA.App.IcaControlKeeper)
 		_, err := msgServer.IcaAuthzGrant(sdk.WrapSDKContext(exeCtxA), &tc.msg)
@@ -506,6 +510,11 @@ func (suite *KeeperTestSuite) TestAuthzGrant() {
 			suite.Require().Error(err)
 		} else {
 			suite.Require().NoError(err)
+
+			suite.icaRelay(exeCtxA)
+
+			auth := suite.chainB.GetApp().AuthzKeeper.GetAuthorizations(suite.chainB.GetContext(), tc.grantee, tc.granter)
+			suite.Equal(tc.result, auth[0].MsgTypeURL())
 		}
 	}
 }
@@ -605,5 +614,4 @@ func (suite *KeeperTestSuite) TestIcaAuthzRevoke() {
 			}
 		})
 	}
-
 }
