@@ -201,41 +201,136 @@ func (m *QueryZoneResponse) GetZone() *RegisteredZone {
 	return nil
 }
 
+type QueryAutoStakingVersion struct {
+	ZoneId string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+}
+
+func (m *QueryAutoStakingVersion) Reset()         { *m = QueryAutoStakingVersion{} }
+func (m *QueryAutoStakingVersion) String() string { return proto.CompactTextString(m) }
+func (*QueryAutoStakingVersion) ProtoMessage()    {}
+func (*QueryAutoStakingVersion) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8f47059bf27385ee, []int{4}
+}
+func (m *QueryAutoStakingVersion) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAutoStakingVersion) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAutoStakingVersion.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAutoStakingVersion) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAutoStakingVersion.Merge(m, src)
+}
+func (m *QueryAutoStakingVersion) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAutoStakingVersion) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAutoStakingVersion.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAutoStakingVersion proto.InternalMessageInfo
+
+func (m *QueryAutoStakingVersion) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+type QueryAutoStakingVersionResponse struct {
+	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
+}
+
+func (m *QueryAutoStakingVersionResponse) Reset()         { *m = QueryAutoStakingVersionResponse{} }
+func (m *QueryAutoStakingVersionResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAutoStakingVersionResponse) ProtoMessage()    {}
+func (*QueryAutoStakingVersionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8f47059bf27385ee, []int{5}
+}
+func (m *QueryAutoStakingVersionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAutoStakingVersionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAutoStakingVersionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAutoStakingVersionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAutoStakingVersionResponse.Merge(m, src)
+}
+func (m *QueryAutoStakingVersionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAutoStakingVersionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAutoStakingVersionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAutoStakingVersionResponse proto.InternalMessageInfo
+
+func (m *QueryAutoStakingVersionResponse) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*QueryAllZonesRequest)(nil), "nova.icacontrol.v1.QueryAllZonesRequest")
 	proto.RegisterType((*QueryAllZonesResponse)(nil), "nova.icacontrol.v1.QueryAllZonesResponse")
 	proto.RegisterType((*QueryZoneRequest)(nil), "nova.icacontrol.v1.QueryZoneRequest")
 	proto.RegisterType((*QueryZoneResponse)(nil), "nova.icacontrol.v1.QueryZoneResponse")
+	proto.RegisterType((*QueryAutoStakingVersion)(nil), "nova.icacontrol.v1.QueryAutoStakingVersion")
+	proto.RegisterType((*QueryAutoStakingVersionResponse)(nil), "nova.icacontrol.v1.QueryAutoStakingVersionResponse")
 }
 
 func init() { proto.RegisterFile("nova/icacontrol/v1/query.proto", fileDescriptor_8f47059bf27385ee) }
 
 var fileDescriptor_8f47059bf27385ee = []byte{
-	// 378 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0x41, 0x4b, 0xf3, 0x30,
-	0x1c, 0xc6, 0xd7, 0xbd, 0xdb, 0xde, 0xf7, 0x8d, 0x17, 0x0d, 0x53, 0x47, 0xd1, 0x3a, 0xca, 0x06,
-	0x53, 0xb1, 0x61, 0x13, 0xc4, 0xab, 0x7a, 0x51, 0x3c, 0xad, 0xc7, 0x5d, 0x24, 0xdb, 0x42, 0x0d,
-	0xc4, 0xa4, 0x6b, 0xb2, 0xe1, 0x14, 0x11, 0x3c, 0x78, 0x56, 0xfc, 0x52, 0x1e, 0x07, 0x5e, 0x3c,
-	0xca, 0xe6, 0x07, 0x91, 0xa4, 0x15, 0x87, 0x76, 0xb8, 0x5b, 0xfb, 0x7f, 0x9e, 0xff, 0xf3, 0x4b,
-	0x9f, 0x06, 0x38, 0x5c, 0x0c, 0x30, 0xa2, 0x1d, 0xdc, 0x11, 0x5c, 0x45, 0x82, 0xa1, 0x41, 0x1d,
-	0xf5, 0xfa, 0x24, 0x1a, 0x7a, 0x61, 0x24, 0x94, 0x80, 0x50, 0xeb, 0xde, 0x97, 0xee, 0x0d, 0xea,
-	0x76, 0x31, 0x10, 0x81, 0x30, 0x32, 0xd2, 0x4f, 0xb1, 0xd3, 0x2e, 0xa7, 0x24, 0x05, 0x84, 0x13,
-	0x49, 0x65, 0xe2, 0x58, 0x0b, 0x84, 0x08, 0x18, 0x41, 0x38, 0xa4, 0x08, 0x73, 0x2e, 0x14, 0x56,
-	0x54, 0xf0, 0x44, 0x75, 0x57, 0x40, 0xb1, 0xa9, 0xc1, 0x07, 0x8c, 0xb5, 0x04, 0x27, 0xd2, 0x27,
-	0xbd, 0x3e, 0x91, 0xca, 0x6d, 0x82, 0xe5, 0x6f, 0x73, 0x19, 0x0a, 0x2e, 0x09, 0xdc, 0x07, 0xf9,
-	0x2b, 0x3d, 0x28, 0x59, 0xe5, 0x3f, 0xb5, 0x85, 0x86, 0xeb, 0xfd, 0x3c, 0xaa, 0xe7, 0x93, 0x80,
-	0x4a, 0x45, 0x22, 0xd2, 0xd5, 0xbb, 0x7e, 0xbc, 0xe0, 0x6e, 0x83, 0x45, 0x13, 0x69, 0x66, 0x31,
-	0x06, 0xae, 0x82, 0xbf, 0x5a, 0x3c, 0xa3, 0xdd, 0x92, 0x55, 0xb6, 0x6a, 0xff, 0xfd, 0x82, 0x7e,
-	0x3d, 0xe9, 0xba, 0xa7, 0x60, 0x69, 0xca, 0x9c, 0xb0, 0xf7, 0x40, 0x4e, 0xcb, 0xc6, 0x3a, 0x1f,
-	0xda, 0xf8, 0x1b, 0x8f, 0x59, 0x90, 0x37, 0x69, 0xf0, 0xde, 0x02, 0xff, 0x3e, 0x3f, 0x09, 0xd6,
-	0xd2, 0x02, 0xd2, 0xda, 0xb0, 0x37, 0xe7, 0x70, 0xc6, 0x67, 0x74, 0xab, 0x77, 0x2f, 0xef, 0x4f,
-	0xd9, 0x0d, 0xb8, 0x8e, 0x52, 0xfe, 0x8c, 0x29, 0x02, 0x61, 0xc6, 0xe0, 0x2d, 0xc8, 0xe9, 0x3d,
-	0x58, 0x99, 0x99, 0x3c, 0x55, 0x93, 0x5d, 0xfd, 0xc5, 0x95, 0xb0, 0xb7, 0x0c, 0xbb, 0x02, 0xdd,
-	0x59, 0x6c, 0x74, 0x9d, 0xb4, 0x7d, 0x73, 0x78, 0xfc, 0x3c, 0x76, 0xac, 0xd1, 0xd8, 0xb1, 0xde,
-	0xc6, 0x8e, 0xf5, 0x30, 0x71, 0x32, 0xa3, 0x89, 0x93, 0x79, 0x9d, 0x38, 0x99, 0x96, 0x17, 0x50,
-	0x75, 0xde, 0x6f, 0x7b, 0x1d, 0x71, 0x81, 0x8e, 0x70, 0x44, 0x39, 0xde, 0x61, 0xb8, 0x2d, 0xe3,
-	0xcc, 0xcb, 0xe9, 0x54, 0x35, 0x0c, 0x89, 0x6c, 0x17, 0xcc, 0x4d, 0xda, 0xfd, 0x08, 0x00, 0x00,
-	0xff, 0xff, 0x99, 0xa7, 0x9a, 0x89, 0xd5, 0x02, 0x00, 0x00,
+	// 464 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0x41, 0x6b, 0x14, 0x31,
+	0x14, 0xde, 0xd8, 0x6d, 0xab, 0xf1, 0xa2, 0xa1, 0xda, 0x65, 0xd0, 0xe9, 0x12, 0x5a, 0x58, 0x5b,
+	0x9d, 0xd0, 0x2d, 0x88, 0xe0, 0x49, 0xbd, 0x28, 0x9e, 0x3a, 0x82, 0x87, 0x5e, 0x4a, 0x76, 0x37,
+	0xc4, 0xe0, 0x98, 0x37, 0x9d, 0x64, 0x06, 0xab, 0x88, 0xe0, 0xc1, 0xb3, 0xe0, 0xbf, 0xf0, 0x47,
+	0x78, 0xf6, 0x58, 0xf0, 0xe2, 0x51, 0x76, 0xfd, 0x21, 0x92, 0x64, 0xda, 0x2e, 0x76, 0x06, 0xdb,
+	0xdb, 0xe4, 0x7d, 0xdf, 0xf7, 0xbe, 0x2f, 0xef, 0x4d, 0x70, 0xac, 0xa1, 0xe2, 0x4c, 0x8d, 0xf9,
+	0x18, 0xb4, 0x2d, 0x20, 0x63, 0xd5, 0x36, 0x3b, 0x28, 0x45, 0x71, 0x98, 0xe4, 0x05, 0x58, 0x20,
+	0xc4, 0xe1, 0xc9, 0x29, 0x9e, 0x54, 0xdb, 0xd1, 0x8a, 0x04, 0x09, 0x1e, 0x66, 0xee, 0x2b, 0x30,
+	0xa3, 0x7e, 0x43, 0x27, 0x29, 0xb4, 0x30, 0xca, 0xd4, 0x8c, 0x5b, 0x12, 0x40, 0x66, 0x82, 0xf1,
+	0x5c, 0x31, 0xae, 0x35, 0x58, 0x6e, 0x15, 0xe8, 0x1a, 0xa5, 0x37, 0xf1, 0xca, 0xae, 0x33, 0x7e,
+	0x94, 0x65, 0x7b, 0xa0, 0x85, 0x49, 0xc5, 0x41, 0x29, 0x8c, 0xa5, 0xbb, 0xf8, 0xc6, 0x3f, 0x75,
+	0x93, 0x83, 0x36, 0x82, 0x3c, 0xc0, 0x8b, 0xef, 0x5c, 0xa1, 0x87, 0xfa, 0x0b, 0x83, 0xab, 0x43,
+	0x9a, 0x9c, 0x8d, 0x9a, 0xa4, 0x42, 0x2a, 0x63, 0x45, 0x21, 0x26, 0x4e, 0x9b, 0x06, 0x01, 0xdd,
+	0xc2, 0xd7, 0x7c, 0x4b, 0x5f, 0x0b, 0x36, 0x64, 0x15, 0x2f, 0x3b, 0x70, 0x5f, 0x4d, 0x7a, 0xa8,
+	0x8f, 0x06, 0x57, 0xd2, 0x25, 0x77, 0x7c, 0x36, 0xa1, 0xcf, 0xf1, 0xf5, 0x39, 0x72, 0xed, 0x7d,
+	0x1f, 0x77, 0x1d, 0xec, 0xa9, 0xe7, 0xb3, 0xf6, 0x7c, 0x3a, 0xc4, 0xab, 0xe1, 0x32, 0xa5, 0x85,
+	0x17, 0x96, 0xbf, 0x56, 0x5a, 0xbe, 0x14, 0x85, 0x51, 0xa0, 0xdb, 0x03, 0x3c, 0xc4, 0x6b, 0x2d,
+	0x9a, 0x93, 0x38, 0x3d, 0xbc, 0x5c, 0x85, 0x92, 0xd7, 0x76, 0xd3, 0xe3, 0xe3, 0xf0, 0xfb, 0x02,
+	0x5e, 0xf4, 0x6a, 0xf2, 0x19, 0xe1, 0xcb, 0xc7, 0x33, 0x24, 0x83, 0xa6, 0xc4, 0x4d, 0xe3, 0x8f,
+	0xee, 0x9c, 0x83, 0x19, 0x52, 0xd0, 0x8d, 0x4f, 0x3f, 0xff, 0x7c, 0xbd, 0xb4, 0x46, 0x6e, 0xb3,
+	0x86, 0x5f, 0xc1, 0x4f, 0x9e, 0xf1, 0x2c, 0x23, 0x1f, 0x71, 0xd7, 0xe9, 0xc8, 0x7a, 0x6b, 0xe7,
+	0xb9, 0xbd, 0x44, 0x1b, 0xff, 0x61, 0xd5, 0xde, 0x9b, 0xde, 0x7b, 0x9d, 0xd0, 0x36, 0x6f, 0xf6,
+	0xbe, 0x9e, 0xee, 0x07, 0xf2, 0x0d, 0x61, 0xd2, 0xb0, 0x80, 0xad, 0xf6, 0x9b, 0x9e, 0x21, 0x47,
+	0x3b, 0x17, 0x20, 0x9f, 0x84, 0x1c, 0xfa, 0x90, 0x77, 0xc9, 0x66, 0x08, 0x29, 0x85, 0x75, 0xe9,
+	0x78, 0x69, 0xc1, 0x04, 0xc1, 0x7e, 0xbd, 0xb6, 0xd3, 0xb0, 0x8f, 0x9f, 0xfe, 0x98, 0xc6, 0xe8,
+	0x68, 0x1a, 0xa3, 0xdf, 0xd3, 0x18, 0x7d, 0x99, 0xc5, 0x9d, 0xa3, 0x59, 0xdc, 0xf9, 0x35, 0x8b,
+	0x3b, 0x7b, 0x89, 0x54, 0xf6, 0x55, 0x39, 0x4a, 0xc6, 0xf0, 0x86, 0x3d, 0xe1, 0x85, 0xd2, 0xfc,
+	0x5e, 0xc6, 0x47, 0x26, 0xf4, 0x7e, 0x3b, 0x3f, 0x02, 0x7b, 0x98, 0x0b, 0x33, 0x5a, 0xf2, 0xef,
+	0x6c, 0xe7, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x29, 0xe4, 0x59, 0x68, 0xf3, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -253,6 +348,7 @@ type QueryClient interface {
 	// AllZones returns all the zones registered.
 	AllZones(ctx context.Context, in *QueryAllZonesRequest, opts ...grpc.CallOption) (*QueryAllZonesResponse, error)
 	Zone(ctx context.Context, in *QueryZoneRequest, opts ...grpc.CallOption) (*QueryZoneResponse, error)
+	AutoStakingVersion(ctx context.Context, in *QueryAutoStakingVersion, opts ...grpc.CallOption) (*QueryAutoStakingVersionResponse, error)
 }
 
 type queryClient struct {
@@ -281,11 +377,21 @@ func (c *queryClient) Zone(ctx context.Context, in *QueryZoneRequest, opts ...gr
 	return out, nil
 }
 
+func (c *queryClient) AutoStakingVersion(ctx context.Context, in *QueryAutoStakingVersion, opts ...grpc.CallOption) (*QueryAutoStakingVersionResponse, error) {
+	out := new(QueryAutoStakingVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Query/AutoStakingVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// AllZones returns all the zones registered.
 	AllZones(context.Context, *QueryAllZonesRequest) (*QueryAllZonesResponse, error)
 	Zone(context.Context, *QueryZoneRequest) (*QueryZoneResponse, error)
+	AutoStakingVersion(context.Context, *QueryAutoStakingVersion) (*QueryAutoStakingVersionResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -297,6 +403,9 @@ func (*UnimplementedQueryServer) AllZones(ctx context.Context, req *QueryAllZone
 }
 func (*UnimplementedQueryServer) Zone(ctx context.Context, req *QueryZoneRequest) (*QueryZoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Zone not implemented")
+}
+func (*UnimplementedQueryServer) AutoStakingVersion(ctx context.Context, req *QueryAutoStakingVersion) (*QueryAutoStakingVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AutoStakingVersion not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -339,6 +448,24 @@ func _Query_Zone_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_AutoStakingVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAutoStakingVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AutoStakingVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.icacontrol.v1.Query/AutoStakingVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AutoStakingVersion(ctx, req.(*QueryAutoStakingVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "nova.icacontrol.v1.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -350,6 +477,10 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Zone",
 			Handler:    _Query_Zone_Handler,
+		},
+		{
+			MethodName: "AutoStakingVersion",
+			Handler:    _Query_AutoStakingVersion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -481,6 +612,64 @@ func (m *QueryZoneResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryAutoStakingVersion) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAutoStakingVersion) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAutoStakingVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAutoStakingVersionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAutoStakingVersionResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAutoStakingVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Version != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -538,6 +727,31 @@ func (m *QueryZoneResponse) Size() (n int) {
 	if m.Zone != nil {
 		l = m.Zone.Size()
 		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAutoStakingVersion) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAutoStakingVersionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Version != 0 {
+		n += 1 + sovQuery(uint64(m.Version))
 	}
 	return n
 }
@@ -829,6 +1043,157 @@ func (m *QueryZoneResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAutoStakingVersion) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAutoStakingVersion: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAutoStakingVersion: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAutoStakingVersionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAutoStakingVersionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAutoStakingVersionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipQuery(dAtA[iNdEx:])

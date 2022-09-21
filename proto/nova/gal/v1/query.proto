@@ -47,6 +47,18 @@ service Query {
   rpc WithdrawRecords(QueryWithdrawRecordRequest) returns (QueryWithdrawRecordResponse) {
     option (google.api.http).get = "/nova/get/v1/withdraw/{address}/{zone_id}";
   }
+
+  rpc DelegateVersion(QueryDelegateVersion) returns (QueryDelegateVersionResponse) {
+    option (google.api.http).get = "/nova/get/v1/delegate_version/{zone_id}";
+  }
+
+  rpc UndelegateVersion(QueryUndelegateVersion) returns (QueryUndelegateVersionResponse) {
+    option (google.api.http).get = "/nova/get/v1/undelegate_version/{zone_id}";
+  }
+
+  rpc WithdrawVersion(QueryWithdrawVersion) returns (QueryWithdrawVersionResponse) {
+    option (google.api.http).get = "/nova/get/v1/withdraw_version/{zone_id}";
+  }
 }
 
 // QueryParamsRequest is the request type for the Query/Params RPC method.
@@ -139,4 +151,28 @@ message QueryEstimateSnAssetRequest {
 
 message QueryEstimateSnAssetResponse {
   cosmos.base.v1beta1.Coin amount = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryDelegateVersion {
+  string zone_id = 1;
+}
+
+message QueryDelegateVersionResponse {
+  uint64 version = 1;
+}
+
+message QueryUndelegateVersion {
+  string zone_id = 1;
+}
+
+message QueryUndelegateVersionResponse {
+  uint64 version = 1;
+}
+
+message QueryWithdrawVersion {
+  string zone_id = 1;
+}
+
+message QueryWithdrawVersionResponse {
+  uint64 version = 1;
 }

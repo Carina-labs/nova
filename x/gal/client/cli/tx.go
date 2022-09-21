@@ -188,9 +188,9 @@ func txClaimSnAssetCmd() *cobra.Command {
 	return cmd
 }
 
-func txPendingWithdrawCmd() *cobra.Command {
+func txIcaWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "pending-withdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
+		Use:  "ica-withdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 

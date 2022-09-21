@@ -322,3 +322,106 @@ func (suite *KeeperTestSuite) TestQueryUndelegateRecord() {
 	suite.Require().NoError(err)
 	suite.Require().Equal(records, ret.UndelegateRecord)
 }
+
+func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
+
+	//invalid zone
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+
+	// query with invalid zone
+	_, err := queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
+		ZoneId: "invalid",
+	})
+	suite.Require().Error(err)
+
+	//sequence is zero
+	exp := types.QueryDelegateVersionResponse{Version: 0}
+
+	res, err := queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(res, &exp)
+
+	//sequence is 8
+	exp = types.QueryDelegateVersionResponse{Version: 8}
+
+	//set delegate version
+	suite.App.GalKeeper.SetDelegateVersion(ctx, zoneId, 8)
+	res, err = queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(res, &exp)
+}
+
+func (suite *KeeperTestSuite) TestQueryUndelegateVersion() {
+	//invalid zone
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+
+	// query with invalid zone
+	_, err := queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
+		ZoneId: "invalid",
+	})
+	suite.Require().Error(err)
+
+	//sequence is zero
+	exp := types.QueryUndelegateVersionResponse{Version: 0}
+
+	res, err := queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(res, &exp)
+
+	//sequence is 20
+	exp = types.QueryUndelegateVersionResponse{Version: 20}
+
+	//set delegate version
+	suite.App.GalKeeper.SetUndelegateVersion(ctx, zoneId, 20)
+	res, err = queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(res, &exp)
+}
+
+func (suite *KeeperTestSuite) TestQueryWithdrawVersion() {
+	//invalid zone
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+
+	// query with invalid zone
+	_, err := queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
+		ZoneId: "invalid",
+	})
+	suite.Require().Error(err)
+
+	//sequence is zero
+	exp := types.QueryWithdrawVersionResponse{Version: 0}
+
+	res, err := queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(res, &exp)
+
+	//sequence is 18
+	exp = types.QueryWithdrawVersionResponse{Version: 18}
+
+	//set delegate version
+	suite.App.GalKeeper.SetWithdrawVersion(ctx, zoneId, 18)
+	res, err = queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(res, &exp)
+}

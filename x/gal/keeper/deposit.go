@@ -74,7 +74,6 @@ func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, zoneId, userAddr,
 	return totalDepositAmt
 }
 
-
 // SetDepositOracleVersion updates the Oracle version for recorded Deposit requests.
 // This action is required for the correct equity calculation.
 func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state types.DepositStatusType, oracleVersion uint64) {
