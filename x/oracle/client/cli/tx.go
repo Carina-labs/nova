@@ -27,28 +27,28 @@ func GetTxCmd() *cobra.Command {
 
 func NewUpdateStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update_state [amount] [block_height] [app_hash] [chain_id]",
+		Use:   "update_state [amount] [block_height] [app_hash] [zone_id]",
 		Short: "",
 		Long:  "",
-		Args:  cobra.ExactArgs(5),
+		Args:  cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			amount, err := sdk.ParseCoinNormalized(args[1])
+			amount, err := sdk.ParseCoinNormalized(args[0])
 			if err != nil {
 				return err
 			}
 
-			blockHeight, err := strconv.ParseInt(args[2], 10, 64)
+			blockHeight, err := strconv.ParseInt(args[1], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			appHash := []byte(args[3])
-			chainId := args[4]
+			appHash := []byte(args[2])
+			chainId := args[3]
 
 			msg := types.NewMsgUpdateChainState(clientCtx.GetFromAddress(), chainId, amount, blockHeight, appHash)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)

@@ -30,7 +30,7 @@ func GetTxCmd() *cobra.Command {
 func CreateCandidatePoolCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "create-candidate-pool [pool_id] [pool_contract_address]",
-		Args: cobra.ExactArgs(3),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -51,7 +51,7 @@ func CreateCandidatePoolCmd() *cobra.Command {
 func CreateIncentivePoolCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "create-incentive-pool [pool_id] [pool_contract_address]",
-		Args: cobra.ExactArgs(3),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -72,7 +72,7 @@ func CreateIncentivePoolCmd() *cobra.Command {
 func SetPoolWeightCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "set-pool-weight [pool_id] [new_weight]",
-		Args: cobra.ExactArgs(3),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
