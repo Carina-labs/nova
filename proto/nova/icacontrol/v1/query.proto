@@ -13,12 +13,25 @@ service Query {
   rpc AllZones(QueryAllZonesRequest) returns (QueryAllZonesResponse) {
     option (google.api.http).get = "/nova/icacontrol/v1/zones/all";
   }
+  rpc Zone(QueryZoneRequest) returns (QueryZoneResponse) {
+    option (google.api.http).get = "/nova/icacontrol/v1/zone/{zone_id}";
+  }
 }
 
 // QueryAllZonesRequest is the request type for Query/AllZones.
-message QueryAllZonesRequest { };
+message QueryAllZonesRequest {};
 
 // QueryAllZonesResponse is the response type for Query/AllZones.
 message QueryAllZonesResponse {
   repeated RegisteredZone zones = 1;
+}
+
+// QueryZoneRequest is the request type for Query/Zone.
+message QueryZoneRequest {
+  string zone_id = 1;
+};
+
+// QueryZoneResponse is the response type for Query/Zone.
+message QueryZoneResponse {
+  RegisteredZone zone = 1;
 }

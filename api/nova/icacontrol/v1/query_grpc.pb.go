@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type QueryClient interface {
 	// AllZones returns all the zones registered.
 	AllZones(ctx context.Context, in *QueryAllZonesRequest, opts ...grpc.CallOption) (*QueryAllZonesResponse, error)
+	Zone(ctx context.Context, in *QueryZoneRequest, opts ...grpc.CallOption) (*QueryZoneResponse, error)
 }
 
 type queryClient struct {
@@ -43,12 +44,22 @@ func (c *queryClient) AllZones(ctx context.Context, in *QueryAllZonesRequest, op
 	return out, nil
 }
 
+func (c *queryClient) Zone(ctx context.Context, in *QueryZoneRequest, opts ...grpc.CallOption) (*QueryZoneResponse, error) {
+	out := new(QueryZoneResponse)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Query/Zone", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	// AllZones returns all the zones registered.
 	AllZones(context.Context, *QueryAllZonesRequest) (*QueryAllZonesResponse, error)
+	Zone(context.Context, *QueryZoneRequest) (*QueryZoneResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -58,6 +69,9 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) AllZones(context.Context, *QueryAllZonesRequest) (*QueryAllZonesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllZones not implemented")
+}
+func (UnimplementedQueryServer) Zone(context.Context, *QueryZoneRequest) (*QueryZoneResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Zone not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -90,6 +104,24 @@ func _Query_AllZones_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_Zone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryZoneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).Zone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.icacontrol.v1.Query/Zone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).Zone(ctx, req.(*QueryZoneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -100,6 +132,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AllZones",
 			Handler:    _Query_AllZones_Handler,
+		},
+		{
+			MethodName: "Zone",
+			Handler:    _Query_Zone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
