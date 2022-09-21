@@ -64,10 +64,8 @@ func (k Keeper) GetUndelegateRecord(ctx sdk.Context, zoneId, delegator string) (
 // GetAllUndelegateRecord returns all undelegate records corresponding to zoneId.
 func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.UndelegateRecord {
 	var undelegateInfo []*types.UndelegateRecord
-	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
-		if undelegateRecord.ZoneId == zoneId {
-			undelegateInfo = append(undelegateInfo, undelegateRecord)
-		}
+	k.IterateUndelegatedRecords(ctx, zoneId, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
+		undelegateInfo = append(undelegateInfo, undelegateRecord)
 		return false
 	})
 
@@ -79,23 +77,21 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone icacon
 	snAsset := sdk.NewCoin(snDenom, sdk.NewInt(0))
 	wAsset := sdk.NewInt(0)
 
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
-		if undelegateRecord.ZoneId == zone.ZoneId {
-			for _, record := range undelegateRecord.Records {
-				if record.OracleVersion < version && record.State == types.UndelegateRequestByUser {
-					withdrawAsset, err := k.GetWithdrawAmt(ctx, *record.SnAssetAmount)
-					if err != nil {
-						return false
-					}
-					record.WithdrawAmount = withdrawAsset.Amount
-
-					record.State = types.UndelegateRequestByIca
-					wAsset = wAsset.Add(record.WithdrawAmount)
-					snAsset = snAsset.Add(*record.SnAssetAmount)
+	k.IterateUndelegatedRecords(ctx, zone.ZoneId, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
+		for _, record := range undelegateRecord.Records {
+			if record.OracleVersion < version && record.State == types.UndelegateRequestByUser {
+				withdrawAsset, err := k.GetWithdrawAmt(ctx, *record.SnAssetAmount)
+				if err != nil {
+					return false
 				}
+				record.WithdrawAmount = withdrawAsset.Amount
+
+				record.State = types.UndelegateRequestByIca
+				wAsset = wAsset.Add(record.WithdrawAmount)
+				snAsset = snAsset.Add(*record.SnAssetAmount)
 			}
-			k.SetUndelegateRecord(ctx, undelegateRecord)
 		}
+		k.SetUndelegateRecord(ctx, undelegateRecord)
 		return false
 	})
 	return snAsset, wAsset
@@ -105,13 +101,11 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone icacon
 // UNDELEGATE_REQUEST_USER : Just requested undelegate by user. It is not in undelegate period.
 // UNDELEGATE_REQUEST_ICA  : Requested by ICA, It is in undelegate period.
 func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
-		if undelegateRecord.ZoneId == zoneId {
-			for _, record := range undelegateRecord.Records {
-				record.State = state
-			}
-			k.SetUndelegateRecord(ctx, undelegateRecord)
+	k.IterateUndelegatedRecords(ctx, zoneId, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
+		for _, record := range undelegateRecord.Records {
+			record.State = state
 		}
+		k.SetUndelegateRecord(ctx, undelegateRecord)
 		return false
 	})
 }
@@ -139,18 +133,16 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) 
 
 // SetUndelegateRecordVersion navigates undelegate records and updates version for records corresponding to zoneId and state.
 func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType, version uint64) bool {
-	k.IterateUndelegatedRecords(ctx, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
-		if undelegateRecord.ZoneId == zoneId {
-			isChanged := false
-			for _, record := range undelegateRecord.Records {
-				if record.State == state {
-					isChanged = true
-					record.UndelegateVersion = version
-				}
+	k.IterateUndelegatedRecords(ctx, zoneId, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
+		isChanged := false
+		for _, record := range undelegateRecord.Records {
+			if record.State == state {
+				isChanged = true
+				record.UndelegateVersion = version
 			}
-			if isChanged {
-				k.SetUndelegateRecord(ctx, undelegateRecord)
-			}
+		}
+		if isChanged {
+			k.SetUndelegateRecord(ctx, undelegateRecord)
 		}
 		return false
 	})
@@ -161,28 +153,26 @@ func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state
 // DeleteUndelegateRecords deletes records corresponding to zoneId and state for undelegate records.
 func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
 	var recordItems []*types.UndelegateRecordContent
-	k.IterateUndelegatedRecords(ctx, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
-		if undelegateRecord.ZoneId == zoneId {
-			for _, record := range undelegateRecord.Records {
-				if record.State != state {
-					recordItems = append(recordItems, record)
-				}
+	k.IterateUndelegatedRecords(ctx, zoneId, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
+		for _, record := range undelegateRecord.Records {
+			if record.State != state {
+				recordItems = append(recordItems, record)
 			}
+		}
 
-			isDeleted := len(recordItems) < len(undelegateRecord.Records)
-			if isDeleted {
-				undelegateRecord.Records = recordItems
-				k.SetUndelegateRecord(ctx, undelegateRecord)
-			}
+		isDeleted := len(recordItems) < len(undelegateRecord.Records)
+		if isDeleted {
+			undelegateRecord.Records = recordItems
+			k.SetUndelegateRecord(ctx, undelegateRecord)
 		}
 		return false
 	})
 }
 
 // IterateUndelegatedRecords navigates de-delegation records.
-func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, fn func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool)) {
+func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, zoneId string, fn func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool)) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)
-	iterator := sdk.KVStorePrefixIterator(store, nil)
+	iterator := sdk.KVStorePrefixIterator(store, []byte(zoneId))
 	defer func(iterator sdk.Iterator) {
 		err := iterator.Close()
 		if err != nil {
