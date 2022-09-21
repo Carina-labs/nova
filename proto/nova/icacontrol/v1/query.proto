@@ -16,6 +16,9 @@ service Query {
   rpc Zone(QueryZoneRequest) returns (QueryZoneResponse) {
     option (google.api.http).get = "/nova/icacontrol/v1/zone/{zone_id}";
   }
+  rpc AutoStakingVersion(QueryAutoStakingVersion) returns (QueryAutoStakingVersionResponse) {
+    option (google.api.http).get = "/nova/get/v1/autostaking_version/{zone_id}";
+  }
 }
 
 // QueryAllZonesRequest is the request type for Query/AllZones.
@@ -34,4 +37,12 @@ message QueryZoneRequest {
 // QueryZoneResponse is the response type for Query/Zone.
 message QueryZoneResponse {
   RegisteredZone zone = 1;
+}
+
+message QueryAutoStakingVersion {
+  string zone_id = 1;
+}
+
+message QueryAutoStakingVersionResponse {
+  uint64 version = 1;
 }

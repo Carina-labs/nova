@@ -177,3 +177,48 @@ func (q QueryServer) WithdrawRecords(goCtx context.Context, request *types.Query
 		WithdrawRecord: result,
 	}, nil
 }
+
+func (q QueryServer) DelegateVersion(goCtx context.Context, request *types.QueryDelegateVersion) (*types.QueryDelegateVersionResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	_, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	version := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
+
+	return &types.QueryDelegateVersionResponse{
+		Version:     version,
+	}, nil
+}
+
+func (q QueryServer) UndelegateVersion(goCtx context.Context, request *types.QueryUndelegateVersion) (*types.QueryUndelegateVersionResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	_, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	version := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
+
+	return &types.QueryUndelegateVersionResponse{
+		Version:     version,
+	}, nil
+}
+
+func (q QueryServer) WithdrawVersion(goCtx context.Context, request *types.QueryWithdrawVersion) (*types.QueryWithdrawVersionResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	_, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	version := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
+
+	return &types.QueryWithdrawVersionResponse{
+		Version:     version,
+	}, nil
+}

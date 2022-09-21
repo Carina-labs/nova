@@ -221,3 +221,84 @@ func queryWithdrawRecords() *cobra.Command {
 
 	return cmd
 }
+
+func queryDelegateVersion() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "delegate-version [zone-id]",
+		Long: "Query for delegate version",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			res, err := queryClient.DelegateVersion(cmd.Context(), &types.QueryDelegateVersion{
+				ZoneId: args[0],
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func queryUndelegateVersion() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "undelegate-version [zone-id]",
+		Long: "Query for undelegate version",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			res, err := queryClient.UndelegateVersion(cmd.Context(), &types.QueryUndelegateVersion{
+				ZoneId: args[0],
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func queryWithdrawVersion() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "withdraw-version [zone-id]",
+		Long: "Query for withdraw version",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			res, err := queryClient.WithdrawVersion(cmd.Context(), &types.QueryWithdrawVersion{
+				ZoneId: args[0],
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}

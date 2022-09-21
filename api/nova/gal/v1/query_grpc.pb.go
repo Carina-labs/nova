@@ -31,6 +31,9 @@ type QueryClient interface {
 	DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error)
 	UndelegateRecords(ctx context.Context, in *QueryUndelegateRecordRequest, opts ...grpc.CallOption) (*QueryUndelegateRecordResponse, error)
 	WithdrawRecords(ctx context.Context, in *QueryWithdrawRecordRequest, opts ...grpc.CallOption) (*QueryWithdrawRecordResponse, error)
+	DelegateVersion(ctx context.Context, in *QueryDelegateVersion, opts ...grpc.CallOption) (*QueryDelegateVersionResponse, error)
+	UndelegateVersion(ctx context.Context, in *QueryUndelegateVersion, opts ...grpc.CallOption) (*QueryUndelegateVersionResponse, error)
+	WithdrawVersion(ctx context.Context, in *QueryWithdrawVersion, opts ...grpc.CallOption) (*QueryWithdrawVersionResponse, error)
 }
 
 type queryClient struct {
@@ -122,6 +125,33 @@ func (c *queryClient) WithdrawRecords(ctx context.Context, in *QueryWithdrawReco
 	return out, nil
 }
 
+func (c *queryClient) DelegateVersion(ctx context.Context, in *QueryDelegateVersion, opts ...grpc.CallOption) (*QueryDelegateVersionResponse, error) {
+	out := new(QueryDelegateVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DelegateVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) UndelegateVersion(ctx context.Context, in *QueryUndelegateVersion, opts ...grpc.CallOption) (*QueryUndelegateVersionResponse, error) {
+	out := new(QueryUndelegateVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/UndelegateVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) WithdrawVersion(ctx context.Context, in *QueryWithdrawVersion, opts ...grpc.CallOption) (*QueryWithdrawVersionResponse, error) {
+	out := new(QueryWithdrawVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/WithdrawVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -135,6 +165,9 @@ type QueryServer interface {
 	DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error)
 	UndelegateRecords(context.Context, *QueryUndelegateRecordRequest) (*QueryUndelegateRecordResponse, error)
 	WithdrawRecords(context.Context, *QueryWithdrawRecordRequest) (*QueryWithdrawRecordResponse, error)
+	DelegateVersion(context.Context, *QueryDelegateVersion) (*QueryDelegateVersionResponse, error)
+	UndelegateVersion(context.Context, *QueryUndelegateVersion) (*QueryUndelegateVersionResponse, error)
+	WithdrawVersion(context.Context, *QueryWithdrawVersion) (*QueryWithdrawVersionResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -168,6 +201,15 @@ func (UnimplementedQueryServer) UndelegateRecords(context.Context, *QueryUndeleg
 }
 func (UnimplementedQueryServer) WithdrawRecords(context.Context, *QueryWithdrawRecordRequest) (*QueryWithdrawRecordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WithdrawRecords not implemented")
+}
+func (UnimplementedQueryServer) DelegateVersion(context.Context, *QueryDelegateVersion) (*QueryDelegateVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelegateVersion not implemented")
+}
+func (UnimplementedQueryServer) UndelegateVersion(context.Context, *QueryUndelegateVersion) (*QueryUndelegateVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UndelegateVersion not implemented")
+}
+func (UnimplementedQueryServer) WithdrawVersion(context.Context, *QueryWithdrawVersion) (*QueryWithdrawVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WithdrawVersion not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -344,6 +386,60 @@ func _Query_WithdrawRecords_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_DelegateVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryDelegateVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).DelegateVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/DelegateVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).DelegateVersion(ctx, req.(*QueryDelegateVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_UndelegateVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUndelegateVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).UndelegateVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/UndelegateVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).UndelegateVersion(ctx, req.(*QueryUndelegateVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_WithdrawVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryWithdrawVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).WithdrawVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/WithdrawVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).WithdrawVersion(ctx, req.(*QueryWithdrawVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +482,18 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WithdrawRecords",
 			Handler:    _Query_WithdrawRecords_Handler,
+		},
+		{
+			MethodName: "DelegateVersion",
+			Handler:    _Query_DelegateVersion_Handler,
+		},
+		{
+			MethodName: "UndelegateVersion",
+			Handler:    _Query_UndelegateVersion_Handler,
+		},
+		{
+			MethodName: "WithdrawVersion",
+			Handler:    _Query_WithdrawVersion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -27,6 +27,7 @@ var (
 
 type KeeperTestSuite struct {
 	apptesting.KeeperTestHelper
+	queryClient types.QueryClient
 
 	coordinator  *novatesting.Coordinator
 	chainA       *novatesting.TestChain
@@ -48,23 +49,23 @@ func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
 	return acc.GetAddress()
 }
 
-func (suite *KeeperTestSuite) setZone(num int) []icacontroltypes.RegisteredZone {
+func (suite *KeeperTestSuite) setZone(num int) []types.RegisteredZone {
 
 	addr := make([]sdk.AccAddress, 0)
-	zones := make([]icacontroltypes.RegisteredZone, 0)
+	zones := make([]types.RegisteredZone, 0)
 
 	for i := 0; i < num; i++ {
 		addr = append(addr, suite.GenRandomAddress())
-		zones = append(zones, icacontroltypes.RegisteredZone{
+		zones = append(zones, types.RegisteredZone{
 			ZoneId: "gaia" + strconv.Itoa(i),
-			IcaConnectionInfo: &icacontroltypes.IcaConnectionInfo{
+			IcaConnectionInfo: &types.IcaConnectionInfo{
 				ConnectionId: "connection-" + strconv.Itoa(i),
 				PortId:       "gaia" + strconv.Itoa(i) + "." + addr[i].String(),
 			},
-			IcaAccount: &icacontroltypes.IcaAccount{
+			IcaAccount: &types.IcaAccount{
 				ControllerAddress: addr[i].String(),
 			},
-			TransferInfo: &icacontroltypes.TransferConnectionInfo{
+			TransferInfo: &types.TransferConnectionInfo{
 				PortId:    "transfer",
 				ChannelId: "channel-" + strconv.Itoa(i),
 			},
@@ -102,6 +103,8 @@ func (suite *KeeperTestSuite) RegisterInterchainAccount(endpoint *novatesting.En
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
 
+	suite.queryClient = types.NewQueryClient(suite.QueryHelper)
+
 	suite.coordinator = novatesting.NewCoordinator(suite.T(), 2)
 	suite.chainA = suite.coordinator.GetChain(novatesting.GetChainID(1))
 	suite.chainB = suite.coordinator.GetChain(novatesting.GetChainID(2))
@@ -117,7 +120,7 @@ func (suite *KeeperTestSuite) SetupTest() {
 	suite.Require().NoError(err)
 }
 
-func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []icacontroltypes.RegisteredZone) {
+func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []types.RegisteredZone) {
 	for _, msg := range zoneMsgs {
 		suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &msg)
 	}
@@ -133,7 +136,7 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 	addresses = append(addresses, addr1)
 	addresses = append(addresses, addr2)
 
-	params := icacontroltypes.Params{
+	params := types.Params{
 		ControllerAddress: addresses,
 	}
 

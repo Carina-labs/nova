@@ -40,3 +40,18 @@ func (q *QueryServer) Zone(goCtx context.Context, request *types.QueryZoneReques
 
 	return &types.QueryZoneResponse{Zone: &zone}, nil
 }
+
+func (q QueryServer) AutoStakingVersion(goCtx context.Context, request *types.QueryAutoStakingVersion) (*types.QueryAutoStakingVersionResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	_, ok := q.keeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	version := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
+
+	return &types.QueryAutoStakingVersionResponse{
+		Version:     version,
+	}, nil
+}
