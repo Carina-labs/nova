@@ -1340,6 +1340,5 @@ func (suite *KeeperTestSuite) TestClaimSnAsset() {
 			result := suite.chainA.GetApp().BankKeeper.GetBalance(suite.chainA.GetContext(), claimer, baseSnDenom)
 			suite.Require().Equal(tc.result, result)
 		}
-
 	}
 }
