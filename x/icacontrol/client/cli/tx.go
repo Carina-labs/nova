@@ -29,31 +29,6 @@ const (
 	unbond                = "unbond"
 )
 
-// GetTxCmd creates and returns the icacontrol tx command
-func GetTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:                        types.ModuleName,
-		Short:                      fmt.Sprintf("%s transactions subcommands", types.ModuleName),
-		DisableFlagParsing:         true,
-		SuggestionsMinimumDistance: 2,
-		RunE:                       client.ValidateCmd,
-	}
-
-	cmd.AddCommand(
-		txRegisterZoneCmd(),
-		txDelegateTxCmd(),
-		txUndelegateTxCmd(),
-		txAutoStakingTxCmd(),
-		txTransferTxCmd(),
-		txDeleteZoneTxCmd(),
-		txChangeZoneInfoTxCmd(),
-		txAuthzGrantTxCmd(),
-		txAuthzRevokeTxCmd(),
-	)
-
-	return cmd
-}
-
 // txRegisterZoneCmd is a transaction that registers new Zone information. This transaction can only be submitted by a given signatory.
 func txRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
