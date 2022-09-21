@@ -45,6 +45,7 @@ func NewKeeper(cdc codec.BinaryCodec,
 		icaControlKeeper:  icaControlKeeper,
 		ibcTransferKeeper: ibcTransferKeeper,
 		oracleKeeper:      oracleKeeper,
+		airdropKeeper:     airdropKeeper,
 	}
 }
 
