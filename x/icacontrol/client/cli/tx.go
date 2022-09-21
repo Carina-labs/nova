@@ -60,9 +60,6 @@ func txRegisterZoneCmd() *cobra.Command {
 		Use:  "register-zone [zone-id] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
 		Args: cobra.ExactArgs(7),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -100,9 +97,6 @@ func txDelegateTxCmd() *cobra.Command {
 		Use:  "ica-delegate [zone-id] [host-address] [amount]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -133,9 +127,6 @@ func txUndelegateTxCmd() *cobra.Command {
 		Use:  "ica-undelegate [zone-id] [host-address] [amount]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -161,9 +152,6 @@ func txAutoStakingTxCmd() *cobra.Command {
 		Use:  "ica-auto-staking [zone-id] [amount]",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
 			clientCtx, err := client.GetClientTxContext(cmd)
 
 			if err != nil {
@@ -191,9 +179,6 @@ func txTransferTxCmd() *cobra.Command {
 		Use:  "ica-transfer [zone-id] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
 		Args: cobra.ExactArgs(6),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 
@@ -226,9 +211,6 @@ func txDeleteZoneTxCmd() *cobra.Command {
 		Use:  "delete-zone [zone-id]",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
 			clientCtx, err := client.GetClientTxContext(cmd)
 
 			if err != nil {
@@ -252,9 +234,6 @@ func txChangeZoneInfoTxCmd() *cobra.Command {
 		Use:  "change-zone [zone-id] [host-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
 		Args: cobra.ExactArgs(8),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
-				return err
-			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
