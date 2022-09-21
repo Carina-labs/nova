@@ -48,6 +48,42 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	suite.Require().Equal(amt.Amount.Amount.Int64(), amount.Int64())
 }
 
+func (suite *KeeperTestSuite) TestDepositAmountQuery() {
+	queryClient := suite.queryClient
+	keeper := suite.App.GalKeeper
+	ibcstaking := suite.App.IcaControlKeeper
+	oracleKeeper := suite.App.OracleKeeper
+	ctx := suite.Ctx
+
+	denom := ibcstaking.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
+	amount := sdk.NewInt(1000_000000)
+	coin := sdk.NewCoin(denom, amount)
+
+	oracleKeeper.SetOracleVersion(ctx, zoneId, 2)
+	keeper.SetDepositRecord(ctx, &types.DepositRecord{
+		ZoneId:  zoneId,
+		Claimer: fooUser.String(),
+		Records: []*types.DepositRecordContent{
+			{
+				Depositor:       fooUser.String(),
+				Amount:          &coin,
+				State:           types.DepositSuccess,
+				OracleVersion:   1,
+				DelegateVersion: 1,
+			},
+		},
+	})
+
+	amt, err := queryClient.DepositAmount(ctx.Context(), &types.QueryDepositAmountRequest{
+		ZoneId:  zoneId,
+		Address: fooUser.String(),
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(amt.Amount.Denom, denom)
+	suite.Require().Equal(amt.Amount.Amount.Int64(), amount.Int64())
+}
+
 func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	// add pending withdrawals to the kv store
 	// query pending withdrawals and check if the result is correct
