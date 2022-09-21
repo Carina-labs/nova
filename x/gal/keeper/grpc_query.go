@@ -189,7 +189,7 @@ func (q QueryServer) DelegateVersion(goCtx context.Context, request *types.Query
 	version := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
 
 	return &types.QueryDelegateVersionResponse{
-		Version:     version,
+		Version: version,
 	}, nil
 }
 
@@ -204,7 +204,7 @@ func (q QueryServer) UndelegateVersion(goCtx context.Context, request *types.Que
 	version := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
 
 	return &types.QueryUndelegateVersionResponse{
-		Version:     version,
+		Version: version,
 	}, nil
 }
 
@@ -219,6 +219,6 @@ func (q QueryServer) WithdrawVersion(goCtx context.Context, request *types.Query
 	version := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
 
 	return &types.QueryWithdrawVersionResponse{
-		Version:     version,
+		Version: version,
 	}, nil
 }
