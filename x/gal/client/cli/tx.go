@@ -98,8 +98,8 @@ func txUndelegateRequestCmd() *cobra.Command {
 
 func txUndelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegate [zone-id] [controller-address]",
-		Args: cobra.ExactArgs(2),
+		Use:  "undelegate [zone-id]",
+		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := cmd.Flags().Set(flags.FlagFrom, args[1])
 			if err != nil {
@@ -112,9 +112,8 @@ func txUndelegateCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			controllerAddr := clientCtx.GetFromAddress()
 
-			msg := types.NewMsgUndelegate(zoneId, controllerAddr)
+			msg := types.NewMsgUndelegate(zoneId, clientCtx.GetFromAddress())
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -195,8 +194,8 @@ func txClaimSnAssetCmd() *cobra.Command {
 }
 func txPendingWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "pending-withdraw [zone-id] [controller-address] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
-		Args: cobra.ExactArgs(5),
+		Use:  "pending-withdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
+		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -209,16 +208,15 @@ func txPendingWithdrawCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			daoModifierAddr := clientCtx.GetFromAddress()
-			portId := args[2]
-			chanId := args[3]
-			blockTime := args[4]
+			portId := args[1]
+			chanId := args[2]
+			blockTime := args[3]
 			t, err := time.Parse(time.RFC3339, blockTime)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewIcaWithdraw(zoneId, daoModifierAddr, portId, chanId, t)
+			msg := types.NewIcaWithdraw(zoneId, clientCtx.GetFromAddress(), portId, chanId, t)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -229,7 +227,7 @@ func txPendingWithdrawCmd() *cobra.Command {
 func txDelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "delegate [zone-id]",
-		Args: cobra.ExactArgs(2),
+		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {

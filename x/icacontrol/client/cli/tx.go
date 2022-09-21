@@ -57,8 +57,8 @@ func GetTxCmd() *cobra.Command {
 // txRegisterZoneCmd is a transaction that registers new Zone information. This transaction can only be submitted by a given signatory.
 func txRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "register-zone [zone-id] [controller-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
-		Args: cobra.ExactArgs(8),
+		Use:  "register-zone [zone-id] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
+		Args: cobra.ExactArgs(7),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -70,17 +70,16 @@ func txRegisterZoneCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			controllerAddr := clientCtx.GetFromAddress()
-			icaConnId := args[2]
-			transferPortId := args[3]
-			transferChanId := args[4]
-			validatorAddr := args[5]
-			denom := args[6]
-			decimal, err := strconv.ParseInt(args[7], 10, 64)
+			icaConnId := args[1]
+			transferPortId := args[2]
+			transferChanId := args[3]
+			validatorAddr := args[4]
+			denom := args[5]
+			decimal, err := strconv.ParseInt(args[6], 10, 64)
 			if err != nil {
 				return err
 			}
-			msg := types.NewMsgRegisterZone(zoneId, icaConnId, controllerAddr, transferPortId, transferChanId, validatorAddr, denom, decimal)
+			msg := types.NewMsgRegisterZone(zoneId, icaConnId, clientCtx.GetFromAddress(), transferPortId, transferChanId, validatorAddr, denom, decimal)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -98,8 +97,8 @@ func txRegisterZoneCmd() *cobra.Command {
 // txDelegateTxCmd is a transaction used for remote delegation using ICA. This transaction can only be submitted by a given signatory.
 func txDelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "ica-delegate [zone-id] [controller-address] [host-address] [amount]",
-		Args: cobra.ExactArgs(4),
+		Use:  "ica-delegate [zone-id] [host-address] [amount]",
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -111,15 +110,14 @@ func txDelegateTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			controllerAddr := clientCtx.GetFromAddress()
-			hostAddr := args[2]
-			amount, err := sdk.ParseCoinNormalized(args[3])
+			hostAddr := args[1]
+			amount, err := sdk.ParseCoinNormalized(args[2])
 
 			if err != nil {
 				panic("coin error")
 			}
 
-			msg := types.NewMsgIcaDelegate(zoneId, controllerAddr, hostAddr, amount)
+			msg := types.NewMsgIcaDelegate(zoneId, clientCtx.GetFromAddress(), hostAddr, amount)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -132,8 +130,8 @@ func txDelegateTxCmd() *cobra.Command {
 // txUndelegateTxCmd is a transaction used for remote de-delegation using ICA. This transaction can only be submitted by a given signatory.
 func txUndelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "ica-undelegate [zone-id] [controller-address] [host-address] [amount]",
-		Args: cobra.ExactArgs(4),
+		Use:  "ica-undelegate [zone-id] [host-address] [amount]",
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
@@ -145,11 +143,10 @@ func txUndelegateTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			controllerAddr := clientCtx.GetFromAddress()
-			hostAddr := args[2]
-			amount, _ := sdk.ParseCoinNormalized(args[3])
+			hostAddr := args[1]
+			amount, _ := sdk.ParseCoinNormalized(args[2])
 
-			msg := types.NewMsgIcaUnDelegate(zoneId, hostAddr, controllerAddr, amount)
+			msg := types.NewMsgIcaUnDelegate(zoneId, hostAddr, clientCtx.GetFromAddress(), amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -161,74 +158,7 @@ func txUndelegateTxCmd() *cobra.Command {
 // txAutoStakingTxCmd is a transaction used for auto-compounding using ICA. This transaction can only be submitted by a given signatory.
 func txAutoStakingTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "ica-auto-staking [zone-id] [controller-address] [amount]",
-		Args: cobra.ExactArgs(3),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
-			clientCtx, err := client.GetClientTxContext(cmd)
-
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			controllerAddr := clientCtx.GetFromAddress()
-			amount, err := sdk.ParseCoinNormalized(args[2])
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgIcaAutoStaking(zoneId, controllerAddr, amount)
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-// txTransferTxCmd is a transaction used to transfer assets between chains using ICA. This transaction can only be submitted by a given signatory.
-func txTransferTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "ica-transfer [zone-id] [controller-address] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
-		Args: cobra.ExactArgs(7),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
-
-			clientCtx, err := client.GetClientTxContext(cmd)
-
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			controllerAddr := clientCtx.GetFromAddress()
-			hostAddr := args[2]
-			receiver := args[3]
-			portId := args[4]
-			chanId := args[5]
-			amount, err := sdk.ParseCoinNormalized(args[6])
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgIcaTransfer(zoneId, hostAddr, controllerAddr, receiver, portId, chanId, amount)
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-// txDeleteZoneTxCmd is a transaction that deletes the registered zone. This transaction can only be submitted by a given signatory.
-func txDeleteZoneTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "delete-zone [zone-id] [controller-address]",
+		Use:  "ica-auto-staking [zone-id] [amount]",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
@@ -241,9 +171,73 @@ func txDeleteZoneTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			controllerAddr := clientCtx.GetFromAddress()
+			amount, err := sdk.ParseCoinNormalized(args[2])
+			if err != nil {
+				return err
+			}
 
-			msg := types.NewMsgDeleteRegisteredZone(zoneId, controllerAddr)
+			msg := types.NewMsgIcaAutoStaking(zoneId, clientCtx.GetFromAddress(), amount)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+// txTransferTxCmd is a transaction used to transfer assets between chains using ICA. This transaction can only be submitted by a given signatory.
+func txTransferTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "ica-transfer [zone-id] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
+		Args: cobra.ExactArgs(6),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
+				return err
+			}
+
+			clientCtx, err := client.GetClientTxContext(cmd)
+
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			hostAddr := args[1]
+			receiver := args[2]
+			portId := args[3]
+			chanId := args[4]
+			amount, err := sdk.ParseCoinNormalized(args[5])
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgIcaTransfer(zoneId, hostAddr, clientCtx.GetFromAddress(), receiver, portId, chanId, amount)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+// txDeleteZoneTxCmd is a transaction that deletes the registered zone. This transaction can only be submitted by a given signatory.
+func txDeleteZoneTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "delete-zone [zone-id]",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
+				return err
+			}
+			clientCtx, err := client.GetClientTxContext(cmd)
+
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+
+			msg := types.NewMsgDeleteRegisteredZone(zoneId, clientCtx.GetFromAddress())
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -256,7 +250,7 @@ func txDeleteZoneTxCmd() *cobra.Command {
 func txChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "change-zone [zone-id] [host-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
-		Args: cobra.ExactArgs(9),
+		Args: cobra.ExactArgs(8),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := cmd.Flags().Set(flags.FlagFrom, args[2]); err != nil {
 				return err
@@ -269,18 +263,17 @@ func txChangeZoneInfoTxCmd() *cobra.Command {
 
 			zoneId := args[0]
 			hostAddr := args[1]
-			controllerAddr := clientCtx.GetFromAddress()
-			icaConnId := args[3]
-			transferPortId := args[4]
-			transferChanId := args[5]
-			validatorAddr := args[6]
-			denom := args[7]
-			decimal, err := strconv.ParseInt(args[8], 10, 64)
+			icaConnId := args[2]
+			transferPortId := args[3]
+			transferChanId := args[4]
+			validatorAddr := args[5]
+			denom := args[6]
+			decimal, err := strconv.ParseInt(args[7], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgChangeZoneInfo(zoneId, hostAddr, controllerAddr, icaConnId, transferPortId, transferChanId, validatorAddr, denom, decimal)
+			msg := types.NewMsgChangeZoneInfo(zoneId, hostAddr, clientCtx.GetFromAddress(), icaConnId, transferPortId, transferChanId, validatorAddr, denom, decimal)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
