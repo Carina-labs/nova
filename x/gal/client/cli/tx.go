@@ -101,11 +101,6 @@ func txUndelegateCmd() *cobra.Command {
 		Use:  "undelegate [zone-id]",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			err := cmd.Flags().Set(flags.FlagFrom, args[1])
-			if err != nil {
-				return err
-			}
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -192,14 +187,12 @@ func txClaimSnAssetCmd() *cobra.Command {
 	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
+
 func txPendingWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "pending-withdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
 		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 
@@ -224,6 +217,7 @@ func txPendingWithdrawCmd() *cobra.Command {
 
 	return cmd
 }
+
 func txDelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "delegate [zone-id]",
