@@ -55,6 +55,26 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 	return totalDepositAmt
 }
 
+// GetTotalDepositAmtForUserAddr returns the sum of the user's address entered as input
+// and the deposit coin corresponding to the coin denom.
+func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, zoneId, userAddr, denom string) sdk.Coin {
+	totalDepositAmt := sdk.NewCoin(denom, sdk.NewInt(0))
+
+	k.IterateDepositRecord(ctx, zoneId, func(index int64, depositRecord types.DepositRecord) (stop bool) {
+		if depositRecord.Claimer == userAddr {
+			for _, record := range depositRecord.Records {
+				if record.State == types.DepositSuccess && record.Amount.Denom == denom {
+					totalDepositAmt = totalDepositAmt.Add(*record.Amount)
+				}
+			}
+		}
+		return false
+	})
+
+	return totalDepositAmt
+}
+
+
 // SetDepositOracleVersion updates the Oracle version for recorded Deposit requests.
 // This action is required for the correct equity calculation.
 func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state types.DepositStatusType, oracleVersion uint64) {
