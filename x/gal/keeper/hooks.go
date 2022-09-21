@@ -90,7 +90,9 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, delegateVersion+1)
 }
 
-// ica transfer
+// AfterWithdrawEnd is executed IcaWithdraw request finished.
+// 1. Increase the withdrawal version.
+// 2. The withdrawal status registered as transferred changes
 func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	asset := transferMsg.Token
 
@@ -98,11 +100,6 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 
 	if transferMsg.Receiver != zoneInfo.IcaAccount.ControllerAddress {
 		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zoneInfo.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
-		return
-	}
-
-	if asset.Amount.IsZero() || asset.Amount.IsNil() {
-		// TODO: withdraw fail event
 		return
 	}
 
