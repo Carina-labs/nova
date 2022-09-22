@@ -158,7 +158,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 		return nil, err
 	}
 
-	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
+	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 
 	newRecord := types.UndelegateRecordContent{
 		Withdrawer:    undelegate.Withdrawer,
@@ -220,7 +220,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("zone is not found")
 	}
 
-	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
+	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo, oracleVersion)
 	if burnAssets.IsZero() || undelegateAssets.IsZero() {
 		return nil, errors.New("no coins to undelegate")
@@ -383,7 +383,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		Denom:  ibcDenom,
 	}
 
-	oracleVersion := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
+	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	for _, record := range records.Records {
 		if record.OracleVersion >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)

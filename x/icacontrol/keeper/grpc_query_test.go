@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"fmt"
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"strconv"
 )
@@ -77,7 +78,7 @@ func (suite *KeeperTestSuite) TestAutoStakingVersion() {
 	suite.Require().Error(err)
 
 	//version is zero
-	exp := types.QueryAutoStakingVersionResponse{Version: 0}
+	exp := types.QueryAutoStakingVersionResponse{Version: 0, Height: 0}
 
 	res, err := queryClient.AutoStakingVersion(ctx.Context(), &types.QueryAutoStakingVersion{
 		ZoneId: zoneId,
@@ -87,13 +88,14 @@ func (suite *KeeperTestSuite) TestAutoStakingVersion() {
 	suite.Require().Equal(res, &exp)
 
 	//version is 30
-	exp = types.QueryAutoStakingVersionResponse{Version: 30}
+	exp = types.QueryAutoStakingVersionResponse{Version: 30, Height: 1}
 
 	//set delegate version
-	suite.App.IcaControlKeeper.SetAutoStakingVersion(ctx, zoneId, 30)
+	suite.App.IcaControlKeeper.SetAutoStakingVersion(ctx, zoneId, 30, uint64(ctx.BlockHeight()))
 	res, err = queryClient.AutoStakingVersion(ctx.Context(), &types.QueryAutoStakingVersion{
 		ZoneId: zoneId,
 	})
 	suite.Require().NoError(err)
+	fmt.Println(res, &exp)
 	suite.Require().Equal(res, &exp)
 }

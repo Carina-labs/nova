@@ -224,7 +224,7 @@ func (suite *KeeperTestSuite) TestGetUndelegateAmount() {
 
 			err := suite.App.OracleKeeper.UpdateChainState(suite.Ctx, &chainInfo)
 			suite.Require().NoError(err)
-			suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, tc.zoneId, tc.oracleVersion)
+			suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, tc.zoneId, tc.oracleVersion, uint64(suite.Ctx.BlockHeight()))
 
 			snAsset, wAsset := suite.App.GalKeeper.GetUndelegateAmount(suite.Ctx, tc.snDenom, zone, tc.oracleVersion)
 			suite.Require().Equal(tc.snAsset, snAsset)

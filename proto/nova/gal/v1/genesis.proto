@@ -37,14 +37,17 @@ message WithdrawInfo {
   string address = 1;
   string denom = 2;
   int64 amount = 3;
-  google.protobuf.Timestamp completion_time = 4[(gogoproto.nullable) = false, (gogoproto.stdtime)= true];
+  google.protobuf.Timestamp completion_time = 4[(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }
 
 message RecordInfo {
   string zone_id = 1;
   uint64 delegate_version = 2;
-  uint64 undelegate_version = 3;
-  uint64 withdraw_version = 4;
+  uint64 delegate_height = 3;
+  uint64 undelegate_version = 4;
+  uint64 undelegate_height = 5;
+  uint64 withdraw_version = 6;
+  uint64 withdraw_height = 7;
 }
 
 message DepositRecord {
@@ -87,5 +90,5 @@ message WithdrawRecordContent {
   int64 state = 2;
   int64 oracle_version = 3;
   uint64 withdraw_version = 4;
-  google.protobuf.Timestamp completion_time = 5[(gogoproto.nullable) = false, (gogoproto.stdtime)= true];
+  google.protobuf.Timestamp completion_time = 5[(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }

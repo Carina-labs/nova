@@ -18,25 +18,30 @@ func (k Keeper) GetUndelegateVersionStore(ctx sdk.Context) prefix.Store {
 }
 
 // SetUndelegateVersion sets the new un-delgate Version.
-func (k Keeper) SetUndelegateVersion(ctx sdk.Context, zoneId string, version uint64) {
+func (k Keeper) SetUndelegateVersion(ctx sdk.Context, zoneId string, version uint64, height uint64) {
 	store := k.GetUndelegateVersionStore(ctx)
 	key := zoneId
-	bz := make([]byte, 8)
-	binary.BigEndian.PutUint64(bz, version)
+	v := make([]byte, 8)
+	h := make([]byte, 8)
+
+	binary.BigEndian.PutUint64(v, version)
+	binary.BigEndian.PutUint64(h, height)
+
+	bz := append(v, h...)
 	store.Set([]byte(key), bz)
 }
 
 // GetUndelegateVersion returns the latest undelegation version.
-func (k Keeper) GetUndelegateVersion(ctx sdk.Context, zoneId string) uint64 {
+func (k Keeper) GetUndelegateVersion(ctx sdk.Context, zoneId string) (uint64, uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateVersion)
 	key := []byte(zoneId)
 	bz := store.Get(key)
 
 	if bz == nil {
-		return 0
+		return 0, 0
 	}
 
-	return binary.BigEndian.Uint64(bz)
+	return binary.BigEndian.Uint64(bz[:8]), binary.BigEndian.Uint64(bz[8:])
 }
 
 // SetUndelegateRecord writes a record of the user's undelegation actions.

@@ -1398,11 +1398,11 @@ var (
 
 	pattern_Query_DepositRecords_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"nova", "gal", "v1", "deposit", "address", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
 
-	pattern_Query_UndelegateRecords_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"nova", "get", "v1", "undelegate", "address", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
+	pattern_Query_UndelegateRecords_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"nova", "gal", "v1", "undelegate", "address", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
 
-	pattern_Query_WithdrawRecords_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"nova", "get", "v1", "withdraw", "address", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
+	pattern_Query_WithdrawRecords_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"nova", "gal", "v1", "withdraw", "address", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
 
-	pattern_Query_DelegateVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"nova", "get", "v1", "delegate_version", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
+	pattern_Query_DelegateVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"nova", "gal", "v1", "delegate_version", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
 
 	pattern_Query_UndelegateVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"nova", "get", "v1", "undelegate_version", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
 

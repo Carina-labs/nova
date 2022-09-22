@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"context"
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 
 	"github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -96,4 +97,57 @@ func (suite *KeeperTestSuite) TestQueryParam() {
 			suite.Require().Equal(params.Params.OracleOperators, tt.expect)
 		})
 	}
+}
+
+func (suite *KeeperTestSuite) TestQueryOracleVersion() {
+	//invalid zone
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+
+	zone := &icacontroltypes.RegisteredZone{
+		ZoneId: "gaia",
+		IcaConnectionInfo: &icacontroltypes.IcaConnectionInfo{
+			ConnectionId: "connection-0",
+			PortId:       "test",
+		},
+		TransferInfo: &icacontroltypes.TransferConnectionInfo{
+			PortId:    "transfer",
+			ChannelId: "channel-0",
+		},
+		ValidatorAddress: "valAddr",
+		BaseDenom:        "uatom",
+		SnDenom:          "snuatom",
+		Decimal:          6,
+	}
+
+	//set chain info
+	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, zone)
+
+	// query with invalid zone
+	_, err := queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
+		ZoneId: "invalid",
+	})
+	suite.Require().Error(err)
+
+	//sequence is zero
+	exp := types.QueryOracleVersionResponse{Version: 0, Height: 0}
+
+	res, err := queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
+		ZoneId: "gaia",
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(res, &exp)
+
+	//sequence is 18
+	exp = types.QueryOracleVersionResponse{Version: 18, Height: 1}
+
+	//set delegate version
+	suite.App.OracleKeeper.SetOracleVersion(ctx, "gaia", 18, uint64(ctx.BlockHeight()))
+	res, err = queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
+		ZoneId: "gaia",
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(res, &exp)
 }

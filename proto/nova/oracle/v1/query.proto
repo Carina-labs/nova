@@ -19,16 +19,20 @@ service Query {
   rpc State(QueryStateRequest) returns (QueryStateResponse) {
     option (google.api.http).get = "/nova/oracle/v1/state";
   }
+
+  rpc OracleVersion(QueryOracleVersionRequest) returns (QueryOracleVersionResponse) {
+    option (google.api.http).get = "/nova/oracle/v1/oracle_version/{zone_id}";
+  }
 }
 
 message QueryParamsRequest {}
 message QueryParamsResponse {
   // params defines the parameters of the module.
-  Params params = 1 [ (gogoproto.nullable) = false ];
+  Params params = 1 [(gogoproto.nullable) = false];
 }
 
 message QueryStateRequest {
-  string chain_denom = 1 [ (gogoproto.moretags) = "yaml:\"chain_denom\"" ];
+  string chain_denom = 1 [(gogoproto.moretags) = "yaml:\"chain_denom\""];
 }
 message QueryStateResponse {
   cosmos.base.v1beta1.Coin coin = 1 [
@@ -36,9 +40,18 @@ message QueryStateResponse {
     (gogoproto.moretags) = "yaml:\"coin\"",
     (gogoproto.nullable) = false
   ];
-  string operator = 2 [ (gogoproto.moretags) = "yaml:\"operator\"" ];
-  uint32 decimal = 3 [ (gogoproto.moretags) = "yaml:\"decimal\"" ];
-  int64 last_block_height = 4 [ (gogoproto.moretags) = "yaml:\"last_block_height\"" ];
-  bytes app_hash = 5 [ (gogoproto.moretags) = "yaml:\"app_hash\"" ];
-  string chain_id = 6 [ (gogoproto.moretags) = "yaml:\"chain_id\"" ];
+  string operator = 2 [(gogoproto.moretags) = "yaml:\"operator\""];
+  uint32 decimal = 3 [(gogoproto.moretags) = "yaml:\"decimal\""];
+  int64 last_block_height = 4 [(gogoproto.moretags) = "yaml:\"last_block_height\""];
+  bytes app_hash = 5 [(gogoproto.moretags) = "yaml:\"app_hash\""];
+  string chain_id = 6 [(gogoproto.moretags) = "yaml:\"chain_id\""];
+}
+
+message QueryOracleVersionRequest {
+  string zone_id = 1;
+}
+
+message QueryOracleVersionResponse {
+  uint64 version = 1;
+  uint64 height = 2;
 }

@@ -186,10 +186,11 @@ func (q QueryServer) DelegateVersion(goCtx context.Context, request *types.Query
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
 
-	version := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
+	version, height := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
 
 	return &types.QueryDelegateVersionResponse{
 		Version: version,
+		Height:  height,
 	}, nil
 }
 
@@ -201,10 +202,11 @@ func (q QueryServer) UndelegateVersion(goCtx context.Context, request *types.Que
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
 
-	version := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
+	version, height := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
 
 	return &types.QueryUndelegateVersionResponse{
 		Version: version,
+		Height:  height,
 	}, nil
 }
 
@@ -216,9 +218,10 @@ func (q QueryServer) WithdrawVersion(goCtx context.Context, request *types.Query
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
 
-	version := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
+	version, height := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
 
 	return &types.QueryWithdrawVersionResponse{
 		Version: version,
+		Height:  height,
 	}, nil
 }

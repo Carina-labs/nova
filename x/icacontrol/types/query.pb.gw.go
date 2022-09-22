@@ -343,7 +343,7 @@ var (
 
 	pattern_Query_Zone_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"nova", "icacontrol", "v1", "zone", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
 
-	pattern_Query_AutoStakingVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"nova", "get", "v1", "autostaking_version", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
+	pattern_Query_AutoStakingVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"nova", "icacontrol", "v1", "autostaking_version", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
 )
 
 var (

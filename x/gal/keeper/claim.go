@@ -80,7 +80,7 @@ func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone icacontrolkeeper.Regi
 	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 	result := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
-	oracleVersion := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
+	oracleVersion, _ := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
 
 	records, found := k.GetUserDepositRecord(ctx, zone.ZoneId, claimer)
 	if !found {

@@ -25,6 +25,7 @@ type QueryClient interface {
 	// Params returns the total set of minting parameters.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	State(ctx context.Context, in *QueryStateRequest, opts ...grpc.CallOption) (*QueryStateResponse, error)
+	OracleVersion(ctx context.Context, in *QueryOracleVersionRequest, opts ...grpc.CallOption) (*QueryOracleVersionResponse, error)
 }
 
 type queryClient struct {
@@ -53,6 +54,15 @@ func (c *queryClient) State(ctx context.Context, in *QueryStateRequest, opts ...
 	return out, nil
 }
 
+func (c *queryClient) OracleVersion(ctx context.Context, in *QueryOracleVersionRequest, opts ...grpc.CallOption) (*QueryOracleVersionResponse, error) {
+	out := new(QueryOracleVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.oracle.v1.Query/OracleVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -60,6 +70,7 @@ type QueryServer interface {
 	// Params returns the total set of minting parameters.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	State(context.Context, *QueryStateRequest) (*QueryStateResponse, error)
+	OracleVersion(context.Context, *QueryOracleVersionRequest) (*QueryOracleVersionResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -72,6 +83,9 @@ func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*Q
 }
 func (UnimplementedQueryServer) State(context.Context, *QueryStateRequest) (*QueryStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method State not implemented")
+}
+func (UnimplementedQueryServer) OracleVersion(context.Context, *QueryOracleVersionRequest) (*QueryOracleVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OracleVersion not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -122,6 +136,24 @@ func _Query_State_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_OracleVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryOracleVersionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).OracleVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.oracle.v1.Query/OracleVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).OracleVersion(ctx, req.(*QueryOracleVersionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -136,6 +168,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "State",
 			Handler:    _Query_State_Handler,
+		},
+		{
+			MethodName: "OracleVersion",
+			Handler:    _Query_OracleVersion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

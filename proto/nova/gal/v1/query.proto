@@ -41,15 +41,15 @@ service Query {
   }
 
   rpc UndelegateRecords(QueryUndelegateRecordRequest) returns (QueryUndelegateRecordResponse) {
-    option (google.api.http).get = "/nova/get/v1/undelegate/{address}/{zone_id}";
+    option (google.api.http).get = "/nova/gal/v1/undelegate/{address}/{zone_id}";
   }
 
   rpc WithdrawRecords(QueryWithdrawRecordRequest) returns (QueryWithdrawRecordResponse) {
-    option (google.api.http).get = "/nova/get/v1/withdraw/{address}/{zone_id}";
+    option (google.api.http).get = "/nova/gal/v1/withdraw/{address}/{zone_id}";
   }
 
   rpc DelegateVersion(QueryDelegateVersion) returns (QueryDelegateVersionResponse) {
-    option (google.api.http).get = "/nova/get/v1/delegate_version/{zone_id}";
+    option (google.api.http).get = "/nova/gal/v1/delegate_version/{zone_id}";
   }
 
   rpc UndelegateVersion(QueryUndelegateVersion) returns (QueryUndelegateVersionResponse) {
@@ -159,6 +159,7 @@ message QueryDelegateVersion {
 
 message QueryDelegateVersionResponse {
   uint64 version = 1;
+  uint64 height = 2;
 }
 
 message QueryUndelegateVersion {
@@ -167,6 +168,7 @@ message QueryUndelegateVersion {
 
 message QueryUndelegateVersionResponse {
   uint64 version = 1;
+  uint64 height = 2;
 }
 
 message QueryWithdrawVersion {
@@ -175,4 +177,5 @@ message QueryWithdrawVersion {
 
 message QueryWithdrawVersionResponse {
   uint64 version = 1;
+  uint64 height = 2;
 }
