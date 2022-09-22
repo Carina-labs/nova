@@ -102,7 +102,7 @@ func (k Keeper) SetWithdrawVersion(ctx sdk.Context, zoneId string, version uint6
 }
 
 // GetWithdrawVersion returns current withdraw-version.
-func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) (uint64, uint64) {
+func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) (version uint64, height uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawVersion)
 	key := []byte(zoneId)
 	bz := store.Get(key)
@@ -111,7 +111,9 @@ func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) (uint64, uint
 		return 0, 0
 	}
 
-	return binary.BigEndian.Uint64(bz[:8]), binary.BigEndian.Uint64(bz[8:])
+	version = binary.BigEndian.Uint64(bz[:8])
+	height = binary.BigEndian.Uint64(bz[8:])
+	return version, height
 }
 
 // SetWithdrawRecordVersion set new version to withdraw record corresponding to zoneId and state.

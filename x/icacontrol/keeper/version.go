@@ -27,7 +27,7 @@ func (k Keeper) SetAutoStakingVersion(ctx sdk.Context, zoneId string, version ui
 }
 
 // GetAutoStakingVersion returns version for autostaking corresponding to zone-id records.
-func (k Keeper) GetAutoStakingVersion(ctx sdk.Context, zoneId string) (uint64, uint64) {
+func (k Keeper) GetAutoStakingVersion(ctx sdk.Context, zoneId string) (version uint64, height uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyAutoStakingVersion)
 	key := []byte(zoneId)
 	bz := store.Get(key)
@@ -36,5 +36,7 @@ func (k Keeper) GetAutoStakingVersion(ctx sdk.Context, zoneId string) (uint64, u
 		return 0, 0
 	}
 
-	return binary.BigEndian.Uint64(bz[:8]), binary.BigEndian.Uint64(bz[8:])
+	version = binary.BigEndian.Uint64(bz[:8])
+	height = binary.BigEndian.Uint64(bz[8:])
+	return version, height
 }
