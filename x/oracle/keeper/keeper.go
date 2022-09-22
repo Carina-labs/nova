@@ -97,7 +97,7 @@ func (k Keeper) SetOracleVersion(ctx sdk.Context, zoneId string, version uint64,
 	store.Set([]byte(key), bz)
 }
 
-func (k Keeper) GetOracleVersion(ctx sdk.Context, zoneId string) (uint64, uint64) {
+func (k Keeper) GetOracleVersion(ctx sdk.Context, zoneId string) (version uint64, height uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyOracleVersion)
 	key := []byte(zoneId)
 	bz := store.Get(key)
@@ -106,5 +106,7 @@ func (k Keeper) GetOracleVersion(ctx sdk.Context, zoneId string) (uint64, uint64
 		return 0, 0
 	}
 
-	return binary.BigEndian.Uint64(bz[:8]), binary.BigEndian.Uint64(bz[8:])
+	version = binary.BigEndian.Uint64(bz[:8])
+	height = binary.BigEndian.Uint64(bz[8:])
+	return version, height
 }

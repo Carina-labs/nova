@@ -27,7 +27,7 @@ func (k Keeper) SetDelegateVersion(ctx sdk.Context, zoneId string, version uint6
 }
 
 // GetDelegateVersion returns version for delegation corresponding to zone-id records.
-func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) (uint64, uint64) {
+func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) (version uint64, height uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyDelegateVersion)
 	key := []byte(zoneId)
 	bz := store.Get(key)
@@ -36,5 +36,7 @@ func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) (uint64, uint
 		return 0, 0
 	}
 
-	return binary.BigEndian.Uint64(bz[:8]), binary.BigEndian.Uint64(bz[8:])
+	version = binary.BigEndian.Uint64(bz[:8])
+	height = binary.BigEndian.Uint64(bz[8:])
+	return version, height
 }
