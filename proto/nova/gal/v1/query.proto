@@ -53,11 +53,11 @@ service Query {
   }
 
   rpc UndelegateVersion(QueryUndelegateVersion) returns (QueryUndelegateVersionResponse) {
-    option (google.api.http).get = "/nova/get/v1/undelegate_version/{zone_id}";
+    option (google.api.http).get = "/nova/gal/v1/undelegate_version/{zone_id}";
   }
 
   rpc WithdrawVersion(QueryWithdrawVersion) returns (QueryWithdrawVersionResponse) {
-    option (google.api.http).get = "/nova/get/v1/withdraw_version/{zone_id}";
+    option (google.api.http).get = "/nova/gal/v1/withdraw_version/{zone_id}";
   }
 }
 
