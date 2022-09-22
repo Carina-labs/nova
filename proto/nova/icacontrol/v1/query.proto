@@ -17,7 +17,7 @@ service Query {
     option (google.api.http).get = "/nova/icacontrol/v1/zone/{zone_id}";
   }
   rpc AutoStakingVersion(QueryAutoStakingVersion) returns (QueryAutoStakingVersionResponse) {
-    option (google.api.http).get = "/nova/get/v1/autostaking_version/{zone_id}";
+    option (google.api.http).get = "/nova/icacontrol/v1/autostaking_version/{zone_id}";
   }
 }
 
@@ -45,4 +45,5 @@ message QueryAutoStakingVersion {
 
 message QueryAutoStakingVersionResponse {
   uint64 version = 1;
+  uint64 height = 2;
 }

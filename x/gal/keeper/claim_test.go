@@ -68,7 +68,7 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 			zone, ok := suite.App.IcaControlKeeper.GetRegisteredZone(suite.Ctx, zoneId)
 			suite.Require().True(ok)
 
-			suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, zoneId, tc.oracleVersion)
+			suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, zoneId, tc.oracleVersion, uint64(suite.Ctx.BlockHeight()))
 			result, err := suite.App.GalKeeper.TotalClaimableAssets(suite.Ctx, zone, tc.claimer)
 
 			if tc.err {

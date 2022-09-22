@@ -219,6 +219,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appCodec,
 		appKeepers.keys[oracletypes.StoreKey],
 		appKeepers.GetSubspace(oracletypes.ModuleName),
+		icaControlKeeper,
 	)
 	appKeepers.OracleKeeper = &oracleKeeper
 

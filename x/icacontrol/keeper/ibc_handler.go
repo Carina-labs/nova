@@ -79,8 +79,9 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 			return "", types.ErrMsgNotFound
 		}
 
-		version := k.GetAutoStakingVersion(ctx, zone.ZoneId)
-		k.SetAutoStakingVersion(ctx, zone.ZoneId, version+1)
+		version, _ := k.GetAutoStakingVersion(ctx, zone.ZoneId)
+		height := ctx.BlockHeight()
+		k.SetAutoStakingVersion(ctx, zone.ZoneId, version+1, uint64(height))
 		return "", nil
 	default:
 		return "", nil

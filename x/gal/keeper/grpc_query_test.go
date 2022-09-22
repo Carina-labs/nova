@@ -23,7 +23,7 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	amount := sdk.NewInt(1000_000000)
 	coin := sdk.NewCoin(denom, amount)
 
-	oracleKeeper.SetOracleVersion(ctx, zoneId, 2)
+	oracleKeeper.SetOracleVersion(ctx, zoneId, 2, uint64(ctx.BlockHeight()))
 	keeper.SetDepositRecord(ctx, &types.DepositRecord{
 		ZoneId:  zoneId,
 		Claimer: fooUser.String(),
@@ -59,7 +59,7 @@ func (suite *KeeperTestSuite) TestDepositAmountQuery() {
 	amount := sdk.NewInt(1000_000000)
 	coin := sdk.NewCoin(denom, amount)
 
-	oracleKeeper.SetOracleVersion(ctx, zoneId, 2)
+	oracleKeeper.SetOracleVersion(ctx, zoneId, 2, uint64(ctx.BlockHeight()))
 	keeper.SetDepositRecord(ctx, &types.DepositRecord{
 		ZoneId:  zoneId,
 		Claimer: fooUser.String(),
@@ -336,7 +336,7 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	suite.Require().Error(err)
 
 	//sequence is zero
-	exp := types.QueryDelegateVersionResponse{Version: 0}
+	exp := types.QueryDelegateVersionResponse{Version: 0, Height: 0}
 
 	res, err := queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
 		ZoneId: zoneId,
@@ -346,10 +346,10 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	suite.Require().Equal(res, &exp)
 
 	//sequence is 8
-	exp = types.QueryDelegateVersionResponse{Version: 8}
+	exp = types.QueryDelegateVersionResponse{Version: 8, Height: 1}
 
 	//set delegate version
-	suite.App.GalKeeper.SetDelegateVersion(ctx, zoneId, 8)
+	suite.App.GalKeeper.SetDelegateVersion(ctx, zoneId, 8, uint64(ctx.BlockHeight()))
 	res, err = queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
 		ZoneId: zoneId,
 	})
@@ -370,7 +370,7 @@ func (suite *KeeperTestSuite) TestQueryUndelegateVersion() {
 	suite.Require().Error(err)
 
 	//sequence is zero
-	exp := types.QueryUndelegateVersionResponse{Version: 0}
+	exp := types.QueryUndelegateVersionResponse{Version: 0, Height: 0}
 
 	res, err := queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
 		ZoneId: zoneId,
@@ -380,10 +380,10 @@ func (suite *KeeperTestSuite) TestQueryUndelegateVersion() {
 	suite.Require().Equal(res, &exp)
 
 	//sequence is 20
-	exp = types.QueryUndelegateVersionResponse{Version: 20}
+	exp = types.QueryUndelegateVersionResponse{Version: 20, Height: 1}
 
 	//set delegate version
-	suite.App.GalKeeper.SetUndelegateVersion(ctx, zoneId, 20)
+	suite.App.GalKeeper.SetUndelegateVersion(ctx, zoneId, 20, uint64(ctx.BlockHeight()))
 	res, err = queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
 		ZoneId: zoneId,
 	})
@@ -404,7 +404,7 @@ func (suite *KeeperTestSuite) TestQueryWithdrawVersion() {
 	suite.Require().Error(err)
 
 	//sequence is zero
-	exp := types.QueryWithdrawVersionResponse{Version: 0}
+	exp := types.QueryWithdrawVersionResponse{Version: 0, Height: 0}
 
 	res, err := queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
 		ZoneId: zoneId,
@@ -414,10 +414,10 @@ func (suite *KeeperTestSuite) TestQueryWithdrawVersion() {
 	suite.Require().Equal(res, &exp)
 
 	//sequence is 18
-	exp = types.QueryWithdrawVersionResponse{Version: 18}
+	exp = types.QueryWithdrawVersionResponse{Version: 18, Height: 1}
 
 	//set delegate version
-	suite.App.GalKeeper.SetWithdrawVersion(ctx, zoneId, 18)
+	suite.App.GalKeeper.SetWithdrawVersion(ctx, zoneId, 18, uint64(ctx.BlockHeight()))
 	res, err = queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
 		ZoneId: zoneId,
 	})

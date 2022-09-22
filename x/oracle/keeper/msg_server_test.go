@@ -47,14 +47,14 @@ func (suite *KeeperTestSuite) TestServerUpdateChainState() {
 	suite.Require().Equal(chainInfo.ChainId, got.ChainId)
 
 	// oracle version should increase
-	version := keeper.GetOracleVersion(ctx, chainInfo.ChainId)
+	version, _ := keeper.GetOracleVersion(ctx, chainInfo.ChainId)
 	suite.Require().Equal(uint64(1), version)
 
 	// after updating chain state, version should increase
 	_, err = msgServer.UpdateChainState(sdk.WrapSDKContext(suite.Ctx), &msg)
 	suite.Require().NoError(err)
 
-	version = keeper.GetOracleVersion(ctx, chainInfo.ChainId)
+	version, _ = keeper.GetOracleVersion(ctx, chainInfo.ChainId)
 	suite.Require().Equal(uint64(2), version)
 
 	// updating with invalid operator should fail
