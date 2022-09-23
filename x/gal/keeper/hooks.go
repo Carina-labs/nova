@@ -70,7 +70,11 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 	// get withdrawVersion
 	withdrawVersion, _ := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
 
-	h.k.SetWithdrawVersion(ctx, zone.ZoneId, withdrawVersion+1, uint64(ctx.BlockHeight()))
+	trace := types.IBCTrace{
+		Version: withdrawVersion + 1,
+		Height:  uint64(ctx.BlockHeight()),
+	}
+	h.k.SetWithdrawVersion(ctx, zone.ZoneId, trace)
 	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusRegistered, withdrawVersion+1)
 	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
 }
@@ -83,7 +87,12 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	oracleVersion, _ := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	// get delegateVersion
 	delegateVersion, _ := h.k.GetDelegateVersion(ctx, zoneInfo.ZoneId)
-	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, delegateVersion+1, uint64(ctx.BlockHeight()))
+
+	trace := types.IBCTrace{
+		Version: delegateVersion + 1,
+		Height:  uint64(ctx.BlockHeight()),
+	}
+	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, trace)
 
 	// change deposit state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
 	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DelegateRequest, types.DelegateSuccess)
@@ -107,7 +116,11 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	// get withdrawVersion
 	withdrawVersion, _ := h.k.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
 
-	h.k.SetWithdrawVersion(ctx, zoneInfo.ZoneId, withdrawVersion+1, uint64(ctx.BlockHeight()))
+	trace := types.IBCTrace{
+		Version: withdrawVersion + 1,
+		Height:  uint64(ctx.BlockHeight()),
+	}
+	h.k.SetWithdrawVersion(ctx, zoneInfo.ZoneId, trace)
 	h.k.SetWithdrawRecordVersion(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, withdrawVersion+1)
 	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
 
@@ -130,8 +143,12 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	undelegateVersion, _ := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
 	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca, undelegateVersion+1)
 
+	trace := types.IBCTrace{
+		Version: undelegateVersion + 1,
+		Height:  uint64(ctx.BlockHeight()),
+	}
 	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
-	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, undelegateVersion+1, uint64(ctx.BlockHeight()))
+	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, trace)
 
 	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
 }

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package nova.gal.v1;
+
+option go_package = "github.com/Carina-labs/nova/x/gal/types";
+
+message IBCTrace {
+  uint64 version = 1;
+  uint64 height = 2;
+}

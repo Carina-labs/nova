@@ -40,7 +40,11 @@ func (suite *KeeperTestSuite) InitICA() {
 			},
 		},
 	})
-	suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), zoneId, 1, uint64(suite.chainA.GetContext().BlockHeight()))
+	trace := oracletypes.IBCTrace{
+		Version: 1,
+		Height:  uint64(suite.chainA.GetContext().BlockHeight()),
+	}
+	suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), zoneId, trace)
 	suite.chainA.GetApp().IcaControlKeeper.InitGenesis(suite.chainA.GetContext(), &icacontroltypes.GenesisState{
 		Params: icacontroltypes.Params{
 			ControllerAddress: []string{
@@ -751,8 +755,12 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 				OperatorAddress: baseOwnerAcc.String(),
 			}
 
+			trace := oracletypes.IBCTrace{
+				Version: tc.oracleVersion,
+				Height:  uint64(suite.chainA.GetContext().BlockHeight()),
+			}
 			suite.chainA.GetApp().OracleKeeper.UpdateChainState(suite.chainA.GetContext(), chainInfo)
-			suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), tc.zoneId, tc.oracleVersion, uint64(suite.chainA.GetContext().BlockHeight()))
+			suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), tc.zoneId, trace)
 
 			for _, record := range tc.undelegateRecords {
 				suite.chainA.GetApp().GalKeeper.SetUndelegateRecord(suite.chainA.GetContext(), record)
@@ -1328,7 +1336,12 @@ func (suite *KeeperTestSuite) TestClaimSnAsset() {
 		}
 
 		suite.chainA.GetApp().OracleKeeper.UpdateChainState(suite.chainA.GetContext(), &chainInfo)
-		suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), tc.zoneId, tc.oracleVersion, uint64(suite.chainA.GetContext().BlockHeight()))
+
+		trace := oracletypes.IBCTrace{
+			Version: tc.oracleVersion,
+			Height:  uint64(suite.chainA.GetContext().BlockHeight()),
+		}
+		suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), tc.zoneId, trace)
 
 		msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
 		_, err := msgServer.ClaimSnAsset(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)

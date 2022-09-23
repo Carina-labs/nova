@@ -47,7 +47,12 @@ func (suite *KeeperTestSuite) InitICA() {
 			},
 		},
 	})
-	suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), zoneId, 1, uint64(suite.chainA.GetContext().BlockHeight()))
+
+	trace := oracletypes.IBCTrace{
+		Version: 1,
+		Height:  uint64(suite.chainA.GetContext().BlockHeight()),
+	}
+	suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), zoneId, trace)
 	suite.chainA.GetApp().IcaControlKeeper.InitGenesis(suite.chainA.GetContext(), &types.GenesisState{
 		Params: types.Params{
 			ControllerAddress: []string{

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package nova.oracle.v1;
+
+option go_package = "github.com/Carina-labs/nova/x/oracle/types";
+
+message IBCTrace {
+  uint64 version = 1;
+  uint64 height = 2;
+}

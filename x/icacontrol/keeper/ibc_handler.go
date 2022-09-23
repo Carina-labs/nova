@@ -81,7 +81,13 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 
 		version, _ := k.GetAutoStakingVersion(ctx, zone.ZoneId)
 		height := ctx.BlockHeight()
-		k.SetAutoStakingVersion(ctx, zone.ZoneId, version+1, uint64(height))
+
+		trace := types.IBCTrace{
+			Version: version + 1,
+			Height:  uint64(height),
+		}
+
+		k.SetAutoStakingVersion(ctx, zone.ZoneId, trace)
 		return "", nil
 	default:
 		return "", nil

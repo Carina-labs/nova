@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
+	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"time"
@@ -23,7 +24,12 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	amount := sdk.NewInt(1000_000000)
 	coin := sdk.NewCoin(denom, amount)
 
-	oracleKeeper.SetOracleVersion(ctx, zoneId, 2, uint64(ctx.BlockHeight()))
+	trace := oracletypes.IBCTrace{
+		Version: 2,
+		Height:  uint64(ctx.BlockHeight()),
+	}
+
+	oracleKeeper.SetOracleVersion(ctx, zoneId, trace)
 	keeper.SetDepositRecord(ctx, &types.DepositRecord{
 		ZoneId:  zoneId,
 		Claimer: fooUser.String(),
@@ -59,7 +65,12 @@ func (suite *KeeperTestSuite) TestDepositAmountQuery() {
 	amount := sdk.NewInt(1000_000000)
 	coin := sdk.NewCoin(denom, amount)
 
-	oracleKeeper.SetOracleVersion(ctx, zoneId, 2, uint64(ctx.BlockHeight()))
+	trace := oracletypes.IBCTrace{
+		Version: 2,
+		Height:  uint64(ctx.BlockHeight()),
+	}
+
+	oracleKeeper.SetOracleVersion(ctx, zoneId, trace)
 	keeper.SetDepositRecord(ctx, &types.DepositRecord{
 		ZoneId:  zoneId,
 		Claimer: fooUser.String(),
@@ -349,7 +360,12 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	exp = types.QueryDelegateVersionResponse{Version: 8, Height: 1}
 
 	//set delegate version
-	suite.App.GalKeeper.SetDelegateVersion(ctx, zoneId, 8, uint64(ctx.BlockHeight()))
+
+	trace := types.IBCTrace{
+		Version: 8,
+		Height:  uint64(ctx.BlockHeight()),
+	}
+	suite.App.GalKeeper.SetDelegateVersion(ctx, zoneId, trace)
 	res, err = queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
 		ZoneId: zoneId,
 	})
@@ -383,7 +399,11 @@ func (suite *KeeperTestSuite) TestQueryUndelegateVersion() {
 	exp = types.QueryUndelegateVersionResponse{Version: 20, Height: 1}
 
 	//set delegate version
-	suite.App.GalKeeper.SetUndelegateVersion(ctx, zoneId, 20, uint64(ctx.BlockHeight()))
+	trace := types.IBCTrace{
+		Version: 20,
+		Height:  uint64(ctx.BlockHeight()),
+	}
+	suite.App.GalKeeper.SetUndelegateVersion(ctx, zoneId, trace)
 	res, err = queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
 		ZoneId: zoneId,
 	})
@@ -417,7 +437,12 @@ func (suite *KeeperTestSuite) TestQueryWithdrawVersion() {
 	exp = types.QueryWithdrawVersionResponse{Version: 18, Height: 1}
 
 	//set delegate version
-	suite.App.GalKeeper.SetWithdrawVersion(ctx, zoneId, 18, uint64(ctx.BlockHeight()))
+	trace := types.IBCTrace{
+		Version: 18,
+		Height:  uint64(ctx.BlockHeight()),
+	}
+
+	suite.App.GalKeeper.SetWithdrawVersion(ctx, zoneId, trace)
 	res, err = queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
 		ZoneId: zoneId,
 	})

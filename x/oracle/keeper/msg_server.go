@@ -35,7 +35,12 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 	}
 
 	oracleVersion, _ := server.keeper.GetOracleVersion(ctx, state.ChainId)
-	server.keeper.SetOracleVersion(ctx, state.ChainId, oracleVersion+1, uint64(ctx.BlockHeight()))
+
+	trace := types.IBCTrace{
+		Version:  oracleVersion+1,
+		Height: uint64(ctx.BlockHeight()),
+	}
+	server.keeper.SetOracleVersion(ctx, state.ChainId, trace)
 
 	if err := server.keeper.UpdateChainState(ctx, newOracleState); err != nil {
 		return nil, sdkerrors.Wrapf(types.ErrUnknown, "err: %v", err)

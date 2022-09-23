@@ -90,8 +90,12 @@ func (suite *KeeperTestSuite) TestAutoStakingVersion() {
 	//version is 30
 	exp = types.QueryAutoStakingVersionResponse{Version: 30, Height: 1}
 
+	trace := types.IBCTrace{
+		Version: 30,
+		Height:  uint64(ctx.BlockHeight()),
+	}
 	//set delegate version
-	suite.App.IcaControlKeeper.SetAutoStakingVersion(ctx, zoneId, 30, uint64(ctx.BlockHeight()))
+	suite.App.IcaControlKeeper.SetAutoStakingVersion(ctx, zoneId, trace)
 	res, err = queryClient.AutoStakingVersion(ctx.Context(), &types.QueryAutoStakingVersion{
 		ZoneId: zoneId,
 	})
