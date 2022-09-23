@@ -2,9 +2,9 @@ syntax = "proto3";
 package nova.icacontrol.v1;
 
 import "gogoproto/gogo.proto";
-import "nova/icacontrol/v1/genesis.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/authz/v1beta1/authz.proto";
+import "nova/icacontrol/v1/icacontrol.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
 option (gogoproto.goproto_getters_all) = false;
@@ -64,6 +64,7 @@ message MsgChangeRegisteredZone{
   string validator_address = 5;
   string base_denom = 6;
   int64 decimal = 7;
+  int64 max_entries = 8;
 }
 
 // MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
@@ -76,6 +77,7 @@ message MsgChangeRegisteredZoneResponse{
   string base_denom = 6;
   string sn_denom = 7;
   int64 decimal = 8;
+  int64 max_entries = 9;
 }
 
 // MsgDeleteRegisteredZone deletes registered Zone information.

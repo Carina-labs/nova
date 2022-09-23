@@ -2,7 +2,7 @@ syntax = "proto3";
 package nova.icacontrol.v1;
 
 import "gogoproto/gogo.proto";
-import "nova/icacontrol/v1/genesis.proto";
+import "nova/icacontrol/v1/icacontrol.proto";
 import "google/api/annotations.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";

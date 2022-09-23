@@ -3,7 +3,7 @@ package nova.gal.v1;
 
 import "gogoproto/gogo.proto";
 import "nova/gal/v1/params.proto";
-import "nova/gal/v1/genesis.proto";
+import "nova/gal/v1/gal.proto";
 import "google/api/annotations.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
