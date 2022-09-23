@@ -152,14 +152,6 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 		return nil, types.ErrInvalidDenom
 	}
 
-	//send stAsset to GAL moduleAccount
-	undelegateRecord, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
-
-	if len(undelegateRecord.Records) >= int(zoneInfo.MaxEntries) &&
-		m.keeper.HasMaxUndelegateEntries(*undelegateRecord, zoneInfo.MaxEntries) {
-		return nil, types.ErrMaxUndelegateEntries
-	}
-
 	delegatorAcc, err := sdk.AccAddressFromBech32(undelegate.Delegator)
 	if err != nil {
 		return nil, err
@@ -176,6 +168,8 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 
 	snAssetAmt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
 
+	//send stAsset to GAL moduleAccount
+	undelegateRecord, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
 	if !found {
 		undelegateRecord = &types.UndelegateRecord{
 			ZoneId:    undelegate.ZoneId,
@@ -183,6 +177,11 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 			Records:   []*types.UndelegateRecordContent{&newRecord},
 		}
 	} else {
+		if len(undelegateRecord.Records) >= int(zoneInfo.MaxEntries) &&
+			m.keeper.HasMaxUndelegateEntries(*undelegateRecord, zoneInfo.MaxEntries) {
+			return nil, types.ErrMaxUndelegateEntries
+		}
+
 		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
 	}
 
