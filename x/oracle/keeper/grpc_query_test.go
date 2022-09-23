@@ -142,8 +142,12 @@ func (suite *KeeperTestSuite) TestQueryOracleVersion() {
 	//sequence is 18
 	exp = types.QueryOracleVersionResponse{Version: 18, Height: 1}
 
+	trace := types.IBCTrace{
+		Version: 18,
+		Height:  uint64(ctx.BlockHeight()),
+	}
 	//set delegate version
-	suite.App.OracleKeeper.SetOracleVersion(ctx, "gaia", 18, uint64(ctx.BlockHeight()))
+	suite.App.OracleKeeper.SetOracleVersion(ctx, "gaia", trace)
 	res, err = queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
 		ZoneId: "gaia",
 	})

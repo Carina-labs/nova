@@ -101,13 +101,21 @@ func (suite *KeeperTestSuite) TestSetOracleVersion() {
 
 	// set & get oracle version
 	oracleKeeper := suite.App.OracleKeeper
-	oracleKeeper.SetOracleVersion(suite.Ctx, testZoneId, version, uint64(suite.Ctx.BlockHeight()))
+	trace := types.IBCTrace{
+		Version: version,
+		Height:  uint64(suite.Ctx.BlockHeight()),
+	}
+	oracleKeeper.SetOracleVersion(suite.Ctx, testZoneId, trace)
 	got, _ := oracleKeeper.GetOracleVersion(suite.Ctx, testZoneId)
 	suite.Require().Equal(version, got)
 
 	// update to new version
 	newVersion := uint64(2)
-	oracleKeeper.SetOracleVersion(suite.Ctx, testZoneId, newVersion, uint64(suite.Ctx.BlockHeight()))
+	trace = types.IBCTrace{
+		Version: newVersion,
+		Height:  uint64(suite.Ctx.BlockHeight()),
+	}
+	oracleKeeper.SetOracleVersion(suite.Ctx, testZoneId, trace)
 	got, _ = oracleKeeper.GetOracleVersion(suite.Ctx, testZoneId)
 	suite.Require().Equal(newVersion, got)
 

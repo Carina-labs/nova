@@ -68,7 +68,11 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 			zone, ok := suite.App.IcaControlKeeper.GetRegisteredZone(suite.Ctx, zoneId)
 			suite.Require().True(ok)
 
-			suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, zoneId, tc.oracleVersion, uint64(suite.Ctx.BlockHeight()))
+			trace := oracletypes.IBCTrace{
+				Version: tc.oracleVersion,
+				Height:  uint64(suite.Ctx.BlockHeight()),
+			}
+			suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, zoneId, trace)
 			result, err := suite.App.GalKeeper.TotalClaimableAssets(suite.Ctx, zone, tc.claimer)
 
 			if tc.err {
@@ -77,7 +81,6 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 				suite.Require().NoError(err)
 				suite.Require().Equal(tc.result, *result)
 			}
-
 		})
 	}
 
