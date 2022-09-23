@@ -15,6 +15,7 @@ echo "### Generating gogo proto code ###"
 echo "##################################"
 
 cd proto
+buf mod update
 proto_dirs=$(find ./nova -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
 for dir in $proto_dirs; do
   find "${dir}" -maxdepth 1 -name '*.proto' -print0 |

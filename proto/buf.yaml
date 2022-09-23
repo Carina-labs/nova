@@ -2,9 +2,9 @@ version: v1
 name: buf.build/a4x/nova
 deps:
   - buf.build/googleapis/googleapis
-  - buf.build/cosmos/gogo-proto:739310d858571659171cdd7b2ca8bea7076c7ff2
-  - buf.build/cosmos/cosmos-proto:508be82654c8fce94cac6936bd485cfbc6f6366f
-  - buf.build/cosmos/cosmos-sdk:ad9e5620fb3445c716e9de45cfcdb56e8f1745bf
+  - buf.build/cosmos/gogo-proto
+  - buf.build/cosmos/cosmos-proto
+  - buf.build/cosmos/cosmos-sdk:7252f4a75893868a22e43905170b6258c2e97767
 breaking:
   use:
     - FILE

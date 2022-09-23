@@ -24,6 +24,7 @@ echo "##################################"
 echo "#### Generating proto API set ####"
 echo "##################################"
 cd proto
+buf mod update
 buf generate --template buf.gen.api.yaml buf.build/cosmos/cosmos-sdk
 buf generate --template buf.gen.api.yaml
 
