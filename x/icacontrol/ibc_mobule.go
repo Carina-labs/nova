@@ -143,20 +143,30 @@ func (im IBCModule) OnAcknowledgementPacket(
 
 	switch len(txMsgData.Data) {
 	case 1: // Delegate, Undelegate, IcaWithdraw
-		response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
-		if err != nil {
-			return err
-		}
-		im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
-		return nil
-	case 2: // AutoStaking
-		if txMsgData.Data[0].MsgType == sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{}) &&
-			txMsgData.Data[1].MsgType == sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}) {
+		if ack.Success(){
 			response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
 			if err != nil {
 				return err
 			}
 			im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
+		}else{
+			// TODO: Fail case
+		}
+
+		return nil
+	case 2: // AutoStaking
+		if txMsgData.Data[0].MsgType == sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{}) &&
+			txMsgData.Data[1].MsgType == sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}) {
+			if ack.Success(){
+				response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
+				if err != nil {
+					return err
+				}
+				im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
+			}else{
+				
+			}
+
 		}
 		return nil
 	default:
