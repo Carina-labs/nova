@@ -12,31 +12,3 @@ message GenesisState {
   // params defines all the parameters of module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
-
-message RegisteredZone {
-  string zone_id = 1;
-  IcaConnectionInfo ica_connection_info = 2;
-  IcaAccount ica_account = 3;
-  TransferConnectionInfo transfer_info = 4;
-  string validator_address = 5;
-  string base_denom = 6;
-  string sn_denom = 7;
-  int64 decimal = 8;
-}
-
-message IcaAccount {
-  string controller_address = 1;
-  string host_address = 2;
-}
-
-//zone name, connection id, portID(owner address)
-message IcaConnectionInfo {
-  string connection_id = 1;
-  string port_id = 2;
-}
-
-//transfer connection info
-message TransferConnectionInfo {
-  string channel_id = 1;
-  string port_id = 2;
-}
