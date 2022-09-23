@@ -19,4 +19,5 @@ var (
 	ErrTransferInfoNotFound = errors.Register(ModuleName, 13, "transfer info is not found")
 	ErrInvalidParameter     = errors.Register(ModuleName, 14, "invalid parameter")
 	ErrNoDeleteRecord       = errors.Register(ModuleName, 15, "fail delete deposit record")
+	ErrMaxUndelegateEntries = errors.Register(ModuleName, 16, "too many undelegate request")
 )

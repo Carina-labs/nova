@@ -153,6 +153,13 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 	}
 
 	//send stAsset to GAL moduleAccount
+	undelegateRecord, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
+
+	if len(undelegateRecord.Records) >= int(zoneInfo.MaxEntries) &&
+		m.keeper.HasMaxUndelegateEntries(*undelegateRecord, zoneInfo.MaxEntries) {
+		return nil, types.ErrMaxUndelegateEntries
+	}
+
 	delegatorAcc, err := sdk.AccAddressFromBech32(undelegate.Delegator)
 	if err != nil {
 		return nil, err
@@ -169,7 +176,6 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 
 	snAssetAmt := sdk.NewCoin(undelegate.Amount.Denom, undelegate.Amount.Amount)
 
-	undelegateRecord, found := m.keeper.GetUndelegateRecord(ctx, undelegate.ZoneId, undelegate.Delegator)
 	if !found {
 		undelegateRecord = &types.UndelegateRecord{
 			ZoneId:    undelegate.ZoneId,

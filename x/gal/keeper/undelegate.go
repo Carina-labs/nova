@@ -169,6 +169,18 @@ func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state ty
 	})
 }
 
+func (k Keeper) HasMaxUndelegateEntries(undelegateRecords types.UndelegateRecord, maxEntries int64) bool {
+	for _, record := range undelegateRecords.Records {
+		if record.State == types.UndelegateRequestByUser {
+			maxEntries -= 1
+		}
+		if maxEntries == 0 {
+			return true
+		}
+	}
+	return false
+}
+
 // IterateUndelegatedRecords navigates de-delegation records.
 func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, zoneId string, fn func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool)) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)

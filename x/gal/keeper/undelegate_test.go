@@ -754,3 +754,113 @@ func (suite *KeeperTestSuite) TestDeleteUndelegateRecords() {
 		})
 	}
 }
+
+func (suite *KeeperTestSuite) TestHasMaxUndelegateEntries() {
+	delegator := suite.GenRandomAddress()
+
+	tcs := []struct {
+		name             string
+		undelegateRecord types.UndelegateRecord
+		maxEntries       int64
+		success          bool
+	}{
+		{
+			name: "success - record is nil",
+			undelegateRecord: types.UndelegateRecord{
+				ZoneId:    zoneId,
+				Delegator: delegator.String(),
+			},
+			maxEntries: 3,
+			success:    false,
+		},
+		{
+			name: "success - previous records",
+			undelegateRecord: types.UndelegateRecord{
+				ZoneId:    zoneId,
+				Delegator: delegator.String(),
+				Records: []*types.UndelegateRecordContent{
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+				},
+			},
+			maxEntries: 10,
+			success:    false,
+		},
+		{
+			name: "fail - undelegate requests exceeded",
+			undelegateRecord: types.UndelegateRecord{
+				ZoneId:    zoneId,
+				Delegator: delegator.String(),
+				Records: []*types.UndelegateRecordContent{
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByIca,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+					{
+						State: types.UndelegateRequestByUser,
+					},
+				},
+			},
+			maxEntries: 5,
+			success:    true,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			res := suite.App.GalKeeper.HasMaxUndelegateEntries(tc.undelegateRecord, tc.maxEntries)
+			suite.Require().Equal(tc.success, res)
+		})
+	}
+}

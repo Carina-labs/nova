@@ -461,6 +461,71 @@ func (suite *KeeperTestSuite) TestDelegate() {
 func (suite *KeeperTestSuite) TestPendingUndelegate() {
 	delegator1 := suite.GenRandomAddress()
 	delegator2 := suite.GenRandomAddress()
+	delegator3 := suite.GenRandomAddress()
+
+	max_entries := suite.GenRandomAddress()
+
+	record := &types.UndelegateRecord{
+		ZoneId:    zoneId,
+		Delegator: max_entries.String(),
+		Records: []*types.UndelegateRecordContent{
+			{
+				Withdrawer: max_entries.String(),
+				State:      types.UndelegateRequestByUser,
+			},
+			{
+				Withdrawer: max_entries.String(),
+				State:      types.UndelegateRequestByUser,
+			},
+			{
+				Withdrawer: max_entries.String(),
+				State:      types.UndelegateRequestByIca,
+			},
+			{
+				Withdrawer: max_entries.String(),
+				State:      types.UndelegateRequestByIca,
+			},
+			{
+				Withdrawer: max_entries.String(),
+				State:      types.UndelegateRequestByIca,
+			},
+			{
+				Withdrawer: max_entries.String(),
+				State:      types.UndelegateRequestByIca,
+			},
+		},
+	}
+
+	suite.chainA.GetApp().GalKeeper.SetUndelegateRecord(suite.chainA.GetContext(), record)
+
+	record = &types.UndelegateRecord{
+		ZoneId:    zoneId,
+		Delegator: delegator3.String(),
+		Records: []*types.UndelegateRecordContent{
+			{
+				Withdrawer: delegator3.String(),
+				State:      types.UndelegateRequestByUser,
+			},
+			{
+				Withdrawer: delegator3.String(),
+				State:      types.UndelegateRequestByUser,
+			},
+			{
+				Withdrawer: delegator3.String(),
+				State:      types.UndelegateRequestByUser,
+			},
+			{
+				Withdrawer: delegator3.String(),
+				State:      types.UndelegateRequestByUser,
+			},
+			{
+				Withdrawer: delegator3.String(),
+				State:      types.UndelegateRequestByUser,
+			},
+		},
+	}
+
+	suite.chainA.GetApp().GalKeeper.SetUndelegateRecord(suite.chainA.GetContext(), record)
 
 	tcs := []struct {
 		name           string
@@ -504,6 +569,50 @@ func (suite *KeeperTestSuite) TestPendingUndelegate() {
 			err: false,
 		},
 		{
+			name:           "success - next sequence",
+			zoneId:         zoneId,
+			delegator:      max_entries,
+			undelegateAddr: max_entries,
+			msg: types.MsgPendingUndelegate{
+				ZoneId:     zoneId,
+				Delegator:  max_entries.String(),
+				Withdrawer: max_entries.String(),
+				Amount:     sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(10000, 18)),
+			},
+			denom: baseDenom,
+			result: types.UndelegateRecord{
+				ZoneId:    zoneId,
+				Delegator: max_entries.String(),
+				Records: []*types.UndelegateRecordContent{
+					{
+						Withdrawer: delegator1.String(),
+						State:      types.UndelegateRequestByUser,
+					},
+					{
+						Withdrawer: delegator1.String(),
+						State:      types.UndelegateRequestByUser,
+					},
+					{
+						Withdrawer: delegator1.String(),
+						State:      types.UndelegateRequestByIca,
+					},
+					{
+						Withdrawer: delegator1.String(),
+						State:      types.UndelegateRequestByIca,
+					},
+					{
+						Withdrawer: delegator1.String(),
+						State:      types.UndelegateRequestByIca,
+					},
+					{
+						Withdrawer: delegator1.String(),
+						State:      types.UndelegateRequestByIca,
+					},
+				},
+			},
+			err: false,
+		},
+		{
 			name:           "fail case 1 - zone not found",
 			zoneId:         "test",
 			delegator:      delegator2,
@@ -527,6 +636,21 @@ func (suite *KeeperTestSuite) TestPendingUndelegate() {
 				ZoneId:     zoneId,
 				Delegator:  delegator2.String(),
 				Withdrawer: delegator2.String(),
+				Amount:     sdk.NewCoin("snFailDenom", sdk.NewIntWithDecimal(10000, 18)),
+			},
+			denom:  baseDenom,
+			result: types.UndelegateRecord{},
+			err:    true,
+		},
+		{
+			name:           "fail case 3 - undelegate requests exceeded",
+			zoneId:         zoneId,
+			delegator:      delegator3,
+			undelegateAddr: delegator3,
+			msg: types.MsgPendingUndelegate{
+				ZoneId:     zoneId,
+				Delegator:  delegator3.String(),
+				Withdrawer: delegator3.String(),
 				Amount:     sdk.NewCoin("snFailDenom", sdk.NewIntWithDecimal(10000, 18)),
 			},
 			denom:  baseDenom,
