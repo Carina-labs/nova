@@ -32,8 +32,8 @@ const (
 // txRegisterZoneCmd is a transaction that registers new Zone information. This transaction can only be submitted by a given signatory.
 func txRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "register-zone [zone-id] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
-		Args: cobra.ExactArgs(7),
+		Use:  "register-zone [zone-id] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal] [max-entries]",
+		Args: cobra.ExactArgs(8),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -51,7 +51,13 @@ func txRegisterZoneCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			msg := types.NewMsgRegisterZone(zoneId, icaConnId, clientCtx.GetFromAddress(), transferPortId, transferChanId, validatorAddr, denom, decimal)
+
+			maxEntries, err := strconv.ParseInt(args[7], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgRegisterZone(zoneId, icaConnId, clientCtx.GetFromAddress(), transferPortId, transferChanId, validatorAddr, denom, decimal, maxEntries)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -206,7 +212,7 @@ func txDeleteZoneTxCmd() *cobra.Command {
 // txChangeZoneInfoTxCmd is a transaction that modifies the registered zone. This transaction can only be submitted by a given signatory.
 func txChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "change-zone [zone-id] [host-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal]",
+		Use:  "change-zone [zone-id] [host-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal] [max_entries]",
 		Args: cobra.ExactArgs(8),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
@@ -227,7 +233,12 @@ func txChangeZoneInfoTxCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgChangeZoneInfo(zoneId, hostAddr, clientCtx.GetFromAddress(), icaConnId, transferPortId, transferChanId, validatorAddr, denom, decimal)
+			maxEntries, err := strconv.ParseInt(args[8], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgChangeZoneInfo(zoneId, hostAddr, clientCtx.GetFromAddress(), icaConnId, transferPortId, transferChanId, validatorAddr, denom, decimal, maxEntries)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err

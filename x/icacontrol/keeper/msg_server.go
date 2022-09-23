@@ -47,6 +47,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		BaseDenom:        zone.BaseDenom,
 		SnDenom:          appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
 		Decimal:          zone.Decimal,
+		MaxEntries:       zone.MaxEntries,
 	}
 
 	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
@@ -72,6 +73,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		BaseDenom:        zoneInfo.BaseDenom,
 		SnDenom:          zoneInfo.BaseDenom,
 		Decimal:          zoneInfo.Decimal,
+		MaxEntries:       zoneInfo.MaxEntries,
 	}, nil
 }
 
@@ -118,6 +120,7 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 		BaseDenom:        zone.BaseDenom,
 		SnDenom:          appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
 		Decimal:          zone.Decimal,
+		MaxEntries:       zone.MaxEntries,
 	}
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
@@ -129,6 +132,7 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 		BaseDenom:        zoneInfo.BaseDenom,
 		SnDenom:          zoneInfo.BaseDenom,
 		Decimal:          zoneInfo.Decimal,
+		MaxEntries:       zoneInfo.MaxEntries,
 	}, nil
 }
 
