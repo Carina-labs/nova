@@ -37,8 +37,8 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 	oracleVersion, _ := server.keeper.GetOracleVersion(ctx, state.ChainId)
 
 	trace := types.IBCTrace{
-		Version:  oracleVersion+1,
-		Height: uint64(ctx.BlockHeight()),
+		Version: oracleVersion + 1,
+		Height:  uint64(ctx.BlockHeight()),
 	}
 	server.keeper.SetOracleVersion(ctx, state.ChainId, trace)
 
