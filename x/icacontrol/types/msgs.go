@@ -26,7 +26,7 @@ var (
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
-func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAddress, transferPortId, transferChanId string, validatorAddress, baseDenom string, decimal int64) *MsgRegisterZone {
+func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAddress, transferPortId, transferChanId string, validatorAddress, baseDenom string, decimal int64, maxEntries int64) *MsgRegisterZone {
 	return &MsgRegisterZone{
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
@@ -43,6 +43,7 @@ func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAd
 		ValidatorAddress: validatorAddress,
 		BaseDenom:        baseDenom,
 		Decimal:          decimal,
+		MaxEntries:       maxEntries,
 	}
 }
 
@@ -67,6 +68,10 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 
 	if strings.TrimSpace(msg.BaseDenom) == "" {
 		return errors.New("missing denom")
+	}
+
+	if msg.MaxEntries == 0 {
+		return errors.New("cannot set max_entries to zero")
 	}
 
 	return nil
@@ -293,7 +298,7 @@ func (msg MsgDeleteRegisteredZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress, icaConnectionId, transferPortId, transferChanId, validatorAddress, baseDenom string, decimal int64) *MsgChangeRegisteredZone {
+func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress, icaConnectionId, transferPortId, transferChanId, validatorAddress, baseDenom string, decimal int64, maxEntries int64) *MsgChangeRegisteredZone {
 	return &MsgChangeRegisteredZone{
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
@@ -311,6 +316,7 @@ func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress
 		ValidatorAddress: validatorAddress,
 		BaseDenom:        baseDenom,
 		Decimal:          decimal,
+		MaxEntries:       maxEntries,
 	}
 }
 
@@ -319,6 +325,10 @@ func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+	}
+
+	if msg.MaxEntries == 0 {
+		return errors.New("cannot set max_entries to zero")
 	}
 
 	return nil
