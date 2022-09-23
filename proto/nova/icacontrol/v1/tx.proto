@@ -39,6 +39,7 @@ message MsgRegisterZone {
   string validator_address = 5;
   string base_denom = 6;
   int64 decimal = 7;
+  int64 max_entries = 8;
 }
 
 // MsgRegisterZoneResponse is a response message for MsgRegisterZone
@@ -51,6 +52,7 @@ message MsgRegisterZoneResponse {
   string base_denom = 6;
   string sn_denom = 7;
   int64 decimal = 8;
+  int64 max_entries = 9;
 }
 
 // MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
