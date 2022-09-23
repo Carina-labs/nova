@@ -471,27 +471,57 @@ func (suite *KeeperTestSuite) TestPendingUndelegate() {
 		Records: []*types.UndelegateRecordContent{
 			{
 				Withdrawer: max_entries.String(),
-				State:      types.UndelegateRequestByUser,
+				SnAssetAmount: &sdk.Coin{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(0, 18),
+				},
+				WithdrawAmount: sdk.NewInt(0),
+				State:          types.UndelegateRequestByUser,
 			},
 			{
 				Withdrawer: max_entries.String(),
-				State:      types.UndelegateRequestByUser,
+				SnAssetAmount: &sdk.Coin{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(0, 18),
+				},
+				WithdrawAmount: sdk.NewInt(0),
+				State:          types.UndelegateRequestByUser,
 			},
 			{
 				Withdrawer: max_entries.String(),
-				State:      types.UndelegateRequestByIca,
+				SnAssetAmount: &sdk.Coin{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(0, 18),
+				},
+				WithdrawAmount: sdk.NewInt(0),
+				State:          types.UndelegateRequestByIca,
 			},
 			{
 				Withdrawer: max_entries.String(),
-				State:      types.UndelegateRequestByIca,
+				SnAssetAmount: &sdk.Coin{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(0, 18),
+				},
+				WithdrawAmount: sdk.NewInt(0),
+				State:          types.UndelegateRequestByIca,
 			},
 			{
 				Withdrawer: max_entries.String(),
-				State:      types.UndelegateRequestByIca,
+				SnAssetAmount: &sdk.Coin{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(0, 18),
+				},
+				WithdrawAmount: sdk.NewInt(0),
+				State:          types.UndelegateRequestByIca,
 			},
 			{
 				Withdrawer: max_entries.String(),
-				State:      types.UndelegateRequestByIca,
+				SnAssetAmount: &sdk.Coin{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(0, 18),
+				},
+				WithdrawAmount: sdk.NewInt(0),
+				State:          types.UndelegateRequestByIca,
 			},
 		},
 	}
@@ -585,28 +615,69 @@ func (suite *KeeperTestSuite) TestPendingUndelegate() {
 				Delegator: max_entries.String(),
 				Records: []*types.UndelegateRecordContent{
 					{
-						Withdrawer: delegator1.String(),
-						State:      types.UndelegateRequestByUser,
+						Withdrawer: max_entries.String(),
+						SnAssetAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(0, 18),
+						},
+						WithdrawAmount: sdk.NewInt(0),
+						State:          types.UndelegateRequestByUser,
 					},
 					{
-						Withdrawer: delegator1.String(),
-						State:      types.UndelegateRequestByUser,
+						Withdrawer: max_entries.String(),
+						SnAssetAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(0, 18),
+						},
+						WithdrawAmount: sdk.NewInt(0),
+						State:          types.UndelegateRequestByUser,
 					},
 					{
-						Withdrawer: delegator1.String(),
-						State:      types.UndelegateRequestByIca,
+						Withdrawer: max_entries.String(),
+						SnAssetAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(0, 18),
+						},
+						WithdrawAmount: sdk.NewInt(0),
+						State:          types.UndelegateRequestByIca,
 					},
 					{
-						Withdrawer: delegator1.String(),
-						State:      types.UndelegateRequestByIca,
+						Withdrawer: max_entries.String(),
+						SnAssetAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(0, 18),
+						},
+						WithdrawAmount: sdk.NewInt(0),
+						State:          types.UndelegateRequestByIca,
 					},
 					{
-						Withdrawer: delegator1.String(),
-						State:      types.UndelegateRequestByIca,
+						Withdrawer: max_entries.String(),
+						SnAssetAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(0, 18),
+						},
+						WithdrawAmount: sdk.NewInt(0),
+						State:          types.UndelegateRequestByIca,
 					},
 					{
-						Withdrawer: delegator1.String(),
-						State:      types.UndelegateRequestByIca,
+						Withdrawer: max_entries.String(),
+						SnAssetAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(0, 18),
+						},
+						WithdrawAmount: sdk.NewInt(0),
+						State:          types.UndelegateRequestByIca,
+					},
+					{
+						Withdrawer: max_entries.String(),
+						SnAssetAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(10000, 18),
+						},
+						WithdrawAmount:    sdk.NewInt(0),
+						State:             types.UndelegateRequestByUser,
+						OracleVersion:     1,
+						UndelegateVersion: 0,
 					},
 				},
 			},
@@ -614,11 +685,11 @@ func (suite *KeeperTestSuite) TestPendingUndelegate() {
 		},
 		{
 			name:           "fail case 1 - zone not found",
-			zoneId:         "test",
+			zoneId:         "test1",
 			delegator:      delegator2,
 			undelegateAddr: delegator2,
 			msg: types.MsgPendingUndelegate{
-				ZoneId:     "test",
+				ZoneId:     "test1",
 				Delegator:  delegator2.String(),
 				Withdrawer: delegator2.String(),
 				Amount:     sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(10000, 18)),
