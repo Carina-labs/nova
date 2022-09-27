@@ -188,5 +188,3 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 
 	return nil
 }
-
-
