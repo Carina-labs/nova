@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"strconv"
 )
@@ -100,6 +99,5 @@ func (suite *KeeperTestSuite) TestAutoStakingVersion() {
 		ZoneId: zoneId,
 	})
 	suite.Require().NoError(err)
-	fmt.Println(res, &exp)
 	suite.Require().Equal(res, &exp)
 }

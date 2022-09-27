@@ -349,7 +349,7 @@ func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			packetData.Data = tc.args.GetBytes()
-			err := suite.App.IcaControlKeeper.HandleTimeoutPacket(suite.Ctx, packetData)
+			err := suite.App.IcaControlKeeper.HandleAckFail(suite.Ctx, packetData)
 			if tc.err {
 				suite.Require().Error(err)
 			} else {

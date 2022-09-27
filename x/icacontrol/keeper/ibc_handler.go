@@ -30,7 +30,6 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		if !ok {
 			return "", types.ErrMsgNotFound
 		}
-
 		k.AfterDelegateEnd(ctx, *delegateMsg)
 		return "", nil
 	case sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}): // undelegate
@@ -94,7 +93,7 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 	}
 }
 
-func (k *Keeper) HandleTimeoutPacket(ctx sdk.Context, packet channeltypes.Packet) error {
+func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) error {
 	var data ibcaccounttypes.InterchainAccountPacketData
 	if err := ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data); err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrJSONUnmarshal, "cannot unmarshal packet data: %s", err.Error())
@@ -189,3 +188,5 @@ func (k *Keeper) HandleTimeoutPacket(ctx sdk.Context, packet channeltypes.Packet
 
 	return nil
 }
+
+

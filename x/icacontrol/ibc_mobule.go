@@ -140,7 +140,6 @@ func (im IBCModule) OnAcknowledgementPacket(
 	if err := proto.Unmarshal(ack.GetResult(), txMsgData); err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "cannot unmarshal ICS-27 tx message data: %v", err)
 	}
-
 	switch len(txMsgData.Data) {
 	case 1: // Delegate, Undelegate, IcaWithdraw
 		if ack.Success() {
@@ -150,7 +149,10 @@ func (im IBCModule) OnAcknowledgementPacket(
 			}
 			im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
 		} else {
-			// TODO: Fail case
+			if err := im.keeper.HandleAckFail(ctx, packet); err != nil {
+				return err
+			}
+			im.keeper.Logger(ctx).Error("ICA ack result is fail", "receive packet", packet)
 		}
 
 		return nil
@@ -164,12 +166,15 @@ func (im IBCModule) OnAcknowledgementPacket(
 				}
 				im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
 			} else {
-
+				if err := im.keeper.HandleAckFail(ctx, packet); err != nil {
+					return err
+				}
+				im.keeper.Logger(ctx).Error("ICA ack result is fail", "receive packet", packet)
 			}
-
 		}
 		return nil
 	default:
+		ctx.Logger().Debug("Unknown ICA msg", "receive packet", packet)
 		return nil
 	}
 }
@@ -180,7 +185,7 @@ func (im IBCModule) OnTimeoutPacket(
 	packet channeltypes.Packet,
 	relayer sdk.AccAddress,
 ) error {
-	return im.keeper.HandleTimeoutPacket(ctx, packet)
+	return im.keeper.HandleAckFail(ctx, packet)
 }
 
 // NegotiateAppVersion implements the IBCModule interface

@@ -233,15 +233,21 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 	suite.NewUndelegateRecord(undelegateRecord)
 
 	tcs := []struct {
-		name         string
-		zoneId       string
-		withdrawAddr string
-		result       types.WithdrawRecord
+		name           string
+		zoneId         string
+		withdrawAddr   string
+		withdrawRecord types.WithdrawRecord
+		result         types.WithdrawRecord
 	}{
 		{
-			name:         "",
-			zoneId:       zoneId,
-			withdrawAddr: delegator.String(),
+			name:           "",
+			zoneId:         zoneId,
+			withdrawRecord: types.WithdrawRecord{
+				ZoneId: zoneId,
+				Withdrawer: delegator.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{},
+			},
+			withdrawAddr:   delegator.String(),
 			result: types.WithdrawRecord{
 				ZoneId:     zoneId,
 				Withdrawer: delegator.String(),
@@ -258,13 +264,13 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
+			suite.App.GalKeeper.SetWithdrawRecord(suite.Ctx, &tc.withdrawRecord)
 			suite.App.GalKeeper.SetWithdrawRecords(suite.Ctx, tc.zoneId, time.Time{})
 			result, ok := suite.App.GalKeeper.GetWithdrawRecord(suite.Ctx, tc.zoneId, tc.withdrawAddr)
 			suite.Require().True(ok)
 			suite.Require().Equal(tc.result, *result)
 		})
 	}
-
 }
 
 func (suite *KeeperTestSuite) TestGetWithdrawAmountForUser() {

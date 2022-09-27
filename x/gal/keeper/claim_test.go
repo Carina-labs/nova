@@ -253,7 +253,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					Records: []*types.DepositRecordContent{
 						{
 							Amount: &ibcAmount,
-							State:  4,
+							State:  types.DelegateSuccess,
 						},
 					},
 				}
