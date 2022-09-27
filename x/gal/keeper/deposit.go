@@ -11,7 +11,7 @@ import (
 // getDepositRecordStore returns "DepositRecord" store.
 // It is used for finding the amount of coin user deposit.
 func (k Keeper) getDepositRecordStore(ctx sdk.Context) prefix.Store {
-	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyShare)
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyDepositRecordInfo)
 }
 
 // SetDepositRecord stores the deposit record which stores amount of the coin and user address.
@@ -97,33 +97,26 @@ func (k Keeper) SetDepositOracleVersion(ctx sdk.Context, zoneId string, state ty
 // This operation runs in the hook after the remote deposit is run.
 func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId string, preState, postState types.DepositStatusType) bool {
 	isChanged := false
-
 	k.IterateDepositRecord(ctx, zoneId, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		stateCheck := false
-		if depositRecord.ZoneId == zoneId {
-			for _, record := range depositRecord.Records {
-				if record.State == preState {
-					record.State = postState
-					stateCheck = true
-				}
+		for _, record := range depositRecord.Records {
+			if record.State == preState {
+				record.State = postState
+				stateCheck = true
 			}
-			if stateCheck {
-				k.SetDepositRecord(ctx, &depositRecord)
-				isChanged = true
-			}
+		}
+		if stateCheck {
+			k.SetDepositRecord(ctx, &depositRecord)
+			isChanged = true
 		}
 		return false
 	})
 
-	if !isChanged {
-		return isChanged
-	}
-
-	return true
+	return isChanged
 }
 
 // SetDelegateRecordVersion updates the deposit version performed by the bot for the state of the deposit records corresponding to zoneId.
-func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state types.DepositStatusType, version uint64) bool {
+func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state types.DepositStatusType, version uint64) {
 	k.IterateDepositRecord(ctx, zoneId, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		isChanged := false
 		for _, record := range depositRecord.Records {
@@ -137,7 +130,6 @@ func (k Keeper) SetDelegateRecordVersion(ctx sdk.Context, zoneId string, state t
 		}
 		return false
 	})
-	return true
 }
 
 // DeleteRecordedDepositItem deletes the records corresponding to state among the defositor's assets deposited in the zone corresponding to zoneId.

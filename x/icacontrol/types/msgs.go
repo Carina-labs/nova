@@ -19,8 +19,6 @@ var (
 	_ sdk.Msg = &MsgIcaAutoStaking{}
 	_ sdk.Msg = &MsgIcaAuthzGrant{}
 	_ sdk.Msg = &MsgIcaAuthzRevoke{}
-
-	//modify
 	_ sdk.Msg = &MsgDeleteRegisteredZone{}
 	_ sdk.Msg = &MsgChangeRegisteredZone{}
 )

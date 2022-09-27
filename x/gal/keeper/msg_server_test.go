@@ -753,6 +753,7 @@ func (suite *KeeperTestSuite) TestPendingUndelegate() {
 func (suite *KeeperTestSuite) TestUndelegate() {
 	suite.InitICA()
 	delegator := suite.GenRandomAddress()
+	withdrawer := suite.GenRandomAddress()
 	valAddr := suite.setValidator()
 	hostAddr := suite.setHostAddr(zoneId)
 
@@ -791,6 +792,28 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 							OracleVersion:     1,
 							UndelegateVersion: 0,
 						},
+						{
+							Withdrawer: withdrawer.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(1000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(0),
+							State:             types.UndelegateRequestByUser,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+						{
+							Withdrawer: withdrawer.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(10000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(0),
+							State:             types.UndelegateRequestByUser,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
 					},
 				},
 			},
@@ -801,7 +824,7 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 			denom:         baseDenom,
 			snDenom:       baseSnDenom,
 			oracleVersion: 2,
-			oracleAmount:  sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
+			oracleAmount:  sdk.NewCoin(baseDenom, sdk.NewInt(21000)),
 			undelegateResult: []*types.UndelegateRecord{
 				{
 					ZoneId:    zoneId,
@@ -818,10 +841,32 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 							OracleVersion:     1,
 							UndelegateVersion: 0,
 						},
+						{
+							Withdrawer: withdrawer.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(1000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(1000),
+							State:             types.UndelegateRequestByIca,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+						{
+							Withdrawer: withdrawer.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(10000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(10000),
+							State:             types.UndelegateRequestByIca,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
 					},
 				},
 			},
-			burnAmount: sdk.NewIntWithDecimal(10000, 18),
+			burnAmount: sdk.NewIntWithDecimal(21000, 18),
 			result: []*types.WithdrawRecord{
 				{
 					ZoneId:     zoneId,
@@ -829,6 +874,17 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 					Records: map[uint64]*types.WithdrawRecordContent{
 						1: {
 							Amount:          sdk.NewInt(10000),
+							State:           types.WithdrawStatusRegistered,
+							WithdrawVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:     zoneId,
+					Withdrawer: withdrawer.String(),
+					Records: map[uint64]*types.WithdrawRecordContent{
+						1: {
+							Amount:          sdk.NewInt(11000),
 							State:           types.WithdrawStatusRegistered,
 							WithdrawVersion: 1,
 						},
@@ -954,13 +1010,14 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 				Version: tc.oracleVersion,
 				Height:  uint64(suite.chainA.GetContext().BlockHeight()),
 			}
+
 			suite.chainA.GetApp().OracleKeeper.UpdateChainState(suite.chainA.GetContext(), chainInfo)
 			suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), tc.zoneId, trace)
 
 			for _, record := range tc.undelegateRecords {
 				suite.chainA.GetApp().GalKeeper.SetUndelegateRecord(suite.chainA.GetContext(), record)
-				suite.mintCoinToModule(suite.chainA.GetContext(), suite.chainA.GetApp(), tc.snDenom, tc.burnAmount, types.ModuleName)
 			}
+			suite.mintCoinToModule(suite.chainA.GetContext(), suite.chainA.GetApp(), tc.snDenom, tc.burnAmount, types.ModuleName)
 
 			excCtx := suite.chainA.GetContext()
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
@@ -981,6 +1038,7 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 					suite.Require().True(ok)
 					for key, value := range result.Records {
 						suite.Require().Equal(withdrawRecord.Records[key].Amount, value.Amount)
+
 						suite.Require().Equal(withdrawRecord.Records[key].WithdrawVersion, value.WithdrawVersion)
 					}
 				}
@@ -1548,5 +1606,400 @@ func (suite *KeeperTestSuite) TestClaimSnAsset() {
 			result := suite.chainA.GetApp().BankKeeper.GetBalance(suite.chainA.GetContext(), claimer, baseSnDenom)
 			suite.Require().Equal(tc.result, result)
 		}
+	}
+}
+
+func (suite *KeeperTestSuite) TestReDelegate() {
+	suite.InitICA()
+
+	depositor := suite.GenRandomAddress()
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+
+	tcs := []struct {
+		name          string
+		depositRecord types.DepositRecord
+		msg           types.MsgReDelegate
+		zoneId        string
+		denom         string
+		depositor     sdk.AccAddress
+		result        types.DepositRecord
+		err           bool
+	}{
+		{
+			name:      "success",
+			depositor: depositor,
+			zoneId:    zoneId,
+			denom:     baseDenom,
+			depositRecord: types.DepositRecord{
+				ZoneId:  zoneId,
+				Claimer: depositor.String(),
+				Records: []*types.DepositRecordContent{
+					{
+						Depositor: depositor.String(),
+						Amount: &sdk.Coin{
+							Amount: sdk.NewInt(10000),
+							Denom:  baseIbcDenom,
+						},
+						State:         types.DelegateRequest,
+						OracleVersion: 0,
+					},
+				},
+			},
+			msg: types.MsgReDelegate{
+				ZoneId:            zoneId,
+				ControllerAddress: baseOwnerAcc.String(),
+				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
+			},
+			result: types.DepositRecord{
+				ZoneId:  zoneId,
+				Claimer: depositor.String(),
+				Records: []*types.DepositRecordContent{
+					{
+						Depositor: depositor.String(),
+						State:     types.DelegateSuccess,
+						Amount: &sdk.Coin{
+							Amount: sdk.NewInt(10000),
+							Denom:  baseIbcDenom,
+						},
+						OracleVersion:   1,
+						DelegateVersion: 1,
+					},
+				},
+			},
+			err: false,
+		},
+		{
+			name:      "fail case 1 - controller address is invalid",
+			depositor: depositor,
+			zoneId:    zoneId,
+			denom:     baseDenom,
+			depositRecord: types.DepositRecord{
+				ZoneId:  zoneId,
+				Claimer: depositor.String(),
+				Records: []*types.DepositRecordContent{
+					{
+						Depositor: depositor.String(),
+						Amount: &sdk.Coin{
+							Amount: sdk.NewInt(10000),
+							Denom:  baseIbcDenom,
+						},
+						State:         types.DelegateRequest,
+						OracleVersion: 0,
+					},
+				},
+			},
+			msg: types.MsgReDelegate{
+				ZoneId:            zoneId,
+				ControllerAddress: depositor.String(),
+				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
+			},
+			result: types.DepositRecord{
+				ZoneId:  zoneId,
+				Claimer: depositor.String(),
+				Records: []*types.DepositRecordContent{
+					{
+						Depositor: depositor.String(),
+						State:     types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Amount: sdk.NewInt(10000),
+							Denom:  baseIbcDenom,
+						},
+						OracleVersion:   1,
+						DelegateVersion: 1,
+					},
+				},
+			},
+			err: true,
+		},
+		{
+			name:      "fail case 2 - zone not found",
+			depositor: depositor,
+			zoneId:    zoneId,
+			denom:     baseDenom,
+			depositRecord: types.DepositRecord{
+				ZoneId:  zoneId,
+				Claimer: depositor.String(),
+				Records: []*types.DepositRecordContent{},
+			},
+			msg: types.MsgReDelegate{
+				ZoneId:            "test",
+				ControllerAddress: baseOwnerAcc.String(),
+				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
+			},
+			result: types.DepositRecord{},
+			err:    true,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			suite.setValidator()
+			hostAddr := suite.setHostAddr(tc.zoneId)
+
+			suite.chainA.GetApp().GalKeeper.SetDepositRecord(suite.chainA.GetContext(), &tc.depositRecord)
+			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), baseDenom, tc.msg.Amount.Amount, hostAddr)
+
+			// delegate
+			excCtx := suite.chainA.GetContext()
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
+			_, err := msgServer.ReDelegate(sdk.WrapSDKContext(excCtx), &tc.msg)
+
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.icaRelay(excCtx)
+
+				suite.Require().NoError(err)
+				result, ok := suite.chainA.GetApp().GalKeeper.GetUserDepositRecord(suite.chainA.GetContext(), tc.zoneId, tc.depositor)
+				suite.Require().True(ok)
+				suite.Require().Equal(tc.result, *result)
+			}
+		})
+	}
+}
+
+func (suite *KeeperTestSuite) TestReUndelegate() {
+	suite.InitICA()
+
+	delegator := suite.GenRandomAddress()
+	withdrawer := suite.GenRandomAddress()
+	valAddr := suite.setValidator()
+	hostAddr := suite.setHostAddr(zoneId)
+
+	tcs := []struct {
+		name              string
+		zoneId            string
+		delegator         sdk.AccAddress
+		undelegateRecords []*types.UndelegateRecord
+		msg               types.MsgReUndelegate
+		denom             string
+		snDenom           string
+		oracleVersion     uint64
+		oracleAmount      sdk.Coin
+		burnAmount        sdk.Int
+		undelegateResult  []*types.UndelegateRecord
+		result            []*types.WithdrawRecord
+		err               bool
+	}{
+		{
+			name:      "success",
+			zoneId:    zoneId,
+			delegator: delegator,
+			undelegateRecords: []*types.UndelegateRecord{
+				{
+					ZoneId:    zoneId,
+					Delegator: delegator.String(),
+					Records: []*types.UndelegateRecordContent{
+						{
+							Withdrawer: delegator.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(10000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(10000),
+							State:             types.UndelegateRequestByIca,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+						{
+							Withdrawer: withdrawer.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(1000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(1000),
+							State:             types.UndelegateRequestByIca,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+						{
+							Withdrawer: withdrawer.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(10000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(10000),
+							State:             types.UndelegateRequestByIca,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+					},
+				},
+			},
+			msg: types.MsgReUndelegate{
+				ZoneId:            zoneId,
+				ControllerAddress: baseOwnerAcc.String(),
+				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(11000)),
+			},
+			denom:         baseDenom,
+			snDenom:       baseSnDenom,
+			oracleVersion: 2,
+			oracleAmount:  sdk.NewCoin(baseDenom, sdk.NewInt(21000)),
+			undelegateResult: []*types.UndelegateRecord{
+				{
+					ZoneId:    zoneId,
+					Delegator: delegator.String(),
+					Records: []*types.UndelegateRecordContent{
+						{
+							Withdrawer: delegator.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(10000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(10000),
+							State:             types.UndelegateRequestByIca,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+						{
+							Withdrawer: withdrawer.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(1000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(1000),
+							State:             types.UndelegateRequestByIca,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+						{
+							Withdrawer: withdrawer.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(10000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(10000),
+							State:             types.UndelegateRequestByIca,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+					},
+				},
+			},
+			burnAmount: sdk.NewIntWithDecimal(21000, 18),
+			result: []*types.WithdrawRecord{
+				{
+					ZoneId:     zoneId,
+					Withdrawer: delegator.String(),
+					Records: map[uint64]*types.WithdrawRecordContent{
+						1: {
+							Amount:          sdk.NewInt(10000),
+							State:           types.WithdrawStatusRegistered,
+							WithdrawVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:     zoneId,
+					Withdrawer: withdrawer.String(),
+					Records: map[uint64]*types.WithdrawRecordContent{
+						1: {
+							Amount:          sdk.NewInt(11000),
+							State:           types.WithdrawStatusRegistered,
+							WithdrawVersion: 1,
+						},
+					},
+				},
+			},
+			err: false,
+		},
+		{
+			name:      "fail case 1 - zone not found",
+			zoneId:    "test",
+			delegator: delegator,
+			undelegateRecords: []*types.UndelegateRecord{
+				{
+					ZoneId:    zoneId,
+					Delegator: delegator.String(),
+					Records: []*types.UndelegateRecordContent{
+						{
+							Withdrawer: delegator.String(),
+							SnAssetAmount: &sdk.Coin{
+								Denom:  baseSnDenom,
+								Amount: sdk.NewIntWithDecimal(10000, 18),
+							},
+							WithdrawAmount:    sdk.NewInt(10000),
+							State:             types.UndelegateRequestByUser,
+							OracleVersion:     1,
+							UndelegateVersion: 0,
+						},
+					},
+				},
+			},
+			msg: types.MsgReUndelegate{
+				ZoneId:            "test",
+				ControllerAddress: baseOwnerAcc.String(),
+				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
+			},
+			denom:            baseDenom,
+			snDenom:          baseSnDenom,
+			oracleVersion:    2,
+			oracleAmount:     sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
+			undelegateResult: []*types.UndelegateRecord(nil),
+			burnAmount:       sdk.NewIntWithDecimal(0, 18),
+			result:           []*types.WithdrawRecord{},
+			err:              true,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+
+			delegation := stakingtypes.MsgDelegate{
+				DelegatorAddress: hostAddr.String(),
+				ValidatorAddress: valAddr,
+				Amount:           tc.oracleAmount,
+			}
+
+			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), tc.denom, tc.oracleAmount.Amount, hostAddr)
+
+			bmsgServer := stakingkeeper.NewMsgServerImpl(*suite.chainB.App.StakingKeeper)
+			_, err := bmsgServer.Delegate(sdk.WrapSDKContext(suite.chainB.GetContext()), &delegation)
+			suite.Require().NoError(err)
+
+			chainInfo := &oracletypes.ChainInfo{
+				Coin:            tc.oracleAmount,
+				OracleVersion:   2,
+				OperatorAddress: baseOwnerAcc.String(),
+			}
+
+			trace := oracletypes.IBCTrace{
+				Version: tc.oracleVersion,
+				Height:  uint64(suite.chainA.GetContext().BlockHeight()),
+			}
+
+			suite.chainA.GetApp().OracleKeeper.UpdateChainState(suite.chainA.GetContext(), chainInfo)
+			suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), tc.zoneId, trace)
+
+			for _, record := range tc.undelegateRecords {
+				suite.chainA.GetApp().GalKeeper.SetUndelegateRecord(suite.chainA.GetContext(), record)
+			}
+			suite.mintCoinToModule(suite.chainA.GetContext(), suite.chainA.GetApp(), tc.snDenom, tc.burnAmount, types.ModuleName)
+
+			excCtx := suite.chainA.GetContext()
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
+			_, err = msgServer.ReUndelegate(sdk.WrapSDKContext(excCtx), &tc.msg)
+
+			undelegateResult := suite.chainA.GetApp().GalKeeper.GetAllUndelegateRecord(excCtx, tc.zoneId)
+
+			if tc.err {
+				suite.Require().Error(err)
+				suite.Equal(tc.undelegateResult, undelegateResult)
+			} else {
+				suite.Require().NoError(err)
+				suite.Equal(tc.undelegateResult, undelegateResult)
+				suite.icaRelay(excCtx)
+
+				for _, result := range tc.result {
+					withdrawRecord, ok := suite.chainA.GetApp().GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), result.ZoneId, result.Withdrawer)
+					suite.Require().True(ok)
+					for key, value := range result.Records {
+						suite.Require().Equal(withdrawRecord.Records[key].Amount, value.Amount)
+
+						suite.Require().Equal(withdrawRecord.Records[key].WithdrawVersion, value.WithdrawVersion)
+					}
+				}
+			}
+		})
 	}
 }

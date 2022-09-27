@@ -825,6 +825,214 @@ func (m *MsgIcaWithdrawResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgIcaWithdrawResponse proto.InternalMessageInfo
 
+type MsgReDelegate struct {
+	ZoneId            string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ControllerAddress string     `protobuf:"bytes,2,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	Amount            types.Coin `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount"`
+}
+
+func (m *MsgReDelegate) Reset()         { *m = MsgReDelegate{} }
+func (m *MsgReDelegate) String() string { return proto.CompactTextString(m) }
+func (*MsgReDelegate) ProtoMessage()    {}
+func (*MsgReDelegate) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8b1072e606aed7de, []int{14}
+}
+func (m *MsgReDelegate) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgReDelegate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgReDelegate.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgReDelegate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgReDelegate.Merge(m, src)
+}
+func (m *MsgReDelegate) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgReDelegate) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgReDelegate.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgReDelegate proto.InternalMessageInfo
+
+func (m *MsgReDelegate) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+func (m *MsgReDelegate) GetControllerAddress() string {
+	if m != nil {
+		return m.ControllerAddress
+	}
+	return ""
+}
+
+func (m *MsgReDelegate) GetAmount() types.Coin {
+	if m != nil {
+		return m.Amount
+	}
+	return types.Coin{}
+}
+
+type MsgReDelegateResponse struct {
+}
+
+func (m *MsgReDelegateResponse) Reset()         { *m = MsgReDelegateResponse{} }
+func (m *MsgReDelegateResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgReDelegateResponse) ProtoMessage()    {}
+func (*MsgReDelegateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8b1072e606aed7de, []int{15}
+}
+func (m *MsgReDelegateResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgReDelegateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgReDelegateResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgReDelegateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgReDelegateResponse.Merge(m, src)
+}
+func (m *MsgReDelegateResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgReDelegateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgReDelegateResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgReDelegateResponse proto.InternalMessageInfo
+
+type MsgReUndelegate struct {
+	ZoneId            string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ControllerAddress string     `protobuf:"bytes,2,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	Amount            types.Coin `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount"`
+}
+
+func (m *MsgReUndelegate) Reset()         { *m = MsgReUndelegate{} }
+func (m *MsgReUndelegate) String() string { return proto.CompactTextString(m) }
+func (*MsgReUndelegate) ProtoMessage()    {}
+func (*MsgReUndelegate) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8b1072e606aed7de, []int{16}
+}
+func (m *MsgReUndelegate) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgReUndelegate) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgReUndelegate.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgReUndelegate) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgReUndelegate.Merge(m, src)
+}
+func (m *MsgReUndelegate) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgReUndelegate) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgReUndelegate.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgReUndelegate proto.InternalMessageInfo
+
+func (m *MsgReUndelegate) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+func (m *MsgReUndelegate) GetControllerAddress() string {
+	if m != nil {
+		return m.ControllerAddress
+	}
+	return ""
+}
+
+func (m *MsgReUndelegate) GetAmount() types.Coin {
+	if m != nil {
+		return m.Amount
+	}
+	return types.Coin{}
+}
+
+type MsgReUndelegateResponse struct {
+	ZoneId               string     `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	TotalUndelegateAsset types.Coin `protobuf:"bytes,2,opt,name=total_undelegate_asset,json=totalUndelegateAsset,proto3" json:"total_undelegate_asset"`
+}
+
+func (m *MsgReUndelegateResponse) Reset()         { *m = MsgReUndelegateResponse{} }
+func (m *MsgReUndelegateResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgReUndelegateResponse) ProtoMessage()    {}
+func (*MsgReUndelegateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8b1072e606aed7de, []int{17}
+}
+func (m *MsgReUndelegateResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgReUndelegateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgReUndelegateResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgReUndelegateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgReUndelegateResponse.Merge(m, src)
+}
+func (m *MsgReUndelegateResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgReUndelegateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgReUndelegateResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgReUndelegateResponse proto.InternalMessageInfo
+
+func (m *MsgReUndelegateResponse) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+func (m *MsgReUndelegateResponse) GetTotalUndelegateAsset() types.Coin {
+	if m != nil {
+		return m.TotalUndelegateAsset
+	}
+	return types.Coin{}
+}
+
 func init() {
 	proto.RegisterType((*MsgDeposit)(nil), "nova.gal.v1.MsgDeposit")
 	proto.RegisterType((*MsgDepositResponse)(nil), "nova.gal.v1.MsgDepositResponse")
@@ -840,72 +1048,80 @@ func init() {
 	proto.RegisterType((*MsgClaimSnAssetResponse)(nil), "nova.gal.v1.MsgClaimSnAssetResponse")
 	proto.RegisterType((*MsgIcaWithdraw)(nil), "nova.gal.v1.MsgIcaWithdraw")
 	proto.RegisterType((*MsgIcaWithdrawResponse)(nil), "nova.gal.v1.MsgIcaWithdrawResponse")
+	proto.RegisterType((*MsgReDelegate)(nil), "nova.gal.v1.MsgReDelegate")
+	proto.RegisterType((*MsgReDelegateResponse)(nil), "nova.gal.v1.MsgReDelegateResponse")
+	proto.RegisterType((*MsgReUndelegate)(nil), "nova.gal.v1.MsgReUndelegate")
+	proto.RegisterType((*MsgReUndelegateResponse)(nil), "nova.gal.v1.MsgReUndelegateResponse")
 }
 
 func init() { proto.RegisterFile("nova/gal/v1/tx.proto", fileDescriptor_8b1072e606aed7de) }
 
 var fileDescriptor_8b1072e606aed7de = []byte{
-	// 945 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0x4f, 0x6f, 0xe3, 0x44,
-	0x14, 0xaf, 0xdb, 0xd2, 0x3f, 0xaf, 0xd0, 0x3f, 0x26, 0xbb, 0xcd, 0x9a, 0x2a, 0x29, 0x06, 0x41,
-	0x39, 0xd4, 0xa6, 0x45, 0xfc, 0x39, 0x21, 0x35, 0x41, 0x48, 0x59, 0x11, 0xb1, 0xca, 0x6e, 0x55,
-	0x89, 0x03, 0x66, 0x6c, 0xcf, 0x3a, 0x23, 0x9c, 0x99, 0x68, 0x66, 0x92, 0xdd, 0xe5, 0xce, 0x15,
-	0xed, 0x11, 0xf1, 0x11, 0x38, 0xed, 0x01, 0xbe, 0xc3, 0x1e, 0x57, 0x7b, 0x42, 0x7b, 0xd8, 0x45,
-	0xed, 0x17, 0x41, 0x1e, 0x8f, 0x1d, 0x27, 0x26, 0x8d, 0x41, 0x88, 0x53, 0x3b, 0xf9, 0xbd, 0xf7,
-	0x7b, 0xef, 0xf7, 0xe6, 0xcd, 0x7b, 0x86, 0x1a, 0x65, 0x63, 0xe4, 0x46, 0x28, 0x76, 0xc7, 0x27,
-	0xae, 0x7c, 0xe8, 0x0c, 0x39, 0x93, 0xcc, 0xdc, 0x4a, 0x7e, 0x75, 0x22, 0x14, 0x3b, 0xe3, 0x13,
-	0xab, 0x16, 0xb1, 0x88, 0xa9, 0xdf, 0xdd, 0xe4, 0xbf, 0xd4, 0xc4, 0xba, 0x15, 0x31, 0x16, 0xc5,
-	0xd8, 0x55, 0x27, 0x7f, 0x74, 0xdf, 0x45, 0xf4, 0x91, 0x86, 0x1a, 0x01, 0x13, 0x03, 0x26, 0x5c,
-	0x1f, 0x09, 0xec, 0x8e, 0x4f, 0x7c, 0x2c, 0xd1, 0x89, 0x1b, 0x30, 0x42, 0x33, 0xd7, 0x14, 0xf7,
-	0x52, 0xce, 0xf4, 0xa0, 0xa1, 0xe6, 0x2c, 0xab, 0x24, 0x03, 0x2c, 0x24, 0x1a, 0x0c, 0x53, 0x03,
-	0xfb, 0x89, 0x01, 0xd0, 0x15, 0xd1, 0x17, 0x78, 0xc8, 0x04, 0x91, 0xe6, 0x3e, 0xac, 0xff, 0xc0,
-	0x28, 0xf6, 0x48, 0x58, 0x37, 0x0e, 0x8d, 0xa3, 0xcd, 0xde, 0x5a, 0x72, 0xec, 0x84, 0xe6, 0x27,
-	0xb0, 0x19, 0xa6, 0x36, 0x8c, 0xd7, 0x97, 0x13, 0xa8, 0x55, 0x7f, 0xfe, 0xdb, 0x71, 0x4d, 0x47,
-	0x3b, 0x0b, 0x43, 0x8e, 0x85, 0xb8, 0x2b, 0x39, 0xa1, 0x51, 0x6f, 0x62, 0x6a, 0xd6, 0x61, 0x3d,
-	0x88, 0x11, 0x19, 0x60, 0x5e, 0x5f, 0x51, 0x84, 0xd9, 0xd1, 0xfc, 0x14, 0xd6, 0xd0, 0x80, 0x8d,
-	0xa8, 0xac, 0xaf, 0x1e, 0x1a, 0x47, 0x5b, 0xa7, 0xb7, 0x1c, 0xcd, 0x95, 0xc8, 0x74, 0xb4, 0x4c,
-	0xa7, 0xcd, 0x08, 0x6d, 0xad, 0x3e, 0x7d, 0xd9, 0x5c, 0xea, 0x69, 0x73, 0xfb, 0x17, 0x03, 0xcc,
-	0x49, 0xca, 0x3d, 0x2c, 0x86, 0x8c, 0x0a, 0x6c, 0x5a, 0xb0, 0xc1, 0x71, 0x80, 0xc9, 0x18, 0x73,
-	0x9d, 0x7b, 0x7e, 0x36, 0x0f, 0x4a, 0xd9, 0x17, 0x73, 0xbc, 0x0d, 0xbb, 0xfa, 0x80, 0x43, 0x4f,
-	0xe7, 0xb4, 0x52, 0x2d, 0xa7, 0x9d, 0xdc, 0xf1, 0x2c, 0x4d, 0xee, 0x1c, 0xb6, 0x54, 0x6e, 0x31,
-	0x8e, 0x90, 0xc4, 0xf3, 0xeb, 0x79, 0x0c, 0x66, 0xc0, 0xa8, 0xe4, 0x2c, 0x8e, 0x31, 0xf7, 0x50,
-	0x5a, 0x3e, 0x9d, 0xda, 0xde, 0x04, 0xd1, 0x75, 0xb5, 0x6f, 0xc0, 0x9b, 0x05, 0xda, 0x4c, 0xb3,
-	0x7d, 0x01, 0x6f, 0x74, 0x45, 0x74, 0x4e, 0xc3, 0xff, 0x3a, 0xde, 0x73, 0x03, 0x6e, 0x4c, 0x31,
-	0xe7, 0x65, 0x9e, 0x1b, 0xa1, 0x03, 0xbb, 0x92, 0x49, 0x14, 0x7b, 0xfe, 0x88, 0x53, 0x0f, 0x09,
-	0x81, 0xa5, 0xe2, 0xaf, 0x50, 0xc5, 0x6d, 0xe5, 0xd8, 0x1a, 0x71, 0x7a, 0x96, 0xb8, 0x99, 0xe7,
-	0x70, 0x33, 0xa5, 0x1a, 0xe5, 0xf1, 0x35, 0x61, 0xc5, 0x6b, 0xa9, 0x29, 0xf7, 0x49, 0xf6, 0x8a,
-	0xd6, 0x7e, 0x61, 0x40, 0xad, 0x2b, 0xa2, 0x3b, 0x98, 0x86, 0x84, 0x56, 0xaa, 0x9a, 0xea, 0x7a,
-	0x65, 0x54, 0xad, 0xeb, 0xb5, 0xa9, 0xf9, 0x19, 0xc0, 0x03, 0x22, 0xfb, 0x21, 0x47, 0x0f, 0xb2,
-	0xc6, 0xbf, 0xc6, 0xb1, 0x60, 0xfb, 0xef, 0x5f, 0xc5, 0xef, 0xcb, 0x70, 0xf0, 0x77, 0xe2, 0x16,
-	0x5f, 0xdc, 0xff, 0x2f, 0xf2, 0x73, 0x80, 0x42, 0x93, 0x54, 0x14, 0xba, 0xe9, 0xe7, 0xfd, 0x71,
-	0x1b, 0x76, 0x4b, 0x9d, 0xf1, 0x5a, 0xc5, 0x07, 0x3b, 0x9a, 0x69, 0x8a, 0xef, 0xd4, 0x83, 0xbd,
-	0xd0, 0xc9, 0xcd, 0xaf, 0xd2, 0xb4, 0xda, 0xe5, 0xea, 0x6a, 0xed, 0x9f, 0x0c, 0xf5, 0x78, 0xb3,
-	0x10, 0xf9, 0x85, 0x34, 0xa6, 0x18, 0xd3, 0x68, 0xc5, 0x2a, 0x5d, 0xc0, 0x4e, 0x76, 0xca, 0xa6,
-	0x52, 0x1a, 0xd6, 0x49, 0x94, 0xbc, 0x78, 0xd9, 0x7c, 0x2f, 0x22, 0xb2, 0x3f, 0xf2, 0x9d, 0x80,
-	0x0d, 0xf4, 0xd4, 0xd7, 0x7f, 0x8e, 0x45, 0xf8, 0xbd, 0x2b, 0x1f, 0x0d, 0xb1, 0x70, 0x3a, 0x54,
-	0xf6, 0xb6, 0x33, 0x1a, 0x3d, 0xa3, 0xbe, 0x85, 0x9d, 0xae, 0x88, 0xda, 0xc9, 0x1c, 0xbe, 0xab,
-	0x2b, 0x3a, 0x57, 0xf6, 0xe9, 0x64, 0x7e, 0x2f, 0xd2, 0x9c, 0x19, 0xda, 0x3f, 0x1b, 0xb0, 0x3f,
-	0x13, 0x20, 0x17, 0x5d, 0xd8, 0x07, 0xc6, 0xf4, 0x3e, 0x08, 0x60, 0x6d, 0x40, 0xa8, 0xc4, 0xe1,
-	0xe2, 0xa9, 0xf1, 0x61, 0x52, 0x80, 0x5f, 0x5f, 0x35, 0x8f, 0x2a, 0x14, 0x20, 0x71, 0x10, 0x3d,
-	0x4d, 0x6d, 0xff, 0xb8, 0x0c, 0xdb, 0x5d, 0x11, 0x75, 0x02, 0xb4, 0xf8, 0xc6, 0xff, 0xd9, 0xc8,
-	0x34, 0x5d, 0xa8, 0x91, 0x00, 0x79, 0x92, 0x23, 0x2a, 0xee, 0x63, 0xee, 0x0d, 0x19, 0x97, 0x09,
-	0x69, 0xba, 0xf6, 0xf6, 0x48, 0x80, 0xee, 0x69, 0xe8, 0x0e, 0xe3, 0xb2, 0x13, 0x9a, 0x1f, 0xc3,
-	0xfe, 0x94, 0x43, 0xd0, 0x47, 0x94, 0xe2, 0x38, 0xf1, 0x59, 0x55, 0x3e, 0xb5, 0x82, 0x4f, 0x3b,
-	0x05, 0x3b, 0xa1, 0xd9, 0x06, 0x08, 0xfa, 0x88, 0x50, 0x2f, 0x59, 0xe5, 0xba, 0xed, 0x2d, 0x27,
-	0xdd, 0xf3, 0x4e, 0xb6, 0xe7, 0x9d, 0x7b, 0xd9, 0x9e, 0x6f, 0x6d, 0x24, 0xc5, 0x7a, 0xfc, 0xaa,
-	0x69, 0xf4, 0x36, 0x95, 0x5f, 0x82, 0xd8, 0x75, 0xb8, 0x39, 0x5d, 0x86, 0xec, 0x82, 0x4e, 0x9f,
-	0xac, 0xc2, 0x4a, 0x57, 0x44, 0x66, 0x1b, 0xd6, 0xf3, 0x8f, 0x02, 0xa7, 0xf0, 0xf9, 0xe2, 0x4c,
-	0x56, 0xaf, 0xd5, 0x9c, 0x03, 0xe4, 0xb7, 0xfd, 0x25, 0x6c, 0xe4, 0xab, 0xb0, 0x5e, 0x36, 0x4e,
-	0x11, 0xeb, 0x70, 0x1e, 0x92, 0xf3, 0x7c, 0x05, 0x50, 0x18, 0xd7, 0xd6, 0xac, 0xfd, 0x04, 0xb3,
-	0xec, 0xf9, 0x58, 0xce, 0x86, 0x60, 0xaf, 0xbc, 0x03, 0xde, 0x9e, 0x75, 0x2c, 0x99, 0x58, 0x1f,
-	0x2c, 0x34, 0x29, 0x0a, 0xcf, 0x1b, 0xac, 0x24, 0x3c, 0x43, 0xca, 0xc2, 0x4b, 0x33, 0xa2, 0x07,
-	0xaf, 0x4f, 0xbd, 0xd3, 0x83, 0x59, 0x8f, 0x22, 0x6a, 0xbd, 0x7b, 0x1d, 0x9a, 0x73, 0x7e, 0x0d,
-	0x5b, 0xc5, 0xfe, 0x7f, 0x6b, 0xd6, 0xa9, 0x00, 0x5a, 0xef, 0x5c, 0x03, 0x66, 0x84, 0xad, 0xb3,
-	0xa7, 0x97, 0x0d, 0xe3, 0xd9, 0x65, 0xc3, 0xf8, 0xf3, 0xb2, 0x61, 0x3c, 0xbe, 0x6a, 0x2c, 0x3d,
-	0xbb, 0x6a, 0x2c, 0xfd, 0x71, 0xd5, 0x58, 0xfa, 0xe6, 0xfd, 0xc2, 0x03, 0x6d, 0x23, 0x4e, 0x28,
-	0x3a, 0x8e, 0x91, 0x2f, 0x5c, 0xf5, 0x91, 0xfc, 0x50, 0x7d, 0x26, 0xab, 0x57, 0xea, 0xaf, 0xa9,
-	0xc6, 0xfd, 0xe8, 0xaf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xb5, 0xfe, 0x93, 0x91, 0x3f, 0x0b, 0x00,
-	0x00,
+	// 1022 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x57, 0x4d, 0x6f, 0x1b, 0x45,
+	0x18, 0xce, 0x3a, 0x69, 0x3e, 0xde, 0x40, 0x3e, 0x16, 0xb7, 0x71, 0x97, 0xc8, 0x0e, 0x4b, 0x05,
+	0xe1, 0x90, 0x5d, 0x12, 0xc4, 0xc7, 0x09, 0x29, 0x36, 0x42, 0x72, 0x85, 0x45, 0xb5, 0x6d, 0x14,
+	0x89, 0x03, 0x66, 0xbc, 0x3b, 0xdd, 0xac, 0x58, 0xcf, 0x58, 0x3b, 0x63, 0xb7, 0xe5, 0xce, 0x81,
+	0x0b, 0x8a, 0x38, 0x21, 0x7e, 0x02, 0x27, 0x0e, 0xf0, 0x1f, 0x7a, 0xac, 0x72, 0x42, 0x3d, 0xb4,
+	0x28, 0xf9, 0x23, 0x68, 0x67, 0x67, 0x77, 0xc7, 0x5e, 0x1c, 0x6f, 0x43, 0xd4, 0x53, 0x32, 0x7e,
+	0xde, 0xf7, 0x99, 0xf7, 0x6b, 0xde, 0xc7, 0x86, 0x2a, 0xa1, 0x23, 0x64, 0xfb, 0x28, 0xb4, 0x47,
+	0xfb, 0x36, 0x7f, 0x6c, 0x0d, 0x22, 0xca, 0xa9, 0xbe, 0x1a, 0x7f, 0x6a, 0xf9, 0x28, 0xb4, 0x46,
+	0xfb, 0x46, 0xd5, 0xa7, 0x3e, 0x15, 0x9f, 0xdb, 0xf1, 0x7f, 0x89, 0x89, 0x71, 0xdb, 0xa7, 0xd4,
+	0x0f, 0xb1, 0x2d, 0x4e, 0xbd, 0xe1, 0x43, 0x1b, 0x91, 0x27, 0x12, 0xaa, 0xbb, 0x94, 0xf5, 0x29,
+	0xb3, 0x7b, 0x88, 0x61, 0x7b, 0xb4, 0xdf, 0xc3, 0x1c, 0xed, 0xdb, 0x2e, 0x0d, 0x48, 0xea, 0x9a,
+	0xe0, 0xdd, 0x84, 0x33, 0x39, 0x48, 0xa8, 0x31, 0xc9, 0xca, 0x83, 0x3e, 0x66, 0x1c, 0xf5, 0x07,
+	0x89, 0x81, 0xf9, 0x87, 0x06, 0xd0, 0x61, 0xfe, 0x17, 0x78, 0x40, 0x59, 0xc0, 0xf5, 0x2d, 0x58,
+	0xfa, 0x81, 0x12, 0xdc, 0x0d, 0xbc, 0x9a, 0xb6, 0xa3, 0xed, 0xae, 0x38, 0x8b, 0xf1, 0xb1, 0xed,
+	0xe9, 0x9f, 0xc0, 0x8a, 0x97, 0xd8, 0xd0, 0xa8, 0x56, 0x89, 0xa1, 0x66, 0xed, 0xec, 0xcf, 0xbd,
+	0xaa, 0xbc, 0xed, 0xd0, 0xf3, 0x22, 0xcc, 0xd8, 0x7d, 0x1e, 0x05, 0xc4, 0x77, 0x72, 0x53, 0xbd,
+	0x06, 0x4b, 0x6e, 0x88, 0x82, 0x3e, 0x8e, 0x6a, 0xf3, 0x82, 0x30, 0x3d, 0xea, 0x9f, 0xc2, 0x22,
+	0xea, 0xd3, 0x21, 0xe1, 0xb5, 0x85, 0x1d, 0x6d, 0x77, 0xf5, 0xe0, 0xb6, 0x25, 0xb9, 0xe2, 0x34,
+	0x2d, 0x99, 0xa6, 0xd5, 0xa2, 0x01, 0x69, 0x2e, 0x3c, 0x7d, 0xd1, 0x98, 0x73, 0xa4, 0xb9, 0xf9,
+	0x9b, 0x06, 0x7a, 0x1e, 0xb2, 0x83, 0xd9, 0x80, 0x12, 0x86, 0x75, 0x03, 0x96, 0x23, 0xec, 0xe2,
+	0x60, 0x84, 0x23, 0x19, 0x7b, 0x76, 0xd6, 0xb7, 0x0b, 0xd1, 0xab, 0x31, 0xde, 0x85, 0x0d, 0x79,
+	0xc0, 0x5e, 0x57, 0xc6, 0x34, 0x5f, 0x2e, 0xa6, 0xf5, 0xcc, 0xf1, 0x30, 0x09, 0xee, 0x08, 0x56,
+	0x45, 0x6c, 0x21, 0xf6, 0x11, 0xc7, 0xd3, 0xeb, 0xb9, 0x07, 0xba, 0x4b, 0x09, 0x8f, 0x68, 0x18,
+	0xe2, 0xa8, 0x8b, 0x92, 0xf2, 0xc9, 0xd0, 0x36, 0x73, 0x44, 0xd6, 0xd5, 0xbc, 0x09, 0x6f, 0x29,
+	0xb4, 0x69, 0xce, 0xe6, 0x31, 0xbc, 0xd9, 0x61, 0xfe, 0x11, 0xf1, 0xae, 0xfb, 0xbe, 0x33, 0x0d,
+	0x6e, 0x8e, 0x31, 0x67, 0x65, 0x9e, 0x7a, 0x43, 0x1b, 0x36, 0x38, 0xe5, 0x28, 0xec, 0xf6, 0x86,
+	0x11, 0xe9, 0x22, 0xc6, 0x30, 0x17, 0xfc, 0x25, 0xaa, 0xb8, 0x26, 0x1c, 0x9b, 0xc3, 0x88, 0x1c,
+	0xc6, 0x6e, 0xfa, 0x11, 0xdc, 0x4a, 0xa8, 0x86, 0xd9, 0xfd, 0x92, 0xb0, 0x64, 0x5b, 0xaa, 0xc2,
+	0x3d, 0x8f, 0x5e, 0xd0, 0x9a, 0xcf, 0x35, 0xa8, 0x76, 0x98, 0x7f, 0x0f, 0x13, 0x2f, 0x20, 0xa5,
+	0xaa, 0x26, 0xa6, 0x5e, 0x18, 0x95, 0x9b, 0x7a, 0x69, 0xaa, 0x7f, 0x06, 0xf0, 0x28, 0xe0, 0x27,
+	0x5e, 0x84, 0x1e, 0xa5, 0x83, 0x7f, 0x89, 0xa3, 0x62, 0x7b, 0xf5, 0x57, 0xf1, 0x57, 0x05, 0xb6,
+	0xff, 0x2b, 0xb9, 0xd9, 0x8d, 0x7b, 0xfd, 0x49, 0x7e, 0x0e, 0xa0, 0x0c, 0x49, 0xc9, 0x44, 0x57,
+	0x7a, 0xd9, 0x7c, 0xdc, 0x85, 0x8d, 0xc2, 0x64, 0xdc, 0x28, 0xf9, 0x60, 0x87, 0x13, 0x43, 0xf1,
+	0x9d, 0x78, 0xb0, 0xc7, 0x32, 0xb8, 0xe9, 0x55, 0x1a, 0xcf, 0xb6, 0x52, 0x3e, 0x5b, 0xf3, 0x67,
+	0x4d, 0x3c, 0xde, 0xf4, 0x8a, 0xac, 0x21, 0xf5, 0x31, 0xc6, 0xe4, 0x36, 0xb5, 0x4a, 0xc7, 0xb0,
+	0x9e, 0x9e, 0xd2, 0xad, 0x94, 0x5c, 0x6b, 0xc5, 0x99, 0x3c, 0x7f, 0xd1, 0x78, 0xcf, 0x0f, 0xf8,
+	0xc9, 0xb0, 0x67, 0xb9, 0xb4, 0x2f, 0xb7, 0xbe, 0xfc, 0xb3, 0xc7, 0xbc, 0xef, 0x6d, 0xfe, 0x64,
+	0x80, 0x99, 0xd5, 0x26, 0xdc, 0x59, 0x4b, 0x69, 0xe4, 0x8e, 0xfa, 0x16, 0xd6, 0x3b, 0xcc, 0x6f,
+	0xc5, 0x7b, 0xf8, 0xbe, 0xac, 0xe8, 0xd4, 0xb4, 0x0f, 0xf2, 0xfd, 0x3d, 0x2b, 0xe7, 0xd4, 0xd0,
+	0xfc, 0x55, 0x83, 0xad, 0x89, 0x0b, 0xb2, 0xa4, 0x15, 0x3d, 0xd0, 0xc6, 0xf5, 0xc0, 0x85, 0xc5,
+	0x7e, 0x40, 0x38, 0xf6, 0x66, 0x6f, 0x8d, 0x0f, 0xe3, 0x02, 0xfc, 0xfe, 0xb2, 0xb1, 0x5b, 0xa2,
+	0x00, 0xb1, 0x03, 0x73, 0x24, 0xb5, 0xf9, 0x63, 0x05, 0xd6, 0x3a, 0xcc, 0x6f, 0xbb, 0x68, 0x76,
+	0xc7, 0x5f, 0x6d, 0x65, 0xea, 0x36, 0x54, 0x03, 0x17, 0x75, 0x79, 0x84, 0x08, 0x7b, 0x88, 0xa3,
+	0xee, 0x80, 0x46, 0x3c, 0x26, 0x4d, 0x64, 0x6f, 0x33, 0x70, 0xd1, 0x03, 0x09, 0xdd, 0xa3, 0x11,
+	0x6f, 0x7b, 0xfa, 0xc7, 0xb0, 0x35, 0xe6, 0xe0, 0x9e, 0x20, 0x42, 0x70, 0x18, 0xfb, 0x2c, 0x08,
+	0x9f, 0xaa, 0xe2, 0xd3, 0x4a, 0xc0, 0xb6, 0xa7, 0xb7, 0x00, 0xdc, 0x13, 0x14, 0x90, 0x6e, 0x2c,
+	0xe5, 0x72, 0xec, 0x0d, 0x2b, 0xd1, 0x79, 0x2b, 0xd5, 0x79, 0xeb, 0x41, 0xaa, 0xf3, 0xcd, 0xe5,
+	0xb8, 0x58, 0xa7, 0x2f, 0x1b, 0x9a, 0xb3, 0x22, 0xfc, 0x62, 0xc4, 0xac, 0xc1, 0xad, 0xf1, 0x32,
+	0x64, 0x92, 0x72, 0xaa, 0x09, 0x4d, 0x71, 0xf0, 0x75, 0x6b, 0x98, 0xb2, 0xda, 0xe6, 0x5f, 0x6d,
+	0xb5, 0x6d, 0x09, 0x2d, 0xca, 0x23, 0xca, 0x62, 0xfd, 0x45, 0x13, 0x93, 0xec, 0xe0, 0xeb, 0x57,
+	0xc0, 0xab, 0x47, 0xfb, 0x53, 0x32, 0xfd, 0x6a, 0x50, 0xb3, 0x77, 0xf0, 0x74, 0xc5, 0xab, 0xfc,
+	0x0f, 0xc5, 0x3b, 0x38, 0xbb, 0x01, 0xf3, 0x1d, 0xe6, 0xeb, 0x2d, 0x58, 0xca, 0xbe, 0xe1, 0x59,
+	0xca, 0x77, 0x51, 0x2b, 0xff, 0x1e, 0x65, 0x34, 0xa6, 0x00, 0x59, 0xf0, 0x5f, 0xc2, 0x72, 0x36,
+	0x13, 0xb5, 0xa2, 0x71, 0x82, 0x18, 0x3b, 0xd3, 0x90, 0x8c, 0xe7, 0x2b, 0x00, 0xa5, 0x5f, 0xc6,
+	0xa4, 0x7d, 0x8e, 0x19, 0xe6, 0x74, 0x2c, 0x63, 0x43, 0xb0, 0x59, 0x14, 0xf4, 0x77, 0x26, 0x1d,
+	0x0b, 0x26, 0xc6, 0x07, 0x33, 0x4d, 0xd4, 0xc4, 0xb3, 0x6d, 0x51, 0x48, 0x3c, 0x45, 0x8a, 0x89,
+	0x17, 0x16, 0xbe, 0x03, 0x6f, 0x8c, 0x2d, 0xdd, 0xed, 0x49, 0x0f, 0x15, 0x35, 0xee, 0x5c, 0x86,
+	0x66, 0x9c, 0x5f, 0xc3, 0xaa, 0xba, 0xcc, 0xde, 0x9e, 0x74, 0x52, 0x40, 0xe3, 0xdd, 0x4b, 0x40,
+	0xb5, 0x3b, 0xca, 0xdb, 0x2f, 0x74, 0x27, 0xc7, 0x8a, 0xdd, 0x29, 0xbe, 0xd0, 0x38, 0xe5, 0xb1,
+	0xd7, 0xb9, 0x5d, 0xf4, 0x51, 0x7a, 0x72, 0xe7, 0x32, 0x34, 0xe5, 0x6c, 0x1e, 0x3e, 0x3d, 0xaf,
+	0x6b, 0xcf, 0xce, 0xeb, 0xda, 0x3f, 0xe7, 0x75, 0xed, 0xf4, 0xa2, 0x3e, 0xf7, 0xec, 0xa2, 0x3e,
+	0xf7, 0xf7, 0x45, 0x7d, 0xee, 0x9b, 0xf7, 0x15, 0x3d, 0x68, 0xa1, 0x28, 0x20, 0x68, 0x2f, 0x44,
+	0x3d, 0x66, 0x8b, 0xdf, 0x64, 0x8f, 0xc5, 0xaf, 0x32, 0x21, 0x0a, 0xbd, 0x45, 0xb1, 0x27, 0x3f,
+	0xfa, 0x37, 0x00, 0x00, 0xff, 0xff, 0x5e, 0x9d, 0xa2, 0x8b, 0xae, 0x0d, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -927,6 +1143,8 @@ type MsgClient interface {
 	Withdraw(ctx context.Context, in *MsgWithdraw, opts ...grpc.CallOption) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts ...grpc.CallOption) (*MsgClaimSnAssetResponse, error)
 	IcaWithdraw(ctx context.Context, in *MsgIcaWithdraw, opts ...grpc.CallOption) (*MsgIcaWithdrawResponse, error)
+	ReDelegate(ctx context.Context, in *MsgReDelegate, opts ...grpc.CallOption) (*MsgReDelegateResponse, error)
+	ReUndelegate(ctx context.Context, in *MsgReUndelegate, opts ...grpc.CallOption) (*MsgReUndelegateResponse, error)
 }
 
 type msgClient struct {
@@ -1000,6 +1218,24 @@ func (c *msgClient) IcaWithdraw(ctx context.Context, in *MsgIcaWithdraw, opts ..
 	return out, nil
 }
 
+func (c *msgClient) ReDelegate(ctx context.Context, in *MsgReDelegate, opts ...grpc.CallOption) (*MsgReDelegateResponse, error) {
+	out := new(MsgReDelegateResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/ReDelegate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ReUndelegate(ctx context.Context, in *MsgReUndelegate, opts ...grpc.CallOption) (*MsgReUndelegateResponse, error) {
+	out := new(MsgReUndelegateResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/ReUndelegate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	Deposit(context.Context, *MsgDeposit) (*MsgDepositResponse, error)
@@ -1009,6 +1245,8 @@ type MsgServer interface {
 	Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error)
 	IcaWithdraw(context.Context, *MsgIcaWithdraw) (*MsgIcaWithdrawResponse, error)
+	ReDelegate(context.Context, *MsgReDelegate) (*MsgReDelegateResponse, error)
+	ReUndelegate(context.Context, *MsgReUndelegate) (*MsgReUndelegateResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -1035,6 +1273,12 @@ func (*UnimplementedMsgServer) ClaimSnAsset(ctx context.Context, req *MsgClaimSn
 }
 func (*UnimplementedMsgServer) IcaWithdraw(ctx context.Context, req *MsgIcaWithdraw) (*MsgIcaWithdrawResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IcaWithdraw not implemented")
+}
+func (*UnimplementedMsgServer) ReDelegate(ctx context.Context, req *MsgReDelegate) (*MsgReDelegateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReDelegate not implemented")
+}
+func (*UnimplementedMsgServer) ReUndelegate(ctx context.Context, req *MsgReUndelegate) (*MsgReUndelegateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReUndelegate not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -1167,6 +1411,42 @@ func _Msg_IcaWithdraw_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_ReDelegate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgReDelegate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ReDelegate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Msg/ReDelegate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ReDelegate(ctx, req.(*MsgReDelegate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_ReUndelegate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgReUndelegate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ReUndelegate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Msg/ReUndelegate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ReUndelegate(ctx, req.(*MsgReUndelegate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "nova.gal.v1.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -1198,6 +1478,14 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IcaWithdraw",
 			Handler:    _Msg_IcaWithdraw_Handler,
+		},
+		{
+			MethodName: "ReDelegate",
+			Handler:    _Msg_ReDelegate_Handler,
+		},
+		{
+			MethodName: "ReUndelegate",
+			Handler:    _Msg_ReUndelegate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1806,6 +2094,163 @@ func (m *MsgIcaWithdrawResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgReDelegate) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgReDelegate) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgReDelegate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintTx(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0x1a
+	if len(m.ControllerAddress) > 0 {
+		i -= len(m.ControllerAddress)
+		copy(dAtA[i:], m.ControllerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ControllerAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgReDelegateResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgReDelegateResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgReDelegateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgReUndelegate) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgReUndelegate) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgReUndelegate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.Amount.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintTx(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0x1a
+	if len(m.ControllerAddress) > 0 {
+		i -= len(m.ControllerAddress)
+		copy(dAtA[i:], m.ControllerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ControllerAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgReUndelegateResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgReUndelegateResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgReUndelegateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.TotalUndelegateAsset.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintTx(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0x12
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -2064,6 +2509,68 @@ func (m *MsgIcaWithdrawResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
+	return n
+}
+
+func (m *MsgReDelegate) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.ControllerAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = m.Amount.Size()
+	n += 1 + l + sovTx(uint64(l))
+	return n
+}
+
+func (m *MsgReDelegateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgReUndelegate) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.ControllerAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = m.Amount.Size()
+	n += 1 + l + sovTx(uint64(l))
+	return n
+}
+
+func (m *MsgReUndelegateResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = m.TotalUndelegateAsset.Size()
+	n += 1 + l + sovTx(uint64(l))
 	return n
 }
 
@@ -3915,6 +4422,465 @@ func (m *MsgIcaWithdrawResponse) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: MsgIcaWithdrawResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgReDelegate) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgReDelegate: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgReDelegate: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ControllerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgReDelegateResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgReDelegateResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgReDelegateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgReUndelegate) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgReUndelegate: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgReUndelegate: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ControllerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Amount", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Amount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgReUndelegateResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgReUndelegateResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgReUndelegateResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TotalUndelegateAsset", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.TotalUndelegateAsset.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTx(dAtA[iNdEx:])

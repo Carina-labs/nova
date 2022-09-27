@@ -25,6 +25,8 @@ func GetTxCmd() *cobra.Command {
 		txUndelegateCmd(),
 		txClaimSnAssetCmd(),
 		txIcaWithdrawCmd(),
+		txReDelegateCmd(),
+		txReUnDelegateCmd(),
 	)
 
 	return cmd

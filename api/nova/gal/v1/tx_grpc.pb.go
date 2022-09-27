@@ -29,6 +29,8 @@ type MsgClient interface {
 	Withdraw(ctx context.Context, in *MsgWithdraw, opts ...grpc.CallOption) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts ...grpc.CallOption) (*MsgClaimSnAssetResponse, error)
 	IcaWithdraw(ctx context.Context, in *MsgIcaWithdraw, opts ...grpc.CallOption) (*MsgIcaWithdrawResponse, error)
+	ReDelegate(ctx context.Context, in *MsgReDelegate, opts ...grpc.CallOption) (*MsgReDelegateResponse, error)
+	ReUndelegate(ctx context.Context, in *MsgReUndelegate, opts ...grpc.CallOption) (*MsgReUndelegateResponse, error)
 }
 
 type msgClient struct {
@@ -102,6 +104,24 @@ func (c *msgClient) IcaWithdraw(ctx context.Context, in *MsgIcaWithdraw, opts ..
 	return out, nil
 }
 
+func (c *msgClient) ReDelegate(ctx context.Context, in *MsgReDelegate, opts ...grpc.CallOption) (*MsgReDelegateResponse, error) {
+	out := new(MsgReDelegateResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/ReDelegate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ReUndelegate(ctx context.Context, in *MsgReUndelegate, opts ...grpc.CallOption) (*MsgReUndelegateResponse, error) {
+	out := new(MsgReUndelegateResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/ReUndelegate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -113,6 +133,8 @@ type MsgServer interface {
 	Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error)
 	IcaWithdraw(context.Context, *MsgIcaWithdraw) (*MsgIcaWithdrawResponse, error)
+	ReDelegate(context.Context, *MsgReDelegate) (*MsgReDelegateResponse, error)
+	ReUndelegate(context.Context, *MsgReUndelegate) (*MsgReUndelegateResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -140,6 +162,12 @@ func (UnimplementedMsgServer) ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*
 }
 func (UnimplementedMsgServer) IcaWithdraw(context.Context, *MsgIcaWithdraw) (*MsgIcaWithdrawResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IcaWithdraw not implemented")
+}
+func (UnimplementedMsgServer) ReDelegate(context.Context, *MsgReDelegate) (*MsgReDelegateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReDelegate not implemented")
+}
+func (UnimplementedMsgServer) ReUndelegate(context.Context, *MsgReUndelegate) (*MsgReUndelegateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReUndelegate not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -280,6 +308,42 @@ func _Msg_IcaWithdraw_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_ReDelegate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgReDelegate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ReDelegate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Msg/ReDelegate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ReDelegate(ctx, req.(*MsgReDelegate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_ReUndelegate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgReUndelegate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ReUndelegate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Msg/ReUndelegate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ReUndelegate(ctx, req.(*MsgReUndelegate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -314,6 +378,14 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IcaWithdraw",
 			Handler:    _Msg_IcaWithdraw_Handler,
+		},
+		{
+			MethodName: "ReDelegate",
+			Handler:    _Msg_ReDelegate_Handler,
+		},
+		{
+			MethodName: "ReUndelegate",
+			Handler:    _Msg_ReUndelegate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

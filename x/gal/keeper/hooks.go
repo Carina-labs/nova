@@ -147,6 +147,7 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 		Version: undelegateVersion + 1,
 		Height:  uint64(ctx.BlockHeight()),
 	}
+
 	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
 	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, trace)
 

@@ -9,10 +9,15 @@ import (
 )
 
 const (
-	TypeMsgDeposit          = "deposit"
-	TypeMsgUndelegate       = "undelegate"
-	TypeMsgWithdrawRecord   = "withdrawRecord"
-	TypeMsgUndelegateRecord = "undelegateRecord"
+	TypeMsgDeposit           = "deposit"
+	TypeMsgDelegate          = "delegate"
+	TypeMsgUndelegate        = "undelegate"
+	TypeMsgPendingUndelegate = "pendingUndelegate"
+	TypeMsgWithdrawRecord    = "withdrawRecord"
+	TypeMsgClaim             = "claim"
+	TypeMsgIcaWithdraw       = "icaWithdarw"
+	TypeMsgReDelegate        = "reDelegate"
+	TypeMsgReUndelegate      = "reUndelegate"
 )
 
 var _ sdk.Msg = &MsgDeposit{}
@@ -22,6 +27,8 @@ var _ sdk.Msg = &MsgPendingUndelegate{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
 var _ sdk.Msg = &MsgIcaWithdraw{}
+var _ sdk.Msg = &MsgReDelegate{}
+var _ sdk.Msg = &MsgReUndelegate{}
 
 func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin) *MsgDeposit {
 	return &MsgDeposit{
@@ -84,6 +91,14 @@ func NewMsgDelegate(zoneId string, controllerAddr sdk.AccAddress) *MsgDelegate {
 	}
 }
 
+func (msg MsgDelegate) Route() string {
+	return RouterKey
+}
+
+func (msg MsgDelegate) Type() string {
+	return TypeMsgDelegate
+}
+
 func (msg MsgDelegate) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
 		return err
@@ -117,7 +132,7 @@ func (msg MsgUndelegate) Route() string {
 }
 
 func (msg MsgUndelegate) Type() string {
-	return TypeMsgDeposit
+	return TypeMsgUndelegate
 }
 
 func (msg MsgUndelegate) ValidateBasic() error {
@@ -154,7 +169,7 @@ func (msg MsgPendingUndelegate) Route() string {
 }
 
 func (msg MsgPendingUndelegate) Type() string {
-	return TypeMsgUndelegateRecord
+	return TypeMsgPendingUndelegate
 }
 
 func (msg MsgPendingUndelegate) ValidateBasic() error {
@@ -233,6 +248,14 @@ func NewMsgClaimSnAsset(zoneId string, claimer sdk.AccAddress) *MsgClaimSnAsset 
 	}
 }
 
+func (msg MsgClaimSnAsset) Route() string {
+	return RouterKey
+}
+
+func (msg MsgClaimSnAsset) Type() string {
+	return TypeMsgClaim
+}
+
 func (msg MsgClaimSnAsset) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.Claimer); err != nil {
 		return err
@@ -268,6 +291,10 @@ func (msg MsgIcaWithdraw) Route() string {
 	return RouterKey
 }
 
+func (msg MsgIcaWithdraw) Type() string {
+	return TypeMsgIcaWithdraw
+}
+
 func (msg MsgIcaWithdraw) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
@@ -299,4 +326,86 @@ func (msg MsgIcaWithdraw) GetSignBytes() []byte {
 func (msg MsgIcaWithdraw) GetSigners() []sdk.AccAddress {
 	withdrawer, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	return []sdk.AccAddress{withdrawer}
+}
+
+func NewMsgReDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgReDelegate {
+	return &MsgReDelegate{
+		ZoneId:            zoneId,
+		ControllerAddress: controllerAddr.String(),
+		Amount:            amount,
+	}
+}
+
+func (msg MsgReDelegate) Route() string {
+	return RouterKey
+}
+
+func (msg MsgReDelegate) Type() string {
+	return TypeMsgReDelegate
+}
+
+func (msg MsgReDelegate) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
+	if msg.Amount.IsZero() {
+		return sdkerrors.Wrap(ErrInvalidDenom, "zoneId is not nil")
+	}
+
+	return nil
+}
+
+func (msg MsgReDelegate) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgReDelegate) GetSigners() []sdk.AccAddress {
+	controllerAddr, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
+	return []sdk.AccAddress{controllerAddr}
+}
+
+func NewMsgReUndelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgReUndelegate {
+	return &MsgReUndelegate{
+		ZoneId:            zoneId,
+		ControllerAddress: controllerAddr.String(),
+		Amount:            amount,
+	}
+}
+
+func (msg MsgReUndelegate) Route() string {
+	return RouterKey
+}
+
+func (msg MsgReUndelegate) Type() string {
+	return TypeMsgReUndelegate
+}
+
+func (msg MsgReUndelegate) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
+	if msg.Amount.IsZero() {
+		return sdkerrors.Wrap(ErrInvalidDenom, "zoneId is not nil")
+	}
+
+	return nil
+}
+
+func (msg MsgReUndelegate) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgReUndelegate) GetSigners() []sdk.AccAddress {
+	controllerAddr, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
+	return []sdk.AccAddress{controllerAddr}
 }

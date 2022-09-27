@@ -103,10 +103,10 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	}
 
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, delegate.ZoneId)
-
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
+
 	ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DepositSuccess, types.DelegateRequest)
 	if !ok {
 		return nil, types.ErrCanNotChangeState
@@ -426,5 +426,67 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	return &types.MsgClaimSnAssetResponse{
 		Claimer: claimMsg.Claimer,
 		Minted:  claimSnAsset,
+	}, nil
+}
+
+func (m msgServer) ReDelegate(goCtx context.Context, reDelegate *types.MsgReDelegate) (*types.MsgReDelegateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, reDelegate.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, reDelegate.ControllerAddress)
+	}
+
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, reDelegate.ZoneId)
+	if !ok {
+		return nil, types.ErrNotFoundZoneInfo
+	}
+
+	var msgs []sdk.Msg
+	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: reDelegate.Amount})
+
+	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+	if err != nil {
+		return nil, types.ErrDelegateFail
+	}
+
+	if err := ctx.EventManager().EmitTypedEvent(
+		types.NewEventDelegate(
+			zoneInfo.IcaAccount.HostAddress,
+			zoneInfo.ValidatorAddress,
+			&reDelegate.Amount,
+			zoneInfo.TransferInfo.ChannelId,
+			zoneInfo.TransferInfo.PortId)); err != nil {
+		return nil, err
+	}
+
+	return &types.MsgReDelegateResponse{}, nil
+}
+
+func (m msgServer) ReUndelegate(goCtx context.Context, reUndelegate *types.MsgReUndelegate) (*types.MsgReUndelegateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, reUndelegate.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, reUndelegate.ControllerAddress)
+	}
+
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, reUndelegate.ZoneId)
+	if !ok {
+		return nil, errors.New("zone is not found")
+	}
+
+	var msgs []sdk.Msg
+	msgs = append(msgs, &stakingtype.MsgUndelegate{
+		DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
+		ValidatorAddress: zoneInfo.ValidatorAddress,
+		Amount:           reUndelegate.Amount})
+	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+
+	if err != nil {
+		return nil, errors.New("IcaUnDelegate transaction failed to send")
+	}
+
+	return &types.MsgReUndelegateResponse{
+		ZoneId:               zoneInfo.ZoneId,
+		TotalUndelegateAsset: reUndelegate.Amount,
 	}, nil
 }
