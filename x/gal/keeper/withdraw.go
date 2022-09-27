@@ -41,14 +41,13 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 		for _, items := range undelegateInfo.Records {
 			if items.State == types.UndelegateRequestByIca {
 				withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, items.Withdrawer)
+
 				if !found {
 					withdrawRecord = &types.WithdrawRecord{
 						ZoneId:     zoneId,
 						Withdrawer: items.Withdrawer,
 					}
-					withdrawRecord.Records = make(map[types.UndelegateVersion]*types.WithdrawRecordContent)
 				}
-
 				withdrawRecordContent, found := withdrawRecord.Records[items.UndelegateVersion]
 
 				if !found {
@@ -58,12 +57,11 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 						Amount:          items.WithdrawAmount,
 						CompletionTime:  time,
 					}
-
+					withdrawRecord.Records = make(map[types.UndelegateVersion]*types.WithdrawRecordContent)
 				} else {
 					withdrawRecordContent.Amount = items.WithdrawAmount.Add(withdrawRecordContent.Amount)
 				}
 				withdrawRecord.Records[items.UndelegateVersion] = withdrawRecordContent
-
 				k.SetWithdrawRecord(ctx, withdrawRecord)
 			}
 		}
