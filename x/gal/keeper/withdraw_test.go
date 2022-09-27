@@ -240,14 +240,14 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 		result         types.WithdrawRecord
 	}{
 		{
-			name:           "",
-			zoneId:         zoneId,
+			name:   "",
+			zoneId: zoneId,
 			withdrawRecord: types.WithdrawRecord{
-				ZoneId: zoneId,
+				ZoneId:     zoneId,
 				Withdrawer: delegator.String(),
-				Records: map[uint64]*types.WithdrawRecordContent{},
+				Records:    map[uint64]*types.WithdrawRecordContent{},
 			},
-			withdrawAddr:   delegator.String(),
+			withdrawAddr: delegator.String(),
 			result: types.WithdrawRecord{
 				ZoneId:     zoneId,
 				Withdrawer: delegator.String(),
