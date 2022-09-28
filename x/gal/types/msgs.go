@@ -64,11 +64,7 @@ func (msg MsgDeposit) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
-	if msg.Amount.IsNegative() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
-	}
-
-	if msg.Amount.IsZero() {
+	if !msg.Amount.IsPositive() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
@@ -353,10 +349,13 @@ func (msg MsgReDelegate) ValidateBasic() error {
 		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
 	}
 
-	if msg.Amount.IsZero() {
-		return sdkerrors.Wrap(ErrInvalidDenom, "zoneId is not nil")
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
 	return nil
 }
 
@@ -394,10 +393,13 @@ func (msg MsgReUndelegate) ValidateBasic() error {
 		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
 	}
 
-	if msg.Amount.IsZero() {
-		return sdkerrors.Wrap(ErrInvalidDenom, "zoneId is not nil")
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
 
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
 	return nil
 }
 

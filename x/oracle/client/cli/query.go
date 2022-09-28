@@ -22,7 +22,7 @@ func GetQueryCmd() *cobra.Command {
 
 func GetStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "state [chain_name]",
+		Use:  "state [chain_denom]",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
