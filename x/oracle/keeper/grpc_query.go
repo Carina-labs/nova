@@ -24,7 +24,6 @@ func (q Querier) State(ctx context.Context, request *types.QueryStateRequest) (*
 	return &types.QueryStateResponse{
 		Coin:            res.Coin,
 		Operator:        res.OperatorAddress,
-		Decimal:         0,
 		LastBlockHeight: res.LastBlockHeight,
 		AppHash:         res.AppHash,
 		ChainId:         res.ChainId,
@@ -42,12 +41,12 @@ func (q Querier) Params(ctx context.Context, request *types.QueryParamsRequest) 
 func (q Querier) OracleVersion(goCtx context.Context, request *types.QueryOracleVersionRequest) (*types.QueryOracleVersionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, ok := q.Keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	_, ok := q.Keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ChainId)
 	if !ok {
-		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ChainId)
 	}
 
-	version, height := q.Keeper.GetOracleVersion(ctx, request.ZoneId)
+	version, height := q.Keeper.GetOracleVersion(ctx, request.ChainId)
 
 	return &types.QueryOracleVersionResponse{
 		Version: version,

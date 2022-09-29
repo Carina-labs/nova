@@ -16,13 +16,14 @@ func GetQueryCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(GetStateCmd())
+	cmd.AddCommand(GetVersionCmd())
 
 	return cmd
 }
 
 func GetStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "state [chain_denom]",
+		Use:  "state [chain-denom]",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
@@ -36,6 +37,33 @@ func GetStateCmd() *cobra.Command {
 
 			msg := types.NewQueryChainStateRequest(chainDenom)
 			res, err := queryClient.State(ctx, msg)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func GetVersionCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "oracle-version [chain-id]",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			chainId := args[0]
+			queryClient := types.NewQueryClient(clientCtx)
+			ctx := cmd.Context()
+
+			msg := types.NewQueryOracleVersionRequest(chainId)
+			res, err := queryClient.OracleVersion(ctx, msg)
 			if err != nil {
 				return err
 			}
