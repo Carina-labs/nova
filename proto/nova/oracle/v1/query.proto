@@ -21,7 +21,7 @@ service Query {
   }
 
   rpc OracleVersion(QueryOracleVersionRequest) returns (QueryOracleVersionResponse) {
-    option (google.api.http).get = "/nova/oracle/v1/oracle_version/{zone_id}";
+    option (google.api.http).get = "/nova/oracle/v1/oracle_version/{chain_id}";
   }
 }
 
@@ -41,14 +41,13 @@ message QueryStateResponse {
     (gogoproto.nullable) = false
   ];
   string operator = 2 [(gogoproto.moretags) = "yaml:\"operator\""];
-  uint32 decimal = 3 [(gogoproto.moretags) = "yaml:\"decimal\""];
-  int64 last_block_height = 4 [(gogoproto.moretags) = "yaml:\"last_block_height\""];
-  bytes app_hash = 5 [(gogoproto.moretags) = "yaml:\"app_hash\""];
-  string chain_id = 6 [(gogoproto.moretags) = "yaml:\"chain_id\""];
+  int64 last_block_height = 3 [(gogoproto.moretags) = "yaml:\"last_block_height\""];
+  bytes app_hash = 4 [(gogoproto.moretags) = "yaml:\"app_hash\""];
+  string chain_id = 5 [(gogoproto.moretags) = "yaml:\"chain_id\""];
 }
 
 message QueryOracleVersionRequest {
-  string zone_id = 1;
+  string chain_id = 1;
 }
 
 message QueryOracleVersionResponse {

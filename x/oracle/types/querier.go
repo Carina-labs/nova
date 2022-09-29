@@ -5,3 +5,9 @@ func NewQueryChainStateRequest(chainDenom string) *QueryStateRequest {
 		ChainDenom: chainDenom,
 	}
 }
+
+func NewQueryOracleVersionRequest(zoneId string) *QueryOracleVersionRequest {
+	return &QueryOracleVersionRequest{
+		ChainId: zoneId,
+	}
+}
