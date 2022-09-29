@@ -26,7 +26,6 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 				LastBlockHeight: 10,
 				AppHash:         []byte("apphash"),
 				ChainId:         fooChainId,
-				OracleVersion:   0,
 			},
 			queryDenom: fooDenom,
 			wantErr:    false,
@@ -39,7 +38,6 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 				LastBlockHeight: 10,
 				AppHash:         []byte("apphash"),
 				ChainId:         fooChainId,
-				OracleVersion:   0,
 			},
 			queryDenom: invalidDenom,
 			wantErr:    true,
@@ -125,7 +123,7 @@ func (suite *KeeperTestSuite) TestQueryOracleVersion() {
 
 	// query with invalid zone
 	_, err := queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
-		ZoneId: "invalid",
+		ChainId: "invalid",
 	})
 	suite.Require().Error(err)
 
@@ -133,7 +131,7 @@ func (suite *KeeperTestSuite) TestQueryOracleVersion() {
 	exp := types.QueryOracleVersionResponse{Version: 0, Height: 0}
 
 	res, err := queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
-		ZoneId: "gaia",
+		ChainId: "gaia",
 	})
 
 	suite.Require().NoError(err)
@@ -149,7 +147,7 @@ func (suite *KeeperTestSuite) TestQueryOracleVersion() {
 	//set delegate version
 	suite.App.OracleKeeper.SetOracleVersion(ctx, "gaia", trace)
 	res, err = queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
-		ZoneId: "gaia",
+		ChainId: "gaia",
 	})
 
 	suite.Require().NoError(err)

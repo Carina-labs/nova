@@ -23,7 +23,6 @@ func (suite *KeeperTestSuite) TestExportGenesis() {
 				LastBlockHeight: 1,
 				AppHash:         []byte{1, 2, 3, 4},
 				ChainId:         "cosmos-test-chain",
-				OracleVersion:   10,
 			},
 			{
 				Coin:            sdk.NewCoin("uosmo", sdk.NewInt(100)),
@@ -31,7 +30,6 @@ func (suite *KeeperTestSuite) TestExportGenesis() {
 				LastBlockHeight: 10,
 				AppHash:         []byte{1, 2, 3, 4, 5},
 				ChainId:         "osmosis-test-chain",
-				OracleVersion:   11,
 			},
 		},
 	}
