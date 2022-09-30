@@ -74,9 +74,10 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 		Version: withdrawVersion + 1,
 		Height:  uint64(ctx.BlockHeight()),
 	}
+
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, trace)
-	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusRegistered, withdrawVersion+1)
-	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
+	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, withdrawVersion+1)
+	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
 }
 
 // delegateAddr(controllerAddr), validatorAddr, delegateAmt
@@ -106,27 +107,29 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	asset := transferMsg.Token
 
-	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, asset.Denom)
+	zone := h.k.icaControlKeeper.GetZoneForDenom(ctx, asset.Denom)
 
-	if transferMsg.Receiver != zoneInfo.IcaAccount.ControllerAddress {
-		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zoneInfo.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
+	if transferMsg.Receiver != zone.IcaAccount.ControllerAddress {
+		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zone.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
 		return
 	}
 
 	// get withdrawVersion
-	withdrawVersion, _ := h.k.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
+	withdrawVersion, _ := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
 
 	trace := types.IBCTrace{
 		Version: withdrawVersion + 1,
 		Height:  uint64(ctx.BlockHeight()),
 	}
-	h.k.SetWithdrawVersion(ctx, zoneInfo.ZoneId, trace)
-	h.k.SetWithdrawRecordVersion(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, withdrawVersion+1)
-	h.k.ChangeWithdrawState(ctx, zoneInfo.ZoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
+
+	h.k.SetWithdrawVersion(ctx, zone.ZoneId, trace)
+	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, withdrawVersion+1)
+	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
 
 }
 
 func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
+
 }
 
 // AfterUndelegateEnd is executed when ICA undelegation request finished.

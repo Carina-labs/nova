@@ -288,3 +288,30 @@ func txReUnDelegateCmd() *cobra.Command {
 
 	return cmd
 }
+
+func txReIcaWithdrawCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "reicawithdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
+		Args: cobra.ExactArgs(4),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			portId := args[1]
+			chanId := args[2]
+			amount, err := sdk.ParseCoinNormalized(args[3])
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgReIcaWithdraw(zoneId, portId, chanId, clientCtx.GetFromAddress(), amount)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}

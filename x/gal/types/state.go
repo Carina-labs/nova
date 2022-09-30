@@ -2,6 +2,7 @@ package types
 
 const (
 	WithdrawStatusRegistered WithdrawStatusType = iota + 1
+	WithdrawStatusTransferRequest
 	WithdrawStatusTransferred
 )
 

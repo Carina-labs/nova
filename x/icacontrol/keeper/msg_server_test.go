@@ -43,7 +43,6 @@ func (suite *KeeperTestSuite) InitICA() {
 				Coin:            sdk.NewCoin(baseDenom, sdk.NewInt(0)),
 				ChainId:         zoneId,
 				OperatorAddress: baseOwnerAcc.String(),
-				OracleVersion:   1,
 			},
 		},
 	})
