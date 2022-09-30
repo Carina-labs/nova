@@ -18,6 +18,7 @@ const (
 	TypeMsgIcaWithdraw       = "icaWithdarw"
 	TypeMsgReDelegate        = "reDelegate"
 	TypeMsgReUndelegate      = "reUndelegate"
+	TypeMsgReIcaWithdraw     = "reIcaWithdraw"
 )
 
 var _ sdk.Msg = &MsgDeposit{}
@@ -29,6 +30,7 @@ var _ sdk.Msg = &MsgClaimSnAsset{}
 var _ sdk.Msg = &MsgIcaWithdraw{}
 var _ sdk.Msg = &MsgReDelegate{}
 var _ sdk.Msg = &MsgReUndelegate{}
+var _ sdk.Msg = &MsgReIcaWithdraw{}
 
 func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin) *MsgDeposit {
 	return &MsgDeposit{
@@ -408,6 +410,52 @@ func (msg MsgReUndelegate) GetSignBytes() []byte {
 }
 
 func (msg MsgReUndelegate) GetSigners() []sdk.AccAddress {
+	controllerAddr, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
+	return []sdk.AccAddress{controllerAddr}
+}
+
+func NewMsgReIcaWithdraw(zoneId, portId, chanId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgReIcaWithdraw {
+	return &MsgReIcaWithdraw{
+		ZoneId:               zoneId,
+		IcaTransferPortId:    portId,
+		IcaTransferChannelId: chanId,
+		ControllerAddress:    controllerAddr.String(),
+		Amount:               amount,
+	}
+}
+
+func (msg MsgReIcaWithdraw) Route() string {
+	return RouterKey
+}
+
+func (msg MsgReIcaWithdraw) Type() string {
+	return TypeMsgReIcaWithdraw
+}
+
+func (msg MsgReIcaWithdraw) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
+	if !msg.Amount.IsValid() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+
+	if !msg.Amount.IsPositive() {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
+	}
+	return nil
+}
+
+func (msg MsgReIcaWithdraw) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgReIcaWithdraw) GetSigners() []sdk.AccAddress {
 	controllerAddr, _ := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	return []sdk.AccAddress{controllerAddr}
 }

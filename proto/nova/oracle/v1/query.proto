@@ -32,18 +32,17 @@ message QueryParamsResponse {
 }
 
 message QueryStateRequest {
-  string chain_denom = 1 [(gogoproto.moretags) = "yaml:\"chain_denom\""];
+  string chain_denom = 1;
 }
 message QueryStateResponse {
   cosmos.base.v1beta1.Coin coin = 1 [
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
-    (gogoproto.moretags) = "yaml:\"coin\"",
     (gogoproto.nullable) = false
   ];
-  string operator = 2 [(gogoproto.moretags) = "yaml:\"operator\""];
-  int64 last_block_height = 3 [(gogoproto.moretags) = "yaml:\"last_block_height\""];
-  bytes app_hash = 4 [(gogoproto.moretags) = "yaml:\"app_hash\""];
-  string chain_id = 5 [(gogoproto.moretags) = "yaml:\"chain_id\""];
+  string operator = 2;
+  int64 last_block_height = 3;
+  bytes app_hash = 4;
+  string chain_id = 5;
 }
 
 message QueryOracleVersionRequest {

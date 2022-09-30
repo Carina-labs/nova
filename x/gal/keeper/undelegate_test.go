@@ -7,14 +7,16 @@ import (
 )
 
 type UndelegateRecord struct {
-	zoneId        string
-	withdrawer    string
-	delegator     string
-	claimer       sdk.AccAddress
-	snAsset       sdk.Coin
-	withdrawAsset sdk.Coin
-	state         int64
-	result        types.UndelegateRecord
+	zoneId            string
+	withdrawer        string
+	delegator         string
+	claimer           sdk.AccAddress
+	snAsset           sdk.Coin
+	withdrawAsset     sdk.Coin
+	state             int64
+	result            types.UndelegateRecord
+	undelegateVersion uint64
+	oracleVersion     uint64
 }
 
 func (suite *KeeperTestSuite) NewUndelegateRecord(records []*UndelegateRecord) {
@@ -33,8 +35,8 @@ func (suite *KeeperTestSuite) NewUndelegateRecord(records []*UndelegateRecord) {
 			SnAssetAmount:     &record.snAsset,
 			WithdrawAmount:    record.withdrawAsset.Amount,
 			State:             record.state,
-			OracleVersion:     1,
-			UndelegateVersion: 1,
+			OracleVersion:     record.oracleVersion,
+			UndelegateVersion: record.undelegateVersion,
 		}
 
 		undelegateRecord.Records = append(undelegateRecord.Records, recordContent)
@@ -52,19 +54,19 @@ func (suite *KeeperTestSuite) TestGetAllUndelegateRecord() {
 
 	undelegateRecord := []*UndelegateRecord{
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 	}
 
@@ -156,21 +158,22 @@ func (suite *KeeperTestSuite) TestGetAllUndelegateRecord() {
 
 func (suite *KeeperTestSuite) TestGetUndelegateAmount() {
 	delegator := suite.GenRandomAddress()
+
 	undelegateRecord := []*UndelegateRecord{
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 	}
 
@@ -217,7 +220,6 @@ func (suite *KeeperTestSuite) TestGetUndelegateAmount() {
 				ChainId:         tc.zoneId,
 				OperatorAddress: baseOwnerAcc.String(),
 				Coin:            sdk.NewCoin(baseDenom, tc.wAsset),
-				OracleVersion:   1,
 				AppHash:         []byte("test"),
 				LastBlockHeight: 2,
 			}
@@ -240,21 +242,22 @@ func (suite *KeeperTestSuite) TestGetUndelegateAmount() {
 
 func (suite *KeeperTestSuite) TestChangeUndelegateState() {
 	delegator := suite.GenRandomAddress()
+
 	undelegateRecord := []*UndelegateRecord{
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 		},
 	}
 
@@ -334,7 +337,7 @@ func (suite *KeeperTestSuite) TestChangeUndelegateState() {
 		suite.Run(tc.name, func() {
 			suite.App.GalKeeper.ChangeUndelegateState(suite.Ctx, tc.zoneId, tc.state)
 			result := suite.App.GalKeeper.GetAllUndelegateRecord(suite.Ctx, tc.zoneId)
-			suite.Require().Equal(result, tc.result)
+			suite.Require().Equal(tc.result, result)
 		})
 	}
 }
@@ -346,7 +349,7 @@ func (suite *KeeperTestSuite) TestUndelegateRecordVersion() {
 		name              string
 		zoneId            string
 		records           []*UndelegateRecord
-		undelegateVersion int64
+		undelegateVersion uint64
 		result            []*types.UndelegateRecord
 	}{
 		{
@@ -355,19 +358,19 @@ func (suite *KeeperTestSuite) TestUndelegateRecordVersion() {
 			undelegateVersion: 2,
 			records: []*UndelegateRecord{
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 			},
 			result: []*types.UndelegateRecord{
@@ -433,19 +436,19 @@ func (suite *KeeperTestSuite) TestUndelegateRecordVersion() {
 			zoneId: zoneId,
 			records: []*UndelegateRecord{
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 			},
 			undelegateVersion: 2,
@@ -512,19 +515,19 @@ func (suite *KeeperTestSuite) TestUndelegateRecordVersion() {
 			zoneId: "test",
 			records: []*UndelegateRecord{
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 			},
 			undelegateVersion: 2,
@@ -536,7 +539,7 @@ func (suite *KeeperTestSuite) TestUndelegateRecordVersion() {
 		suite.Run(tc.name, func() {
 			suite.NewUndelegateRecord(tc.records)
 
-			ok := suite.App.GalKeeper.SetUndelegateRecordVersion(suite.Ctx, tc.zoneId, types.UndelegateRequestByIca, 2)
+			ok := suite.App.GalKeeper.SetUndelegateRecordVersion(suite.Ctx, tc.zoneId, types.UndelegateRequestByIca, tc.undelegateVersion)
 			suite.Require().True(ok)
 
 			result := suite.App.GalKeeper.GetAllUndelegateRecord(suite.Ctx, tc.zoneId)
@@ -563,19 +566,19 @@ func (suite *KeeperTestSuite) TestDeleteUndelegateRecords() {
 			zoneId: zoneId,
 			records: []*UndelegateRecord{
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 			},
 			state: types.UndelegateRequestByIca,
@@ -613,19 +616,19 @@ func (suite *KeeperTestSuite) TestDeleteUndelegateRecords() {
 			zoneId: zoneId,
 			records: []*UndelegateRecord{
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 			},
 			state: types.UndelegateRequestByIca,
@@ -642,19 +645,19 @@ func (suite *KeeperTestSuite) TestDeleteUndelegateRecords() {
 			zoneId: zoneId,
 			records: []*UndelegateRecord{
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 			},
 			state: types.UndelegateRequestByIca,
@@ -721,19 +724,19 @@ func (suite *KeeperTestSuite) TestDeleteUndelegateRecords() {
 			zoneId: "test",
 			records: []*UndelegateRecord{
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 				{
-					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca,
+					zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca, undelegateVersion: 1, oracleVersion: 1,
 				},
 			},
 			state:  types.UndelegateRequestByIca,

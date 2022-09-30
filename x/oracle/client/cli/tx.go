@@ -1,14 +1,13 @@
 package cli
 
 import (
-	"strconv"
-
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
+	"strconv"
 )
 
 func GetTxCmd() *cobra.Command {
@@ -27,7 +26,7 @@ func GetTxCmd() *cobra.Command {
 
 func NewUpdateStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update_state [amount] [block_height] [app_hash] [zone_id]",
+		Use:   "update_state [amount] [block-height] [app-hash] [chain-id]",
 		Short: "",
 		Long:  "",
 		Args:  cobra.ExactArgs(4),

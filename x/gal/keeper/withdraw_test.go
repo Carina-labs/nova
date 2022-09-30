@@ -127,13 +127,13 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecordVersion() {
 			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(1000), state: types.WithdrawStatusRegistered, undelegateVerion: 1,
 		},
 		{
-			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(2000), state: types.WithdrawStatusTransferred, undelegateVerion: 2,
+			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(2000), state: types.WithdrawStatusTransferRequest, undelegateVerion: 2,
 		},
 		{
-			zoneId: "gaia", withdrawAddr: withdrawAddr2.String(), amount: sdk.NewInt(500), state: types.WithdrawStatusRegistered, undelegateVerion: 1,
+			zoneId: "gaia", withdrawAddr: withdrawAddr2.String(), amount: sdk.NewInt(500), state: types.WithdrawStatusTransferRequest, undelegateVerion: 1,
 		},
 		{
-			zoneId: "gaia", withdrawAddr: withdrawAddr2.String(), amount: sdk.NewInt(700), state: types.WithdrawStatusRegistered, undelegateVerion: 2,
+			zoneId: "gaia", withdrawAddr: withdrawAddr2.String(), amount: sdk.NewInt(700), state: types.WithdrawStatusTransferRequest, undelegateVerion: 2,
 		},
 	}
 
@@ -150,7 +150,7 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecordVersion() {
 		{
 			name:            "withdraw version test 1",
 			zoneId:          zoneId,
-			state:           types.WithdrawStatusRegistered,
+			state:           types.WithdrawStatusTransferRequest,
 			withdrawVersion: 2,
 			withdrawAddr:    withdrawAddr1.String(),
 			result: types.WithdrawRecord{
@@ -161,13 +161,13 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecordVersion() {
 						Amount:          sdk.NewInt(1000),
 						State:           types.WithdrawStatusRegistered,
 						OracleVersion:   1,
-						WithdrawVersion: 2,
+						WithdrawVersion: 1,
 					},
 					2: {
 						Amount:          sdk.NewInt(2000),
-						State:           types.WithdrawStatusTransferred,
+						State:           types.WithdrawStatusTransferRequest,
 						OracleVersion:   1,
-						WithdrawVersion: 1,
+						WithdrawVersion: 2,
 					},
 				},
 			},
@@ -176,7 +176,7 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecordVersion() {
 			name:            "withdraw version test 2",
 			zoneId:          zoneId,
 			withdrawAddr:    withdrawAddr2.String(),
-			state:           types.WithdrawStatusRegistered,
+			state:           types.WithdrawStatusTransferRequest,
 			withdrawVersion: 3,
 			result: types.WithdrawRecord{
 				ZoneId:     zoneId,
@@ -184,13 +184,13 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecordVersion() {
 				Records: map[uint64]*types.WithdrawRecordContent{
 					1: {
 						Amount:          sdk.NewInt(500),
-						State:           types.WithdrawStatusRegistered,
+						State:           types.WithdrawStatusTransferRequest,
 						OracleVersion:   1,
 						WithdrawVersion: 3,
 					},
 					2: {
 						Amount:          sdk.NewInt(700),
-						State:           types.WithdrawStatusRegistered,
+						State:           types.WithdrawStatusTransferRequest,
 						OracleVersion:   1,
 						WithdrawVersion: 3,
 					},
@@ -214,19 +214,19 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 
 	undelegateRecord := []*UndelegateRecord{
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(1500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(1500)), state: types.UndelegateRequestByIca, undelegateVersion: 2, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(2000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(2000)), state: types.UndelegateRequestByUser, undelegateVersion: 2, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(3500, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(3500)), state: types.UndelegateRequestByUser, undelegateVersion: 2, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(4000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(4000)), state: types.UndelegateRequestByIca, undelegateVersion: 2, oracleVersion: 1,
 		},
 		{
-			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca,
+			zoneId: zoneId, withdrawer: delegator.String(), delegator: delegator.String(), claimer: delegator, snAsset: sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(5000, 18)), withdrawAsset: sdk.NewCoin(baseDenom, sdk.NewInt(5000)), state: types.UndelegateRequestByIca, undelegateVersion: 2, oracleVersion: 1,
 		},
 	}
 
@@ -240,7 +240,7 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 		result         types.WithdrawRecord
 	}{
 		{
-			name:   "",
+			name:   "success1",
 			zoneId: zoneId,
 			withdrawRecord: types.WithdrawRecord{
 				ZoneId:     zoneId,
@@ -252,10 +252,42 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 				ZoneId:     zoneId,
 				Withdrawer: delegator.String(),
 				Records: map[uint64]*types.WithdrawRecordContent{
-					1: {
+					2: {
 						Amount:          sdk.NewInt(10500),
 						State:           types.WithdrawStatusRegistered,
+						WithdrawVersion: 2,
+					},
+				},
+			},
+		},
+		{
+			name:   "success2 - withdraw list",
+			zoneId: zoneId,
+			withdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: delegator.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(5500),
+						State:           types.WithdrawStatusRegistered,
 						WithdrawVersion: 1,
+					},
+				},
+			},
+			withdrawAddr: delegator.String(),
+			result: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: delegator.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(5500),
+						State:           types.WithdrawStatusRegistered,
+						WithdrawVersion: 1,
+					},
+					2: {
+						Amount:          sdk.NewInt(10500),
+						State:           types.WithdrawStatusRegistered,
+						WithdrawVersion: 2,
 					},
 				},
 			},
@@ -385,11 +417,11 @@ func (suite *KeeperTestSuite) TestGetTotalWithdrawAmountForZoneId() {
 			amount:         1500,
 		},
 		{
-			name:           "state",
+			name:           "fail : completion time has not passed",
 			zoneId:         zoneId,
 			denom:          baseDenom,
-			completionTime: time.Now().UTC().Add(10000000000),
-			amount:         1500,
+			completionTime: time.Now().UTC().Add(-1000000000),
+			amount:         0,
 		},
 	}
 	for _, tc := range tcs {
@@ -500,16 +532,16 @@ func (suite *KeeperTestSuite) TestChangeWithdrawState() {
 
 	records := []*WithdrawRecords{
 		{
-			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(1000), state: types.WithdrawStatusRegistered, undelegateVerion: 1,
+			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(1000), state: types.WithdrawStatusTransferRequest, undelegateVerion: 1,
 		},
 		{
 			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(2000), state: types.WithdrawStatusTransferred, undelegateVerion: 2,
 		},
 		{
-			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(500), state: types.WithdrawStatusRegistered, undelegateVerion: 3,
+			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(500), state: types.WithdrawStatusTransferRequest, undelegateVerion: 3,
 		},
 		{
-			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(700), state: types.WithdrawStatusRegistered, undelegateVerion: 4,
+			zoneId: "gaia", withdrawAddr: withdrawAddr1.String(), amount: sdk.NewInt(700), state: types.WithdrawStatusTransferRequest, undelegateVerion: 4,
 		},
 	}
 
@@ -568,7 +600,7 @@ func (suite *KeeperTestSuite) TestChangeWithdrawState() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.App.GalKeeper.ChangeWithdrawState(suite.Ctx, tc.zoneId, types.WithdrawStatusRegistered, types.WithdrawStatusTransferred)
+			suite.App.GalKeeper.ChangeWithdrawState(suite.Ctx, tc.zoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
 			result, ok := suite.App.GalKeeper.GetWithdrawRecord(suite.Ctx, tc.zoneId, tc.withdrawAddr)
 			if tc.err {
 				suite.Require().False(ok)

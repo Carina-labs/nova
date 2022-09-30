@@ -9,5 +9,5 @@ message Params {
   option (gogoproto.goproto_stringer) = false;
 
   // oracle operator's address.
-  repeated string oracle_operators = 1 [ (gogoproto.moretags) = "yaml:\"address\"" ];
+  repeated string oracle_operators = 1;
 }

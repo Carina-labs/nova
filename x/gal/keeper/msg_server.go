@@ -490,3 +490,40 @@ func (m msgServer) ReUndelegate(goCtx context.Context, reUndelegate *types.MsgRe
 		TotalUndelegateAsset: reUndelegate.Amount,
 	}, nil
 }
+
+func (m msgServer) ReIcaWithdraw(goCtx context.Context, reWithdraw *types.MsgReIcaWithdraw) (*types.MsgReIcaWithdrawResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, reWithdraw.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, reWithdraw.ControllerAddress)
+	}
+
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, reWithdraw.ZoneId)
+	if !ok {
+		return nil, errors.New("zone is not found")
+	}
+
+	var msgs []sdk.Msg
+	msgs = append(msgs, &ibctransfertypes.MsgTransfer{
+		SourcePort:    reWithdraw.IcaTransferPortId,
+		SourceChannel: reWithdraw.IcaTransferChannelId,
+		Token:         reWithdraw.Amount,
+		Sender:        zoneInfo.IcaAccount.HostAddress,
+		Receiver:      zoneInfo.IcaAccount.ControllerAddress,
+		TimeoutHeight: ibcclienttypes.Height{
+			RevisionHeight: 0,
+			RevisionNumber: 0,
+		},
+		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+	})
+	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
+
+	if err != nil {
+		return nil, errors.New("IcaUnDelegate transaction failed to send")
+	}
+
+	return &types.MsgReIcaWithdrawResponse{
+		ZoneId:             zoneInfo.ZoneId,
+		TotalWithdrawAsset: reWithdraw.Amount,
+	}, nil
+}

@@ -36,7 +36,6 @@ func (suite *KeeperTestSuite) InitICA() {
 				Coin:            sdk.NewCoin(baseDenom, sdk.NewInt(0)),
 				ChainId:         zoneId,
 				OperatorAddress: baseOwnerAcc.String(),
-				OracleVersion:   1,
 			},
 		},
 	})
@@ -1002,7 +1001,6 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 
 			chainInfo := &oracletypes.ChainInfo{
 				Coin:            tc.oracleAmount,
-				OracleVersion:   2,
 				OperatorAddress: baseOwnerAcc.String(),
 			}
 
@@ -1038,7 +1036,6 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 					suite.Require().True(ok)
 					for key, value := range result.Records {
 						suite.Require().Equal(withdrawRecord.Records[key].Amount, value.Amount)
-
 						suite.Require().Equal(withdrawRecord.Records[key].WithdrawVersion, value.WithdrawVersion)
 					}
 				}
@@ -1057,14 +1054,15 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 	icaPortId := suite.transferPath.EndpointB.ChannelConfig.PortID
 	icaChanId := suite.transferPath.EndpointB.ChannelID
 	tcs := []struct {
-		name           string
-		zoneId         string
-		withdrawAddr   sdk.AccAddress
-		withdrawRecord types.WithdrawRecord
-		msg            types.MsgIcaWithdraw
-		denom          string
-		result         bool
-		err            bool
+		name                 string
+		zoneId               string
+		withdrawAddr         sdk.AccAddress
+		withdrawRecord       types.WithdrawRecord
+		resultWithdrawRecord types.WithdrawRecord
+		msg                  types.MsgIcaWithdraw
+		denom                string
+		result               bool
+		err                  bool
 	}{
 		{
 			name:         "success",
@@ -1077,6 +1075,19 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 					1: {
 						Amount:          sdk.NewInt(10000),
 						State:           types.WithdrawStatusRegistered,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime(),
+					},
+				},
+			},
+			resultWithdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusTransferRequest,
 						OracleVersion:   1,
 						WithdrawVersion: 1,
 						CompletionTime:  suite.chainB.GetContext().BlockTime(),
@@ -1111,6 +1122,19 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 					},
 				},
 			},
+			resultWithdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusTransferRequest,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime(),
+					},
+				},
+			},
 			msg: types.MsgIcaWithdraw{
 				ZoneId:               zoneId,
 				ControllerAddress:    withdrawAddr.String(),
@@ -1139,6 +1163,19 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 					},
 				},
 			},
+			resultWithdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusTransferRequest,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime(),
+					},
+				},
+			},
 			msg: types.MsgIcaWithdraw{
 				ZoneId:               zoneId,
 				ControllerAddress:    baseOwnerAcc.String(),
@@ -1161,6 +1198,19 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 					1: {
 						Amount:          sdk.NewInt(10000),
 						State:           types.WithdrawStatusRegistered,
+						OracleVersion:   1,
+						WithdrawVersion: 1,
+						CompletionTime:  suite.chainB.GetContext().BlockTime().Add(time.Hour),
+					},
+				},
+			},
+			resultWithdrawRecord: types.WithdrawRecord{
+				ZoneId:     zoneId,
+				Withdrawer: withdrawAddr.String(),
+				Records: map[uint64]*types.WithdrawRecordContent{
+					1: {
+						Amount:          sdk.NewInt(10000),
+						State:           types.WithdrawStatusTransferRequest,
 						OracleVersion:   1,
 						WithdrawVersion: 1,
 						CompletionTime:  suite.chainB.GetContext().BlockTime().Add(time.Hour),
@@ -1202,7 +1252,7 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 
 				resultRecords, ok := suite.chainA.GetApp().GalKeeper.GetWithdrawRecord(suite.chainA.GetContext(), tc.zoneId, tc.withdrawAddr.String())
 				suite.Require().True(ok)
-				suite.Require().Equal(tc.withdrawRecord, *resultRecords)
+				suite.Require().Equal(tc.resultWithdrawRecord, *resultRecords)
 			}
 		})
 	}
@@ -1242,7 +1292,7 @@ func (suite *KeeperTestSuite) TestTransferWithdraw() {
 				Records: map[uint64]*types.WithdrawRecordContent{
 					1: {
 						Amount:          sdk.NewInt(10000),
-						State:           types.WithdrawStatusRegistered,
+						State:           types.WithdrawStatusTransferRequest,
 						OracleVersion:   1,
 						WithdrawVersion: 1,
 						CompletionTime:  suite.chainB.GetContext().BlockTime(),
@@ -1585,7 +1635,6 @@ func (suite *KeeperTestSuite) TestClaimSnAsset() {
 			ChainId:         tc.zoneId,
 			OperatorAddress: baseOwnerAcc.String(),
 			Coin:            sdk.NewCoin(tc.denom, tc.oracleAmount),
-			OracleVersion:   tc.oracleVersion,
 		}
 
 		suite.chainA.GetApp().OracleKeeper.UpdateChainState(suite.chainA.GetContext(), &chainInfo)
@@ -1959,7 +2008,6 @@ func (suite *KeeperTestSuite) TestReUndelegate() {
 
 			chainInfo := &oracletypes.ChainInfo{
 				Coin:            tc.oracleAmount,
-				OracleVersion:   2,
 				OperatorAddress: baseOwnerAcc.String(),
 			}
 

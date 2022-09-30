@@ -213,7 +213,7 @@ func txDeleteZoneTxCmd() *cobra.Command {
 func txChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "change-zone [zone-id] [host-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal] [max_entries]",
-		Args: cobra.ExactArgs(8),
+		Args: cobra.ExactArgs(9),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			clientCtx, err := client.GetClientTxContext(cmd)
