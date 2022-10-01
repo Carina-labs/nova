@@ -10,14 +10,14 @@ import (
 func TestInitGenesis(t *testing.T) {
 	operatorAddr := sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
 	genesis := NewGenesisState(Params{
-		OracleOperators: []string{operatorAddr.String()},
+		OracleKeyManager: []string{operatorAddr.String()},
 	}, []ChainInfo{})
 
 	err := genesis.Validate()
 	assert.NoError(t, err)
 
 	genesis = NewGenesisState(Params{
-		OracleOperators: []string{"invalid_addr"},
+		OracleKeyManager: []string{"invalid_addr"},
 	}, []ChainInfo{})
 	err = genesis.Validate()
 	assert.Error(t, err, "error expected but not found: %v", err)

@@ -226,14 +226,22 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 			operator := suite.GenRandomAddress().String()
 			suite.App.OracleKeeper.InitGenesis(suite.Ctx, &oracletypes.GenesisState{
 				Params: oracletypes.Params{
-					OracleOperators: []string{
+					OracleKeyManager: []string{
 						operator,
+					},
+				},
+				OracleAddressInfo: []oracletypes.OracleAddressInfo{
+					{
+						ZoneId: "stake-1",
+						OracleAddress: []string{
+							operator,
+						},
 					},
 				},
 				States: []oracletypes.ChainInfo{
 					{
 						Coin:            tc.stakedAmount,
-						ChainId:         "stake-1",
+						ZoneId:          "stake-1",
 						OperatorAddress: operator,
 					},
 				},

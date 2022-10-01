@@ -2,6 +2,7 @@ syntax="proto3";
 package nova.oracle.v1;
 
 import "gogoproto/gogo.proto";
+import "nova/oracle/v1/store.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/oracle/types";
 
@@ -9,5 +10,5 @@ message Params {
   option (gogoproto.goproto_stringer) = false;
 
   // oracle operator's address.
-  repeated string oracle_operators = 1;
+  repeated string oracle_key_manager = 1;
 }

@@ -25,7 +25,7 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 				OperatorAddress: fooOperator.String(),
 				LastBlockHeight: 10,
 				AppHash:         []byte("apphash"),
-				ChainId:         fooChainId,
+				ZoneId:          fooChainId,
 			},
 			queryDenom: fooDenom,
 			wantErr:    false,
@@ -37,19 +37,16 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 				OperatorAddress: fooOperator.String(),
 				LastBlockHeight: 10,
 				AppHash:         []byte("apphash"),
-				ChainId:         fooChainId,
+				ZoneId:          fooChainId,
 			},
 			queryDenom: invalidDenom,
 			wantErr:    true,
 		},
 	}
 
-	oracleKeeper.SetParams(suite.Ctx, types.Params{
-		OracleOperators: []string{fooOperator.String()},
-	})
-
 	for _, tt := range tests {
 		suite.Run(tt.name, func() {
+			oracleKeeper.SetOracleAddress(suite.Ctx, tt.chainInfo.ZoneId, []string{fooOperator.String()})
 			err := oracleKeeper.UpdateChainState(suite.Ctx, &tt.chainInfo)
 			suite.Require().NoError(err)
 
@@ -66,7 +63,7 @@ func (suite *KeeperTestSuite) TestGRPCState() {
 			suite.Require().Equal(val.LastBlockHeight, tt.chainInfo.LastBlockHeight)
 			suite.Require().Equal(val.Coin, tt.chainInfo.Coin)
 			suite.Require().Equal(val.AppHash, tt.chainInfo.AppHash)
-			suite.Require().Equal(val.ChainId, tt.chainInfo.ChainId)
+			suite.Require().Equal(val.ZoneId, tt.chainInfo.ZoneId)
 
 		})
 	}
@@ -87,12 +84,12 @@ func (suite *KeeperTestSuite) TestQueryParam() {
 	for _, tt := range tests {
 		suite.Run(tt.name, func() {
 			suite.App.OracleKeeper.SetParams(suite.Ctx, types.Params{
-				OracleOperators: tt.operators,
+				OracleKeyManager: tt.operators,
 			})
 
 			params, err := queryClient.Params(context.Background(), &types.QueryParamsRequest{})
 			suite.Require().NoError(err)
-			suite.Require().Equal(params.Params.OracleOperators, tt.expect)
+			suite.Require().Equal(params.Params.OracleKeyManager, tt.expect)
 		})
 	}
 }
@@ -123,7 +120,7 @@ func (suite *KeeperTestSuite) TestQueryOracleVersion() {
 
 	// query with invalid zone
 	_, err := queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
-		ChainId: "invalid",
+		ZoneId: "invalid",
 	})
 	suite.Require().Error(err)
 
@@ -131,7 +128,7 @@ func (suite *KeeperTestSuite) TestQueryOracleVersion() {
 	exp := types.QueryOracleVersionResponse{Version: 0, Height: 0}
 
 	res, err := queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
-		ChainId: "gaia",
+		ZoneId: "gaia",
 	})
 
 	suite.Require().NoError(err)
@@ -147,7 +144,7 @@ func (suite *KeeperTestSuite) TestQueryOracleVersion() {
 	//set delegate version
 	suite.App.OracleKeeper.SetOracleVersion(ctx, "gaia", trace)
 	res, err = queryClient.OracleVersion(ctx.Context(), &types.QueryOracleVersionRequest{
-		ChainId: "gaia",
+		ZoneId: "gaia",
 	})
 
 	suite.Require().NoError(err)

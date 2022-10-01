@@ -7,3 +7,8 @@ message IBCTrace {
   uint64 version = 1;
   uint64 height = 2;
 }
+
+message OracleAddressInfo {
+  string zone_id = 1;
+  repeated string oracle_address = 2;
+}

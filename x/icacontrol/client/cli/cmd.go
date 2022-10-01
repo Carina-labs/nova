@@ -27,6 +27,7 @@ func GetTxCmd() *cobra.Command {
 		txChangeZoneInfoTxCmd(),
 		txAuthzGrantTxCmd(),
 		txAuthzRevokeTxCmd(),
+		txSetControllerAddrTxCmd(),
 	)
 
 	return cmd

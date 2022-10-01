@@ -1,17 +1,12 @@
 package types
 
 const (
-	ModuleName = "icacontrol"
-
-	StoreKey = "storeIcaControl"
-
-	RouterKey = ModuleName
-
+	ModuleName   = "icacontrol"
+	StoreKey     = "storeIcaControl"
+	RouterKey    = ModuleName
 	QuerierRoute = ModuleName
-
-	PortID = ModuleName
-
-	Version = "ics27-1"
+	PortID       = ModuleName
+	Version      = "ics27-1"
 )
 
 const (
@@ -19,8 +14,8 @@ const (
 )
 
 var (
-	KeyPrefixZone           = []byte{0x01}
-	KeyPrefixConnectionInfo = []byte{0x02}
+	KeyPrefixZone         = []byte{0x01}
+	KeyAutoStakingVersion = []byte{0x02}
 
-	KeyAutoStakingVersion = []byte{0x03}
+	KeyControllerAddress = []byte{0x03}
 )

@@ -21,6 +21,7 @@ var (
 	_ sdk.Msg = &MsgIcaAuthzRevoke{}
 	_ sdk.Msg = &MsgDeleteRegisteredZone{}
 	_ sdk.Msg = &MsgChangeRegisteredZone{}
+	_ sdk.Msg = &MsgRegisterControllerAddr{}
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
@@ -48,7 +49,7 @@ func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAd
 // ValidateBasic implements sdk.Msg
 func (msg MsgRegisterZone) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return errors.New("missing zone name")
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	if strings.TrimSpace(msg.IcaInfo.ConnectionId) == "" {
@@ -180,7 +181,7 @@ func NewMsgIcaAutoStaking(zoneId string, controllerAddr sdk.AccAddress, amount s
 // ValidateBasic implements sdk.Msg
 func (msg MsgIcaAutoStaking) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return errors.New("missing zone name")
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
@@ -229,7 +230,7 @@ func NewMsgIcaTransfer(zoneId, hostAddr string, controllerAddr sdk.AccAddress, r
 // ValidateBasic implements sdk.Msg
 func (msg MsgIcaTransfer) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return errors.New("missing zone name")
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
@@ -383,7 +384,7 @@ func (msg MsgIcaAuthzGrant) ValidateBasic() error {
 	}
 
 	if msg.ZoneId == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "Grantee address is not nil")
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	return nil
@@ -421,7 +422,7 @@ func (msg MsgIcaAuthzRevoke) ValidateBasic() error {
 	}
 
 	if msg.ZoneId == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "Grantee address is not nil")
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 	return nil
 }
@@ -429,6 +430,43 @@ func (msg MsgIcaAuthzRevoke) ValidateBasic() error {
 // GetSigners implements sdk.Msg
 func (msg MsgIcaAuthzRevoke) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{accAddr}
+}
+
+func NewMsgRegisterControllerAddress(zoneId string, controllerAddr, fromAddr sdk.AccAddress) *MsgRegisterControllerAddr {
+	return &MsgRegisterControllerAddr{
+		ZoneId:            zoneId,
+		ControllerAddress: controllerAddr.String(),
+		FromAddress:       fromAddr.String(),
+	}
+}
+
+// ValidateBasic implements sdk.Msg
+func (msg MsgRegisterControllerAddr) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(msg.FromAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+	}
+
+	_, err = sdk.AccAddressFromBech32(msg.ControllerAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid from address")
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+	}
+	return nil
+}
+
+// GetSigners implements sdk.Msg
+func (msg MsgRegisterControllerAddr) GetSigners() []sdk.AccAddress {
+	accAddr, err := sdk.AccAddressFromBech32(msg.FromAddress)
 
 	if err != nil {
 		panic(err)

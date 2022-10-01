@@ -209,7 +209,7 @@ func txIcaWithdrawCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewIcaWithdraw(zoneId, clientCtx.GetFromAddress(), portId, chanId, t)
+			msg := types.NewMsgIcaWithdraw(zoneId, clientCtx.GetFromAddress(), portId, chanId, t)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

@@ -20,7 +20,7 @@ var (
 	fd_MsgUpdateChainState_operator     protoreflect.FieldDescriptor
 	fd_MsgUpdateChainState_block_height protoreflect.FieldDescriptor
 	fd_MsgUpdateChainState_app_hash     protoreflect.FieldDescriptor
-	fd_MsgUpdateChainState_chain_id     protoreflect.FieldDescriptor
+	fd_MsgUpdateChainState_zone_id      protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -30,7 +30,7 @@ func init() {
 	fd_MsgUpdateChainState_operator = md_MsgUpdateChainState.Fields().ByName("operator")
 	fd_MsgUpdateChainState_block_height = md_MsgUpdateChainState.Fields().ByName("block_height")
 	fd_MsgUpdateChainState_app_hash = md_MsgUpdateChainState.Fields().ByName("app_hash")
-	fd_MsgUpdateChainState_chain_id = md_MsgUpdateChainState.Fields().ByName("chain_id")
+	fd_MsgUpdateChainState_zone_id = md_MsgUpdateChainState.Fields().ByName("zone_id")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgUpdateChainState)(nil)
@@ -122,9 +122,9 @@ func (x *fastReflection_MsgUpdateChainState) Range(f func(protoreflect.FieldDesc
 			return
 		}
 	}
-	if x.ChainId != "" {
-		value := protoreflect.ValueOfString(x.ChainId)
-		if !f(fd_MsgUpdateChainState_chain_id, value) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_MsgUpdateChainState_zone_id, value) {
 			return
 		}
 	}
@@ -151,8 +151,8 @@ func (x *fastReflection_MsgUpdateChainState) Has(fd protoreflect.FieldDescriptor
 		return x.BlockHeight != int64(0)
 	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
 		return len(x.AppHash) != 0
-	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
-		return x.ChainId != ""
+	case "nova.oracle.v1.MsgUpdateChainState.zone_id":
+		return x.ZoneId != ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -177,8 +177,8 @@ func (x *fastReflection_MsgUpdateChainState) Clear(fd protoreflect.FieldDescript
 		x.BlockHeight = int64(0)
 	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
 		x.AppHash = nil
-	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
-		x.ChainId = ""
+	case "nova.oracle.v1.MsgUpdateChainState.zone_id":
+		x.ZoneId = ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -207,8 +207,8 @@ func (x *fastReflection_MsgUpdateChainState) Get(descriptor protoreflect.FieldDe
 	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
 		value := x.AppHash
 		return protoreflect.ValueOfBytes(value)
-	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
-		value := x.ChainId
+	case "nova.oracle.v1.MsgUpdateChainState.zone_id":
+		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
@@ -238,8 +238,8 @@ func (x *fastReflection_MsgUpdateChainState) Set(fd protoreflect.FieldDescriptor
 		x.BlockHeight = value.Int()
 	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
 		x.AppHash = value.Bytes()
-	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
-		x.ChainId = value.Interface().(string)
+	case "nova.oracle.v1.MsgUpdateChainState.zone_id":
+		x.ZoneId = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -271,8 +271,8 @@ func (x *fastReflection_MsgUpdateChainState) Mutable(fd protoreflect.FieldDescri
 		panic(fmt.Errorf("field block_height of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
 	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
 		panic(fmt.Errorf("field app_hash of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
-	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
-		panic(fmt.Errorf("field chain_id of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
+	case "nova.oracle.v1.MsgUpdateChainState.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.oracle.v1.MsgUpdateChainState is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgUpdateChainState"))
@@ -295,7 +295,7 @@ func (x *fastReflection_MsgUpdateChainState) NewField(fd protoreflect.FieldDescr
 		return protoreflect.ValueOfInt64(int64(0))
 	case "nova.oracle.v1.MsgUpdateChainState.app_hash":
 		return protoreflect.ValueOfBytes(nil)
-	case "nova.oracle.v1.MsgUpdateChainState.chain_id":
+	case "nova.oracle.v1.MsgUpdateChainState.zone_id":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
@@ -381,7 +381,7 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.ChainId)
+		l = len(x.ZoneId)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
@@ -414,10 +414,10 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.ChainId) > 0 {
-			i -= len(x.ChainId)
-			copy(dAtA[i:], x.ChainId)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ChainId)))
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
 			i--
 			dAtA[i] = 0x2a
 		}
@@ -626,7 +626,7 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 				iNdEx = postIndex
 			case 5:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ChainId", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
 				}
 				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
@@ -654,7 +654,7 @@ func (x *fastReflection_MsgUpdateChainState) ProtoMethods() *protoiface.Methods 
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.ChainId = string(dAtA[iNdEx:postIndex])
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -1101,6 +1101,910 @@ func (x *fastReflection_MsgUpdateChainStateResponse) ProtoMethods() *protoiface.
 	}
 }
 
+var (
+	md_MsgRegisterOracleAddr                protoreflect.MessageDescriptor
+	fd_MsgRegisterOracleAddr_zone_id        protoreflect.FieldDescriptor
+	fd_MsgRegisterOracleAddr_oracle_address protoreflect.FieldDescriptor
+	fd_MsgRegisterOracleAddr_from_address   protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_oracle_v1_tx_proto_init()
+	md_MsgRegisterOracleAddr = File_nova_oracle_v1_tx_proto.Messages().ByName("MsgRegisterOracleAddr")
+	fd_MsgRegisterOracleAddr_zone_id = md_MsgRegisterOracleAddr.Fields().ByName("zone_id")
+	fd_MsgRegisterOracleAddr_oracle_address = md_MsgRegisterOracleAddr.Fields().ByName("oracle_address")
+	fd_MsgRegisterOracleAddr_from_address = md_MsgRegisterOracleAddr.Fields().ByName("from_address")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgRegisterOracleAddr)(nil)
+
+type fastReflection_MsgRegisterOracleAddr MsgRegisterOracleAddr
+
+func (x *MsgRegisterOracleAddr) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgRegisterOracleAddr)(x)
+}
+
+func (x *MsgRegisterOracleAddr) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_oracle_v1_tx_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgRegisterOracleAddr_messageType fastReflection_MsgRegisterOracleAddr_messageType
+var _ protoreflect.MessageType = fastReflection_MsgRegisterOracleAddr_messageType{}
+
+type fastReflection_MsgRegisterOracleAddr_messageType struct{}
+
+func (x fastReflection_MsgRegisterOracleAddr_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgRegisterOracleAddr)(nil)
+}
+func (x fastReflection_MsgRegisterOracleAddr_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgRegisterOracleAddr)
+}
+func (x fastReflection_MsgRegisterOracleAddr_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgRegisterOracleAddr
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgRegisterOracleAddr) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgRegisterOracleAddr
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgRegisterOracleAddr) Type() protoreflect.MessageType {
+	return _fastReflection_MsgRegisterOracleAddr_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgRegisterOracleAddr) New() protoreflect.Message {
+	return new(fastReflection_MsgRegisterOracleAddr)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgRegisterOracleAddr) Interface() protoreflect.ProtoMessage {
+	return (*MsgRegisterOracleAddr)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgRegisterOracleAddr) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_MsgRegisterOracleAddr_zone_id, value) {
+			return
+		}
+	}
+	if x.OracleAddress != "" {
+		value := protoreflect.ValueOfString(x.OracleAddress)
+		if !f(fd_MsgRegisterOracleAddr_oracle_address, value) {
+			return
+		}
+	}
+	if x.FromAddress != "" {
+		value := protoreflect.ValueOfString(x.FromAddress)
+		if !f(fd_MsgRegisterOracleAddr_from_address, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgRegisterOracleAddr) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.oracle.v1.MsgRegisterOracleAddr.zone_id":
+		return x.ZoneId != ""
+	case "nova.oracle.v1.MsgRegisterOracleAddr.oracle_address":
+		return x.OracleAddress != ""
+	case "nova.oracle.v1.MsgRegisterOracleAddr.from_address":
+		return x.FromAddress != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddr"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddr does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgRegisterOracleAddr) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.oracle.v1.MsgRegisterOracleAddr.zone_id":
+		x.ZoneId = ""
+	case "nova.oracle.v1.MsgRegisterOracleAddr.oracle_address":
+		x.OracleAddress = ""
+	case "nova.oracle.v1.MsgRegisterOracleAddr.from_address":
+		x.FromAddress = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddr"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddr does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgRegisterOracleAddr) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.oracle.v1.MsgRegisterOracleAddr.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.oracle.v1.MsgRegisterOracleAddr.oracle_address":
+		value := x.OracleAddress
+		return protoreflect.ValueOfString(value)
+	case "nova.oracle.v1.MsgRegisterOracleAddr.from_address":
+		value := x.FromAddress
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddr"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddr does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgRegisterOracleAddr) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.oracle.v1.MsgRegisterOracleAddr.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.oracle.v1.MsgRegisterOracleAddr.oracle_address":
+		x.OracleAddress = value.Interface().(string)
+	case "nova.oracle.v1.MsgRegisterOracleAddr.from_address":
+		x.FromAddress = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddr"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddr does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgRegisterOracleAddr) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.oracle.v1.MsgRegisterOracleAddr.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.oracle.v1.MsgRegisterOracleAddr is not mutable"))
+	case "nova.oracle.v1.MsgRegisterOracleAddr.oracle_address":
+		panic(fmt.Errorf("field oracle_address of message nova.oracle.v1.MsgRegisterOracleAddr is not mutable"))
+	case "nova.oracle.v1.MsgRegisterOracleAddr.from_address":
+		panic(fmt.Errorf("field from_address of message nova.oracle.v1.MsgRegisterOracleAddr is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddr"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddr does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgRegisterOracleAddr) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.oracle.v1.MsgRegisterOracleAddr.zone_id":
+		return protoreflect.ValueOfString("")
+	case "nova.oracle.v1.MsgRegisterOracleAddr.oracle_address":
+		return protoreflect.ValueOfString("")
+	case "nova.oracle.v1.MsgRegisterOracleAddr.from_address":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddr"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddr does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgRegisterOracleAddr) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.oracle.v1.MsgRegisterOracleAddr", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgRegisterOracleAddr) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgRegisterOracleAddr) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgRegisterOracleAddr) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgRegisterOracleAddr) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgRegisterOracleAddr)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.OracleAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.FromAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgRegisterOracleAddr)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.FromAddress) > 0 {
+			i -= len(x.FromAddress)
+			copy(dAtA[i:], x.FromAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.FromAddress)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.OracleAddress) > 0 {
+			i -= len(x.OracleAddress)
+			copy(dAtA[i:], x.OracleAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.OracleAddress)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgRegisterOracleAddr)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgRegisterOracleAddr: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgRegisterOracleAddr: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field OracleAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.OracleAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field FromAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.FromAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgRegisterOracleAddrResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_oracle_v1_tx_proto_init()
+	md_MsgRegisterOracleAddrResponse = File_nova_oracle_v1_tx_proto.Messages().ByName("MsgRegisterOracleAddrResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgRegisterOracleAddrResponse)(nil)
+
+type fastReflection_MsgRegisterOracleAddrResponse MsgRegisterOracleAddrResponse
+
+func (x *MsgRegisterOracleAddrResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgRegisterOracleAddrResponse)(x)
+}
+
+func (x *MsgRegisterOracleAddrResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_oracle_v1_tx_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgRegisterOracleAddrResponse_messageType fastReflection_MsgRegisterOracleAddrResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgRegisterOracleAddrResponse_messageType{}
+
+type fastReflection_MsgRegisterOracleAddrResponse_messageType struct{}
+
+func (x fastReflection_MsgRegisterOracleAddrResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgRegisterOracleAddrResponse)(nil)
+}
+func (x fastReflection_MsgRegisterOracleAddrResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgRegisterOracleAddrResponse)
+}
+func (x fastReflection_MsgRegisterOracleAddrResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgRegisterOracleAddrResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgRegisterOracleAddrResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgRegisterOracleAddrResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgRegisterOracleAddrResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgRegisterOracleAddrResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddrResponse"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddrResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddrResponse"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddrResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddrResponse"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddrResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddrResponse"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddrResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddrResponse"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddrResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.oracle.v1.MsgRegisterOracleAddrResponse"))
+		}
+		panic(fmt.Errorf("message nova.oracle.v1.MsgRegisterOracleAddrResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.oracle.v1.MsgRegisterOracleAddrResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgRegisterOracleAddrResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgRegisterOracleAddrResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgRegisterOracleAddrResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgRegisterOracleAddrResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgRegisterOracleAddrResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgRegisterOracleAddrResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -1128,8 +2032,8 @@ type MsgUpdateChainState struct {
 	BlockHeight int64 `protobuf:"varint,3,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
 	// app_hash of the block fetched by oracle from host chain
 	AppHash []byte `protobuf:"bytes,4,opt,name=app_hash,json=appHash,proto3" json:"app_hash,omitempty"`
-	// chain_id of the host chain
-	ChainId string `protobuf:"bytes,5,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	// zone_id of the host chain
+	ZoneId string `protobuf:"bytes,5,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 }
 
 func (x *MsgUpdateChainState) Reset() {
@@ -1180,9 +2084,9 @@ func (x *MsgUpdateChainState) GetAppHash() []byte {
 	return nil
 }
 
-func (x *MsgUpdateChainState) GetChainId() string {
+func (x *MsgUpdateChainState) GetZoneId() string {
 	if x != nil {
-		return x.ChainId
+		return x.ZoneId
 	}
 	return ""
 }
@@ -1224,6 +2128,83 @@ func (x *MsgUpdateChainStateResponse) GetSuccess() bool {
 	return false
 }
 
+type MsgRegisterOracleAddr struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneId        string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	OracleAddress string `protobuf:"bytes,2,opt,name=oracle_address,json=oracleAddress,proto3" json:"oracle_address,omitempty"`
+	FromAddress   string `protobuf:"bytes,3,opt,name=from_address,json=fromAddress,proto3" json:"from_address,omitempty"`
+}
+
+func (x *MsgRegisterOracleAddr) Reset() {
+	*x = MsgRegisterOracleAddr{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_oracle_v1_tx_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgRegisterOracleAddr) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgRegisterOracleAddr) ProtoMessage() {}
+
+// Deprecated: Use MsgRegisterOracleAddr.ProtoReflect.Descriptor instead.
+func (*MsgRegisterOracleAddr) Descriptor() ([]byte, []int) {
+	return file_nova_oracle_v1_tx_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *MsgRegisterOracleAddr) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *MsgRegisterOracleAddr) GetOracleAddress() string {
+	if x != nil {
+		return x.OracleAddress
+	}
+	return ""
+}
+
+func (x *MsgRegisterOracleAddr) GetFromAddress() string {
+	if x != nil {
+		return x.FromAddress
+	}
+	return ""
+}
+
+type MsgRegisterOracleAddrResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgRegisterOracleAddrResponse) Reset() {
+	*x = MsgRegisterOracleAddrResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_oracle_v1_tx_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgRegisterOracleAddrResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgRegisterOracleAddrResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgRegisterOracleAddrResponse.ProtoReflect.Descriptor instead.
+func (*MsgRegisterOracleAddrResponse) Descriptor() ([]byte, []int) {
+	return file_nova_oracle_v1_tx_proto_rawDescGZIP(), []int{3}
+}
+
 var File_nova_oracle_v1_tx_proto protoreflect.FileDescriptor
 
 var file_nova_oracle_v1_tx_proto_rawDesc = []byte{
@@ -1233,7 +2214,7 @@ var file_nova_oracle_v1_tx_proto_rawDesc = []byte{
 	0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2f, 0x63,
 	0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22,
-	0xeb, 0x01, 0x0a, 0x13, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61,
+	0xe9, 0x01, 0x0a, 0x13, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61,
 	0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x5f, 0x0a, 0x04, 0x63, 0x6f, 0x69, 0x6e, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62,
 	0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e,
@@ -1246,30 +2227,47 @@ var file_nova_oracle_v1_tx_proto_rawDesc = []byte{
 	0x69, 0x67, 0x68, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x62, 0x6c, 0x6f, 0x63,
 	0x6b, 0x48, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x61, 0x70, 0x70, 0x5f, 0x68,
 	0x61, 0x73, 0x68, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x07, 0x61, 0x70, 0x70, 0x48, 0x61,
-	0x73, 0x68, 0x12, 0x19, 0x0a, 0x08, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x05,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x22, 0x37, 0x0a,
-	0x1b, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53,
-	0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07,
-	0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73,
-	0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x32, 0x6b, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x64, 0x0a,
-	0x10, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74,
-	0x65, 0x12, 0x23, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e,
-	0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69,
-	0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x1a, 0x2b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72,
-	0x61, 0x63, 0x6c, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x42, 0xb0, 0x01, 0x0a, 0x12, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
-	0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72,
-	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x37, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f,
-	0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x6f, 0x72, 0x61, 0x63,
-	0x6c, 0x65, 0x2f, 0x76, 0x31, 0x3b, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x76, 0x31, 0xa2, 0x02,
-	0x03, 0x4e, 0x4f, 0x58, 0xaa, 0x02, 0x0e, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x4f, 0x72, 0x61, 0x63,
-	0x6c, 0x65, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0e, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x4f, 0x72, 0x61,
-	0x63, 0x6c, 0x65, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1a, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x4f, 0x72,
-	0x61, 0x63, 0x6c, 0x65, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0xea, 0x02, 0x10, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x4f, 0x72, 0x61, 0x63,
-	0x6c, 0x65, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x68, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x22, 0x37, 0x0a, 0x1b, 0x4d,
+	0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75,
+	0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63,
+	0x63, 0x65, 0x73, 0x73, 0x22, 0x7a, 0x0a, 0x15, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73,
+	0x74, 0x65, 0x72, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x41, 0x64, 0x64, 0x72, 0x12, 0x17, 0x0a,
+	0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x25, 0x0a, 0x0e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65,
+	0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d,
+	0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x21, 0x0a,
+	0x0c, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x66, 0x72, 0x6f, 0x6d, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x22, 0x1f, 0x0a, 0x1d, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x4f,
+	0x72, 0x61, 0x63, 0x6c, 0x65, 0x41, 0x64, 0x64, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x32, 0xda, 0x01, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12, 0x64, 0x0a, 0x10, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x23, 0x2e,
+	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
+	0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x1a, 0x2b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65,
+	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x68, 0x61,
+	0x69, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x6d, 0x0a, 0x15, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x4f, 0x72, 0x61, 0x63, 0x6c,
+	0x65, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x25, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67,
+	0x69, 0x73, 0x74, 0x65, 0x72, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x41, 0x64, 0x64, 0x72, 0x1a,
+	0x2d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x76, 0x31,
+	0x2e, 0x4d, 0x73, 0x67, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x4f, 0x72, 0x61, 0x63,
+	0x6c, 0x65, 0x41, 0x64, 0x64, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb0,
+	0x01, 0x0a, 0x12, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x6f, 0x72, 0x61, 0x63,
+	0x6c, 0x65, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54, 0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
+	0x5a, 0x37, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72,
+	0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2f, 0x76, 0x31,
+	0x3b, 0x6f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x4f, 0x58, 0xaa,
+	0x02, 0x0e, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x2e, 0x56, 0x31,
+	0xca, 0x02, 0x0e, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x5c, 0x56,
+	0x31, 0xe2, 0x02, 0x1a, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x5c,
+	0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
+	0x10, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x4f, 0x72, 0x61, 0x63, 0x6c, 0x65, 0x3a, 0x3a, 0x56,
+	0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1284,18 +2282,22 @@ func file_nova_oracle_v1_tx_proto_rawDescGZIP() []byte {
 	return file_nova_oracle_v1_tx_proto_rawDescData
 }
 
-var file_nova_oracle_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_nova_oracle_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_nova_oracle_v1_tx_proto_goTypes = []interface{}{
-	(*MsgUpdateChainState)(nil),         // 0: nova.oracle.v1.MsgUpdateChainState
-	(*MsgUpdateChainStateResponse)(nil), // 1: nova.oracle.v1.MsgUpdateChainStateResponse
-	(*v1beta1.Coin)(nil),                // 2: cosmos.base.v1beta1.Coin
+	(*MsgUpdateChainState)(nil),           // 0: nova.oracle.v1.MsgUpdateChainState
+	(*MsgUpdateChainStateResponse)(nil),   // 1: nova.oracle.v1.MsgUpdateChainStateResponse
+	(*MsgRegisterOracleAddr)(nil),         // 2: nova.oracle.v1.MsgRegisterOracleAddr
+	(*MsgRegisterOracleAddrResponse)(nil), // 3: nova.oracle.v1.MsgRegisterOracleAddrResponse
+	(*v1beta1.Coin)(nil),                  // 4: cosmos.base.v1beta1.Coin
 }
 var file_nova_oracle_v1_tx_proto_depIdxs = []int32{
-	2, // 0: nova.oracle.v1.MsgUpdateChainState.coin:type_name -> cosmos.base.v1beta1.Coin
+	4, // 0: nova.oracle.v1.MsgUpdateChainState.coin:type_name -> cosmos.base.v1beta1.Coin
 	0, // 1: nova.oracle.v1.Msg.UpdateChainState:input_type -> nova.oracle.v1.MsgUpdateChainState
-	1, // 2: nova.oracle.v1.Msg.UpdateChainState:output_type -> nova.oracle.v1.MsgUpdateChainStateResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	2, // 2: nova.oracle.v1.Msg.RegisterOracleAddress:input_type -> nova.oracle.v1.MsgRegisterOracleAddr
+	1, // 3: nova.oracle.v1.Msg.UpdateChainState:output_type -> nova.oracle.v1.MsgUpdateChainStateResponse
+	3, // 4: nova.oracle.v1.Msg.RegisterOracleAddress:output_type -> nova.oracle.v1.MsgRegisterOracleAddrResponse
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -1331,6 +2333,30 @@ func file_nova_oracle_v1_tx_proto_init() {
 				return nil
 			}
 		}
+		file_nova_oracle_v1_tx_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgRegisterOracleAddr); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_oracle_v1_tx_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgRegisterOracleAddrResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1338,7 +2364,7 @@ func file_nova_oracle_v1_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_oracle_v1_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

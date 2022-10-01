@@ -7,6 +7,10 @@ import (
 
 func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
 	k.SetParams(ctx, genState.Params)
+
+	for _, controllerInfo := range genState.ControllerAddressInfo {
+		k.SetControllerAddr(ctx, controllerInfo.ZoneId, controllerInfo.ControllerAddress)
+	}
 }
 
 func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {

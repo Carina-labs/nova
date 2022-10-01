@@ -50,7 +50,7 @@ func GetStateCmd() *cobra.Command {
 
 func GetVersionCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "oracle-version [chain-id]",
+		Use:  "oracle-version [zone-id]",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
@@ -58,11 +58,11 @@ func GetVersionCmd() *cobra.Command {
 				return err
 			}
 
-			chainId := args[0]
+			zoneId := args[0]
 			queryClient := types.NewQueryClient(clientCtx)
 			ctx := cmd.Context()
 
-			msg := types.NewQueryOracleVersionRequest(chainId)
+			msg := types.NewQueryOracleVersionRequest(zoneId)
 			res, err := queryClient.OracleVersion(ctx, msg)
 			if err != nil {
 				return err

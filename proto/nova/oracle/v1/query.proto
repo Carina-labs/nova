@@ -21,7 +21,7 @@ service Query {
   }
 
   rpc OracleVersion(QueryOracleVersionRequest) returns (QueryOracleVersionResponse) {
-    option (google.api.http).get = "/nova/oracle/v1/oracle_version/{chain_id}";
+    option (google.api.http).get = "/nova/oracle/v1/oracle_version/{zone_id}";
   }
 }
 
@@ -42,11 +42,11 @@ message QueryStateResponse {
   string operator = 2;
   int64 last_block_height = 3;
   bytes app_hash = 4;
-  string chain_id = 5;
+  string zone_id = 5;
 }
 
 message QueryOracleVersionRequest {
-  string chain_id = 1;
+  string zone_id = 1;
 }
 
 message QueryOracleVersionResponse {

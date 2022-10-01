@@ -8,6 +8,6 @@ func NewQueryChainStateRequest(chainDenom string) *QueryStateRequest {
 
 func NewQueryOracleVersionRequest(zoneId string) *QueryOracleVersionRequest {
 	return &QueryOracleVersionRequest{
-		ChainId: zoneId,
+		ZoneId: zoneId,
 	}
 }

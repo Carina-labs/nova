@@ -34,14 +34,20 @@ func bech32toValidatorAddresses(validators []string) ([]sdk.ValAddress, error) {
 func (suite *KeeperTestSuite) InitICA() {
 	suite.chainA.GetApp().OracleKeeper.InitGenesis(suite.chainA.GetContext(), &oracletypes.GenesisState{
 		Params: oracletypes.Params{
-			OracleOperators: []string{
+			OracleKeyManager: []string{
 				baseOwnerAcc.String(),
+			},
+		},
+		OracleAddressInfo: []oracletypes.OracleAddressInfo{
+			{
+				ZoneId:        zoneId,
+				OracleAddress: []string{baseOwnerAcc.String()},
 			},
 		},
 		States: []oracletypes.ChainInfo{
 			{
 				Coin:            sdk.NewCoin(baseDenom, sdk.NewInt(0)),
-				ChainId:         zoneId,
+				ZoneId:          zoneId,
 				OperatorAddress: baseOwnerAcc.String(),
 			},
 		},
@@ -54,8 +60,14 @@ func (suite *KeeperTestSuite) InitICA() {
 	suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), zoneId, trace)
 	suite.chainA.GetApp().IcaControlKeeper.InitGenesis(suite.chainA.GetContext(), &types.GenesisState{
 		Params: types.Params{
-			ControllerAddress: []string{
+			ControllerKeyManager: []string{
 				baseOwnerAcc.String(),
+			},
+		},
+		ControllerAddressInfo: []*types.ControllerAddressInfo{
+			{
+				ZoneId:            zoneId,
+				ControllerAddress: []string{baseOwnerAcc.String()},
 			},
 		},
 	})
@@ -86,7 +98,7 @@ func (suite *KeeperTestSuite) setControllerAddr(address string) {
 	addr1 := address
 	addresses = append(addresses, addr1)
 	params := types.Params{
-		ControllerAddress: addresses,
+		ControllerKeyManager: addresses,
 	}
 	suite.chainA.App.IcaControlKeeper.SetParams(suite.chainA.GetContext(), params)
 }
@@ -309,6 +321,8 @@ func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
 		suite.Run(tc.name, func() {
 			suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &tc.zone)
 
+			suite.chainA.GetApp().IcaControlKeeper.SetControllerAddr(suite.chainA.GetContext(), tc.zoneId, []string{tc.msg.IcaAccount.ControllerAddress})
+
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
 			_, err := msgServer.ChangeRegisteredZone(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
 			suite.Require().NoError(err)
@@ -377,14 +391,17 @@ func (suite *KeeperTestSuite) TestIcaDelegate() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			excCtx := suite.chainA.GetContext()
+
+			exeCtxA := suite.chainA.GetContext()
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
-			_, err := msgServer.IcaDelegate(sdk.WrapSDKContext(excCtx), &tc.msg)
+			_, err := msgServer.IcaDelegate(sdk.WrapSDKContext(exeCtxA), &tc.msg)
 
 			if tc.err {
 				suite.Require().Error(err)
 			} else {
 				suite.Require().NoError(err)
+
+				suite.icaRelay(exeCtxA)
 			}
 		})
 	}
@@ -465,13 +482,15 @@ func (suite *KeeperTestSuite) TestIcaUndelegate() {
 			_, err := bmsgServer.Delegate(sdk.WrapSDKContext(suite.chainB.GetContext()), &delegation)
 			suite.Require().NoError(err)
 
+			exeCtxA := suite.chainA.GetContext()
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.IcaControlKeeper)
-			_, err = msgServer.IcaUndelegate(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
+			_, err = msgServer.IcaUndelegate(sdk.WrapSDKContext(exeCtxA), &tc.msg)
 
 			if tc.err {
 				suite.Require().Error(err)
 			} else {
 				suite.Require().NoError(err)
+				suite.icaRelay(exeCtxA)
 			}
 		})
 	}
@@ -479,15 +498,6 @@ func (suite *KeeperTestSuite) TestIcaUndelegate() {
 }
 
 func (suite *KeeperTestSuite) TestIcaAutoStaking() {
-	//suite.InitICA()
-	//valAddr := suite.setValidator()
-	//hostAddr := suite.setHostAddr(zoneId)
-	//randAddr := suite.GenRandomAddress()
-	//
-	//// zone, reward가 요청한 reward보다 작을때 host, controller 주소,
-	////
-	//
-	//suite.chainB.GetApp().DistrKeeper.
 }
 
 func (suite *KeeperTestSuite) TestIcaTransfer() {
@@ -727,4 +737,27 @@ func (suite *KeeperTestSuite) TestIcaAuthzRevoke() {
 			}
 		})
 	}
+}
+
+func (suite *KeeperTestSuite) TestRegisterControllerAddress() {
+	managerAddr := suite.GenRandomAddress()
+	controllerAddr := suite.GenRandomAddress()
+
+	// set params
+	suite.chainA.GetApp().IcaControlKeeper.SetParams(suite.chainA.GetContext(), types.Params{ControllerKeyManager: []string{managerAddr.String()}})
+
+	msg := types.MsgRegisterControllerAddr{
+		ZoneId:            zoneId,
+		ControllerAddress: controllerAddr.String(),
+		FromAddress:       managerAddr.String(),
+	}
+
+	exeCtxA := suite.chainA.GetContext()
+	msgServer := keeper.NewMsgServerImpl(suite.chainA.App.IcaControlKeeper)
+	_, err := msgServer.RegisterControllerAddress(sdk.WrapSDKContext(exeCtxA), &msg)
+	suite.Require().NoError(err)
+
+	controllerInfo := suite.chainA.GetApp().IcaControlKeeper.GetControllerAddr(suite.chainA.GetContext(), zoneId)
+
+	suite.Require().Equal(controllerInfo.ControllerAddress[0], controllerAddr.String())
 }

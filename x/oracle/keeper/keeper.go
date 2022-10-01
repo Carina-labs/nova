@@ -38,13 +38,17 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
+func (k Keeper) ChainStateStore(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyOracleChainState)
+}
+
 // UpdateChainState updates the status of the zones stored in Oracle with a new status.
 func (k Keeper) UpdateChainState(ctx sdk.Context, chainInfo *types.ChainInfo) error {
-	if !k.IsValidOperator(ctx, chainInfo.OperatorAddress) {
+	if !k.IsValidOracleAddress(ctx, chainInfo.ZoneId, chainInfo.OperatorAddress) {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, chainInfo.OperatorAddress)
 	}
 
-	store := ctx.KVStore(k.storeKey)
+	store := k.ChainStateStore(ctx)
 	bz := k.cdc.MustMarshal(chainInfo)
 	store.Set([]byte(chainInfo.Coin.Denom), bz)
 	return nil
@@ -53,7 +57,7 @@ func (k Keeper) UpdateChainState(ctx sdk.Context, chainInfo *types.ChainInfo) er
 // GetChainState returns the status of the Zone stored in Oracle. This result is used to calculate the equity token.
 func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.ChainInfo, error) {
 	chainInfo := types.ChainInfo{}
-	store := ctx.KVStore(k.storeKey)
+	store := k.ChainStateStore(ctx)
 	if !store.Has([]byte(chainDenom)) {
 		return nil, sdkerrors.Wrap(types.ErrNoSupportChain, fmt.Sprintf("chain %s", chainDenom))
 	}
@@ -66,12 +70,12 @@ func (k Keeper) GetChainState(ctx sdk.Context, chainDenom string) (*types.ChainI
 	return &chainInfo, nil
 }
 
-// IsValidOperator verifies that the parameter address is the correct controller address.
-func (k Keeper) IsValidOperator(ctx sdk.Context, operatorAddress string) bool {
+// IsValidOracleKeyManager verifies that the parameter address is the correct key manager address.
+func (k Keeper) IsValidOracleKeyManager(ctx sdk.Context, oracleAddress string) bool {
 	params := k.GetParams(ctx)
 
-	for i := range params.OracleOperators {
-		if params.OracleOperators[i] == operatorAddress {
+	for i := range params.OracleKeyManager {
+		if params.OracleKeyManager[i] == oracleAddress {
 			return true
 		}
 	}

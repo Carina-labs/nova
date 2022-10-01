@@ -126,21 +126,26 @@ func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []types.RegisteredZone) 
 	}
 }
 
-func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
-	var addresses []string
+func (suite *KeeperTestSuite) TestIsValidControllerAddr() {
+	var keyManager []string
+	var controllerAddr []string
 
 	addr1 := suite.GenRandomAddress().String()
 	addr2 := suite.GenRandomAddress().String()
 	addr3 := suite.GenRandomAddress().String()
 
-	addresses = append(addresses, addr1)
-	addresses = append(addresses, addr2)
+	keyManager = append(keyManager, addr1)
+	keyManager = append(keyManager, addr2)
+
+	controllerAddr = append(controllerAddr, addr3)
 
 	params := types.Params{
-		ControllerAddress: addresses,
+		ControllerKeyManager: keyManager,
 	}
 
 	suite.App.IcaControlKeeper.SetParams(suite.Ctx, params)
+
+	suite.App.IcaControlKeeper.SetControllerAddr(suite.Ctx, zoneId, controllerAddr)
 
 	tcs := []struct {
 		name   string
@@ -149,12 +154,7 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 	}{
 		{
 			name:   "success",
-			addr:   addr1,
-			expect: true,
-		},
-		{
-			name:   "success",
-			addr:   addr2,
+			addr:   addr3,
 			expect: true,
 		},
 		{
@@ -164,7 +164,7 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 		},
 		{
 			name:   "random address",
-			addr:   addr3,
+			addr:   addr1,
 			expect: false,
 		},
 		{
@@ -176,7 +176,7 @@ func (suite *KeeperTestSuite) TestIsValidZoneRegisterAddress() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			ok := suite.App.IcaControlKeeper.IsValidDaoModifier(suite.Ctx, tc.addr)
+			ok := suite.App.IcaControlKeeper.IsValidControllerAddr(suite.Ctx, zoneId, tc.addr)
 
 			suite.Require().Equal(ok, tc.expect)
 		})

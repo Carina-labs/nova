@@ -8,5 +8,7 @@ const (
 )
 
 var (
-	KeyOracleVersion = []byte{0x00}
+	KeyOracleVersion    = []byte{0x00}
+	KeyOracleAddr       = []byte{0x01}
+	KeyOracleChainState = []byte{0x02}
 )

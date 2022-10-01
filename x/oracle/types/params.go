@@ -9,12 +9,12 @@ import (
 )
 
 var (
-	KeyOperatorAddress = []byte("OperatorAddress")
+	KeyOracleManager = []byte("OracleKeyManagerAddress")
 )
 
 func NewParams(operators []string) Params {
 	return Params{
-		OracleOperators: operators,
+		OracleKeyManager: operators,
 	}
 }
 
@@ -24,7 +24,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 
 func DefaultParams() Params {
 	return Params{
-		OracleOperators: []string{},
+		OracleKeyManager: []string{},
 	}
 }
 
@@ -35,12 +35,12 @@ func (p *Params) String() string {
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
-		paramtypes.NewParamSetPair(KeyOperatorAddress, &p.OracleOperators, validateOracleOperators),
+		paramtypes.NewParamSetPair(KeyOracleManager, &p.OracleKeyManager, validateOracleOperators),
 	}
 }
 
 func (p *Params) Validate() error {
-	if err := validateOracleOperators(p.OracleOperators); err != nil {
+	if err := validateOracleOperators(p.OracleKeyManager); err != nil {
 		return err
 	}
 
@@ -58,7 +58,7 @@ func validateOracleOperators(i interface{}) error {
 		_, err := sdk.AccAddressFromBech32(val)
 
 		if err != nil {
-			return fmt.Errorf("invalid operator address: %v", err)
+			return fmt.Errorf("invalid key manager address: %v", err)
 		}
 	}
 

@@ -22,7 +22,7 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 
 func (server msgServer) UpdateChainState(goctx context.Context, state *types.MsgUpdateChainState) (*types.MsgUpdateChainStateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goctx)
-	if !server.keeper.IsValidOperator(ctx, state.Operator) {
+	if !server.keeper.IsValidOracleAddress(ctx, state.ZoneId, state.Operator) {
 		return nil, types.ErrInvalidOperator
 	}
 
@@ -31,16 +31,16 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 		OperatorAddress: state.Operator,
 		LastBlockHeight: state.BlockHeight,
 		AppHash:         state.AppHash,
-		ChainId:         state.ChainId,
+		ZoneId:          state.ZoneId,
 	}
 
-	oracleVersion, _ := server.keeper.GetOracleVersion(ctx, state.ChainId)
+	oracleVersion, _ := server.keeper.GetOracleVersion(ctx, state.ZoneId)
 
 	trace := types.IBCTrace{
 		Version: oracleVersion + 1,
 		Height:  uint64(ctx.BlockHeight()),
 	}
-	server.keeper.SetOracleVersion(ctx, state.ChainId, trace)
+	server.keeper.SetOracleVersion(ctx, state.ZoneId, trace)
 
 	if err := server.keeper.UpdateChainState(ctx, newOracleState); err != nil {
 		return nil, sdkerrors.Wrapf(types.ErrUnknown, "err: %v", err)
@@ -51,4 +51,19 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 	}
 
 	return &types.MsgUpdateChainStateResponse{}, nil
+}
+
+func (server msgServer) RegisterOracleAddress(goctx context.Context, msg *types.MsgRegisterOracleAddr) (*types.MsgRegisterOracleAddrResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goctx)
+
+	if !server.keeper.IsValidOracleKeyManager(ctx, msg.FromAddress) {
+		return nil, sdkerrors.Wrapf(types.ErrInvalidKeyManager, msg.OracleAddress)
+	}
+
+	oracleAddrInfo := server.keeper.GetOracleAddress(ctx, msg.ZoneId)
+	oracleAddrInfo.OracleAddress = append(oracleAddrInfo.OracleAddress, msg.OracleAddress)
+
+	server.keeper.SetOracleAddress(ctx, msg.ZoneId, oracleAddrInfo.OracleAddress)
+
+	return &types.MsgRegisterOracleAddrResponse{}, nil
 }
