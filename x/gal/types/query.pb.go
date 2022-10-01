@@ -899,7 +899,8 @@ func (m *QueryEstimateSnAssetResponse) GetAmount() types.Coin {
 }
 
 type QueryDelegateVersion struct {
-	ZoneId string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Version uint64 `protobuf:"varint,2,opt,name=version,proto3" json:"version,omitempty"`
 }
 
 func (m *QueryDelegateVersion) Reset()         { *m = QueryDelegateVersion{} }
@@ -942,9 +943,15 @@ func (m *QueryDelegateVersion) GetZoneId() string {
 	return ""
 }
 
+func (m *QueryDelegateVersion) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
 type QueryDelegateVersionResponse struct {
-	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
-	Height  uint64 `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"`
+	VersionInfo *IBCTrace `protobuf:"bytes,1,opt,name=version_info,json=versionInfo,proto3" json:"version_info,omitempty"`
 }
 
 func (m *QueryDelegateVersionResponse) Reset()         { *m = QueryDelegateVersionResponse{} }
@@ -980,22 +987,16 @@ func (m *QueryDelegateVersionResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QueryDelegateVersionResponse proto.InternalMessageInfo
 
-func (m *QueryDelegateVersionResponse) GetVersion() uint64 {
+func (m *QueryDelegateVersionResponse) GetVersionInfo() *IBCTrace {
 	if m != nil {
-		return m.Version
+		return m.VersionInfo
 	}
-	return 0
-}
-
-func (m *QueryDelegateVersionResponse) GetHeight() uint64 {
-	if m != nil {
-		return m.Height
-	}
-	return 0
+	return nil
 }
 
 type QueryUndelegateVersion struct {
-	ZoneId string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Version uint64 `protobuf:"varint,2,opt,name=version,proto3" json:"version,omitempty"`
 }
 
 func (m *QueryUndelegateVersion) Reset()         { *m = QueryUndelegateVersion{} }
@@ -1038,9 +1039,15 @@ func (m *QueryUndelegateVersion) GetZoneId() string {
 	return ""
 }
 
+func (m *QueryUndelegateVersion) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
 type QueryUndelegateVersionResponse struct {
-	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
-	Height  uint64 `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"`
+	VersionInfo *IBCTrace `protobuf:"bytes,1,opt,name=version_info,json=versionInfo,proto3" json:"version_info,omitempty"`
 }
 
 func (m *QueryUndelegateVersionResponse) Reset()         { *m = QueryUndelegateVersionResponse{} }
@@ -1076,22 +1083,16 @@ func (m *QueryUndelegateVersionResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QueryUndelegateVersionResponse proto.InternalMessageInfo
 
-func (m *QueryUndelegateVersionResponse) GetVersion() uint64 {
+func (m *QueryUndelegateVersionResponse) GetVersionInfo() *IBCTrace {
 	if m != nil {
-		return m.Version
+		return m.VersionInfo
 	}
-	return 0
-}
-
-func (m *QueryUndelegateVersionResponse) GetHeight() uint64 {
-	if m != nil {
-		return m.Height
-	}
-	return 0
+	return nil
 }
 
 type QueryWithdrawVersion struct {
-	ZoneId string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ZoneId  string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	Version uint64 `protobuf:"varint,2,opt,name=version,proto3" json:"version,omitempty"`
 }
 
 func (m *QueryWithdrawVersion) Reset()         { *m = QueryWithdrawVersion{} }
@@ -1134,9 +1135,15 @@ func (m *QueryWithdrawVersion) GetZoneId() string {
 	return ""
 }
 
+func (m *QueryWithdrawVersion) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
 type QueryWithdrawVersionResponse struct {
-	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
-	Height  uint64 `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"`
+	VersionInfo *IBCTrace `protobuf:"bytes,1,opt,name=version_info,json=versionInfo,proto3" json:"version_info,omitempty"`
 }
 
 func (m *QueryWithdrawVersionResponse) Reset()         { *m = QueryWithdrawVersionResponse{} }
@@ -1172,16 +1179,273 @@ func (m *QueryWithdrawVersionResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QueryWithdrawVersionResponse proto.InternalMessageInfo
 
-func (m *QueryWithdrawVersionResponse) GetVersion() uint64 {
+func (m *QueryWithdrawVersionResponse) GetVersionInfo() *IBCTrace {
+	if m != nil {
+		return m.VersionInfo
+	}
+	return nil
+}
+
+type QueryCurrentDelegateVersion struct {
+	ZoneId string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+}
+
+func (m *QueryCurrentDelegateVersion) Reset()         { *m = QueryCurrentDelegateVersion{} }
+func (m *QueryCurrentDelegateVersion) String() string { return proto.CompactTextString(m) }
+func (*QueryCurrentDelegateVersion) ProtoMessage()    {}
+func (*QueryCurrentDelegateVersion) Descriptor() ([]byte, []int) {
+	return fileDescriptor_701b18bfd5c1fb8e, []int{24}
+}
+func (m *QueryCurrentDelegateVersion) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryCurrentDelegateVersion) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryCurrentDelegateVersion.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryCurrentDelegateVersion) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryCurrentDelegateVersion.Merge(m, src)
+}
+func (m *QueryCurrentDelegateVersion) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryCurrentDelegateVersion) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryCurrentDelegateVersion.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryCurrentDelegateVersion proto.InternalMessageInfo
+
+func (m *QueryCurrentDelegateVersion) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+type QueryCurrentDelegateVersionResponse struct {
+	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
+}
+
+func (m *QueryCurrentDelegateVersionResponse) Reset()         { *m = QueryCurrentDelegateVersionResponse{} }
+func (m *QueryCurrentDelegateVersionResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryCurrentDelegateVersionResponse) ProtoMessage()    {}
+func (*QueryCurrentDelegateVersionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_701b18bfd5c1fb8e, []int{25}
+}
+func (m *QueryCurrentDelegateVersionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryCurrentDelegateVersionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryCurrentDelegateVersionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryCurrentDelegateVersionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryCurrentDelegateVersionResponse.Merge(m, src)
+}
+func (m *QueryCurrentDelegateVersionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryCurrentDelegateVersionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryCurrentDelegateVersionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryCurrentDelegateVersionResponse proto.InternalMessageInfo
+
+func (m *QueryCurrentDelegateVersionResponse) GetVersion() uint64 {
 	if m != nil {
 		return m.Version
 	}
 	return 0
 }
 
-func (m *QueryWithdrawVersionResponse) GetHeight() uint64 {
+type QueryCurrentUndelegateVersion struct {
+	ZoneId string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+}
+
+func (m *QueryCurrentUndelegateVersion) Reset()         { *m = QueryCurrentUndelegateVersion{} }
+func (m *QueryCurrentUndelegateVersion) String() string { return proto.CompactTextString(m) }
+func (*QueryCurrentUndelegateVersion) ProtoMessage()    {}
+func (*QueryCurrentUndelegateVersion) Descriptor() ([]byte, []int) {
+	return fileDescriptor_701b18bfd5c1fb8e, []int{26}
+}
+func (m *QueryCurrentUndelegateVersion) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryCurrentUndelegateVersion) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryCurrentUndelegateVersion.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryCurrentUndelegateVersion) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryCurrentUndelegateVersion.Merge(m, src)
+}
+func (m *QueryCurrentUndelegateVersion) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryCurrentUndelegateVersion) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryCurrentUndelegateVersion.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryCurrentUndelegateVersion proto.InternalMessageInfo
+
+func (m *QueryCurrentUndelegateVersion) GetZoneId() string {
 	if m != nil {
-		return m.Height
+		return m.ZoneId
+	}
+	return ""
+}
+
+type QueryCurrentUndelegateVersionResponse struct {
+	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
+}
+
+func (m *QueryCurrentUndelegateVersionResponse) Reset()         { *m = QueryCurrentUndelegateVersionResponse{} }
+func (m *QueryCurrentUndelegateVersionResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryCurrentUndelegateVersionResponse) ProtoMessage()    {}
+func (*QueryCurrentUndelegateVersionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_701b18bfd5c1fb8e, []int{27}
+}
+func (m *QueryCurrentUndelegateVersionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryCurrentUndelegateVersionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryCurrentUndelegateVersionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryCurrentUndelegateVersionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryCurrentUndelegateVersionResponse.Merge(m, src)
+}
+func (m *QueryCurrentUndelegateVersionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryCurrentUndelegateVersionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryCurrentUndelegateVersionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryCurrentUndelegateVersionResponse proto.InternalMessageInfo
+
+func (m *QueryCurrentUndelegateVersionResponse) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
+	}
+	return 0
+}
+
+type QueryCurrentWithdrawVersion struct {
+	ZoneId string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+}
+
+func (m *QueryCurrentWithdrawVersion) Reset()         { *m = QueryCurrentWithdrawVersion{} }
+func (m *QueryCurrentWithdrawVersion) String() string { return proto.CompactTextString(m) }
+func (*QueryCurrentWithdrawVersion) ProtoMessage()    {}
+func (*QueryCurrentWithdrawVersion) Descriptor() ([]byte, []int) {
+	return fileDescriptor_701b18bfd5c1fb8e, []int{28}
+}
+func (m *QueryCurrentWithdrawVersion) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryCurrentWithdrawVersion) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryCurrentWithdrawVersion.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryCurrentWithdrawVersion) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryCurrentWithdrawVersion.Merge(m, src)
+}
+func (m *QueryCurrentWithdrawVersion) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryCurrentWithdrawVersion) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryCurrentWithdrawVersion.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryCurrentWithdrawVersion proto.InternalMessageInfo
+
+func (m *QueryCurrentWithdrawVersion) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+type QueryCurrentWithdrawVersionResponse struct {
+	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
+}
+
+func (m *QueryCurrentWithdrawVersionResponse) Reset()         { *m = QueryCurrentWithdrawVersionResponse{} }
+func (m *QueryCurrentWithdrawVersionResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryCurrentWithdrawVersionResponse) ProtoMessage()    {}
+func (*QueryCurrentWithdrawVersionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_701b18bfd5c1fb8e, []int{29}
+}
+func (m *QueryCurrentWithdrawVersionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryCurrentWithdrawVersionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryCurrentWithdrawVersionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryCurrentWithdrawVersionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryCurrentWithdrawVersionResponse.Merge(m, src)
+}
+func (m *QueryCurrentWithdrawVersionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryCurrentWithdrawVersionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryCurrentWithdrawVersionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryCurrentWithdrawVersionResponse proto.InternalMessageInfo
+
+func (m *QueryCurrentWithdrawVersionResponse) GetVersion() uint64 {
+	if m != nil {
+		return m.Version
 	}
 	return 0
 }
@@ -1211,79 +1475,94 @@ func init() {
 	proto.RegisterType((*QueryUndelegateVersionResponse)(nil), "nova.gal.v1.QueryUndelegateVersionResponse")
 	proto.RegisterType((*QueryWithdrawVersion)(nil), "nova.gal.v1.QueryWithdrawVersion")
 	proto.RegisterType((*QueryWithdrawVersionResponse)(nil), "nova.gal.v1.QueryWithdrawVersionResponse")
+	proto.RegisterType((*QueryCurrentDelegateVersion)(nil), "nova.gal.v1.QueryCurrentDelegateVersion")
+	proto.RegisterType((*QueryCurrentDelegateVersionResponse)(nil), "nova.gal.v1.QueryCurrentDelegateVersionResponse")
+	proto.RegisterType((*QueryCurrentUndelegateVersion)(nil), "nova.gal.v1.QueryCurrentUndelegateVersion")
+	proto.RegisterType((*QueryCurrentUndelegateVersionResponse)(nil), "nova.gal.v1.QueryCurrentUndelegateVersionResponse")
+	proto.RegisterType((*QueryCurrentWithdrawVersion)(nil), "nova.gal.v1.QueryCurrentWithdrawVersion")
+	proto.RegisterType((*QueryCurrentWithdrawVersionResponse)(nil), "nova.gal.v1.QueryCurrentWithdrawVersionResponse")
 }
 
 func init() { proto.RegisterFile("nova/gal/v1/query.proto", fileDescriptor_701b18bfd5c1fb8e) }
 
 var fileDescriptor_701b18bfd5c1fb8e = []byte{
-	// 1067 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x97, 0x4f, 0x6f, 0x1b, 0x45,
-	0x14, 0xc0, 0xb3, 0x25, 0x75, 0xc4, 0x54, 0x8d, 0xc9, 0xc4, 0x6d, 0x9d, 0x4d, 0xeb, 0x94, 0x45,
-	0x22, 0x7f, 0x4c, 0xbc, 0x38, 0x01, 0x2a, 0x04, 0x17, 0x27, 0x45, 0x02, 0x0e, 0x28, 0x38, 0x2a,
-	0x15, 0xbd, 0x58, 0x63, 0xef, 0x68, 0xbd, 0xaa, 0x3d, 0xe3, 0xee, 0xac, 0x1d, 0x4a, 0xd5, 0x0b,
-	0x9f, 0x20, 0x52, 0x0f, 0x94, 0x13, 0xe2, 0xc8, 0x81, 0x1b, 0x37, 0xbe, 0x40, 0x8f, 0x15, 0x5c,
-	0x38, 0x21, 0x94, 0xf0, 0x41, 0x90, 0x67, 0xde, 0x3a, 0x9e, 0xdd, 0x59, 0xdb, 0xc2, 0xf4, 0xe6,
-	0x99, 0xf7, 0x67, 0x7e, 0xef, 0xbd, 0x99, 0x7d, 0xcf, 0xe8, 0x06, 0xe3, 0x03, 0xe2, 0xfa, 0xa4,
-	0xe3, 0x0e, 0xaa, 0xee, 0xa3, 0x3e, 0x0d, 0x1f, 0x57, 0x7a, 0x21, 0x8f, 0x38, 0xbe, 0x32, 0x14,
-	0x54, 0x7c, 0xd2, 0xa9, 0x0c, 0xaa, 0x76, 0xc1, 0xe7, 0x3e, 0x97, 0xfb, 0xee, 0xf0, 0x97, 0x52,
-	0xb1, 0x8b, 0xe3, 0xb6, 0x3d, 0x12, 0x92, 0xae, 0x00, 0xc9, 0xb5, 0x71, 0xc9, 0xd0, 0x87, 0xda,
-	0xbe, 0xe9, 0x73, 0xee, 0x77, 0xa8, 0x4b, 0x7a, 0x81, 0x4b, 0x18, 0xe3, 0x11, 0x89, 0x02, 0xce,
-	0x62, 0xa3, 0xb5, 0x16, 0x17, 0x5d, 0x2e, 0x1a, 0xea, 0x1c, 0xb5, 0x00, 0x51, 0x49, 0xad, 0xdc,
-	0x26, 0x11, 0xd4, 0x1d, 0x54, 0x9b, 0x34, 0x22, 0x55, 0xb7, 0xc5, 0x03, 0xa6, 0xe4, 0x4e, 0x01,
-	0xe1, 0x2f, 0x87, 0xec, 0x47, 0x12, 0xa2, 0x4e, 0x1f, 0xf5, 0xa9, 0x88, 0x9c, 0x4f, 0xd1, 0xaa,
-	0xb6, 0x2b, 0x7a, 0x9c, 0x09, 0x8a, 0xab, 0x28, 0xa7, 0x60, 0x8b, 0xd6, 0x6d, 0x6b, 0xeb, 0xca,
-	0xde, 0x6a, 0x65, 0x2c, 0xd4, 0x8a, 0x52, 0x3e, 0x58, 0x7c, 0xf1, 0xd7, 0xc6, 0x42, 0x1d, 0x14,
-	0x9d, 0x23, 0xb4, 0x2e, 0x3d, 0x1d, 0x76, 0x48, 0xd0, 0x25, 0xcd, 0x0e, 0xad, 0x75, 0x79, 0x9f,
-	0x45, 0x70, 0x10, 0xbe, 0x81, 0x96, 0xbe, 0xe5, 0x8c, 0x36, 0x02, 0x4f, 0xba, 0x7c, 0xbd, 0x9e,
-	0x1b, 0x2e, 0x3f, 0xf3, 0x70, 0x11, 0x2d, 0x11, 0xcf, 0x0b, 0xa9, 0x10, 0xc5, 0x4b, 0x52, 0x10,
-	0x2f, 0x9d, 0xfb, 0xe8, 0xa6, 0xd9, 0x23, 0x40, 0xde, 0x41, 0x39, 0x22, 0x77, 0x00, 0x72, 0xad,
-	0x02, 0x09, 0x19, 0xa6, 0xa0, 0x02, 0x29, 0xa8, 0x1c, 0xf2, 0x80, 0xc5, 0xa8, 0x4a, 0xdd, 0x39,
-	0x46, 0x25, 0x15, 0x34, 0x65, 0x5e, 0xc0, 0xfc, 0xfb, 0x41, 0xd4, 0xf6, 0x42, 0x72, 0x42, 0x3a,
-	0x62, 0x0e, 0xda, 0x07, 0x68, 0x23, 0xd3, 0xe9, 0xbc, 0xc0, 0x5f, 0xa0, 0x35, 0xe9, 0xfb, 0x2e,
-	0xed, 0x71, 0x11, 0x44, 0x73, 0x67, 0xf6, 0x1e, 0xb2, 0x4d, 0xfe, 0xe6, 0xc5, 0xac, 0xa3, 0x5b,
-	0xd2, 0x6d, 0xad, 0x15, 0x05, 0x03, 0xfa, 0xff, 0xa4, 0xf5, 0x6b, 0xa8, 0x95, 0xc1, 0xe7, 0xbc,
-	0xb8, 0x6d, 0x3d, 0xab, 0x75, 0xda, 0xe2, 0xa1, 0x37, 0x15, 0x75, 0x2f, 0x81, 0x7a, 0x50, 0xfc,
-	0xfd, 0xd7, 0xdd, 0x02, 0x1c, 0x59, 0x53, 0x92, 0xe3, 0x28, 0x0c, 0x98, 0x7f, 0x11, 0x44, 0x43,
-	0xcf, 0x77, 0x7c, 0x12, 0x04, 0x50, 0x43, 0xcb, 0x9e, 0x12, 0x34, 0x42, 0x29, 0x81, 0x40, 0x6c,
-	0xed, 0xd1, 0xe9, 0xb6, 0x57, 0xbd, 0xf1, 0xa5, 0xf3, 0x10, 0x9e, 0xca, 0x3d, 0xe6, 0xd1, 0x0e,
-	0xf5, 0x49, 0x44, 0x5f, 0x61, 0x34, 0x0f, 0xa1, 0xcc, 0xe9, 0xc3, 0x20, 0xa0, 0xcf, 0xd1, 0x4a,
-	0x7f, 0x24, 0xd3, 0x63, 0xba, 0xa5, 0xc5, 0x94, 0xf2, 0xf0, 0x46, 0x3f, 0xb1, 0xe3, 0x04, 0x90,
-	0xba, 0xb8, 0xf2, 0xaf, 0x30, 0xae, 0x16, 0x7c, 0xc1, 0x92, 0x47, 0x41, 0x54, 0x77, 0x51, 0xfe,
-	0x04, 0x24, 0x7a, 0x4c, 0xeb, 0x5a, 0x4c, 0x09, 0xeb, 0xe5, 0x13, 0x6d, 0xed, 0x78, 0x70, 0xc8,
-	0x27, 0x22, 0x0a, 0xba, 0x24, 0xa2, 0xc7, 0xac, 0x26, 0x04, 0x9d, 0xfe, 0x98, 0xaf, 0x8f, 0x6e,
-	0xb9, 0x7a, 0x20, 0xb0, 0xc2, 0x05, 0x74, 0xd9, 0xa3, 0x8c, 0x77, 0x8b, 0xaf, 0xc9, 0x6d, 0xb5,
-	0x18, 0x7d, 0x3a, 0x53, 0xa7, 0xcc, 0xfb, 0x66, 0x5c, 0x54, 0x80, 0x9b, 0xac, 0xaa, 0xf4, 0x15,
-	0x0d, 0x45, 0xc0, 0x59, 0x26, 0xb7, 0x73, 0x04, 0x24, 0x09, 0x83, 0x11, 0x49, 0x11, 0x2d, 0x0d,
-	0xd4, 0x96, 0x34, 0x5c, 0xac, 0xc7, 0xcb, 0x61, 0xc4, 0x6d, 0x1a, 0xf8, 0x6d, 0x15, 0xf1, 0x62,
-	0x1d, 0x56, 0x4e, 0x15, 0x5d, 0x4f, 0x5c, 0xbf, 0xa9, 0x10, 0x75, 0xf8, 0x88, 0xa4, 0x4c, 0xe6,
-	0xc0, 0x88, 0x33, 0x11, 0xd7, 0x7b, 0xe6, 0x4c, 0x24, 0x0c, 0xfe, 0x3b, 0xc2, 0xde, 0x6f, 0xcb,
-	0xe8, 0xb2, 0x74, 0x89, 0xdb, 0x28, 0xa7, 0x9a, 0x32, 0xde, 0xd0, 0x2e, 0x63, 0xba, 0xe3, 0xdb,
-	0xb7, 0xb3, 0x15, 0x14, 0x88, 0xb3, 0xfe, 0xdd, 0x1f, 0xff, 0x3c, 0xbb, 0x74, 0x0d, 0xaf, 0xba,
-	0xe9, 0xe1, 0x05, 0x3f, 0xb7, 0x50, 0x3e, 0x71, 0xab, 0xf0, 0x56, 0xda, 0xa5, 0xf9, 0x7a, 0xdb,
-	0xdb, 0x33, 0x68, 0x02, 0xc5, 0xbb, 0x92, 0x62, 0x07, 0x6f, 0x69, 0x14, 0x14, 0xb4, 0x1b, 0x82,
-	0x35, 0xc8, 0x50, 0xdf, 0x7d, 0x02, 0xd9, 0x7e, 0x8a, 0x7f, 0xb2, 0x50, 0x3e, 0x31, 0x2b, 0x98,
-	0xd0, 0xcc, 0x03, 0x8a, 0x09, 0x2d, 0x63, 0xf0, 0x70, 0x3e, 0x94, 0x68, 0xfb, 0xb8, 0xaa, 0xa1,
-	0xb5, 0x62, 0xed, 0x86, 0x7a, 0x2b, 0xee, 0x13, 0xf8, 0xb0, 0x3c, 0x1d, 0x63, 0xfc, 0xc1, 0x42,
-	0x57, 0xb5, 0xae, 0x8b, 0xdf, 0x4e, 0x9f, 0x6b, 0x6a, 0xf3, 0xf6, 0xe6, 0x54, 0x3d, 0xa0, 0xbb,
-	0x23, 0xe9, 0xaa, 0xd8, 0xd5, 0xe8, 0xe2, 0x0e, 0x33, 0x81, 0xed, 0x17, 0x0b, 0xe1, 0xf4, 0xf4,
-	0x82, 0xcb, 0x86, 0x0b, 0x93, 0x35, 0x38, 0xd9, 0xef, 0xcc, 0xa6, 0x0c, 0xa8, 0x1f, 0x4b, 0xd4,
-	0x0f, 0xf0, 0x7b, 0xfa, 0x4d, 0x53, 0x06, 0x8d, 0x93, 0x0b, 0x0b, 0x23, 0xef, 0xcf, 0x16, 0x5a,
-	0x49, 0x8d, 0x05, 0x78, 0x27, 0x4d, 0x90, 0x35, 0x8f, 0xd8, 0xe5, 0x99, 0x74, 0x01, 0xf6, 0x23,
-	0x09, 0xfb, 0x3e, 0xde, 0xd7, 0x60, 0x89, 0xd4, 0x9f, 0xca, 0xfa, 0xcc, 0x42, 0xcb, 0x5a, 0x07,
-	0x17, 0x13, 0x0a, 0xaf, 0xf5, 0xb8, 0x09, 0x85, 0xd7, 0x1b, 0x54, 0xc6, 0x8b, 0x81, 0xc2, 0x1b,
-	0xa9, 0x7e, 0xb4, 0xd0, 0x4a, 0xb2, 0x07, 0x0b, 0x6c, 0x78, 0x09, 0x19, 0x73, 0x85, 0xbd, 0x33,
-	0x8b, 0x2a, 0xe0, 0xed, 0x4b, 0xbc, 0x5d, 0x5c, 0xd6, 0xf0, 0x2e, 0x1a, 0xbe, 0x91, 0xf0, 0x7b,
-	0x0b, 0xe5, 0xf5, 0x8e, 0x2a, 0xb0, 0x21, 0x21, 0xc6, 0xe9, 0xc0, 0xde, 0x9a, 0xae, 0x08, 0x6c,
-	0x55, 0xc9, 0x56, 0xc6, 0xdb, 0x1a, 0x5b, 0x5c, 0x54, 0x23, 0xd9, 0xa9, 0x85, 0xf2, 0xc9, 0x2e,
-	0xf8, 0xa6, 0xa9, 0x54, 0x9a, 0x8a, 0xe9, 0x33, 0x93, 0xd1, 0x1a, 0x1d, 0x57, 0x42, 0x6d, 0xe3,
-	0xcd, 0x44, 0x3d, 0x61, 0xae, 0x82, 0xee, 0x30, 0x86, 0xf4, 0x5c, 0x2b, 0x67, 0x0c, 0xf5, 0xd6,
-	0xa4, 0x1a, 0xc5, 0x58, 0xe5, 0x19, 0x94, 0xa6, 0x64, 0x6b, 0x6c, 0xe4, 0x4b, 0xa3, 0x9d, 0x8e,
-	0xd5, 0x71, 0x42, 0xb6, 0x12, 0x2a, 0xa6, 0x6c, 0x65, 0xb4, 0xcf, 0x8c, 0x6c, 0x8d, 0x26, 0xb6,
-	0x14, 0xd2, 0x41, 0xed, 0xc5, 0x59, 0xc9, 0x7a, 0x79, 0x56, 0xb2, 0xfe, 0x3e, 0x2b, 0x59, 0xa7,
-	0xe7, 0xa5, 0x85, 0x97, 0xe7, 0xa5, 0x85, 0x3f, 0xcf, 0x4b, 0x0b, 0x0f, 0x36, 0xfd, 0x20, 0x6a,
-	0xf7, 0x9b, 0x95, 0x16, 0xef, 0xba, 0x87, 0x24, 0x0c, 0x18, 0xd9, 0xed, 0x90, 0xa6, 0x50, 0x8e,
-	0xbf, 0x91, 0xae, 0xa3, 0xc7, 0x3d, 0x2a, 0x9a, 0x39, 0xf9, 0xd7, 0x7a, 0xff, 0xdf, 0x00, 0x00,
-	0x00, 0xff, 0xff, 0x99, 0x39, 0x86, 0x0d, 0x22, 0x10, 0x00, 0x00,
+	// 1214 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x98, 0xcf, 0x6f, 0x1b, 0x45,
+	0x14, 0xc7, 0xb3, 0xa5, 0x4d, 0xc5, 0x94, 0x26, 0x64, 0xf2, 0xa3, 0xce, 0xa6, 0x75, 0xca, 0x56,
+	0x90, 0x5f, 0xc4, 0x1b, 0x27, 0xd0, 0x16, 0x81, 0x84, 0x9c, 0x14, 0x89, 0x80, 0x84, 0x8a, 0x43,
+	0x29, 0xe4, 0x62, 0x8d, 0xbd, 0x53, 0x67, 0x55, 0x7b, 0xc7, 0xdd, 0x59, 0x3b, 0x94, 0x28, 0x17,
+	0xfe, 0x02, 0xa4, 0x1e, 0x80, 0x5e, 0x10, 0x48, 0x1c, 0x38, 0x70, 0xe3, 0x8f, 0xe8, 0xb1, 0x82,
+	0x0b, 0x5c, 0x10, 0x4a, 0xf8, 0x43, 0x90, 0x67, 0xde, 0xda, 0x9e, 0xdd, 0xd9, 0xf5, 0x4a, 0x4e,
+	0x6f, 0x9e, 0x9d, 0x37, 0xef, 0x7d, 0xde, 0x7b, 0xf3, 0xe3, 0x2b, 0xa3, 0x2b, 0x1e, 0xeb, 0x10,
+	0xbb, 0x4e, 0x1a, 0x76, 0xa7, 0x68, 0x3f, 0x6a, 0x53, 0xff, 0x71, 0xa1, 0xe5, 0xb3, 0x80, 0xe1,
+	0x4b, 0xdd, 0x89, 0x42, 0x9d, 0x34, 0x0a, 0x9d, 0xa2, 0x39, 0x53, 0x67, 0x75, 0x26, 0xbe, 0xdb,
+	0xdd, 0x5f, 0xd2, 0xc4, 0xcc, 0x0d, 0xae, 0x6d, 0x11, 0x9f, 0x34, 0x39, 0xcc, 0xcc, 0x0e, 0xce,
+	0x74, 0x7d, 0xc8, 0xcf, 0x4a, 0x30, 0x1e, 0x30, 0x9f, 0xc2, 0xc4, 0xd5, 0x3a, 0x63, 0xf5, 0x06,
+	0xb5, 0x49, 0xcb, 0xb5, 0x89, 0xe7, 0xb1, 0x80, 0x04, 0x2e, 0xf3, 0x42, 0x6f, 0xf3, 0x35, 0xc6,
+	0x9b, 0x8c, 0x57, 0x24, 0x80, 0x1c, 0xc0, 0x54, 0x5e, 0x8e, 0xec, 0x2a, 0xe1, 0xd4, 0xee, 0x14,
+	0xab, 0x34, 0x20, 0x45, 0xbb, 0xc6, 0x5c, 0x4f, 0xce, 0x5b, 0x33, 0x08, 0x7f, 0xda, 0x4d, 0xea,
+	0xae, 0xa0, 0x2b, 0xd3, 0x47, 0x6d, 0xca, 0x03, 0xeb, 0x43, 0x34, 0xad, 0x7c, 0xe5, 0x2d, 0xe6,
+	0x71, 0x8a, 0x8b, 0x68, 0x5c, 0x66, 0x91, 0x33, 0xae, 0x1b, 0xcb, 0x97, 0x36, 0xa7, 0x0b, 0x03,
+	0x35, 0x28, 0x48, 0xe3, 0xed, 0xf3, 0xcf, 0xfe, 0x59, 0x1c, 0x2b, 0x83, 0xa1, 0x75, 0x17, 0x2d,
+	0x08, 0x4f, 0x3b, 0x0d, 0xe2, 0x36, 0x49, 0xb5, 0x41, 0x4b, 0x4d, 0xd6, 0xf6, 0x02, 0x08, 0x84,
+	0xaf, 0xa0, 0x8b, 0x5f, 0x33, 0x8f, 0x56, 0x5c, 0x47, 0xb8, 0x7c, 0xb9, 0x3c, 0xde, 0x1d, 0xee,
+	0x3a, 0x38, 0x87, 0x2e, 0x12, 0xc7, 0xf1, 0x29, 0xe7, 0xb9, 0x73, 0x62, 0x22, 0x1c, 0x5a, 0xf7,
+	0xd1, 0x55, 0xbd, 0x47, 0x80, 0xbc, 0x85, 0xc6, 0x89, 0xf8, 0x02, 0x90, 0xf3, 0x05, 0x28, 0x48,
+	0xb7, 0x04, 0x05, 0x28, 0x41, 0x61, 0x87, 0xb9, 0x5e, 0x88, 0x2a, 0xcd, 0xad, 0x3d, 0x94, 0x97,
+	0x49, 0x53, 0xcf, 0x71, 0xbd, 0xfa, 0x7d, 0x37, 0x38, 0x70, 0x7c, 0x72, 0x48, 0x1a, 0x7c, 0x04,
+	0xda, 0x7d, 0xb4, 0x98, 0xe8, 0x74, 0x54, 0xe0, 0x4f, 0xd0, 0xbc, 0xf0, 0x7d, 0x87, 0xb6, 0x18,
+	0x77, 0x83, 0x91, 0x2b, 0x7b, 0x0f, 0x99, 0x3a, 0x7f, 0xa3, 0x62, 0x96, 0xd1, 0x35, 0xe1, 0xb6,
+	0x54, 0x0b, 0xdc, 0x0e, 0x3d, 0x9b, 0xb2, 0x7e, 0x09, 0xbd, 0xd2, 0xf8, 0x1c, 0x15, 0xf7, 0x40,
+	0xad, 0x6a, 0x99, 0xd6, 0x98, 0xef, 0x0c, 0x45, 0xdd, 0x8c, 0xa0, 0x6e, 0xe7, 0xfe, 0xf8, 0x7d,
+	0x7d, 0x06, 0x42, 0x96, 0xe4, 0xcc, 0x5e, 0xe0, 0xbb, 0x5e, 0xbd, 0x9f, 0x44, 0x45, 0xad, 0x77,
+	0x18, 0x09, 0x12, 0x28, 0xa1, 0x09, 0x47, 0x4e, 0x54, 0x7c, 0x31, 0x03, 0x89, 0x98, 0xca, 0xa1,
+	0x53, 0xd7, 0x5e, 0x76, 0x06, 0x87, 0xd6, 0x43, 0x38, 0x2a, 0xf7, 0x3c, 0x87, 0x36, 0x68, 0x9d,
+	0x04, 0xf4, 0x05, 0x66, 0xf3, 0x10, 0xda, 0x1c, 0x0f, 0x06, 0x09, 0x7d, 0x84, 0xa6, 0xda, 0xbd,
+	0x39, 0x35, 0xa7, 0x6b, 0x4a, 0x4e, 0x31, 0x0f, 0xaf, 0xb6, 0x23, 0x5f, 0x2c, 0x17, 0x4a, 0x17,
+	0x76, 0xfe, 0x05, 0xe6, 0x55, 0x83, 0x1b, 0x2c, 0x1a, 0x0a, 0xb2, 0xba, 0x83, 0x26, 0x0f, 0x61,
+	0x46, 0xcd, 0x69, 0x41, 0xc9, 0x29, 0xb2, 0x7a, 0xe2, 0x50, 0x19, 0x5b, 0x0e, 0x04, 0xf9, 0x80,
+	0x07, 0x6e, 0x93, 0x04, 0x74, 0xcf, 0x2b, 0x71, 0x4e, 0x87, 0x1f, 0xe6, 0xb9, 0xde, 0x2e, 0x97,
+	0x07, 0x04, 0x46, 0x78, 0x06, 0x5d, 0x70, 0xa8, 0xc7, 0x9a, 0xb9, 0x97, 0xc4, 0x67, 0x39, 0xe8,
+	0x5d, 0x9d, 0xb1, 0x28, 0xa3, 0x9e, 0x99, 0x5d, 0x34, 0x03, 0x3b, 0x59, 0x76, 0xe9, 0x73, 0xea,
+	0x73, 0x97, 0x79, 0xa9, 0x27, 0xbb, 0x23, 0x6d, 0x04, 0xf8, 0xf9, 0x72, 0x38, 0xb4, 0xbe, 0x00,
+	0xc6, 0x88, 0xab, 0x1e, 0xe3, 0x6d, 0xf4, 0x0a, 0x98, 0x56, 0x5c, 0xef, 0x01, 0x03, 0xd2, 0x59,
+	0xa5, 0xd8, 0xbb, 0xdb, 0x3b, 0x9f, 0xf9, 0xa4, 0x46, 0xcb, 0x97, 0xc0, 0x74, 0xd7, 0x7b, 0xc0,
+	0xac, 0x8f, 0xd1, 0x5c, 0x64, 0x83, 0x8e, 0x80, 0xb9, 0x0f, 0x17, 0x50, 0xcc, 0xd9, 0x19, 0x80,
+	0x86, 0xd5, 0x0c, 0xf7, 0xcc, 0x19, 0x54, 0x33, 0xe2, 0xea, 0x0c, 0x20, 0x6f, 0x86, 0x0f, 0x7b,
+	0xdb, 0xf7, 0xa9, 0x17, 0x64, 0xed, 0xbc, 0xf5, 0x3e, 0xba, 0x91, 0xb2, 0xae, 0x07, 0x36, 0x90,
+	0x92, 0xa1, 0xa6, 0x74, 0x1b, 0xee, 0x19, 0x70, 0x90, 0xbd, 0x9b, 0x56, 0x09, 0xbd, 0x9e, 0xba,
+	0x32, 0x43, 0xf0, 0x48, 0xd6, 0x59, 0x3b, 0x14, 0xcd, 0x3a, 0xa9, 0x1d, 0x89, 0x81, 0x37, 0xff,
+	0xc6, 0xe8, 0x82, 0xf0, 0x80, 0x0f, 0xd0, 0xb8, 0x54, 0x5a, 0x78, 0x51, 0x69, 0x53, 0x5c, 0xc6,
+	0x99, 0xd7, 0x93, 0x0d, 0x64, 0x40, 0x6b, 0xe1, 0x9b, 0x3f, 0xff, 0x7b, 0x72, 0x6e, 0x16, 0x4f,
+	0xdb, 0x71, 0xa9, 0x8a, 0xbf, 0x37, 0xd0, 0x64, 0xe4, 0xaa, 0xc0, 0xcb, 0x71, 0x97, 0xfa, 0x3b,
+	0xcb, 0x5c, 0xc9, 0x60, 0x09, 0x14, 0x1b, 0x82, 0x62, 0x15, 0x2f, 0x2b, 0x14, 0x14, 0xac, 0x2b,
+	0xdc, 0xab, 0x90, 0xae, 0xbd, 0x7d, 0x04, 0xc5, 0x3d, 0xc6, 0x3f, 0x19, 0x68, 0x32, 0x22, 0x00,
+	0x75, 0x68, 0x7a, 0xd5, 0xa9, 0x43, 0x4b, 0x50, 0x93, 0xd6, 0x3b, 0x02, 0x6d, 0x0b, 0x17, 0x15,
+	0xb4, 0x5a, 0x68, 0x5d, 0x91, 0x17, 0xa0, 0x7d, 0x04, 0xaf, 0xc5, 0xf1, 0x00, 0xe3, 0x0f, 0x06,
+	0xba, 0xac, 0x48, 0x29, 0xfc, 0x46, 0x3c, 0xae, 0x4e, 0xbb, 0x99, 0x4b, 0x43, 0xed, 0x80, 0xee,
+	0x96, 0xa0, 0x2b, 0x62, 0x5b, 0xa1, 0x0b, 0x65, 0x43, 0x0a, 0xdb, 0x6f, 0x06, 0xc2, 0x71, 0x49,
+	0x8a, 0xd7, 0x34, 0x1b, 0x26, 0x49, 0x0d, 0x9b, 0x6f, 0x66, 0x33, 0x06, 0xd4, 0xf7, 0x04, 0xea,
+	0x4d, 0xfc, 0x96, 0xba, 0xd3, 0xe4, 0x82, 0xca, 0x61, 0x7f, 0x85, 0x96, 0xf7, 0x57, 0x03, 0x4d,
+	0xc5, 0xb4, 0x1e, 0x5e, 0x8d, 0x13, 0x24, 0x89, 0x4c, 0x73, 0x2d, 0x93, 0x2d, 0xc0, 0xbe, 0x2b,
+	0x60, 0xdf, 0xc6, 0x5b, 0x0a, 0x2c, 0x11, 0xf6, 0x43, 0x59, 0x9f, 0x18, 0x68, 0x42, 0x91, 0x65,
+	0x3c, 0xa5, 0xf1, 0x8a, 0x70, 0x49, 0x69, 0xbc, 0xaa, 0x3a, 0x12, 0x4e, 0x0c, 0x34, 0x5e, 0x4b,
+	0xf5, 0xa3, 0x81, 0xa6, 0xa2, 0xc2, 0x8a, 0x63, 0xcd, 0x49, 0x48, 0x10, 0x8b, 0xe6, 0x6a, 0x16,
+	0x53, 0xc0, 0xdb, 0x12, 0x78, 0xeb, 0x78, 0x4d, 0xc1, 0xeb, 0xab, 0x38, 0x2d, 0xe1, 0x77, 0x06,
+	0x9a, 0x54, 0x65, 0x12, 0xc7, 0x9a, 0x82, 0x68, 0x25, 0x9f, 0xb9, 0x3c, 0xdc, 0x10, 0xd8, 0x8a,
+	0x82, 0x6d, 0x0d, 0xaf, 0x28, 0x6c, 0x61, 0x53, 0xb5, 0x64, 0x4f, 0x0d, 0x34, 0x19, 0x7d, 0xe0,
+	0x5e, 0xd3, 0xb5, 0x4a, 0x31, 0xd1, 0x5d, 0x33, 0x09, 0xcf, 0x5d, 0xc2, 0x35, 0xd3, 0x13, 0xcb,
+	0xf0, 0x0a, 0xf4, 0x91, 0xec, 0x23, 0xf8, 0x74, 0x8c, 0x7f, 0x56, 0x1a, 0x1b, 0xe2, 0xdd, 0x48,
+	0xeb, 0x56, 0x08, 0xb8, 0x96, 0xc1, 0x68, 0xc8, 0x99, 0x18, 0x50, 0xf4, 0x69, 0x90, 0x4f, 0x07,
+	0x7a, 0x9b, 0x52, 0xc1, 0x88, 0x89, 0xae, 0x82, 0x09, 0x4f, 0x67, 0x42, 0x05, 0x7b, 0xd2, 0x3c,
+	0x0d, 0xee, 0x17, 0x03, 0xcd, 0x85, 0x8d, 0x81, 0x07, 0x3a, 0x64, 0xd4, 0xbd, 0x29, 0x5a, 0xe1,
+	0x62, 0x6e, 0x64, 0xb5, 0xec, 0x11, 0xdb, 0x82, 0x78, 0x05, 0x2f, 0x65, 0xec, 0x79, 0xf7, 0xd2,
+	0xce, 0xf5, 0xfb, 0x13, 0x21, 0x5d, 0x4d, 0x8c, 0x1f, 0xef, 0xfb, 0x66, 0x76, 0xdb, 0x21, 0xc7,
+	0x26, 0xad, 0xfd, 0xa2, 0xae, 0x61, 0xbb, 0x32, 0xd7, 0x35, 0xba, 0x05, 0x36, 0xb2, 0x5a, 0x0e,
+	0xa9, 0x6b, 0xf2, 0x4e, 0xd8, 0x2e, 0x3d, 0x3b, 0xc9, 0x1b, 0xcf, 0x4f, 0xf2, 0xc6, 0xbf, 0x27,
+	0x79, 0xe3, 0xdb, 0xd3, 0xfc, 0xd8, 0xf3, 0xd3, 0xfc, 0xd8, 0x5f, 0xa7, 0xf9, 0xb1, 0xfd, 0xa5,
+	0xba, 0x1b, 0x1c, 0xb4, 0xab, 0x85, 0x1a, 0x6b, 0xda, 0x3b, 0xc4, 0x77, 0x3d, 0xb2, 0xde, 0x20,
+	0x55, 0x2e, 0x1d, 0x7f, 0x25, 0x5c, 0x07, 0x8f, 0x5b, 0x94, 0x57, 0xc7, 0xc5, 0xbf, 0x69, 0x5b,
+	0xff, 0x07, 0x00, 0x00, 0xff, 0xff, 0x60, 0x7a, 0x20, 0x7a, 0x2e, 0x14, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1310,6 +1589,9 @@ type QueryClient interface {
 	DelegateVersion(ctx context.Context, in *QueryDelegateVersion, opts ...grpc.CallOption) (*QueryDelegateVersionResponse, error)
 	UndelegateVersion(ctx context.Context, in *QueryUndelegateVersion, opts ...grpc.CallOption) (*QueryUndelegateVersionResponse, error)
 	WithdrawVersion(ctx context.Context, in *QueryWithdrawVersion, opts ...grpc.CallOption) (*QueryWithdrawVersionResponse, error)
+	DelegateCurrentVersion(ctx context.Context, in *QueryCurrentDelegateVersion, opts ...grpc.CallOption) (*QueryCurrentDelegateVersionResponse, error)
+	UndelegateCurrentVersion(ctx context.Context, in *QueryCurrentUndelegateVersion, opts ...grpc.CallOption) (*QueryCurrentUndelegateVersionResponse, error)
+	WithdrawCurrentVersion(ctx context.Context, in *QueryCurrentWithdrawVersion, opts ...grpc.CallOption) (*QueryCurrentWithdrawVersionResponse, error)
 }
 
 type queryClient struct {
@@ -1428,6 +1710,33 @@ func (c *queryClient) WithdrawVersion(ctx context.Context, in *QueryWithdrawVers
 	return out, nil
 }
 
+func (c *queryClient) DelegateCurrentVersion(ctx context.Context, in *QueryCurrentDelegateVersion, opts ...grpc.CallOption) (*QueryCurrentDelegateVersionResponse, error) {
+	out := new(QueryCurrentDelegateVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DelegateCurrentVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) UndelegateCurrentVersion(ctx context.Context, in *QueryCurrentUndelegateVersion, opts ...grpc.CallOption) (*QueryCurrentUndelegateVersionResponse, error) {
+	out := new(QueryCurrentUndelegateVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/UndelegateCurrentVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) WithdrawCurrentVersion(ctx context.Context, in *QueryCurrentWithdrawVersion, opts ...grpc.CallOption) (*QueryCurrentWithdrawVersionResponse, error) {
+	out := new(QueryCurrentWithdrawVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/WithdrawCurrentVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
@@ -1442,6 +1751,9 @@ type QueryServer interface {
 	DelegateVersion(context.Context, *QueryDelegateVersion) (*QueryDelegateVersionResponse, error)
 	UndelegateVersion(context.Context, *QueryUndelegateVersion) (*QueryUndelegateVersionResponse, error)
 	WithdrawVersion(context.Context, *QueryWithdrawVersion) (*QueryWithdrawVersionResponse, error)
+	DelegateCurrentVersion(context.Context, *QueryCurrentDelegateVersion) (*QueryCurrentDelegateVersionResponse, error)
+	UndelegateCurrentVersion(context.Context, *QueryCurrentUndelegateVersion) (*QueryCurrentUndelegateVersionResponse, error)
+	WithdrawCurrentVersion(context.Context, *QueryCurrentWithdrawVersion) (*QueryCurrentWithdrawVersionResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -1483,6 +1795,15 @@ func (*UnimplementedQueryServer) UndelegateVersion(ctx context.Context, req *Que
 }
 func (*UnimplementedQueryServer) WithdrawVersion(ctx context.Context, req *QueryWithdrawVersion) (*QueryWithdrawVersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WithdrawVersion not implemented")
+}
+func (*UnimplementedQueryServer) DelegateCurrentVersion(ctx context.Context, req *QueryCurrentDelegateVersion) (*QueryCurrentDelegateVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelegateCurrentVersion not implemented")
+}
+func (*UnimplementedQueryServer) UndelegateCurrentVersion(ctx context.Context, req *QueryCurrentUndelegateVersion) (*QueryCurrentUndelegateVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UndelegateCurrentVersion not implemented")
+}
+func (*UnimplementedQueryServer) WithdrawCurrentVersion(ctx context.Context, req *QueryCurrentWithdrawVersion) (*QueryCurrentWithdrawVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WithdrawCurrentVersion not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -1705,6 +2026,60 @@ func _Query_WithdrawVersion_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_DelegateCurrentVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCurrentDelegateVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).DelegateCurrentVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/DelegateCurrentVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).DelegateCurrentVersion(ctx, req.(*QueryCurrentDelegateVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_UndelegateCurrentVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCurrentUndelegateVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).UndelegateCurrentVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/UndelegateCurrentVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).UndelegateCurrentVersion(ctx, req.(*QueryCurrentUndelegateVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_WithdrawCurrentVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCurrentWithdrawVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).WithdrawCurrentVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/WithdrawCurrentVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).WithdrawCurrentVersion(ctx, req.(*QueryCurrentWithdrawVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "nova.gal.v1.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -1756,6 +2131,18 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WithdrawVersion",
 			Handler:    _Query_WithdrawVersion_Handler,
+		},
+		{
+			MethodName: "DelegateCurrentVersion",
+			Handler:    _Query_DelegateCurrentVersion_Handler,
+		},
+		{
+			MethodName: "UndelegateCurrentVersion",
+			Handler:    _Query_UndelegateCurrentVersion_Handler,
+		},
+		{
+			MethodName: "WithdrawCurrentVersion",
+			Handler:    _Query_WithdrawCurrentVersion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -2411,6 +2798,11 @@ func (m *QueryDelegateVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Version != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x10
+	}
 	if len(m.ZoneId) > 0 {
 		i -= len(m.ZoneId)
 		copy(dAtA[i:], m.ZoneId)
@@ -2441,15 +2833,17 @@ func (m *QueryDelegateVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
-	if m.Height != 0 {
-		i = encodeVarintQuery(dAtA, i, uint64(m.Height))
+	if m.VersionInfo != nil {
+		{
+			size, err := m.VersionInfo.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x10
-	}
-	if m.Version != 0 {
-		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
-		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -2474,6 +2868,11 @@ func (m *QueryUndelegateVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.Version != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x10
+	}
 	if len(m.ZoneId) > 0 {
 		i -= len(m.ZoneId)
 		copy(dAtA[i:], m.ZoneId)
@@ -2504,15 +2903,17 @@ func (m *QueryUndelegateVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int,
 	_ = i
 	var l int
 	_ = l
-	if m.Height != 0 {
-		i = encodeVarintQuery(dAtA, i, uint64(m.Height))
+	if m.VersionInfo != nil {
+		{
+			size, err := m.VersionInfo.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x10
-	}
-	if m.Version != 0 {
-		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
-		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -2537,6 +2938,11 @@ func (m *QueryWithdrawVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.Version != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x10
+	}
 	if len(m.ZoneId) > 0 {
 		i -= len(m.ZoneId)
 		copy(dAtA[i:], m.ZoneId)
@@ -2567,11 +2973,187 @@ func (m *QueryWithdrawVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
-	if m.Height != 0 {
-		i = encodeVarintQuery(dAtA, i, uint64(m.Height))
+	if m.VersionInfo != nil {
+		{
+			size, err := m.VersionInfo.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0xa
 	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryCurrentDelegateVersion) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryCurrentDelegateVersion) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryCurrentDelegateVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryCurrentDelegateVersionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryCurrentDelegateVersionResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryCurrentDelegateVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Version != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryCurrentUndelegateVersion) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryCurrentUndelegateVersion) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryCurrentUndelegateVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryCurrentUndelegateVersionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryCurrentUndelegateVersionResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryCurrentUndelegateVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Version != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryCurrentWithdrawVersion) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryCurrentWithdrawVersion) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryCurrentWithdrawVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryCurrentWithdrawVersionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryCurrentWithdrawVersionResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryCurrentWithdrawVersionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	if m.Version != 0 {
 		i = encodeVarintQuery(dAtA, i, uint64(m.Version))
 		i--
@@ -2855,6 +3437,9 @@ func (m *QueryDelegateVersion) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovQuery(uint64(l))
 	}
+	if m.Version != 0 {
+		n += 1 + sovQuery(uint64(m.Version))
+	}
 	return n
 }
 
@@ -2864,11 +3449,9 @@ func (m *QueryDelegateVersionResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Version != 0 {
-		n += 1 + sovQuery(uint64(m.Version))
-	}
-	if m.Height != 0 {
-		n += 1 + sovQuery(uint64(m.Height))
+	if m.VersionInfo != nil {
+		l = m.VersionInfo.Size()
+		n += 1 + l + sovQuery(uint64(l))
 	}
 	return n
 }
@@ -2883,6 +3466,9 @@ func (m *QueryUndelegateVersion) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovQuery(uint64(l))
 	}
+	if m.Version != 0 {
+		n += 1 + sovQuery(uint64(m.Version))
+	}
 	return n
 }
 
@@ -2892,11 +3478,9 @@ func (m *QueryUndelegateVersionResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Version != 0 {
-		n += 1 + sovQuery(uint64(m.Version))
-	}
-	if m.Height != 0 {
-		n += 1 + sovQuery(uint64(m.Height))
+	if m.VersionInfo != nil {
+		l = m.VersionInfo.Size()
+		n += 1 + l + sovQuery(uint64(l))
 	}
 	return n
 }
@@ -2911,6 +3495,9 @@ func (m *QueryWithdrawVersion) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovQuery(uint64(l))
 	}
+	if m.Version != 0 {
+		n += 1 + sovQuery(uint64(m.Version))
+	}
 	return n
 }
 
@@ -2920,11 +3507,84 @@ func (m *QueryWithdrawVersionResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.VersionInfo != nil {
+		l = m.VersionInfo.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryCurrentDelegateVersion) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryCurrentDelegateVersionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	if m.Version != 0 {
 		n += 1 + sovQuery(uint64(m.Version))
 	}
-	if m.Height != 0 {
-		n += 1 + sovQuery(uint64(m.Height))
+	return n
+}
+
+func (m *QueryCurrentUndelegateVersion) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryCurrentUndelegateVersionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Version != 0 {
+		n += 1 + sovQuery(uint64(m.Version))
+	}
+	return n
+}
+
+func (m *QueryCurrentWithdrawVersion) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryCurrentWithdrawVersionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Version != 0 {
+		n += 1 + sovQuery(uint64(m.Version))
 	}
 	return n
 }
@@ -4746,6 +5406,25 @@ func (m *QueryDelegateVersion) Unmarshal(dAtA []byte) error {
 			}
 			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipQuery(dAtA[iNdEx:])
@@ -4797,10 +5476,10 @@ func (m *QueryDelegateVersionResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VersionInfo", wireType)
 			}
-			m.Version = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowQuery
@@ -4810,30 +5489,28 @@ func (m *QueryDelegateVersionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Version |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Height", wireType)
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
 			}
-			m.Height = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Height |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
 			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.VersionInfo == nil {
+				m.VersionInfo = &IBCTrace{}
+			}
+			if err := m.VersionInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipQuery(dAtA[iNdEx:])
@@ -4916,6 +5593,25 @@ func (m *QueryUndelegateVersion) Unmarshal(dAtA []byte) error {
 			}
 			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipQuery(dAtA[iNdEx:])
@@ -4967,10 +5663,10 @@ func (m *QueryUndelegateVersionResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VersionInfo", wireType)
 			}
-			m.Version = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowQuery
@@ -4980,30 +5676,28 @@ func (m *QueryUndelegateVersionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Version |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Height", wireType)
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
 			}
-			m.Height = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Height |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
 			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.VersionInfo == nil {
+				m.VersionInfo = &IBCTrace{}
+			}
+			if err := m.VersionInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipQuery(dAtA[iNdEx:])
@@ -5086,6 +5780,25 @@ func (m *QueryWithdrawVersion) Unmarshal(dAtA []byte) error {
 			}
 			m.ZoneId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipQuery(dAtA[iNdEx:])
@@ -5137,6 +5850,174 @@ func (m *QueryWithdrawVersionResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VersionInfo", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.VersionInfo == nil {
+				m.VersionInfo = &IBCTrace{}
+			}
+			if err := m.VersionInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryCurrentDelegateVersion) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryCurrentDelegateVersion: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryCurrentDelegateVersion: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryCurrentDelegateVersionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryCurrentDelegateVersionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryCurrentDelegateVersionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
 			}
@@ -5155,11 +6036,61 @@ func (m *QueryWithdrawVersionResponse) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Height", wireType)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
 			}
-			m.Height = 0
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryCurrentUndelegateVersion) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryCurrentUndelegateVersion: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryCurrentUndelegateVersion: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowQuery
@@ -5169,7 +6100,240 @@ func (m *QueryWithdrawVersionResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Height |= uint64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryCurrentUndelegateVersionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryCurrentUndelegateVersionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryCurrentUndelegateVersionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryCurrentWithdrawVersion) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryCurrentWithdrawVersion: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryCurrentWithdrawVersion: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryCurrentWithdrawVersionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryCurrentWithdrawVersionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryCurrentWithdrawVersionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
+			}
+			m.Version = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Version |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}

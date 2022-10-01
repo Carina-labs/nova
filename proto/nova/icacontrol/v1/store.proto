@@ -6,4 +6,11 @@ option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
 message IBCTrace {
   uint64 version = 1;
   uint64 height = 2;
+  uint64 state = 3;
+}
+
+message VersionState{
+  string zoneId = 1;
+  uint64 current_version = 2;
+  map <uint64, IBCTrace> record = 3;
 }

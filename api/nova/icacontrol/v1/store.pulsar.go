@@ -9,6 +9,7 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	io "io"
 	reflect "reflect"
+	sort "sort"
 	sync "sync"
 )
 
@@ -16,6 +17,7 @@ var (
 	md_IBCTrace         protoreflect.MessageDescriptor
 	fd_IBCTrace_version protoreflect.FieldDescriptor
 	fd_IBCTrace_height  protoreflect.FieldDescriptor
+	fd_IBCTrace_state   protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -23,6 +25,7 @@ func init() {
 	md_IBCTrace = File_nova_icacontrol_v1_store_proto.Messages().ByName("IBCTrace")
 	fd_IBCTrace_version = md_IBCTrace.Fields().ByName("version")
 	fd_IBCTrace_height = md_IBCTrace.Fields().ByName("height")
+	fd_IBCTrace_state = md_IBCTrace.Fields().ByName("state")
 }
 
 var _ protoreflect.Message = (*fastReflection_IBCTrace)(nil)
@@ -102,6 +105,12 @@ func (x *fastReflection_IBCTrace) Range(f func(protoreflect.FieldDescriptor, pro
 			return
 		}
 	}
+	if x.State != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.State)
+		if !f(fd_IBCTrace_state, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -121,6 +130,8 @@ func (x *fastReflection_IBCTrace) Has(fd protoreflect.FieldDescriptor) bool {
 		return x.Version != uint64(0)
 	case "nova.icacontrol.v1.IBCTrace.height":
 		return x.Height != uint64(0)
+	case "nova.icacontrol.v1.IBCTrace.state":
+		return x.State != uint64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.IBCTrace"))
@@ -141,6 +152,8 @@ func (x *fastReflection_IBCTrace) Clear(fd protoreflect.FieldDescriptor) {
 		x.Version = uint64(0)
 	case "nova.icacontrol.v1.IBCTrace.height":
 		x.Height = uint64(0)
+	case "nova.icacontrol.v1.IBCTrace.state":
+		x.State = uint64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.IBCTrace"))
@@ -162,6 +175,9 @@ func (x *fastReflection_IBCTrace) Get(descriptor protoreflect.FieldDescriptor) p
 		return protoreflect.ValueOfUint64(value)
 	case "nova.icacontrol.v1.IBCTrace.height":
 		value := x.Height
+		return protoreflect.ValueOfUint64(value)
+	case "nova.icacontrol.v1.IBCTrace.state":
+		value := x.State
 		return protoreflect.ValueOfUint64(value)
 	default:
 		if descriptor.IsExtension() {
@@ -187,6 +203,8 @@ func (x *fastReflection_IBCTrace) Set(fd protoreflect.FieldDescriptor, value pro
 		x.Version = value.Uint()
 	case "nova.icacontrol.v1.IBCTrace.height":
 		x.Height = value.Uint()
+	case "nova.icacontrol.v1.IBCTrace.state":
+		x.State = value.Uint()
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.IBCTrace"))
@@ -211,6 +229,8 @@ func (x *fastReflection_IBCTrace) Mutable(fd protoreflect.FieldDescriptor) proto
 		panic(fmt.Errorf("field version of message nova.icacontrol.v1.IBCTrace is not mutable"))
 	case "nova.icacontrol.v1.IBCTrace.height":
 		panic(fmt.Errorf("field height of message nova.icacontrol.v1.IBCTrace is not mutable"))
+	case "nova.icacontrol.v1.IBCTrace.state":
+		panic(fmt.Errorf("field state of message nova.icacontrol.v1.IBCTrace is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.IBCTrace"))
@@ -227,6 +247,8 @@ func (x *fastReflection_IBCTrace) NewField(fd protoreflect.FieldDescriptor) prot
 	case "nova.icacontrol.v1.IBCTrace.version":
 		return protoreflect.ValueOfUint64(uint64(0))
 	case "nova.icacontrol.v1.IBCTrace.height":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "nova.icacontrol.v1.IBCTrace.state":
 		return protoreflect.ValueOfUint64(uint64(0))
 	default:
 		if fd.IsExtension() {
@@ -303,6 +325,9 @@ func (x *fastReflection_IBCTrace) ProtoMethods() *protoiface.Methods {
 		if x.Height != 0 {
 			n += 1 + runtime.Sov(uint64(x.Height))
 		}
+		if x.State != 0 {
+			n += 1 + runtime.Sov(uint64(x.State))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -331,6 +356,11 @@ func (x *fastReflection_IBCTrace) ProtoMethods() *protoiface.Methods {
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.State != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.State))
+			i--
+			dAtA[i] = 0x18
 		}
 		if x.Height != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.Height))
@@ -429,6 +459,805 @@ func (x *fastReflection_IBCTrace) ProtoMethods() *protoiface.Methods {
 						break
 					}
 				}
+			case 3:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+				}
+				x.State = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.State |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var _ protoreflect.Map = (*_VersionState_3_map)(nil)
+
+type _VersionState_3_map struct {
+	m *map[uint64]*IBCTrace
+}
+
+func (x *_VersionState_3_map) Len() int {
+	if x.m == nil {
+		return 0
+	}
+	return len(*x.m)
+}
+
+func (x *_VersionState_3_map) Range(f func(protoreflect.MapKey, protoreflect.Value) bool) {
+	if x.m == nil {
+		return
+	}
+	for k, v := range *x.m {
+		mapKey := (protoreflect.MapKey)(protoreflect.ValueOfUint64(k))
+		mapValue := protoreflect.ValueOfMessage(v.ProtoReflect())
+		if !f(mapKey, mapValue) {
+			break
+		}
+	}
+}
+
+func (x *_VersionState_3_map) Has(key protoreflect.MapKey) bool {
+	if x.m == nil {
+		return false
+	}
+	keyUnwrapped := key.Uint()
+	concreteValue := keyUnwrapped
+	_, ok := (*x.m)[concreteValue]
+	return ok
+}
+
+func (x *_VersionState_3_map) Clear(key protoreflect.MapKey) {
+	if x.m == nil {
+		return
+	}
+	keyUnwrapped := key.Uint()
+	concreteKey := keyUnwrapped
+	delete(*x.m, concreteKey)
+}
+
+func (x *_VersionState_3_map) Get(key protoreflect.MapKey) protoreflect.Value {
+	if x.m == nil {
+		return protoreflect.Value{}
+	}
+	keyUnwrapped := key.Uint()
+	concreteKey := keyUnwrapped
+	v, ok := (*x.m)[concreteKey]
+	if !ok {
+		return protoreflect.Value{}
+	}
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_VersionState_3_map) Set(key protoreflect.MapKey, value protoreflect.Value) {
+	if !key.IsValid() || !value.IsValid() {
+		panic("invalid key or value provided")
+	}
+	keyUnwrapped := key.Uint()
+	concreteKey := keyUnwrapped
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*IBCTrace)
+	(*x.m)[concreteKey] = concreteValue
+}
+
+func (x *_VersionState_3_map) Mutable(key protoreflect.MapKey) protoreflect.Value {
+	keyUnwrapped := key.Uint()
+	concreteKey := keyUnwrapped
+	v, ok := (*x.m)[concreteKey]
+	if ok {
+		return protoreflect.ValueOfMessage(v.ProtoReflect())
+	}
+	newValue := new(IBCTrace)
+	(*x.m)[concreteKey] = newValue
+	return protoreflect.ValueOfMessage(newValue.ProtoReflect())
+}
+
+func (x *_VersionState_3_map) NewValue() protoreflect.Value {
+	v := new(IBCTrace)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_VersionState_3_map) IsValid() bool {
+	return x.m != nil
+}
+
+var (
+	md_VersionState                 protoreflect.MessageDescriptor
+	fd_VersionState_zoneId          protoreflect.FieldDescriptor
+	fd_VersionState_current_version protoreflect.FieldDescriptor
+	fd_VersionState_record          protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_icacontrol_v1_store_proto_init()
+	md_VersionState = File_nova_icacontrol_v1_store_proto.Messages().ByName("VersionState")
+	fd_VersionState_zoneId = md_VersionState.Fields().ByName("zoneId")
+	fd_VersionState_current_version = md_VersionState.Fields().ByName("current_version")
+	fd_VersionState_record = md_VersionState.Fields().ByName("record")
+}
+
+var _ protoreflect.Message = (*fastReflection_VersionState)(nil)
+
+type fastReflection_VersionState VersionState
+
+func (x *VersionState) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_VersionState)(x)
+}
+
+func (x *VersionState) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_icacontrol_v1_store_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_VersionState_messageType fastReflection_VersionState_messageType
+var _ protoreflect.MessageType = fastReflection_VersionState_messageType{}
+
+type fastReflection_VersionState_messageType struct{}
+
+func (x fastReflection_VersionState_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_VersionState)(nil)
+}
+func (x fastReflection_VersionState_messageType) New() protoreflect.Message {
+	return new(fastReflection_VersionState)
+}
+func (x fastReflection_VersionState_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_VersionState
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_VersionState) Descriptor() protoreflect.MessageDescriptor {
+	return md_VersionState
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_VersionState) Type() protoreflect.MessageType {
+	return _fastReflection_VersionState_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_VersionState) New() protoreflect.Message {
+	return new(fastReflection_VersionState)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_VersionState) Interface() protoreflect.ProtoMessage {
+	return (*VersionState)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_VersionState) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_VersionState_zoneId, value) {
+			return
+		}
+	}
+	if x.CurrentVersion != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.CurrentVersion)
+		if !f(fd_VersionState_current_version, value) {
+			return
+		}
+	}
+	if len(x.Record) != 0 {
+		value := protoreflect.ValueOfMap(&_VersionState_3_map{m: &x.Record})
+		if !f(fd_VersionState_record, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_VersionState) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.icacontrol.v1.VersionState.zoneId":
+		return x.ZoneId != ""
+	case "nova.icacontrol.v1.VersionState.current_version":
+		return x.CurrentVersion != uint64(0)
+	case "nova.icacontrol.v1.VersionState.record":
+		return len(x.Record) != 0
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.VersionState"))
+		}
+		panic(fmt.Errorf("message nova.icacontrol.v1.VersionState does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_VersionState) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.icacontrol.v1.VersionState.zoneId":
+		x.ZoneId = ""
+	case "nova.icacontrol.v1.VersionState.current_version":
+		x.CurrentVersion = uint64(0)
+	case "nova.icacontrol.v1.VersionState.record":
+		x.Record = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.VersionState"))
+		}
+		panic(fmt.Errorf("message nova.icacontrol.v1.VersionState does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_VersionState) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.icacontrol.v1.VersionState.zoneId":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.icacontrol.v1.VersionState.current_version":
+		value := x.CurrentVersion
+		return protoreflect.ValueOfUint64(value)
+	case "nova.icacontrol.v1.VersionState.record":
+		if len(x.Record) == 0 {
+			return protoreflect.ValueOfMap(&_VersionState_3_map{})
+		}
+		mapValue := &_VersionState_3_map{m: &x.Record}
+		return protoreflect.ValueOfMap(mapValue)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.VersionState"))
+		}
+		panic(fmt.Errorf("message nova.icacontrol.v1.VersionState does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_VersionState) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.icacontrol.v1.VersionState.zoneId":
+		x.ZoneId = value.Interface().(string)
+	case "nova.icacontrol.v1.VersionState.current_version":
+		x.CurrentVersion = value.Uint()
+	case "nova.icacontrol.v1.VersionState.record":
+		mv := value.Map()
+		cmv := mv.(*_VersionState_3_map)
+		x.Record = *cmv.m
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.VersionState"))
+		}
+		panic(fmt.Errorf("message nova.icacontrol.v1.VersionState does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_VersionState) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.icacontrol.v1.VersionState.record":
+		if x.Record == nil {
+			x.Record = make(map[uint64]*IBCTrace)
+		}
+		value := &_VersionState_3_map{m: &x.Record}
+		return protoreflect.ValueOfMap(value)
+	case "nova.icacontrol.v1.VersionState.zoneId":
+		panic(fmt.Errorf("field zoneId of message nova.icacontrol.v1.VersionState is not mutable"))
+	case "nova.icacontrol.v1.VersionState.current_version":
+		panic(fmt.Errorf("field current_version of message nova.icacontrol.v1.VersionState is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.VersionState"))
+		}
+		panic(fmt.Errorf("message nova.icacontrol.v1.VersionState does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_VersionState) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.icacontrol.v1.VersionState.zoneId":
+		return protoreflect.ValueOfString("")
+	case "nova.icacontrol.v1.VersionState.current_version":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "nova.icacontrol.v1.VersionState.record":
+		m := make(map[uint64]*IBCTrace)
+		return protoreflect.ValueOfMap(&_VersionState_3_map{m: &m})
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.VersionState"))
+		}
+		panic(fmt.Errorf("message nova.icacontrol.v1.VersionState does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_VersionState) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.icacontrol.v1.VersionState", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_VersionState) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_VersionState) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_VersionState) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_VersionState) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*VersionState)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.CurrentVersion != 0 {
+			n += 1 + runtime.Sov(uint64(x.CurrentVersion))
+		}
+		if len(x.Record) > 0 {
+			SiZeMaP := func(k uint64, v *IBCTrace) {
+				l := 0
+				if v != nil {
+					l = options.Size(v)
+				}
+				l += 1 + runtime.Sov(uint64(l))
+				mapEntrySize := 1 + runtime.Sov(uint64(k)) + l
+				n += mapEntrySize + 1 + runtime.Sov(uint64(mapEntrySize))
+			}
+			if options.Deterministic {
+				sortme := make([]uint64, 0, len(x.Record))
+				for k := range x.Record {
+					sortme = append(sortme, k)
+				}
+				sort.Slice(sortme, func(i, j int) bool {
+					return sortme[i] < sortme[j]
+				})
+				for _, k := range sortme {
+					v := x.Record[k]
+					SiZeMaP(k, v)
+				}
+			} else {
+				for k, v := range x.Record {
+					SiZeMaP(k, v)
+				}
+			}
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*VersionState)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Record) > 0 {
+			MaRsHaLmAp := func(k uint64, v *IBCTrace) (protoiface.MarshalOutput, error) {
+				baseI := i
+				encoded, err := options.Marshal(v)
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x12
+				i = runtime.EncodeVarint(dAtA, i, uint64(k))
+				i--
+				dAtA[i] = 0x8
+				i = runtime.EncodeVarint(dAtA, i, uint64(baseI-i))
+				i--
+				dAtA[i] = 0x1a
+				return protoiface.MarshalOutput{}, nil
+			}
+			if options.Deterministic {
+				keysForRecord := make([]uint64, 0, len(x.Record))
+				for k := range x.Record {
+					keysForRecord = append(keysForRecord, uint64(k))
+				}
+				sort.Slice(keysForRecord, func(i, j int) bool {
+					return keysForRecord[i] < keysForRecord[j]
+				})
+				for iNdEx := len(keysForRecord) - 1; iNdEx >= 0; iNdEx-- {
+					v := x.Record[uint64(keysForRecord[iNdEx])]
+					out, err := MaRsHaLmAp(keysForRecord[iNdEx], v)
+					if err != nil {
+						return out, err
+					}
+				}
+			} else {
+				for k := range x.Record {
+					v := x.Record[k]
+					out, err := MaRsHaLmAp(k, v)
+					if err != nil {
+						return out, err
+					}
+				}
+			}
+		}
+		if x.CurrentVersion != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.CurrentVersion))
+			i--
+			dAtA[i] = 0x10
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*VersionState)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: VersionState: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: VersionState: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CurrentVersion", wireType)
+				}
+				x.CurrentVersion = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.CurrentVersion |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Record", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Record == nil {
+					x.Record = make(map[uint64]*IBCTrace)
+				}
+				var mapkey uint64
+				var mapvalue *IBCTrace
+				for iNdEx < postIndex {
+					entryPreIndex := iNdEx
+					var wire uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+						}
+						if iNdEx >= l {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						wire |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					fieldNum := int32(wire >> 3)
+					if fieldNum == 1 {
+						for shift := uint(0); ; shift += 7 {
+							if shift >= 64 {
+								return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+							}
+							if iNdEx >= l {
+								return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+							}
+							b := dAtA[iNdEx]
+							iNdEx++
+							mapkey |= uint64(b&0x7F) << shift
+							if b < 0x80 {
+								break
+							}
+						}
+					} else if fieldNum == 2 {
+						var mapmsglen int
+						for shift := uint(0); ; shift += 7 {
+							if shift >= 64 {
+								return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+							}
+							if iNdEx >= l {
+								return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+							}
+							b := dAtA[iNdEx]
+							iNdEx++
+							mapmsglen |= int(b&0x7F) << shift
+							if b < 0x80 {
+								break
+							}
+						}
+						if mapmsglen < 0 {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+						}
+						postmsgIndex := iNdEx + mapmsglen
+						if postmsgIndex < 0 {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+						}
+						if postmsgIndex > l {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+						}
+						mapvalue = &IBCTrace{}
+						if err := options.Unmarshal(dAtA[iNdEx:postmsgIndex], mapvalue); err != nil {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+						}
+						iNdEx = postmsgIndex
+					} else {
+						iNdEx = entryPreIndex
+						skippy, err := runtime.Skip(dAtA[iNdEx:])
+						if err != nil {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+						}
+						if (skippy < 0) || (iNdEx+skippy) < 0 {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+						}
+						if (iNdEx + skippy) > postIndex {
+							return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+						}
+						iNdEx += skippy
+					}
+				}
+				x.Record[mapkey] = mapvalue
+				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -484,6 +1313,7 @@ type IBCTrace struct {
 
 	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
 	Height  uint64 `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"`
+	State   uint64 `protobuf:"varint,3,opt,name=state,proto3" json:"state,omitempty"`
 }
 
 func (x *IBCTrace) Reset() {
@@ -520,30 +1350,105 @@ func (x *IBCTrace) GetHeight() uint64 {
 	return 0
 }
 
+func (x *IBCTrace) GetState() uint64 {
+	if x != nil {
+		return x.State
+	}
+	return 0
+}
+
+type VersionState struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneId         string               `protobuf:"bytes,1,opt,name=zoneId,proto3" json:"zoneId,omitempty"`
+	CurrentVersion uint64               `protobuf:"varint,2,opt,name=current_version,json=currentVersion,proto3" json:"current_version,omitempty"`
+	Record         map[uint64]*IBCTrace `protobuf:"bytes,3,rep,name=record,proto3" json:"record,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *VersionState) Reset() {
+	*x = VersionState{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_icacontrol_v1_store_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VersionState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VersionState) ProtoMessage() {}
+
+// Deprecated: Use VersionState.ProtoReflect.Descriptor instead.
+func (*VersionState) Descriptor() ([]byte, []int) {
+	return file_nova_icacontrol_v1_store_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *VersionState) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *VersionState) GetCurrentVersion() uint64 {
+	if x != nil {
+		return x.CurrentVersion
+	}
+	return 0
+}
+
+func (x *VersionState) GetRecord() map[uint64]*IBCTrace {
+	if x != nil {
+		return x.Record
+	}
+	return nil
+}
+
 var File_nova_icacontrol_v1_store_proto protoreflect.FileDescriptor
 
 var file_nova_icacontrol_v1_store_proto_rawDesc = []byte{
 	0x0a, 0x1e, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
 	0x6c, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x12, 0x12, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
-	0x6c, 0x2e, 0x76, 0x31, 0x22, 0x3c, 0x0a, 0x08, 0x49, 0x42, 0x43, 0x54, 0x72, 0x61, 0x63, 0x65,
+	0x6c, 0x2e, 0x76, 0x31, 0x22, 0x52, 0x0a, 0x08, 0x49, 0x42, 0x43, 0x54, 0x72, 0x61, 0x63, 0x65,
 	0x12, 0x18, 0x0a, 0x07, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x04, 0x52, 0x07, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x16, 0x0a, 0x06, 0x68, 0x65,
 	0x69, 0x67, 0x68, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x68, 0x65, 0x69, 0x67,
-	0x68, 0x74, 0x42, 0xcf, 0x01, 0x0a, 0x16, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
-	0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x53,
-	0x74, 0x6f, 0x72, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c,
-	0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76,
-	0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x3b,
-	0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e,
-	0x49, 0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x49, 0x63, 0x61, 0x63, 0x6f, 0x6e,
-	0x74, 0x72, 0x6f, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49,
-	0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1e, 0x4e,
-	0x6f, 0x76, 0x61, 0x5c, 0x49, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x5c, 0x56,
-	0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x14,
-	0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x49, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c,
-	0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x68, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x04, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0xee, 0x01, 0x0a, 0x0c, 0x56, 0x65, 0x72,
+	0x73, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x7a, 0x6f, 0x6e,
+	0x65, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49,
+	0x64, 0x12, 0x27, 0x0a, 0x0f, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x5f, 0x76, 0x65, 0x72,
+	0x73, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0e, 0x63, 0x75, 0x72, 0x72,
+	0x65, 0x6e, 0x74, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x44, 0x0a, 0x06, 0x72, 0x65,
+	0x63, 0x6f, 0x72, 0x64, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x2e,
+	0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x2e, 0x52, 0x65, 0x63,
+	0x6f, 0x72, 0x64, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64,
+	0x1a, 0x57, 0x0a, 0x0b, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12,
+	0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x03, 0x6b, 0x65,
+	0x79, 0x12, 0x32, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72,
+	0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x42, 0x43, 0x54, 0x72, 0x61, 0x63, 0x65, 0x52, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0xcf, 0x01, 0x0a, 0x16, 0x63, 0x6f,
+	0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x6c, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f,
+	0x50, 0x01, 0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x43,
+	0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74,
+	0x72, 0x6f, 0x6c, 0x2f, 0x76, 0x31, 0x3b, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x49, 0x58, 0xaa, 0x02, 0x12, 0x4e, 0x6f, 0x76, 0x61,
+	0x2e, 0x49, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02,
+	0x12, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c,
+	0x5c, 0x56, 0x31, 0xe2, 0x02, 0x1e, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x49, 0x63, 0x61, 0x63, 0x6f,
+	0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x14, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x49, 0x63, 0x61,
+	0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x3a, 0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -558,16 +1463,20 @@ func file_nova_icacontrol_v1_store_proto_rawDescGZIP() []byte {
 	return file_nova_icacontrol_v1_store_proto_rawDescData
 }
 
-var file_nova_icacontrol_v1_store_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_nova_icacontrol_v1_store_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_nova_icacontrol_v1_store_proto_goTypes = []interface{}{
-	(*IBCTrace)(nil), // 0: nova.icacontrol.v1.IBCTrace
+	(*IBCTrace)(nil),     // 0: nova.icacontrol.v1.IBCTrace
+	(*VersionState)(nil), // 1: nova.icacontrol.v1.VersionState
+	nil,                  // 2: nova.icacontrol.v1.VersionState.RecordEntry
 }
 var file_nova_icacontrol_v1_store_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: nova.icacontrol.v1.VersionState.record:type_name -> nova.icacontrol.v1.VersionState.RecordEntry
+	0, // 1: nova.icacontrol.v1.VersionState.RecordEntry.value:type_name -> nova.icacontrol.v1.IBCTrace
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_nova_icacontrol_v1_store_proto_init() }
@@ -588,6 +1497,18 @@ func file_nova_icacontrol_v1_store_proto_init() {
 				return nil
 			}
 		}
+		file_nova_icacontrol_v1_store_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VersionState); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -595,7 +1516,7 @@ func file_nova_icacontrol_v1_store_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_icacontrol_v1_store_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
