@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MsgClient interface {
 	UpdateChainState(ctx context.Context, in *MsgUpdateChainState, opts ...grpc.CallOption) (*MsgUpdateChainStateResponse, error)
+	RegisterOracleAddress(ctx context.Context, in *MsgRegisterOracleAddr, opts ...grpc.CallOption) (*MsgRegisterOracleAddrResponse, error)
 }
 
 type msgClient struct {
@@ -42,11 +43,21 @@ func (c *msgClient) UpdateChainState(ctx context.Context, in *MsgUpdateChainStat
 	return out, nil
 }
 
+func (c *msgClient) RegisterOracleAddress(ctx context.Context, in *MsgRegisterOracleAddr, opts ...grpc.CallOption) (*MsgRegisterOracleAddrResponse, error) {
+	out := new(MsgRegisterOracleAddrResponse)
+	err := c.cc.Invoke(ctx, "/nova.oracle.v1.Msg/RegisterOracleAddress", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
 type MsgServer interface {
 	UpdateChainState(context.Context, *MsgUpdateChainState) (*MsgUpdateChainStateResponse, error)
+	RegisterOracleAddress(context.Context, *MsgRegisterOracleAddr) (*MsgRegisterOracleAddrResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedMsgServer struct {
 
 func (UnimplementedMsgServer) UpdateChainState(context.Context, *MsgUpdateChainState) (*MsgUpdateChainStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateChainState not implemented")
+}
+func (UnimplementedMsgServer) RegisterOracleAddress(context.Context, *MsgRegisterOracleAddr) (*MsgRegisterOracleAddrResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterOracleAddress not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -88,6 +102,24 @@ func _Msg_UpdateChainState_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_RegisterOracleAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgRegisterOracleAddr)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).RegisterOracleAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.oracle.v1.Msg/RegisterOracleAddress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).RegisterOracleAddress(ctx, req.(*MsgRegisterOracleAddr))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateChainState",
 			Handler:    _Msg_UpdateChainState_Handler,
+		},
+		{
+			MethodName: "RegisterOracleAddress",
+			Handler:    _Msg_RegisterOracleAddress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

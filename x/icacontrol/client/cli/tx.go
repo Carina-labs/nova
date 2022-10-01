@@ -403,6 +403,35 @@ func txAuthzRevokeTxCmd() *cobra.Command {
 
 	return cmd
 }
+func txSetControllerAddrTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use: "controller-address [zone-id] [controller-address]",
+
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			controllerAddr, err := sdk.AccAddressFromBech32(args[1])
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgRegisterControllerAddress(zoneId, controllerAddr, clientCtx.GetFromAddress())
+
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	return cmd
+}
+
 func bech32toValidatorAddresses(validators []string) ([]sdk.ValAddress, error) {
 	vals := make([]sdk.ValAddress, len(validators))
 	for i, validator := range validators {

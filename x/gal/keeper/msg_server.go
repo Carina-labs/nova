@@ -98,7 +98,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) (*types.MsgDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, delegate.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, delegate.ZoneId, delegate.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
 	}
 
@@ -216,7 +216,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
@@ -316,7 +316,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
@@ -432,7 +432,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 func (m msgServer) ReDelegate(goCtx context.Context, reDelegate *types.MsgReDelegate) (*types.MsgReDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, reDelegate.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, reDelegate.ZoneId, reDelegate.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, reDelegate.ControllerAddress)
 	}
 
@@ -465,7 +465,7 @@ func (m msgServer) ReDelegate(goCtx context.Context, reDelegate *types.MsgReDele
 func (m msgServer) ReUndelegate(goCtx context.Context, reUndelegate *types.MsgReUndelegate) (*types.MsgReUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, reUndelegate.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, reUndelegate.ZoneId, reUndelegate.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, reUndelegate.ControllerAddress)
 	}
 
@@ -494,7 +494,7 @@ func (m msgServer) ReUndelegate(goCtx context.Context, reUndelegate *types.MsgRe
 func (m msgServer) ReIcaWithdraw(goCtx context.Context, reWithdraw *types.MsgReIcaWithdraw) (*types.MsgReIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.icaControlKeeper.IsValidDaoModifier(ctx, reWithdraw.ControllerAddress) {
+	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, reWithdraw.ZoneId, reWithdraw.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, reWithdraw.ControllerAddress)
 	}
 

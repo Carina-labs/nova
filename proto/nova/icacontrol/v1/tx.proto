@@ -26,6 +26,7 @@ service Msg {
   rpc IcaAuthzRevoke(MsgIcaAuthzRevoke) returns (MsgIcaAuthzRevokeResponse);
   rpc DeleteRegisteredZone(MsgDeleteRegisteredZone) returns (MsgDeleteRegisteredZoneResponse);
   rpc ChangeRegisteredZone(MsgChangeRegisteredZone) returns (MsgChangeRegisteredZoneResponse);
+  rpc RegisterControllerAddress(MsgRegisterControllerAddr) returns (MsgRegisterControllerAddrResponse);
 }
 
 // MsgRegisterZone is the message you use to register a new zone.
@@ -160,3 +161,13 @@ message MsgIcaAuthzRevoke{
 
 // MsgIcaAuthzRevokeResponse is a response message for MsgIcaAuthzRevoke.
 message MsgIcaAuthzRevokeResponse{}
+
+// MsgRegisterControllerAddr is a message used for
+message MsgRegisterControllerAddr{
+  string zone_id = 1;
+  string controller_address = 2;
+  string from_address = 3;
+}
+
+// MsgRegisterControllerAddrResponse is a response message for MsgRegisterControllerAddr.
+message MsgRegisterControllerAddrResponse{}

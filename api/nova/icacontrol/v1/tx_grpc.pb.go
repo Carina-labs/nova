@@ -37,6 +37,7 @@ type MsgClient interface {
 	IcaAuthzRevoke(ctx context.Context, in *MsgIcaAuthzRevoke, opts ...grpc.CallOption) (*MsgIcaAuthzRevokeResponse, error)
 	DeleteRegisteredZone(ctx context.Context, in *MsgDeleteRegisteredZone, opts ...grpc.CallOption) (*MsgDeleteRegisteredZoneResponse, error)
 	ChangeRegisteredZone(ctx context.Context, in *MsgChangeRegisteredZone, opts ...grpc.CallOption) (*MsgChangeRegisteredZoneResponse, error)
+	RegisterControllerAddress(ctx context.Context, in *MsgRegisterControllerAddr, opts ...grpc.CallOption) (*MsgRegisterControllerAddrResponse, error)
 }
 
 type msgClient struct {
@@ -128,6 +129,15 @@ func (c *msgClient) ChangeRegisteredZone(ctx context.Context, in *MsgChangeRegis
 	return out, nil
 }
 
+func (c *msgClient) RegisterControllerAddress(ctx context.Context, in *MsgRegisterControllerAddr, opts ...grpc.CallOption) (*MsgRegisterControllerAddrResponse, error) {
+	out := new(MsgRegisterControllerAddrResponse)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Msg/RegisterControllerAddress", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -147,6 +157,7 @@ type MsgServer interface {
 	IcaAuthzRevoke(context.Context, *MsgIcaAuthzRevoke) (*MsgIcaAuthzRevokeResponse, error)
 	DeleteRegisteredZone(context.Context, *MsgDeleteRegisteredZone) (*MsgDeleteRegisteredZoneResponse, error)
 	ChangeRegisteredZone(context.Context, *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error)
+	RegisterControllerAddress(context.Context, *MsgRegisterControllerAddr) (*MsgRegisterControllerAddrResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -180,6 +191,9 @@ func (UnimplementedMsgServer) DeleteRegisteredZone(context.Context, *MsgDeleteRe
 }
 func (UnimplementedMsgServer) ChangeRegisteredZone(context.Context, *MsgChangeRegisteredZone) (*MsgChangeRegisteredZoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeRegisteredZone not implemented")
+}
+func (UnimplementedMsgServer) RegisterControllerAddress(context.Context, *MsgRegisterControllerAddr) (*MsgRegisterControllerAddrResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterControllerAddress not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -356,6 +370,24 @@ func _Msg_ChangeRegisteredZone_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_RegisterControllerAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgRegisterControllerAddr)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).RegisterControllerAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.icacontrol.v1.Msg/RegisterControllerAddress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).RegisterControllerAddress(ctx, req.(*MsgRegisterControllerAddr))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -398,6 +430,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeRegisteredZone",
 			Handler:    _Msg_ChangeRegisteredZone_Handler,
+		},
+		{
+			MethodName: "RegisterControllerAddress",
+			Handler:    _Msg_RegisterControllerAddress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

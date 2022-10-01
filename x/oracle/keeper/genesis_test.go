@@ -7,29 +7,41 @@ import (
 )
 
 var (
-	pk            = ed25519.GenPrivKey().PubKey()
-	validOperator = sdk.AccAddress(pk.Address())
+	pk                = ed25519.GenPrivKey().PubKey()
+	managerKey        = sdk.AccAddress(pk.Address())
+	osmosisOracleAddr = sdk.AccAddress(pk.Address())
+	cosmosOracleAddr  = sdk.AccAddress(pk.Address())
 )
 
 func (suite *KeeperTestSuite) TestExportGenesis() {
 	genesis := &types.GenesisState{
 		Params: types.Params{
-			OracleOperators: []string{validOperator.String()},
+			OracleKeyManager: []string{managerKey.String()},
+		},
+		OracleAddressInfo: []types.OracleAddressInfo{
+			{
+				ZoneId:        "cosmos-test-chain",
+				OracleAddress: []string{cosmosOracleAddr.String()},
+			},
+			{
+				ZoneId:        "osmosis-test-chain",
+				OracleAddress: []string{osmosisOracleAddr.String()},
+			},
 		},
 		States: []types.ChainInfo{
 			{
 				Coin:            sdk.NewCoin("uatom", sdk.NewInt(100)),
-				OperatorAddress: validOperator.String(),
+				OperatorAddress: cosmosOracleAddr.String(),
 				LastBlockHeight: 1,
 				AppHash:         []byte{1, 2, 3, 4},
-				ChainId:         "cosmos-test-chain",
+				ZoneId:          "cosmos-test-chain",
 			},
 			{
 				Coin:            sdk.NewCoin("uosmo", sdk.NewInt(100)),
-				OperatorAddress: validOperator.String(),
+				OperatorAddress: osmosisOracleAddr.String(),
 				LastBlockHeight: 10,
 				AppHash:         []byte{1, 2, 3, 4, 5},
-				ChainId:         "osmosis-test-chain",
+				ZoneId:          "osmosis-test-chain",
 			},
 		},
 	}

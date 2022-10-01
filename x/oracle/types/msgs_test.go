@@ -14,7 +14,7 @@ func TestMsgUpdateChainStateValidation(t *testing.T) {
 		Operator:    addr.String(),
 		BlockHeight: 10,
 		AppHash:     []byte("apphash"),
-		ChainId:     "cosmos",
+		ZoneId:      "cosmos",
 	}
 	err := msg.ValidateBasic()
 	require.NoError(t, err)

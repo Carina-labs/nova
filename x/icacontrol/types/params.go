@@ -9,12 +9,12 @@ import (
 )
 
 var (
-	KeyDaoModifierAddress = []byte("DaoModifierAddress")
+	KeyControllerManager = []byte("DaoModifierAddress")
 )
 
-func NewParams(daomodifierAddrs []string) Params {
+func NewParams(address []string) Params {
 	return Params{
-		ControllerAddress: daomodifierAddrs,
+		ControllerKeyManager: address,
 	}
 }
 
@@ -24,7 +24,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 
 func DefaultParams() Params {
 	return Params{
-		ControllerAddress: []string{},
+		ControllerKeyManager: []string{},
 	}
 }
 
@@ -35,12 +35,12 @@ func (p *Params) String() string {
 
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
-		paramtypes.NewParamSetPair(KeyDaoModifierAddress, &p.ControllerAddress, validateDaoModifierAddress),
+		paramtypes.NewParamSetPair(KeyControllerManager, &p.ControllerKeyManager, validateDaoModifierAddress),
 	}
 }
 
 func (p *Params) Validate() error {
-	if err := validateDaoModifierAddress(p.ControllerAddress); err != nil {
+	if err := validateDaoModifierAddress(p.ControllerKeyManager); err != nil {
 		return err
 	}
 
@@ -58,7 +58,7 @@ func validateDaoModifierAddress(i interface{}) error {
 		_, err := sdk.AccAddressFromBech32(val)
 
 		if err != nil {
-			return fmt.Errorf("invalid daomodifier address: %v", err)
+			return fmt.Errorf("invalid key manager address: %v", err)
 		}
 	}
 

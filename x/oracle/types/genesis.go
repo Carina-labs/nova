@@ -17,7 +17,7 @@ func DefaultGenesis() *GenesisState {
 }
 
 func (gs GenesisState) Validate() error {
-	for _, op := range gs.Params.OracleOperators {
+	for _, op := range gs.Params.OracleKeyManager {
 		_, err := sdk.AccAddressFromBech32(op)
 		if err != nil {
 			return err

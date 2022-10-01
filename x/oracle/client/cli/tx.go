@@ -20,13 +20,14 @@ func GetTxCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(NewUpdateStateCmd())
+	cmd.AddCommand(NewRegisterOracleAddressCmd())
 
 	return cmd
 }
 
 func NewUpdateStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update_state [amount] [block-height] [app-hash] [chain-id]",
+		Use:   "update_state [amount] [block-height] [app-hash] [zone-id]",
 		Short: "",
 		Long:  "",
 		Args:  cobra.ExactArgs(4),
@@ -47,9 +48,35 @@ func NewUpdateStateCmd() *cobra.Command {
 			}
 
 			appHash := []byte(args[2])
-			chainId := args[3]
+			zoneId := args[3]
 
-			msg := types.NewMsgUpdateChainState(clientCtx.GetFromAddress(), chainId, amount, blockHeight, appHash)
+			msg := types.NewMsgUpdateChainState(clientCtx.GetFromAddress(), zoneId, amount, blockHeight, appHash)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+
+	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func NewRegisterOracleAddressCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "oracle-address [zone-id] [oracle-address]",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			oracleAddr, err := sdk.AccAddressFromBech32(args[1])
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgRegisterOracleAddr(zoneId, oracleAddr, clientCtx.GetFromAddress())
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

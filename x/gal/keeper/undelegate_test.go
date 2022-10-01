@@ -179,8 +179,19 @@ func (suite *KeeperTestSuite) TestGetUndelegateAmount() {
 
 	suite.NewUndelegateRecord(undelegateRecord)
 
-	suite.App.OracleKeeper.SetParams(suite.Ctx, oracletypes.Params{
-		OracleOperators: []string{baseOwnerAcc.String()},
+	suite.App.OracleKeeper.InitGenesis(suite.Ctx, &oracletypes.GenesisState{
+		Params: oracletypes.Params{
+			OracleKeyManager: []string{
+				baseOwnerAcc.String(),
+			},
+		},
+		OracleAddressInfo: []oracletypes.OracleAddressInfo{
+			{
+				ZoneId:        zoneId,
+				OracleAddress: []string{baseOwnerAcc.String()},
+			},
+		},
+		States: []oracletypes.ChainInfo{},
 	})
 
 	tcs := []struct {
@@ -217,7 +228,7 @@ func (suite *KeeperTestSuite) TestGetUndelegateAmount() {
 			zone, ok := suite.App.IcaControlKeeper.GetRegisteredZone(suite.Ctx, tc.zoneId)
 			suite.Require().True(ok)
 			chainInfo := oracletypes.ChainInfo{
-				ChainId:         tc.zoneId,
+				ZoneId:          tc.zoneId,
 				OperatorAddress: baseOwnerAcc.String(),
 				Coin:            sdk.NewCoin(baseDenom, tc.wAsset),
 				AppHash:         []byte("test"),

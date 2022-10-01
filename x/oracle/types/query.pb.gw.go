@@ -98,15 +98,15 @@ func request_Query_OracleVersion_0(ctx context.Context, marshaler runtime.Marsha
 		_   = err
 	)
 
-	val, ok = pathParams["chain_id"]
+	val, ok = pathParams["zone_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "chain_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "zone_id")
 	}
 
-	protoReq.ChainId, err = runtime.String(val)
+	protoReq.ZoneId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "chain_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "zone_id", err)
 	}
 
 	msg, err := client.OracleVersion(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -125,15 +125,15 @@ func local_request_Query_OracleVersion_0(ctx context.Context, marshaler runtime.
 		_   = err
 	)
 
-	val, ok = pathParams["chain_id"]
+	val, ok = pathParams["zone_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "chain_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "zone_id")
 	}
 
-	protoReq.ChainId, err = runtime.String(val)
+	protoReq.ZoneId, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "chain_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "zone_id", err)
 	}
 
 	msg, err := server.OracleVersion(ctx, &protoReq)
@@ -325,7 +325,7 @@ var (
 
 	pattern_Query_State_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"nova", "oracle", "v1", "state"}, "", runtime.AssumeColonVerbOpt(false)))
 
-	pattern_Query_OracleVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"nova", "oracle", "v1", "oracle_version", "chain_id"}, "", runtime.AssumeColonVerbOpt(false)))
+	pattern_Query_OracleVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"nova", "oracle", "v1", "oracle_version", "zone_id"}, "", runtime.AssumeColonVerbOpt(false)))
 )
 
 var (

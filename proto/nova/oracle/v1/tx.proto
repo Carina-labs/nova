@@ -8,6 +8,7 @@ option go_package = "github.com/Carina-labs/nova/x/oracle/types";
 
 service Msg {
   rpc UpdateChainState(MsgUpdateChainState) returns (MsgUpdateChainStateResponse);
+  rpc RegisterOracleAddress(MsgRegisterOracleAddr) returns (MsgRegisterOracleAddrResponse);
 }
 
 // MsgUpdateChainState is the message used to update the status of the zone stored in Oracle.
@@ -27,8 +28,8 @@ message MsgUpdateChainState {
   // app_hash of the block fetched by oracle from host chain
   bytes app_hash = 4;
 
-  // chain_id of the host chain
-  string chain_id = 5;
+  // zone_id of the host chain
+  string zone_id = 5;
 }
 
 // MsgUpdateChainStateResponse is a response message for MsgUpdateChainState.
@@ -36,3 +37,11 @@ message MsgUpdateChainState {
 message MsgUpdateChainStateResponse {
   bool success = 1;
 }
+
+message MsgRegisterOracleAddr{
+  string zone_id = 1;
+  string oracle_address = 2;
+  string from_address = 3;
+}
+
+message MsgRegisterOracleAddrResponse {}

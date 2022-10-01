@@ -27,14 +27,20 @@ import (
 func (suite *KeeperTestSuite) InitICA() {
 	suite.chainA.GetApp().OracleKeeper.InitGenesis(suite.chainA.GetContext(), &oracletypes.GenesisState{
 		Params: oracletypes.Params{
-			OracleOperators: []string{
+			OracleKeyManager: []string{
 				baseOwnerAcc.String(),
+			},
+		},
+		OracleAddressInfo: []oracletypes.OracleAddressInfo{
+			{
+				ZoneId:        zoneId,
+				OracleAddress: []string{baseOwnerAcc.String()},
 			},
 		},
 		States: []oracletypes.ChainInfo{
 			{
 				Coin:            sdk.NewCoin(baseDenom, sdk.NewInt(0)),
-				ChainId:         zoneId,
+				ZoneId:          zoneId,
 				OperatorAddress: baseOwnerAcc.String(),
 			},
 		},
@@ -46,8 +52,14 @@ func (suite *KeeperTestSuite) InitICA() {
 	suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), zoneId, trace)
 	suite.chainA.GetApp().IcaControlKeeper.InitGenesis(suite.chainA.GetContext(), &icacontroltypes.GenesisState{
 		Params: icacontroltypes.Params{
-			ControllerAddress: []string{
+			ControllerKeyManager: []string{
 				baseOwnerAcc.String(),
+			},
+		},
+		ControllerAddressInfo: []*icacontroltypes.ControllerAddressInfo{
+			{
+				ZoneId:            zoneId,
+				ControllerAddress: []string{baseOwnerAcc.String()},
 			},
 		},
 	})
@@ -1002,6 +1014,7 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 			chainInfo := &oracletypes.ChainInfo{
 				Coin:            tc.oracleAmount,
 				OperatorAddress: baseOwnerAcc.String(),
+				ZoneId:          zoneId,
 			}
 
 			trace := oracletypes.IBCTrace{
@@ -1632,7 +1645,7 @@ func (suite *KeeperTestSuite) TestClaimSnAsset() {
 		suite.chainA.GetApp().GalKeeper.SetDepositRecord(suite.chainA.GetContext(), &tc.depositRecord)
 
 		chainInfo := oracletypes.ChainInfo{
-			ChainId:         tc.zoneId,
+			ZoneId:          tc.zoneId,
 			OperatorAddress: baseOwnerAcc.String(),
 			Coin:            sdk.NewCoin(tc.denom, tc.oracleAmount),
 		}

@@ -6,7 +6,7 @@ import (
 
 	"github.com/Carina-labs/nova/app/apptesting"
 	"github.com/Carina-labs/nova/x/oracle/types"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"
 )
@@ -17,7 +17,7 @@ var (
 	fooChainId             = "testchain"
 	fooAppHash             = "apphash"
 	fooBlockProposer       = "cosmos-block-proposer"
-	fooOperator            = sdk.AccAddress(ed25519.GenPrivKey().PubKey().Address())
+	fooOperator            = sdk.AccAddress(secp256k1.GenPrivKey().PubKey().Address())
 	fooBalance       int64 = 1000000000
 )
 
@@ -45,7 +45,7 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 		OperatorAddress: fooOperator.String(),
 		LastBlockHeight: 10,
 		AppHash:         []byte(fooAppHash),
-		ChainId:         fooChainId,
+		ZoneId:          fooChainId,
 	}
 
 	tests := []struct {
@@ -72,9 +72,7 @@ func (suite *KeeperTestSuite) TestUpdateChainState() {
 	for _, tt := range tests {
 		suite.Run(tt.name, func() {
 			if tt.operator != nil {
-				oracleKeeper.SetParams(suite.Ctx, types.Params{
-					OracleOperators: []string{tt.operator.String()},
-				})
+				oracleKeeper.SetOracleAddress(suite.Ctx, chainInfo.ZoneId, []string{tt.operator.String()})
 			}
 
 			err := oracleKeeper.UpdateChainState(suite.Ctx, &chainInfo)

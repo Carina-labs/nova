@@ -50,7 +50,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		MaxEntries:       zone.MaxEntries,
 	}
 
-	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
+	if !k.IsValidControllerAddr(ctx, zoneInfo.ZoneId, zone.IcaAccount.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
 	}
 
@@ -81,7 +81,7 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDeleteRegisteredZone) (*types.MsgDeleteRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, zone.ControllerAddress) {
+	if !k.IsValidControllerAddr(ctx, zone.ZoneId, zone.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.ControllerAddress)
 	}
 
@@ -98,7 +98,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgChangeRegisteredZone) (*types.MsgChangeRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, zone.IcaAccount.ControllerAddress) {
+	if !k.IsValidControllerAddr(ctx, zone.ZoneId, zone.IcaAccount.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
 	}
 
@@ -140,7 +140,7 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate) (*types.MsgIcaDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
@@ -165,7 +165,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndelegate) (*types.MsgIcaUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
@@ -190,7 +190,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoStaking) (*types.MsgIcaAutoStakingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
@@ -216,7 +216,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer) (*types.MsgIcaTransferResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
@@ -253,8 +253,8 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGrant) (*types.MsgIcaAuthzGrantResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -279,7 +279,7 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzRevoke) (*types.MsgIcaAuthzRevokeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !k.IsValidDaoModifier(ctx, msg.ControllerAddress) {
+	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
@@ -301,4 +301,20 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 	}
 
 	return &types.MsgIcaAuthzRevokeResponse{}, nil
+}
+
+func (k msgServer) RegisterControllerAddress(goCtx context.Context, msg *types.MsgRegisterControllerAddr) (*types.MsgRegisterControllerAddrResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidKeyManager(ctx, msg.FromAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.FromAddress)
+	}
+
+	controllerInfo := k.GetControllerAddr(ctx, msg.ZoneId)
+	controllerAddrs := controllerInfo.ControllerAddress
+
+	controllerAddrs = append(controllerAddrs, msg.ControllerAddress)
+	k.SetControllerAddr(ctx, msg.ZoneId, controllerAddrs)
+
+	return &types.MsgRegisterControllerAddrResponse{}, nil
 }

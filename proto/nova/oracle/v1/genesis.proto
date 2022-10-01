@@ -2,7 +2,7 @@ syntax = "proto3";
 package nova.oracle.v1;
 
 import "nova/oracle/v1/params.proto";
-
+import "nova/oracle/v1/store.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
 
@@ -14,6 +14,8 @@ message GenesisState {
 
   // states is an amount of coins on the host chain.
   repeated ChainInfo states = 2 [(gogoproto.nullable) = false];
+
+  repeated OracleAddressInfo oracle_address_info = 3 [(gogoproto.nullable) = false];
 }
 
 // ChainInfo refers to the state of the counterpart chain to be stored on the Oracle module.
@@ -35,6 +37,6 @@ message ChainInfo {
   bytes app_hash = 4;
 
   // chain_id of the host chain
-  string chain_id = 5;
+  string zone_id = 5;
 
 }
