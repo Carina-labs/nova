@@ -186,11 +186,10 @@ func (q QueryServer) DelegateVersion(goCtx context.Context, request *types.Query
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
 
-	version, height := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
+	versionInfo := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
 
 	return &types.QueryDelegateVersionResponse{
-		Version: version,
-		Height:  height,
+		VersionInfo: versionInfo.Record[request.Version],
 	}, nil
 }
 
@@ -202,11 +201,10 @@ func (q QueryServer) UndelegateVersion(goCtx context.Context, request *types.Que
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
 
-	version, height := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
+	versionInfo := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
 
 	return &types.QueryUndelegateVersionResponse{
-		Version: version,
-		Height:  height,
+		VersionInfo: versionInfo.Record[request.Version],
 	}, nil
 }
 
@@ -218,10 +216,54 @@ func (q QueryServer) WithdrawVersion(goCtx context.Context, request *types.Query
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
 
-	version, height := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
+	versionInfo := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
 
 	return &types.QueryWithdrawVersionResponse{
-		Version: version,
-		Height:  height,
+		VersionInfo: versionInfo.Record[request.Version],
+	}, nil
+}
+
+func (q QueryServer) DelegateCurrentVersion(goCtx context.Context, request *types.QueryCurrentDelegateVersion) (*types.QueryCurrentDelegateVersionResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	_, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	versionInfo := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
+
+	return &types.QueryCurrentDelegateVersionResponse{
+		Version: versionInfo.CurrentVersion,
+	}, nil
+}
+
+func (q QueryServer) UndelegateCurrentVersion(goCtx context.Context, request *types.QueryCurrentUndelegateVersion) (*types.QueryCurrentUndelegateVersionResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	_, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	versionInfo := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
+
+	return &types.QueryCurrentUndelegateVersionResponse{
+		Version: versionInfo.CurrentVersion,
+	}, nil
+}
+
+func (q QueryServer) WithdrawCurrentVersion(goCtx context.Context, request *types.QueryCurrentWithdrawVersion) (*types.QueryCurrentWithdrawVersionResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	_, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	versionInfo := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
+
+	return &types.QueryCurrentWithdrawVersionResponse{
+		Version: versionInfo.CurrentVersion,
 	}, nil
 }

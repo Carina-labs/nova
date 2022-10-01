@@ -41,18 +41,15 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTokenPacketData) {
 	zone := h.k.icaControlKeeper.GetZoneForDenom(ctx, data.Denom)
 	if zone == nil {
-		h.k.Logger(ctx).Error("AfterOnRecvPacket", "err", "Zone id is not found", "Denom", data.Denom)
 		return
 	}
 
 	// check receiveAddr == controllerAddr && receiver == hostAddr
 	if data.Sender != zone.IcaAccount.HostAddress {
-		h.k.Logger(ctx).Error("AfterOnRecvPacket", "err", "The sender address is different from the registered host address", "hostAddr", zone.IcaAccount.HostAddress, "senderAddr", data.Sender)
 		return
 	}
 
 	if data.Receiver != zone.IcaAccount.ControllerAddress {
-		h.k.Logger(ctx).Error("AfterOnRecvPacket", "err", "The sender address is different from the registered host address", "hostAddr", zone.IcaAccount.HostAddress, "senderAddr", data.Sender)
 		return
 	}
 
@@ -68,16 +65,23 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 	}
 
 	// get withdrawVersion
-	withdrawVersion, _ := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
-
-	trace := types.IBCTrace{
-		Version: withdrawVersion + 1,
-		Height:  uint64(ctx.BlockHeight()),
-	}
-
-	h.k.SetWithdrawVersion(ctx, zone.ZoneId, trace)
-	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, withdrawVersion+1)
+	versionInfo := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
+	currentVersion := versionInfo.CurrentVersion
+	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, currentVersion)
 	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
+
+	// change version state
+	versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
+	versionInfo.Record[currentVersion].State = types.IcaSuccess
+
+	// set withdraw version
+	nextVersion := versionInfo.CurrentVersion + 1
+	versionInfo.CurrentVersion = nextVersion
+	versionInfo.Record[nextVersion] = &types.IBCTrace{
+		Version: nextVersion,
+		State: icatypes.IcaPending,
+	}
+	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
 }
 
 // delegateAddr(controllerAddr), validatorAddr, delegateAmt
@@ -86,19 +90,26 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
 
 	oracleVersion, _ := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
-	// get delegateVersion
-	delegateVersion, _ := h.k.GetDelegateVersion(ctx, zoneInfo.ZoneId)
 
-	trace := types.IBCTrace{
-		Version: delegateVersion + 1,
-		Height:  uint64(ctx.BlockHeight()),
-	}
-	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, trace)
+	// get delegateVersion
+	versionInfo := h.k.GetDelegateVersion(ctx, zoneInfo.ZoneId)
+	currentVersion := versionInfo.CurrentVersion
 
 	// change deposit state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
 	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DelegateRequest, types.DelegateSuccess)
 	h.k.SetDepositOracleVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, oracleVersion)
-	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, delegateVersion+1)
+	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, currentVersion)
+
+	versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
+	versionInfo.Record[currentVersion].State = types.IcaSuccess
+
+	nextVersion := versionInfo.CurrentVersion + 1
+	versionInfo.CurrentVersion = nextVersion
+	versionInfo.Record[nextVersion] = &types.IBCTrace{
+		Version: nextVersion,
+		State:   types.IcaPending,
+	}
+	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 }
 
 // AfterWithdrawEnd is executed IcaWithdraw request finished.
@@ -115,17 +126,20 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	}
 
 	// get withdrawVersion
-	withdrawVersion, _ := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
+	versionInfo := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
+	currentVersion := versionInfo.CurrentVersion
 
-	trace := types.IBCTrace{
-		Version: withdrawVersion + 1,
-		Height:  uint64(ctx.BlockHeight()),
-	}
-
-	h.k.SetWithdrawVersion(ctx, zone.ZoneId, trace)
-	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, withdrawVersion+1)
+	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, currentVersion)
 	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
 
+	versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
+	versionInfo.CurrentVersion = currentVersion + 1
+	versionInfo.Record[currentVersion].State = types.IcaSuccess
+	versionInfo.Record[currentVersion+1] = &types.IBCTrace{
+		Version: currentVersion + 1,
+		State:   types.IcaPending,
+	}
+	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
 }
 
 func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
@@ -143,19 +157,26 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 		return
 	}
 
-	undelegateVersion, _ := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
-	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca, undelegateVersion+1)
-
-	trace := types.IBCTrace{
-		Version: undelegateVersion + 1,
-		Height:  uint64(ctx.BlockHeight()),
-	}
-
+	versionInfo := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
+	currentVersion := versionInfo.CurrentVersion
+	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca, currentVersion)
 	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
-	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, trace)
 
 	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
+
+	nextVersion := currentVersion + 1
+	versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
+	versionInfo.Record[currentVersion].State = types.IcaSuccess
+
+	versionInfo.CurrentVersion = nextVersion
+	versionInfo.Record[nextVersion] = &types.IBCTrace{
+		Version: nextVersion,
+		State:   types.IcaPending,
+	}
+	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
+
 }
 
 func (h Hooks) AfterAutoStakingEnd() {
+
 }

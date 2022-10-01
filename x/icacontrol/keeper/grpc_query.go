@@ -52,7 +52,6 @@ func (q QueryServer) AutoStakingVersion(goCtx context.Context, request *types.Qu
 	versionInfo := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
 
 	return &types.QueryAutoStakingVersionResponse{
-		Version: versionInfo.Version,
-		Height:  versionInfo.Height,
+		VersionInfo: versionInfo.Record[versionInfo.CurrentVersion],
 	}, nil
 }

@@ -12,7 +12,7 @@ func (k Keeper) GetDelegateVersionStore(ctx sdk.Context) prefix.Store {
 }
 
 // SetDelegateVersion sets version for delegation corresponding to zone-id records.
-func (k Keeper) SetDelegateVersion(ctx sdk.Context, zoneId string, trace types.IBCTrace) {
+func (k Keeper) SetDelegateVersion(ctx sdk.Context, zoneId string, trace types.VersionState) {
 	store := k.GetDelegateVersionStore(ctx)
 	key := zoneId
 	bz := k.cdc.MustMarshal(&trace)
@@ -20,16 +20,23 @@ func (k Keeper) SetDelegateVersion(ctx sdk.Context, zoneId string, trace types.I
 }
 
 // GetDelegateVersion returns version for delegation corresponding to zone-id records.
-func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) (version uint64, height uint64) {
+func (k Keeper) GetDelegateVersion(ctx sdk.Context, zoneId string) types.VersionState {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyDelegateVersion)
 	key := []byte(zoneId)
 	res := store.Get(key)
 
-	var record types.IBCTrace
+	var record types.VersionState
 	k.cdc.MustUnmarshal(res, &record)
-	if res == nil {
-		return 0, 0
-	}
 
-	return record.Version, record.Height
+	return record
+}
+
+func (k Keeper) IsValidDelegateVersion(ctx sdk.Context, zoneId string, version uint64) bool {
+	//get delegateState
+	versionInfo := k.GetDelegateVersion(ctx, zoneId)
+
+	if versionInfo.CurrentVersion >= version && versionInfo.Record[version].State == types.IcaPending {
+		return true
+	}
+	return false
 }

@@ -17,7 +17,7 @@ func (k Keeper) GetUndelegateVersionStore(ctx sdk.Context) prefix.Store {
 }
 
 // SetUndelegateVersion sets the new un-delgate Version.
-func (k Keeper) SetUndelegateVersion(ctx sdk.Context, zoneId string, trace types.IBCTrace) {
+func (k Keeper) SetUndelegateVersion(ctx sdk.Context, zoneId string, trace types.VersionState) {
 	store := k.GetUndelegateVersionStore(ctx)
 	key := zoneId
 	bz := k.cdc.MustMarshal(&trace)
@@ -25,18 +25,25 @@ func (k Keeper) SetUndelegateVersion(ctx sdk.Context, zoneId string, trace types
 }
 
 // GetUndelegateVersion returns the latest undelegation version.
-func (k Keeper) GetUndelegateVersion(ctx sdk.Context, zoneId string) (version uint64, height uint64) {
+func (k Keeper) GetUndelegateVersion(ctx sdk.Context, zoneId string) types.VersionState {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateVersion)
 	key := []byte(zoneId)
 	res := store.Get(key)
 
-	var record types.IBCTrace
+	var record types.VersionState
 	k.cdc.MustUnmarshal(res, &record)
-	if res == nil {
-		return 0, 0
-	}
 
-	return record.Version, record.Height
+	return record
+}
+
+func (k Keeper) IsValidUndelegateVersion(ctx sdk.Context, zoneId string, version uint64) bool {
+	//get undelegateState
+	versionInfo := k.GetUndelegateVersion(ctx, zoneId)
+
+	if versionInfo.CurrentVersion >= version && versionInfo.Record[version].State == types.IcaPending {
+		return true
+	}
+	return false
 }
 
 // SetUndelegateRecord writes a record of the user's undelegation actions.
