@@ -89,7 +89,7 @@ func (k Keeper) GetWithdrawVersionStore(ctx sdk.Context) prefix.Store {
 }
 
 // SetWithdrawVersion set withdraw version for zone id.
-func (k Keeper) SetWithdrawVersion(ctx sdk.Context, zoneId string, trace types.IBCTrace) {
+func (k Keeper) SetWithdrawVersion(ctx sdk.Context, zoneId string, trace types.VersionState) {
 	store := k.GetWithdrawVersionStore(ctx)
 	key := zoneId
 	bz := k.cdc.MustMarshal(&trace)
@@ -97,19 +97,27 @@ func (k Keeper) SetWithdrawVersion(ctx sdk.Context, zoneId string, trace types.I
 }
 
 // GetWithdrawVersion returns current withdraw-version.
-func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) (version uint64, height uint64) {
+func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) types.VersionState {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyWithdrawVersion)
 	key := []byte(zoneId)
 	res := store.Get(key)
 
-	var record types.IBCTrace
+	var record types.VersionState
 	k.cdc.MustUnmarshal(res, &record)
-	if res == nil {
-		return 0, 0
-	}
 
-	return record.Version, record.Height
+	return record
 }
+
+func (k Keeper) IsValidWithdrawVersion(ctx sdk.Context, zoneId string, version uint64) bool {
+	//get delegateState
+	versionInfo := k.GetWithdrawVersion(ctx, zoneId)
+
+	if versionInfo.CurrentVersion >= version && versionInfo.Record[version].State == types.IcaPending {
+		return true
+	}
+	return false
+}
+
 
 // SetWithdrawRecordVersion set new version to withdraw record corresponding to zoneId and state.
 func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state types.WithdrawStatusType, version uint64) {

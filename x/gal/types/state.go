@@ -18,10 +18,17 @@ const (
 	UndelegateRequestByIca
 )
 
+const (
+	IcaPending IcaStatus = iota + 1
+	IcaRequest
+	IcaSuccess
+)
+
 type (
 	WithdrawStatusType    = int64
 	DepositStatusType     = int64
 	UndelegatedStatusType = int64
+	IcaStatus             = uint64
 
 	UndelegateVersion = uint64
 )

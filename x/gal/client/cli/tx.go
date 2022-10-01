@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -98,8 +99,8 @@ func txUndelegateRequestCmd() *cobra.Command {
 
 func txUndelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegate [zone-id]",
-		Args: cobra.ExactArgs(1),
+		Use:  "undelegate [zone-id] [sequence]",
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -107,10 +108,14 @@ func txUndelegateCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
+			seq, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
 
-			msg := types.NewMsgUndelegate(zoneId, clientCtx.GetFromAddress())
+			msg := types.NewMsgUndelegate(zoneId, seq, clientCtx.GetFromAddress())
 
-			if err := msg.ValidateBasic(); err != nil {
+			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
 
@@ -190,8 +195,8 @@ func txClaimSnAssetCmd() *cobra.Command {
 
 func txIcaWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "ica-withdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time]",
-		Args: cobra.ExactArgs(4),
+		Use:  "ica-withdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time] [sequence]",
+		Args: cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -209,7 +214,12 @@ func txIcaWithdrawCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgIcaWithdraw(zoneId, clientCtx.GetFromAddress(), portId, chanId, t)
+			seq, err := strconv.ParseUint(args[4], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgIcaWithdraw(zoneId, clientCtx.GetFromAddress(), portId, chanId, t, seq)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -220,28 +230,7 @@ func txIcaWithdrawCmd() *cobra.Command {
 
 func txDelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "delegate [zone-id]",
-		Args: cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-
-			msg := types.NewMsgDelegate(zoneId, clientCtx.GetFromAddress())
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-func txReDelegateCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "redelegate [zone-id] [amount]",
+		Use:  "delegate [zone-id] [sequence]",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -250,64 +239,12 @@ func txReDelegateCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			amount, err := sdk.ParseCoinNormalized(args[1])
+			seq, err := strconv.ParseUint(args[2], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgReDelegate(zoneId, clientCtx.GetFromAddress(), amount)
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-func txReUnDelegateCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "reundelegate [zone-id] [amount]",
-		Args: cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			amount, err := sdk.ParseCoinNormalized(args[1])
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgReUndelegate(zoneId, clientCtx.GetFromAddress(), amount)
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-func txReIcaWithdrawCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "reicawithdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
-		Args: cobra.ExactArgs(4),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			portId := args[1]
-			chanId := args[2]
-			amount, err := sdk.ParseCoinNormalized(args[3])
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgReIcaWithdraw(zoneId, portId, chanId, clientCtx.GetFromAddress(), amount)
+			msg := types.NewMsgDelegate(zoneId, seq, clientCtx.GetFromAddress())
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
