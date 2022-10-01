@@ -25,6 +25,7 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type IBCTrace struct {
 	Version uint64 `protobuf:"varint,1,opt,name=version,proto3" json:"version,omitempty"`
 	Height  uint64 `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"`
+	State   uint64 `protobuf:"varint,3,opt,name=state,proto3" json:"state,omitempty"`
 }
 
 func (m *IBCTrace) Reset()         { *m = IBCTrace{} }
@@ -74,26 +75,103 @@ func (m *IBCTrace) GetHeight() uint64 {
 	return 0
 }
 
+func (m *IBCTrace) GetState() uint64 {
+	if m != nil {
+		return m.State
+	}
+	return 0
+}
+
+type VersionState struct {
+	ZoneId         string               `protobuf:"bytes,1,opt,name=zoneId,proto3" json:"zoneId,omitempty"`
+	CurrentVersion uint64               `protobuf:"varint,2,opt,name=current_version,json=currentVersion,proto3" json:"current_version,omitempty"`
+	Record         map[uint64]*IBCTrace `protobuf:"bytes,3,rep,name=record,proto3" json:"record,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (m *VersionState) Reset()         { *m = VersionState{} }
+func (m *VersionState) String() string { return proto.CompactTextString(m) }
+func (*VersionState) ProtoMessage()    {}
+func (*VersionState) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f747ac3da695793e, []int{1}
+}
+func (m *VersionState) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *VersionState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_VersionState.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *VersionState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VersionState.Merge(m, src)
+}
+func (m *VersionState) XXX_Size() int {
+	return m.Size()
+}
+func (m *VersionState) XXX_DiscardUnknown() {
+	xxx_messageInfo_VersionState.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_VersionState proto.InternalMessageInfo
+
+func (m *VersionState) GetZoneId() string {
+	if m != nil {
+		return m.ZoneId
+	}
+	return ""
+}
+
+func (m *VersionState) GetCurrentVersion() uint64 {
+	if m != nil {
+		return m.CurrentVersion
+	}
+	return 0
+}
+
+func (m *VersionState) GetRecord() map[uint64]*IBCTrace {
+	if m != nil {
+		return m.Record
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*IBCTrace)(nil), "nova.icacontrol.v1.IBCTrace")
+	proto.RegisterType((*VersionState)(nil), "nova.icacontrol.v1.VersionState")
+	proto.RegisterMapType((map[uint64]*IBCTrace)(nil), "nova.icacontrol.v1.VersionState.RecordEntry")
 }
 
 func init() { proto.RegisterFile("nova/icacontrol/v1/store.proto", fileDescriptor_f747ac3da695793e) }
 
 var fileDescriptor_f747ac3da695793e = []byte{
-	// 182 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcb, 0xcb, 0x2f, 0x4b,
-	0xd4, 0xcf, 0x4c, 0x4e, 0x4c, 0xce, 0xcf, 0x2b, 0x29, 0xca, 0xcf, 0xd1, 0x2f, 0x33, 0xd4, 0x2f,
-	0x2e, 0xc9, 0x2f, 0x4a, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x02, 0xc9, 0xeb, 0x21,
-	0xe4, 0xf5, 0xca, 0x0c, 0x95, 0x6c, 0xb8, 0x38, 0x3c, 0x9d, 0x9c, 0x43, 0x8a, 0x12, 0x93, 0x53,
-	0x85, 0x24, 0xb8, 0xd8, 0xcb, 0x52, 0x8b, 0x8a, 0x33, 0xf3, 0xf3, 0x24, 0x18, 0x15, 0x18, 0x35,
-	0x58, 0x82, 0x60, 0x5c, 0x21, 0x31, 0x2e, 0xb6, 0x8c, 0xd4, 0xcc, 0xf4, 0x8c, 0x12, 0x09, 0x26,
-	0xb0, 0x04, 0x94, 0xe7, 0xe4, 0x71, 0xe2, 0x91, 0x1c, 0xe3, 0x85, 0x47, 0x72, 0x8c, 0x0f, 0x1e,
-	0xc9, 0x31, 0x4e, 0x78, 0x2c, 0xc7, 0x70, 0xe1, 0xb1, 0x1c, 0xc3, 0x8d, 0xc7, 0x72, 0x0c, 0x51,
-	0x7a, 0xe9, 0x99, 0x25, 0x19, 0xa5, 0x49, 0x7a, 0xc9, 0xf9, 0xb9, 0xfa, 0xce, 0x89, 0x45, 0x99,
-	0x79, 0x89, 0xba, 0x39, 0x89, 0x49, 0xc5, 0xfa, 0x60, 0x27, 0x56, 0x20, 0x3b, 0xb2, 0xa4, 0xb2,
-	0x20, 0xb5, 0x38, 0x89, 0x0d, 0xec, 0x44, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0x29, 0x71,
-	0x40, 0xee, 0xc4, 0x00, 0x00, 0x00,
+	// 317 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x51, 0x41, 0x4b, 0xc3, 0x30,
+	0x18, 0x5d, 0x56, 0x37, 0x35, 0x13, 0x95, 0x20, 0x52, 0x44, 0xc2, 0xd8, 0xc5, 0x1d, 0x34, 0x65,
+	0xf3, 0x22, 0x1e, 0x37, 0x05, 0x77, 0x8d, 0xa2, 0xe0, 0x45, 0xb2, 0x2c, 0x6c, 0xc5, 0x99, 0x8c,
+	0x34, 0x2d, 0xd6, 0x5f, 0xe1, 0xcf, 0xf2, 0xb8, 0xa3, 0x47, 0x69, 0xef, 0xfe, 0x06, 0x69, 0x9a,
+	0x62, 0x41, 0x6f, 0x7d, 0xef, 0xfb, 0xde, 0x7b, 0xfd, 0xf2, 0x20, 0x96, 0x2a, 0x61, 0x41, 0xc8,
+	0x19, 0x57, 0xd2, 0x68, 0xb5, 0x0c, 0x92, 0x41, 0x10, 0x19, 0xa5, 0x05, 0x59, 0x69, 0x65, 0x14,
+	0x42, 0xc5, 0x9c, 0xfc, 0xce, 0x49, 0x32, 0xe8, 0x51, 0xb8, 0x35, 0x19, 0x8d, 0xef, 0x34, 0xe3,
+	0x02, 0xf9, 0x70, 0x33, 0x11, 0x3a, 0x0a, 0x95, 0xf4, 0x41, 0x17, 0xf4, 0x37, 0x68, 0x05, 0xd1,
+	0x21, 0x6c, 0x2f, 0x44, 0x38, 0x5f, 0x18, 0xbf, 0x69, 0x07, 0x0e, 0xa1, 0x03, 0xd8, 0x8a, 0x0c,
+	0x33, 0xc2, 0xf7, 0x2c, 0x5d, 0x82, 0xde, 0x37, 0x80, 0x3b, 0xf7, 0xa5, 0xf2, 0xb6, 0x20, 0x0a,
+	0xf9, 0x9b, 0x92, 0x62, 0x32, 0xb3, 0xbe, 0xdb, 0xd4, 0x21, 0x74, 0x02, 0xf7, 0x78, 0xac, 0xb5,
+	0x90, 0xe6, 0xa9, 0x0a, 0x2e, 0xfd, 0x77, 0x1d, 0xed, 0x5c, 0xd0, 0x15, 0x6c, 0x6b, 0xc1, 0x95,
+	0x9e, 0xf9, 0x5e, 0xd7, 0xeb, 0x77, 0x86, 0xa7, 0xe4, 0xef, 0x29, 0xa4, 0x1e, 0x49, 0xa8, 0x5d,
+	0xbf, 0x96, 0x46, 0xa7, 0xd4, 0x69, 0x8f, 0x1e, 0x60, 0xa7, 0x46, 0xa3, 0x7d, 0xe8, 0x3d, 0x8b,
+	0xd4, 0x9d, 0x5a, 0x7c, 0xa2, 0x21, 0x6c, 0x25, 0x6c, 0x19, 0x0b, 0xfb, 0x17, 0x9d, 0xe1, 0xf1,
+	0x7f, 0x29, 0xd5, 0x6b, 0xd1, 0x72, 0xf5, 0xb2, 0x79, 0x01, 0x46, 0x37, 0x1f, 0x19, 0x06, 0xeb,
+	0x0c, 0x83, 0xaf, 0x0c, 0x83, 0xf7, 0x1c, 0x37, 0xd6, 0x39, 0x6e, 0x7c, 0xe6, 0xb8, 0xf1, 0x48,
+	0xe6, 0xa1, 0x59, 0xc4, 0x53, 0xc2, 0xd5, 0x4b, 0x30, 0x66, 0x3a, 0x94, 0xec, 0x6c, 0xc9, 0xa6,
+	0x51, 0x60, 0x9b, 0x7a, 0xad, 0x77, 0x65, 0xd2, 0x95, 0x88, 0xa6, 0x6d, 0xdb, 0xd4, 0xf9, 0x4f,
+	0x00, 0x00, 0x00, 0xff, 0xff, 0xf7, 0x81, 0x9e, 0x95, 0xcb, 0x01, 0x00, 0x00,
 }
 
 func (m *IBCTrace) Marshal() (dAtA []byte, err error) {
@@ -116,6 +194,11 @@ func (m *IBCTrace) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.State != 0 {
+		i = encodeVarintStore(dAtA, i, uint64(m.State))
+		i--
+		dAtA[i] = 0x18
+	}
 	if m.Height != 0 {
 		i = encodeVarintStore(dAtA, i, uint64(m.Height))
 		i--
@@ -125,6 +208,65 @@ func (m *IBCTrace) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintStore(dAtA, i, uint64(m.Version))
 		i--
 		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *VersionState) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *VersionState) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *VersionState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Record) > 0 {
+		for k := range m.Record {
+			v := m.Record[k]
+			baseI := i
+			if v != nil {
+				{
+					size, err := v.MarshalToSizedBuffer(dAtA[:i])
+					if err != nil {
+						return 0, err
+					}
+					i -= size
+					i = encodeVarintStore(dAtA, i, uint64(size))
+				}
+				i--
+				dAtA[i] = 0x12
+			}
+			i = encodeVarintStore(dAtA, i, uint64(k))
+			i--
+			dAtA[i] = 0x8
+			i = encodeVarintStore(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if m.CurrentVersion != 0 {
+		i = encodeVarintStore(dAtA, i, uint64(m.CurrentVersion))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.ZoneId) > 0 {
+		i -= len(m.ZoneId)
+		copy(dAtA[i:], m.ZoneId)
+		i = encodeVarintStore(dAtA, i, uint64(len(m.ZoneId)))
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -151,6 +293,38 @@ func (m *IBCTrace) Size() (n int) {
 	}
 	if m.Height != 0 {
 		n += 1 + sovStore(uint64(m.Height))
+	}
+	if m.State != 0 {
+		n += 1 + sovStore(uint64(m.State))
+	}
+	return n
+}
+
+func (m *VersionState) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ZoneId)
+	if l > 0 {
+		n += 1 + l + sovStore(uint64(l))
+	}
+	if m.CurrentVersion != 0 {
+		n += 1 + sovStore(uint64(m.CurrentVersion))
+	}
+	if len(m.Record) > 0 {
+		for k, v := range m.Record {
+			_ = k
+			_ = v
+			l = 0
+			if v != nil {
+				l = v.Size()
+				l += 1 + sovStore(uint64(l))
+			}
+			mapEntrySize := 1 + sovStore(uint64(k)) + l
+			n += mapEntrySize + 1 + sovStore(uint64(mapEntrySize))
+		}
 	}
 	return n
 }
@@ -228,6 +402,241 @@ func (m *IBCTrace) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			m.State = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.State |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipStore(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthStore
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *VersionState) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowStore
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: VersionState: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: VersionState: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthStore
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthStore
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ZoneId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CurrentVersion", wireType)
+			}
+			m.CurrentVersion = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CurrentVersion |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Record", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthStore
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthStore
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Record == nil {
+				m.Record = make(map[uint64]*IBCTrace)
+			}
+			var mapkey uint64
+			var mapvalue *IBCTrace
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowStore
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowStore
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+				} else if fieldNum == 2 {
+					var mapmsglen int
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowStore
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapmsglen |= int(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					if mapmsglen < 0 {
+						return ErrInvalidLengthStore
+					}
+					postmsgIndex := iNdEx + mapmsglen
+					if postmsgIndex < 0 {
+						return ErrInvalidLengthStore
+					}
+					if postmsgIndex > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapvalue = &IBCTrace{}
+					if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
+						return err
+					}
+					iNdEx = postmsgIndex
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipStore(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthStore
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.Record[mapkey] = mapvalue
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipStore(dAtA[iNdEx:])

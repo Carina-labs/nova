@@ -44,7 +44,7 @@ message WithdrawInfo {
 
 message RecordInfo {
   string zone_id = 1;
-  IBCTrace delegate_trace = 2;
-  IBCTrace undelegate_trace = 3;
-  IBCTrace withdraw_trace = 4;
+  VersionState delegate_trace = 2;
+  VersionState undelegate_trace = 3;
+  VersionState withdraw_trace = 4;
 }

@@ -3,6 +3,7 @@ package nova.icacontrol.v1;
 
 import "gogoproto/gogo.proto";
 import "nova/icacontrol/v1/icacontrol.proto";
+import "nova/icacontrol/v1/store.proto";
 import "google/api/annotations.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
@@ -44,6 +45,13 @@ message QueryAutoStakingVersion {
 }
 
 message QueryAutoStakingVersionResponse {
+  IBCTrace version_info = 1;
+}
+
+message QueryCurrentAutoStakingVersion {
+  string zone_id = 1;
+}
+
+message QueryCurrentAutoStakingVersionResponse {
   uint64 version = 1;
-  uint64 height = 2;
 }

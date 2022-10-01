@@ -18,9 +18,6 @@ service Msg {
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
   rpc ClaimSnAsset(MsgClaimSnAsset) returns (MsgClaimSnAssetResponse);
   rpc IcaWithdraw(MsgIcaWithdraw) returns (MsgIcaWithdrawResponse);
-  rpc ReDelegate(MsgReDelegate) returns (MsgReDelegateResponse);
-  rpc ReUndelegate(MsgReUndelegate) returns (MsgReUndelegateResponse);
-  rpc ReIcaWithdraw(MsgReIcaWithdraw) returns (MsgReIcaWithdrawResponse);
 }
 
 // MsgDeposit defines user who deposit and amount of coins.
@@ -40,6 +37,7 @@ message MsgDepositResponse {
 message MsgDelegate {
   string zone_id = 1;
   string controller_address = 2;
+  uint64 version = 3;
 }
 
 message MsgDelegateResponse {}
@@ -47,6 +45,7 @@ message MsgDelegateResponse {}
 message MsgUndelegate {
   string zone_id = 1;
   string controller_address = 2;
+  uint64 version = 3;
 }
 
 message MsgUndelegateResponse{
@@ -100,38 +99,7 @@ message MsgIcaWithdraw{
   string ica_transfer_port_id = 3;
   string ica_transfer_channel_id = 4;
   google.protobuf.Timestamp chain_time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  uint64 version = 6;
 }
 
 message MsgIcaWithdrawResponse{}
-
-message MsgReDelegate {
-  string zone_id = 1;
-  string controller_address = 2;
-  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
-}
-
-message MsgReDelegateResponse {}
-
-message MsgReUndelegate {
-  string zone_id = 1;
-  string controller_address = 2;
-  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
-}
-
-message MsgReUndelegateResponse{
-  string zone_id = 1;
-  cosmos.base.v1beta1.Coin total_undelegate_asset = 2 [(gogoproto.nullable) = false];
-}
-
-message MsgReIcaWithdraw {
-  string zone_id = 1;
-  string controller_address = 2;
-  string ica_transfer_port_id = 3;
-  string ica_transfer_channel_id = 4;
-  cosmos.base.v1beta1.Coin amount = 5 [(gogoproto.nullable) = false];
-}
-
-message MsgReIcaWithdrawResponse{
-  string zone_id = 1;
-  cosmos.base.v1beta1.Coin total_withdraw_asset = 2 [(gogoproto.nullable) = false];
-}

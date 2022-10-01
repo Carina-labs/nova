@@ -4,6 +4,7 @@ package nova.gal.v1;
 import "gogoproto/gogo.proto";
 import "nova/gal/v1/params.proto";
 import "nova/gal/v1/gal.proto";
+import "nova/gal/v1/store.proto";
 import "google/api/annotations.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
@@ -49,14 +50,26 @@ service Query {
   }
 
   rpc DelegateVersion(QueryDelegateVersion) returns (QueryDelegateVersionResponse) {
-    option (google.api.http).get = "/nova/gal/v1/delegate_version/{zone_id}";
+    option (google.api.http).get = "/nova/gal/v1/delegate_version/{zone_id}/{version}";
   }
 
   rpc UndelegateVersion(QueryUndelegateVersion) returns (QueryUndelegateVersionResponse) {
-    option (google.api.http).get = "/nova/gal/v1/undelegate_version/{zone_id}";
+    option (google.api.http).get = "/nova/gal/v1/undelegate_version/{zone_id}/{version}";
   }
 
   rpc WithdrawVersion(QueryWithdrawVersion) returns (QueryWithdrawVersionResponse) {
+    option (google.api.http).get = "/nova/gal/v1/withdraw_version/{zone_id}/{version}";
+  }
+
+  rpc DelegateCurrentVersion(QueryCurrentDelegateVersion) returns (QueryCurrentDelegateVersionResponse) {
+    option (google.api.http).get = "/nova/gal/v1/delegate_version/{zone_id}";
+  }
+
+  rpc UndelegateCurrentVersion(QueryCurrentUndelegateVersion) returns (QueryCurrentUndelegateVersionResponse) {
+    option (google.api.http).get = "/nova/gal/v1/undelegate_version/{zone_id}";
+  }
+
+  rpc WithdrawCurrentVersion(QueryCurrentWithdrawVersion) returns (QueryCurrentWithdrawVersionResponse) {
     option (google.api.http).get = "/nova/gal/v1/withdraw_version/{zone_id}";
   }
 }
@@ -155,27 +168,51 @@ message QueryEstimateSnAssetResponse {
 
 message QueryDelegateVersion {
   string zone_id = 1;
+  uint64 version = 2;
 }
 
 message QueryDelegateVersionResponse {
-  uint64 version = 1;
-  uint64 height = 2;
+  IBCTrace version_info = 1;
 }
 
 message QueryUndelegateVersion {
   string zone_id = 1;
+  uint64 version = 2;
 }
 
 message QueryUndelegateVersionResponse {
-  uint64 version = 1;
-  uint64 height = 2;
+  IBCTrace version_info = 1;
 }
 
 message QueryWithdrawVersion {
   string zone_id = 1;
+  uint64 version = 2;
 }
 
 message QueryWithdrawVersionResponse {
+  IBCTrace version_info = 1;
+}
+
+message QueryCurrentDelegateVersion {
+  string zone_id = 1;
+}
+
+message QueryCurrentDelegateVersionResponse {
   uint64 version = 1;
-  uint64 height = 2;
+}
+
+message QueryCurrentUndelegateVersion {
+  string zone_id = 1;
+}
+
+message QueryCurrentUndelegateVersionResponse {
+  uint64 version = 1;
+}
+
+message QueryCurrentWithdrawVersion {
+  string zone_id = 1;
+}
+
+message QueryCurrentWithdrawVersionResponse {
+  uint64 version = 1;
 }

@@ -34,6 +34,9 @@ type QueryClient interface {
 	DelegateVersion(ctx context.Context, in *QueryDelegateVersion, opts ...grpc.CallOption) (*QueryDelegateVersionResponse, error)
 	UndelegateVersion(ctx context.Context, in *QueryUndelegateVersion, opts ...grpc.CallOption) (*QueryUndelegateVersionResponse, error)
 	WithdrawVersion(ctx context.Context, in *QueryWithdrawVersion, opts ...grpc.CallOption) (*QueryWithdrawVersionResponse, error)
+	DelegateCurrentVersion(ctx context.Context, in *QueryCurrentDelegateVersion, opts ...grpc.CallOption) (*QueryCurrentDelegateVersionResponse, error)
+	UndelegateCurrentVersion(ctx context.Context, in *QueryCurrentUndelegateVersion, opts ...grpc.CallOption) (*QueryCurrentUndelegateVersionResponse, error)
+	WithdrawCurrentVersion(ctx context.Context, in *QueryCurrentWithdrawVersion, opts ...grpc.CallOption) (*QueryCurrentWithdrawVersionResponse, error)
 }
 
 type queryClient struct {
@@ -152,6 +155,33 @@ func (c *queryClient) WithdrawVersion(ctx context.Context, in *QueryWithdrawVers
 	return out, nil
 }
 
+func (c *queryClient) DelegateCurrentVersion(ctx context.Context, in *QueryCurrentDelegateVersion, opts ...grpc.CallOption) (*QueryCurrentDelegateVersionResponse, error) {
+	out := new(QueryCurrentDelegateVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DelegateCurrentVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) UndelegateCurrentVersion(ctx context.Context, in *QueryCurrentUndelegateVersion, opts ...grpc.CallOption) (*QueryCurrentUndelegateVersionResponse, error) {
+	out := new(QueryCurrentUndelegateVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/UndelegateCurrentVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) WithdrawCurrentVersion(ctx context.Context, in *QueryCurrentWithdrawVersion, opts ...grpc.CallOption) (*QueryCurrentWithdrawVersionResponse, error) {
+	out := new(QueryCurrentWithdrawVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/WithdrawCurrentVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -168,6 +198,9 @@ type QueryServer interface {
 	DelegateVersion(context.Context, *QueryDelegateVersion) (*QueryDelegateVersionResponse, error)
 	UndelegateVersion(context.Context, *QueryUndelegateVersion) (*QueryUndelegateVersionResponse, error)
 	WithdrawVersion(context.Context, *QueryWithdrawVersion) (*QueryWithdrawVersionResponse, error)
+	DelegateCurrentVersion(context.Context, *QueryCurrentDelegateVersion) (*QueryCurrentDelegateVersionResponse, error)
+	UndelegateCurrentVersion(context.Context, *QueryCurrentUndelegateVersion) (*QueryCurrentUndelegateVersionResponse, error)
+	WithdrawCurrentVersion(context.Context, *QueryCurrentWithdrawVersion) (*QueryCurrentWithdrawVersionResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -210,6 +243,15 @@ func (UnimplementedQueryServer) UndelegateVersion(context.Context, *QueryUndeleg
 }
 func (UnimplementedQueryServer) WithdrawVersion(context.Context, *QueryWithdrawVersion) (*QueryWithdrawVersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WithdrawVersion not implemented")
+}
+func (UnimplementedQueryServer) DelegateCurrentVersion(context.Context, *QueryCurrentDelegateVersion) (*QueryCurrentDelegateVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelegateCurrentVersion not implemented")
+}
+func (UnimplementedQueryServer) UndelegateCurrentVersion(context.Context, *QueryCurrentUndelegateVersion) (*QueryCurrentUndelegateVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UndelegateCurrentVersion not implemented")
+}
+func (UnimplementedQueryServer) WithdrawCurrentVersion(context.Context, *QueryCurrentWithdrawVersion) (*QueryCurrentWithdrawVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WithdrawCurrentVersion not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -440,6 +482,60 @@ func _Query_WithdrawVersion_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_DelegateCurrentVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCurrentDelegateVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).DelegateCurrentVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/DelegateCurrentVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).DelegateCurrentVersion(ctx, req.(*QueryCurrentDelegateVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_UndelegateCurrentVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCurrentUndelegateVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).UndelegateCurrentVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/UndelegateCurrentVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).UndelegateCurrentVersion(ctx, req.(*QueryCurrentUndelegateVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_WithdrawCurrentVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCurrentWithdrawVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).WithdrawCurrentVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/WithdrawCurrentVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).WithdrawCurrentVersion(ctx, req.(*QueryCurrentWithdrawVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -494,6 +590,18 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WithdrawVersion",
 			Handler:    _Query_WithdrawVersion_Handler,
+		},
+		{
+			MethodName: "DelegateCurrentVersion",
+			Handler:    _Query_DelegateCurrentVersion_Handler,
+		},
+		{
+			MethodName: "UndelegateCurrentVersion",
+			Handler:    _Query_UndelegateCurrentVersion_Handler,
+		},
+		{
+			MethodName: "WithdrawCurrentVersion",
+			Handler:    _Query_WithdrawCurrentVersion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

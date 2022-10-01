@@ -119,6 +119,7 @@ message MsgIcaAutoStaking{
   string host_address = 2;
   string controller_address = 3;
   cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+  uint64 version = 5;
 }
 
 // MsgIcaAutoStakingResponse is a response message for MsgIcaAutoStaking.

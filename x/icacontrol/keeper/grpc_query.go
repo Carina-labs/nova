@@ -49,10 +49,10 @@ func (q QueryServer) AutoStakingVersion(goCtx context.Context, request *types.Qu
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
 
-	version, height := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
+	versionInfo := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
 
 	return &types.QueryAutoStakingVersionResponse{
-		Version: version,
-		Height:  height,
+		Version: versionInfo.Version,
+		Height:  versionInfo.Height,
 	}, nil
 }
