@@ -109,6 +109,22 @@ func (k Keeper) GetRegisterZoneForPortId(ctx sdk.Context, portId string) (*types
 	return zone, ok
 }
 
+// GetRegisterZoneForHostAddr returns the appropriate Zone information for host address.
+func (k Keeper) GetRegisterZoneForHostAddr(ctx sdk.Context, hostAddr string) (*types.RegisteredZone, bool) {
+	var zone *types.RegisteredZone
+	ok := false
+	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
+		if zoneInfo.IcaAccount.HostAddress == hostAddr {
+			zone = &zoneInfo
+			ok = true
+			return true
+		}
+		return false
+	})
+
+	return zone, ok
+}
+
 // GetsnDenomForBaseDenom returns an appropriate pair of sn-asset denom for BaseDenom.
 func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, baseDenom string) string {
 	var snDenom string

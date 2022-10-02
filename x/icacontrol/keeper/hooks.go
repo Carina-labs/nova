@@ -4,6 +4,7 @@ import (
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 // Implements ICAHooks interface
@@ -21,8 +22,20 @@ func (k Keeper) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.M
 	}
 }
 
-func (k Keeper) AfterAutoStakingEnd() {
+func (k Keeper) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	if k.hooks != nil {
-		k.hooks.AfterAutoStakingEnd()
+		k.hooks.AfterDelegateFail(ctx, delegateMsg)
+	}
+}
+
+func (k Keeper) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate) {
+	if k.hooks != nil {
+		k.hooks.AfterUndelegateFail(ctx, undelegateMsg)
+	}
+}
+
+func (k Keeper) AfterTransferFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+	if k.hooks != nil {
+		k.hooks.AfterTransferFail(ctx, transferMsg)
 	}
 }

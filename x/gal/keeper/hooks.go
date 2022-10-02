@@ -86,7 +86,6 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
 }
 
-// delegateAddr(controllerAddr), validatorAddr, delegateAmt
 func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	// getZoneInfoForValidatorAddr
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
@@ -150,10 +149,6 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
 }
 
-func (h Hooks) BeforeUndelegateStart(ctx sdk.Context, zoneId string) {
-
-}
-
 // AfterUndelegateEnd is executed when ICA undelegation request finished.
 // 1. It removes undelegation history in store.
 // 2. It saves undelegation finish time to store.
@@ -187,6 +182,47 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 
 }
 
-func (h Hooks) AfterAutoStakingEnd() {
+func (h Hooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
+	zone := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
 
+	versionInfo := h.k.GetDelegateVersion(ctx, zone.ZoneId)
+	currentVersion := versionInfo.CurrentVersion
+
+	versionInfo.Record[currentVersion] = &types.IBCTrace{
+		Height:  uint64(ctx.BlockHeight()),
+		Version: types.IcaFail,
+	}
+
+	h.k.SetDelegateVersion(ctx, zone.ZoneId, versionInfo)
+}
+
+func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate) {
+	zone := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
+
+	versionInfo := h.k.GetUndelegateVersion(ctx, zone.ZoneId)
+	currentVersion := versionInfo.CurrentVersion
+
+	versionInfo.Record[currentVersion] = &types.IBCTrace{
+		Height:  uint64(ctx.BlockHeight()),
+		Version: types.IcaFail,
+	}
+
+	h.k.SetUndelegateVersion(ctx, zone.ZoneId, versionInfo)
+}
+
+func (h Hooks) AfterTransferFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+	zone, ok := h.k.icaControlKeeper.GetRegisterZoneForHostAddr(ctx, transferMsg.Sender)
+	if !ok {
+		return
+	}
+
+	versionInfo := h.k.GetUndelegateVersion(ctx, zone.ZoneId)
+	currentVersion := versionInfo.CurrentVersion
+
+	versionInfo.Record[currentVersion] = &types.IBCTrace{
+		Height:  uint64(ctx.BlockHeight()),
+		Version: types.IcaFail,
+	}
+
+	h.k.SetUndelegateVersion(ctx, zone.ZoneId, versionInfo)
 }
