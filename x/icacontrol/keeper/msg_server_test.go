@@ -425,7 +425,7 @@ func (suite *KeeperTestSuite) TestIcaUndelegate() {
 			name: "success",
 			msg: types.MsgIcaUndelegate{
 				ZoneId:            zoneId,
-				HostAddress:       hostAddr.String(),
+				HostAddress:       randAddr.String(),
 				ControllerAddress: baseOwnerAcc.String(),
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},

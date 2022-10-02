@@ -5,6 +5,7 @@ import (
 	distributiontype "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	"time"
 
+	galtypes "github.com/Carina-labs/nova/x/gal/types"
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -16,6 +17,65 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
+func (suite *KeeperTestSuite) SetVersion(msgType string, zoneInfo types.RegisteredZone) {
+
+	switch msgType {
+	case "delegate":
+		versionInfo := galtypes.VersionState{
+			CurrentVersion: 0,
+			ZoneId:         zoneId,
+			Record: map[uint64]*galtypes.IBCTrace{
+				0: {
+					Version: 0,
+					State:   types.IcaRequest,
+				},
+			},
+		}
+		suite.App.GalKeeper.SetDelegateVersion(suite.Ctx, zoneInfo.ZoneId, versionInfo)
+		break
+	case "undelegate", "undelegate error":
+		versionInfo := galtypes.VersionState{
+			CurrentVersion: 0,
+			ZoneId:         zoneId,
+			Record: map[uint64]*galtypes.IBCTrace{
+				0: {
+					Version: 0,
+					State:   types.IcaRequest,
+				},
+			},
+		}
+		suite.App.GalKeeper.SetUndelegateVersion(suite.Ctx, zoneInfo.ZoneId, versionInfo)
+		break
+	case "autostaking":
+		versionInfo := types.VersionState{
+			CurrentVersion: 0,
+			ZoneId:         zoneId,
+			Record: map[uint64]*types.IBCTrace{
+				0: {
+					Version: 0,
+					State:   types.IcaRequest,
+				},
+			},
+		}
+		suite.App.IcaControlKeeper.SetAutoStakingVersion(suite.Ctx, zoneInfo.ZoneId, versionInfo)
+		break
+	case "transfer":
+		versionInfo := galtypes.VersionState{
+			CurrentVersion: 0,
+			ZoneId:         zoneId,
+			Record: map[uint64]*galtypes.IBCTrace{
+				0: {
+					Version: 0,
+					State:   types.IcaRequest,
+				},
+			},
+		}
+		suite.App.GalKeeper.SetWithdrawVersion(suite.Ctx, zoneInfo.ZoneId, versionInfo)
+		break
+	}
+	return
+
+}
 func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.RegisteredZone) ibcaccounttypes.InterchainAccountPacketData {
 	var msgs []sdk.Msg
 	switch msgType {
@@ -273,6 +333,7 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
+			suite.SetVersion(tc.name, zone[0])
 			res, err := suite.App.IcaControlKeeper.HandleAckMsgData(suite.Ctx, tc.packet, tc.args)
 			suite.NoError(err)
 
