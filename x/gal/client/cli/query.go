@@ -5,6 +5,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
+	"strconv"
 )
 
 func queryParams() *cobra.Command {
@@ -224,9 +225,9 @@ func queryWithdrawRecords() *cobra.Command {
 
 func queryDelegateVersion() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "delegate-version [zone-id]",
+		Use:  "delegate-version [zone-id] [version]",
 		Long: "Query for delegate version",
-		Args: cobra.ExactArgs(1),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -234,9 +235,14 @@ func queryDelegateVersion() *cobra.Command {
 			}
 
 			queryClient := types.NewQueryClient(clientCtx)
+			version, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
 
 			res, err := queryClient.DelegateVersion(cmd.Context(), &types.QueryDelegateVersion{
-				ZoneId: args[0],
+				ZoneId:  args[0],
+				Version: version,
 			})
 			if err != nil {
 				return err
@@ -251,9 +257,9 @@ func queryDelegateVersion() *cobra.Command {
 
 func queryUndelegateVersion() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "undelegate-version [zone-id]",
+		Use:  "undelegate-version [zone-id] [version]",
 		Long: "Query for undelegate version",
-		Args: cobra.ExactArgs(1),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -261,9 +267,14 @@ func queryUndelegateVersion() *cobra.Command {
 			}
 
 			queryClient := types.NewQueryClient(clientCtx)
+			version, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
 
 			res, err := queryClient.UndelegateVersion(cmd.Context(), &types.QueryUndelegateVersion{
-				ZoneId: args[0],
+				ZoneId:  args[0],
+				Version: version,
 			})
 			if err != nil {
 				return err
@@ -278,9 +289,9 @@ func queryUndelegateVersion() *cobra.Command {
 
 func queryWithdrawVersion() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "withdraw-version [zone-id]",
+		Use:  "withdraw-version [zone-id] [version]",
 		Long: "Query for withdraw version",
-		Args: cobra.ExactArgs(1),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -288,9 +299,14 @@ func queryWithdrawVersion() *cobra.Command {
 			}
 
 			queryClient := types.NewQueryClient(clientCtx)
+			version, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
 
 			res, err := queryClient.WithdrawVersion(cmd.Context(), &types.QueryWithdrawVersion{
-				ZoneId: args[0],
+				ZoneId:  args[0],
+				Version: version,
 			})
 			if err != nil {
 				return err
