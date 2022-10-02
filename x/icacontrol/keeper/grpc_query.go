@@ -51,7 +51,24 @@ func (q QueryServer) AutoStakingVersion(goCtx context.Context, request *types.Qu
 
 	versionInfo := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
 
+
 	return &types.QueryAutoStakingVersionResponse{
-		VersionInfo: versionInfo.Record[versionInfo.CurrentVersion],
+		VersionInfo: versionInfo.Record[request.Version],
+	}, nil
+}
+
+func (q QueryServer) AutoStakingCurrentVersion(goCtx context.Context, request *types.QueryCurrentAutoStakingVersion) (*types.QueryCurrentAutoStakingVersionResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	_, ok := q.keeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	versionInfo := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
+
+
+	return &types.QueryCurrentAutoStakingVersionResponse{
+		Version: versionInfo.CurrentVersion,
 	}, nil
 }

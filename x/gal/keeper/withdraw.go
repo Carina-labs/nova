@@ -109,15 +109,25 @@ func (k Keeper) GetWithdrawVersion(ctx sdk.Context, zoneId string) types.Version
 }
 
 func (k Keeper) IsValidWithdrawVersion(ctx sdk.Context, zoneId string, version uint64) bool {
-	//get delegateState
+	//get withdraw version
 	versionInfo := k.GetWithdrawVersion(ctx, zoneId)
+	if versionInfo.ZoneId == "" {
+		versionInfo.ZoneId = zoneId
+		versionInfo.CurrentVersion = 0
+		versionInfo.Record = make(map[uint64]*types.IBCTrace)
+		versionInfo.Record[0] = &types.IBCTrace{
+			Version: 0,
+			State:   types.IcaPending,
+		}
 
-	if versionInfo.CurrentVersion >= version && versionInfo.Record[version].State == types.IcaPending {
+		k.SetWithdrawVersion(ctx, zoneId, versionInfo)
+	}
+
+	if versionInfo.CurrentVersion >= version && (versionInfo.Record[version].State == types.IcaPending || versionInfo.Record[version].State == types.IcaFail) {
 		return true
 	}
 	return false
 }
-
 
 // SetWithdrawRecordVersion set new version to withdraw record corresponding to zoneId and state.
 func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state types.WithdrawStatusType, version uint64) {
@@ -164,6 +174,20 @@ func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom s
 			}
 		}
 		k.SetWithdrawRecord(ctx, withdrawInfo)
+		return false
+	})
+	return amount
+}
+
+func (k Keeper) GetTotalWithdrawAmountForFailCase(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {
+	amount := sdk.NewCoin(denom, sdk.ZeroInt())
+
+	k.IterateWithdrawRecords(ctx, zoneId, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
+		for _, record := range withdrawInfo.Records {
+			if record.CompletionTime.Before(blockTime) && record.State == types.WithdrawStatusTransferRequest {
+				amount.Amount = amount.Amount.Add(record.Amount)
+			}
+		}
 		return false
 	})
 	return amount

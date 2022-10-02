@@ -30,3 +30,25 @@ func (k Keeper) GetAutoStakingVersion(ctx sdk.Context, zoneId string) types.Vers
 
 	return record
 }
+
+func (k Keeper) IsValidAutoStakingVersion(ctx sdk.Context, zoneId string, version uint64) bool {
+	//get autostaking state
+	versionInfo := k.GetAutoStakingVersion(ctx, zoneId)
+	if versionInfo.ZoneId == "" {
+		versionInfo.ZoneId = zoneId
+		versionInfo.CurrentVersion = 0
+		versionInfo.Record = make(map[uint64]*types.IBCTrace)
+		versionInfo.Record[0] = &types.IBCTrace{
+			Version: 0,
+			State:   types.IcaPending,
+		}
+
+		k.SetAutoStakingVersion(ctx, zoneId, versionInfo)
+	}
+
+	currentVersion := versionInfo.Record[version]
+	if versionInfo.CurrentVersion >= version && (currentVersion.State == types.IcaPending || currentVersion.State == types.IcaFail) {
+		return true
+	}
+	return false
+}

@@ -81,16 +81,20 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		versionInfo := k.GetAutoStakingVersion(ctx, zone.ZoneId)
 		currentVersion := versionInfo.CurrentVersion
 
-		versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
-		versionInfo.Record[currentVersion].State = types.IcaSuccess
+		versionInfo.Record[currentVersion] = &types.IBCTrace{
+			Height:  uint64(ctx.BlockHeight()),
+			Version: types.IcaSuccess,
+		}
 
-		nextVersion := currentVersion + 1
+		// set withdraw version
+		nextVersion := versionInfo.CurrentVersion + 1
 		versionInfo.CurrentVersion = nextVersion
-		versionInfo.Record[nextVersion].Version = nextVersion
-		versionInfo.Record[nextVersion].State = types.IcaPending
+		versionInfo.Record[nextVersion] = &types.IBCTrace{
+			Version: nextVersion,
+			State:   types.IcaPending,
+		}
 
 		k.SetAutoStakingVersion(ctx, zone.ZoneId, versionInfo)
-
 		return "", nil
 	default:
 		return "", nil

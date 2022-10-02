@@ -71,15 +71,17 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
 
 	// change version state
-	versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
-	versionInfo.Record[currentVersion].State = types.IcaSuccess
+	versionInfo.Record[currentVersion] = &types.IBCTrace{
+		Height:  uint64(ctx.BlockHeight()),
+		Version: types.IcaSuccess,
+	}
 
 	// set withdraw version
 	nextVersion := versionInfo.CurrentVersion + 1
 	versionInfo.CurrentVersion = nextVersion
 	versionInfo.Record[nextVersion] = &types.IBCTrace{
 		Version: nextVersion,
-		State: icatypes.IcaPending,
+		State:   icatypes.IcaPending,
 	}
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
 }
@@ -100,8 +102,10 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	h.k.SetDepositOracleVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, oracleVersion)
 	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, currentVersion)
 
-	versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
-	versionInfo.Record[currentVersion].State = types.IcaSuccess
+	versionInfo.Record[currentVersion] = &types.IBCTrace{
+		Height: uint64(ctx.BlockHeight()),
+		State:  types.IcaSuccess,
+	}
 
 	nextVersion := versionInfo.CurrentVersion + 1
 	versionInfo.CurrentVersion = nextVersion
@@ -132,10 +136,14 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, currentVersion)
 	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
 
-	versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
-	versionInfo.CurrentVersion = currentVersion + 1
-	versionInfo.Record[currentVersion].State = types.IcaSuccess
-	versionInfo.Record[currentVersion+1] = &types.IBCTrace{
+	versionInfo.Record[currentVersion] = &types.IBCTrace{
+		Height: uint64(ctx.BlockHeight()),
+		State:  types.IcaSuccess,
+	}
+
+	nextVersion := currentVersion + 1
+	versionInfo.CurrentVersion = nextVersion
+	versionInfo.Record[nextVersion] = &types.IBCTrace{
 		Version: currentVersion + 1,
 		State:   types.IcaPending,
 	}
@@ -164,10 +172,12 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 
 	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
 
-	nextVersion := currentVersion + 1
-	versionInfo.Record[currentVersion].Height = uint64(ctx.BlockHeight())
-	versionInfo.Record[currentVersion].State = types.IcaSuccess
+	versionInfo.Record[currentVersion] = &types.IBCTrace{
+		Height: uint64(ctx.BlockHeight()),
+		State:  types.IcaSuccess,
+	}
 
+	nextVersion := currentVersion + 1
 	versionInfo.CurrentVersion = nextVersion
 	versionInfo.Record[nextVersion] = &types.IBCTrace{
 		Version: nextVersion,
