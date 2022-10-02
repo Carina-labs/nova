@@ -3,12 +3,15 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 )
 
 type ICAHooks interface {
 	AfterDelegateEnd(sdk.Context, stakingtypes.MsgDelegate)
 	AfterUndelegateEnd(sdk.Context, stakingtypes.MsgUndelegate, *stakingtypes.MsgUndelegateResponse)
-	AfterAutoStakingEnd()
+	AfterDelegateFail(sdk.Context, stakingtypes.MsgDelegate)
+	AfterUndelegateFail(sdk.Context, stakingtypes.MsgUndelegate)
+	AfterTransferFail(sdk.Context, transfertypes.MsgTransfer)
 }
 
 var _ ICAHooks = MultiICAHooks{}
@@ -31,8 +34,20 @@ func (h MultiICAHooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg staking
 	}
 }
 
-func (h MultiICAHooks) AfterAutoStakingEnd() {
+func (h MultiICAHooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	for i := range h {
-		h[i].AfterAutoStakingEnd()
+		h[i].AfterDelegateFail(ctx, delegateMsg)
+	}
+}
+
+func (h MultiICAHooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate) {
+	for i := range h {
+		h[i].AfterUndelegateFail(ctx, undelegateMsg)
+	}
+}
+
+func (h MultiICAHooks) AfterTransferFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+	for i := range h {
+		h[i].AfterTransferFail(ctx, transferMsg)
 	}
 }

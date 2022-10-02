@@ -132,6 +132,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return err
 		}
 
+		k.AfterDelegateFail(ctx, *data)
 	case *stakingtypes.MsgUndelegate:
 		data := packetData[0].(*stakingtypes.MsgUndelegate)
 
@@ -147,6 +148,8 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 		if err != nil {
 			return err
 		}
+
+		k.AfterUndelegateFail(ctx, *data)
 
 	case *distributiontype.MsgWithdrawDelegatorReward:
 		if len(packetData) != 2 {
@@ -171,6 +174,16 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return err
 		}
 
+		zoneInfo := k.GetRegisteredZoneForValidatorAddr(ctx, data.ValidatorAddress)
+		versionInfo := k.GetAutoStakingVersion(ctx, zoneInfo.ZoneId)
+		currentVersion := versionInfo.CurrentVersion
+
+		versionInfo.Record[currentVersion] = &types.IBCTrace{
+			Version: currentVersion,
+			State:   types.IcaFail,
+		}
+
+		k.SetAutoStakingVersion(ctx, zoneInfo.ZoneId, versionInfo)
 	case *transfertypes.MsgTransfer:
 		data := packetData[0].(*transfertypes.MsgTransfer)
 
@@ -190,6 +203,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return err
 		}
 
+		k.AfterTransferFail(ctx, *data)
 	default:
 		return types.ErrMsgNotFound
 	}

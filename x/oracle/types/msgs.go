@@ -51,7 +51,14 @@ func (msg MsgRegisterOracleAddr) GetSigners() []sdk.AccAddress {
 
 func (msg MsgRegisterOracleAddr) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.FromAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid from address (%s)", err)
+	}
+
 	_, err = sdk.AccAddressFromBech32(msg.OracleAddress)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid oracle address (%s)", err)
+	}
 
 	if msg.ZoneId == "" {
 		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
