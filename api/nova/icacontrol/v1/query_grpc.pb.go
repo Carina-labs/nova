@@ -26,6 +26,7 @@ type QueryClient interface {
 	AllZones(ctx context.Context, in *QueryAllZonesRequest, opts ...grpc.CallOption) (*QueryAllZonesResponse, error)
 	Zone(ctx context.Context, in *QueryZoneRequest, opts ...grpc.CallOption) (*QueryZoneResponse, error)
 	AutoStakingVersion(ctx context.Context, in *QueryAutoStakingVersion, opts ...grpc.CallOption) (*QueryAutoStakingVersionResponse, error)
+	AutoStakingCurrentVersion(ctx context.Context, in *QueryCurrentAutoStakingVersion, opts ...grpc.CallOption) (*QueryCurrentAutoStakingVersionResponse, error)
 }
 
 type queryClient struct {
@@ -63,6 +64,15 @@ func (c *queryClient) AutoStakingVersion(ctx context.Context, in *QueryAutoStaki
 	return out, nil
 }
 
+func (c *queryClient) AutoStakingCurrentVersion(ctx context.Context, in *QueryCurrentAutoStakingVersion, opts ...grpc.CallOption) (*QueryCurrentAutoStakingVersionResponse, error) {
+	out := new(QueryCurrentAutoStakingVersionResponse)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Query/AutoStakingCurrentVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -71,6 +81,7 @@ type QueryServer interface {
 	AllZones(context.Context, *QueryAllZonesRequest) (*QueryAllZonesResponse, error)
 	Zone(context.Context, *QueryZoneRequest) (*QueryZoneResponse, error)
 	AutoStakingVersion(context.Context, *QueryAutoStakingVersion) (*QueryAutoStakingVersionResponse, error)
+	AutoStakingCurrentVersion(context.Context, *QueryCurrentAutoStakingVersion) (*QueryCurrentAutoStakingVersionResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -86,6 +97,9 @@ func (UnimplementedQueryServer) Zone(context.Context, *QueryZoneRequest) (*Query
 }
 func (UnimplementedQueryServer) AutoStakingVersion(context.Context, *QueryAutoStakingVersion) (*QueryAutoStakingVersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AutoStakingVersion not implemented")
+}
+func (UnimplementedQueryServer) AutoStakingCurrentVersion(context.Context, *QueryCurrentAutoStakingVersion) (*QueryCurrentAutoStakingVersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AutoStakingCurrentVersion not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -154,6 +168,24 @@ func _Query_AutoStakingVersion_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_AutoStakingCurrentVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryCurrentAutoStakingVersion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AutoStakingCurrentVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.icacontrol.v1.Query/AutoStakingCurrentVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AutoStakingCurrentVersion(ctx, req.(*QueryCurrentAutoStakingVersion))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -172,6 +204,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AutoStakingVersion",
 			Handler:    _Query_AutoStakingVersion_Handler,
+		},
+		{
+			MethodName: "AutoStakingCurrentVersion",
+			Handler:    _Query_AutoStakingCurrentVersion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

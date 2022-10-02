@@ -77,7 +77,7 @@ func (suite *KeeperTestSuite) TestAutoStakingVersion() {
 	suite.Require().Error(err)
 
 	//version is zero
-	exp := types.QueryAutoStakingVersionResponse{Version: 0, Height: 0}
+	exp := types.QueryAutoStakingVersionResponse{}
 
 	res, err := queryClient.AutoStakingVersion(ctx.Context(), &types.QueryAutoStakingVersion{
 		ZoneId: zoneId,
@@ -87,17 +87,40 @@ func (suite *KeeperTestSuite) TestAutoStakingVersion() {
 	suite.Require().Equal(res, &exp)
 
 	//version is 30
-	exp = types.QueryAutoStakingVersionResponse{Version: 30, Height: 1}
-
-	trace := types.IBCTrace{
-		Version: 30,
-		Height:  uint64(ctx.BlockHeight()),
+	exp = types.QueryAutoStakingVersionResponse{
+		VersionInfo: &types.IBCTrace{
+			Version: 30,
+			Height:  1,
+			State:   types.IcaPending,
+		},
 	}
-	//set delegate version
-	suite.App.IcaControlKeeper.SetAutoStakingVersion(ctx, zoneId, trace)
+
+	versionInfo := types.VersionState{
+		ZoneId:         zoneId,
+		CurrentVersion: 1,
+		Record: map[uint64]*types.IBCTrace{
+			0: {
+				Version: 30,
+				Height:  uint64(ctx.BlockHeight()),
+				State:   types.IcaPending,
+			},
+		},
+	}
+
+	//set autostaking version
+	suite.App.IcaControlKeeper.SetAutoStakingVersion(ctx, zoneId, versionInfo)
 	res, err = queryClient.AutoStakingVersion(ctx.Context(), &types.QueryAutoStakingVersion{
-		ZoneId: zoneId,
+		ZoneId:  zoneId,
+		Version: 0,
 	})
 	suite.Require().NoError(err)
 	suite.Require().Equal(res, &exp)
+
+	currentVersion, err := queryClient.AutoStakingCurrentVersion(ctx.Context(), &types.QueryCurrentAutoStakingVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(currentVersion.Version, versionInfo.CurrentVersion)
+
 }

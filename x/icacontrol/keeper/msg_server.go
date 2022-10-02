@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/cosmos/cosmos-sdk/x/authz"
+	"strconv"
 	"time"
 
 	"github.com/Carina-labs/nova/x/icacontrol/types"
@@ -194,6 +195,10 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
+	if !k.IsValidAutoStakingVersion(ctx, msg.ZoneId, msg.Version) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
+	}
+
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
@@ -208,6 +213,15 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	if err != nil {
 		return nil, errors.New("IcaAutoStaking transaction failed to send")
 	}
+
+	// version state 변경
+	versionInfo := k.GetAutoStakingVersion(ctx, zoneInfo.ZoneId)
+	versionInfo.Record[versionInfo.CurrentVersion] = &types.IBCTrace{
+		Version: versionInfo.CurrentVersion,
+		State:   types.IcaRequest,
+	}
+
+	k.SetAutoStakingVersion(ctx, zoneInfo.ZoneId, versionInfo)
 
 	return &types.MsgIcaAutoStakingResponse{}, nil
 }

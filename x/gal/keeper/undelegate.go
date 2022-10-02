@@ -37,12 +37,24 @@ func (k Keeper) GetUndelegateVersion(ctx sdk.Context, zoneId string) types.Versi
 }
 
 func (k Keeper) IsValidUndelegateVersion(ctx sdk.Context, zoneId string, version uint64) bool {
-	//get undelegateState
+	//get undelegate version
 	versionInfo := k.GetUndelegateVersion(ctx, zoneId)
+	if versionInfo.ZoneId == "" {
+		versionInfo.ZoneId = zoneId
+		versionInfo.CurrentVersion = 0
+		versionInfo.Record = make(map[uint64]*types.IBCTrace)
+		versionInfo.Record[0] = &types.IBCTrace{
+			Version: 0,
+			State:   types.IcaPending,
+		}
 
-	if versionInfo.CurrentVersion >= version && versionInfo.Record[version].State == types.IcaPending {
+		k.SetUndelegateVersion(ctx, zoneId, versionInfo)
+	}
+
+	if versionInfo.CurrentVersion >= version && (versionInfo.Record[version].State == types.IcaPending || versionInfo.Record[version].State == types.IcaFail) {
 		return true
 	}
+
 	return false
 }
 
@@ -99,6 +111,22 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone icacon
 			}
 		}
 		k.SetUndelegateRecord(ctx, undelegateRecord)
+		return false
+	})
+	return snAsset, wAsset
+}
+
+func (k Keeper) GetReUndelegateAmount(ctx sdk.Context, snDenom string, zone icacontroltypes.RegisteredZone, version uint64) (sdk.Coin, sdk.Int) {
+	snAsset := sdk.NewCoin(snDenom, sdk.NewInt(0))
+	wAsset := sdk.NewInt(0)
+
+	k.IterateUndelegatedRecords(ctx, zone.ZoneId, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
+		for _, record := range undelegateRecord.Records {
+			if record.OracleVersion < version && record.State == types.UndelegateRequestByIca {
+				wAsset = wAsset.Add(record.WithdrawAmount)
+				snAsset = snAsset.Add(*record.SnAssetAmount)
+			}
+		}
 		return false
 	})
 	return snAsset, wAsset

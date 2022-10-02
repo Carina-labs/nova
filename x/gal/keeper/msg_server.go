@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -102,22 +103,27 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
 	}
 
-	// version state check
-	if !m.keeper.IsValidDelegateVersion(ctx, delegate.ZoneId, delegate.Version){
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
-	}
-
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, delegate.ZoneId)
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
 
-	ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DepositSuccess, types.DelegateRequest)
-	if !ok {
-		return nil, types.ErrCanNotChangeState
+	// version state check
+	if !m.keeper.IsValidDelegateVersion(ctx, delegate.ZoneId, delegate.Version) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(delegate.Version, 10))
 	}
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+
+	versionInfo := m.keeper.GetDelegateVersion(ctx, zoneInfo.ZoneId)
+	version := versionInfo.Record[delegate.Version]
+	if version.State == types.IcaPending {
+		ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DepositSuccess, types.DelegateRequest)
+		if !ok {
+			return nil, types.ErrCanNotChangeState
+		}
+	}
+
 	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, types.DelegateRequest)
 	delegateAmt.Denom = zoneInfo.BaseDenom
 
@@ -127,6 +133,11 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, types.ErrDelegateFail
+	}
+
+	versionInfo.Record[delegate.Version] = &types.IBCTrace{
+		Version: versionInfo.CurrentVersion,
+		State:   types.IcaRequest,
 	}
 
 	if err := ctx.EventManager().EmitTypedEvent(
@@ -230,13 +241,32 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, errors.New("zone is not found")
 	}
 
-	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
-	burnAssets, undelegateAssets := m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo, oracleVersion)
-	if burnAssets.IsZero() || undelegateAssets.IsZero() {
-		return nil, errors.New("no coins to undelegate")
+	if !m.keeper.IsValidUndelegateVersion(ctx, msg.ZoneId, msg.Version) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
 	}
 
-	m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
+	var burnAssets sdk.Coin
+	var undelegateAssets sdk.Int
+
+	versionInfo := m.keeper.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
+	version := versionInfo.Record[msg.Version]
+	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
+
+	if version.State == types.IcaPending {
+		burnAssets, undelegateAssets = m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo, oracleVersion)
+		if burnAssets.IsZero() || undelegateAssets.IsZero() {
+			return nil, errors.New("no coins to undelegate")
+		}
+
+		m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
+	}
+
+	if version.State == types.IcaFail {
+		burnAssets, undelegateAssets = m.keeper.GetReUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo, oracleVersion)
+		if burnAssets.IsZero() || undelegateAssets.IsZero() {
+			return nil, errors.New("no coins to undelegate")
+		}
+	}
 
 	undelegateAmt := sdk.NewCoin(zoneInfo.BaseDenom, undelegateAssets)
 
@@ -254,6 +284,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
 		sdk.Coins{sdk.Coin{Denom: burnAssets.Denom, Amount: burnAssets.Amount}}); err != nil {
 		return nil, err
+	}
+
+	versionInfo.Record[msg.Version] = &types.IBCTrace{
+		Version: versionInfo.CurrentVersion,
+		State:   types.IcaRequest,
 	}
 
 	if err := ctx.EventManager().EmitTypedEvent(
@@ -325,12 +360,27 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
+	if !m.keeper.IsValidWithdrawVersion(ctx, msg.ZoneId, msg.Version) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
+	}
+
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
 
-	withdrawAmount := m.keeper.GetTotalWithdrawAmountForZoneId(ctx, msg.ZoneId, zoneInfo.BaseDenom, msg.ChainTime)
+	versionInfo := m.keeper.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
+	version := versionInfo.Record[msg.Version]
+
+	var withdrawAmount sdk.Coin
+	if version.State == types.IcaPending {
+		withdrawAmount = m.keeper.GetTotalWithdrawAmountForZoneId(ctx, msg.ZoneId, zoneInfo.BaseDenom, msg.ChainTime)
+	}
+
+	if version.State == types.IcaFail {
+		withdrawAmount = m.keeper.GetTotalWithdrawAmountForFailCase(ctx, msg.ZoneId, zoneInfo.BaseDenom, msg.ChainTime)
+	}
+
 	if withdrawAmount.IsZero() {
 		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "total widraw amount: %s", withdrawAmount)
 	}
@@ -355,6 +405,11 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, errors.New("PendingWithdraw transaction failed to send")
+	}
+
+	versionInfo.Record[msg.Version] = &types.IBCTrace{
+		Version: versionInfo.CurrentVersion,
+		State:   types.IcaRequest,
 	}
 
 	if err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaWithdraw(

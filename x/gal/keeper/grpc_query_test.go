@@ -347,9 +347,7 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	suite.Require().Error(err)
 
 	//version info is nil
-	exp := types.QueryDelegateVersionResponse{
-		VersionInfo: &types.IBCTrace{},
-	}
+	exp := types.QueryDelegateVersionResponse{}
 
 	res, err := queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
 		ZoneId: zoneId,
@@ -359,29 +357,23 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	suite.Require().Equal(res, &exp)
 
 	//sequence is 8
-	exp = types.QueryDelegateVersionResponse{
-		VersionInfo: &types.IBCTrace{
-			Version: 8,
-			Height:  100,
-			State: types.IcaPending,
-		},
-	}
+	exp = types.QueryDelegateVersionResponse{}
 
 	//set delegate version
-	versioninfo := types.VersionState{
+	versionInfo := types.VersionState{
 		ZoneId:         zoneId,
 		CurrentVersion: 8,
 		Record: map[uint64]*types.IBCTrace{
 			8: {
 				Version: 8,
 				Height:  100,
-				State: types.IcaPending,
+				State:   types.IcaPending,
 			},
 		},
 	}
-	suite.App.GalKeeper.SetDelegateVersion(ctx, zoneId, versioninfo)
+	suite.App.GalKeeper.SetDelegateVersion(ctx, zoneId, versionInfo)
 	res, err = queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
-		ZoneId: zoneId,
+		ZoneId:  zoneId,
 		Version: 1,
 	})
 
@@ -394,7 +386,7 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	})
 
 	suite.Require().NoError(err)
-	suite.Require().Equal(currentVersion, versioninfo.CurrentVersion)
+	suite.Require().Equal(currentVersion.Version, versionInfo.CurrentVersion)
 }
 
 func (suite *KeeperTestSuite) TestQueryUndelegateVersion() {
@@ -409,9 +401,7 @@ func (suite *KeeperTestSuite) TestQueryUndelegateVersion() {
 	suite.Require().Error(err)
 
 	//version info is nil
-	exp := types.QueryUndelegateVersionResponse{
-		VersionInfo: &types.IBCTrace{},
-	}
+	exp := types.QueryUndelegateVersionResponse{}
 
 	res, err := queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
 		ZoneId: zoneId,
@@ -422,33 +412,41 @@ func (suite *KeeperTestSuite) TestQueryUndelegateVersion() {
 
 	//sequence is 20
 	exp = types.QueryUndelegateVersionResponse{
-			VersionInfo: &types.IBCTrace{
+		VersionInfo: &types.IBCTrace{
 			Version: 20,
-			Height:  100,
-			State: types.IcaPending,
+			Height:  1,
+			State:   types.IcaPending,
 		},
 	}
 
 	//set delegate version
-	trace := types.VersionState{
-		ZoneId: zoneId,
+	versionInfo := types.VersionState{
+		ZoneId:         zoneId,
 		CurrentVersion: 20,
 		Record: map[uint64]*types.IBCTrace{
-			20:{
+			20: {
 				Version: 20,
 				Height:  uint64(ctx.BlockHeight()),
-				State: types.IcaPending,
+				State:   types.IcaPending,
 			},
 		},
 	}
 
-	suite.App.GalKeeper.SetUndelegateVersion(ctx, zoneId, trace)
+	suite.App.GalKeeper.SetUndelegateVersion(ctx, zoneId, versionInfo)
 	res, err = queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
-		ZoneId: zoneId,
+		ZoneId:  zoneId,
+		Version: 20,
 	})
 
 	suite.Require().NoError(err)
 	suite.Require().Equal(res, &exp)
+
+	currentVersion, err := queryClient.UndelegateCurrentVersion(ctx.Context(), &types.QueryCurrentUndelegateVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(currentVersion.Version, versionInfo.CurrentVersion)
 }
 
 func (suite *KeeperTestSuite) TestQueryWithdrawVersion() {
@@ -463,44 +461,52 @@ func (suite *KeeperTestSuite) TestQueryWithdrawVersion() {
 	suite.Require().Error(err)
 
 	//version info is nil
-	exp := types.QueryWithdrawVersionResponse{
-		VersionInfo: &types.IBCTrace{},
-	}
+	exp := types.QueryWithdrawVersionResponse{}
 
 	res, err := queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
-		ZoneId: zoneId,
+		ZoneId:  zoneId,
+		Version: 0,
 	})
 
 	suite.Require().NoError(err)
 	suite.Require().Equal(res, &exp)
 
-	//sequence is 18
+	//sequence is 20
 	exp = types.QueryWithdrawVersionResponse{
 		VersionInfo: &types.IBCTrace{
 			Version: 20,
-			Height:  100,
+			Height:  1,
 			State:   types.IcaPending,
 		},
 	}
 
 	//set delegate version
-	trace := types.VersionState{
-		ZoneId: zoneId,
-		CurrentVersion: 18,
+	versionInfo := types.VersionState{
+		ZoneId:         zoneId,
+		CurrentVersion: 20,
 		Record: map[uint64]*types.IBCTrace{
-			18:{
-				Version: 18,
+			20: {
+				Version: 20,
 				Height:  uint64(ctx.BlockHeight()),
-				State: types.IcaPending,
+				State:   types.IcaPending,
 			},
 		},
 	}
 
-	suite.App.GalKeeper.SetWithdrawVersion(ctx, zoneId, trace)
+	suite.App.GalKeeper.SetWithdrawVersion(ctx, zoneId, versionInfo)
 	res, err = queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
-		ZoneId: zoneId,
+		ZoneId:  zoneId,
+		Version: 20,
 	})
 
 	suite.Require().NoError(err)
 	suite.Require().Equal(res, &exp)
+
+	// get current sequence
+	currentVersion, err := queryClient.WithdrawCurrentVersion(ctx.Context(), &types.QueryCurrentWithdrawVersion{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().Equal(currentVersion.Version, versionInfo.CurrentVersion)
 }
