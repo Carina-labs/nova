@@ -450,12 +450,12 @@ func NewMsgRegisterControllerAddress(zoneId string, controllerAddr, fromAddr sdk
 func (msg MsgRegisterControllerAddr) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.FromAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid from address")
 	}
 
 	_, err = sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid from address")
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if msg.ZoneId == "" {
