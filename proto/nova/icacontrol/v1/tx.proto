@@ -95,9 +95,8 @@ message MsgDeleteRegisteredZoneResponse{}
 // MsgIcaDelegate is a message used for remote delegation using ICA.
 message MsgIcaDelegate{
   string zone_id = 1;
-  string host_address = 2;
-  string controller_address = 3;
-  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
 }
 
 // MsgIcaDelegateResponse is a response message for MsgIcaDelegate.
@@ -106,9 +105,8 @@ message MsgIcaDelegateResponse{}
 // MsgIcaUndelegate is a message used to de-delegate remote using ICA.
 message MsgIcaUndelegate{
   string zone_id = 1;
-  string host_address = 2;
-  string controller_address = 3;
-  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
 }
 
 // MsgIcaUndelegateResponse is a response message for MsgIcaUndelegate.
@@ -117,10 +115,9 @@ message MsgIcaUndelegateResponse{}
 // MsgIcaAutoStaking is a message for remote auto-compound using ICA.
 message MsgIcaAutoStaking{
   string zone_id = 1;
-  string host_address = 2;
-  string controller_address = 3;
-  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
-  uint64 version = 5;
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
+  uint64 version = 4;
 }
 
 // MsgIcaAutoStakingResponse is a response message for MsgIcaAutoStaking.
@@ -129,12 +126,11 @@ message MsgIcaAutoStakingResponse{}
 // MsgIcaTransfer is a message for IBC transfer from the counterpart to the Supernova chain using ICA.
 message MsgIcaTransfer{
   string zone_id = 1;
-  string host_address = 2;
-  string controller_address = 3;
-  string receiver_address = 4;
-  string ica_transfer_port_id = 5;
-  string ica_transfer_channel_id = 6;
-  cosmos.base.v1beta1.Coin amount = 7[(gogoproto.nullable) = false];
+  string controller_address = 2;
+  string receiver_address = 3;
+  string ica_transfer_port_id = 4;
+  string ica_transfer_channel_id = 5;
+  cosmos.base.v1beta1.Coin amount = 6[(gogoproto.nullable) = false];
 }
 
 // MsgIcaTransferResponse is a response message for MsgIcaTransfer.

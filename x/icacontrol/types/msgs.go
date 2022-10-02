@@ -86,11 +86,10 @@ func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaDelegate(zoneId string, controllerAddr sdk.AccAddress, hostAddr string, amount sdk.Coin) *MsgIcaDelegate {
+func NewMsgIcaDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaDelegate {
 	return &MsgIcaDelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr.String(),
-		HostAddress:       hostAddr,
 		Amount:            amount,
 	}
 }
@@ -100,10 +99,6 @@ func (msg MsgIcaDelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
-	}
-
-	if strings.TrimSpace(msg.HostAddress) == "" {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid host address")
 	}
 
 	if !msg.Amount.IsValid() {
@@ -128,11 +123,10 @@ func (msg MsgIcaDelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaUnDelegate(zoneId, hostAddr string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaUndelegate {
+func NewMsgIcaUnDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaUndelegate {
 	return &MsgIcaUndelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr.String(),
-		HostAddress:       hostAddr,
 		Amount:            amount,
 	}
 }
@@ -142,10 +136,6 @@ func (msg MsgIcaUndelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
-	}
-
-	if strings.TrimSpace(msg.HostAddress) == "" {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid host address")
 	}
 
 	if !msg.Amount.IsValid() {
@@ -189,10 +179,6 @@ func (msg MsgIcaAutoStaking) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
-	if strings.TrimSpace(msg.HostAddress) == "" {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid host address")
-	}
-
 	if !msg.Amount.IsValid() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
@@ -215,10 +201,9 @@ func (msg MsgIcaAutoStaking) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaTransfer(zoneId, hostAddr string, controllerAddr sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgIcaTransfer {
+func NewMsgIcaTransfer(zoneId string, controllerAddr sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgIcaTransfer {
 	return &MsgIcaTransfer{
 		ZoneId:               zoneId,
-		HostAddress:          hostAddr,
 		ControllerAddress:    controllerAddr.String(),
 		ReceiverAddress:      receiver,
 		IcaTransferPortId:    portId,
@@ -241,10 +226,6 @@ func (msg MsgIcaTransfer) ValidateBasic() error {
 	_, err = sdk.AccAddressFromBech32(msg.ReceiverAddress)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid receiver address")
-	}
-
-	if strings.TrimSpace(msg.HostAddress) == "" {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid host address")
 	}
 
 	if !msg.Amount.IsValid() {

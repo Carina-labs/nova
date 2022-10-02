@@ -75,8 +75,8 @@ func txRegisterZoneCmd() *cobra.Command {
 // txDelegateTxCmd is a transaction used for remote delegation using ICA. This transaction can only be submitted by a given signatory.
 func txDelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "ica-delegate [zone-id] [host-address] [amount]",
-		Args: cobra.ExactArgs(3),
+		Use:  "ica-delegate [zone-id] [amount]",
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -85,14 +85,13 @@ func txDelegateTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			hostAddr := args[1]
-			amount, err := sdk.ParseCoinNormalized(args[2])
+			amount, err := sdk.ParseCoinNormalized(args[1])
 
 			if err != nil {
 				panic("coin error")
 			}
 
-			msg := types.NewMsgIcaDelegate(zoneId, clientCtx.GetFromAddress(), hostAddr, amount)
+			msg := types.NewMsgIcaDelegate(zoneId, clientCtx.GetFromAddress(), amount)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -105,8 +104,8 @@ func txDelegateTxCmd() *cobra.Command {
 // txUndelegateTxCmd is a transaction used for remote de-delegation using ICA. This transaction can only be submitted by a given signatory.
 func txUndelegateTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "ica-undelegate [zone-id] [host-address] [amount]",
-		Args: cobra.ExactArgs(3),
+		Use:  "ica-undelegate [zone-id] [amount]",
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -115,10 +114,9 @@ func txUndelegateTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			hostAddr := args[1]
-			amount, _ := sdk.ParseCoinNormalized(args[2])
+			amount, _ := sdk.ParseCoinNormalized(args[1])
 
-			msg := types.NewMsgIcaUnDelegate(zoneId, hostAddr, clientCtx.GetFromAddress(), amount)
+			msg := types.NewMsgIcaUnDelegate(zoneId, clientCtx.GetFromAddress(), amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -140,7 +138,7 @@ func txAutoStakingTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			amount, err := sdk.ParseCoinNormalized(args[2])
+			amount, err := sdk.ParseCoinNormalized(args[1])
 			if err != nil {
 				return err
 			}
@@ -157,8 +155,8 @@ func txAutoStakingTxCmd() *cobra.Command {
 // txTransferTxCmd is a transaction used to transfer assets between chains using ICA. This transaction can only be submitted by a given signatory.
 func txTransferTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "ica-transfer [zone-id] [host-address] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
-		Args: cobra.ExactArgs(6),
+		Use:  "ica-transfer [zone-id] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
+		Args: cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -168,16 +166,15 @@ func txTransferTxCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			hostAddr := args[1]
-			receiver := args[2]
-			portId := args[3]
-			chanId := args[4]
-			amount, err := sdk.ParseCoinNormalized(args[5])
+			receiver := args[1]
+			portId := args[2]
+			chanId := args[3]
+			amount, err := sdk.ParseCoinNormalized(args[4])
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgIcaTransfer(zoneId, hostAddr, clientCtx.GetFromAddress(), receiver, portId, chanId, amount)
+			msg := types.NewMsgIcaTransfer(zoneId, clientCtx.GetFromAddress(), receiver, portId, chanId, amount)
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
