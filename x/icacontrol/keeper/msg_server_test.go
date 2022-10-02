@@ -339,7 +339,6 @@ func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
 func (suite *KeeperTestSuite) TestIcaDelegate() {
 	suite.InitICA()
 	_ = suite.setValidator()
-	hostAddr := suite.setHostAddr(zoneId)
 	randAddr := suite.GenRandomAddress()
 
 	tcs := []struct {
@@ -351,7 +350,6 @@ func (suite *KeeperTestSuite) TestIcaDelegate() {
 			name: "success",
 			msg: types.MsgIcaDelegate{
 				ZoneId:            zoneId,
-				HostAddress:       hostAddr.String(),
 				ControllerAddress: baseOwnerAcc.String(),
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},
@@ -361,7 +359,6 @@ func (suite *KeeperTestSuite) TestIcaDelegate() {
 			name: "fail case 1 - zone not found",
 			msg: types.MsgIcaDelegate{
 				ZoneId:            "test",
-				HostAddress:       hostAddr.String(),
 				ControllerAddress: baseOwnerAcc.String(),
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},
@@ -371,7 +368,6 @@ func (suite *KeeperTestSuite) TestIcaDelegate() {
 			name: "fail case 2 - invalid controller address",
 			msg: types.MsgIcaDelegate{
 				ZoneId:            zoneId,
-				HostAddress:       hostAddr.String(),
 				ControllerAddress: randAddr.String(),
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},
@@ -381,7 +377,6 @@ func (suite *KeeperTestSuite) TestIcaDelegate() {
 			name: "fail case 3 - invalid controller address",
 			msg: types.MsgIcaDelegate{
 				ZoneId:            zoneId,
-				HostAddress:       hostAddr.String(),
 				ControllerAddress: "test",
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},
@@ -414,6 +409,7 @@ func (suite *KeeperTestSuite) TestIcaUndelegate() {
 	hostAddr := suite.setHostAddr(zoneId)
 	randAddr := suite.GenRandomAddress()
 
+	suite.chainA.GetApp().GalKeeper.IsValidUndelegateVersion(suite.chainA.GetContext(), zoneId, 0)
 	suite.mintCoin(suite.chainA.GetContext(), suite.chainA.GetApp(), baseDenom, sdk.NewInt(10000), hostAddr)
 	tcs := []struct {
 		name           string
@@ -425,7 +421,6 @@ func (suite *KeeperTestSuite) TestIcaUndelegate() {
 			name: "success",
 			msg: types.MsgIcaUndelegate{
 				ZoneId:            zoneId,
-				HostAddress:       randAddr.String(),
 				ControllerAddress: baseOwnerAcc.String(),
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},
@@ -436,7 +431,6 @@ func (suite *KeeperTestSuite) TestIcaUndelegate() {
 			name: "fail case 1 - zone not found",
 			msg: types.MsgIcaUndelegate{
 				ZoneId:            "test",
-				HostAddress:       hostAddr.String(),
 				ControllerAddress: baseOwnerAcc.String(),
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},
@@ -447,7 +441,6 @@ func (suite *KeeperTestSuite) TestIcaUndelegate() {
 			name: "fail case 2 - invalid controller address",
 			msg: types.MsgIcaUndelegate{
 				ZoneId:            zoneId,
-				HostAddress:       hostAddr.String(),
 				ControllerAddress: randAddr.String(),
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},
@@ -458,7 +451,6 @@ func (suite *KeeperTestSuite) TestIcaUndelegate() {
 			name: "fail case 3 - undelegate 요청 금액이 delegate 금액보다 많음",
 			msg: types.MsgIcaUndelegate{
 				ZoneId:            zoneId,
-				HostAddress:       hostAddr.String(),
 				ControllerAddress: randAddr.String(),
 				Amount:            sdk.NewCoin(baseDenom, sdk.NewInt(10000)),
 			},
@@ -502,7 +494,6 @@ func (suite *KeeperTestSuite) TestIcaAutoStaking() {
 
 func (suite *KeeperTestSuite) TestIcaTransfer() {
 	suite.InitICA()
-	hostAddr := suite.setHostAddr(zoneId)
 	randAddr := suite.GenRandomAddress()
 
 	tcs := []struct {
@@ -514,7 +505,6 @@ func (suite *KeeperTestSuite) TestIcaTransfer() {
 			name: "success",
 			msg: types.MsgIcaTransfer{
 				ZoneId:               zoneId,
-				HostAddress:          hostAddr.String(),
 				ControllerAddress:    baseOwnerAcc.String(),
 				ReceiverAddress:      baseOwnerAcc.String(),
 				IcaTransferPortId:    suite.transferPath.EndpointB.ChannelConfig.PortID,
@@ -527,7 +517,6 @@ func (suite *KeeperTestSuite) TestIcaTransfer() {
 			name: "fail case 1 - zone not found",
 			msg: types.MsgIcaTransfer{
 				ZoneId:               "test",
-				HostAddress:          hostAddr.String(),
 				ControllerAddress:    baseOwnerAcc.String(),
 				ReceiverAddress:      baseOwnerAcc.String(),
 				IcaTransferPortId:    suite.transferPath.EndpointB.ChannelConfig.PortID,
@@ -540,7 +529,6 @@ func (suite *KeeperTestSuite) TestIcaTransfer() {
 			name: "fail case 2 - invalid controller address",
 			msg: types.MsgIcaTransfer{
 				ZoneId:               zoneId,
-				HostAddress:          hostAddr.String(),
 				ControllerAddress:    randAddr.String(),
 				ReceiverAddress:      baseOwnerAcc.String(),
 				IcaTransferPortId:    suite.transferPath.EndpointB.ChannelConfig.PortID,
