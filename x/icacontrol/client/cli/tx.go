@@ -405,7 +405,7 @@ func txAuthzRevokeTxCmd() *cobra.Command {
 }
 func txSetControllerAddrTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "controller-address [zone-id] [controller-address]",
+		Use:  "controller-address [zone-id] [controller-address]",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)

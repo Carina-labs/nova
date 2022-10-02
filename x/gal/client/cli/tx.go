@@ -239,7 +239,7 @@ func txDelegateCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			seq, err := strconv.ParseUint(args[2], 10, 64)
+			seq, err := strconv.ParseUint(args[1], 10, 64)
 			if err != nil {
 				return err
 			}

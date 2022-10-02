@@ -4,6 +4,7 @@ import (
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/spf13/cobra"
+	"strconv"
 )
 
 func queryAllZones() *cobra.Command {
@@ -60,9 +61,9 @@ func queryZone() *cobra.Command {
 
 func queryAutoStakingVersion() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "autostaking-version [zone-id]",
+		Use:  "autostaking-version [zone-id] [version]",
 		Long: "Query for autostaking",
-		Args: cobra.ExactArgs(1),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -70,9 +71,14 @@ func queryAutoStakingVersion() *cobra.Command {
 			}
 
 			queryClient := types.NewQueryClient(clientCtx)
+			version, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
 
 			res, err := queryClient.AutoStakingVersion(cmd.Context(), &types.QueryAutoStakingVersion{
-				ZoneId: args[0],
+				ZoneId:  args[0],
+				Version: version,
 			})
 			if err != nil {
 				return err
