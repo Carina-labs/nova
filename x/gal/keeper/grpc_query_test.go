@@ -347,7 +347,11 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	suite.Require().Error(err)
 
 	//version info is nil
-	exp := types.QueryDelegateVersionResponse{}
+	exp := types.QueryDelegateVersionResponse{
+		VersionInfo: &types.IBCTrace{
+			Version: 0,
+		},
+	}
 
 	res, err := queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
 		ZoneId: zoneId,
@@ -357,7 +361,13 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	suite.Require().Equal(res, &exp)
 
 	//sequence is 8
-	exp = types.QueryDelegateVersionResponse{}
+	exp = types.QueryDelegateVersionResponse{
+		VersionInfo: &types.IBCTrace{
+			Version: 8,
+			Height:  100,
+			State:   types.IcaPending,
+		},
+	}
 
 	//set delegate version
 	versionInfo := types.VersionState{
@@ -374,7 +384,7 @@ func (suite *KeeperTestSuite) TestQueryDelegateVersion() {
 	suite.App.GalKeeper.SetDelegateVersion(ctx, zoneId, versionInfo)
 	res, err = queryClient.DelegateVersion(ctx.Context(), &types.QueryDelegateVersion{
 		ZoneId:  zoneId,
-		Version: 1,
+		Version: 8,
 	})
 
 	suite.Require().NoError(err)
@@ -401,7 +411,11 @@ func (suite *KeeperTestSuite) TestQueryUndelegateVersion() {
 	suite.Require().Error(err)
 
 	//version info is nil
-	exp := types.QueryUndelegateVersionResponse{}
+	exp := types.QueryUndelegateVersionResponse{
+		VersionInfo: &types.IBCTrace{
+			Version: 0,
+		},
+	}
 
 	res, err := queryClient.UndelegateVersion(ctx.Context(), &types.QueryUndelegateVersion{
 		ZoneId: zoneId,
@@ -461,7 +475,11 @@ func (suite *KeeperTestSuite) TestQueryWithdrawVersion() {
 	suite.Require().Error(err)
 
 	//version info is nil
-	exp := types.QueryWithdrawVersionResponse{}
+	exp := types.QueryWithdrawVersionResponse{
+		VersionInfo: &types.IBCTrace{
+			Version: 0,
+		},
+	}
 
 	res, err := queryClient.WithdrawVersion(ctx.Context(), &types.QueryWithdrawVersion{
 		ZoneId:  zoneId,

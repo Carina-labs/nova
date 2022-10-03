@@ -77,7 +77,11 @@ func (suite *KeeperTestSuite) TestAutoStakingVersion() {
 	suite.Require().Error(err)
 
 	//version is zero
-	exp := types.QueryAutoStakingVersionResponse{}
+	exp := types.QueryAutoStakingVersionResponse{
+		VersionInfo: &types.IBCTrace{
+			Version: 0,
+		},
+	}
 
 	res, err := queryClient.AutoStakingVersion(ctx.Context(), &types.QueryAutoStakingVersion{
 		ZoneId: zoneId,
