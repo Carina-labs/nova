@@ -50,9 +50,14 @@ func (q QueryServer) AutoStakingVersion(goCtx context.Context, request *types.Qu
 	}
 
 	versionInfo := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
-
+	version := versionInfo.Record[request.Version]
+	if versionInfo.Record[request.Version] == nil {
+		version = &types.IBCTrace{
+			Version: 0,
+		}
+	}
 	return &types.QueryAutoStakingVersionResponse{
-		VersionInfo: versionInfo.Record[request.Version],
+		VersionInfo: version,
 	}, nil
 }
 
@@ -65,8 +70,12 @@ func (q QueryServer) AutoStakingCurrentVersion(goCtx context.Context, request *t
 	}
 
 	versionInfo := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
+	version := versionInfo.CurrentVersion
+	if versionInfo.ZoneId == "" {
+		version = 0
+	}
 
 	return &types.QueryCurrentAutoStakingVersionResponse{
-		Version: versionInfo.CurrentVersion,
+		Version: version,
 	}, nil
 }

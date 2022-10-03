@@ -187,9 +187,16 @@ func (q QueryServer) DelegateVersion(goCtx context.Context, request *types.Query
 	}
 
 	versionInfo := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
+	version := versionInfo.Record[request.Version]
+
+	if versionInfo.Record[request.Version] == nil {
+		version = &types.IBCTrace{
+			Version: 0,
+		}
+	}
 
 	return &types.QueryDelegateVersionResponse{
-		VersionInfo: versionInfo.Record[request.Version],
+		VersionInfo: version,
 	}, nil
 }
 
@@ -202,9 +209,16 @@ func (q QueryServer) UndelegateVersion(goCtx context.Context, request *types.Que
 	}
 
 	versionInfo := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
+	version := versionInfo.Record[request.Version]
+
+	if versionInfo.Record[request.Version] == nil {
+		version = &types.IBCTrace{
+			Version: 0,
+		}
+	}
 
 	return &types.QueryUndelegateVersionResponse{
-		VersionInfo: versionInfo.Record[request.Version],
+		VersionInfo: version,
 	}, nil
 }
 
@@ -217,9 +231,16 @@ func (q QueryServer) WithdrawVersion(goCtx context.Context, request *types.Query
 	}
 
 	versionInfo := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
+	version := versionInfo.Record[request.Version]
+
+	if versionInfo.Record[request.Version] == nil {
+		version = &types.IBCTrace{
+			Version: 0,
+		}
+	}
 
 	return &types.QueryWithdrawVersionResponse{
-		VersionInfo: versionInfo.Record[request.Version],
+		VersionInfo: version,
 	}, nil
 }
 
@@ -232,9 +253,14 @@ func (q QueryServer) DelegateCurrentVersion(goCtx context.Context, request *type
 	}
 
 	versionInfo := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
+	version := versionInfo.CurrentVersion
+
+	if versionInfo.ZoneId == "" {
+		version = 0
+	}
 
 	return &types.QueryCurrentDelegateVersionResponse{
-		Version: versionInfo.CurrentVersion,
+		Version: version,
 	}, nil
 }
 
@@ -247,9 +273,14 @@ func (q QueryServer) UndelegateCurrentVersion(goCtx context.Context, request *ty
 	}
 
 	versionInfo := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
+	version := versionInfo.CurrentVersion
+
+	if versionInfo.ZoneId == "" {
+		version = 0
+	}
 
 	return &types.QueryCurrentUndelegateVersionResponse{
-		Version: versionInfo.CurrentVersion,
+		Version: version,
 	}, nil
 }
 
@@ -262,8 +293,13 @@ func (q QueryServer) WithdrawCurrentVersion(goCtx context.Context, request *type
 	}
 
 	versionInfo := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
+	version := versionInfo.CurrentVersion
+
+	if versionInfo.ZoneId == "" {
+		version = 0
+	}
 
 	return &types.QueryCurrentWithdrawVersionResponse{
-		Version: versionInfo.CurrentVersion,
+		Version: version,
 	}, nil
 }
