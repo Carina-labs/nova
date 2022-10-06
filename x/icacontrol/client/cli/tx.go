@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"strconv"
 
 	"github.com/Carina-labs/nova/x/icacontrol/types"
@@ -10,6 +11,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	bank "github.com/cosmos/cosmos-sdk/x/bank/types"
+	govcli "github.com/cosmos/cosmos-sdk/x/gov/client/cli"
 	staking "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/spf13/cobra"
 	"time"
@@ -421,6 +423,63 @@ func txSetControllerAddrTxCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func NewProposalZoneTxCmd() *cobra.Command{
+	cmd := &cobra.Command{
+		Use:  "proposal-zone [zone-id] [base-denom]",
+		Short: "Submit a registration zone proposal",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			title, err := cmd.Flags().GetString(govcli.FlagTitle)
+			if err != nil {
+				return err
+			}
+
+			description, err := cmd.Flags().GetString(govcli.FlagDescription)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			baseDenom :=  args[1]
+			proposal := types.ZoneProposalInfo{
+				ZoneId: zoneId,
+				BaseDenom: baseDenom,
+			}
+
+			content := types.NewRegisterZoneProposal(title, description, proposal)
+			depositStr, err := cmd.Flags().GetString(govcli.FlagDeposit)
+			if err != nil {
+				return err
+			}
+
+			deposit, err := sdk.ParseCoinsNormalized(depositStr)
+			if err != nil {
+				return err
+			}
+
+			msg, err := govtypes.NewMsgSubmitProposal(content, deposit, clientCtx.GetFromAddress())
+			if err != nil {
+				return err
+			}
+
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	cmd.Flags().String(govcli.FlagTitle, "", "title of proposal")
+	cmd.Flags().String(govcli.FlagDescription, "", "description of proposal")
+	cmd.Flags().String(govcli.FlagDeposit, "", "deposit of proposal")
 
 	return cmd
 }

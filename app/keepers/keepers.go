@@ -181,15 +181,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appCodec, appKeepers.keys[ibchost.StoreKey], appKeepers.GetSubspace(ibchost.ModuleName), appKeepers.StakingKeeper, appKeepers.UpgradeKeeper, appKeepers.ScopedIBCKeeper,
 	)
 
-	// register the proposal types
-	govRouter := govtypes.NewRouter()
-	govRouter.AddRoute(govtypes.RouterKey, govtypes.ProposalHandler).
-		AddRoute(paramproposal.RouterKey, params.NewParamChangeProposalHandler(*appKeepers.ParamsKeeper)).
-		AddRoute(distrtypes.RouterKey, distr.NewCommunityPoolSpendProposalHandler(*appKeepers.DistrKeeper)).
-		AddRoute(upgradetypes.RouterKey, upgrade.NewSoftwareUpgradeProposalHandler(*appKeepers.UpgradeKeeper)).
-		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(appKeepers.IBCKeeper.ClientKeeper)).
-		AddRoute(poolincentivetypes.RouterKey, poolincentive.NewPoolIncentivesProposalHandler(*appKeepers.PoolKeeper))
-
 	icaControllerKeeper := icacontrollerkeeper.NewKeeper(
 		appCodec, appKeepers.keys[icacontrollertypes.StoreKey], appKeepers.GetSubspace(icacontrollertypes.SubModuleName),
 		appKeepers.IBCKeeper.ChannelKeeper, // may be replaced with middleware such as ics29 fee
@@ -276,6 +267,16 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 	appKeepers.WasmKeeper = &wasmKeeper
 
+	// register the proposal types
+	govRouter := govtypes.NewRouter()
+	govRouter.AddRoute(govtypes.RouterKey, govtypes.ProposalHandler).
+		AddRoute(paramproposal.RouterKey, params.NewParamChangeProposalHandler(*appKeepers.ParamsKeeper)).
+		AddRoute(distrtypes.RouterKey, distr.NewCommunityPoolSpendProposalHandler(*appKeepers.DistrKeeper)).
+		AddRoute(upgradetypes.RouterKey, upgrade.NewSoftwareUpgradeProposalHandler(*appKeepers.UpgradeKeeper)).
+		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(appKeepers.IBCKeeper.ClientKeeper)).
+		AddRoute(poolincentivetypes.RouterKey, poolincentive.NewPoolIncentivesProposalHandler(*appKeepers.PoolKeeper)).
+		AddRoute(icacontroltypes.RouterKey, icacontrol.NewRegisterZoneProposalHandelr(*appKeepers.IcaControlKeeper))
+
 	// register wasm gov proposal types
 	if len(wasmProposals) != 0 {
 		govRouter.AddRoute(wasm.RouterKey, wasm.NewWasmProposalHandler(appKeepers.WasmKeeper, wasmProposals))
@@ -285,6 +286,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appCodec, appKeepers.keys[govtypes.StoreKey], appKeepers.GetSubspace(govtypes.ModuleName), appKeepers.AccountKeeper, appKeepers.BankKeeper,
 		&stakingKeeper, govRouter,
 	)
+
 	appKeepers.GovKeeper = govKeeper.SetHooks(
 		govtypes.NewMultiGovHooks(appKeepers.AirdropKeeper.Hooks()),
 	)
