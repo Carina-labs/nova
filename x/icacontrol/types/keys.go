@@ -18,4 +18,5 @@ var (
 	KeyAutoStakingVersion = []byte{0x02}
 
 	KeyControllerAddress = []byte{0x03}
+	KeyZoneProposal      = []byte{0x04}
 )

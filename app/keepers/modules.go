@@ -52,6 +52,7 @@ var AppModuleBasic = []module.AppModuleBasic{
 			upgradeclient.CancelProposalHandler,
 			ibcclientclient.UpdateClientProposalHandler,
 			ibcclientclient.UpgradeProposalHandler,
+			icacontrolclient.ZoneProposalHandler,
 		)...,
 	),
 	params.AppModuleBasic{},
