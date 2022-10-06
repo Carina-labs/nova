@@ -68,6 +68,11 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 			Records: []*types.DepositRecordContent{newRecord},
 		})
 	} else {
+		if len(record.Records) >= int(zoneInfo.DepositMaxEntries) &&
+			m.keeper.HasMaxDepositEntries(*record, zoneInfo.DepositMaxEntries) {
+			return nil, types.ErrMaxDepositEntries
+		}
+
 		record.Records = append(record.Records, newRecord)
 		m.keeper.SetDepositRecord(ctx, record)
 	}
@@ -193,8 +198,8 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 			Records:   []*types.UndelegateRecordContent{&newRecord},
 		}
 	} else {
-		if len(undelegateRecord.Records) >= int(zoneInfo.MaxEntries) &&
-			m.keeper.HasMaxUndelegateEntries(*undelegateRecord, zoneInfo.MaxEntries) {
+		if len(undelegateRecord.Records) >= int(zoneInfo.UndelegateMaxEntries) &&
+			m.keeper.HasMaxUndelegateEntries(*undelegateRecord, zoneInfo.UndelegateMaxEntries) {
 			return nil, types.ErrMaxUndelegateEntries
 		}
 

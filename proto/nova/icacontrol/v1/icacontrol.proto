@@ -16,7 +16,8 @@ message RegisteredZone {
   string base_denom = 6;
   string sn_denom = 7;
   int64 decimal = 8;
-  int64 max_entries = 9;
+  int64 undelegate_max_entries = 9;
+  int64 deposit_max_entries = 10;
 }
 
 message IcaAccount {
