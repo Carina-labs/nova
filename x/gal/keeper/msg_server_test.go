@@ -1257,6 +1257,7 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 		suite.Run(tc.name, func() {
 			excCtxA := suite.chainA.GetContext()
 
+			suite.chainA.GetApp().GalKeeper.IsValidUndelegateVersion(suite.chainA.GetContext(), tc.zoneId, 0)
 			suite.chainA.GetApp().GalKeeper.SetWithdrawRecord(suite.chainA.GetContext(), &tc.withdrawRecord)
 			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), baseDenom, sdk.NewInt(10000), hostAddr)
 
