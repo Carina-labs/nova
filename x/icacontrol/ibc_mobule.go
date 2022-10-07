@@ -140,38 +140,33 @@ func (im IBCModule) OnAcknowledgementPacket(
 	if err := proto.Unmarshal(ack.GetResult(), txMsgData); err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "cannot unmarshal ICS-27 tx message data: %v", err)
 	}
+
+	if !ack.Success() {
+		if err := im.keeper.HandleAckFail(ctx, packet); err != nil {
+			return err
+		}
+		im.keeper.Logger(ctx).Error("ICA ack result is fail", "receive packet", packet)
+	}
+
 	switch len(txMsgData.Data) {
 	case 1: // Delegate, Undelegate, IcaWithdraw
-		if ack.Success() {
-			response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
-			if err != nil {
-				return err
-			}
-			im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
-		} else {
-			if err := im.keeper.HandleAckFail(ctx, packet); err != nil {
-				return err
-			}
-			im.keeper.Logger(ctx).Error("ICA ack result is fail", "receive packet", packet)
+		response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
+		if err != nil {
+			return err
 		}
+		im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
 
 		return nil
 	case 2: // AutoStaking
 		if txMsgData.Data[0].MsgType == sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{}) &&
 			txMsgData.Data[1].MsgType == sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}) {
-			if ack.Success() {
-				response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
-				if err != nil {
-					return err
-				}
-				im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
-			} else {
-				if err := im.keeper.HandleAckFail(ctx, packet); err != nil {
-					return err
-				}
-				im.keeper.Logger(ctx).Error("ICA ack result is fail", "receive packet", packet)
+			response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
+			if err != nil {
+				return err
 			}
+			im.keeper.Logger(ctx).Info("message response in ICS-27 packet response", "response", response)
 		}
+
 		return nil
 	default:
 		ctx.Logger().Debug("Unknown ICA msg", "receive packet", packet)
