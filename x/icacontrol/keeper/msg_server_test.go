@@ -1,7 +1,9 @@
 package keeper_test
 
 import (
+	"fmt"
 	"github.com/Carina-labs/nova/app"
+	galtypes "github.com/Carina-labs/nova/x/gal/types"
 	"github.com/Carina-labs/nova/x/icacontrol/keeper"
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	minttypes "github.com/Carina-labs/nova/x/mint/types"
@@ -146,6 +148,53 @@ func (suite *KeeperTestSuite) getGrantMsg(msg, zoneId, grantee string, controlle
 	t := time.Now().AddDate(2, 0, 0).UTC()
 
 	grantMsg, _ := types.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, t)
+
+	return *grantMsg
+}
+
+func (suite *KeeperTestSuite) getAuthzGrantMsg(msg string, grantee, hostAddr sdk.AccAddress) authz.MsgGrant {
+	var authorization authz.Authorization
+	var allowed []sdk.ValAddress
+	var denied []sdk.ValAddress
+	var allowValidators []string
+	var delegateLimit sdk.Coin
+	var err error
+
+	addr := suite.GenRandomAddress()
+
+	switch msg {
+	case "send":
+		spendLimit := sdk.NewCoins(sdk.NewCoin(baseDenom, sdk.NewInt(10000)))
+		authorization = banktypes.NewSendAuthorization(spendLimit)
+		break
+	case "generic":
+		msgType := ""
+		authorization = authz.NewGenericAuthorization(msgType)
+		break
+	case "delegate", "unbond", "redelegate", "undelegate":
+		allowValidators = append(allowValidators, sdk.ValAddress(addr).String())
+		allowed, err = bech32toValidatorAddresses(allowValidators)
+		suite.Require().NoError(err)
+
+		delegateLimit = sdk.NewCoin(baseDenom, sdk.NewInt(10000))
+		break
+	}
+
+	switch msg {
+	case "delegate":
+		authorization, _ = stakingtypes.NewStakeAuthorization(allowed, denied, stakingtypes.AuthorizationType_AUTHORIZATION_TYPE_DELEGATE, &delegateLimit)
+		break
+	case "undelegate":
+		authorization, _ = stakingtypes.NewStakeAuthorization(allowed, denied, stakingtypes.AuthorizationType_AUTHORIZATION_TYPE_UNDELEGATE, &delegateLimit)
+		break
+	case "redelegate":
+		authorization, _ = stakingtypes.NewStakeAuthorization(allowed, denied, stakingtypes.AuthorizationType_AUTHORIZATION_TYPE_REDELEGATE, &delegateLimit)
+		break
+	}
+
+	t := time.Now().AddDate(2, 0, 0).UTC()
+
+	grantMsg, err := authz.NewMsgGrant(hostAddr, grantee, authorization, t)
 
 	return *grantMsg
 }
@@ -340,7 +389,23 @@ func (suite *KeeperTestSuite) TestIcaDelegate() {
 	suite.InitICA()
 	_ = suite.setValidator()
 	randAddr := suite.GenRandomAddress()
-
+	hostAddr := suite.setHostAddr(zoneId)
+	ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+	record := galtypes.DepositRecord{
+		ZoneId:  zoneId,
+		Claimer: randAddr.String(),
+		Records: []*galtypes.DepositRecordContent{
+			{
+				Depositor: randAddr.String(),
+				Amount: &sdk.Coin{
+					Amount: sdk.NewInt(10000),
+					Denom:  ibcDenom,
+				},
+				State: galtypes.DepositSuccess,
+			},
+		},
+	}
+	suite.chainA.GetApp().GalKeeper.SetDepositRecord(suite.chainA.GetContext(), &record)
 	tcs := []struct {
 		name string
 		msg  types.MsgIcaDelegate
@@ -386,7 +451,8 @@ func (suite *KeeperTestSuite) TestIcaDelegate() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-
+			suite.chainA.GetApp().GalKeeper.IsValidDelegateVersion(suite.chainA.GetContext(), zoneId, 0)
+			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), baseDenom, sdk.NewInt(10000), hostAddr)
 			exeCtxA := suite.chainA.GetContext()
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
 			_, err := msgServer.IcaDelegate(sdk.WrapSDKContext(exeCtxA), &tc.msg)
@@ -647,7 +713,7 @@ func (suite *KeeperTestSuite) TestIcaAuthzRevoke() {
 		err     bool
 	}{
 		{
-			name:    "success - send",
+			name:    "send",
 			granter: hostAddr,
 			grantee: granteeAddr,
 			msg: types.MsgIcaAuthzRevoke{
@@ -659,7 +725,7 @@ func (suite *KeeperTestSuite) TestIcaAuthzRevoke() {
 			err: false,
 		},
 		{
-			name:    "success - delegate",
+			name:    "delegate",
 			granter: hostAddr,
 			grantee: granteeAddr,
 			msg: types.MsgIcaAuthzRevoke{
@@ -671,7 +737,7 @@ func (suite *KeeperTestSuite) TestIcaAuthzRevoke() {
 			err: false,
 		},
 		{
-			name:    "success - undelegate",
+			name:    "undelegate",
 			granter: hostAddr,
 			grantee: granteeAddr,
 			msg: types.MsgIcaAuthzRevoke{
@@ -710,6 +776,11 @@ func (suite *KeeperTestSuite) TestIcaAuthzRevoke() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
+			if !tc.err {
+				sendMsg := suite.getAuthzGrantMsg(tc.name, granteeAddr, hostAddr)
+				suite.chainB.GetApp().AuthzKeeper.Grant(sdk.WrapSDKContext(suite.chainB.GetContext()), &sendMsg)
+			}
+
 			exeCtxA := suite.chainA.GetContext()
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.IcaControlKeeper)
 			_, err := msgServer.IcaAuthzRevoke(sdk.WrapSDKContext(exeCtxA), &tc.msg)
@@ -721,6 +792,8 @@ func (suite *KeeperTestSuite) TestIcaAuthzRevoke() {
 				suite.icaRelay(exeCtxA)
 
 				auths := suite.chainB.App.AuthzKeeper.GetAuthorizations(suite.chainB.GetContext(), tc.grantee, tc.granter)
+
+				fmt.Println(auths)
 				suite.Require().Nil(auths)
 			}
 		})
