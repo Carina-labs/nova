@@ -464,7 +464,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
-	err = m.keeper.MintTo(ctx, claimerAddr, claimSnAsset)
+	err = m.keeper.MintTo(ctx, claimerAddr, *claimSnAsset)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(err,
 			"account: %s", claimMsg.Claimer)
@@ -479,12 +479,12 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	// mark user performed claim action
 	m.keeper.airdropKeeper.PostClaimedSnAsset(ctx, claimerAddr)
 	if err = ctx.EventManager().EmitTypedEvent(
-		types.NewEventClaimSnToken(claimMsg.Claimer, &claimSnAsset, oracleVersion)); err != nil {
+		types.NewEventClaimSnToken(claimMsg.Claimer, claimSnAsset, oracleVersion)); err != nil {
 		return nil, err
 	}
 
 	return &types.MsgClaimSnAssetResponse{
 		Claimer: claimMsg.Claimer,
-		Minted:  claimSnAsset,
+		Minted:  *claimSnAsset,
 	}, nil
 }

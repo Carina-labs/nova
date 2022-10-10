@@ -312,9 +312,10 @@ func (suite *KeeperTestSuite) TestConvertWAssetToSnAssetDecimal() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			result := suite.App.GalKeeper.ConvertWAssetToSnAssetDecimal(tc.amount.Amount.BigInt(), tc.decimal, "snuatom")
+			result, err := suite.App.GalKeeper.ConvertWAssetToSnAssetDecimal(tc.amount.Amount.BigInt(), tc.decimal, "snuatom")
 
-			suite.Require().Equal(tc.result, result)
+			suite.Require().NoError(err)
+			suite.Require().Equal(tc.result, *result)
 		})
 	}
 }
@@ -354,9 +355,10 @@ func (suite *KeeperTestSuite) TestConvertSnAssetToWAssetDecimal() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			result := suite.App.GalKeeper.ConvertSnAssetToWAssetDecimal(tc.amount.Amount.BigInt(), tc.decimal, "snuatom")
+			result, err := suite.App.GalKeeper.ConvertSnAssetToWAssetDecimal(tc.amount.Amount.BigInt(), tc.decimal, "snuatom")
 
-			suite.Require().Equal(tc.result, result)
+			suite.Require().NoError(err)
+			suite.Require().Equal(tc.result, *result)
 		})
 	}
 }
