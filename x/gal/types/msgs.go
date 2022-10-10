@@ -137,6 +137,10 @@ func (msg MsgUndelegate) ValidateBasic() error {
 	if msg.ZoneId == "" {
 		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
 	}
+
+	if msg.Version < 0 {
+		return ErrNegativeVersion
+	}
 	return nil
 }
 
@@ -223,6 +227,11 @@ func (msg MsgWithdraw) ValidateBasic() error {
 		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
 	}
 
+	_, err := sdk.AccAddressFromBech32(msg.Withdrawer)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -257,6 +266,11 @@ func (msg MsgClaimSnAsset) ValidateBasic() error {
 
 	if msg.ZoneId == "" {
 		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
+	_, err := sdk.AccAddressFromBech32(msg.Claimer)
+	if err != nil {
+		return err
 	}
 
 	return nil
@@ -309,6 +323,10 @@ func (msg MsgIcaWithdraw) ValidateBasic() error {
 
 	if msg.ChainTime.IsZero() {
 		return sdkerrors.Wrap(ErrInvalidTime, msg.ControllerAddress)
+	}
+
+	if msg.Version < 0 {
+		return ErrNegativeVersion
 	}
 
 	return nil
