@@ -5,9 +5,10 @@ import (
 )
 
 var (
-	ErrNoSupportChain    = sdkerrors.Register(ModuleName, 0, "this chain is not supported")
-	ErrInvalidOperator   = sdkerrors.Register(ModuleName, 1, "invalid operator address")
-	ErrUnknown           = sdkerrors.Register(ModuleName, 2, "unknown error")
-	ErrNotFoundZoneInfo  = sdkerrors.Register(ModuleName, 3, "not found zone info")
-	ErrInvalidKeyManager = sdkerrors.Register(ModuleName, 4, "invalid key manager address")
+	ErrNoSupportChain      = sdkerrors.Register(ModuleName, 0, "this chain is not supported")
+	ErrInvalidOperator     = sdkerrors.Register(ModuleName, 1, "invalid operator address")
+	ErrUnknown             = sdkerrors.Register(ModuleName, 2, "unknown error")
+	ErrNotFoundZoneInfo    = sdkerrors.Register(ModuleName, 3, "not found zone info")
+	ErrInvalidKeyManager   = sdkerrors.Register(ModuleName, 4, "invalid key manager address")
+	ErrNegativeBlockHeight = sdkerrors.Register(ModuleName, 5, "blockHeight must be positive")
 )

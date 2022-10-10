@@ -69,6 +69,11 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 		return errors.New("missing denom")
 	}
 
+	err = sdk.ValidateDenom(msg.BaseDenom)
+	if err != nil {
+		return err
+	}
+
 	if msg.MaxEntries == 0 {
 		return errors.New("cannot set max_entries to zero")
 	}
