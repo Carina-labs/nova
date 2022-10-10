@@ -33,6 +33,14 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
+			depositor, err := sdk.AccAddressFromBech32(args[1])
+			if err != nil {
+				return err
+			}
+			if !clientCtx.GetFromAddress().Equals(depositor) {
+				return fmt.Errorf("tx sender is invalid")
+			}
+
 			claimer, err := sdk.AccAddressFromBech32(args[2])
 			if err != nil {
 				return err
@@ -72,6 +80,10 @@ func txUndelegateRequestCmd() *cobra.Command {
 			delegator, err := sdk.AccAddressFromBech32(args[1])
 			if err != nil {
 				return err
+			}
+
+			if !clientCtx.GetFromAddress().Equals(delegator) {
+				return fmt.Errorf("tx sender is invalid")
 			}
 
 			withdrawer, err := sdk.AccAddressFromBech32(args[2])
@@ -153,6 +165,10 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
+			if !clientCtx.GetFromAddress().Equals(withdrawer) {
+				return fmt.Errorf("sender is invalid")
+			}
+
 			msg := types.NewMsgWithdraw(zoneId, withdrawer)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
@@ -179,9 +195,12 @@ func txClaimSnAssetCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			claimer := clientCtx.GetFromAddress()
+			claimer, err := sdk.AccAddressFromBech32(args[1])
 			if err != nil {
 				return err
+			}
+			if !clientCtx.GetFromAddress().Equals(claimer) {
+				return fmt.Errorf("sender is invalid")
 			}
 
 			msg := types.NewMsgClaimSnAsset(zoneId, claimer)
