@@ -427,11 +427,11 @@ func txSetControllerAddrTxCmd() *cobra.Command {
 	return cmd
 }
 
-func NewProposalZoneTxCmd() *cobra.Command{
+func NewProposalZoneTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "proposal-zone [zone-id] [base-denom]",
+		Use:   "proposal-zone [zone-id] [base-denom]",
 		Short: "Submit a registration zone proposal",
-		Args: cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -449,9 +449,9 @@ func NewProposalZoneTxCmd() *cobra.Command{
 			}
 
 			zoneId := args[0]
-			baseDenom :=  args[1]
+			baseDenom := args[1]
 			proposal := types.ZoneProposalInfo{
-				ZoneId: zoneId,
+				ZoneId:    zoneId,
 				BaseDenom: baseDenom,
 			}
 
