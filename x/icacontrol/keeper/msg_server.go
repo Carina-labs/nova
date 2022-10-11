@@ -44,11 +44,12 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 			PortId:    zone.TransferInfo.PortId,
 			ChannelId: zone.TransferInfo.ChannelId,
 		},
-		ValidatorAddress: zone.ValidatorAddress,
-		BaseDenom:        zone.BaseDenom,
-		SnDenom:          appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
-		Decimal:          zone.Decimal,
-		MaxEntries:       zone.MaxEntries,
+		ValidatorAddress:     zone.ValidatorAddress,
+		BaseDenom:            zone.BaseDenom,
+		SnDenom:              appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
+		Decimal:              zone.Decimal,
+		UndelegateMaxEntries: zone.UndelegateMaxEntries,
+		DepositMaxEntries:    zone.DepositMaxEntries,
 	}
 
 	if !k.IsValidControllerAddr(ctx, zoneInfo.ZoneId, zone.IcaAccount.ControllerAddress) {
@@ -67,14 +68,15 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 	}
 
 	return &types.MsgRegisterZoneResponse{
-		ZoneId:           zoneInfo.ZoneId,
-		IcaInfo:          zoneInfo.IcaConnectionInfo,
-		TransferInfo:     zoneInfo.TransferInfo,
-		ValidatorAddress: zoneInfo.ValidatorAddress,
-		BaseDenom:        zoneInfo.BaseDenom,
-		SnDenom:          zoneInfo.BaseDenom,
-		Decimal:          zoneInfo.Decimal,
-		MaxEntries:       zoneInfo.MaxEntries,
+		ZoneId:               zoneInfo.ZoneId,
+		IcaInfo:              zoneInfo.IcaConnectionInfo,
+		TransferInfo:         zoneInfo.TransferInfo,
+		ValidatorAddress:     zoneInfo.ValidatorAddress,
+		BaseDenom:            zoneInfo.BaseDenom,
+		SnDenom:              zoneInfo.BaseDenom,
+		Decimal:              zoneInfo.Decimal,
+		DepositMaxEntries:    zoneInfo.DepositMaxEntries,
+		UndelegateMaxEntries: zoneInfo.UndelegateMaxEntries,
 	}, nil
 }
 
@@ -117,23 +119,25 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 			PortId:    zone.TransferInfo.PortId,
 			ChannelId: zone.TransferInfo.ChannelId,
 		},
-		ValidatorAddress: zone.ValidatorAddress,
-		BaseDenom:        zone.BaseDenom,
-		SnDenom:          appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
-		Decimal:          zone.Decimal,
-		MaxEntries:       zone.MaxEntries,
+		ValidatorAddress:     zone.ValidatorAddress,
+		BaseDenom:            zone.BaseDenom,
+		SnDenom:              appendSnPrefix(types.PrefixSnAsset, zone.BaseDenom),
+		Decimal:              zone.Decimal,
+		UndelegateMaxEntries: zone.UndelegateMaxEntries,
+		DepositMaxEntries:    zone.DepositMaxEntries,
 	}
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
 	return &types.MsgChangeRegisteredZoneResponse{
-		ZoneId:           zoneInfo.ZoneId,
-		IcaInfo:          zoneInfo.IcaConnectionInfo,
-		TransferInfo:     zoneInfo.TransferInfo,
-		ValidatorAddress: zoneInfo.ValidatorAddress,
-		BaseDenom:        zoneInfo.BaseDenom,
-		SnDenom:          zoneInfo.BaseDenom,
-		Decimal:          zoneInfo.Decimal,
-		MaxEntries:       zoneInfo.MaxEntries,
+		ZoneId:               zoneInfo.ZoneId,
+		IcaInfo:              zoneInfo.IcaConnectionInfo,
+		TransferInfo:         zoneInfo.TransferInfo,
+		ValidatorAddress:     zoneInfo.ValidatorAddress,
+		BaseDenom:            zoneInfo.BaseDenom,
+		SnDenom:              zoneInfo.BaseDenom,
+		Decimal:              zoneInfo.Decimal,
+		UndelegateMaxEntries: zoneInfo.UndelegateMaxEntries,
+		DepositMaxEntries:    zoneInfo.DepositMaxEntries,
 	}, nil
 }
 
