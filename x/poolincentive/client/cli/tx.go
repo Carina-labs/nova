@@ -1,10 +1,12 @@
 package cli
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/x/poolincentive/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/tx"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	govcli "github.com/cosmos/cosmos-sdk/x/gov/client/cli"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/spf13/cobra"
 	"strconv"
 	"strings"
@@ -18,113 +20,155 @@ func GetTxCmd() *cobra.Command {
 		SuggestionsMinimumDistance: 2,
 		RunE:                       client.ValidateCmd,
 	}
-
-	cmd.AddCommand(CreateCandidatePoolCmd())
-	cmd.AddCommand(CreateIncentivePoolCmd())
-	cmd.AddCommand(SetPoolWeightCmd())
-	cmd.AddCommand(SetMultiplePoolWeightCmd())
-
+	cmd.AddCommand(NewUpdatePoolIncentivesProposalCmd())
+	cmd.AddCommand(NewReplacePoolIncentivesProposalCmd())
 	return cmd
 }
 
-func CreateCandidatePoolCmd() *cobra.Command {
+func NewUpdatePoolIncentivesProposalCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "create-candidate-pool [pool_id] [pool_contract_address]",
-		Args: cobra.ExactArgs(2),
+		Use:   "update-pool-incentives-proposal [pool-id] [contract-address] [weight] [flag]",
+		Short: "Submit a registration zone proposal",
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			poolId := args[0]
-			poolContractAddress := args[1]
-
-			msg := types.NewMsgCreateCandidatePool(poolId, poolContractAddress, clientCtx.GetFromAddress())
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-
-	return cmd
-}
-
-func CreateIncentivePoolCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "create-incentive-pool [pool_id] [pool_contract_address]",
-		Args: cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
+			title, err := cmd.Flags().GetString(govcli.FlagTitle)
 			if err != nil {
 				return err
 			}
 
-			poolId := args[0]
-			poolContractAddress := args[1]
-
-			msg := types.NewMsgCreateIncentivePool(poolId, poolContractAddress, clientCtx.GetFromAddress())
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-
-	return cmd
-}
-
-func SetPoolWeightCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "set-pool-weight [pool_id] [new_weight]",
-		Args: cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
+			description, err := cmd.Flags().GetString(govcli.FlagDescription)
 			if err != nil {
 				return err
 			}
 
-			poolId := args[0]
-			newWeight, err := strconv.ParseUint(args[1], 10, 64)
+			poolId := strings.Split(args[0], ",")
+			contractAddr := strings.Split(args[1], ",")
+			weight, err := ParseUint64SliceFromString(args[2], ",")
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgSetPoolWeight(poolId, newWeight, clientCtx.GetFromAddress())
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
+			var proposal []types.IncentivePool
 
-	return cmd
-}
-
-func SetMultiplePoolWeightCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "set-multiple-pool-weight [pool_ids] [weights]",
-		Args: cobra.MatchAll(),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			poolIds := strings.Split(args[0], ",")
-			weights := strings.Split(args[1], ",")
-			if len(poolIds) != len(weights) {
-				return fmt.Errorf("the number of pool id set and weight set must be same")
-			}
-
-			var newPoolData []types.NewPoolWeight
-			for i := range weights {
-				newWeight, err := strconv.ParseUint(weights[i], 10, 64)
-				if err != nil {
-					return err
-				}
-				newPoolData = append(newPoolData, types.NewPoolWeight{
-					NewWeight: newWeight,
-					PoolId:    poolIds[i],
+			for i := 0; i < len(poolId); i++ {
+				proposal = append(proposal, types.IncentivePool{
+					PoolId:              poolId[i],
+					PoolContractAddress: contractAddr[i],
+					Weight:              weight[i],
 				})
 			}
 
-			msg := types.NewMsgSetMultipleWeight(newPoolData, clientCtx.GetFromAddress())
+			content := types.NewUpdatePoolIncentivesProposal(title, description, proposal)
+			depositStr, err := cmd.Flags().GetString(govcli.FlagDeposit)
+			if err != nil {
+				return err
+			}
+
+			deposit, err := sdk.ParseCoinsNormalized(depositStr)
+			if err != nil {
+				return err
+			}
+
+			msg, err := govtypes.NewMsgSubmitProposal(content, deposit, clientCtx.GetFromAddress())
+			if err != nil {
+				return err
+			}
+
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+	cmd.Flags().String(govcli.FlagTitle, "", "title of proposal")
+	cmd.Flags().String(govcli.FlagDescription, "", "description of proposal")
+	cmd.Flags().String(govcli.FlagDeposit, "", "deposit of proposal")
 
 	return cmd
+}
+
+func NewReplacePoolIncentivesProposalCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "replace-pool-incentives-proposal [pool-id] [contract-address] [weight] [flag]",
+		Short: "Submit a registration zone proposal",
+		Args:  cobra.ExactArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			title, err := cmd.Flags().GetString(govcli.FlagTitle)
+			if err != nil {
+				return err
+			}
+
+			description, err := cmd.Flags().GetString(govcli.FlagDescription)
+			if err != nil {
+				return err
+			}
+
+			poolId := strings.Split(args[0], ",")
+			contractAddr := strings.Split(args[1], ",")
+			weight, err := ParseUint64SliceFromString(args[2], ",")
+			if err != nil {
+				return err
+			}
+
+			var proposal []types.IncentivePool
+
+			for i := 0; i < len(poolId); i++ {
+				proposal = append(proposal, types.IncentivePool{
+					PoolId:              poolId[i],
+					PoolContractAddress: contractAddr[i],
+					Weight:              weight[i],
+				})
+			}
+
+			content := types.NewReplacePoolIncentivesProposal(title, description, proposal)
+			depositStr, err := cmd.Flags().GetString(govcli.FlagDeposit)
+			if err != nil {
+				return err
+			}
+
+			deposit, err := sdk.ParseCoinsNormalized(depositStr)
+			if err != nil {
+				return err
+			}
+
+			msg, err := govtypes.NewMsgSubmitProposal(content, deposit, clientCtx.GetFromAddress())
+			if err != nil {
+				return err
+			}
+
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	cmd.Flags().String(govcli.FlagTitle, "", "title of proposal")
+	cmd.Flags().String(govcli.FlagDescription, "", "description of proposal")
+	cmd.Flags().String(govcli.FlagDeposit, "", "deposit of proposal")
+
+	return cmd
+}
+
+func ParseUint64SliceFromString(s string, separator string) ([]uint64, error) {
+	var parsedInts []uint64
+	for _, s := range strings.Split(s, separator) {
+		s = strings.TrimSpace(s)
+
+		parsed, err := strconv.ParseUint(s, 10, 64)
+		if err != nil {
+			return []uint64{}, err
+		}
+		parsedInts = append(parsedInts, parsed)
+	}
+	return parsedInts, nil
 }

@@ -3,6 +3,7 @@ package types
 import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/msgservice"
@@ -19,6 +20,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(MsgIcaUndelegate{}, "icacontrol/MsgIcaUndelegate", nil)
 	cdc.RegisterConcrete(MsgIcaTransfer{}, "icacontrol/MsgIcaTransfer", nil)
 	cdc.RegisterConcrete(MsgIcaAutoStaking{}, "icacontrol/MsgIcaAutoStaking", nil)
+	cdc.RegisterConcrete(ZoneRegisterProposal{}, "icacontrol/ZoneRegisterProposal", nil)
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
@@ -30,5 +32,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgIcaUndelegate{},
 		&MsgIcaTransfer{},
 		&MsgIcaAutoStaking{},
+	)
+	registry.RegisterImplementations(
+		(*govtypes.Content)(nil),
+		&ZoneRegisterProposal{},
 	)
 }
