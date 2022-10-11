@@ -148,20 +148,27 @@ func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state type
 // GetWithdrawAmt is used for calculating the amount of coin user can withdraw
 // after un-delegate. This function is executed when ICA un-delegate call executed,
 // and calculate using the balance of user's share coin.
-func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (sdk.Coin, error) {
+func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (*sdk.Coin, error) {
 	baseDenom := k.icaControlKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
 	totalSharedToken := k.bankKeeper.GetSupply(ctx, amt.Denom)
 
 	oracleInfo, err := k.oracleKeeper.GetChainState(ctx, baseDenom)
 	if err != nil {
-		return sdk.Coin{}, err
+		return nil, err
 	}
 
 	zoneInfo := k.icaControlKeeper.GetZoneForDenom(ctx, baseDenom)
 
-	convOracleAmt := k.ConvertWAssetToSnAssetDecimal(oracleInfo.Coin.Amount.BigInt(), zoneInfo.Decimal, zoneInfo.BaseDenom)
+	convOracleAmt, err := k.ConvertWAssetToSnAssetDecimal(oracleInfo.Coin.Amount.BigInt(), zoneInfo.Decimal, zoneInfo.BaseDenom)
+	if err != nil {
+		return nil, err
+	}
+
 	withdrawAmt := k.CalculateWithdrawAlpha(amt.Amount.BigInt(), totalSharedToken.Amount.BigInt(), convOracleAmt.Amount.BigInt())
-	wAsset := k.ConvertSnAssetToWAssetDecimal(withdrawAmt, zoneInfo.Decimal, baseDenom)
+	wAsset, err := k.ConvertSnAssetToWAssetDecimal(withdrawAmt, zoneInfo.Decimal, baseDenom)
+	if err != nil {
+		return nil, err
+	}
 
 	return wAsset, nil
 }

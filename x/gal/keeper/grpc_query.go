@@ -44,7 +44,7 @@ func (q QueryServer) EstimateSnAsset(goCtx context.Context, request *types.Query
 	}
 
 	return &types.QueryEstimateSnAssetResponse{
-		Amount: estimateAsset,
+		Amount: *estimateAsset,
 	}, nil
 }
 
