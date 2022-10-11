@@ -5,6 +5,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/msgservice"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 )
 
 var (
@@ -13,10 +14,12 @@ var (
 )
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
-	cdc.RegisterConcrete(&MsgCreateCandidatePool{}, "supernova/pool/create-candidate-pool", nil)
-	cdc.RegisterConcrete(&MsgCreateIncentivePool{}, "supernova/pool/create-incentive-pool", nil)
-	cdc.RegisterConcrete(&MsgSetPoolWeight{}, "supernova/pool/set-pool-weight", nil)
-	cdc.RegisterConcrete(&MsgSetMultiplePoolWeight{}, "supernova/pool/set-multiple-pool-weight", nil)
+	cdc.RegisterConcrete(&MsgCreateCandidatePool{}, "nova/MsgCreateCandidatePool", nil)
+	cdc.RegisterConcrete(&MsgCreateIncentivePool{}, "nova/MsgCreateIncentivePool", nil)
+	cdc.RegisterConcrete(&MsgSetPoolWeight{}, "nova/MsgSetPoolWeight", nil)
+	cdc.RegisterConcrete(&MsgSetMultiplePoolWeight{}, "nova/MsgSetMultiplePoolWeight", nil)
+	cdc.RegisterConcrete(&UpdatePoolIncentivesProposal{}, "nova/UpdatePoolIncentivesProposal", nil)
+	cdc.RegisterConcrete(&ReplacePoolIncentivesProposal{}, "nova/ReplacePoolIncentivesProposal", nil)
 }
 
 func RegisterInterfaces(registry types.InterfaceRegistry) {
@@ -27,7 +30,11 @@ func RegisterInterfaces(registry types.InterfaceRegistry) {
 		&MsgSetPoolWeight{},
 		&MsgSetMultiplePoolWeight{},
 	)
-
+	registry.RegisterImplementations(
+		(*govtypes.Content)(nil),
+		&UpdatePoolIncentivesProposal{},
+		&ReplacePoolIncentivesProposal{},
+	)
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
 }
 
