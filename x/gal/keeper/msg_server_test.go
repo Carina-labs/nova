@@ -784,12 +784,33 @@ func (suite *KeeperTestSuite) TestPendingUndelegate() {
 			result: types.UndelegateRecord{},
 			err:    true,
 		},
+		{
+			name:           "fail case 4 - undelegate amount is zero",
+			zoneId:         zoneId,
+			delegator:      delegator1,
+			undelegateAddr: delegator1,
+			msg: types.MsgPendingUndelegate{
+				ZoneId:     zoneId,
+				Delegator:  delegator1.String(),
+				Withdrawer: delegator1.String(),
+				Amount:     sdk.NewCoin(baseSnDenom, sdk.NewInt(10000)),
+			},
+			denom: baseDenom,
+			err:   true,
+		},
 	}
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			suite.InitICA()
-			suite.mintCoin(suite.chainA.GetContext(), suite.chainA.GetApp(), baseSnDenom, tc.msg.Amount.Amount, tc.delegator)
+			suite.mintCoin(suite.chainA.GetContext(), suite.chainA.GetApp(), baseSnDenom, sdk.NewIntWithDecimal(10000, 18), tc.delegator)
+
+			chainInfo := oracletypes.ChainInfo{
+				Coin:            sdk.NewCoin(baseDenom, tc.msg.Amount.Amount),
+				OperatorAddress: baseOwnerAcc.String(),
+				ZoneId:          zoneId,
+			}
+			suite.chainA.GetApp().OracleKeeper.UpdateChainState(suite.chainA.GetContext(), &chainInfo)
 
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
 			_, err := msgServer.PendingUndelegate(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
