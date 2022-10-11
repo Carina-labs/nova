@@ -1546,7 +1546,7 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 			for _, record := range tc.WithdrawRecords {
 				suite.chainA.GetApp().GalKeeper.SetWithdrawRecord(suite.chainA.GetContext(), record)
 				for _, withdrawRecords := range record.Records {
-					suite.mintCoin(suite.chainA.GetContext(), suite.chainA.GetApp(), baseIbcDenom, withdrawRecords.Amount, baseOwnerAcc)
+					suite.mintCoinToModule(suite.chainA.GetContext(), suite.chainA.GetApp(), baseIbcDenom, withdrawRecords.Amount, types.ModuleName)
 				}
 			}
 

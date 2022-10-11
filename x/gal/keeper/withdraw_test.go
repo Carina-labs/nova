@@ -457,19 +457,15 @@ func (suite *KeeperTestSuite) TestClaimWithdrawAsset() {
 	}
 
 	for _, tc := range tcs {
-		testOwnerAddress := "cosmos1a05qwsaeqgdp7pc3tsegw87w9c0j6xlhdk84f3"
-		testOwnerAcc, _ := sdk.AccAddressFromBech32(testOwnerAddress)
 		suite.Run(tc.name, func() {
 			// setup
 			suite.Setup()
 			err := suite.App.BankKeeper.MintCoins(suite.Ctx, types.ModuleName, sdk.Coins{tc.initAmount})
 			suite.Require().NoError(err)
-			err = suite.App.BankKeeper.SendCoinsFromModuleToAccount(suite.Ctx, types.ModuleName, testOwnerAcc, sdk.Coins{tc.initAmount})
-			suite.Require().NoError(err)
 			userAcc, _ := sdk.AccAddressFromBech32(tc.userAddress)
 
 			// execute
-			err = suite.App.GalKeeper.ClaimWithdrawAsset(suite.Ctx, testOwnerAcc, userAcc, tc.wantToClaim)
+			err = suite.App.GalKeeper.ClaimWithdrawAsset(suite.Ctx, userAcc, tc.wantToClaim)
 
 			// verify
 			if tc.shouldErr {
