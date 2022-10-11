@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/app"
 	galtypes "github.com/Carina-labs/nova/x/gal/types"
 	"github.com/Carina-labs/nova/x/icacontrol/keeper"
@@ -792,8 +791,6 @@ func (suite *KeeperTestSuite) TestIcaAuthzRevoke() {
 				suite.icaRelay(exeCtxA)
 
 				auths := suite.chainB.App.AuthzKeeper.GetAuthorizations(suite.chainB.GetContext(), tc.grantee, tc.granter)
-
-				fmt.Println(auths)
 				suite.Require().Nil(auths)
 			}
 		})

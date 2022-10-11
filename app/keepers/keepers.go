@@ -227,6 +227,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		appCodec,
 		appKeepers.keys[galtypes.StoreKey],
 		appKeepers.GetSubspace(galtypes.ModuleName),
+		appKeepers.AccountKeeper,
 		appKeepers.BankKeeper,
 		icaControlKeeper,
 		transferKeeper,
