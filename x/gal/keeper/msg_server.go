@@ -179,6 +179,16 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 		return nil, types.ErrInvalidDenom
 	}
 
+	// check undelegate amount
+	wAsset, err := m.keeper.GetWithdrawAmt(ctx, undelegate.Amount)
+	if err != nil {
+		return nil, err
+	}
+
+	if wAsset.IsZero() || wAsset.IsNil() {
+		return nil, types.ErrConvertWAssetIsZero
+	}
+
 	delegatorAcc, err := sdk.AccAddressFromBech32(undelegate.Delegator)
 	if err != nil {
 		return nil, err
