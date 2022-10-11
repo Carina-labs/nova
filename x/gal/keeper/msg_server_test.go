@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/app"
 	novatesting "github.com/Carina-labs/nova/testing"
 	"github.com/Carina-labs/nova/x/gal/keeper"
@@ -328,7 +327,6 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			_, err := msgServer.Deposit(sdk.WrapSDKContext(ctxA), &tc.msg)
 
 			if tc.err {
-				fmt.Println(err)
 				suite.Require().Error(err)
 			} else {
 				balance := suite.chainA.GetApp().BankKeeper.GetBalance(ctxA, depositor, ibcDenom)
