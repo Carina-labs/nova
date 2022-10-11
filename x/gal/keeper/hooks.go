@@ -55,12 +55,23 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 
 	asset, ok := sdk.NewIntFromString(data.Amount)
 	if !ok {
-		h.k.Logger(ctx).Error("")
 		return
 	}
 
 	if asset.IsZero() || asset.IsNil() {
-		h.k.Logger(ctx).Error("")
+		h.k.Logger(ctx).Error("AfterOnRecvPacket", "transfer amount is zero", data.Amount)
+		return
+	}
+
+	controllerAddr, err := sdk.AccAddressFromBech32(data.Receiver)
+	if err != nil {
+		h.k.Logger(ctx).Error(",AfterOnRecvPacket", "receiver address is invalid", data.Receiver)
+		return
+	}
+
+	denom := h.k.icaControlKeeper.GetIBCHashDenom(zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
+	err = h.k.bankKeeper.SendCoinsFromAccountToModule(ctx, controllerAddr, types.ModuleName, sdk.NewCoins(sdk.NewCoin(denom, asset)))
+	if err != nil {
 		return
 	}
 

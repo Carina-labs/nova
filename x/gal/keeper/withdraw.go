@@ -194,8 +194,8 @@ func (k Keeper) GetTotalWithdrawAmountForFailCase(ctx sdk.Context, zoneId, denom
 }
 
 // ClaimWithdrawAsset is used when user want to claim their asset which is after undeleagted.
-func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, from sdk.AccAddress, withdrawer sdk.AccAddress, amt sdk.Coin) error {
-	err := k.bankKeeper.SendCoins(ctx, from, withdrawer, sdk.NewCoins(amt))
+func (k Keeper) ClaimWithdrawAsset(ctx sdk.Context, withdrawer sdk.AccAddress, amt sdk.Coin) error {
+	err := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, withdrawer, sdk.NewCoins(amt))
 	if err != nil {
 		return err
 	}

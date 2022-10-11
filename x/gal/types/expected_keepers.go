@@ -2,6 +2,7 @@ package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
 // BankKeeper defines the contract needed to be fulfilled for banking and supply dependencies.
@@ -18,4 +19,8 @@ type BankKeeper interface {
 // AirdropKeeper defines the contract needed to be fulfilled for airdrop dependencies.
 type AirdropKeeper interface {
 	PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress)
+}
+
+type AccountKeeper interface {
+	GetModuleAccount(ctx sdk.Context, moduleName string) types.ModuleAccountI
 }

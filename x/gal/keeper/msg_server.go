@@ -320,11 +320,6 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 
-	controllerAddr, err := sdk.AccAddressFromBech32(zoneInfo.IcaAccount.ControllerAddress)
-	if err != nil {
-		return nil, err
-	}
-
 	// sum of all withdraw records for user
 	withdrawAmt := m.keeper.GetWithdrawAmountForUser(ctx, zoneInfo.ZoneId, ibcDenom, withdraw.Withdrawer)
 	if withdrawAmt.IsZero() {
@@ -336,7 +331,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 		return nil, err
 	}
 
-	if err := m.keeper.ClaimWithdrawAsset(ctx, controllerAddr, withdrawerAddr, withdrawAmt); err != nil {
+	if err = m.keeper.ClaimWithdrawAsset(ctx, withdrawerAddr, withdrawAmt); err != nil {
 		return nil, err
 	}
 
