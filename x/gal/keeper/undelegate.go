@@ -223,6 +223,18 @@ func (k Keeper) HasMaxUndelegateEntries(undelegateRecords types.UndelegateRecord
 	return false
 }
 
+func (k Keeper) HasMaxDepositEntries(depositRecords types.DepositRecord, maxEntries int64) bool {
+	for _, record := range depositRecords.Records {
+		if record.State == types.DepositSuccess {
+			maxEntries -= 1
+		}
+		if maxEntries == 0 {
+			return true
+		}
+	}
+	return false
+}
+
 // IterateUndelegatedRecords navigates de-delegation records.
 func (k Keeper) IterateUndelegatedRecords(ctx sdk.Context, zoneId string, fn func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool)) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyUndelegateRecordInfo)

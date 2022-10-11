@@ -25,7 +25,7 @@ var (
 )
 
 // NewMsgRegisterAccount creates a new MsgRegisterAccount instance
-func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAddress, transferPortId, transferChanId string, validatorAddress, baseDenom string, decimal int64, maxEntries int64) *MsgRegisterZone {
+func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAddress, transferPortId, transferChanId string, validatorAddress, baseDenom string, decimal, depositMaxEntries, undelegateMaxEntries int64) *MsgRegisterZone {
 	return &MsgRegisterZone{
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
@@ -39,10 +39,11 @@ func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAd
 			ChannelId: transferChanId,
 			PortId:    transferPortId,
 		},
-		ValidatorAddress: validatorAddress,
-		BaseDenom:        baseDenom,
-		Decimal:          decimal,
-		MaxEntries:       maxEntries,
+		ValidatorAddress:     validatorAddress,
+		BaseDenom:            baseDenom,
+		Decimal:              decimal,
+		UndelegateMaxEntries: undelegateMaxEntries,
+		DepositMaxEntries:    depositMaxEntries,
 	}
 }
 
@@ -69,13 +70,12 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 		return errors.New("missing denom")
 	}
 
-	err = sdk.ValidateDenom(msg.BaseDenom)
-	if err != nil {
-		return err
+	if msg.UndelegateMaxEntries == 0 {
+		return errors.New("cannot set undelegate max_entries to zero")
 	}
 
-	if msg.MaxEntries == 0 {
-		return errors.New("cannot set max_entries to zero")
+	if msg.DepositMaxEntries == 0 {
+		return errors.New("cannot set delegate max_entries to zero")
 	}
 
 	return nil
@@ -283,7 +283,7 @@ func (msg MsgDeleteRegisteredZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress, icaConnectionId, transferPortId, transferChanId, validatorAddress, baseDenom string, decimal int64, maxEntries int64) *MsgChangeRegisteredZone {
+func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress, icaConnectionId, transferPortId, transferChanId, validatorAddress, baseDenom string, decimal, depositMaxEntries, undelegateMaxEntries int64) *MsgChangeRegisteredZone {
 	return &MsgChangeRegisteredZone{
 		ZoneId: zoneId,
 		IcaInfo: &IcaConnectionInfo{
@@ -298,10 +298,11 @@ func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress
 			PortId:    transferPortId,
 			ChannelId: transferChanId,
 		},
-		ValidatorAddress: validatorAddress,
-		BaseDenom:        baseDenom,
-		Decimal:          decimal,
-		MaxEntries:       maxEntries,
+		ValidatorAddress:     validatorAddress,
+		BaseDenom:            baseDenom,
+		Decimal:              decimal,
+		UndelegateMaxEntries: undelegateMaxEntries,
+		DepositMaxEntries:    depositMaxEntries,
 	}
 }
 
@@ -312,8 +313,11 @@ func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
-	if msg.MaxEntries == 0 {
-		return errors.New("cannot set max_entries to zero")
+	if msg.UndelegateMaxEntries == 0 {
+		return errors.New("cannot set undelegate max_entries to zero")
+	}
+	if msg.DepositMaxEntries == 0 {
+		return errors.New("cannot set deposit max_entries to zero")
 	}
 
 	return nil

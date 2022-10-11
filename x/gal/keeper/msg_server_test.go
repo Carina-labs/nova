@@ -180,6 +180,7 @@ func (suite *KeeperTestSuite) setValidator() string {
 
 func (suite *KeeperTestSuite) TestDeposit() {
 	depositor := suite.GenRandomAddress()
+	depositor1 := suite.GenRandomAddress()
 
 	suite.InitICA()
 	_ = suite.setValidator()
@@ -188,6 +189,33 @@ func (suite *KeeperTestSuite) TestDeposit() {
 	baseIbcDenom := suite.chainA.GetApp().IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 	invalidDenom := suite.chainA.GetApp().IcaControlKeeper.GetIBCHashDenom("channel", "port", baseDenom)
 
+	record := types.DepositRecord{
+		ZoneId:  zoneId,
+		Claimer: depositor1.String(),
+		Records: []*types.DepositRecordContent{
+			{
+				Depositor: depositor1.String(),
+				State:     types.DepositSuccess,
+			},
+			{
+				Depositor: depositor1.String(),
+				State:     types.DepositSuccess,
+			},
+			{
+				Depositor: depositor1.String(),
+				State:     types.DepositSuccess,
+			},
+			{
+				Depositor: depositor1.String(),
+				State:     types.DepositSuccess,
+			},
+			{
+				Depositor: depositor1.String(),
+				State:     types.DepositSuccess,
+			},
+		},
+	}
+	suite.chainA.GetApp().GalKeeper.SetDepositRecord(suite.chainA.GetContext(), &record)
 	tcs := []struct {
 		name      string
 		msg       types.MsgDeposit
@@ -265,6 +293,20 @@ func (suite *KeeperTestSuite) TestDeposit() {
 			zoneId:    zoneId,
 			denom:     baseDenom,
 			depositor: depositor,
+			result:    types.DepositRecord{},
+			err:       true,
+		},
+		{
+			name: "fail case 4 - deposit requests exceeded",
+			msg: types.MsgDeposit{
+				ZoneId:    zoneId,
+				Depositor: depositor1.String(),
+				Claimer:   depositor1.String(),
+				Amount:    sdk.NewCoin(baseIbcDenom, sdk.NewInt(10000)),
+			},
+			zoneId:    zoneId,
+			denom:     baseDenom,
+			depositor: depositor1,
 			result:    types.DepositRecord{},
 			err:       true,
 		},

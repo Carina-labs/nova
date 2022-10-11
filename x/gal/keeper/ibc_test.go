@@ -103,9 +103,10 @@ func newBaseRegisteredZone() *icacontroltypes.RegisteredZone {
 			PortId:    transferPort,
 			ChannelId: transferChannel,
 		},
-		BaseDenom:  baseDenom,
-		SnDenom:    baseSnDenom,
-		Decimal:    0,
-		MaxEntries: 5,
+		BaseDenom:            baseDenom,
+		SnDenom:              baseSnDenom,
+		Decimal:              0,
+		UndelegateMaxEntries: 5,
+		DepositMaxEntries:    5,
 	}
 }

@@ -21,4 +21,5 @@ var (
 	ErrNoDeleteRecord       = errors.Register(ModuleName, 15, "fail delete deposit record")
 	ErrMaxUndelegateEntries = errors.Register(ModuleName, 16, "too many undelegate request")
 	ErrNegativeVersion      = errors.Register(ModuleName, 17, "every version must be positive")
+	ErrMaxDepositEntries    = errors.Register(ModuleName, 18, "too many deposit request")
 )

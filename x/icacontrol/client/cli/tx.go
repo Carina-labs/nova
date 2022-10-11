@@ -34,8 +34,8 @@ const (
 // txRegisterZoneCmd is a transaction that registers new Zone information. This transaction can only be submitted by a given signatory.
 func txRegisterZoneCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "register-zone [zone-id] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal] [max-entries]",
-		Args: cobra.ExactArgs(8),
+		Use:  "register-zone [zone-id] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal] [deposit-max-entries] [undelegate-max-entries]",
+		Args: cobra.ExactArgs(9),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -54,12 +54,17 @@ func txRegisterZoneCmd() *cobra.Command {
 				return err
 			}
 
-			maxEntries, err := strconv.ParseInt(args[7], 10, 64)
+			depositMaxEntries, err := strconv.ParseInt(args[7], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgRegisterZone(zoneId, icaConnId, clientCtx.GetFromAddress(), transferPortId, transferChanId, validatorAddr, denom, decimal, maxEntries)
+			undelegateMaxEntries, err := strconv.ParseInt(args[8], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgRegisterZone(zoneId, icaConnId, clientCtx.GetFromAddress(), transferPortId, transferChanId, validatorAddr, denom, decimal, depositMaxEntries, undelegateMaxEntries)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -211,8 +216,8 @@ func txDeleteZoneTxCmd() *cobra.Command {
 // txChangeZoneInfoTxCmd is a transaction that modifies the registered zone. This transaction can only be submitted by a given signatory.
 func txChangeZoneInfoTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "change-zone [zone-id] [host-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal] [max_entries]",
-		Args: cobra.ExactArgs(9),
+		Use:  "change-zone [zone-id] [host-address] [connection-id] [transfer-port-id] [transfer-channel-id] [validator_address] [base-denom] [decimal] [deposit-max-entries] [undelegate-max-entries]",
+		Args: cobra.ExactArgs(10),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -232,12 +237,17 @@ func txChangeZoneInfoTxCmd() *cobra.Command {
 				return err
 			}
 
-			maxEntries, err := strconv.ParseInt(args[8], 10, 64)
+			depositMaxEntries, err := strconv.ParseInt(args[8], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgChangeZoneInfo(zoneId, hostAddr, clientCtx.GetFromAddress(), icaConnId, transferPortId, transferChanId, validatorAddr, denom, decimal, maxEntries)
+			undelegateMaxEntries, err := strconv.ParseInt(args[9], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgChangeZoneInfo(zoneId, hostAddr, clientCtx.GetFromAddress(), icaConnId, transferPortId, transferChanId, validatorAddr, denom, decimal, depositMaxEntries, undelegateMaxEntries)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -402,6 +412,7 @@ func txAuthzRevokeTxCmd() *cobra.Command {
 
 	return cmd
 }
+
 func txSetControllerAddrTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "controller-address [zone-id] [controller-address]",
