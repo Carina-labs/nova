@@ -17,7 +17,7 @@ var (
 	ErrInvalidAddress       = errors.Register(ModuleName, 11, "invalid address")
 	ErrUnknown              = errors.Register(ModuleName, 12, "unknown error occurred")
 	ErrTransferInfoNotFound = errors.Register(ModuleName, 13, "transfer info is not found")
-	ErrInvalidParameter     = errors.Register(ModuleName, 14, "invalid parameter")
+	ErrConvertWAssetIsZero  = errors.Register(ModuleName, 14, "converted to wAsset value is 0")
 	ErrNoDeleteRecord       = errors.Register(ModuleName, 15, "fail delete deposit record")
 	ErrMaxUndelegateEntries = errors.Register(ModuleName, 16, "too many undelegate request")
 	ErrNegativeVersion      = errors.Register(ModuleName, 17, "every version must be positive")
