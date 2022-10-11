@@ -8,6 +8,7 @@ import (
 	"github.com/Carina-labs/nova/x/mint"
 	"github.com/Carina-labs/nova/x/oracle"
 	"github.com/Carina-labs/nova/x/poolincentive"
+	poolincentiveclient "github.com/Carina-labs/nova/x/poolincentive/client"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	"github.com/cosmos/cosmos-sdk/types/module"
@@ -54,6 +55,8 @@ var AppModuleBasic = []module.AppModuleBasic{
 			ibcclientclient.UpdateClientProposalHandler,
 			ibcclientclient.UpgradeProposalHandler,
 			icacontrolclient.ZoneProposalHandler,
+			poolincentiveclient.UpdatePoolIncentivesProposalHandler,
+			poolincentiveclient.ReplacePoolIncentivesProposal,
 		)...,
 	),
 	params.AppModuleBasic{},
