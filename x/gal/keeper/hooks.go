@@ -200,8 +200,8 @@ func (h Hooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDe
 	currentVersion := versionInfo.CurrentVersion
 
 	versionInfo.Record[currentVersion] = &types.IBCTrace{
-		Height:  uint64(ctx.BlockHeight()),
-		Version: types.IcaFail,
+		Height: uint64(ctx.BlockHeight()),
+		State:  types.IcaFail,
 	}
 
 	h.k.SetDelegateVersion(ctx, zone.ZoneId, versionInfo)
@@ -214,8 +214,8 @@ func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.M
 	currentVersion := versionInfo.CurrentVersion
 
 	versionInfo.Record[currentVersion] = &types.IBCTrace{
-		Height:  uint64(ctx.BlockHeight()),
-		Version: types.IcaFail,
+		Height: uint64(ctx.BlockHeight()),
+		State:  types.IcaFail,
 	}
 
 	h.k.SetUndelegateVersion(ctx, zone.ZoneId, versionInfo)
@@ -227,13 +227,13 @@ func (h Hooks) AfterTransferFail(ctx sdk.Context, transferMsg transfertypes.MsgT
 		return
 	}
 
-	versionInfo := h.k.GetUndelegateVersion(ctx, zone.ZoneId)
+	versionInfo := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
 	currentVersion := versionInfo.CurrentVersion
 
 	versionInfo.Record[currentVersion] = &types.IBCTrace{
-		Height:  uint64(ctx.BlockHeight()),
-		Version: types.IcaFail,
+		Height: uint64(ctx.BlockHeight()),
+		State:  types.IcaFail,
 	}
 
-	h.k.SetUndelegateVersion(ctx, zone.ZoneId, versionInfo)
+	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
 }

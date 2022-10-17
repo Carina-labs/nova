@@ -137,6 +137,11 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 
 	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
+		versionInfo.Record[delegate.Version] = &types.IBCTrace{
+			Version: versionInfo.CurrentVersion,
+			State:   types.IcaFail,
+		}
+		m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 		return nil, types.ErrDelegateFail
 	}
 
@@ -144,6 +149,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 		Version: versionInfo.CurrentVersion,
 		State:   types.IcaRequest,
 	}
+	m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 
 	if err := ctx.EventManager().EmitTypedEvent(
 		types.NewEventDelegate(
@@ -283,6 +289,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 
 	if err != nil {
+		versionInfo.Record[msg.Version] = &types.IBCTrace{
+			Version: versionInfo.CurrentVersion,
+			State:   types.IcaFail,
+		}
+		m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
 	}
 
@@ -295,6 +306,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		Version: versionInfo.CurrentVersion,
 		State:   types.IcaRequest,
 	}
+	m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 
 	if err := ctx.EventManager().EmitTypedEvent(
 		types.NewEventUndelegate(zoneInfo.ZoneId, &burnAssets, &undelegateAmt)); err != nil {
@@ -355,7 +367,6 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
 	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
@@ -382,7 +393,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	}
 
 	if withdrawAmount.IsZero() {
-		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "total widraw amount: %s", withdrawAmount)
+		return nil, sdkerrors.Wrapf(types.ErrCanNotWithdrawAsset, "total withdraw amount: %s", withdrawAmount)
 	}
 
 	var msgs []sdk.Msg
@@ -404,6 +415,11 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 
 	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
+		versionInfo.Record[msg.Version] = &types.IBCTrace{
+			Version: versionInfo.CurrentVersion,
+			State:   types.IcaFail,
+		}
+		m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
 		return nil, errors.New("PendingWithdraw transaction failed to send")
 	}
 
@@ -411,6 +427,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		Version: versionInfo.CurrentVersion,
 		State:   types.IcaRequest,
 	}
+	m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
 
 	if err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaWithdraw(
 		zoneInfo.IcaAccount.HostAddress,
