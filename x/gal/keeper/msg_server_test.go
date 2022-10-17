@@ -1303,6 +1303,7 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 			suite.chainA.GetApp().GalKeeper.SetWithdrawRecord(suite.chainA.GetContext(), &tc.withdrawRecord)
 			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), baseDenom, sdk.NewInt(10000), hostAddr)
 
+			tc.msg.Version = suite.chainA.GetApp().GalKeeper.GetWithdrawVersion(suite.chainA.GetContext(), tc.zoneId).CurrentVersion
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
 			_, err := msgServer.IcaWithdraw(sdk.WrapSDKContext(excCtxA), &tc.msg)
 			if tc.err {
@@ -1320,6 +1321,15 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 				suite.Require().True(ok)
 				suite.Require().Equal(tc.resultWithdrawRecord, *resultRecords)
 			}
+			suite.chainA.GetApp().GalKeeper.SetWithdrawVersion(suite.chainA.GetContext(), tc.zoneId, types.VersionState{
+				ZoneId:         tc.zoneId,
+				CurrentVersion: tc.msg.Version + 1,
+				Record: map[uint64]*types.IBCTrace{
+					tc.msg.Version + 1: {
+						State: types.IcaPending,
+					},
+				},
+			})
 		})
 	}
 }
