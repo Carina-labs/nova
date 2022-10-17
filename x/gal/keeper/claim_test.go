@@ -362,3 +362,55 @@ func (suite *KeeperTestSuite) TestConvertSnAssetToWAssetDecimal() {
 		})
 	}
 }
+
+func (suite *KeeperTestSuite) TestCheckDecimal() {
+	tcs := []struct {
+		name    string
+		amount  sdk.Coin
+		decimal int64
+		result  sdk.Coin
+		err     bool
+	}{
+		{
+			name:    "success",
+			decimal: 6,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000)),
+			err:     true,
+		},
+		{
+			name:    "fail",
+			decimal: 6,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000000000)),
+			err:     false,
+		},
+		{
+			name:    "success",
+			decimal: 6,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(100000000000)),
+			err:     true,
+		},
+		{
+			name:    "success",
+			decimal: 7,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1000000000000)),
+			err:     false,
+		},
+		{
+			name:    "success",
+			decimal: 18,
+			amount:  sdk.NewCoin("snuatom", sdk.NewIntFromUint64(1)),
+			err:     false,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			err := suite.App.GalKeeper.CheckDecimal(tc.amount, tc.decimal)
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.Require().NoError(err)
+			}
+		})
+	}
+}

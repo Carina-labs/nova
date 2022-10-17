@@ -173,6 +173,11 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 		return nil, types.ErrInvalidDenom
 	}
 
+	// check snAsset decimal
+	if err := m.keeper.CheckDecimal(undelegate.Amount, zoneInfo.Decimal); err != nil {
+		return nil, err
+	}
+
 	// check undelegate amount
 	wAsset, err := m.keeper.GetWithdrawAmt(ctx, undelegate.Amount)
 	if err != nil {
