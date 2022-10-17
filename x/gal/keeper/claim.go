@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	icacontrolkeeper "github.com/Carina-labs/nova/x/icacontrol/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"math/big"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -203,4 +204,19 @@ func (k Keeper) ConvertSnAssetToWAssetDecimal(amount *big.Int, decimal int64, de
 
 	wAsset := new(big.Int).Quo(amount, decimalMultiplier)
 	return &sdk.Coin{Denom: denom, Amount: sdk.NewIntFromBigInt(wAsset)}, nil
+}
+
+func (k Keeper) CheckDecimal(amount sdk.Coin, decimal int64) error {
+	convertAsset, err := k.ConvertSnAssetToWAssetDecimal(amount.Amount.BigInt(), decimal, amount.Denom)
+	if err != nil {
+		return err
+	}
+	if convertAsset.Amount.IsZero() || convertAsset.Amount.IsNil() {
+		minAsset, err := k.ConvertWAssetToSnAssetDecimal(big.NewInt(1), decimal, amount.Denom)
+		if err != nil {
+			return err
+		}
+		return sdkerrors.Wrapf(types.ErrConvertWAssetIsZero, "Input amount is %s, minimum input is %s", amount.String(), minAsset.String())
+	}
+	return nil
 }
