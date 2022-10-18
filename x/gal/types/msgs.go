@@ -322,7 +322,7 @@ func (msg MsgIcaWithdraw) ValidateBasic() error {
 	}
 
 	if msg.ChainTime.IsZero() {
-		return sdkerrors.Wrap(ErrInvalidTime, msg.ControllerAddress)
+		return sdkerrors.Wrap(ErrInvalidTime, msg.ChainTime.String())
 	}
 
 	if msg.Version < 0 {

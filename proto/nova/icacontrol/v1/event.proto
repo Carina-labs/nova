@@ -5,6 +5,8 @@ import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "nova/icacontrol/v1/params.proto";
+import "nova/icacontrol/v1/icacontrol.proto";
+import "cosmos/authz/v1beta1/authz.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
 
@@ -14,9 +16,9 @@ message EventDelegateFail {
   string delegator_address = 2;
   string validator_address = 3;
   cosmos.base.v1beta1.Coin amount = 4 [
-        (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
-        (gogoproto.nullable) = false
-    ];
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.nullable) = false
+  ];
 }
 
 // EventUndelegateFail is an event that occurs when a remote delegation fails.
@@ -25,25 +27,25 @@ message EventUndelegateFail {
   string delegator_address = 2;
   string validator_address = 3;
   cosmos.base.v1beta1.Coin amount = 4 [
-        (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
-        (gogoproto.nullable) = false
-    ];
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.nullable) = false
+  ];
 }
 
 // EventAutostakingFail is an event that occurs when auto-compounding fails.
 message EventAutostakingFail {
-    string msg_type_url = 1;
-    string delegator_address = 2;
-    string validator_address = 3;
-    cosmos.base.v1beta1.Coin amount = 4 [
-        (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
-        (gogoproto.nullable) = false
-    ];
+  string msg_type_url = 1;
+  string delegator_address = 2;
+  string validator_address = 3;
+  cosmos.base.v1beta1.Coin amount = 4 [
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
+    (gogoproto.nullable) = false
+  ];
 }
 
 // EventTransferFail is an event that occurs when an asset transfer between chains fails.
 message EventTransferFail {
-  option (gogoproto.equal)           = false;
+  option (gogoproto.equal) = false;
   option (gogoproto.goproto_getters) = false;
 
   string msg_type_url = 1;
@@ -56,3 +58,80 @@ message EventTransferFail {
   uint64 timeout_timestamp = 8;
 }
 
+message EventRegisterZone{
+  string zone_id = 1;
+  IcaConnectionInfo ica_connection_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
+  int64 undelegate_max_entries = 9;
+  int64 deposit_max_entries = 10;
+}
+
+message EventChangeRegisteredZone{
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
+  int64 undelegate_max_entries = 9;
+  int64 deposit_max_entries = 10;
+}
+
+message EventDeleteZone{
+  string zone_id = 1;
+  string controller_address = 2;
+}
+
+message EventIcaDelegate{
+  string zone_id = 1;
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
+}
+
+message EventIcaUndelegate{
+  string zone_id = 1;
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
+}
+
+message EventIcaAutoStaking{
+  string zone_id = 1;
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
+}
+
+message EventIcaTransfer{
+  string zone_id = 1;
+  string controller_address = 2;
+  string receiver_address = 3;
+  string ica_transfer_port_id = 4;
+  string ica_transfer_channel_id = 5;
+  cosmos.base.v1beta1.Coin amount = 6[(gogoproto.nullable) = false];
+}
+
+message EventIcaAuthzGrant{
+  string zone_id = 1;
+  string grantee = 2;
+  string controller_address = 3;
+  cosmos.authz.v1beta1.Grant grant = 4 [(gogoproto.nullable) = false];
+}
+
+message EventIcaAuthzRevoke{
+  string zone_id = 1;
+  string grantee = 2;
+  string controller_address = 3;
+  string msg_type_url = 4;
+}
+
+message EventRegisterControllerAddress{
+  string zone_id = 1;
+  string controller_address = 2;
+  string from_address = 3;
+}

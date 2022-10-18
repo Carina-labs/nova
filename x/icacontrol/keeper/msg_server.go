@@ -67,6 +67,12 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		return nil, err
 	}
 
+	//register_zone event
+	err := ctx.EventManager().EmitTypedEvent(types.NewEventRegisterZone(zoneInfo))
+	if err != nil {
+		return nil, err
+	}
+
 	return &types.MsgRegisterZoneResponse{
 		ZoneId:               zoneInfo.ZoneId,
 		IcaInfo:              zoneInfo.IcaConnectionInfo,
@@ -94,6 +100,12 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 	}
 
 	k.Keeper.DeleteRegisteredZone(ctx, zone.ZoneId)
+
+	err := ctx.EventManager().EmitTypedEvent(types.NewEventDeleteZone(zone))
+	if err != nil {
+		return nil, err
+	}
+
 	return &types.MsgDeleteRegisteredZoneResponse{}, nil
 }
 
@@ -128,6 +140,12 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 	}
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
+
+	err := ctx.EventManager().EmitTypedEvent(types.NewEventChangeRegisterZone(zoneInfo))
+	if err != nil {
+		return nil, err
+	}
+
 	return &types.MsgChangeRegisteredZoneResponse{
 		ZoneId:               zoneInfo.ZoneId,
 		IcaInfo:              zoneInfo.IcaConnectionInfo,
@@ -163,6 +181,11 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 		return nil, errors.New("IcaDelegate transaction failed to send")
 	}
 
+	err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaDelegate(msg))
+	if err != nil {
+		return nil, err
+	}
+
 	return &types.MsgIcaDelegateResponse{}, nil
 }
 
@@ -186,6 +209,11 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 
 	if err != nil {
 		return nil, errors.New("IcaUnDelegate transaction failed to send")
+	}
+
+	err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaUndelegate(msg))
+	if err != nil {
+		return nil, err
 	}
 
 	return &types.MsgIcaUndelegateResponse{}, nil
@@ -227,6 +255,11 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 	k.SetAutoStakingVersion(ctx, zoneInfo.ZoneId, versionInfo)
 
+	err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaAutoStaking(msg))
+	if err != nil {
+		return nil, err
+	}
+
 	return &types.MsgIcaAutoStakingResponse{}, nil
 }
 
@@ -265,6 +298,11 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 		return nil, errors.New("IcaTransfer transaction failed to send")
 	}
 
+	err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaTransfer(msg))
+	if err != nil {
+		return nil, err
+	}
+
 	return &types.MsgIcaTransferResponse{}, nil
 }
 
@@ -289,6 +327,11 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 	err := k.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
 	if err != nil {
 		return nil, errors.New("IcaAuthzGrant transaction failed to send")
+	}
+
+	err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaAuthzGrant(msg))
+	if err != nil {
+		return nil, err
 	}
 
 	return &types.MsgIcaAuthzGrantResponse{}, nil
@@ -318,6 +361,11 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 		return nil, errors.New("IcaAuthzRevoke transaction failed to send")
 	}
 
+	err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaAuthzRevoke(msg))
+	if err != nil {
+		return nil, err
+	}
+
 	return &types.MsgIcaAuthzRevokeResponse{}, nil
 }
 
@@ -333,6 +381,11 @@ func (k msgServer) RegisterControllerAddress(goCtx context.Context, msg *types.M
 
 	controllerAddrs = append(controllerAddrs, msg.ControllerAddress)
 	k.SetControllerAddr(ctx, msg.ZoneId, controllerAddrs)
+
+	err := ctx.EventManager().EmitTypedEvent(types.NewEventRegisterControllerAddress(msg))
+	if err != nil {
+		return nil, err
+	}
 
 	return &types.MsgRegisterControllerAddrResponse{}, nil
 }
