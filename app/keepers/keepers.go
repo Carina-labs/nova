@@ -182,7 +182,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 
 	icaControllerKeeper := icacontrollerkeeper.NewKeeper(
-		appCodec, appKeepers.keys[icacontrollertypes.StoreKey], appKeepers.GetSubspace(icacontrollertypes.SubModuleName),
+		appCodec, appKeepers.keys[icacontrollertypes.StoreKey], appKeepers.GetSubspace(icacontrollertypes.SubModuleName), appKeepers.AccountKeeper,
 		appKeepers.IBCKeeper.ChannelKeeper, // may be replaced with middleware such as ics29 fee
 		appKeepers.IBCKeeper.ChannelKeeper, &appKeepers.IBCKeeper.PortKeeper,
 		appKeepers.ScopedICAControllerKeeper, bApp.MsgServiceRouter(),
