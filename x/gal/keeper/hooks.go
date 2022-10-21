@@ -105,6 +105,9 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 
 	// get delegateVersion
 	versionInfo := h.k.GetDelegateVersion(ctx, zoneInfo.ZoneId)
+	if versionInfo.Size() == 0 {
+		return
+	}
 	currentVersion := versionInfo.CurrentVersion
 
 	// change deposit state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
@@ -141,6 +144,9 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 
 	// get withdrawVersion
 	versionInfo := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
+	if versionInfo.Size() == 0 {
+		return
+	}
 	currentVersion := versionInfo.CurrentVersion
 
 	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, currentVersion)
@@ -172,6 +178,9 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	}
 
 	versionInfo := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
+	if versionInfo.Size() == 0 {
+		return
+	}
 	currentVersion := versionInfo.CurrentVersion
 	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca, currentVersion)
 	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
