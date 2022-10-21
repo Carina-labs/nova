@@ -73,7 +73,6 @@ var AppModuleBasic = []module.AppModuleBasic{
 	gal.AppModuleBasic{},
 	icacontrol.AppModuleBasic{},
 	authzmodule.AppModuleBasic{},
-	gal.AppModuleBasic{},
 	oracle.AppModuleBasic{},
 	airdrop.AppModuleBasic{},
 	poolincentive.AppModuleBasic{},
