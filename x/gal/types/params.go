@@ -21,6 +21,8 @@ func (p *Params) Validate() error {
 	return nil
 }
 
+// ParamSetPairs returns the parameter set used in GAL module.
+// There is no use-case of ParamSetPairs in GAL module, so it returns default value.
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{}
 }
