@@ -97,15 +97,21 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 	ibcDenom := q.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	amount := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
+	undelegateRecord, found := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
+	if !found {
+		ctx.Logger().Debug("failed to find undelegate record", "request", request)
+	}
+
+	for _, record := range undelegateRecord.Records {
+		amount.Amount = amount.Amount.Add(record.WithdrawAmount)
+	}
+
 	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
 	withdrawRecord, found := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
 
 	// if found is false, withdrawRecord variable is nil
 	if !found {
 		ctx.Logger().Debug("failed to find withdraw record", "request", request)
-		return &types.QueryPendingWithdrawalsResponse{
-			Amount: amount,
-		}, nil
 	}
 
 	for _, record := range withdrawRecord.Records {
