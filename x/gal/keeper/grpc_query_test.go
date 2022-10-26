@@ -5,6 +5,7 @@ import (
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	"time"
 )
 
@@ -14,6 +15,33 @@ var (
 )
 
 func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
+	denomTrace := transfertypes.DenomTrace{
+		Path:      transferPort + "/" + transferChannel,
+		BaseDenom: baseDenom,
+	}
+	suite.App.TransferKeeper.SetDenomTrace(suite.Ctx, denomTrace)
+
+	suite.App.OracleKeeper.InitGenesis(suite.Ctx, &oracletypes.GenesisState{
+		Params: oracletypes.Params{
+			OracleKeyManager: []string{
+				baseOwnerAcc.String(),
+			},
+		},
+		OracleAddressInfo: []oracletypes.OracleAddressInfo{
+			{
+				ZoneId:        zoneId,
+				OracleAddress: []string{baseOwnerAcc.String()},
+			},
+		},
+		States: []oracletypes.ChainInfo{
+			{
+				Coin:            sdk.NewCoin(baseDenom, sdk.NewInt(1000_000000)),
+				ZoneId:          zoneId,
+				OperatorAddress: baseOwnerAcc.String(),
+			},
+		},
+	})
+
 	queryClient := suite.queryClient
 	keeper := suite.App.GalKeeper
 	icaControlKeeper := suite.App.IcaControlKeeper
@@ -30,16 +58,13 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	}
 
 	oracleKeeper.SetOracleVersion(ctx, zoneId, trace)
-	keeper.SetDepositRecord(ctx, &types.DepositRecord{
+	keeper.SetDelegateRecord(ctx, &types.DelegateRecord{
 		ZoneId:  zoneId,
 		Claimer: fooUser.String(),
-		Records: []*types.DepositRecordContent{
-			{
-				Depositor:       fooUser.String(),
-				Amount:          &coin,
-				State:           types.DelegateSuccess,
-				OracleVersion:   1,
-				DelegateVersion: 1,
+		Records: map[uint64]*types.DelegateRecordContent{
+			1: {
+				Amount: &coin,
+				State:  types.DelegateSuccess,
 			},
 		},
 	})
@@ -50,8 +75,8 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	})
 
 	suite.Require().NoError(err)
-	suite.Require().Equal(amt.Amount.Denom, denom)
-	suite.Require().Equal(amt.Amount.Amount.Int64(), amount.Int64())
+	suite.Require().Equal(amt.Amount.Denom, baseSnDenom)
+	suite.Require().Equal(amt.Amount.Amount, sdk.NewIntWithDecimal(amount.Int64(), 18))
 }
 
 func (suite *KeeperTestSuite) TestDepositAmountQuery() {
@@ -72,15 +97,13 @@ func (suite *KeeperTestSuite) TestDepositAmountQuery() {
 
 	oracleKeeper.SetOracleVersion(ctx, zoneId, trace)
 	keeper.SetDepositRecord(ctx, &types.DepositRecord{
-		ZoneId:  zoneId,
-		Claimer: fooUser.String(),
+		ZoneId:    zoneId,
+		Depositor: fooUser.String(),
 		Records: []*types.DepositRecordContent{
 			{
-				Depositor:       fooUser.String(),
-				Amount:          &coin,
-				State:           types.DepositSuccess,
-				OracleVersion:   1,
-				DelegateVersion: 1,
+				Claimer: fooUser.String(),
+				Amount:  &coin,
+				State:   types.DepositSuccess,
 			},
 		},
 	})
@@ -224,22 +247,20 @@ func (suite *KeeperTestSuite) TestQueryDepositRecord() {
 	// Save the deposit record to the keeper
 	token := sdk.NewInt64Coin(baseDenom, 100)
 	fooRecords := &types.DepositRecord{
-		ZoneId:  zoneId,
-		Claimer: fooUser.String(),
+		ZoneId:    zoneId,
+		Depositor: fooUser.String(),
 		Records: []*types.DepositRecordContent{
 			{
-				Depositor:       fooUser.String(),
-				Amount:          &token,
-				State:           types.DepositRequest,
-				OracleVersion:   0,
-				DelegateVersion: 0,
+				Claimer: fooUser.String(),
+				Amount:  &token,
+				State:   types.DepositRequest,
 			},
 		},
 	}
 
 	galKeeper.SetDepositRecord(ctx, fooRecords)
 
-	fooRecords.Claimer = barUser.String()
+	fooRecords.Depositor = barUser.String()
 	galKeeper.SetDepositRecord(ctx, fooRecords)
 
 	ret, err := queryClient.DepositRecords(ctx.Context(), &types.QueryDepositRecordRequest{
@@ -248,7 +269,7 @@ func (suite *KeeperTestSuite) TestQueryDepositRecord() {
 	})
 
 	suite.Require().NoError(err)
-	fooRecords.Claimer = fooUser.String()
+	fooRecords.Depositor = fooUser.String()
 	suite.Require().Equal(fooRecords, ret.DepositRecord)
 }
 

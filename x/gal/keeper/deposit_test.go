@@ -8,35 +8,13 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
-type DepositRecord struct {
+type DelegateRecord struct {
 	zoneId    string
 	depositor sdk.AccAddress
 	claimer   sdk.AccAddress
 	amount    sdk.Coin
 	state     int64
-}
-
-func (suite *KeeperTestSuite) NewDepositRecords(records []*DepositRecord) {
-	for _, record := range records {
-		depositRecord, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, record.zoneId, record.claimer)
-		if !ok {
-			depositRecord = &types.DepositRecord{
-				ZoneId:  record.zoneId,
-				Claimer: record.claimer.String(),
-			}
-		}
-		recordContent := &types.DepositRecordContent{
-			Depositor:       record.depositor.String(),
-			Amount:          &record.amount,
-			State:           record.state,
-			OracleVersion:   1,
-			DelegateVersion: 1,
-		}
-
-		depositRecord.Records = append(depositRecord.Records, recordContent)
-
-		suite.App.GalKeeper.SetDepositRecord(suite.Ctx, depositRecord)
-	}
+	version   uint64
 }
 
 func (suite *KeeperTestSuite) TestDepositRecord() {
@@ -53,54 +31,46 @@ func (suite *KeeperTestSuite) TestDepositRecord() {
 			name:      "success deposit records",
 			depositor: depositor,
 			depositRecord: types.DepositRecord{
-				ZoneId:  zoneId,
-				Claimer: depositor.String(),
+				ZoneId:    zoneId,
+				Depositor: depositor.String(),
 				Records: []*types.DepositRecordContent{
 					{
-						Depositor: depositor.String(),
+						Claimer: depositor.String(),
 						Amount: &sdk.Coin{
 							Amount: sdk.NewInt(10000),
-							Denom:  "base",
+							Denom:  baseDenom,
 						},
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DepositRequest,
+						State: types.DepositRequest,
 					},
 					{
-						Depositor: depositor.String(),
+						Claimer: depositor.String(),
 						Amount: &sdk.Coin{
 							Amount: sdk.NewInt(20000),
-							Denom:  "base",
+							Denom:  baseDenom,
 						},
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DepositRequest,
+						State: types.DepositRequest,
 					},
 				},
 			},
 			result: types.DepositRecord{
-				ZoneId:  zoneId,
-				Claimer: depositor.String(),
+				ZoneId:    zoneId,
+				Depositor: depositor.String(),
 				Records: []*types.DepositRecordContent{
 					{
-						Depositor: depositor.String(),
+						Claimer: depositor.String(),
 						Amount: &sdk.Coin{
 							Amount: sdk.NewInt(10000),
-							Denom:  "base",
+							Denom:  baseDenom,
 						},
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DepositRequest,
+						State: types.DepositRequest,
 					},
 					{
-						Depositor: depositor.String(),
+						Claimer: depositor.String(),
 						Amount: &sdk.Coin{
 							Amount: sdk.NewInt(20000),
-							Denom:  "base",
+							Denom:  baseDenom,
 						},
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DepositRequest,
+						State: types.DepositRequest,
 					},
 				},
 			},
@@ -136,28 +106,24 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForZoneId() {
 			zoneId:    zoneId,
 			depositRecord: []*types.DepositRecord{
 				{
-					ZoneId:  zoneId,
-					Claimer: depositor,
+					ZoneId:    zoneId,
+					Depositor: depositor,
 					Records: []*types.DepositRecordContent{
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DelegateRequest,
+							State: types.DepositSuccess,
 						},
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(20000),
 								Denom:  ibcDenom,
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DelegateRequest,
+							State: types.DepositSuccess,
 						},
 					},
 				},
@@ -170,28 +136,24 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForZoneId() {
 			zoneId:    zoneId,
 			depositRecord: []*types.DepositRecord{
 				{
-					ZoneId:  zoneId,
-					Claimer: depositor,
+					ZoneId:    zoneId,
+					Depositor: depositor,
 					Records: []*types.DepositRecordContent{
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DepositRequest,
+							State: types.DepositRequest,
 						},
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(20000),
 								Denom:  ibcDenom,
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DelegateRequest,
+							State: types.DepositSuccess,
 						},
 					},
 				},
@@ -204,28 +166,24 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForZoneId() {
 			zoneId:    zoneId,
 			depositRecord: []*types.DepositRecord{
 				{
-					ZoneId:  zoneId,
-					Claimer: depositor,
+					ZoneId:    zoneId,
+					Depositor: depositor,
 					Records: []*types.DepositRecordContent{
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DepositRequest,
+							State: types.DepositRequest,
 						},
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(20000),
 								Denom:  ibcDenom,
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DepositRequest,
+							State: types.DepositRequest,
 						},
 					},
 				},
@@ -238,28 +196,24 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForZoneId() {
 			zoneId:    "nil",
 			depositRecord: []*types.DepositRecord{
 				{
-					ZoneId:  zoneId,
-					Claimer: depositor,
+					ZoneId:    zoneId,
+					Depositor: depositor,
 					Records: []*types.DepositRecordContent{
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DelegateRequest,
+							State: types.DelegateRequest,
 						},
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(20000),
 								Denom:  ibcDenom,
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DelegateSuccess,
+							State: types.DelegateSuccess,
 						},
 					},
 				},
@@ -272,28 +226,24 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForZoneId() {
 			zoneId:    zoneId,
 			depositRecord: []*types.DepositRecord{
 				{
-					ZoneId:  zoneId,
-					Claimer: depositor,
+					ZoneId:    zoneId,
+					Depositor: depositor,
 					Records: []*types.DepositRecordContent{
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  "stake",
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DelegateRequest,
+							State: types.DepositRequest,
 						},
 						{
-							Depositor: depositor,
+							Claimer: depositor,
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(20000),
 								Denom:  "stake",
 							},
-							OracleVersion:   1,
-							DelegateVersion: 1,
-							State:           types.DelegateRequest,
+							State: types.DepositRequest,
 						},
 					},
 				},
@@ -308,110 +258,8 @@ func (suite *KeeperTestSuite) TestTotalDepositAmtForZoneId() {
 				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, record)
 			}
 
-			result := suite.App.GalKeeper.GetTotalDepositAmtForZoneId(suite.Ctx, tc.zoneId, ibcDenom, types.DelegateRequest)
+			result := suite.App.GalKeeper.GetTotalDepositAmtForZoneId(suite.Ctx, tc.zoneId, ibcDenom, types.DepositSuccess)
 			suite.Require().Equal(tc.result, result)
-		})
-	}
-}
-
-func (suite *KeeperTestSuite) TestDepositOracleVersion() {
-	depositor := suite.GenRandomAddress()
-
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
-	tcs := []struct {
-		name          string
-		zoneId        string
-		state         int64
-		oracleVersion uint64
-	}{
-		{
-			name:          "oracle version is 1",
-			zoneId:        zoneId,
-			state:         types.DepositSuccess,
-			oracleVersion: 1,
-		},
-		{
-			name:          "oracle version is 2",
-			zoneId:        zoneId,
-			state:         types.DepositSuccess,
-			oracleVersion: 2,
-		},
-		{
-			name:          "oracle version is 3",
-			zoneId:        zoneId,
-			state:         types.DepositSuccess,
-			oracleVersion: 3,
-		},
-		{
-			name:          "oracle version is 4",
-			zoneId:        zoneId,
-			state:         types.DepositSuccess,
-			oracleVersion: 4,
-		},
-	}
-
-	for _, tc := range tcs {
-		suite.Run(tc.name, func() {
-			depositRecord := []*types.DepositRecord{
-				{
-					ZoneId:  zoneId,
-					Claimer: depositor.String(),
-					Records: []*types.DepositRecordContent{
-						{
-							Depositor: depositor.String(),
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(10000),
-								Denom:  ibcDenom,
-							},
-							State: types.DepositSuccess,
-						},
-						{
-							Depositor: depositor.String(),
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(30000),
-								Denom:  ibcDenom,
-							},
-							State: types.DepositSuccess,
-						},
-					},
-				},
-				{
-					ZoneId:  zoneId,
-					Claimer: depositor.String(),
-					Records: []*types.DepositRecordContent{
-						{
-							Depositor: depositor.String(),
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(15000),
-								Denom:  ibcDenom,
-							},
-							State: types.DepositSuccess,
-						},
-						{
-							Depositor: depositor.String(),
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(10000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateSuccess,
-						},
-					},
-				},
-			}
-			for _, record := range depositRecord {
-				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, record)
-			}
-
-			suite.App.GalKeeper.SetDepositOracleVersion(suite.Ctx, tc.zoneId, tc.state, tc.oracleVersion)
-
-			result, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, zoneId, depositor)
-			suite.Require().True(ok)
-
-			for _, record := range result.Records {
-				if record.State == tc.state {
-					suite.Require().Equal(record.OracleVersion, tc.oracleVersion)
-				}
-			}
 		})
 	}
 }
@@ -428,27 +276,15 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 		result    []int64
 	}{
 		{
-			name:      "state change : DepositRequest - DepositSuccess",
-			zoneId:    zoneId,
-			preState:  types.DelegateRequest,
-			postState: types.DelegateSuccess,
-			result: []int64{
-				types.DepositRequest,
-				types.DelegateSuccess,
-				types.DepositRequest,
-				types.DelegateSuccess,
-			},
-		},
-		{
-			name:      "state change : DelegateRequest - DelegateSuccess",
+			name:      "state change",
 			zoneId:    zoneId,
 			preState:  types.DepositRequest,
 			postState: types.DepositSuccess,
 			result: []int64{
 				types.DepositSuccess,
-				types.DelegateRequest,
 				types.DepositSuccess,
-				types.DelegateRequest,
+				types.DepositSuccess,
+				types.DepositSuccess,
 			},
 		},
 	}
@@ -457,11 +293,11 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 		suite.Run(tc.name, func() {
 			depositRecord := []*types.DepositRecord{
 				{
-					ZoneId:  zoneId,
-					Claimer: depositor.String(),
+					ZoneId:    zoneId,
+					Depositor: depositor.String(),
 					Records: []*types.DepositRecordContent{
 						{
-							Depositor: depositor.String(),
+							Claimer: depositor.String(),
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
@@ -469,7 +305,7 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 							State: types.DepositRequest,
 						},
 						{
-							Depositor: depositor.String(),
+							Claimer: depositor.String(),
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(30000),
 								Denom:  ibcDenom,
@@ -479,11 +315,11 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 					},
 				},
 				{
-					ZoneId:  zoneId,
-					Claimer: depositor.String(),
+					ZoneId:    zoneId,
+					Depositor: depositor.String(),
 					Records: []*types.DepositRecordContent{
 						{
-							Depositor: depositor.String(),
+							Claimer: depositor.String(),
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(15000),
 								Denom:  ibcDenom,
@@ -491,7 +327,7 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 							State: types.DepositRequest,
 						},
 						{
-							Depositor: depositor.String(),
+							Claimer: depositor.String(),
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
@@ -505,257 +341,13 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, record)
 			}
 
-			suite.App.GalKeeper.ChangeDepositState(suite.Ctx, tc.zoneId, tc.preState, tc.postState)
+			suite.App.GalKeeper.ChangeDepositState(suite.Ctx, tc.zoneId)
 
 			result, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, zoneId, depositor)
 			suite.Require().True(ok)
 
 			for i, record := range result.Records {
 				suite.Require().Equal(record.State, tc.result[i])
-			}
-		})
-	}
-}
-
-func (suite *KeeperTestSuite) TestDelegateRecordVersion() {
-	depositor := suite.GenRandomAddress()
-
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
-	tcs := []struct {
-		name            string
-		zoneId          string
-		state           int64
-		delegateVersion uint64
-	}{
-		{
-			name:            "delegate version 1",
-			zoneId:          zoneId,
-			state:           types.DelegateSuccess,
-			delegateVersion: 1,
-		},
-		{
-			name:            "delegate version 2",
-			zoneId:          zoneId,
-			state:           types.DelegateSuccess,
-			delegateVersion: 2,
-		},
-		{
-			name:            "delegate version 3",
-			zoneId:          zoneId,
-			state:           types.DelegateSuccess,
-			delegateVersion: 3,
-		},
-		{
-			name:            "delegate version 4",
-			zoneId:          zoneId,
-			state:           types.DelegateSuccess,
-			delegateVersion: 4,
-		},
-	}
-
-	for _, tc := range tcs {
-		suite.Run(tc.name, func() {
-			depositRecord := []*types.DepositRecord{
-				{
-					ZoneId:  zoneId,
-					Claimer: depositor.String(),
-					Records: []*types.DepositRecordContent{
-						{
-							Depositor: depositor.String(),
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(10000),
-								Denom:  ibcDenom,
-							},
-							State: types.DepositSuccess,
-						},
-						{
-							Depositor: depositor.String(),
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(30000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateSuccess,
-						},
-					},
-				},
-				{
-					ZoneId:  zoneId,
-					Claimer: depositor.String(),
-					Records: []*types.DepositRecordContent{
-						{
-							Depositor: depositor.String(),
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(15000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateSuccess,
-						},
-						{
-							Depositor: depositor.String(),
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(10000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateSuccess,
-						},
-					},
-				},
-			}
-			for _, record := range depositRecord {
-				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, record)
-			}
-
-			suite.App.GalKeeper.SetDelegateRecordVersion(suite.Ctx, tc.zoneId, tc.state, tc.delegateVersion)
-
-			result, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, zoneId, depositor)
-			suite.Require().True(ok)
-
-			for _, record := range result.Records {
-				if record.State == tc.state {
-					suite.Require().Equal(record.DelegateVersion, tc.delegateVersion)
-				}
-			}
-		})
-	}
-}
-
-func (suite *KeeperTestSuite) TestDeleteRecordedDepositItem() {
-	depositor := suite.GenRandomAddress().String()
-
-	tcs := []struct {
-		name          string
-		depositor     string
-		depositRecord types.DepositRecord
-		result        types.DepositRecord
-		wantErr       bool
-	}{
-		{
-			name:      "success",
-			depositor: depositor,
-			depositRecord: types.DepositRecord{
-				ZoneId:  zoneId,
-				Claimer: depositor,
-
-				Records: []*types.DepositRecordContent{
-					{
-						Depositor:       depositor,
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DelegateSuccess,
-						Amount: &sdk.Coin{
-							Denom:  "stake",
-							Amount: sdk.NewInt(3000),
-						},
-					},
-					{
-						Depositor:       depositor,
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DelegateSuccess,
-						Amount: &sdk.Coin{
-							Denom:  "stake",
-							Amount: sdk.NewInt(2000),
-						},
-					},
-					{
-						Depositor:       depositor,
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DelegateSuccess,
-						Amount: &sdk.Coin{
-							Denom:  "stake",
-							Amount: sdk.NewInt(1000),
-						},
-					},
-				},
-			},
-			result: types.DepositRecord{
-				ZoneId:  zoneId,
-				Claimer: depositor,
-				Records: []*types.DepositRecordContent(nil),
-			},
-			wantErr: false,
-		},
-		{
-			name:      "no deleted item",
-			depositor: depositor,
-			depositRecord: types.DepositRecord{
-				ZoneId:  zoneId,
-				Claimer: depositor,
-				Records: []*types.DepositRecordContent{
-					{
-						Depositor:       depositor,
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DepositSuccess,
-						Amount: &sdk.Coin{
-							Denom:  "stake",
-							Amount: sdk.NewInt(1000),
-						},
-					},
-					{
-						Depositor:       depositor,
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DelegateRequest,
-						Amount: &sdk.Coin{
-							Denom:  "stake",
-							Amount: sdk.NewInt(3000),
-						},
-					},
-				},
-			},
-			result: types.DepositRecord{
-				ZoneId:  zoneId,
-				Claimer: depositor,
-				Records: []*types.DepositRecordContent{
-					{
-						Depositor:       depositor,
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DepositSuccess,
-						Amount: &sdk.Coin{
-							Denom:  "stake",
-							Amount: sdk.NewInt(1000),
-						},
-					},
-					{
-						Depositor:       depositor,
-						OracleVersion:   1,
-						DelegateVersion: 1,
-						State:           types.DelegateRequest,
-						Amount: &sdk.Coin{
-							Denom:  "stake",
-							Amount: sdk.NewInt(3000),
-						},
-					},
-				},
-			},
-			wantErr: true,
-		},
-		{
-			name:          "no deposited history, error case",
-			depositor:     depositor,
-			depositRecord: types.DepositRecord{},
-			result:        types.DepositRecord{},
-			wantErr:       true,
-		},
-	}
-
-	for _, tc := range tcs {
-		suite.Run(tc.name, func() {
-			if tc.depositRecord.Size() > 0 {
-				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, &tc.depositRecord)
-			}
-
-			testAcc, _ := sdk.AccAddressFromBech32(tc.depositor)
-			err := suite.App.GalKeeper.DeleteRecordedDepositItem(suite.Ctx, zoneId, testAcc, types.DelegateSuccess)
-			if !tc.wantErr {
-				result, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, zoneId, testAcc)
-				suite.Require().True(ok)
-				suite.Require().Equal(*result, tc.result)
-			} else {
-				suite.Require().Error(err)
 			}
 		})
 	}
@@ -780,21 +372,19 @@ func (suite *KeeperTestSuite) TestGetAllAmountNotMintShareToken() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			depositRecord := []*types.DepositRecord{
+			delegateRecord := []*types.DelegateRecord{
 				{
 					ZoneId:  zoneId,
 					Claimer: depositor1.String(),
-					Records: []*types.DepositRecordContent{
-						{
-							Depositor: depositor1.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
 							},
 							State: types.DelegateSuccess,
 						},
-						{
-							Depositor: depositor1.String(),
+						2: {
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(30000),
 								Denom:  ibcDenom,
@@ -806,25 +396,22 @@ func (suite *KeeperTestSuite) TestGetAllAmountNotMintShareToken() {
 				{
 					ZoneId:  zoneId,
 					Claimer: depositor2.String(),
-					Records: []*types.DepositRecordContent{
-						{
-							Depositor: depositor2.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(15000),
 								Denom:  ibcDenom,
 							},
-							State: types.DepositRequest,
+							State: types.DelegateRequest,
 						},
-						{
-							Depositor: depositor2.String(),
+						2: {
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
 							},
 							State: types.DelegateSuccess,
 						},
-						{
-							Depositor: depositor2.String(),
+						3: {
 							Amount: &sdk.Coin{
 								Amount: sdk.NewInt(10000),
 								Denom:  ibcDenom,
@@ -834,8 +421,8 @@ func (suite *KeeperTestSuite) TestGetAllAmountNotMintShareToken() {
 					},
 				},
 			}
-			for _, record := range depositRecord {
-				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, record)
+			for _, record := range delegateRecord {
+				suite.App.GalKeeper.SetDelegateRecord(suite.Ctx, record)
 			}
 
 			zone := icacontroltypes.RegisteredZone{
@@ -860,6 +447,257 @@ func (suite *KeeperTestSuite) TestGetAllAmountNotMintShareToken() {
 
 			suite.Require().Equal(result, tc.result)
 		})
+	}
+}
+
+func (suite *KeeperTestSuite) TestDeleteDepositRecords() {
+	depositor := suite.GenRandomAddress().String()
+
+	tcs := []struct {
+		name          string
+		depositor     string
+		depositRecord types.DepositRecord
+		result        types.DepositRecord
+	}{
+		{
+			name:      "success",
+			depositor: depositor,
+			depositRecord: types.DepositRecord{
+				ZoneId:    zoneId,
+				Depositor: depositor,
+				Records: []*types.DepositRecordContent{
+					{
+						Claimer: depositor,
+						State:   types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Denom:  "stake",
+							Amount: sdk.NewInt(3000),
+						},
+					},
+					{
+						Claimer: depositor,
+						State:   types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Denom:  "stake",
+							Amount: sdk.NewInt(2000),
+						},
+					},
+					{
+						Claimer: depositor,
+						State:   types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Denom:  "stake",
+							Amount: sdk.NewInt(1000),
+						},
+					},
+				},
+			},
+			result: types.DepositRecord{
+				ZoneId:    zoneId,
+				Depositor: depositor,
+				Records:   []*types.DepositRecordContent(nil),
+			},
+		},
+		{
+			name:      "no deleted item",
+			depositor: depositor,
+			depositRecord: types.DepositRecord{
+				ZoneId:    zoneId,
+				Depositor: depositor,
+				Records: []*types.DepositRecordContent{
+					{
+						Claimer: depositor,
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  "stake",
+							Amount: sdk.NewInt(1000),
+						},
+					},
+					{
+						Claimer: depositor,
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  "stake",
+							Amount: sdk.NewInt(3000),
+						},
+					},
+				},
+			},
+			result: types.DepositRecord{
+				ZoneId:    zoneId,
+				Depositor: depositor,
+				Records: []*types.DepositRecordContent{
+					{
+						Claimer: depositor,
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  "stake",
+							Amount: sdk.NewInt(1000),
+						},
+					},
+					{
+						Claimer: depositor,
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  "stake",
+							Amount: sdk.NewInt(3000),
+						},
+					},
+				},
+			},
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			if tc.depositRecord.Size() > 0 {
+				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, &tc.depositRecord)
+			}
+
+			testAcc, _ := sdk.AccAddressFromBech32(tc.depositor)
+			suite.App.GalKeeper.DeleteDepositRecords(suite.Ctx, zoneId, types.DepositSuccess)
+
+			result, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, zoneId, testAcc)
+			suite.Require().True(ok)
+			suite.Require().Equal(*result, tc.result)
+		})
+	}
+}
+
+func (suite *KeeperTestSuite) TestDeleteRecordedDepositItem() {
+	depositor := suite.GenRandomAddress()
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
+
+	tcs := []struct {
+		name          string
+		zoneId        string
+		depositor     sdk.AccAddress
+		amount        sdk.Int
+		state         types.DepositStatusType
+		depositRecord types.DepositRecord
+		result        types.DepositRecord
+		wantErr       bool
+	}{
+		{
+			name:      "success",
+			zoneId:    zoneId,
+			amount:    sdk.NewInt(3000),
+			depositor: depositor,
+			state:     types.DepositRequest,
+			depositRecord: types.DepositRecord{
+				ZoneId:    zoneId,
+				Depositor: depositor.String(),
+				Records: []*types.DepositRecordContent{
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(3000),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(3000),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(3500),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DelegateSuccess,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(2000),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(1000),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(3000),
+						},
+					},
+				},
+			},
+			result: types.DepositRecord{
+				ZoneId:    zoneId,
+				Depositor: depositor.String(),
+				Records: []*types.DepositRecordContent{
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(3000),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositRequest,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(3500),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DelegateSuccess,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(2000),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(1000),
+						},
+					},
+					{
+						Claimer: depositor.String(),
+						State:   types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Denom:  ibcDenom,
+							Amount: sdk.NewInt(3000),
+						},
+					},
+				},
+			},
+			wantErr: false,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.App.GalKeeper.SetDepositRecord(suite.Ctx, &tc.depositRecord)
+
+		err := suite.App.GalKeeper.DeleteRecordedDepositItem(suite.Ctx, tc.zoneId, tc.depositor, tc.state, tc.amount)
+		suite.NoError(err)
+
+		res, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, tc.zoneId, tc.depositor)
+		suite.Require().True(ok)
+
+		suite.Require().Equal(tc.result, *res)
 	}
 }
 
