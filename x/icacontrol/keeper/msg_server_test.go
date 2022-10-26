@@ -391,11 +391,11 @@ func (suite *KeeperTestSuite) TestIcaDelegate() {
 	hostAddr := suite.setHostAddr(zoneId)
 	ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
 	record := galtypes.DepositRecord{
-		ZoneId:  zoneId,
-		Claimer: randAddr.String(),
+		ZoneId:    zoneId,
+		Depositor: randAddr.String(),
 		Records: []*galtypes.DepositRecordContent{
 			{
-				Depositor: randAddr.String(),
+				Claimer: randAddr.String(),
 				Amount: &sdk.Coin{
 					Amount: sdk.NewInt(10000),
 					Denom:  ibcDenom,
