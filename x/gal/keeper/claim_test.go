@@ -4,28 +4,56 @@ import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	"math/big"
 )
 
 func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
-
 	claimer1 := suite.GenRandomAddress()
 	claimer2 := suite.GenRandomAddress()
 	claimer3 := suite.GenRandomAddress()
 
 	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
-	depositRecords := []*DepositRecord{
-		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(10000)), state: types.DelegateSuccess},
-		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(20000)), state: types.DelegateSuccess},
-		{zoneId: zoneId, claimer: claimer1, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(30000)), state: types.DepositSuccess},
-		{zoneId: zoneId, claimer: claimer1, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(40000)), state: types.DelegateRequest},
 
-		{zoneId: zoneId, claimer: claimer2, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(10000)), state: types.DelegateSuccess},
-		{zoneId: zoneId, claimer: claimer2, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(20000)), state: types.DelegateRequest},
-		{zoneId: zoneId, claimer: claimer2, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(30000)), state: types.DepositRequest},
-		{zoneId: zoneId, claimer: claimer2, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(40000)), state: types.DelegateSuccess},
+	denomTrace := transfertypes.DenomTrace{
+		Path:      transferPort + "/" + transferChannel,
+		BaseDenom: baseDenom,
 	}
-	suite.NewDepositRecords(depositRecords)
+	suite.App.TransferKeeper.SetDenomTrace(suite.Ctx, denomTrace)
+
+	suite.App.OracleKeeper.InitGenesis(suite.Ctx, &oracletypes.GenesisState{
+		Params: oracletypes.Params{
+			OracleKeyManager: []string{
+				baseOwnerAcc.String(),
+			},
+		},
+		OracleAddressInfo: []oracletypes.OracleAddressInfo{
+			{
+				ZoneId:        zoneId,
+				OracleAddress: []string{baseOwnerAcc.String()},
+			},
+		},
+		States: []oracletypes.ChainInfo{
+			{
+				Coin:            sdk.NewCoin(baseDenom, sdk.NewInt(80000)),
+				ZoneId:          zoneId,
+				OperatorAddress: baseOwnerAcc.String(),
+			},
+		},
+	})
+
+	delegateRecords := []*DelegateRecord{
+		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(10000)), state: types.DelegateSuccess, version: 1},
+		{zoneId: zoneId, claimer: claimer1, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(20000)), state: types.DelegateSuccess, version: 2},
+		{zoneId: zoneId, claimer: claimer1, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(30000)), state: types.DelegateRequest, version: 3},
+		{zoneId: zoneId, claimer: claimer1, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(40000)), state: types.DelegateRequest, version: 4},
+
+		{zoneId: zoneId, claimer: claimer2, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(10000)), state: types.DelegateSuccess, version: 1},
+		{zoneId: zoneId, claimer: claimer2, depositor: claimer2, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(20000)), state: types.DelegateRequest, version: 2},
+		{zoneId: zoneId, claimer: claimer2, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(30000)), state: types.DelegateRequest, version: 3},
+		{zoneId: zoneId, claimer: claimer2, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(40000)), state: types.DelegateSuccess, version: 4},
+	}
+	suite.NewDelegateRecords(delegateRecords)
 
 	tcs := []struct {
 		name          string
@@ -37,14 +65,14 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 		{
 			name:          "claimer1 claimable assets",
 			claimer:       claimer1,
-			result:        sdk.NewCoin(ibcDenom, sdk.NewInt(30000)),
+			result:        sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(30000, 18)),
 			oracleVersion: 2,
 			err:           false,
 		},
 		{
 			name:          "claimer2 claimable assets",
 			claimer:       claimer2,
-			result:        sdk.NewCoin(ibcDenom, sdk.NewInt(50000)),
+			result:        sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(50000, 18)),
 			oracleVersion: 3,
 			err:           false,
 		},
@@ -57,7 +85,7 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 		{
 			name:          "oracleVersion issue",
 			claimer:       claimer1,
-			result:        sdk.NewCoin(ibcDenom, sdk.NewInt(0)),
+			result:        sdk.NewCoin(baseSnDenom, sdk.NewIntWithDecimal(0, 18)),
 			oracleVersion: 1,
 			err:           false,
 		},
@@ -83,7 +111,6 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 			}
 		})
 	}
-
 }
 
 func (suite *KeeperTestSuite) TestCalculateDepositAlpha() {
@@ -167,52 +194,71 @@ func (suite *KeeperTestSuite) TestCalculateWithdrawAlpha() {
 }
 
 func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
-	type depositInfo struct {
-		address string
-		amount  sdk.Coin
-	}
-
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom("transfer", "channel-0", "stake")
+	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	tcs := []struct {
-		name         string
-		stakedAmount sdk.Coin
-		depositInfo  []depositInfo
-		expect       sdk.Coin
+		name           string
+		stakedAmount   sdk.Coin
+		delegateRecord []*DelegateRecord
+		expect         sdk.Coin
 	}{
 		{
 			name:         "test case 1",
-			stakedAmount: sdk.NewInt64Coin("stake", 1_000_000),
-			depositInfo: []depositInfo{
+			stakedAmount: sdk.NewInt64Coin(baseDenom, 1_000_000),
+			delegateRecord: []*DelegateRecord{
 				{
-					address: suite.GenRandomAddress().String(),
-					amount:  sdk.NewInt64Coin("stake", 100_000),
+					zoneId:    zoneId,
+					claimer:   suite.GenRandomAddress(),
+					depositor: suite.GenRandomAddress(),
+					amount:    sdk.NewInt64Coin(ibcDenom, 100_000),
+					state:     types.DelegateSuccess,
+					version:   1,
 				},
 				{
-					address: suite.GenRandomAddress().String(),
-					amount:  sdk.NewInt64Coin("stake", 100_000),
+					zoneId:    zoneId,
+					claimer:   suite.GenRandomAddress(),
+					depositor: suite.GenRandomAddress(),
+					amount:    sdk.NewInt64Coin(ibcDenom, 100_000),
+					state:     types.DelegateSuccess,
+					version:   1,
 				},
 				{
-					address: suite.GenRandomAddress().String(),
-					amount:  sdk.NewInt64Coin("stake", 100_000),
+					zoneId:    zoneId,
+					claimer:   suite.GenRandomAddress(),
+					depositor: suite.GenRandomAddress(),
+					amount:    sdk.NewInt64Coin(ibcDenom, 100_000),
+					state:     types.DelegateSuccess,
+					version:   1,
 				},
 			},
 			expect: sdk.NewInt64Coin(ibcDenom, 700_000),
 		},
 		{
 			name:         "test case 2",
-			stakedAmount: sdk.NewInt64Coin("stake", 1_500_000),
-			depositInfo: []depositInfo{
+			stakedAmount: sdk.NewInt64Coin(baseDenom, 1_500_000),
+			delegateRecord: []*DelegateRecord{
 				{
-					address: suite.GenRandomAddress().String(),
-					amount:  sdk.NewInt64Coin("stake", 100_000),
+					zoneId:    zoneId,
+					claimer:   suite.GenRandomAddress(),
+					depositor: suite.GenRandomAddress(),
+					amount:    sdk.NewInt64Coin(ibcDenom, 100_000),
+					state:     types.DelegateSuccess,
+					version:   1,
 				},
 				{
-					address: suite.GenRandomAddress().String(),
-					amount:  sdk.NewInt64Coin("stake", 200_000),
+					zoneId:    zoneId,
+					claimer:   suite.GenRandomAddress(),
+					depositor: suite.GenRandomAddress(),
+					amount:    sdk.NewInt64Coin(ibcDenom, 200_000),
+					state:     types.DelegateSuccess,
+					version:   1,
 				},
 				{
-					address: suite.GenRandomAddress().String(),
-					amount:  sdk.NewInt64Coin("stake", 300_000),
+					zoneId:    zoneId,
+					claimer:   suite.GenRandomAddress(),
+					depositor: suite.GenRandomAddress(),
+					amount:    sdk.NewInt64Coin(ibcDenom, 300_000),
+					state:     types.DelegateSuccess,
+					version:   1,
 				},
 			},
 			expect: sdk.NewInt64Coin(ibcDenom, 900_000),
@@ -232,7 +278,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 				},
 				OracleAddressInfo: []oracletypes.OracleAddressInfo{
 					{
-						ZoneId: "stake-1",
+						ZoneId: zoneId,
 						OracleAddress: []string{
 							operator,
 						},
@@ -241,35 +287,19 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 				States: []oracletypes.ChainInfo{
 					{
 						Coin:            tc.stakedAmount,
-						ZoneId:          "stake-1",
+						ZoneId:          zoneId,
 						OperatorAddress: operator,
 					},
 				},
 			})
 
 			baseTestZone := newBaseRegisteredZone()
-			baseTestZone.ZoneId = "stake-1"
-			baseTestZone.BaseDenom = "stake"
-			baseTestZone.SnDenom = "snstake"
 			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, baseTestZone)
 
-			for _, item := range tc.depositInfo {
-				ibcAmount := sdk.NewInt64Coin(ibcDenom, item.amount.Amount.Int64())
-				record := types.DepositRecord{
-					ZoneId:  "stake-1",
-					Claimer: item.address,
-					Records: []*types.DepositRecordContent{
-						{
-							Amount: &ibcAmount,
-							State:  types.DelegateSuccess,
-						},
-					},
-				}
-				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, &record)
-			}
+			suite.NewDelegateRecords(tc.delegateRecord)
 
 			// execute
-			res, err := suite.App.GalKeeper.GetTotalStakedForLazyMinting(suite.Ctx, "stake", "transfer", "channel-0")
+			res, err := suite.App.GalKeeper.GetTotalStakedForLazyMinting(suite.Ctx, baseDenom, transferPort, transferChannel)
 			// verify
 			suite.Require().NoError(err)
 			suite.Require().True(tc.expect.IsEqual(res))
