@@ -53,7 +53,7 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Query
 	zone, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
 
 	if !ok {
-		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, "zone not found")
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
 
 	addr, err := sdk.AccAddressFromBech32(request.Address)
@@ -79,10 +79,17 @@ func (q QueryServer) DepositAmount(goCtx context.Context, request *types.QueryDe
 	}
 
 	ibcDenom := q.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
-	amt := q.keeper.GetTotalDepositAmtForUserAddr(ctx, request.ZoneId, request.Address, ibcDenom)
+	depositAmount := q.keeper.GetTotalDepositAmtForUserAddr(ctx, request.ZoneId, request.Address, ibcDenom)
+
+	claimer, err := sdk.AccAddressFromBech32(request.Address)
+	if err != nil {
+		return nil, err
+	}
+	delegateAmount := q.keeper.GetTotalDelegateAmtForUser(ctx, request.ZoneId, ibcDenom, claimer, types.DelegateRequest)
+	result := depositAmount.Add(delegateAmount)
 
 	return &types.QueryDepositAmountResponse{
-		Amount: amt,
+		Amount: result,
 	}, nil
 }
 
@@ -98,26 +105,26 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 	amount := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
 
 	undelegateRecord, found := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
-	if !found {
+	if found {
+		for _, record := range undelegateRecord.Records {
+			amount.Amount = amount.Amount.Add(record.WithdrawAmount)
+		}
+	} else {
 		ctx.Logger().Debug("failed to find undelegate record", "request", request)
-	}
-
-	for _, record := range undelegateRecord.Records {
-		amount.Amount = amount.Amount.Add(record.WithdrawAmount)
 	}
 
 	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
 	withdrawRecord, found := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
 
 	// if found is false, withdrawRecord variable is nil
-	if !found {
-		ctx.Logger().Debug("failed to find withdraw record", "request", request)
-	}
-
-	for _, record := range withdrawRecord.Records {
-		if record.State == types.WithdrawStatusRegistered {
-			amount.Amount = amount.Amount.Add(record.Amount)
+	if found {
+		for _, record := range withdrawRecord.Records {
+			if record.State == types.WithdrawStatusRegistered {
+				amount.Amount = amount.Amount.Add(record.Amount)
+			}
 		}
+	} else {
+		ctx.Logger().Debug("failed to find withdraw record", "request", request)
 	}
 
 	return &types.QueryPendingWithdrawalsResponse{
@@ -157,6 +164,23 @@ func (q QueryServer) DepositRecords(goCtx context.Context, request *types.QueryD
 
 	return &types.QueryDepositRecordResponse{
 		DepositRecord: records,
+	}, nil
+}
+
+func (q QueryServer) DelegateRecords(goCtx context.Context, request *types.QueryDelegateRecordRequest) (*types.QueryDelegateRecordResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	user, err := sdk.AccAddressFromBech32(request.Address)
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
+	}
+
+	records, found := q.keeper.GetUserDelegateRecord(ctx, request.ZoneId, user)
+	if !found {
+		return nil, types.ErrNoDelegateRecord
+	}
+
+	return &types.QueryDelegateRecordResponse{
+		DelegateRecord: records,
 	}, nil
 }
 

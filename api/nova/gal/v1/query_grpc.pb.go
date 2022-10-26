@@ -29,6 +29,7 @@ type QueryClient interface {
 	PendingWithdrawals(ctx context.Context, in *QueryPendingWithdrawalsRequest, opts ...grpc.CallOption) (*QueryPendingWithdrawalsResponse, error)
 	ActiveWithdrawals(ctx context.Context, in *QueryActiveWithdrawalsRequest, opts ...grpc.CallOption) (*QueryActiveWithdrawalsResponse, error)
 	DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error)
+	DelegateRecords(ctx context.Context, in *QueryDelegateRecordRequest, opts ...grpc.CallOption) (*QueryDelegateRecordResponse, error)
 	UndelegateRecords(ctx context.Context, in *QueryUndelegateRecordRequest, opts ...grpc.CallOption) (*QueryUndelegateRecordResponse, error)
 	WithdrawRecords(ctx context.Context, in *QueryWithdrawRecordRequest, opts ...grpc.CallOption) (*QueryWithdrawRecordResponse, error)
 	DelegateVersion(ctx context.Context, in *QueryDelegateVersion, opts ...grpc.CallOption) (*QueryDelegateVersionResponse, error)
@@ -104,6 +105,15 @@ func (c *queryClient) ActiveWithdrawals(ctx context.Context, in *QueryActiveWith
 func (c *queryClient) DepositRecords(ctx context.Context, in *QueryDepositRecordRequest, opts ...grpc.CallOption) (*QueryDepositRecordResponse, error) {
 	out := new(QueryDepositRecordResponse)
 	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DepositRecords", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) DelegateRecords(ctx context.Context, in *QueryDelegateRecordRequest, opts ...grpc.CallOption) (*QueryDelegateRecordResponse, error) {
+	out := new(QueryDelegateRecordResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/DelegateRecords", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -193,6 +203,7 @@ type QueryServer interface {
 	PendingWithdrawals(context.Context, *QueryPendingWithdrawalsRequest) (*QueryPendingWithdrawalsResponse, error)
 	ActiveWithdrawals(context.Context, *QueryActiveWithdrawalsRequest) (*QueryActiveWithdrawalsResponse, error)
 	DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error)
+	DelegateRecords(context.Context, *QueryDelegateRecordRequest) (*QueryDelegateRecordResponse, error)
 	UndelegateRecords(context.Context, *QueryUndelegateRecordRequest) (*QueryUndelegateRecordResponse, error)
 	WithdrawRecords(context.Context, *QueryWithdrawRecordRequest) (*QueryWithdrawRecordResponse, error)
 	DelegateVersion(context.Context, *QueryDelegateVersion) (*QueryDelegateVersionResponse, error)
@@ -228,6 +239,9 @@ func (UnimplementedQueryServer) ActiveWithdrawals(context.Context, *QueryActiveW
 }
 func (UnimplementedQueryServer) DepositRecords(context.Context, *QueryDepositRecordRequest) (*QueryDepositRecordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DepositRecords not implemented")
+}
+func (UnimplementedQueryServer) DelegateRecords(context.Context, *QueryDelegateRecordRequest) (*QueryDelegateRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelegateRecords not implemented")
 }
 func (UnimplementedQueryServer) UndelegateRecords(context.Context, *QueryUndelegateRecordRequest) (*QueryUndelegateRecordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UndelegateRecords not implemented")
@@ -388,6 +402,24 @@ func _Query_DepositRecords_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).DepositRecords(ctx, req.(*QueryDepositRecordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_DelegateRecords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryDelegateRecordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).DelegateRecords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/DelegateRecords",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).DelegateRecords(ctx, req.(*QueryDelegateRecordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -570,6 +602,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DepositRecords",
 			Handler:    _Query_DepositRecords_Handler,
+		},
+		{
+			MethodName: "DelegateRecords",
+			Handler:    _Query_DelegateRecords_Handler,
 		},
 		{
 			MethodName: "UndelegateRecords",

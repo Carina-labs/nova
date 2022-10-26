@@ -41,6 +41,10 @@ service Query {
     option (google.api.http).get = "/nova/gal/v1/deposit/{address}/{zone_id}";
   }
 
+  rpc DelegateRecords(QueryDelegateRecordRequest) returns (QueryDelegateRecordResponse) {
+    option (google.api.http).get = "/nova/gal/v1/delegate/{address}/{zone_id}";
+  }
+
   rpc UndelegateRecords(QueryUndelegateRecordRequest) returns (QueryUndelegateRecordResponse) {
     option (google.api.http).get = "/nova/gal/v1/undelegate/{address}/{zone_id}";
   }
@@ -136,6 +140,15 @@ message QueryDepositRecordRequest {
 
 message QueryDepositRecordResponse {
   DepositRecord deposit_record = 1;
+}
+
+message QueryDelegateRecordRequest {
+  string zone_id = 1;
+  string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+}
+
+message QueryDelegateRecordResponse {
+  DelegateRecord delegateRecord = 1;
 }
 
 message QueryUndelegateRecordRequest {
