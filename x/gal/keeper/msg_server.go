@@ -54,18 +54,18 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	newRecord := &types.DepositRecordContent{
-		Depositor: depositorAcc.String(),
-		Amount:    &deposit.Amount,
-		State:     types.DepositRequest,
+		Claimer: claimAcc.String(),
+		Amount:  &deposit.Amount,
+		State:   types.DepositRequest,
 	}
 
-	record, found := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, claimAcc)
+	record, found := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, depositorAcc)
 
 	if !found {
 		m.keeper.SetDepositRecord(ctx, &types.DepositRecord{
-			ZoneId:  deposit.ZoneId,
-			Claimer: deposit.Claimer,
-			Records: []*types.DepositRecordContent{newRecord},
+			ZoneId:    deposit.ZoneId,
+			Depositor: deposit.Claimer,
+			Records:   []*types.DepositRecordContent{newRecord},
 		})
 	} else {
 		if len(record.Records) >= int(zoneInfo.DepositMaxEntries) &&
@@ -122,14 +122,18 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 
 	versionInfo := m.keeper.GetDelegateVersion(ctx, zoneInfo.ZoneId)
 	version := versionInfo.Record[delegate.Version]
+
 	if version.State == types.IcaPending {
-		ok = m.keeper.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DepositSuccess, types.DelegateRequest)
-		if !ok {
-			return nil, types.ErrCanNotChangeState
+		depoistAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, zoneInfo.ZoneId, ibcDenom, types.DepositSuccess)
+		if depoistAmt.IsZero() {
+			return nil, types.ErrNoDepositRecord
 		}
+
+		m.keeper.SetDelegateRecords(ctx, zoneInfo.ZoneId)
+		m.keeper.DeleteDepositRecords(ctx, zoneInfo.ZoneId, types.DepositSuccess)
 	}
 
-	delegateAmt := m.keeper.GetTotalDepositAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, types.DelegateRequest)
+	delegateAmt := m.keeper.GetTotalDelegateAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, versionInfo.CurrentVersion, types.DelegateRequest)
 	delegateAmt.Denom = zoneInfo.BaseDenom
 
 	var msgs []sdk.Msg
@@ -464,9 +468,13 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		return nil, err
 	}
 
-	records, found := m.keeper.GetUserDepositRecord(ctx, claimMsg.ZoneId, claimerAddr)
+	records, found := m.keeper.GetUserDelegateRecord(ctx, claimMsg.ZoneId, claimerAddr)
 	if !found {
-		return nil, types.ErrNoDepositRecord
+		return nil, types.ErrNoDelegateRecord
+	}
+
+	if records.Records == nil {
+		return nil, types.ErrNoDelegateRecord
 	}
 
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, records.ZoneId)
@@ -475,10 +483,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	}
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
-	totalClaimAsset := sdk.Coin{
-		Amount: sdk.NewIntFromUint64(0),
-		Denom:  ibcDenom,
-	}
+	totalClaimAsset := sdk.NewCoin(ibcDenom, sdk.NewInt(0))
 
 	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	for _, record := range records.Records {
@@ -502,7 +507,12 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
-	err = m.keeper.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, claimerAddr, types.DelegateSuccess)
+	delegateRecord, found := m.keeper.GetUserDelegateRecord(ctx, zoneInfo.ZoneId, claimerAddr)
+	if !found {
+		return nil, types.ErrNoDelegateRecord
+	}
+
+	m.keeper.DeleteDelegateRecord(ctx, delegateRecord)
 	if err != nil {
 		return nil, sdkerrors.Wrapf(err,
 			"account: %s", claimMsg.Claimer)

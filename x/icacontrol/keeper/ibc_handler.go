@@ -150,7 +150,6 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 		}
 
 		k.AfterUndelegateFail(ctx, *data)
-
 	case *distributiontype.MsgWithdrawDelegatorReward:
 		if len(packetData) != 2 {
 			return types.ErrMsgNotFound
@@ -187,7 +186,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 	case *transfertypes.MsgTransfer:
 		data := packetData[0].(*transfertypes.MsgTransfer)
 
-		//delegate fail event
+		//icawithdraw fail event
 		event := types.EventTransferFail{
 			MsgTypeUrl:       sdk.MsgTypeURL(&transfertypes.MsgTransfer{}),
 			SourcePort:       data.SourcePort,
@@ -203,7 +202,6 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return err
 		}
 
-		k.AfterTransferFail(ctx, *data)
 	default:
 		return types.ErrMsgNotFound
 	}

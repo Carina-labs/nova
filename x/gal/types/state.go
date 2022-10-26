@@ -9,7 +9,10 @@ const (
 const (
 	DepositRequest DepositStatusType = iota + 1
 	DepositSuccess
-	DelegateRequest
+)
+
+const (
+	DelegateRequest DelegateStatusType = iota + 1
 	DelegateSuccess
 )
 
@@ -28,8 +31,10 @@ const (
 type (
 	WithdrawStatusType    = int64
 	DepositStatusType     = int64
+	DelegateStatusType    = int64
 	UndelegatedStatusType = int64
 	IcaStatus             = uint64
 
 	UndelegateVersion = uint64
+	DelegateVersion   = uint64
 )
