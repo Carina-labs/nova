@@ -35,7 +35,33 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		return
 	}
 
-	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DepositRequest, types.DepositSuccess)
+	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId)
+}
+
+func (h Hooks) AfterTransferFail(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, baseDenom string) {
+	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, baseDenom)
+	// if zoneInfo == nil, it may be a test situation.
+	if zoneInfo == nil {
+		h.k.Logger(ctx).Error("AfterTransferEnd", "err", "Zone id is not found", "Denom", data.Denom)
+		return
+	}
+
+	if data.Receiver != zoneInfo.IcaAccount.HostAddress {
+		return
+	}
+
+	sender, err := sdk.AccAddressFromBech32(data.Sender)
+	if err != nil {
+		return
+	}
+	amount, ok := sdk.NewIntFromString(data.Amount)
+	if !ok {
+		return
+	}
+
+	// remove deposit state
+	h.k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, sender, types.DepositRequest, amount)
+
 }
 
 func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTokenPacketData) {
@@ -100,7 +126,6 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	// getZoneInfoForValidatorAddr
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
-
 	oracleVersion, _ := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 
 	// get delegateVersion
@@ -110,10 +135,9 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	}
 	currentVersion := versionInfo.CurrentVersion
 
-	// change deposit state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
-	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, types.DelegateRequest, types.DelegateSuccess)
-	h.k.SetDepositOracleVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, oracleVersion)
-	h.k.SetDelegateRecordVersion(ctx, zoneInfo.ZoneId, types.DelegateSuccess, currentVersion)
+	// change delegate state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
+	h.k.ChangeDelegateState(ctx, zoneInfo.ZoneId, versionInfo.CurrentVersion)
+	h.k.SetDelegateOracleVersion(ctx, zoneInfo.ZoneId, versionInfo.CurrentVersion, oracleVersion)
 
 	versionInfo.Record[currentVersion] = &types.IBCTrace{
 		Height: uint64(ctx.BlockHeight()),
@@ -160,7 +184,7 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	nextVersion := currentVersion + 1
 	versionInfo.CurrentVersion = nextVersion
 	versionInfo.Record[nextVersion] = &types.IBCTrace{
-		Version: currentVersion + 1,
+		Version: nextVersion,
 		State:   types.IcaPending,
 	}
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
@@ -230,7 +254,7 @@ func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.M
 	h.k.SetUndelegateVersion(ctx, zone.ZoneId, versionInfo)
 }
 
-func (h Hooks) AfterTransferFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+func (h Hooks) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	zone, ok := h.k.icaControlKeeper.GetRegisterZoneForHostAddr(ctx, transferMsg.Sender)
 	if !ok {
 		return

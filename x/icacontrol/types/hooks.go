@@ -11,7 +11,7 @@ type ICAHooks interface {
 	AfterUndelegateEnd(sdk.Context, stakingtypes.MsgUndelegate, *stakingtypes.MsgUndelegateResponse)
 	AfterDelegateFail(sdk.Context, stakingtypes.MsgDelegate)
 	AfterUndelegateFail(sdk.Context, stakingtypes.MsgUndelegate)
-	AfterTransferFail(sdk.Context, transfertypes.MsgTransfer)
+	AfterIcaWithdrawFail(sdk.Context, transfertypes.MsgTransfer)
 }
 
 var _ ICAHooks = MultiICAHooks{}
@@ -46,8 +46,8 @@ func (h MultiICAHooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakin
 	}
 }
 
-func (h MultiICAHooks) AfterTransferFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+func (h MultiICAHooks) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	for i := range h {
-		h[i].AfterTransferFail(ctx, transferMsg)
+		h[i].AfterIcaWithdrawFail(ctx, transferMsg)
 	}
 }

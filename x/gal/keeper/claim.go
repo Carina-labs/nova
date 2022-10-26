@@ -95,9 +95,9 @@ func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone icacontrolkeeper.Regi
 
 	oracleVersion, _ := k.oracleKeeper.GetOracleVersion(ctx, zone.ZoneId)
 
-	records, found := k.GetUserDepositRecord(ctx, zone.ZoneId, claimer)
+	records, found := k.GetUserDelegateRecord(ctx, zone.ZoneId, claimer)
 	if !found {
-		return nil, types.ErrNoDepositRecord
+		return nil, types.ErrNoDelegateRecord
 	}
 
 	for _, record := range records.Records {
@@ -106,7 +106,12 @@ func (k Keeper) TotalClaimableAssets(ctx sdk.Context, zone icacontrolkeeper.Regi
 		}
 	}
 
-	return &result, nil
+	amt, err := k.ClaimShareToken(ctx, &zone, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return amt, nil
 }
 
 // CalculateDepositAlpha calculates alpha value.

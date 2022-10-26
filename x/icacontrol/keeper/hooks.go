@@ -34,8 +34,8 @@ func (k Keeper) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.
 	}
 }
 
-func (k Keeper) AfterTransferFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+func (k Keeper) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	if k.hooks != nil {
-		k.hooks.AfterTransferFail(ctx, transferMsg)
+		k.hooks.AfterIcaWithdrawFail(ctx, transferMsg)
 	}
 }

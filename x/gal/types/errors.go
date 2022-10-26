@@ -20,4 +20,5 @@ var (
 	ErrMaxUndelegateEntries = errors.Register(ModuleName, 14, "too many undelegate request")
 	ErrNegativeVersion      = errors.Register(ModuleName, 15, "every version must be positive")
 	ErrMaxDepositEntries    = errors.Register(ModuleName, 16, "too many deposit request")
+	ErrNoDelegateRecord     = errors.Register(ModuleName, 17, "no delegate history for this account")
 )

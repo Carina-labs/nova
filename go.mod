@@ -259,7 +259,7 @@ require (
 )
 
 replace (
-	github.com/cosmos/ibc-go/v3 => github.com/Carina-labs/ibc-go/v3 v3.3.1-nova-rc2
+	github.com/cosmos/ibc-go/v3 => github.com/Carina-labs/ibc-go/v3 v3.3.1-nova-rc6
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 )
