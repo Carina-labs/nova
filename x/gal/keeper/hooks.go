@@ -42,7 +42,7 @@ func (h Hooks) AfterTransferFail(ctx sdk.Context, data transfertypes.FungibleTok
 	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, baseDenom)
 	// if zoneInfo == nil, it may be a test situation.
 	if zoneInfo == nil {
-		h.k.Logger(ctx).Error("AfterTransferEnd", "err", "Zone id is not found", "Denom", data.Denom)
+		h.k.Logger(ctx).Error("AfterTransferFail", "err", "Zone id is not found", "Denom", data.Denom)
 		return
 	}
 
@@ -60,8 +60,10 @@ func (h Hooks) AfterTransferFail(ctx sdk.Context, data transfertypes.FungibleTok
 	}
 
 	// remove deposit state
-	h.k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, sender, types.DepositRequest, amount)
-
+	err = h.k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, sender, types.DepositRequest, amount)
+	if err != nil {
+		ctx.Logger().Error("AfterTransferFail", "zoneId", zoneInfo.ZoneId, "sender", sender, "amount", amount, "err", err)
+	}
 }
 
 func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTokenPacketData) {

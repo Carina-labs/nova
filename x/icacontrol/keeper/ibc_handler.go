@@ -118,30 +118,30 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 
 	switch packetData[0].(type) {
 	case *stakingtypes.MsgDelegate:
-		data := packetData[0].(*stakingtypes.MsgDelegate)
+		msgData := packetData[0].(*stakingtypes.MsgDelegate)
 
 		//delegate fail event
 		event := types.EventDelegateFail{
 			MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
-			DelegatorAddress: data.DelegatorAddress,
-			ValidatorAddress: data.ValidatorAddress,
-			Amount:           data.Amount,
+			DelegatorAddress: msgData.DelegatorAddress,
+			ValidatorAddress: msgData.ValidatorAddress,
+			Amount:           msgData.Amount,
 		}
 		err = ctx.EventManager().EmitTypedEvent(&event)
 		if err != nil {
 			return err
 		}
 
-		k.AfterDelegateFail(ctx, *data)
+		k.AfterDelegateFail(ctx, *msgData)
 	case *stakingtypes.MsgUndelegate:
-		data := packetData[0].(*stakingtypes.MsgUndelegate)
+		msgData := packetData[0].(*stakingtypes.MsgUndelegate)
 
 		//undelegate fail event
 		event := types.EventUndelegateFail{
 			MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{}),
-			DelegatorAddress: data.DelegatorAddress,
-			ValidatorAddress: data.ValidatorAddress,
-			Amount:           data.Amount,
+			DelegatorAddress: msgData.DelegatorAddress,
+			ValidatorAddress: msgData.ValidatorAddress,
+			Amount:           msgData.Amount,
 		}
 
 		err = ctx.EventManager().EmitTypedEvent(&event)
@@ -149,7 +149,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return err
 		}
 
-		k.AfterUndelegateFail(ctx, *data)
+		k.AfterUndelegateFail(ctx, *msgData)
 	case *distributiontype.MsgWithdrawDelegatorReward:
 		if len(packetData) != 2 {
 			return types.ErrMsgNotFound
@@ -159,21 +159,21 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return types.ErrMsgNotFound
 		}
 
-		data := packetData[1].(*stakingtypes.MsgDelegate)
+		msgData := packetData[1].(*stakingtypes.MsgDelegate)
 
 		//delegate fail event
 		event := types.EventAutostakingFail{
 			MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
-			DelegatorAddress: data.DelegatorAddress,
-			ValidatorAddress: data.ValidatorAddress,
-			Amount:           data.Amount,
+			DelegatorAddress: msgData.DelegatorAddress,
+			ValidatorAddress: msgData.ValidatorAddress,
+			Amount:           msgData.Amount,
 		}
 		err = ctx.EventManager().EmitTypedEvent(&event)
 		if err != nil {
 			return err
 		}
 
-		zoneInfo := k.GetRegisteredZoneForValidatorAddr(ctx, data.ValidatorAddress)
+		zoneInfo := k.GetRegisteredZoneForValidatorAddr(ctx, msgData.ValidatorAddress)
 		versionInfo := k.GetAutoStakingVersion(ctx, zoneInfo.ZoneId)
 		currentVersion := versionInfo.CurrentVersion
 
@@ -184,24 +184,25 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 
 		k.SetAutoStakingVersion(ctx, zoneInfo.ZoneId, versionInfo)
 	case *transfertypes.MsgTransfer:
-		data := packetData[0].(*transfertypes.MsgTransfer)
+		msgData := packetData[0].(*transfertypes.MsgTransfer)
 
 		//icawithdraw fail event
 		event := types.EventTransferFail{
 			MsgTypeUrl:       sdk.MsgTypeURL(&transfertypes.MsgTransfer{}),
-			SourcePort:       data.SourcePort,
-			SourceChannel:    data.SourceChannel,
-			Token:            data.Token,
-			Sender:           data.Sender,
-			Receiver:         data.Receiver,
-			TimeoutHeight:    data.TimeoutHeight.String(),
-			TimeoutTimestamp: data.TimeoutTimestamp,
+			SourcePort:       msgData.SourcePort,
+			SourceChannel:    msgData.SourceChannel,
+			Token:            msgData.Token,
+			Sender:           msgData.Sender,
+			Receiver:         msgData.Receiver,
+			TimeoutHeight:    msgData.TimeoutHeight.String(),
+			TimeoutTimestamp: msgData.TimeoutTimestamp,
 		}
 		err = ctx.EventManager().EmitTypedEvent(&event)
 		if err != nil {
 			return err
 		}
 
+		k.AfterIcaWithdrawFail(ctx, *msgData)
 	default:
 		return types.ErrMsgNotFound
 	}
