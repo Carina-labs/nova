@@ -51,6 +51,10 @@ func GetQueryCmd() *cobra.Command {
 		queryDelegateVersion(),
 		queryUndelegateVersion(),
 		queryWithdrawVersion(),
+		queryDelegateRecords(),
+		queryCurrentDelegateVersion(),
+		queryCurrentUndelegateVersion(),
+		queryCurrentWithdrawVersion(),
 	)
 
 	return cmd

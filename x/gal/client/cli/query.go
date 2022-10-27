@@ -157,6 +157,40 @@ func queryDepositRecords() *cobra.Command {
 	return cmd
 }
 
+func queryDelegateRecords() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "delegate-records [zone-id] [address]",
+		Long: "Query for delegate records",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			addr, err := sdk.AccAddressFromBech32(args[1])
+			if err != nil {
+				return err
+			}
+
+			res, err := queryClient.DelegateRecords(cmd.Context(), &types.QueryDelegateRecordRequest{
+				ZoneId:  args[0],
+				Address: addr.String(),
+			})
+
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
 func queryUndelegateRecords() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "undelegate-records [zone-id] [address]",
@@ -211,6 +245,96 @@ func queryWithdrawRecords() *cobra.Command {
 			res, err := queryClient.WithdrawRecords(cmd.Context(), &types.QueryWithdrawRecordRequest{
 				ZoneId:  args[0],
 				Address: addr.String(),
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func queryCurrentDelegateVersion() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "delegate-current-version [zone-id]",
+		Long: "Query for delegate current version",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+			if err != nil {
+				return err
+			}
+
+			res, err := queryClient.DelegateCurrentVersion(cmd.Context(), &types.QueryCurrentDelegateVersion{
+				ZoneId: args[0],
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func queryCurrentUndelegateVersion() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "undelegate-current-version [zone-id]",
+		Long: "Query for undelegate current version",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+			if err != nil {
+				return err
+			}
+
+			res, err := queryClient.UndelegateCurrentVersion(cmd.Context(), &types.QueryCurrentUndelegateVersion{
+				ZoneId: args[0],
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func queryCurrentWithdrawVersion() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "withdraw-current-version [zone-id]",
+		Long: "Query for withdraw currnet version",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+			if err != nil {
+				return err
+			}
+
+			res, err := queryClient.WithdrawCurrentVersion(cmd.Context(), &types.QueryCurrentWithdrawVersion{
+				ZoneId: args[0],
 			})
 			if err != nil {
 				return err
