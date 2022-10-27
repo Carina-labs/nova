@@ -47,6 +47,7 @@ func GetQueryCmd() *cobra.Command {
 		queryAllZones(),
 		queryZone(),
 		queryAutoStakingVersion(),
+		queryAutoStakingCurrentVersion(),
 	)
 
 	return cmd

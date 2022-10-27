@@ -62,7 +62,7 @@ func queryZone() *cobra.Command {
 func queryAutoStakingVersion() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "autostaking-version [zone-id] [version]",
-		Long: "Query for autostaking",
+		Long: "Query for autostaking version",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
@@ -79,6 +79,36 @@ func queryAutoStakingVersion() *cobra.Command {
 			res, err := queryClient.AutoStakingVersion(cmd.Context(), &types.QueryAutoStakingVersion{
 				ZoneId:  args[0],
 				Version: version,
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func queryAutoStakingCurrentVersion() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "autostaking-current-version [zone-id]",
+		Long: "Query for autostaking current veresion",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+			if err != nil {
+				return err
+			}
+
+			res, err := queryClient.AutoStakingCurrentVersion(cmd.Context(), &types.QueryCurrentAutoStakingVersion{
+				ZoneId: args[0],
 			})
 			if err != nil {
 				return err
