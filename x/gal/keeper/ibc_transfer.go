@@ -25,20 +25,27 @@ func (k Keeper) TransferToTargetZone(ctx sdk.Context, option *IBCTransferOption)
 		return err
 	}
 
-	_, err = k.ibcTransferKeeper.Transfer(goCtx,
-		&transfertypes.MsgTransfer{
-			SourcePort:    option.SourcePort,
-			SourceChannel: option.SourceChannel,
-			Token:         option.Token,
-			Sender:        sender.String(),
-			Receiver:      option.Receiver,
-			TimeoutHeight: ibcclienttypes.Height{
-				RevisionHeight: 0,
-				RevisionNumber: 0,
-			},
-			TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+	msgTrnasfer := &transfertypes.MsgTransfer{
+		SourcePort:    option.SourcePort,
+		SourceChannel: option.SourceChannel,
+		Token:         option.Token,
+		Sender:        sender.String(),
+		Receiver:      option.Receiver,
+		TimeoutHeight: ibcclienttypes.Height{
+			RevisionHeight: 0,
+			RevisionNumber: 0,
 		},
-	)
+		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+	}
+
+	_, err = k.ibcTransferKeeper.Transfer(goCtx, msgTrnasfer)
+	if err != nil {
+		return err
+	}
+
+	if err = ctx.EventManager().EmitTypedEvent(msgTrnasfer); err != nil {
+		return err
+	}
 
 	return err
 }
