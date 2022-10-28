@@ -119,6 +119,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 	switch packetData[0].(type) {
 	case *stakingtypes.MsgDelegate:
 		msgData := packetData[0].(*stakingtypes.MsgDelegate)
+		ctx.Logger().Debug("HandleAckFail", "MsgType", "MsgDelegate", "Data", msgData)
 
 		//delegate fail event
 		event := types.EventDelegateFail{
@@ -135,6 +136,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 		k.AfterDelegateFail(ctx, *msgData)
 	case *stakingtypes.MsgUndelegate:
 		msgData := packetData[0].(*stakingtypes.MsgUndelegate)
+		ctx.Logger().Debug("HandleAckFail", "MsgType", "MsgUndelegate", "Data", msgData)
 
 		//undelegate fail event
 		event := types.EventUndelegateFail{
@@ -149,6 +151,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return err
 		}
 
+
 		k.AfterUndelegateFail(ctx, *msgData)
 	case *distributiontype.MsgWithdrawDelegatorReward:
 		if len(packetData) != 2 {
@@ -161,6 +164,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 
 		msgData := packetData[1].(*stakingtypes.MsgDelegate)
 
+		ctx.Logger().Debug("HandleAckFail", "MsgType", "MsgWithdrawDelegatorReward", "Data", msgData)
 		//delegate fail event
 		event := types.EventAutostakingFail{
 			MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
@@ -182,6 +186,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			State:   types.IcaFail,
 		}
 
+		ctx.Logger().Debug("HandleAckFail", "ZoneId", zoneInfo.ZoneId, "AutostakingCurrentVersion", currentVersion, "IcaWithdrawVersionState", versionInfo.Record[currentVersion].State)
 		k.SetAutoStakingVersion(ctx, zoneInfo.ZoneId, versionInfo)
 	case *transfertypes.MsgTransfer:
 		msgData := packetData[0].(*transfertypes.MsgTransfer)
@@ -202,8 +207,10 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return err
 		}
 
+		ctx.Logger().Debug("HandleAckFail", "MsgType", "MsgTransfer")
 		k.AfterIcaWithdrawFail(ctx, *msgData)
 	default:
+		ctx.Logger().Debug("HandleAckFail", "MsgType", types.ErrMsgNotFound)
 		return types.ErrMsgNotFound
 	}
 

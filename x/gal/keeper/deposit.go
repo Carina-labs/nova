@@ -143,10 +143,12 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 		return types.ErrNoDepositRecord
 	}
 
+	var deleteRecord types.DepositRecordContent
 	recordItems := record.Records
 	for i, item := range record.Records {
 		if item.State == state && item.Amount.Amount.Equal(amount) {
 			recordItems = append(recordItems[:i], recordItems[i+1:]...)
+			deleteRecord = *item
 			break
 		}
 	}
@@ -155,9 +157,11 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	if isDeleted {
 		record.Records = recordItems
 		k.SetDepositRecord(ctx, record)
+		ctx.Logger().Debug("DeleteRecordedDepositItem", "DeleteRecord", deleteRecord)
 		return nil
 	}
 
+	ctx.Logger().Debug("DeleteRecordedDepositItem", "Error", types.ErrNoDelegateRecord)
 	return types.ErrNoDeleteRecord
 }
 
