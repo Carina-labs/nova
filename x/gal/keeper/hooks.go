@@ -27,7 +27,6 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, baseDenom)
 	// if zoneInfo == nil, it may be a test situation.
 	if zoneInfo == nil {
-		h.k.Logger(ctx).Error("AfterTransferEnd", "err", "Zone id is not found", "Denom", data.Denom)
 		return
 	}
 
@@ -36,13 +35,13 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 	}
 
 	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId)
+	ctx.Logger().Debug("AfterTransferEnd", "zone id", zoneInfo.ZoneId, "sender", data.Sender, "receiver", data.Receiver, "amount", data.Amount)
 }
 
 func (h Hooks) AfterTransferFail(ctx sdk.Context, data transfertypes.FungibleTokenPacketData, baseDenom string) {
 	zoneInfo := h.k.icaControlKeeper.GetZoneForDenom(ctx, baseDenom)
 	// if zoneInfo == nil, it may be a test situation.
 	if zoneInfo == nil {
-		h.k.Logger(ctx).Error("AfterTransferFail", "err", "Zone id is not found", "Denom", data.Denom)
 		return
 	}
 
@@ -63,6 +62,7 @@ func (h Hooks) AfterTransferFail(ctx sdk.Context, data transfertypes.FungibleTok
 	err = h.k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, sender, types.DepositRequest, amount)
 	if err != nil {
 		ctx.Logger().Error("AfterTransferFail", "zoneId", zoneInfo.ZoneId, "sender", sender, "amount", amount, "err", err)
+		return
 	}
 }
 
@@ -106,6 +106,8 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 	// get withdrawVersion
 	versionInfo := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
 	currentVersion := versionInfo.CurrentVersion
+	ctx.Logger().Debug("AfterOnRecvPacket", "ZoneId", zone.ZoneId, "WithdrawCurrentVersion", currentVersion, "VersionState", versionInfo.Record[currentVersion].State)
+
 	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, currentVersion)
 	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
 
@@ -114,6 +116,7 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 		Height:  uint64(ctx.BlockHeight()),
 		Version: types.IcaSuccess,
 	}
+	ctx.Logger().Debug("AfterOnRecvPacket", "ZoneId", zone.ZoneId, "WithdrawNextVersion", currentVersion, "VersionState", versionInfo.Record[currentVersion].State)
 
 	// set withdraw version
 	nextVersion := versionInfo.CurrentVersion + 1
@@ -123,6 +126,7 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 		State:   icatypes.IcaPending,
 	}
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
+	ctx.Logger().Debug("AfterOnRecvPacket", "ZoneId", zone.ZoneId, "WithdrawNextVersion", nextVersion, "VersionState", versionInfo.Record[nextVersion].State)
 }
 
 func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
@@ -136,6 +140,8 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 		return
 	}
 	currentVersion := versionInfo.CurrentVersion
+
+	ctx.Logger().Debug("AfterDelegateEnd", "ZoneId", zoneInfo.ZoneId, "DelegateCurrentVersion", versionInfo.CurrentVersion, "VersionState", versionInfo.Record[currentVersion].State)
 
 	// change delegate state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
 	h.k.ChangeDelegateState(ctx, zoneInfo.ZoneId, versionInfo.CurrentVersion)
@@ -153,6 +159,7 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 		State:   types.IcaPending,
 	}
 	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
+	ctx.Logger().Debug("AfterDelegateEnd", "ZoneId", zoneInfo.ZoneId, "DelegateNextVersion", nextVersion, "VersionState", versionInfo.Record[nextVersion].State)
 }
 
 // AfterWithdrawEnd is executed IcaWithdraw request finished.
@@ -164,7 +171,7 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	zone := h.k.icaControlKeeper.GetZoneForDenom(ctx, asset.Denom)
 
 	if transferMsg.Receiver != zone.IcaAccount.ControllerAddress {
-		h.k.Logger(ctx).Error("Receiver is not controller address", "receiver", transferMsg.Receiver, "Controller address", zone.IcaAccount.ControllerAddress, "hook", "AfterWithdrawEnd")
+		h.k.Logger(ctx).Error("Receiver is not controller address", "Receiver", transferMsg.Receiver, "ControllerAddress", zone.IcaAccount.ControllerAddress, "Hook", "AfterWithdrawEnd")
 		return
 	}
 
@@ -174,6 +181,7 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 		return
 	}
 	currentVersion := versionInfo.CurrentVersion
+	ctx.Logger().Debug("AfterWithdrawEnd", "ZoneId", zone.ZoneId, "WithdrawCurrentVersion", currentVersion, "VersionState", versionInfo.Record[currentVersion].State)
 
 	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, currentVersion)
 	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
@@ -190,6 +198,7 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 		State:   types.IcaPending,
 	}
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
+	ctx.Logger().Debug("AfterWithdrawEnd", "ZoneId", zone.ZoneId, "WithdrawNextVersion", nextVersion, "VersionState", versionInfo.Record[nextVersion].State)
 }
 
 // AfterUndelegateEnd is executed when ICA undelegation request finished.
@@ -199,7 +208,7 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	// get zone info from the validator address
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
 	if zoneInfo == nil {
-		h.k.Logger(ctx).Error("Zone id is not found", "validatorAddress", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
+		h.k.Logger(ctx).Error("Zone id is not found", "ValidatorAddress", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
 		return
 	}
 
@@ -212,6 +221,7 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
 
 	h.k.DeleteUndelegateRecords(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
+	ctx.Logger().Debug("AfterUndelegateEnd", "ZoneId", zoneInfo.ZoneId, "WithdrawCurrentVersion", currentVersion, "VersionState", versionInfo.Record[currentVersion].State)
 
 	versionInfo.Record[currentVersion] = &types.IBCTrace{
 		Height: uint64(ctx.BlockHeight()),
@@ -225,7 +235,7 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 		State:   types.IcaPending,
 	}
 	h.k.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
-
+	ctx.Logger().Debug("AfterUndelegateEnd", "ZoneId", zoneInfo.ZoneId, "WithdrawNextVersion", nextVersion, "VersionState", versionInfo.Record[nextVersion].State)
 }
 
 func (h Hooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
@@ -240,6 +250,7 @@ func (h Hooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDe
 	}
 
 	h.k.SetDelegateVersion(ctx, zone.ZoneId, versionInfo)
+	ctx.Logger().Debug("AfterDelegateFail", "ZoneId", zone.ZoneId, "WithdrawCurrentVersion", currentVersion, "WithdrawVersionState", versionInfo.Record[currentVersion].State)
 }
 
 func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate) {
@@ -254,6 +265,7 @@ func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.M
 	}
 
 	h.k.SetUndelegateVersion(ctx, zone.ZoneId, versionInfo)
+	ctx.Logger().Debug("AfterUndelegateFail", "ZoneId", zone.ZoneId, "UndelegateCurrentVersion", currentVersion, "UndelegateVersionState", versionInfo.Record[currentVersion].State)
 }
 
 func (h Hooks) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
@@ -271,4 +283,5 @@ func (h Hooks) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.M
 	}
 
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
+	ctx.Logger().Debug("AfterIcaWithdrawFail", "ZoneId", zone.ZoneId, "IcaWithdrawCurrentVersion", currentVersion, "IcaWithdrawVersionState", versionInfo.Record[currentVersion].State)
 }
