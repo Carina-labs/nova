@@ -345,6 +345,155 @@ func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
 				BaseDenom:        baseDenom,
 				Decimal:          baseDecimal,
 			},
+			err: true,
+		},
+		{
+			name:   "fail case - invalid connection id",
+			zoneId: "juno",
+			zone:   zone[0],
+			msg: types.MsgChangeRegisteredZone{
+				ZoneId: "juno",
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: "connection-100",
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				BaseDenom:        "ujuno",
+				Decimal:          baseDecimal,
+			},
+			err: true,
+		},
+		{
+			name:   "fail case - invalid port id",
+			zoneId: "juno",
+			zone:   zone[0],
+			msg: types.MsgChangeRegisteredZone{
+				ZoneId: "juno",
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       "portId",
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				BaseDenom:        "ujuno",
+				Decimal:          baseDecimal,
+			},
+			err: true,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &tc.zone)
+
+			suite.chainA.GetApp().IcaControlKeeper.SetControllerAddr(suite.chainA.GetContext(), tc.zoneId, []string{tc.msg.IcaAccount.ControllerAddress})
+
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
+			_, err := msgServer.ChangeRegisteredZone(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.Require().NoError(err)
+
+				result, ok := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), tc.zoneId)
+				suite.Require().True(ok)
+
+				suite.Require().Equal(tc.result, result)
+			}
+		})
+	}
+}
+
+func (suite *KeeperTestSuite) TestRegisterZoneMsg() {
+	suite.InitICA()
+	hostAddr := suite.setHostAddr(zoneId)
+	valAddr := suite.setValidator()
+
+	tcs := []struct {
+		name   string
+		zoneId string
+		msg    types.MsgRegisterZone
+		result types.RegisteredZone
+		err    bool
+	}{
+		{
+			name:   "should set zone",
+			zoneId: "osmo",
+			msg: types.MsgRegisterZone{
+				ZoneId: "osmo",
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				BaseDenom:        "uosmo",
+				Decimal:          6,
+			},
+			result: types.RegisteredZone{
+				ZoneId: "osmo",
+				IcaConnectionInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				SnDenom:          "snuosmo",
+				BaseDenom:        "uosmo",
+				Decimal:          6,
+			},
+			err: false,
+		},
+		{
+			name:   "fail case - denom is already exist",
+			zoneId: zoneId,
+			msg: types.MsgRegisterZone{
+				ZoneId: zoneId,
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				BaseDenom:        baseDenom,
+				Decimal:          baseDecimal,
+			},
 			result: types.RegisteredZone{
 				ZoneId: zoneId,
 				IcaConnectionInfo: &types.IcaConnectionInfo{
@@ -370,21 +519,15 @@ func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &tc.zone)
 
 			suite.chainA.GetApp().IcaControlKeeper.SetControllerAddr(suite.chainA.GetContext(), tc.zoneId, []string{tc.msg.IcaAccount.ControllerAddress})
 
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
-			_, err := msgServer.ChangeRegisteredZone(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
+			_, err := msgServer.RegisterZone(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
 			if tc.err {
 				suite.Require().Error(err)
 			} else {
 				suite.Require().NoError(err)
-
-				result, ok := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), tc.zoneId)
-				suite.Require().True(ok)
-
-				suite.Require().Equal(tc.result, result)
 			}
 		})
 	}

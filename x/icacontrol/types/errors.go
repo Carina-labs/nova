@@ -12,5 +12,7 @@ var (
 	ErrNotFoundZoneInfo       = sdkerrors.Register(ModuleName, 6, "registered zone not found with given name")
 	ErrZoneIdNotNil           = sdkerrors.Register(ModuleName, 7, "zone Id is not nil")
 	ErrNotFoundHostAddr       = sdkerrors.Register(ModuleName, 8, "host address is not found")
-	ErrDenomDuplicates        = sdkerrors.Register(ModuleName, 9, "denom is already exists : zone id is ")
+	ErrDenomDuplicates        = sdkerrors.Register(ModuleName, 9, "denom is already exists")
+	ErrInvalidPortId          = sdkerrors.Register(ModuleName, 10, "invalid port id")
+	ErrInvalidConnId          = sdkerrors.Register(ModuleName, 11, "invalid connection id")
 )
