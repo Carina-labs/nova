@@ -3,7 +3,6 @@ package keeper
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	"strconv"
 	"time"
@@ -43,10 +42,9 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 	}
 
 	zoneId := k.DenomDuplicateCheck(ctx, zone.BaseDenom)
-	fmt.Println("zone id is ", zoneId)
 
 	if zoneId != "" {
-		return nil, sdkerrors.Wrap(types.ErrDenomDuplicates, zoneId)
+		return nil, sdkerrors.Wrap(types.ErrDenomDuplicates, zone.BaseDenom)
 	}
 
 	zoneInfo := &types.RegisteredZone{
@@ -128,7 +126,17 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 
 	zoneId := k.DenomDuplicateCheck(ctx, zone.BaseDenom)
 	if zoneId != "" {
-		return nil, sdkerrors.Wrap(types.ErrDenomDuplicates, zoneId)
+		return nil, sdkerrors.Wrap(types.ErrDenomDuplicates, zone.BaseDenom)
+	}
+
+	ok := k.Keeper.IcaControllerKeeper.IsBound(ctx, zone.IcaInfo.PortId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrInvalidPortId, zone.IcaInfo.PortId)
+	}
+
+	_, ok = k.Keeper.IcaControllerKeeper.GetOpenActiveChannel(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.PortId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrInvalidConnId, zone.IcaInfo.ConnectionId)
 	}
 
 	zoneInfo := &types.RegisteredZone{
