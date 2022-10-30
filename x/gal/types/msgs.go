@@ -2,6 +2,7 @@ package types
 
 import (
 	"errors"
+	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	time "time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -54,6 +55,10 @@ func (msg MsgDeposit) ValidateBasic() error {
 
 	if msg.ZoneId == "" {
 		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
+	if err := transfertypes.ValidateIBCDenom(msg.Amount.Denom); err != nil {
+		return err
 	}
 
 	if !msg.Amount.IsValid() {
@@ -181,6 +186,10 @@ func (msg MsgPendingUndelegate) ValidateBasic() error {
 
 	if msg.ZoneId == "" {
 		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
+	if err := sdk.ValidateDenom(msg.Amount.Denom); err != nil {
+		return err
 	}
 
 	if !msg.Amount.IsValid() {

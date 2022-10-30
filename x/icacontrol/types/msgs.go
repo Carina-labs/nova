@@ -66,8 +66,8 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 		return errors.New("missing validator address")
 	}
 
-	if strings.TrimSpace(msg.BaseDenom) == "" {
-		return errors.New("missing denom")
+	if err = sdk.ValidateDenom(msg.BaseDenom); err != nil {
+		return err
 	}
 
 	if msg.UndelegateMaxEntries == 0 {
@@ -333,8 +333,8 @@ func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 		return errors.New("missing validator address")
 	}
 
-	if strings.TrimSpace(msg.BaseDenom) == "" {
-		return errors.New("missing denom")
+	if err = sdk.ValidateDenom(msg.BaseDenom); err != nil {
+		return err
 	}
 
 	if msg.UndelegateMaxEntries == 0 {
