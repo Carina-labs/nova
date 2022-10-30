@@ -278,9 +278,53 @@ func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
 		zone   types.RegisteredZone
 		msg    types.MsgChangeRegisteredZone
 		result types.RegisteredZone
+		err    bool
 	}{
 		{
-			name:   "should set zone 1",
+			name:   "should set zone",
+			zoneId: "osmo",
+			zone:   zone[1],
+			msg: types.MsgChangeRegisteredZone{
+				ZoneId: "osmo",
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				BaseDenom:        "uosmo",
+				Decimal:          6,
+			},
+			result: types.RegisteredZone{
+				ZoneId: "osmo",
+				IcaConnectionInfo: &types.IcaConnectionInfo{
+					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
+					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: baseOwnerAcc.String(),
+					HostAddress:       hostAddr.String(),
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: suite.transferPath.EndpointA.ChannelID,
+					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
+				},
+				ValidatorAddress: valAddr,
+				SnDenom:          "snuosmo",
+				BaseDenom:        "uosmo",
+				Decimal:          6,
+			},
+			err: false,
+		},
+		{
+			name:   "fail case - denom is already exist",
 			zoneId: zoneId,
 			zone:   zone[0],
 			msg: types.MsgChangeRegisteredZone{
@@ -320,48 +364,7 @@ func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
 				BaseDenom:        baseDenom,
 				Decimal:          baseDecimal,
 			},
-		},
-		{
-			name:   "should set zone 2",
-			zoneId: "osmo",
-			zone:   zone[1],
-			msg: types.MsgChangeRegisteredZone{
-				ZoneId: "osmo",
-				IcaInfo: &types.IcaConnectionInfo{
-					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
-					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
-				},
-				IcaAccount: &types.IcaAccount{
-					ControllerAddress: baseOwnerAcc.String(),
-					HostAddress:       hostAddr.String(),
-				},
-				TransferInfo: &types.TransferConnectionInfo{
-					ChannelId: suite.transferPath.EndpointA.ChannelID,
-					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
-				},
-				ValidatorAddress: valAddr,
-				BaseDenom:        baseDenom,
-				Decimal:          baseDecimal,
-			},
-			result: types.RegisteredZone{
-				ZoneId: "osmo",
-				IcaConnectionInfo: &types.IcaConnectionInfo{
-					ConnectionId: suite.icaPath.EndpointA.ConnectionID,
-					PortId:       suite.icaPath.EndpointA.ChannelConfig.PortID,
-				},
-				IcaAccount: &types.IcaAccount{
-					ControllerAddress: baseOwnerAcc.String(),
-					HostAddress:       hostAddr.String(),
-				},
-				TransferInfo: &types.TransferConnectionInfo{
-					ChannelId: suite.transferPath.EndpointA.ChannelID,
-					PortId:    suite.transferPath.EndpointA.ChannelConfig.PortID,
-				},
-				ValidatorAddress: valAddr,
-				SnDenom:          baseSnDenom,
-				BaseDenom:        baseDenom,
-				Decimal:          baseDecimal,
-			},
+			err: true,
 		},
 	}
 
@@ -373,12 +376,16 @@ func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
 
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
 			_, err := msgServer.ChangeRegisteredZone(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
-			suite.Require().NoError(err)
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.Require().NoError(err)
 
-			result, ok := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), tc.zoneId)
-			suite.Require().True(ok)
+				result, ok := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), tc.zoneId)
+				suite.Require().True(ok)
 
-			suite.Require().Equal(tc.result, result)
+				suite.Require().Equal(tc.result, result)
+			}
 		})
 	}
 

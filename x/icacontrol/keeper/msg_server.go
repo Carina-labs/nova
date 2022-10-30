@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	"strconv"
 	"time"
@@ -31,6 +32,23 @@ func NewMsgServerImpl(keeper *Keeper) types.MsgServer {
 // RegisterZone implements the Msg/RegisterZone interface
 func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZone) (*types.MsgRegisterZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if !k.IsValidControllerAddr(ctx, zone.ZoneId, zone.IcaAccount.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
+	}
+
+	_, ok := k.Keeper.GetRegisteredZone(ctx, zone.ZoneId)
+	if ok {
+		return nil, errors.New(zone.ZoneId + "already registered")
+	}
+
+	zoneId := k.DenomDuplicateCheck(ctx, zone.BaseDenom)
+	fmt.Println("zone id is ", zoneId)
+
+	if zoneId != "" {
+		return nil, sdkerrors.Wrap(types.ErrDenomDuplicates, zoneId)
+	}
+
 	zoneInfo := &types.RegisteredZone{
 		ZoneId: zone.ZoneId,
 		IcaConnectionInfo: &types.IcaConnectionInfo{
@@ -50,15 +68,6 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 		Decimal:              zone.Decimal,
 		UndelegateMaxEntries: zone.UndelegateMaxEntries,
 		DepositMaxEntries:    zone.DepositMaxEntries,
-	}
-
-	if !k.IsValidControllerAddr(ctx, zoneInfo.ZoneId, zone.IcaAccount.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
-	}
-
-	_, ok := k.Keeper.GetRegisteredZone(ctx, zoneInfo.ZoneId)
-	if ok {
-		return nil, errors.New(zoneInfo.ZoneId + "already registered")
 	}
 
 	k.Keeper.RegisterZone(ctx, zoneInfo)
@@ -115,6 +124,11 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 
 	if !k.IsValidControllerAddr(ctx, zone.ZoneId, zone.IcaAccount.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
+	}
+
+	zoneId := k.DenomDuplicateCheck(ctx, zone.BaseDenom)
+	if zoneId != "" {
+		return nil, sdkerrors.Wrap(types.ErrDenomDuplicates, zoneId)
 	}
 
 	zoneInfo := &types.RegisteredZone{
