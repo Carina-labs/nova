@@ -85,6 +85,54 @@ func TestValidateBasic(t *testing.T) {
 			},
 			wantErr: true,
 		},
+		{
+			name: "invalid case - decimal is negative",
+			msg: types.MsgRegisterZone{
+				ZoneId: "test-zone",
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: "connection-1",
+					PortId:       "transfer",
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: "cosmos1zkarsurgym3hnm06qupyt96pu0k24k4f93tgjq",
+					HostAddress:       "cosmos1zkarsurgym3hnm06qupyt96pu0k24k4f93tgjq",
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: "channel-1",
+					PortId:    "transfer",
+				},
+				ValidatorAddress:     "cosmosvaloper1zkarsurgym3hnm06qupyt96pu0k24k4fq9la7n",
+				BaseDenom:            "uatom",
+				Decimal:              int64(-1),
+				DepositMaxEntries:    int64(100),
+				UndelegateMaxEntries: int64(100),
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid case - decimal greater than 18",
+			msg: types.MsgRegisterZone{
+				ZoneId: "test-zone",
+				IcaInfo: &types.IcaConnectionInfo{
+					ConnectionId: "connection-1",
+					PortId:       "transfer",
+				},
+				IcaAccount: &types.IcaAccount{
+					ControllerAddress: "cosmos1zkarsurgym3hnm06qupyt96pu0k24k4f93tgjq",
+					HostAddress:       "cosmos1zkarsurgym3hnm06qupyt96pu0k24k4f93tgjq",
+				},
+				TransferInfo: &types.TransferConnectionInfo{
+					ChannelId: "channel-1",
+					PortId:    "transfer",
+				},
+				ValidatorAddress:     "cosmosvaloper1zkarsurgym3hnm06qupyt96pu0k24k4fq9la7n",
+				BaseDenom:            "uatom",
+				Decimal:              int64(256),
+				DepositMaxEntries:    int64(100),
+				UndelegateMaxEntries: int64(100),
+			},
+			wantErr: true,
+		},
 	}
 
 	for _, tc := range tcs {
