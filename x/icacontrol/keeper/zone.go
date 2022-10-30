@@ -3,7 +3,6 @@ package keeper
 import (
 	"fmt"
 
-	// transferkeeper "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 
 	"github.com/Carina-labs/nova/x/icacontrol/types"
@@ -152,6 +151,19 @@ func (k Keeper) GetBaseDenomForSnDenom(ctx sdk.Context, snDenom string) string {
 		return false
 	})
 	return baseDenom
+}
+
+func (k Keeper) DenomDuplicateCheck(ctx sdk.Context, baseDenom string) string {
+	var zoneId string
+	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
+		if zoneInfo.BaseDenom == baseDenom {
+			zoneId = zoneInfo.ZoneId
+			return true
+		}
+		return false
+	})
+
+	return zoneId
 }
 
 // GetIBCHashDenom uses baseDenom and portId and channelId to create the appropriate IBCdenom.
