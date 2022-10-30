@@ -78,6 +78,14 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 		return errors.New("cannot set delegate max_entries to zero")
 	}
 
+	if msg.Decimal > 18 {
+		return errors.New("decimal cannot be more than 18")
+	}
+
+	if msg.Decimal < 0 {
+		return errors.New("decimal value must be greater than or equal to 0")
+	}
+
 	return nil
 }
 
@@ -313,6 +321,22 @@ func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
 	}
 
+	if strings.TrimSpace(msg.ZoneId) == "" {
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+	}
+
+	if strings.TrimSpace(msg.IcaInfo.ConnectionId) == "" {
+		return errors.New("missing ICA connection ID")
+	}
+
+	if strings.TrimSpace(msg.ValidatorAddress) == "" {
+		return errors.New("missing validator address")
+	}
+
+	if strings.TrimSpace(msg.BaseDenom) == "" {
+		return errors.New("missing denom")
+	}
+
 	if msg.UndelegateMaxEntries == 0 {
 		return errors.New("cannot set undelegate max_entries to zero")
 	}
@@ -320,6 +344,13 @@ func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 		return errors.New("cannot set deposit max_entries to zero")
 	}
 
+	if msg.Decimal > 18 {
+		return errors.New("decimal cannot be more than 18")
+	}
+
+	if msg.Decimal < 0 {
+		return errors.New("decimal value must be greater than or equal to 0")
+	}
 	return nil
 }
 
