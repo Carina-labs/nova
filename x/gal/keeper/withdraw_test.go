@@ -253,7 +253,11 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 				Withdrawer: delegator.String(),
 				Records: map[uint64]*types.WithdrawRecordContent{
 					2: {
-						Amount:          sdk.NewInt(10500),
+						Amount: sdk.NewInt(10500),
+						UnstakingAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(10500, 18),
+						},
 						State:           types.WithdrawStatusRegistered,
 						WithdrawVersion: 2,
 					},
@@ -268,7 +272,11 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 				Withdrawer: delegator.String(),
 				Records: map[uint64]*types.WithdrawRecordContent{
 					1: {
-						Amount:          sdk.NewInt(5500),
+						Amount: sdk.NewInt(5500),
+						UnstakingAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(5500, 18),
+						},
 						State:           types.WithdrawStatusRegistered,
 						WithdrawVersion: 1,
 					},
@@ -280,12 +288,20 @@ func (suite *KeeperTestSuite) TestSetWithdrawRecords() {
 				Withdrawer: delegator.String(),
 				Records: map[uint64]*types.WithdrawRecordContent{
 					1: {
-						Amount:          sdk.NewInt(5500),
+						Amount: sdk.NewInt(5500),
+						UnstakingAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(5500, 18),
+						},
 						State:           types.WithdrawStatusRegistered,
 						WithdrawVersion: 1,
 					},
 					2: {
-						Amount:          sdk.NewInt(10500),
+						Amount: sdk.NewInt(10500),
+						UnstakingAmount: &sdk.Coin{
+							Denom:  baseSnDenom,
+							Amount: sdk.NewIntWithDecimal(10500, 18),
+						},
 						State:           types.WithdrawStatusRegistered,
 						WithdrawVersion: 2,
 					},
