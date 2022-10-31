@@ -101,13 +101,12 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
 	}
 
-	ibcDenom := q.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
-	amount := sdk.NewCoin(ibcDenom, sdk.ZeroInt())
+	amount := sdk.NewCoin(zoneInfo.SnDenom, sdk.ZeroInt())
 
 	undelegateRecord, found := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
 	if found {
 		for _, record := range undelegateRecord.Records {
-			amount.Amount = amount.Amount.Add(record.WithdrawAmount)
+			amount.Amount = amount.Amount.Add(record.SnAssetAmount.Amount)
 		}
 	} else {
 		ctx.Logger().Debug("failed to find undelegate record", "request", request)
@@ -120,7 +119,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 	if found {
 		for _, record := range withdrawRecord.Records {
 			if record.State == types.WithdrawStatusRegistered {
-				amount.Amount = amount.Amount.Add(record.Amount)
+				amount.Amount = amount.Amount.Add(record.UnstakingAmount.Amount)
 			}
 		}
 	} else {

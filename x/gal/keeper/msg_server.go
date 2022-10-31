@@ -174,7 +174,6 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.MsgPendingUndelegate) (*types.MsgPendingUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// change undelegate State
 	zoneInfo, found := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, undelegate.ZoneId)
 	if !found {
 		return nil, types.ErrNotFoundZoneInfo

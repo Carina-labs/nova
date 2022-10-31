@@ -124,7 +124,6 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	queryClient := suite.queryClient
 	ctx := suite.Ctx
 	galKeeper := suite.App.GalKeeper
-	denom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 
 	// query with invalid zone
 	_, err := queryClient.PendingWithdrawals(ctx.Context(), &types.QueryPendingWithdrawalsRequest{
@@ -138,15 +137,17 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 		Address: "invalid_user",
 	})
 	suite.Require().NoError(err)
-	suite.Require().Equal(denom, invalidResult.Amount.Denom)
+	suite.Require().Equal(baseSnDenom, invalidResult.Amount.Denom)
 	suite.Require().Equal(sdk.ZeroInt(), invalidResult.Amount.Amount)
 
 	// fill the fake content
 	records := make(map[uint64]*types.WithdrawRecordContent)
 
-	amount := sdk.NewInt64Coin(denom, 100)
+	amount := sdk.NewInt64Coin(baseSnDenom, 100)
+	snAmount := sdk.NewCoin(baseSnDenom, sdk.NewInt(100))
 	records[1] = &types.WithdrawRecordContent{
 		Amount:          amount.Amount,
+		UnstakingAmount: &snAmount,
 		State:           types.WithdrawStatusRegistered,
 		OracleVersion:   1,
 		WithdrawVersion: 1,
@@ -155,6 +156,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 
 	records[2] = &types.WithdrawRecordContent{
 		Amount:          amount.Amount,
+		UnstakingAmount: &snAmount,
 		State:           types.WithdrawStatusRegistered,
 		OracleVersion:   1,
 		WithdrawVersion: 1,
@@ -174,7 +176,7 @@ func (suite *KeeperTestSuite) TestQueryPendingWithdrawals() {
 	})
 
 	suite.Require().NoError(err)
-	suite.Require().Equal(result.Amount.Denom, denom)
+	suite.Require().Equal(result.Amount.Denom, baseSnDenom)
 	suite.Require().Equal(result.Amount.Amount, sdk.NewInt(200))
 }
 
