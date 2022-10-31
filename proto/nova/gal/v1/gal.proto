@@ -57,8 +57,9 @@ message WithdrawRecord {
 
 message WithdrawRecordContent {
   string amount = 1[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
-  int64 state = 2;
-  int64 oracle_version = 3;
-  uint64 withdraw_version = 4;
-  google.protobuf.Timestamp completion_time = 5[(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  cosmos.base.v1beta1.Coin unstaking_amount = 2;
+  int64 state = 3;
+  int64 oracle_version = 4;
+  uint64 withdraw_version = 5;
+  google.protobuf.Timestamp completion_time = 6[(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }
