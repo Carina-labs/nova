@@ -104,13 +104,13 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) (*types.MsgDelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, delegate.ZoneId, delegate.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
-	}
-
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, delegate.ZoneId)
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
+	}
+
+	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, delegate.ZoneId, delegate.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
 	}
 
 	// version state check
@@ -261,13 +261,13 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (*types.MsgUndelegateResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
-	}
-
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
 		return nil, errors.New("zone is not found")
+	}
+
+	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	if !m.keeper.IsValidUndelegateVersion(ctx, msg.ZoneId, msg.Version) {
@@ -389,13 +389,13 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
-	if !m.keeper.IsValidWithdrawVersion(ctx, msg.ZoneId, msg.Version) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
-	}
-
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
+	}
+
+	if !m.keeper.IsValidWithdrawVersion(ctx, msg.ZoneId, msg.Version) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
 	}
 
 	versionInfo := m.keeper.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
@@ -467,6 +467,11 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		return nil, err
 	}
 
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, claimMsg.ZoneId)
+	if !ok {
+		return nil, fmt.Errorf("cannot find zone id : %s", claimMsg.ZoneId)
+	}
+
 	records, found := m.keeper.GetUserDelegateRecord(ctx, claimMsg.ZoneId, claimerAddr)
 	if !found {
 		return nil, types.ErrNoDelegateRecord
@@ -476,10 +481,6 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		return nil, types.ErrNoDelegateRecord
 	}
 
-	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, records.ZoneId)
-	if !ok {
-		return nil, fmt.Errorf("cannot find zone id : %s", records.ZoneId)
-	}
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	totalClaimAsset := sdk.NewCoin(ibcDenom, sdk.NewInt(0))
