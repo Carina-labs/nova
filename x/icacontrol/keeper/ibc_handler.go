@@ -151,7 +151,6 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			return err
 		}
 
-
 		k.AfterUndelegateFail(ctx, *msgData)
 	case *distributiontype.MsgWithdrawDelegatorReward:
 		if len(packetData) != 2 {
