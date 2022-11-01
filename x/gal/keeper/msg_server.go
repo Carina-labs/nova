@@ -149,22 +149,26 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 		return nil, types.ErrDelegateFail
 	}
 
-	versionInfo.Record[delegate.Version] = &types.IBCTrace{
-		Version: versionInfo.CurrentVersion,
-		State:   types.IcaRequest,
-	}
-	m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
-
-	if err := ctx.EventManager().EmitTypedEvent(
+	if err = ctx.EventManager().EmitTypedEvent(
 		types.NewEventDelegate(
 			zoneInfo.IcaAccount.HostAddress,
 			zoneInfo.ValidatorAddress,
 			&delegateAmt,
 			zoneInfo.TransferInfo.ChannelId,
 			zoneInfo.TransferInfo.PortId)); err != nil {
+		versionInfo.Record[delegate.Version] = &types.IBCTrace{
+			Version: versionInfo.CurrentVersion,
+			State:   types.IcaFail,
+		}
+		m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 		return nil, err
 	}
 
+	versionInfo.Record[delegate.Version] = &types.IBCTrace{
+		Version: versionInfo.CurrentVersion,
+		State:   types.IcaRequest,
+	}
+	m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 	return &types.MsgDelegateResponse{}, nil
 }
 
@@ -320,16 +324,21 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, err
 	}
 
+	if err := ctx.EventManager().EmitTypedEvent(
+		types.NewEventUndelegate(zoneInfo.ZoneId, &burnAssets, &undelegateAmt)); err != nil {
+		versionInfo.Record[msg.Version] = &types.IBCTrace{
+			Version: versionInfo.CurrentVersion,
+			State:   types.IcaFail,
+		}
+		m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
+		return nil, err
+	}
+
 	versionInfo.Record[msg.Version] = &types.IBCTrace{
 		Version: versionInfo.CurrentVersion,
 		State:   types.IcaRequest,
 	}
 	m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
-
-	if err := ctx.EventManager().EmitTypedEvent(
-		types.NewEventUndelegate(zoneInfo.ZoneId, &burnAssets, &undelegateAmt)); err != nil {
-		return nil, err
-	}
 
 	return &types.MsgUndelegateResponse{
 		ZoneId:               zoneInfo.ZoneId,
@@ -441,12 +450,6 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		return nil, errors.New("PendingWithdraw transaction failed to send")
 	}
 
-	versionInfo.Record[msg.Version] = &types.IBCTrace{
-		Version: versionInfo.CurrentVersion,
-		State:   types.IcaRequest,
-	}
-	m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
-
 	if err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaWithdraw(
 		zoneInfo.IcaAccount.HostAddress,
 		zoneInfo.IcaAccount.ControllerAddress,
@@ -454,8 +457,19 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		zoneInfo.IcaConnectionInfo.ConnectionId,
 		msg.IcaTransferChannelId,
 		msg.IcaTransferPortId)); err != nil {
+		versionInfo.Record[msg.Version] = &types.IBCTrace{
+			Version: versionInfo.CurrentVersion,
+			State:   types.IcaFail,
+		}
+		m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
 		return nil, err
 	}
+
+	versionInfo.Record[msg.Version] = &types.IBCTrace{
+		Version: versionInfo.CurrentVersion,
+		State:   types.IcaRequest,
+	}
+	m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
 
 	return &types.MsgIcaWithdrawResponse{}, nil
 }
@@ -480,7 +494,6 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	if records.Records == nil {
 		return nil, types.ErrNoDelegateRecord
 	}
-
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	totalClaimAsset := sdk.NewCoin(ibcDenom, sdk.NewInt(0))
