@@ -16,7 +16,7 @@ const (
 	TypeMsgPendingUndelegate = "pendingUndelegate"
 	TypeMsgWithdrawRecord    = "withdrawRecord"
 	TypeMsgClaim             = "claim"
-	TypeMsgIcaWithdraw       = "icaWithdarw"
+	TypeMsgIcaWithdraw       = "icaWithdraw"
 )
 
 var _ sdk.Msg = &MsgDeposit{}
