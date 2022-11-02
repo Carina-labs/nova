@@ -44,6 +44,9 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 			}
 
 			msg := types.NewMsgDeposit(zoneId, clientCtx.GetFromAddress(), claimer, coin)
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -85,7 +88,7 @@ func txUndelegateRequestCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgPendingUndelegate(zoneId, delegator, withdrawer, amount)
-			if err := msg.ValidateBasic(); err != nil {
+			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
 
@@ -114,7 +117,6 @@ func txUndelegateCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgUndelegate(zoneId, seq, clientCtx.GetFromAddress())
-
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -136,8 +138,7 @@ Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			err := cmd.Flags().Set(flags.FlagFrom, args[1])
-			if err != nil {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
 			}
 
@@ -148,12 +149,10 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 			zoneId := args[0]
 
-			withdrawer, err := sdk.AccAddressFromBech32(args[1])
-			if err != nil {
+			msg := types.NewMsgWithdraw(zoneId, clientCtx.GetFromAddress())
+			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
-
-			msg := types.NewMsgWithdraw(zoneId, withdrawer)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -168,8 +167,7 @@ func txClaimSnAssetCmd() *cobra.Command {
 		Short: "claim wrapped coin to nova",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			err := cmd.Flags().Set(flags.FlagFrom, args[1])
-			if err != nil {
+			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
 				return err
 			}
 
@@ -179,12 +177,11 @@ func txClaimSnAssetCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
-			claimer := clientCtx.GetFromAddress()
-			if err != nil {
+
+			msg := types.NewMsgClaimSnAsset(zoneId, clientCtx.GetFromAddress())
+			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
-
-			msg := types.NewMsgClaimSnAsset(zoneId, claimer)
 
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
@@ -198,7 +195,6 @@ func txIcaWithdrawCmd() *cobra.Command {
 		Use:  "ica-withdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time] [sequence]",
 		Args: cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) error {
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 
 			if err != nil {
@@ -220,6 +216,10 @@ func txIcaWithdrawCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgIcaWithdraw(zoneId, clientCtx.GetFromAddress(), portId, chanId, t, seq)
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
+
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -245,6 +245,10 @@ func txDelegateCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgDelegate(zoneId, seq, clientCtx.GetFromAddress())
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
+
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
