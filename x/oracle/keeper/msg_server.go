@@ -26,6 +26,11 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 		return nil, types.ErrInvalidOperator
 	}
 
+	ok := server.keeper.ValidZoneAddress(ctx, state.ZoneId)
+	if !ok {
+		return nil, types.ErrNotFoundZoneInfo
+	}
+
 	newOracleState := &types.ChainInfo{
 		Coin:            state.Coin,
 		OperatorAddress: state.Operator,
