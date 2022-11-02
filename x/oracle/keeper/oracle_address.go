@@ -43,3 +43,8 @@ func (k Keeper) IsValidOracleAddress(ctx sdk.Context, zoneId, address string) bo
 	}
 	return false
 }
+
+func (k Keeper) ValidZoneAddress(ctx sdk.Context, zoneId string) bool {
+	_, ok := k.icaControlKeeper.GetRegisteredZone(ctx, zoneId)
+	return ok
+}
