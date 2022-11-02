@@ -136,6 +136,10 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	delegateAmt := m.keeper.GetTotalDelegateAmtForZoneId(ctx, delegate.ZoneId, ibcDenom, versionInfo.CurrentVersion, types.DelegateRequest)
 	delegateAmt.Denom = zoneInfo.BaseDenom
 
+	if delegateAmt.IsZero() {
+		return nil, types.ErrInsufficientFunds
+	}
+
 	var msgs []sdk.Msg
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: delegateAmt})
 
