@@ -1,5 +1,7 @@
 package types
 
+import sdk "github.com/cosmos/cosmos-sdk/types"
+
 func NewGenesisState(params Params) *GenesisState {
 	return &GenesisState{
 		Params: params,
@@ -22,6 +24,9 @@ func ValidateGenesis(gs GenesisState) error {
 }
 
 func (ip IncentivePool) ValidateBasic() error {
-	// TODO : validate contract address is a valid cosm-wasm contract address.
+	if _, err := sdk.AccAddressFromBech32(ip.PoolContractAddress); err != nil {
+		return err
+	}
+
 	return nil
 }
