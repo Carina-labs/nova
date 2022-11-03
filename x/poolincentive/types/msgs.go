@@ -31,6 +31,14 @@ func (m MsgCreateCandidatePool) Type() string {
 }
 
 func (m MsgCreateCandidatePool) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(m.Creator); err != nil {
+		return err
+	}
+
+	if _, err := sdk.AccAddressFromBech32(m.PoolContractAddress); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -97,6 +105,9 @@ func (m MsgCreateIncentivePool) ValidateBasic() error {
 		return err
 	}
 
+	if _, err := sdk.AccAddressFromBech32(m.PoolContractAddress); err != nil {
+		return err
+	}
 	return nil
 }
 
