@@ -34,27 +34,6 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
 }
 
-// getCandidatePoolStore returns store saving poolincentive information.
-func (k Keeper) getCandidatePoolStore(ctx sdk.Context) prefix.Store {
-	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyCandidatePool)
-}
-
 func (k Keeper) getIncentivePoolStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyIncentivePool)
-}
-
-func (k Keeper) getIncentivePoolInfoStore(ctx sdk.Context) prefix.Store {
-	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyIncentivePoolInfo)
-}
-
-// isValidOperator checks if signer of msg is valid.
-func (k Keeper) isValidOperator(ctx sdk.Context, operatorAddress string) bool {
-	params := k.GetParams(ctx)
-
-	for i := range params.Operators {
-		if params.Operators[i] == operatorAddress {
-			return true
-		}
-	}
-	return false
 }
