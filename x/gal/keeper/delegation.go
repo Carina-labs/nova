@@ -116,7 +116,7 @@ func (k Keeper) GetTotalDelegateAmtForZoneId(ctx sdk.Context, zoneId, denom stri
 	return totalDelegateAmt
 }
 
-func (k Keeper) GetTotalDelegateAmtForUser(ctx sdk.Context, zoneId, denom string, userAddr sdk.AccAddress, state types.DelegateStatusType) sdk.Coin {
+func (k Keeper) GetTotalDelegateAmtForUser(ctx sdk.Context, zoneId, denom string, userAddr sdk.AccAddress) sdk.Coin {
 	totalDelegateAmt := sdk.NewCoin(denom, sdk.NewInt(0))
 
 	record, found := k.GetUserDelegateRecord(ctx, zoneId, userAddr)
@@ -124,8 +124,10 @@ func (k Keeper) GetTotalDelegateAmtForUser(ctx sdk.Context, zoneId, denom string
 		return sdk.NewCoin(denom, sdk.NewInt(0))
 	}
 
+	oracleVersion, _ := k.oracleKeeper.GetOracleVersion(ctx, zoneId)
+
 	for _, item := range record.Records {
-		if item.State == state {
+		if item.State == types.DelegateRequest && item.OracleVersion < oracleVersion {
 			totalDelegateAmt = totalDelegateAmt.Add(*item.Amount)
 		}
 	}

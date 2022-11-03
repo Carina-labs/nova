@@ -85,7 +85,8 @@ func (q QueryServer) DepositAmount(goCtx context.Context, request *types.QueryDe
 	if err != nil {
 		return nil, err
 	}
-	delegateAmount := q.keeper.GetTotalDelegateAmtForUser(ctx, request.ZoneId, ibcDenom, claimer, types.DelegateRequest)
+	delegateAmount := q.keeper.GetTotalDelegateAmtForUser(ctx, request.ZoneId, ibcDenom, claimer)
+
 	result := depositAmount.Add(delegateAmount)
 
 	return &types.QueryDepositAmountResponse{
@@ -118,7 +119,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 	// if found is false, withdrawRecord variable is nil
 	if found {
 		for _, record := range withdrawRecord.Records {
-			if record.State == types.WithdrawStatusRegistered {
+			if record.State != types.WithdrawStatusTransferred {
 				amount.Amount = amount.Amount.Add(record.UnstakingAmount.Amount)
 			}
 		}
