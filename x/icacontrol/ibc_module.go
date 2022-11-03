@@ -102,6 +102,7 @@ func (im IBCModule) OnChanCloseInit(
 	portID,
 	channelID string,
 ) error {
+	panic("UNIMPLEMENTED")
 	return nil
 }
 
