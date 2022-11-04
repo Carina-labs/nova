@@ -103,7 +103,6 @@ func (im IBCModule) OnChanCloseInit(
 	channelID string,
 ) error {
 	panic("UNIMPLEMENTED")
-	return nil
 }
 
 // OnChanCloseConfirm implements the IBCModule interface
