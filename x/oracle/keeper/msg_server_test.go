@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	icatypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -11,6 +12,11 @@ func (suite *KeeperTestSuite) TestServerUpdateChainState() {
 	ctx := suite.Ctx
 	keeper := suite.App.OracleKeeper
 	msgServer := suite.msgServer
+
+	zone := icatypes.RegisteredZone{
+		ZoneId: fooChainId,
+	}
+	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &zone)
 
 	// set chain state
 	chainInfo := types.ChainInfo{
