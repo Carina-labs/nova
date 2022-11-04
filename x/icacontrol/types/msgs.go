@@ -91,11 +91,7 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 
 // GetSigners implements sdk.Msg
 func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
-	accAddr, err := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
-	if err != nil {
-		panic(err)
-	}
-
+	accAddr, _ := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
 	return []sdk.AccAddress{accAddr}
 }
 
@@ -206,7 +202,6 @@ func (msg MsgIcaAutoStaking) ValidateBasic() error {
 // GetSigners implements sdk.Msg
 func (msg MsgIcaAutoStaking) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
-
 	if err != nil {
 		panic(err)
 	}

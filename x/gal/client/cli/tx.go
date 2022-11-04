@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 
@@ -84,7 +83,7 @@ func txUndelegateRequestCmd() *cobra.Command {
 
 			amount, err := sdk.ParseCoinNormalized(args[3])
 			if err != nil {
-				panic(fmt.Sprintf("can't parse coin: %s", err.Error()))
+				return err
 			}
 
 			msg := types.NewMsgPendingUndelegate(zoneId, delegator, withdrawer, amount)

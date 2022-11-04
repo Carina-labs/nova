@@ -93,9 +93,8 @@ func txDelegateTxCmd() *cobra.Command {
 
 			zoneId := args[0]
 			amount, err := sdk.ParseCoinNormalized(args[1])
-
 			if err != nil {
-				panic("coin error")
+				return err
 			}
 
 			msg := types.NewMsgIcaDelegate(zoneId, clientCtx.GetFromAddress(), amount)
