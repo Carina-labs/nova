@@ -38,6 +38,7 @@ type QueryClient interface {
 	DelegateCurrentVersion(ctx context.Context, in *QueryCurrentDelegateVersion, opts ...grpc.CallOption) (*QueryCurrentDelegateVersionResponse, error)
 	UndelegateCurrentVersion(ctx context.Context, in *QueryCurrentUndelegateVersion, opts ...grpc.CallOption) (*QueryCurrentUndelegateVersionResponse, error)
 	WithdrawCurrentVersion(ctx context.Context, in *QueryCurrentWithdrawVersion, opts ...grpc.CallOption) (*QueryCurrentWithdrawVersionResponse, error)
+	TotalSnAssetSupply(ctx context.Context, in *QueryTotalSnAssetSupply, opts ...grpc.CallOption) (*QueryTotalSnAssetSupplyResponse, error)
 }
 
 type queryClient struct {
@@ -192,6 +193,15 @@ func (c *queryClient) WithdrawCurrentVersion(ctx context.Context, in *QueryCurre
 	return out, nil
 }
 
+func (c *queryClient) TotalSnAssetSupply(ctx context.Context, in *QueryTotalSnAssetSupply, opts ...grpc.CallOption) (*QueryTotalSnAssetSupplyResponse, error) {
+	out := new(QueryTotalSnAssetSupplyResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Query/TotalSnAssetSupply", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -212,6 +222,7 @@ type QueryServer interface {
 	DelegateCurrentVersion(context.Context, *QueryCurrentDelegateVersion) (*QueryCurrentDelegateVersionResponse, error)
 	UndelegateCurrentVersion(context.Context, *QueryCurrentUndelegateVersion) (*QueryCurrentUndelegateVersionResponse, error)
 	WithdrawCurrentVersion(context.Context, *QueryCurrentWithdrawVersion) (*QueryCurrentWithdrawVersionResponse, error)
+	TotalSnAssetSupply(context.Context, *QueryTotalSnAssetSupply) (*QueryTotalSnAssetSupplyResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -266,6 +277,9 @@ func (UnimplementedQueryServer) UndelegateCurrentVersion(context.Context, *Query
 }
 func (UnimplementedQueryServer) WithdrawCurrentVersion(context.Context, *QueryCurrentWithdrawVersion) (*QueryCurrentWithdrawVersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WithdrawCurrentVersion not implemented")
+}
+func (UnimplementedQueryServer) TotalSnAssetSupply(context.Context, *QueryTotalSnAssetSupply) (*QueryTotalSnAssetSupplyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TotalSnAssetSupply not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -568,6 +582,24 @@ func _Query_WithdrawCurrentVersion_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_TotalSnAssetSupply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryTotalSnAssetSupply)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).TotalSnAssetSupply(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.gal.v1.Query/TotalSnAssetSupply",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).TotalSnAssetSupply(ctx, req.(*QueryTotalSnAssetSupply))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -638,6 +670,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WithdrawCurrentVersion",
 			Handler:    _Query_WithdrawCurrentVersion_Handler,
+		},
+		{
+			MethodName: "TotalSnAssetSupply",
+			Handler:    _Query_TotalSnAssetSupply_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

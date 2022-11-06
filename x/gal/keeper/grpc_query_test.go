@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
@@ -550,4 +551,33 @@ func (suite *KeeperTestSuite) TestQueryWithdrawVersion() {
 
 	suite.Require().NoError(err)
 	suite.Require().Equal(currentVersion.Version, versionInfo.CurrentVersion)
+}
+
+func (suite *KeeperTestSuite) TestQueryTotalSnAssetSupply() {
+	//invalid zone
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+
+	// query with invalid zone
+	_, err := queryClient.TotalSnAssetSupply(ctx.Context(), &types.QueryTotalSnAssetSupply{
+		ZoneId: "invalid",
+	})
+	suite.Require().Error(err)
+
+	//total snAsset supply is zero
+	res, err := queryClient.TotalSnAssetSupply(ctx.Context(), &types.QueryTotalSnAssetSupply{
+		ZoneId: zoneId,
+	})
+
+	suite.Require().NoError(err)
+	suite.Require().True(res.Amount.IsZero())
+
+	suite.App.BankKeeper.MintCoins(suite.Ctx, types.ModuleName, sdk.NewCoins(sdk.NewCoin(baseSnDenom, sdk.NewInt(10000))))
+	res, err = queryClient.TotalSnAssetSupply(ctx.Context(), &types.QueryTotalSnAssetSupply{
+		ZoneId: zoneId,
+	})
+	suite.Require().NoError(err)
+	fmt.Println(res)
+	suite.Require().Equal(res.Amount, sdk.NewCoin(baseSnDenom, sdk.NewInt(10000)))
+
 }

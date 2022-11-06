@@ -442,3 +442,30 @@ func queryWithdrawVersion() *cobra.Command {
 
 	return cmd
 }
+
+func queryTotalSnAssetSupply() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "total-snasset-supply [zone-id]",
+		Long: "Query for total snAsset supply",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			res, err := queryClient.TotalSnAssetSupply(cmd.Context(), &types.QueryTotalSnAssetSupply{
+				ZoneId: args[0],
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
