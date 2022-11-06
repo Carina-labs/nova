@@ -333,3 +333,18 @@ func (q QueryServer) WithdrawCurrentVersion(goCtx context.Context, request *type
 		Version: version,
 	}, nil
 }
+
+func (q QueryServer) TotalSnAssetSupply(goCtx context.Context, request *types.QueryTotalSnAssetSupply) (*types.QueryTotalSnAssetSupplyResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+	}
+
+	totalSnAssetSupply := q.keeper.bankKeeper.GetSupply(ctx, zone.SnDenom)
+
+	return &types.QueryTotalSnAssetSupplyResponse{
+		Amount: totalSnAssetSupply,
+	}, nil
+}

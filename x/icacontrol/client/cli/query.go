@@ -34,8 +34,8 @@ func queryAllZones() *cobra.Command {
 
 func queryZone() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "zone",
-		Long: "Query for zone",
+		Use:  "zone [zone-id]",
+		Long: "Query for zone id",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)

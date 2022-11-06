@@ -76,11 +76,14 @@ service Query {
   rpc WithdrawCurrentVersion(QueryCurrentWithdrawVersion) returns (QueryCurrentWithdrawVersionResponse) {
     option (google.api.http).get = "/nova/gal/v1/withdraw_version/{zone_id}";
   }
+
+  rpc TotalSnAssetSupply(QueryTotalSnAssetSupply) returns (QueryTotalSnAssetSupplyResponse){
+    option (google.api.http).get = "/nova/gal/v1/total_snasset_supply/{zone_id}";
+  }
 }
 
 // QueryParamsRequest is the request type for the Query/Params RPC method.
 message QueryParamsRequest {
-
 }
 
 // QueryParamsResponse is the response type for the Query/Params RPC method.
@@ -228,4 +231,12 @@ message QueryCurrentWithdrawVersion {
 
 message QueryCurrentWithdrawVersionResponse {
   uint64 version = 1;
+}
+
+message QueryTotalSnAssetSupply {
+  string zone_id = 1;
+}
+
+message QueryTotalSnAssetSupplyResponse {
+  cosmos.base.v1beta1.Coin amount = 1 [(gogoproto.nullable) = false];
 }

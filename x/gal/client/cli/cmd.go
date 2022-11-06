@@ -55,6 +55,7 @@ func GetQueryCmd() *cobra.Command {
 		queryCurrentDelegateVersion(),
 		queryCurrentUndelegateVersion(),
 		queryCurrentWithdrawVersion(),
+		queryTotalSnAssetSupply(),
 	)
 
 	return cmd
