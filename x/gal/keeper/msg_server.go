@@ -150,7 +150,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 			State:   types.IcaFail,
 		}
 		m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
-		return nil, types.ErrDelegateFail
+		return nil, sdkerrors.Wrapf(err, "IcaDelegateFail")
 	}
 
 	if err = ctx.EventManager().EmitTypedEvent(
@@ -320,7 +320,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 			State:   types.IcaFail,
 		}
 		m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
-		return nil, errors.New("IcaUnDelegate transaction failed to send")
+		return nil, sdkerrors.Wrapf(err, "IcaUnDelegate transaction failed to send")
 	}
 
 	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
@@ -451,7 +451,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 			State:   types.IcaFail,
 		}
 		m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
-		return nil, errors.New("PendingWithdraw transaction failed to send")
+		return nil, sdkerrors.Wrapf(err, "PendingWithdraw transaction failed to send")
 	}
 
 	if err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaWithdraw(
