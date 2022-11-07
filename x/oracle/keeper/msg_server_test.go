@@ -55,6 +55,26 @@ func (suite *KeeperTestSuite) TestServerUpdateChainState() {
 	version, _ := keeper.GetOracleVersion(ctx, chainInfo.ZoneId)
 	suite.Require().Equal(uint64(1), version)
 
+	// invalid block height error
+	_, err = msgServer.UpdateChainState(sdk.WrapSDKContext(suite.Ctx), &msg)
+	suite.Require().Error(err)
+
+	chainInfo = types.ChainInfo{
+		Coin:            sdk.NewCoin(fooDenom, sdk.NewInt(fooBalance)),
+		OperatorAddress: fooOperator.String(),
+		LastBlockHeight: 1001,
+		AppHash:         []byte(fooAppHash),
+		ZoneId:          fooChainId,
+	}
+
+	msg = types.MsgUpdateChainState{
+		Coin:        chainInfo.Coin,
+		Operator:    chainInfo.OperatorAddress,
+		BlockHeight: chainInfo.LastBlockHeight,
+		AppHash:     chainInfo.AppHash,
+		ZoneId:      chainInfo.ZoneId,
+	}
+
 	// after updating chain state, version should increase
 	_, err = msgServer.UpdateChainState(sdk.WrapSDKContext(suite.Ctx), &msg)
 	suite.Require().NoError(err)

@@ -31,6 +31,11 @@ func (server msgServer) UpdateChainState(goctx context.Context, state *types.Msg
 		return nil, types.ErrNotFoundZoneInfo
 	}
 
+	oracleState, _ := server.keeper.GetChainState(ctx, state.Coin.Denom)
+	if oracleState != nil && oracleState.LastBlockHeight >= state.BlockHeight {
+		return nil, types.ErrInvalidBlockHeight
+	}
+
 	newOracleState := &types.ChainInfo{
 		Coin:            state.Coin,
 		OperatorAddress: state.Operator,
