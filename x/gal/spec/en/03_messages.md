@@ -6,9 +6,10 @@
 ---
 ```protobuf
 message MsgDeposit {
-  required string depositor = 1;
-  required string receiver = 2;
-  repeated cosmos.base.v1beta1.Coin amount = 3;
+  string zone_id = 1;
+  string depositor = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string claimer = 3;
+  cosmos.base.v1beta1.Coin amount = 4 [(gogoproto.nullable) = false];
 }
 ```
 `MsgDeposit` is a message used when depositing for asset liquidity.
@@ -20,7 +21,7 @@ message MsgDeposit {
 message MsgDepositResponse {
   string receiver = 1;
   string depositor = 2;
-  cosmos.base.v1beta1.Coin deposited_amount = 3;
+  cosmos.base.v1beta1.Coin deposited_amount = 3 [(gogoproto.nullable) = false];
 }
 ```
 `MsgDepositResponse` is a message used response for `MsgDepsit`.
@@ -32,32 +33,61 @@ message MsgDepositResponse {
 message MsgDelegate {
   string zone_id = 1;
   string controller_address = 2;
+  uint64 version = 3;
 }
 ```
+`MsgDelegate` is the message the bot requests for a delegate.
 
+## MsgPendingUndelegate
+
+---
+```protobuf
+message MsgPendingUndelegate {
+  string zone_id = 1;
+  string delegator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string withdrawer = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  cosmos.base.v1beta1.Coin amount = 4 [(gogoproto.nullable) = false];
+}
+```
+`MsgPendingUndelegate` is the message the user requests to undelegate.
+This request does not result in an immediate Undelegate request. 
+Requests recorded in the Undelegate Record actually result in a undelegate request via `Undelegate`.
+
+
+## MsgPendingUndelegateResponse
+
+---
+```protobuf
+message MsgPendingUndelegateResponse {
+  string zone_id = 1;
+  string delegator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string withdrawer = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  cosmos.base.v1beta1.Coin burn_asset = 4 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin undelegate_asset = 5 [(gogoproto.nullable) = false];
+}
+```
+`MsgPendingUndelegateResponse` contains metadata for requests in response to MsgPendingUndelegate.
 
 ## MsgUnDelegate
 
 ---
 ```protobuf
-message MsgUnDelegate {
+message MsgUndelegate {
   string zone_id = 1;
   string controller_address = 2;
+  uint64 version = 3;
 }
 ```
-`MsgUndelegate` is the message used when requesting Undelegate. 
-This request does not result in an immediate Undelegate request. 
-Requests recorded in the Undelegate Record actually result in a undelegate request via `IcaUndelegate`.
-
+`MsgUndelegate` is the message the bot requests to undelegate.
 
 ## MsgUndelegateResponse
 
 ---
 ```protobuf
-message MsgUnStakingResponse {
+message MsgUndelegateResponse{
   string zone_id = 1;
-  cosmos.base.v1beta1.Coin total_burn_asset = 2;
-  cosmos.base.v1beta1.Coin total_undelegate_asset = 3;
+  cosmos.base.v1beta1.Coin total_burn_asset = 2 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin total_undelegate_asset = 3 [(gogoproto.nullable) = false];
 }
 ```
 `MsgUndelegateResponse` contains metadata for requests in response to MsgUndelegate.
@@ -67,8 +97,8 @@ message MsgUnStakingResponse {
 ---
 ```protobuf
 message MsgWithdraw {
-  required string withdrawer = 1;
-  repeated cosmos.base.v1beta1.Coin amount = 2;
+  string zone_id = 1;
+  string withdrawer = 2[(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 ```
 `MsgWithdraw` is a message used when user want to withdraw their asset with IBC.
@@ -77,8 +107,9 @@ message MsgWithdraw {
 
 ---
 ```protobuf
-message MsgWithdrawResponse {
-  
+mmessage MsgWithdrawResponse {
+  string withdrawer = 1;
+  string withdraw_amount = 2[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
 }
 ```
 `MsgWithdrawResponse` is a message used response for `MsgWithdraw`
@@ -89,7 +120,7 @@ message MsgWithdrawResponse {
 ```protobuf
 message MsgClaimSnAsset {
   string zone_id = 1;
-  string claimer = 2;
+  string claimer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 ```
 `MsgClaimSnAsset` receives the snAsset, which is the equity token for the assets deposited.
@@ -100,7 +131,8 @@ message MsgClaimSnAsset {
 ```protobuf
 message MsgClaimSnAssetResponse {
   string claimer = 1;
-  cosmos.base.v1beta1.Coin minted = 2;
+  cosmos.base.v1beta1.Coin minted = 2
+  [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }
 ```
 
@@ -108,12 +140,13 @@ message MsgClaimSnAssetResponse {
 
 ---
 ```protobuf
-message MsgIcaWithdraw {
+message MsgIcaWithdraw{
   string zone_id = 1;
   string controller_address = 2;
   string ica_transfer_port_id = 3;
   string ica_transfer_channel_id = 4;
-  google.protobuf.Timestamp chain_time = 5;
+  google.protobuf.Timestamp chain_time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  uint64 version = 6;
 }
 ```
 `MsgIcaWithdraw` remotely transfers the undelegated assets in the other zone to the Supernova chain.
@@ -123,6 +156,5 @@ message MsgIcaWithdraw {
 ---
 ```protobuf
 message MsgIcaWithdrawResponse {
-  
 }
 ```
