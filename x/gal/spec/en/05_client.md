@@ -32,10 +32,10 @@ Example Output:
 }
 ```
 
-#### Pending Withdrawal
-`pending-withdrawal` returns the amount of pending withdrawal asset of user corresponding to zone-id.
+#### IcaWithdrawal
+`ica-withdrawal` returns the amount of pending withdrawal asset of user corresponding to zone-id.
 ```shell
-novad query gal pending-withdrawal [zone-id] [address]
+novad query gal ica-withdrawal [zone-id] [address]
 ```
 
 Example:
@@ -85,10 +85,10 @@ Example Output:
 ```json
 {
   "zoneId": "cosmoshub-1",
-  "claimer": "nova1a2b...",
+  "depositor": "nova1a2b...",
   "records": [
     {
-      "depositor": "nova1a2b...",
+      "claimer": "nova1a2b...",
       "amount": {
         "denom": "uatom",
         "amount": 1000
@@ -98,6 +98,37 @@ Example Output:
       "delegateVersion": 124
     }
   ]
+}
+```
+
+### Delegate Records
+`delegate-records` returns the records of delegate for user corresponding to zone-id.
+```shell
+novad query gal delegate-records [zone-id] [address]
+```
+
+Example:
+```shell
+novad query gal delegate-records cosmoshub-1 nova1a2b...
+```
+
+Example Output:
+```json
+{
+  "zoneId": "cosmoshub-1",
+  "claimer": "nova1a2b...",
+  "records": {
+    "1":{
+      "depositor": "nova1a2b...",
+      "amount": {
+        "denom": "uatom",
+        "amount": 1000
+      },
+      "state": 1,
+      "oracleVersion": 100,
+      "delegateVersion": 124
+    }
+  }
 }
 ```
 
@@ -173,6 +204,23 @@ Example Output:
   }
 }
 ```
+#### TotalSnAssetSupply
+`total-snasset-supply` 
+
+```shell
+novad query total-snasset-supply [zone-id]
+```
+
+Example Output:
+```json
+{
+  "amount": {
+    "amount": "0",
+    "denom": snuatom,
+  }
+}
+```
+
 
 ### Transaction
 
@@ -184,6 +232,16 @@ novad tx gal deposit [zone-id] [depositor] [clamier] [amount]
 Example:
 ```shell
 novad tx gal deposit cosmoshub-1 nova1a2b... nova1a2b... 10000uatom
+```
+
+#### Delegate
+```shell
+novad tx gal delegate [zone-id] [sequence]
+```
+
+Example:
+```shell
+novad tx gal delegate cosmoshub-1 1
 ```
 
 #### Pending Undelegate
@@ -198,12 +256,12 @@ novad tx gal pending-undelegate cosmoshub-1 nova1a2b... nova9a8b... 10000uatom
 
 #### Undelegate
 ```shell
-novad tx gal undelegate [zone-id] [controller-address]
+novad tx gal undelegate [zone-id] [sequence]
 ```
 
 Example:
 ```shell
-novad tx gal undelegate cosmoshub-1 nova7ba2...
+novad tx gal undelegate cosmoshub-1 1
 ```
 
 #### Withdraw
@@ -226,24 +284,14 @@ Example:
 novad tx gal claim cosmoshub-1 nova1a2b...
 ```
 
-#### Pending Withdraw
+#### IcaWithdraw
 ```shell
-novad tx gal pending-withdraw [zone-id] [controller-address] [ica-transfer-port-id]
+novad tx gal ica-withdraw [zone-id] [ica-transfer-port-id] [ica-transfer-channel-id] [block-time] [sequence]
 ```
 
 Example:
 ```shell
-novad tx gal pending-withdraw cosmoshub-1 nova1a2b... port-1
-```
-
-#### Delegate
-```shell
-novad tx gal delegate [zone-id] [controller-address]
-```
-
-Example:
-```shell
-novad tx gal delegate cosmoshub-1 nova1a2b...
+novad tx gal ica-withdraw cosmoshub-1 transfer channel-0  1
 ```
 
 ## gRPC
