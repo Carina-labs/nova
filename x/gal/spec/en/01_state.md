@@ -6,77 +6,46 @@ This document describes the states used by the `GAL` module.
 
 ---
 
-### DepositAccount
-```protobuf
-message DepositAccount {
-  string denom = 1;
-  repeated DepositInfo depositInfos = 2;
-  int64 totalShare = 3;
-  int64 lastBlockUpdate = 4;
-}
-```
-`DepositAccount` specifies the accounts deposited, the destination chain, the entire stake, and the last updated block height.
-
-
-### DepositInfo
-```protobuf
-message DepositInfo {
-  string address = 1;
-  int64 share = 2;
-  int64 debt = 3;
-}
-```
-`DepositInfo` specifies the user's deposit information.
-
-
-### WithdrawInfo
-```protobuf
- message WithdrawInfo {
-  string address = 1;
-  string denom = 2;
-  int64 amount = 3;
-  google.protobuf.Timestamp completion_time = 4[(gogoproto.nullable) = false, (gogoproto.stdtime)= true];
-}
-```
-`WithdrawInfo` shows the information about the withdrawal you applied for and when it was completed.
-Supernova collects withdrawal requests and processes them once every few days, so there is a completion time.
-
-
-### RecordInfo
-```protobuf
-message RecordInfo {
-  string zone_id = 1;
-  uint64 delegate_version = 2;
-  uint64 undelegate_version = 3;
-  uint64 withdraw_version = 4;
-}
-```
-All Supernova delegation, underegulation, and withdraw are processed in batch form and executed by an external bot.
-Therefore, the GAL module manages the version of the last job executed by the bot.
-
 ### DepositRecord
 ```protobuf
 message DepositRecord {
   string zone_id = 1;
-  string claimer = 2;
+  string depositor = 2;
   repeated DepositRecordContent records = 3;
 }
 ```
 `DepositRecord` manages historical data that you deposit in a particular zone.
-sn-tokens are paid to the claimer.
 
 
 ### DepositRecordContent
 ```protobuf
 message DepositRecordContent {
-  string depositor = 1;
+  string claimer = 1;
   cosmos.base.v1beta1.Coin amount = 2;
   int64 state = 3;
-  uint64 oracle_version = 4;
-  uint64 delegate_version = 5;
 }
 ```
-`DepositRecordContent` stores the user's Deposit details.
+`DepositRecordContent` stores the user's Deposit details. sn-tokens are paid to the claimer.
+
+### DelegateRecord
+```protobuf
+message DelegateRecord {
+  string zone_id = 1;
+  string claimer = 2;
+  map <uint64, DelegateRecordContent> records = 3;
+}
+```
+`DelegateRecord` manages historical data that you delegate in a particular zone.
+
+### DelegateRecordContent
+```protobuf
+message DelegateRecordContent {
+  cosmos.base.v1beta1.Coin amount = 1;
+  int64 state = 2;
+  uint64 oracle_version = 3;
+}
+```
+`DelegateRecordContent` stores the user's delegate details.
 
 ### UndelegateRecord
 ```protobuf
@@ -117,10 +86,11 @@ message WithdrawRecord {
 ```protobuf
 message WithdrawRecordContent {
   string amount = 1[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
-  int64 state = 2;
-  int64 oracle_version = 3;
-  uint64 withdraw_version = 4;
-  google.protobuf.Timestamp completion_time = 5[(gogoproto.nullable) = false, (gogoproto.stdtime)= true];
+  cosmos.base.v1beta1.Coin unstaking_amount = 2;
+  int64 state = 3;
+  int64 oracle_version = 4;
+  uint64 withdraw_version = 5;
+  google.protobuf.Timestamp completion_time = 6[(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }
 ```
 `WithdrawRecordContent` manages detailed records of user withdrawal requests. The withdrawal request is made once every few days, so the version of the last bot's action and the withdrawal completion time are saved together.
