@@ -23,6 +23,8 @@ message DepositRecordContent {
 }
 
 message DelegateRecord {
+  option (gogoproto.marshaler) = true;
+  option (gogoproto.stable_marshaler) = true;
   string zone_id = 1;
   string claimer = 2;
   map <uint64, DelegateRecordContent> records = 3;
@@ -50,6 +52,8 @@ message UndelegateRecordContent {
 }
 
 message WithdrawRecord {
+  option (gogoproto.marshaler) = true;
+  option (gogoproto.stable_marshaler) = true;
   string zone_id = 1;
   string withdrawer = 2;
   map <uint64, WithdrawRecordContent> records = 3;
