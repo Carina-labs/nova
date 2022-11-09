@@ -69,6 +69,8 @@ enum QuestStateType {
 
 // UserState indicates the status of the user performing the quest.
 message UserState {
+  option (gogoproto.marshaler) = true;
+  option (gogoproto.stable_marshaler) = true;
   // address of the airdrop recipient.
   string recipient = 1;
 
