@@ -66,7 +66,7 @@ func queryClaimableAsset() *cobra.Command {
 func queryIcaWithdrawal() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "ica-withdrawal [zone-id] [address]",
-		Long: "Query for pending withdrawals",
+		Long: "Query for Ica withdrawals",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
