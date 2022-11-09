@@ -1,6 +1,8 @@
 syntax = "proto3";
 package nova.gal.v1;
 
+import "gogoproto/gogo.proto";
+
 option go_package = "github.com/Carina-labs/nova/x/gal/types";
 
 message IBCTrace {
@@ -10,6 +12,8 @@ message IBCTrace {
 }
 
 message VersionState{
+  option (gogoproto.marshaler) = true;
+  option (gogoproto.stable_marshaler) = true;
   string zoneId = 1;
   uint64 current_version = 2;
   map <uint64, IBCTrace> record = 3;
