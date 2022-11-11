@@ -14,6 +14,8 @@ message MsgRegisterZone {
   string validator_address = 5;
   string base_denom = 6;
   int64 decimal = 7;
+  int64 undelegate_max_entries = 8;
+  int64 deposit_max_entries = 9;
 }
 ```
 
@@ -21,7 +23,18 @@ message MsgRegisterZone {
 
 ## MsgRegisterZoneResponse
 ```protobuf
-message MsgRegisterZoneResponse {}
+message MsgRegisterZoneResponse {
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
+  int64 undelegate_max_entries = 9;
+  int64 deposit_max_entries = 10;
+}
 ```
 
 `MsgRegisterZoneResponse` is a response message for `MsgRegisterZone`.
@@ -38,6 +51,8 @@ message MsgChangeRegisteredZoneInfo{
   string validator_address = 5;
   string base_denom = 6;
   int64 decimal = 7;
+  int64 undelegate_max_entries = 8;
+  int64 deposit_max_entries = 9;
 }
 ```
 
@@ -45,7 +60,18 @@ message MsgChangeRegisteredZoneInfo{
 
 ## MsgChangeRegisteredZoneInfoResponse
 ```protobuf
-message MsgChangeRegisteredZoneInfoResponse{}
+message MsgChangeRegisteredZoneInfoResponse{
+  string zone_id = 1;
+  IcaConnectionInfo ica_info = 2;
+  IcaAccount ica_account = 3;
+  TransferConnectionInfo transfer_info = 4;
+  string validator_address = 5;
+  string base_denom = 6;
+  string sn_denom = 7;
+  int64 decimal = 8;
+  int64 undelegate_max_entries = 9;
+  int64 deposit_max_entries = 10;
+}
 ```
 
 `MsgChangeRegisteredZoneInfoResponse` is a response message for `MsgChangeRegisteredZone`.
@@ -71,9 +97,8 @@ message MsgDeleteRegisteredZoneResponse{}
 ```protobuf
 message MsgIcaDelegate{
   string zone_id = 1;
-  string host_address = 2;
-  string controller_address = 3;
-  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
 }
 ```
 
@@ -90,9 +115,8 @@ message MsgIcaDelegateResponse{}
 ```protobuf
 message MsgIcaUndelegate{
   string zone_id = 1;
-  string host_address = 2;
-  string controller_address = 3;
-  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
 }
 ```
 
@@ -109,9 +133,9 @@ message MsgIcaUndelegateResponse{}
 ```protobuf
 message MsgIcaAutoStaking{
   string zone_id = 1;
-  string host_address = 2;
-  string daomodifier_address = 3;
-  cosmos.base.v1beta1.Coin amount = 4[(gogoproto.nullable) = false];
+  string controller_address = 2;
+  cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
+  uint64 version = 4;
 }
 ```
 
@@ -128,12 +152,11 @@ message MsgIcaAutoStakingResponse{}
 ```protobuf
 message MsgIcaTransfer{
   string zone_id = 1;
-  string host_address = 2;
-  string daomodifier_address = 3;
-  string receiver_address = 4;
-  string ica_transfer_port_id = 5;
-  string ica_transfer_channel_id = 6;
-  cosmos.base.v1beta1.Coin amount = 7[(gogoproto.nullable) = false];
+  string controller_address = 2;
+  string receiver_address = 3;
+  string ica_transfer_port_id = 4;
+  string ica_transfer_channel_id = 5;
+  cosmos.base.v1beta1.Coin amount = 6[(gogoproto.nullable) = false];
 }
 ```
 
@@ -183,3 +206,23 @@ message MsgIcaAuthzRevokeResponse{}
 ```
 
 `MsgIcaAuthzRevokeResponse` is a response message for `MsgIcaAuthzRevoke`.
+
+## MsgRegisterControllerAddr
+
+```protobuf
+message MsgRegisterControllerAddr{
+  string zone_id = 1;
+  string controller_address = 2;
+  string from_address = 3;
+}
+```
+
+`MsgRegisterControllerAddr` is used to register the address to be used as the controller address. It can be registered only with the key registered in keymanager.
+
+## MsgRegisterControllerAddrResponse
+
+```protobuf
+message MsgRegisterControllerAddrResponse{}
+```
+
+`MsgRegisterControllerAddrResponse` is a response message for MsgRegisterControllerAddr.
