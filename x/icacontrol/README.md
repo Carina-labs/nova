@@ -1,4 +1,4 @@
-# IBC-Staking
+# ICA-Control
 
 ---
 
