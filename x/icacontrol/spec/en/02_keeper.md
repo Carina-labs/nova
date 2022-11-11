@@ -57,6 +57,13 @@ func (k Keeper) GetRegisterZoneForPortId(ctx sdk.Context, portId string) (*types
 
 `GetRegisterZoneForPortId` returns the appropriate Zone information for portId.
 
+### GetRegisterZoneForHostAddr
+```go
+func (k Keeper) GetRegisterZoneForHostAddr(ctx sdk.Context, hostAddr string) (*types.RegisteredZone, bool) {]
+```
+
+`GetRegisterZoneForHostAddr` returns the appropriate Zone information for host address.
+
 ### GetsnDenomForBaseDenom
 ```go
 func (k Keeper) GetsnDenomForBaseDenom(ctx sdk.Context, baseDenom string) string {}
@@ -72,6 +79,13 @@ func (k Keeper) GetBaseDenomForSnDenom(ctx sdk.Context, snDenom string) string {
 
 `GetBaseDenomForSnDenom` returns an appropriate pair of BaseDenom for snDenom.
 For example, snatom -> uatom.
+
+### DenomDuplicateCheck
+```go
+func (k Keeper) DenomDuplicateCheck(ctx sdk.Context, baseDenom string) string {}
+```
+
+'DenomDuplicateCheck' checks if a currently registered denom exists and returns denom.
 
 ### GetIBCHashDenom
 ```go
