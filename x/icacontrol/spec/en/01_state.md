@@ -23,6 +23,8 @@ message RegisteredZone {
   string base_denom = 6;
   string sn_denom = 7;
   int64 decimal = 8;
+  int64 undelegate_max_entries = 9;
+  int64 deposit_max_entries = 10;
 }
 ```
 
@@ -34,12 +36,7 @@ message RegisteredZone {
 message IcaAccount {
   string controller_address = 1;
   string host_address = 2;
-  cosmos.base.v1beta1.Coin balance = 3 [
-    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
-    (gogoproto.nullable) = false
-  ];
 }
-
 ```
 
 ### IcaConnectionInfo
@@ -65,5 +62,18 @@ Connection information includes channel_id and port_id.
 message TransferConnectionInfo {
   string channel_id = 1;
   string port_id = 2;
+}
+```
+
+### ControllerAddressInfo
+
+`ControllerAddressInfo` stores the controller account to create an ICA account.
+
+Controller information includes zone_id and controller address.
+
+```protobuf
+message ControllerAddressInfo {
+  string zone_id = 1;
+  repeated string controller_address = 2;
 }
 ```
