@@ -110,7 +110,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 			amount.Amount = amount.Amount.Add(record.SnAssetAmount.Amount)
 		}
 	} else {
-		ctx.Logger().Debug("failed to find undelegate record", "request", request)
+		ctx.Logger().Info("failed to find undelegate record", "request", request)
 	}
 
 	// if the user has no withdraw-able assets (when transfer success record doesn't exist), return 0
@@ -124,7 +124,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 			}
 		}
 	} else {
-		ctx.Logger().Debug("failed to find withdraw record", "request", request)
+		ctx.Logger().Info("failed to find withdraw record", "request", request)
 	}
 
 	return &types.QueryPendingWithdrawalsResponse{

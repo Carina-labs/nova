@@ -157,11 +157,11 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	if isDeleted {
 		record.Records = recordItems
 		k.SetDepositRecord(ctx, record)
-		ctx.Logger().Debug("DeleteRecordedDepositItem", "DeleteRecord", deleteRecord)
+		ctx.Logger().Info("DeleteRecordedDepositItem", "DeleteRecord", deleteRecord)
 		return nil
 	}
 
-	ctx.Logger().Debug("DeleteRecordedDepositItem", "Error", types.ErrNoDelegateRecord)
+	ctx.Logger().Info("DeleteRecordedDepositItem", "Error", types.ErrNoDelegateRecord)
 	return types.ErrNoDeleteRecord
 }
 
