@@ -100,6 +100,7 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 	denom := h.k.icaControlKeeper.GetIBCHashDenom(zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 	err = h.k.bankKeeper.SendCoinsFromAccountToModule(ctx, controllerAddr, types.ModuleName, sdk.NewCoins(sdk.NewCoin(denom, asset)))
 	if err != nil {
+		ctx.Logger().Error("AfterOnRecvPacket", "SendToModuleAccount", err)
 		return
 	}
 
@@ -137,6 +138,7 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	// get delegateVersion
 	versionInfo := h.k.GetDelegateVersion(ctx, zoneInfo.ZoneId)
 	if versionInfo.Size() == 0 {
+		ctx.Logger().Error("AfterDelegateEnd", "versionInfo", "nil")
 		return
 	}
 	currentVersion := versionInfo.CurrentVersion
@@ -171,13 +173,14 @@ func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTr
 	zone := h.k.icaControlKeeper.GetZoneForDenom(ctx, asset.Denom)
 
 	if transferMsg.Receiver != zone.IcaAccount.ControllerAddress {
-		h.k.Logger(ctx).Error("Receiver is not controller address", "Receiver", transferMsg.Receiver, "ControllerAddress", zone.IcaAccount.ControllerAddress, "Hook", "AfterWithdrawEnd")
+		ctx.Logger().Error("Receiver is not controller address", "Receiver", transferMsg.Receiver, "ControllerAddress", zone.IcaAccount.ControllerAddress, "Hook", "AfterWithdrawEnd")
 		return
 	}
 
 	// get withdrawVersion
 	versionInfo := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
 	if versionInfo.Size() == 0 {
+		ctx.Logger().Error("Zone id is not found", "versionInfo", "nil")
 		return
 	}
 	currentVersion := versionInfo.CurrentVersion
@@ -208,12 +211,13 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	// get zone info from the validator address
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
 	if zoneInfo == nil {
-		h.k.Logger(ctx).Error("Zone id is not found", "ValidatorAddress", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
+		ctx.Logger().Error("Zone id is not found", "ValidatorAddress", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
 		return
 	}
 
 	versionInfo := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
 	if versionInfo.Size() == 0 {
+		ctx.Logger().Error("Zone id is not found", "versionInfo", "nil")
 		return
 	}
 	currentVersion := versionInfo.CurrentVersion
