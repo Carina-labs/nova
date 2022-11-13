@@ -240,6 +240,7 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 
 func (h Hooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	zone := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
+	ctx.Logger().Info("AfterDelegateFail", "Zone", zone)
 
 	versionInfo := h.k.GetDelegateVersion(ctx, zone.ZoneId)
 	currentVersion := versionInfo.CurrentVersion
@@ -248,13 +249,13 @@ func (h Hooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDe
 		Height: uint64(ctx.BlockHeight()),
 		State:  types.IcaFail,
 	}
-
 	h.k.SetDelegateVersion(ctx, zone.ZoneId, versionInfo)
-	ctx.Logger().Info("AfterDelegateFail", "ZoneId", zone.ZoneId, "WithdrawCurrentVersion", currentVersion, "WithdrawVersionState", versionInfo.Record[currentVersion].State)
+	ctx.Logger().Error("AfterDelegateFail", "ZoneId", zone.ZoneId, "WithdrawCurrentVersion", currentVersion, "WithdrawVersionState", versionInfo.Record[currentVersion].State)
 }
 
 func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate) {
 	zone := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
+	ctx.Logger().Info("AfterUndelegateFail", "Zone", zone)
 
 	versionInfo := h.k.GetUndelegateVersion(ctx, zone.ZoneId)
 	currentVersion := versionInfo.CurrentVersion
@@ -265,12 +266,13 @@ func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.M
 	}
 
 	h.k.SetUndelegateVersion(ctx, zone.ZoneId, versionInfo)
-	ctx.Logger().Info("AfterUndelegateFail", "ZoneId", zone.ZoneId, "UndelegateCurrentVersion", currentVersion, "UndelegateVersionState", versionInfo.Record[currentVersion].State)
+	ctx.Logger().Error("AfterUndelegateFail", "ZoneId", zone.ZoneId, "UndelegateCurrentVersion", currentVersion, "UndelegateVersionState", versionInfo.Record[currentVersion].State)
 }
 
 func (h Hooks) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
 	zone, ok := h.k.icaControlKeeper.GetRegisterZoneForHostAddr(ctx, transferMsg.Sender)
 	if !ok {
+		ctx.Logger().Error("AfterIcaWithdrawFail", "err", "zone not found")
 		return
 	}
 
@@ -283,5 +285,5 @@ func (h Hooks) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.M
 	}
 
 	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
-	ctx.Logger().Info("AfterIcaWithdrawFail", "ZoneId", zone.ZoneId, "IcaWithdrawCurrentVersion", currentVersion, "IcaWithdrawVersionState", versionInfo.Record[currentVersion].State)
+	ctx.Logger().Error("AfterIcaWithdrawFail", "ZoneId", zone.ZoneId, "IcaWithdrawCurrentVersion", currentVersion, "IcaWithdrawVersionState", versionInfo.Record[currentVersion].State)
 }

@@ -345,170 +345,167 @@ func (suite *KeeperTestSuite) TestDeposit() {
 }
 
 func (suite *KeeperTestSuite) TestDelegate() {
-	//suite.InitICA()
-	//
-	//depositor := suite.GenRandomAddress()
-	//baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
-	//
-	//tcs := []struct {
-	//	name          string
-	//	depositRecord types.DepositRecord
-	//	msg           types.MsgDelegate
-	//	zoneId        string
-	//	denom         string
-	//	depositor     sdk.AccAddress
-	//	result        types.DepositRecord
-	//	err           bool
-	//}{
-	//	{
-	//		name:      "success",
-	//		depositor: depositor,
-	//		zoneId:    zoneId,
-	//		denom:     baseDenom,
-	//		depositRecord: types.DepositRecord{
-	//			ZoneId:  zoneId,
-	//			Depositor: depositor.String(),
-	//			Records: []*types.DepositRecordContent{
-	//				{
-	//					Claimer: depositor.String(),
-	//					Amount: &sdk.Coin{
-	//						Amount: sdk.NewInt(10000),
-	//						Denom:  baseIbcDenom,
-	//					},
-	//					State:         types.DepositSuccess,
-	//				},
-	//			},
-	//		},
-	//		msg: types.MsgDelegate{
-	//			ZoneId:            zoneId,
-	//			ControllerAddress: baseOwnerAcc.String(),
-	//			Version:           0,
-	//		},
-	//		result: types.DepositRecord{
-	//			ZoneId:  zoneId,
-	//			Depositor: depositor.String(),
-	//			Records: []*types.DepositRecordContent{
-	//				{
-	//					Claimer: depositor.String(),
-	//					State:     types.DelegateSuccess,
-	//					Amount: &sdk.Coin{
-	//						Amount: sdk.NewInt(10000),
-	//						Denom:  baseIbcDenom,
-	//					},
-	//				},
-	//			},
-	//		},
-	//		err: false,
-	//	},
-	//	{
-	//		name:      "fail case 1 - deposit record is not nil",
-	//		depositor: depositor,
-	//		zoneId:    zoneId,
-	//		denom:     baseDenom,
-	//		depositRecord: types.DepositRecord{
-	//			ZoneId:  zoneId,
-	//			Claimer: depositor.String(),
-	//			Records: []*types.DepositRecordContent{},
-	//		},
-	//		msg: types.MsgDelegate{
-	//			ZoneId:            zoneId,
-	//			ControllerAddress: baseOwnerAcc.String(),
-	//			Version:           0,
-	//		},
-	//		result: types.DepositRecord{},
-	//		err:    true,
-	//	},
-	//	{
-	//		name:      "fail case 2 - controller address is invalid",
-	//		depositor: depositor,
-	//		zoneId:    zoneId,
-	//		denom:     baseDenom,
-	//		depositRecord: types.DepositRecord{
-	//			ZoneId:  zoneId,
-	//			Claimer: depositor.String(),
-	//			Records: []*types.DepositRecordContent{
-	//				{
-	//					Depositor: depositor.String(),
-	//					Amount: &sdk.Coin{
-	//						Amount: sdk.NewInt(10000),
-	//						Denom:  baseIbcDenom,
-	//					},
-	//					State:         types.DepositSuccess,
-	//					OracleVersion: 0,
-	//				},
-	//			},
-	//		},
-	//		msg: types.MsgDelegate{
-	//			ZoneId:            zoneId,
-	//			ControllerAddress: depositor.String(),
-	//			Version:           0,
-	//		},
-	//		result: types.DepositRecord{
-	//			ZoneId:  zoneId,
-	//			Claimer: depositor.String(),
-	//			Records: []*types.DepositRecordContent{
-	//				{
-	//					Depositor: depositor.String(),
-	//					State:     types.DepositSuccess,
-	//					Amount: &sdk.Coin{
-	//						Amount: sdk.NewInt(10000),
-	//						Denom:  baseIbcDenom,
-	//					},
-	//					OracleVersion:   1,
-	//					DelegateVersion: 1,
-	//				},
-	//			},
-	//		},
-	//		err: true,
-	//	},
-	//	{
-	//		name:      "fail case 3 - zone not found",
-	//		depositor: depositor,
-	//		zoneId:    zoneId,
-	//		denom:     baseDenom,
-	//		depositRecord: types.DepositRecord{
-	//			ZoneId:  zoneId,
-	//			Claimer: depositor.String(),
-	//			Records: []*types.DepositRecordContent{},
-	//		},
-	//		msg: types.MsgDelegate{
-	//			ZoneId:            "test",
-	//			ControllerAddress: baseOwnerAcc.String(),
-	//			Version:           0,
-	//		},
-	//		result: types.DepositRecord{},
-	//		err:    true,
-	//	},
-	//}
-	//
-	//for _, tc := range tcs {
-	//	suite.Run(tc.name, func() {
-	//		suite.setValidator()
-	//		hostAddr := suite.setHostAddr(tc.zoneId)
-	//
-	//		ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
-	//
-	//		suite.chainA.GetApp().GalKeeper.SetDepositRecord(suite.chainA.GetContext(), &tc.depositRecord)
-	//		mintAmt := suite.chainA.GetApp().GalKeeper.GetTotalDepositAmtForZoneId(suite.chainA.GetContext(), tc.zoneId, ibcDenom, types.DepositSuccess)
-	//		suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), baseDenom, mintAmt.Amount, hostAddr)
-	//
-	//		// delegate
-	//		excCtx := suite.chainA.GetContext()
-	//		msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
-	//		_, err := msgServer.Delegate(sdk.WrapSDKContext(excCtx), &tc.msg)
-	//
-	//		if tc.err {
-	//			suite.Require().Error(err)
-	//		} else {
-	//			suite.Require().NoError(err)
-	//			suite.icaRelay(excCtx)
-	//
-	//			result, ok := suite.chainA.GetApp().GalKeeper.GetUserDepositRecord(suite.chainA.GetContext(), tc.zoneId, tc.depositor)
-	//			suite.Require().True(ok)
-	//			suite.Require().Equal(tc.result, *result)
-	//		}
-	//	})
-	//}
+	suite.InitICA()
+
+	depositor := suite.GenRandomAddress()
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+
+	tcs := []struct {
+		name          string
+		depositRecord types.DepositRecord
+		msg           types.MsgDelegate
+		zoneId        string
+		denom         string
+		depositor     sdk.AccAddress
+		result        types.DelegateRecord
+		err           bool
+	}{
+		{
+			name:      "success",
+			depositor: depositor,
+			zoneId:    zoneId,
+			denom:     baseDenom,
+			depositRecord: types.DepositRecord{
+				ZoneId:  zoneId,
+				Depositor: depositor.String(),
+				Records: []*types.DepositRecordContent{
+					{
+						Claimer: depositor.String(),
+						Amount: &sdk.Coin{
+							Amount: sdk.NewInt(10000),
+							Denom:  baseIbcDenom,
+						},
+						State:         types.DepositSuccess,
+					},
+				},
+			},
+			msg: types.MsgDelegate{
+				ZoneId:            zoneId,
+				ControllerAddress: baseOwnerAcc.String(),
+				Version:           0,
+			},
+			result: types.DelegateRecord{
+				ZoneId:  zoneId,
+				Claimer: depositor.String(),
+				Records: map[uint64]*types.DelegateRecordContent{
+					0:{
+						State:     types.DelegateSuccess,
+						Amount: &sdk.Coin{
+							Amount: sdk.NewInt(10000),
+							Denom:  baseIbcDenom,
+						},
+						OracleVersion: 1,
+					},
+				},
+			},
+			err: false,
+		},
+		{
+			name:      "fail case 1 - deposit record is not nil",
+			depositor: depositor,
+			zoneId:    zoneId,
+			denom:     baseDenom,
+			depositRecord: types.DepositRecord{
+				ZoneId:  zoneId,
+				Depositor: depositor.String(),
+				Records: []*types.DepositRecordContent{},
+			},
+			msg: types.MsgDelegate{
+				ZoneId:            zoneId,
+				ControllerAddress: baseOwnerAcc.String(),
+				Version:           0,
+			},
+			result: types.DelegateRecord{},
+			err:    true,
+		},
+		{
+			name:      "fail case 2 - controller address is invalid",
+			depositor: depositor,
+			zoneId:    zoneId,
+			denom:     baseDenom,
+			depositRecord: types.DepositRecord{
+				ZoneId:  zoneId,
+				Depositor: depositor.String(),
+				Records: []*types.DepositRecordContent{
+					{
+						Claimer: depositor.String(),
+						Amount: &sdk.Coin{
+							Amount: sdk.NewInt(10000),
+							Denom:  baseIbcDenom,
+						},
+						State:         types.DepositSuccess,
+					},
+				},
+			},
+			msg: types.MsgDelegate{
+				ZoneId:            zoneId,
+				ControllerAddress: depositor.String(),
+				Version:           0,
+			},
+			result: types.DelegateRecord{
+				ZoneId:  zoneId,
+				Claimer: depositor.String(),
+				Records: map[uint64]*types.DelegateRecordContent{
+					0:{
+						State:     types.DepositSuccess,
+						Amount: &sdk.Coin{
+							Amount: sdk.NewInt(10000),
+							Denom:  baseIbcDenom,
+						},
+						OracleVersion:   1,
+					},
+				},
+			},
+			err: true,
+		},
+		{
+			name:      "fail case 3 - zone not found",
+			depositor: depositor,
+			zoneId:    zoneId,
+			denom:     baseDenom,
+			depositRecord: types.DepositRecord{
+				ZoneId:  zoneId,
+				Depositor: depositor.String(),
+				Records: []*types.DepositRecordContent{},
+			},
+			msg: types.MsgDelegate{
+				ZoneId:            "test",
+				ControllerAddress: baseOwnerAcc.String(),
+				Version:           0,
+			},
+			result: types.DelegateRecord{},
+			err:    true,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			suite.setValidator()
+			hostAddr := suite.setHostAddr(tc.zoneId)
+
+			ibcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
+
+			suite.chainA.GetApp().GalKeeper.SetDepositRecord(suite.chainA.GetContext(), &tc.depositRecord)
+			mintAmt := suite.chainA.GetApp().GalKeeper.GetTotalDepositAmtForZoneId(suite.chainA.GetContext(), tc.zoneId, ibcDenom, types.DepositSuccess)
+			suite.mintCoin(suite.chainB.GetContext(), suite.chainB.GetApp(), baseDenom, mintAmt.Amount, hostAddr)
+
+			// delegate
+			excCtx := suite.chainA.GetContext()
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
+			_, err := msgServer.Delegate(sdk.WrapSDKContext(excCtx), &tc.msg)
+
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.Require().NoError(err)
+				suite.icaRelay(excCtx)
+
+				result, ok := suite.chainA.GetApp().GalKeeper.GetUserDelegateRecord(suite.chainA.GetContext(), tc.zoneId, tc.depositor)
+				suite.Require().True(ok)
+				suite.Require().Equal(tc.result, *result)
+			}
+		})
+	}
 }
 
 func (suite *KeeperTestSuite) TestPendingUndelegate() {

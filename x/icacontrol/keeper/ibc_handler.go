@@ -119,7 +119,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 	switch packetData[0].(type) {
 	case *stakingtypes.MsgDelegate:
 		msgData := packetData[0].(*stakingtypes.MsgDelegate)
-		ctx.Logger().Debug("HandleAckFail", "MsgType", "MsgDelegate", "Data", msgData)
+		ctx.Logger().Error("HandleAckFail", "MsgType", "MsgDelegate", "Data", msgData)
 
 		//delegate fail event
 		event := types.EventDelegateFail{
@@ -130,13 +130,13 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 		}
 		err = ctx.EventManager().EmitTypedEvent(&event)
 		if err != nil {
-			return err
+			ctx.Logger().Error("HandleAckFail", "MsgType", "MsgDelegate", "EventError", err)
 		}
 
 		k.AfterDelegateFail(ctx, *msgData)
 	case *stakingtypes.MsgUndelegate:
 		msgData := packetData[0].(*stakingtypes.MsgUndelegate)
-		ctx.Logger().Debug("HandleAckFail", "MsgType", "MsgUndelegate", "Data", msgData)
+		ctx.Logger().Error("HandleAckFail", "MsgType", "MsgUndelegate", "Data", msgData)
 
 		//undelegate fail event
 		event := types.EventUndelegateFail{
@@ -148,7 +148,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 
 		err = ctx.EventManager().EmitTypedEvent(&event)
 		if err != nil {
-			return err
+			ctx.Logger().Error("HandleAckFail", "MsgType", "MsgUndelegate", "EventError", err)
 		}
 
 		k.AfterUndelegateFail(ctx, *msgData)
@@ -162,8 +162,8 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 		}
 
 		msgData := packetData[1].(*stakingtypes.MsgDelegate)
+		ctx.Logger().Error("HandleAckFail", "MsgType", "MsgWithdrawDelegatorReward", "Data", msgData)
 
-		ctx.Logger().Debug("HandleAckFail", "MsgType", "MsgWithdrawDelegatorReward", "Data", msgData)
 		//delegate fail event
 		event := types.EventAutostakingFail{
 			MsgTypeUrl:       sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
@@ -173,7 +173,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 		}
 		err = ctx.EventManager().EmitTypedEvent(&event)
 		if err != nil {
-			return err
+			ctx.Logger().Error("HandleAckFail", "MsgType", "MsgWithdrawDelegatorReward", "EventError", err)
 		}
 
 		zoneInfo := k.GetRegisteredZoneForValidatorAddr(ctx, msgData.ValidatorAddress)
@@ -185,7 +185,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 			State:   types.IcaFail,
 		}
 
-		ctx.Logger().Debug("HandleAckFail", "ZoneId", zoneInfo.ZoneId, "AutostakingCurrentVersion", currentVersion, "IcaWithdrawVersionState", versionInfo.Record[currentVersion].State)
+		ctx.Logger().Error("HandleAckFail", "ZoneId", zoneInfo.ZoneId, "AutostakingCurrentVersion", currentVersion, "IcaWithdrawVersionState", versionInfo.Record[currentVersion].State)
 		k.SetAutoStakingVersion(ctx, zoneInfo.ZoneId, versionInfo)
 	case *transfertypes.MsgTransfer:
 		msgData := packetData[0].(*transfertypes.MsgTransfer)
@@ -203,13 +203,13 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 		}
 		err = ctx.EventManager().EmitTypedEvent(&event)
 		if err != nil {
-			return err
+			ctx.Logger().Error("HandleAckFail", "MsgType", "MsgTransfer", "EventError", err)
 		}
 
-		ctx.Logger().Debug("HandleAckFail", "MsgType", "MsgTransfer")
+		ctx.Logger().Error("HandleAckFail", "MsgType", "MsgTransfer")
 		k.AfterIcaWithdrawFail(ctx, *msgData)
 	default:
-		ctx.Logger().Debug("HandleAckFail", "MsgType", types.ErrMsgNotFound)
+		ctx.Logger().Error("HandleAckFail", "MsgType", types.ErrMsgNotFound)
 		return types.ErrMsgNotFound
 	}
 
