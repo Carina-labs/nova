@@ -29,6 +29,7 @@ message IcaAccount {
 message IcaConnectionInfo {
   string connection_id = 1;
   string port_id = 2;
+  string channel_id = 3;
 }
 
 //transfer connection info
