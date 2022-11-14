@@ -1,18 +1,19 @@
 package types
 
 import (
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	errors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 var (
-	ErrIBCAccountAlreadyExist = sdkerrors.Register(ModuleName, 2, "interchain account already registered")
-	ErrIBCAccountNotExist     = sdkerrors.Register(ModuleName, 3, "interchain account not exist")
-	ErrMsgNotFound            = sdkerrors.Register(ModuleName, 4, "message not found ")
-	ErrMsgNotNil              = sdkerrors.Register(ModuleName, 5, "message is not nil")
-	ErrNotFoundZoneInfo       = sdkerrors.Register(ModuleName, 6, "registered zone not found with given name")
-	ErrZoneIdNotNil           = sdkerrors.Register(ModuleName, 7, "zone Id is not nil")
-	ErrNotFoundHostAddr       = sdkerrors.Register(ModuleName, 8, "host address is not found")
-	ErrDenomDuplicates        = sdkerrors.Register(ModuleName, 9, "denom is already exists")
-	ErrInvalidPortId          = sdkerrors.Register(ModuleName, 10, "invalid port id")
-	ErrInvalidConnId          = sdkerrors.Register(ModuleName, 11, "invalid connection id")
+	ErrIBCAccountAlreadyExist = errors.Register(ModuleName, 2, "interchain account already registered")
+	ErrIBCAccountNotExist     = errors.Register(ModuleName, 3, "interchain account not exist")
+	ErrMsgNotFound            = errors.Register(ModuleName, 4, "message not found ")
+	ErrMsgNotNil              = errors.Register(ModuleName, 5, "message is not nil")
+	ErrNotFoundZoneInfo       = errors.Register(ModuleName, 6, "registered zone not found with given name")
+	ErrZoneIdNotNil           = errors.Register(ModuleName, 7, "zone Id is not nil")
+	ErrNotFoundHostAddr       = errors.Register(ModuleName, 8, "host address is not found")
+	ErrDenomDuplicates        = errors.Register(ModuleName, 9, "denom is already exists")
+	ErrInvalidPortId          = errors.Register(ModuleName, 10, "invalid port id")
+	ErrInvalidConnId          = errors.Register(ModuleName, 11, "invalid connection id")
+	ErrInvalidAck             = errors.Register(ModuleName, 12, "ack is not receive")
 )

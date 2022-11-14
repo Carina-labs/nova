@@ -196,7 +196,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 	appKeepers.ICAHostKeeper = &icaHostKeeper
 
-	icaControlKeeper := icacontrolkeeper.NewKeeper(appCodec, appKeepers.keys[icacontroltypes.StoreKey], appKeepers.AccountKeeper, *appKeepers.ICAControllerKeeper, appKeepers.ScopedIcaControlKeeper, appKeepers.GetSubspace(icacontroltypes.ModuleName))
+	icaControlKeeper := icacontrolkeeper.NewKeeper(appCodec, appKeepers.keys[icacontroltypes.StoreKey], appKeepers.AccountKeeper, *appKeepers.ICAControllerKeeper, appKeepers.ScopedIcaControlKeeper, appKeepers.GetSubspace(icacontroltypes.ModuleName), appKeepers.IBCKeeper.ChannelKeeper)
 
 	// Create Transfer Keepers
 	transferKeeper := ibctransferkeeper.NewKeeper(
@@ -233,6 +233,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		transferKeeper,
 		oracleKeeper,
 		appKeepers.AirdropKeeper,
+		appKeepers.IBCKeeper.ChannelKeeper,
 	)
 	appKeepers.GalKeeper = &galKeeper
 

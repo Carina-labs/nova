@@ -8,6 +8,7 @@ import (
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 )
 
 // RegisterZone stores metadata for the new zone.
@@ -97,7 +98,7 @@ func (k Keeper) GetRegisterZoneForPortId(ctx sdk.Context, portId string) (*types
 	var zone *types.RegisteredZone
 	ok := false
 	k.IterateRegisteredZones(ctx, func(_ int64, zoneInfo types.RegisteredZone) (stop bool) {
-		if "icacontroller-"+zoneInfo.IcaConnectionInfo.PortId == portId {
+		if icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId == portId {
 			zone = &zoneInfo
 			ok = true
 			return true
