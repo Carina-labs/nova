@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
@@ -577,7 +576,6 @@ func (suite *KeeperTestSuite) TestQueryTotalSnAssetSupply() {
 		ZoneId: zoneId,
 	})
 	suite.Require().NoError(err)
-	fmt.Println(res)
 	suite.Require().Equal(res.Amount, sdk.NewCoin(baseSnDenom, sdk.NewInt(10000)))
 
 }
