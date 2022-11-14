@@ -315,6 +315,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		}
 
 		m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
+
+		if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
+			sdk.Coins{sdk.Coin{Denom: burnAssets.Denom, Amount: burnAssets.Amount}}); err != nil {
+			return nil, err
+		}
 	}
 
 	if version.State == types.IcaFail {
@@ -340,11 +345,6 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		}
 		m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 		return nil, sdkerrors.Wrapf(err, "IcaUnDelegate transaction failed to send")
-	}
-
-	if err := m.keeper.bankKeeper.BurnCoins(ctx, types.ModuleName,
-		sdk.Coins{sdk.Coin{Denom: burnAssets.Denom, Amount: burnAssets.Amount}}); err != nil {
-		return nil, err
 	}
 
 	if err := ctx.EventManager().EmitTypedEvent(
