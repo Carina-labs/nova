@@ -2,6 +2,7 @@ package keeper_test
 
 import (
 	"github.com/Carina-labs/nova/x/icacontrol/types"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 )
 
 func (suite *KeeperTestSuite) TestRegisterZone() {
@@ -175,13 +176,13 @@ func (suite *KeeperTestSuite) TestGetRegisteredZoneForPortId() {
 		{
 			name:   "should get gaia for port id",
 			zone:   &zoneInfo[0],
-			portId: "icacontroller-" + zoneInfo[0].IcaConnectionInfo.PortId,
+			portId: icatypes.PortPrefix + zoneInfo[0].IcaConnectionInfo.PortId,
 			result: &zoneInfo[0],
 		},
 		{
 			name:   "should not get osmo for port id",
 			zone:   &zoneInfo[1],
-			portId: "icacontroller-" + "testPortId",
+			portId: icatypes.PortPrefix + "testPortId",
 			result: nil,
 		},
 	}

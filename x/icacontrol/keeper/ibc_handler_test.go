@@ -10,7 +10,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	ibcaccounttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
@@ -76,7 +76,7 @@ func (suite *KeeperTestSuite) SetVersion(msgType string, zoneInfo types.Register
 	return
 
 }
-func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.RegisteredZone) ibcaccounttypes.InterchainAccountPacketData {
+func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.RegisteredZone) icatypes.InterchainAccountPacketData {
 	var msgs []sdk.Msg
 	switch msgType {
 	case "delegate":
@@ -138,17 +138,17 @@ func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.Registere
 		msgs = append(msgs, bankMsg)
 		break
 	default:
-		return ibcaccounttypes.InterchainAccountPacketData{
-			Type: ibcaccounttypes.EXECUTE_TX,
+		return icatypes.InterchainAccountPacketData{
+			Type: icatypes.EXECUTE_TX,
 			Data: nil,
 		}
 	}
 
-	data, err := ibcaccounttypes.SerializeCosmosTx(suite.App.AppCodec(), msgs)
+	data, err := icatypes.SerializeCosmosTx(suite.App.AppCodec(), msgs)
 	suite.NoError(err)
 
-	icapacket := ibcaccounttypes.InterchainAccountPacketData{
-		Type: ibcaccounttypes.EXECUTE_TX,
+	icapacket := icatypes.InterchainAccountPacketData{
+		Type: icatypes.EXECUTE_TX,
 		Data: data,
 	}
 
@@ -258,17 +258,17 @@ func (suite *KeeperTestSuite) GetPacket(msg string, zone types.RegisteredZone) c
 		break
 	}
 
-	data, err := ibcaccounttypes.SerializeCosmosTx(suite.App.AppCodec(), msgs)
+	data, err := icatypes.SerializeCosmosTx(suite.App.AppCodec(), msgs)
 	suite.NoError(err)
 
-	icapacket := ibcaccounttypes.InterchainAccountPacketData{
-		Type: ibcaccounttypes.EXECUTE_TX,
+	icapacket := icatypes.InterchainAccountPacketData{
+		Type: icatypes.EXECUTE_TX,
 		Data: data,
 	}
 
 	packetData := channeltypes.Packet{
 		Sequence:           1,
-		SourcePort:         "icacontroller-" + zone.IcaAccount.ControllerAddress,
+		SourcePort:         icatypes.PortPrefix + zone.IcaAccount.ControllerAddress,
 		SourceChannel:      "channel-0",
 		DestinationPort:    "icahost",
 		DestinationChannel: "channel-0",
@@ -352,7 +352,7 @@ func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 
 	packetData := channeltypes.Packet{
 		Sequence:           1,
-		SourcePort:         "icacontroller-" + zone[0].IcaAccount.ControllerAddress,
+		SourcePort:         icatypes.PortPrefix + zone[0].IcaAccount.ControllerAddress,
 		SourceChannel:      "channel-0",
 		DestinationPort:    "icahost",
 		DestinationChannel: "channel-0",
@@ -365,7 +365,7 @@ func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 
 	tcs := []struct {
 		name   string
-		args   ibcaccounttypes.InterchainAccountPacketData
+		args   icatypes.InterchainAccountPacketData
 		expect error
 		err    bool
 	}{
