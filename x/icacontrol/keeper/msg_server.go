@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/cosmos/cosmos-sdk/x/authz"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	"strconv"
 	"time"
 
@@ -194,6 +195,14 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 		return nil, types.ErrNotFoundZoneInfo
 	}
 
+	// check unreceived ack
+	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("IcaDelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	}
+	ctx.Logger().Info("IcaDelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+
 	var msgs []sdk.Msg
 
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
@@ -223,6 +232,14 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
+
+	// check unreceived ack
+	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("IcaUndelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	}
+	ctx.Logger().Info("IcaUndelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
 
 	var msgs []sdk.Msg
 
@@ -257,6 +274,14 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
+
+	// check unreceived ack
+	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("IcaAutoStaking", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	}
+	ctx.Logger().Info("IcaAutoStaking", "packetSequence", packetSeq, "ackSequence", ackSeq)
 
 	var msgs []sdk.Msg
 
@@ -297,6 +322,14 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
+
+	// check unreceived ack
+	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("IcaTransfer", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	}
+	ctx.Logger().Info("IcaTransfer", "packetSequence", packetSeq, "ackSequence", ackSeq)
 
 	var msgs []sdk.Msg
 
@@ -340,6 +373,14 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 		return nil, types.ErrNotFoundZoneInfo
 	}
 
+	// check unreceived ack
+	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("IcaAuthzGrant", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	}
+	ctx.Logger().Info("IcaAuthzGrant", "packetSequence", packetSeq, "ackSequence", ackSeq)
+
 	var msgs []sdk.Msg
 	msgs = append(msgs, &authz.MsgGrant{
 		Granter: zoneInfo.IcaAccount.HostAddress,
@@ -370,6 +411,14 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 	if !ok {
 		return nil, types.ErrNotFoundZoneInfo
 	}
+
+	// check unreceived ack
+	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("IcaAuthzRevoke", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	}
+	ctx.Logger().Info("IcaAuthzRevoke", "packetSequence", packetSeq, "ackSequence", ackSeq)
 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &authz.MsgRevoke{

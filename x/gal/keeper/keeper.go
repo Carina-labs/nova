@@ -8,6 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	transfer "github.com/cosmos/ibc-go/v3/modules/apps/transfer/keeper"
+	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/keeper"
 	"github.com/tendermint/tendermint/libs/log"
 )
 
@@ -23,6 +24,7 @@ type Keeper struct {
 	ibcTransferKeeper transfer.Keeper
 	oracleKeeper      oraclekeeper.Keeper
 	airdropKeeper     types.AirdropKeeper
+	channelKeeper     ibcchanneltypes.Keeper
 }
 
 func NewKeeper(cdc codec.BinaryCodec,
@@ -33,7 +35,8 @@ func NewKeeper(cdc codec.BinaryCodec,
 	icaControlKeeper icacontrolkeeper.Keeper,
 	ibcTransferKeeper transfer.Keeper,
 	oracleKeeper oraclekeeper.Keeper,
-	airdropKeeper types.AirdropKeeper) Keeper {
+	airdropKeeper types.AirdropKeeper,
+	channelKeeper ibcchanneltypes.Keeper) Keeper {
 
 	if !paramSpace.HasKeyTable() {
 		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())
@@ -49,6 +52,7 @@ func NewKeeper(cdc codec.BinaryCodec,
 		ibcTransferKeeper: ibcTransferKeeper,
 		oracleKeeper:      oracleKeeper,
 		airdropKeeper:     airdropKeeper,
+		channelKeeper:     channelKeeper,
 	}
 }
 

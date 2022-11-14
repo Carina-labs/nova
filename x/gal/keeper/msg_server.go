@@ -11,6 +11,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	stakingtype "github.com/cosmos/cosmos-sdk/x/staking/types"
+	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 )
@@ -112,6 +113,15 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, delegate.ZoneId, delegate.ControllerAddress) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
 	}
+
+	// check unreceived ack
+	ackSeq, _ := m.keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("Delegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+		return nil, types.ErrInvalidAck
+	}
+	ctx.Logger().Info("Delegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
 
 	// version state check
 	if !m.keeper.IsValidDelegateVersion(ctx, delegate.ZoneId, delegate.Version) {
@@ -282,6 +292,15 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
 	}
 
+	// unreceived ack 확인
+	ackSeq, _ := m.keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("Undelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+		return nil, types.ErrInvalidAck
+	}
+	ctx.Logger().Info("Undelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+
 	var burnAssets sdk.Coin
 	var undelegateAssets sdk.Int
 
@@ -411,6 +430,15 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
 	}
 
+	// unreceived ack 확인
+	ackSeq, _ := m.keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
+	if ackSeq != packetSeq {
+		ctx.Logger().Error("IcaWithdraw", "packetSequence", packetSeq, "ackSequence", ackSeq)
+		return nil, types.ErrInvalidAck
+	}
+	ctx.Logger().Info("IcaWithdraw", "packetSequence", packetSeq, "ackSequence", ackSeq)
+
 	versionInfo := m.keeper.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
 	version := versionInfo.Record[msg.Version]
 
@@ -501,6 +529,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	totalClaimAsset := sdk.NewCoin(ibcDenom, sdk.NewInt(0))
+	ctx.Logger().Info("ClaimSnAsset", "totalClaimAsset", totalClaimAsset)
 
 	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	for _, record := range records.Records {
@@ -513,27 +542,27 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	}
 
 	claimSnAsset, err := m.keeper.ClaimShareToken(ctx, &zoneInfo, totalClaimAsset)
+	ctx.Logger().Info("ClaimSnAsset", "claimSnAsset", claimSnAsset)
 	if err != nil {
+		ctx.Logger().Error("ClaimSnAsset", "ClaimShareToken", err)
 		return nil, sdkerrors.Wrapf(err,
 			"account: %s", claimMsg.Claimer)
 	}
 
 	err = m.keeper.MintTo(ctx, claimerAddr, *claimSnAsset)
 	if err != nil {
+		ctx.Logger().Error("ClaimSnAsset", "MintTo", err)
 		return nil, sdkerrors.Wrapf(err,
 			"account: %s", claimMsg.Claimer)
 	}
 
 	delegateRecord, found := m.keeper.GetUserDelegateRecord(ctx, zoneInfo.ZoneId, claimerAddr)
 	if !found {
+		ctx.Logger().Error("ClaimSnAsset", "delegateRecord", found)
 		return nil, types.ErrNoDelegateRecord
 	}
 
 	m.keeper.DeleteDelegateRecord(ctx, delegateRecord)
-	if err != nil {
-		return nil, sdkerrors.Wrapf(err,
-			"account: %s", claimMsg.Claimer)
-	}
 
 	// mark user performed claim action
 	m.keeper.airdropKeeper.PostClaimedSnAsset(ctx, claimerAddr)

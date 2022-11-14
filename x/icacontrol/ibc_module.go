@@ -83,6 +83,7 @@ func (im IBCModule) OnChanOpenAck(
 	}
 
 	zoneInfo.IcaAccount.HostAddress = hostAddr
+	zoneInfo.IcaConnectionInfo.ChannelId = channelID
 	im.keeper.RegisterZone(ctx, zoneInfo)
 	return nil
 }
