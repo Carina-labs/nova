@@ -115,13 +115,13 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	}
 
 	// check unreceived ack
-	ackSeq, _ := m.keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("Delegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("Delegate", "packetSequence", packetSeq, "commitment", commitment)
 		return nil, types.ErrInvalidAck
 	}
-	ctx.Logger().Info("Delegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("Delegate", "packetSequence", packetSeq, "commitment", commitment)
 
 	// version state check
 	if !m.keeper.IsValidDelegateVersion(ctx, delegate.ZoneId, delegate.Version) {
@@ -293,13 +293,13 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	}
 
 	// unreceived ack 확인
-	ackSeq, _ := m.keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("Undelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("Undelegate", "packetSequence", packetSeq, "commitment", len(commitment))
 		return nil, types.ErrInvalidAck
 	}
-	ctx.Logger().Info("Undelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("Undelegate", "packetSequence", packetSeq, "commitment", len(commitment))
 
 	var burnAssets sdk.Coin
 	var undelegateAssets sdk.Int
@@ -431,13 +431,13 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	}
 
 	// unreceived ack 확인
-	ackSeq, _ := m.keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("IcaWithdraw", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("Delegate", "packetSequence", packetSeq, "commitment", commitment)
 		return nil, types.ErrInvalidAck
 	}
-	ctx.Logger().Info("IcaWithdraw", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("Delegate", "packetSequence", packetSeq, "commitment", commitment)
 
 	versionInfo := m.keeper.GetWithdrawVersion(ctx, zoneInfo.ZoneId)
 	version := versionInfo.Record[msg.Version]

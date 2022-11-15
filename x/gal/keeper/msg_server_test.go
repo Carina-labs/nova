@@ -531,8 +531,8 @@ func (suite *KeeperTestSuite) TestDelegate() {
 				//set channel sequence
 				zoneInfo, _ := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
 				suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceSend(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
-				if !tc.err {
-					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceAck(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
+				if tc.err {
+					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetPacketCommitment(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq-1, []byte{2})
 				}
 			}
 			suite.setValidator()
@@ -1247,8 +1247,8 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 				//set channel sequence
 				zoneInfo, _ := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
 				suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceSend(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
-				if !tc.err {
-					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceAck(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
+				if tc.err {
+					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetPacketCommitment(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq-1, []byte{2})
 				}
 			}
 
@@ -1554,8 +1554,8 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 				//set channel sequence
 				zoneInfo, _ := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
 				suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceSend(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
-				if !tc.err {
-					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceAck(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
+				if tc.err {
+					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetPacketCommitment(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq-1, []byte{2})
 				}
 			}
 

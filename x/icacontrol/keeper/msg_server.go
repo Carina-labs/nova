@@ -196,12 +196,12 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	}
 
 	// check unreceived ack
-	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("IcaDelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("IcaDelegate", "packetSequence", packetSeq, "commitment", commitment)
 	}
-	ctx.Logger().Info("IcaDelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("IcaDelegate", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 
@@ -233,13 +233,12 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 		return nil, types.ErrNotFoundZoneInfo
 	}
 
-	// check unreceived ack
-	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("IcaUndelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("IcaUndelegate", "packetSequence", packetSeq, "commitment", commitment)
 	}
-	ctx.Logger().Info("IcaUndelegate", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("IcaUndelegate", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 
@@ -276,12 +275,12 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	}
 
 	// check unreceived ack
-	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("IcaAutoStaking", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("IcaAutoStaking", "packetSequence", packetSeq, "commitment", commitment)
 	}
-	ctx.Logger().Info("IcaAutoStaking", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("IcaAutoStaking", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 
@@ -324,12 +323,12 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 	}
 
 	// check unreceived ack
-	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("IcaTransfer", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("IcaTransfer", "packetSequence", packetSeq, "commitment", commitment)
 	}
-	ctx.Logger().Info("IcaTransfer", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("IcaTransfer", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 
@@ -374,12 +373,12 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 	}
 
 	// check unreceived ack
-	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("IcaAuthzGrant", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("IcaAuthzGrant", "packetSequence", packetSeq, "commitment", commitment)
 	}
-	ctx.Logger().Info("IcaAuthzGrant", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("IcaAuthzGrant", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &authz.MsgGrant{
@@ -413,12 +412,12 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 	}
 
 	// check unreceived ack
-	ackSeq, _ := k.Keeper.channelKeeper.GetNextSequenceAck(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
 	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	if ackSeq != packetSeq {
-		ctx.Logger().Error("IcaAuthzRevoke", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	if len(commitment) != 0 {
+		ctx.Logger().Error("IcaAuthzRevoke", "packetSequence", packetSeq, "commitment", commitment)
 	}
-	ctx.Logger().Info("IcaAuthzRevoke", "packetSequence", packetSeq, "ackSequence", ackSeq)
+	ctx.Logger().Info("IcaAuthzRevoke", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &authz.MsgRevoke{
