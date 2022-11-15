@@ -14,30 +14,26 @@ import (
 
 func txDepositCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "deposit [zone-id] [depositor] [claimer] [amount]",
+		Use:   "deposit [zone-id] [claimer] [amount]",
 		Short: "Deposit wrapped token to nova",
 		Long: `Deposit wrapped token to nova.
 Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(4),
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			claimer, err := sdk.AccAddressFromBech32(args[2])
+			zoneId := args[0]
+
+			claimer, err := sdk.AccAddressFromBech32(args[1])
 			if err != nil {
 				return err
 			}
 
-			coin, err := sdk.ParseCoinNormalized(args[3])
+			coin, err := sdk.ParseCoinNormalized(args[2])
 			if err != nil {
 				return err
 			}
@@ -57,36 +53,27 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 func txUndelegateRequestCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "pending-undelegate [zone-id] [delegator] [withdrawer] [amount]",
-		Args: cobra.ExactArgs(4),
+		Use:  "pending-undelegate [zone-id] [withdrawer] [amount]",
+		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			err := cmd.Flags().Set(flags.FlagFrom, args[1])
-			if err != nil {
-				return err
-			}
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
 			zoneId := args[0]
-			delegator, err := sdk.AccAddressFromBech32(args[1])
+
+			withdrawer, err := sdk.AccAddressFromBech32(args[1])
 			if err != nil {
 				return err
 			}
 
-			withdrawer, err := sdk.AccAddressFromBech32(args[2])
+			amount, err := sdk.ParseCoinNormalized(args[2])
 			if err != nil {
 				return err
 			}
 
-			amount, err := sdk.ParseCoinNormalized(args[3])
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgPendingUndelegate(zoneId, delegator, withdrawer, amount)
+			msg := types.NewMsgPendingUndelegate(zoneId, clientCtx.GetFromAddress(), withdrawer, amount)
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -130,17 +117,13 @@ func txUndelegateCmd() *cobra.Command {
 
 func txWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [zone-id] [withdrawer]",
+		Use:   "withdraw [zone-id]",
 		Short: "Withdraw wrapped token to nova",
 		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(2),
+		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -162,14 +145,10 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 func txClaimSnAssetCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "claim [zone-id] [claimer-address]",
+		Use:   "claim [zone-id]",
 		Short: "claim wrapped coin to nova",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[1]); err != nil {
-				return err
-			}
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
