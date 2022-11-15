@@ -127,7 +127,7 @@ func (k Keeper) GetTotalDelegateAmtForUser(ctx sdk.Context, zoneId, denom string
 	oracleVersion, _ := k.oracleKeeper.GetOracleVersion(ctx, zoneId)
 
 	for _, item := range record.Records {
-		if item.State == types.DelegateRequest && item.OracleVersion < oracleVersion {
+		if item.State == types.DelegateRequest || (item.State == types.DelegateSuccess && item.OracleVersion < oracleVersion){
 			totalDelegateAmt = totalDelegateAmt.Add(*item.Amount)
 		}
 	}
