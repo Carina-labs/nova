@@ -116,7 +116,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 
 	// check unreceived ack
 	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("Delegate", "packetSequence", packetSeq, "commitment", commitment)
 		return nil, types.ErrInvalidAck
@@ -294,7 +294,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	// unreceived ack 확인
 	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("Undelegate", "packetSequence", packetSeq, "commitment", len(commitment))
 		return nil, types.ErrInvalidAck
@@ -432,7 +432,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 
 	// unreceived ack 확인
 	packetSeq, _ := m.keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId,  zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
+	commitment := m.keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("Delegate", "packetSequence", packetSeq, "commitment", commitment)
 		return nil, types.ErrInvalidAck

@@ -51,7 +51,6 @@ func (q QueryServer) EstimateSnAsset(goCtx context.Context, request *types.Query
 func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.QueryClaimableAmountRequest) (*types.QueryClaimableAmountResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	zone, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
-
 	if !ok {
 		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
 	}
@@ -73,20 +72,22 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Query
 
 func (q QueryServer) DepositAmount(goCtx context.Context, request *types.QueryDepositAmountRequest) (*types.QueryDepositAmountResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	zoneInfo, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
 	}
 
 	ibcDenom := q.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+
 	depositAmount := q.keeper.GetTotalDepositAmtForUserAddr(ctx, request.ZoneId, request.Address, ibcDenom)
 
 	claimer, err := sdk.AccAddressFromBech32(request.Address)
 	if err != nil {
 		return nil, err
 	}
-	delegateAmount := q.keeper.GetTotalDelegateAmtForUser(ctx, request.ZoneId, ibcDenom, claimer)
 
+	delegateAmount := q.keeper.GetTotalDelegateAmtForUser(ctx, request.ZoneId, ibcDenom, claimer)
 	result := depositAmount.Add(delegateAmount)
 
 	return &types.QueryDepositAmountResponse{
@@ -97,6 +98,7 @@ func (q QueryServer) DepositAmount(goCtx context.Context, request *types.QueryDe
 func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.QueryPendingWithdrawalsRequest) (*types.QueryPendingWithdrawalsResponse, error) {
 	// return sum of all withdraw-able assets with WithdrawStatus_Registered status
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	zoneInfo, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
@@ -134,6 +136,7 @@ func (q QueryServer) PendingWithdrawals(goCtx context.Context, request *types.Qu
 
 func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.QueryActiveWithdrawalsRequest) (*types.QueryActiveWithdrawalsResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	zoneInfo, ok := q.keeper.icaControlKeeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
 		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", request.ZoneId)
@@ -152,6 +155,7 @@ func (q QueryServer) ActiveWithdrawals(goCtx context.Context, request *types.Que
 
 func (q QueryServer) DepositRecords(goCtx context.Context, request *types.QueryDepositRecordRequest) (*types.QueryDepositRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	user, err := sdk.AccAddressFromBech32(request.Address)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
@@ -169,6 +173,7 @@ func (q QueryServer) DepositRecords(goCtx context.Context, request *types.QueryD
 
 func (q QueryServer) DelegateRecords(goCtx context.Context, request *types.QueryDelegateRecordRequest) (*types.QueryDelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	user, err := sdk.AccAddressFromBech32(request.Address)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
@@ -186,6 +191,7 @@ func (q QueryServer) DelegateRecords(goCtx context.Context, request *types.Query
 
 func (q QueryServer) UndelegateRecords(goCtx context.Context, request *types.QueryUndelegateRecordRequest) (*types.QueryUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	result, found := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
 	if !found {
 		return nil, types.ErrNoUndelegateRecord
@@ -198,6 +204,7 @@ func (q QueryServer) UndelegateRecords(goCtx context.Context, request *types.Que
 
 func (q QueryServer) WithdrawRecords(goCtx context.Context, request *types.QueryWithdrawRecordRequest) (*types.QueryWithdrawRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	result, found := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
 	if !found {
 		return nil, types.ErrNoWithdrawRecord
@@ -240,7 +247,6 @@ func (q QueryServer) UndelegateVersion(goCtx context.Context, request *types.Que
 
 	versionInfo := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
 	version := versionInfo.Record[request.Version]
-
 	if versionInfo.Record[request.Version] == nil {
 		version = &types.IBCTrace{
 			Version: 0,
@@ -262,7 +268,6 @@ func (q QueryServer) WithdrawVersion(goCtx context.Context, request *types.Query
 
 	versionInfo := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
 	version := versionInfo.Record[request.Version]
-
 	if versionInfo.Record[request.Version] == nil {
 		version = &types.IBCTrace{
 			Version: 0,
@@ -284,7 +289,6 @@ func (q QueryServer) DelegateCurrentVersion(goCtx context.Context, request *type
 
 	versionInfo := q.keeper.GetDelegateVersion(ctx, request.ZoneId)
 	version := versionInfo.CurrentVersion
-
 	if versionInfo.ZoneId == "" {
 		version = 0
 	}
@@ -304,7 +308,6 @@ func (q QueryServer) UndelegateCurrentVersion(goCtx context.Context, request *ty
 
 	versionInfo := q.keeper.GetUndelegateVersion(ctx, request.ZoneId)
 	version := versionInfo.CurrentVersion
-
 	if versionInfo.ZoneId == "" {
 		version = 0
 	}
@@ -324,7 +327,6 @@ func (q QueryServer) WithdrawCurrentVersion(goCtx context.Context, request *type
 
 	versionInfo := q.keeper.GetWithdrawVersion(ctx, request.ZoneId)
 	version := versionInfo.CurrentVersion
-
 	if versionInfo.ZoneId == "" {
 		version = 0
 	}
