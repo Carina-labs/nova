@@ -124,7 +124,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 
 	// version state check
 	if !m.keeper.IsValidDelegateVersion(ctx, delegate.ZoneId, delegate.Version) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(delegate.Version, 10))
+		return nil, sdkerrors.Wrap(types.ErrInvalidIcaVersion, strconv.FormatUint(delegate.Version, 10))
 	}
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
@@ -288,7 +288,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	}
 
 	if !m.keeper.IsValidUndelegateVersion(ctx, msg.ZoneId, msg.Version) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
+		return nil, sdkerrors.Wrap(types.ErrInvalidIcaVersion, strconv.FormatUint(msg.Version, 10))
 	}
 
 	// unreceived ack 확인
@@ -426,7 +426,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	}
 
 	if !m.keeper.IsValidWithdrawVersion(ctx, msg.ZoneId, msg.Version) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
+		return nil, sdkerrors.Wrap(types.ErrInvalidIcaVersion, strconv.FormatUint(msg.Version, 10))
 	}
 
 	// unreceived ack 확인

@@ -200,6 +200,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("IcaDelegate", "packetSequence", packetSeq, "commitment", commitment)
+		return nil, types.ErrInvalidAck
 	}
 	ctx.Logger().Info("IcaDelegate", "packetSequence", packetSeq, "commitment", commitment)
 
@@ -237,6 +238,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("IcaUndelegate", "packetSequence", packetSeq, "commitment", commitment)
+		return nil, types.ErrInvalidAck
 	}
 	ctx.Logger().Info("IcaUndelegate", "packetSequence", packetSeq, "commitment", commitment)
 
@@ -266,7 +268,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	}
 
 	if !k.IsValidAutoStakingVersion(ctx, msg.ZoneId, msg.Version) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidVersion, strconv.FormatUint(msg.Version, 10))
+		return nil, sdkerrors.Wrap(types.ErrInvalidIcaVersion, strconv.FormatUint(msg.Version, 10))
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -279,6 +281,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("IcaAutoStaking", "packetSequence", packetSeq, "commitment", commitment)
+		return nil, types.ErrInvalidAck
 	}
 	ctx.Logger().Info("IcaAutoStaking", "packetSequence", packetSeq, "commitment", commitment)
 
@@ -327,6 +330,7 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("IcaTransfer", "packetSequence", packetSeq, "commitment", commitment)
+		return nil, types.ErrInvalidAck
 	}
 	ctx.Logger().Info("IcaTransfer", "packetSequence", packetSeq, "commitment", commitment)
 
@@ -377,6 +381,7 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("IcaAuthzGrant", "packetSequence", packetSeq, "commitment", commitment)
+		return nil, types.ErrInvalidAck
 	}
 	ctx.Logger().Info("IcaAuthzGrant", "packetSequence", packetSeq, "commitment", commitment)
 
@@ -416,6 +421,7 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
 	if len(commitment) != 0 {
 		ctx.Logger().Error("IcaAuthzRevoke", "packetSequence", packetSeq, "commitment", commitment)
+		return nil, types.ErrInvalidAck
 	}
 	ctx.Logger().Info("IcaAuthzRevoke", "packetSequence", packetSeq, "commitment", commitment)
 
