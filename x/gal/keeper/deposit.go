@@ -76,8 +76,7 @@ func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, zoneId, userAddr,
 
 // ChangeDepositState updates the deposit records corresponding to the preState to postState.
 // This operation runs in the hook after the remote deposit is run.
-func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId, depositor string) bool {
-	isChanged := false
+func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId, depositor string) {
 	k.IterateDepositRecord(ctx, zoneId, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		stateCheck := false
 		if depositRecord.Depositor != depositor {
@@ -87,23 +86,19 @@ func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId, depositor string) bo
 			if record.State == types.DepositRequest {
 				record.State = types.DepositSuccess
 				stateCheck = true
-				break
 			}
 		}
 		if stateCheck {
 			k.SetDepositRecord(ctx, &depositRecord)
-			isChanged = true
 			return true
 		}
 		return false
 	})
-
-	return isChanged
 }
 
 func (k Keeper) DeleteDepositRecords(ctx sdk.Context, zoneId string, state types.DepositStatusType) {
-	var recordItems []*types.DepositRecordContent
 	k.IterateDepositRecord(ctx, zoneId, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
+		var recordItems []*types.DepositRecordContent
 		for _, record := range depositRecord.Records {
 			if record.State != state {
 				recordItems = append(recordItems, record)
