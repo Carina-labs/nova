@@ -87,6 +87,7 @@ func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId, depositor string) bo
 			if record.State == types.DepositRequest {
 				record.State = types.DepositSuccess
 				stateCheck = true
+				break
 			}
 		}
 		if stateCheck {
