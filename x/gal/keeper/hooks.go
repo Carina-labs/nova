@@ -34,7 +34,16 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		return
 	}
 
-	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId)
+	// construct the denomination trace from the full raw denomination
+	denomTrace := transfertypes.ParseDenomTrace(data.Denom)
+	voucherDenom := denomTrace.IBCDenom()
+
+	ibcDenom := h.k.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
+	if voucherDenom != ibcDenom {
+		return
+	}
+
+	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, data.Sender)
 	ctx.Logger().Info("AfterTransferEnd", "zone id", zoneInfo.ZoneId, "sender", data.Sender, "receiver", data.Receiver, "amount", data.Amount)
 }
 

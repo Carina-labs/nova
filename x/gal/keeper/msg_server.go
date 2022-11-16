@@ -61,11 +61,10 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 	}
 
 	record, found := m.keeper.GetUserDepositRecord(ctx, zoneInfo.ZoneId, depositorAcc)
-
 	if !found {
 		m.keeper.SetDepositRecord(ctx, &types.DepositRecord{
 			ZoneId:    deposit.ZoneId,
-			Depositor: deposit.Claimer,
+			Depositor: deposit.Depositor,
 			Records:   []*types.DepositRecordContent{newRecord},
 		})
 	} else {

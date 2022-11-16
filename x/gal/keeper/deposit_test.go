@@ -341,7 +341,7 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 				suite.App.GalKeeper.SetDepositRecord(suite.Ctx, record)
 			}
 
-			suite.App.GalKeeper.ChangeDepositState(suite.Ctx, tc.zoneId)
+			suite.App.GalKeeper.ChangeDepositState(suite.Ctx, tc.zoneId, depositor.String())
 
 			result, ok := suite.App.GalKeeper.GetUserDepositRecord(suite.Ctx, zoneId, depositor)
 			suite.Require().True(ok)
