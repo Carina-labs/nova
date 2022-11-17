@@ -247,12 +247,13 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 		undelegateRecord.Records = append(undelegateRecord.Records, &newRecord)
 	}
 
-	m.keeper.SetUndelegateRecord(ctx, undelegateRecord)
-
 	err = m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, delegatorAcc, types.ModuleName, sdk.Coins{undelegate.Amount})
 	if err != nil {
+		ctx.Logger().Error("PendingUndelegate", "msg", "send coins from account to module error", "err", err)
 		return nil, err
 	}
+
+	m.keeper.SetUndelegateRecord(ctx, undelegateRecord)
 
 	if err := ctx.EventManager().EmitTypedEvent(
 		types.NewEventPendingUndelegate(undelegate.ZoneId,
