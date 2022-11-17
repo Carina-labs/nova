@@ -253,8 +253,6 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 		return nil, err
 	}
 
-	m.keeper.SetUndelegateRecord(ctx, undelegateRecord)
-
 	if err := ctx.EventManager().EmitTypedEvent(
 		types.NewEventPendingUndelegate(undelegate.ZoneId,
 			undelegate.Delegator,
@@ -263,6 +261,8 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 			&undelegate.Amount)); err != nil {
 		return nil, err
 	}
+
+	m.keeper.SetUndelegateRecord(ctx, undelegateRecord)
 
 	return &types.MsgPendingUndelegateResponse{
 		ZoneId:     undelegate.ZoneId,
@@ -337,7 +337,6 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		ValidatorAddress: zoneInfo.ValidatorAddress,
 		Amount:           undelegateAmt})
 	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs)
-
 	if err != nil {
 		versionInfo.Record[msg.Version] = &types.IBCTrace{
 			Version: versionInfo.CurrentVersion,
@@ -556,13 +555,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
-	delegateRecord, found := m.keeper.GetUserDelegateRecord(ctx, zoneInfo.ZoneId, claimerAddr)
-	if !found {
-		ctx.Logger().Error("ClaimSnAsset", "delegateRecord", found)
-		return nil, types.ErrNoDelegateRecord
-	}
-
-	m.keeper.DeleteDelegateRecord(ctx, delegateRecord)
+	m.keeper.DeleteDelegateRecord(ctx, records)
 
 	// mark user performed claim action
 	m.keeper.airdropKeeper.PostClaimedSnAsset(ctx, claimerAddr)
