@@ -194,8 +194,8 @@ func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state
 
 // DeleteUndelegateRecords deletes records corresponding to zoneId and state for undelegate records.
 func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
-	var recordItems []*types.UndelegateRecordContent
 	k.IterateUndelegatedRecords(ctx, zoneId, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
+		var recordItems []*types.UndelegateRecordContent
 		for _, record := range undelegateRecord.Records {
 			if record.State != state {
 				recordItems = append(recordItems, record)
