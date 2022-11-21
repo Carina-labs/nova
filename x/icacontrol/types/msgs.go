@@ -236,6 +236,14 @@ func (msg MsgIcaTransfer) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid receiver address")
 	}
 
+	if msg.IcaTransferChannelId == "" {
+		return sdkerrors.Wrapf(ErrChanIdNotNil, msg.IcaTransferChannelId)
+	}
+
+	if msg.IcaTransferPortId == "" {
+		return sdkerrors.Wrapf(ErrPortIdNotNil, msg.IcaTransferPortId)
+	}
+
 	if !msg.Amount.IsValid() {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidCoins, msg.Amount.String())
 	}
@@ -270,6 +278,10 @@ func (msg MsgDeleteRegisteredZone) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+	}
+
+	if strings.TrimSpace(msg.ZoneId) == "" {
+		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	return nil

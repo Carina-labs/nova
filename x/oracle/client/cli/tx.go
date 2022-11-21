@@ -51,6 +51,11 @@ func NewUpdateStateCmd() *cobra.Command {
 			zoneId := args[3]
 
 			msg := types.NewMsgUpdateChainState(clientCtx.GetFromAddress(), zoneId, amount, blockHeight, appHash)
+			err = msg.ValidateBasic()
+			if err != nil {
+				return err
+			}
+
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -77,6 +82,11 @@ func NewRegisterOracleAddressCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgRegisterOracleAddr(zoneId, oracleAddr, clientCtx.GetFromAddress())
+			err = msg.ValidateBasic()
+			if err != nil {
+				return err
+			}
+
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
