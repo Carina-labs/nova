@@ -13,7 +13,7 @@ service Query {
     option (google.api.http).get = "/nova/poolincentive/v1/params";
   }
 
-  rpc SingleCandidatePool(QuerySingleCandidatePool) returns (QuerySingleCandidatePool);
+  rpc SingleCandidatePool(QuerySingleCandidatePool) returns (QuerySingleCandidatePoolResponse);
   rpc AllCandidatePool(QueryAllCandidatePool) returns (QueryAllCandidatePoolResponse);
   rpc SingleIncentivePool(QuerySingleIncentivePool) returns (QueryAllCandidatePoolResponse);
   rpc AllIncentivePool(QueryAllIncentivePool) returns (QueryAllIncentivePoolResponse);
