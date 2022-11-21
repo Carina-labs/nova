@@ -58,7 +58,7 @@ message MsgRegisterZoneResponse {
   int64 deposit_max_entries = 10;
 }
 
-// MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
+// MsgChangeRegisteredZone modifies the information in the registeredZone.
 message MsgChangeRegisteredZone{
   option (gogoproto.equal) = false;
 
@@ -73,7 +73,7 @@ message MsgChangeRegisteredZone{
   int64 deposit_max_entries = 9;
 }
 
-// MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
+// MsgChangeRegisteredZoneResponse is a response message for MsgChangeRegisteredZone.
 message MsgChangeRegisteredZoneResponse{
   string zone_id = 1;
   IcaConnectionInfo ica_info = 2;
