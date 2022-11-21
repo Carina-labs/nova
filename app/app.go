@@ -14,7 +14,7 @@ import (
 
 	"github.com/Carina-labs/nova/app/keepers"
 	_ "github.com/Carina-labs/nova/client/docs/statik"
-	gal "github.com/Carina-labs/nova/x/gal"
+	"github.com/Carina-labs/nova/x/gal"
 	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/Carina-labs/nova/x/mint"
 	minttypes "github.com/Carina-labs/nova/x/mint/types"
