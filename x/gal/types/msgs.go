@@ -3,7 +3,7 @@ package types
 import (
 	"errors"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
-	time "time"
+	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"

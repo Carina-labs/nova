@@ -3,7 +3,7 @@ package keeper
 import (
 	"errors"
 	"github.com/Carina-labs/nova/x/icacontrol/types"
-	proto "github.com/gogo/protobuf/proto"
+	"github.com/gogo/protobuf/proto"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
