@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
-	SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePool, opts ...grpc.CallOption) (*QuerySingleCandidatePool, error)
+	SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePool, opts ...grpc.CallOption) (*QuerySingleCandidatePoolResponse, error)
 	AllCandidatePool(ctx context.Context, in *QueryAllCandidatePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
 	SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
 	AllIncentivePool(ctx context.Context, in *QueryAllIncentivePool, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error)
@@ -46,8 +46,8 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
-func (c *queryClient) SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePool, opts ...grpc.CallOption) (*QuerySingleCandidatePool, error) {
-	out := new(QuerySingleCandidatePool)
+func (c *queryClient) SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePool, opts ...grpc.CallOption) (*QuerySingleCandidatePoolResponse, error) {
+	out := new(QuerySingleCandidatePoolResponse)
 	err := c.cc.Invoke(ctx, "/nova.poolincentive.v1.Query/SingleCandidatePool", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -87,7 +87,7 @@ func (c *queryClient) AllIncentivePool(ctx context.Context, in *QueryAllIncentiv
 // for forward compatibility
 type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
-	SingleCandidatePool(context.Context, *QuerySingleCandidatePool) (*QuerySingleCandidatePool, error)
+	SingleCandidatePool(context.Context, *QuerySingleCandidatePool) (*QuerySingleCandidatePoolResponse, error)
 	AllCandidatePool(context.Context, *QueryAllCandidatePool) (*QueryAllCandidatePoolResponse, error)
 	SingleIncentivePool(context.Context, *QuerySingleIncentivePool) (*QueryAllCandidatePoolResponse, error)
 	AllIncentivePool(context.Context, *QueryAllIncentivePool) (*QueryAllIncentivePoolResponse, error)
@@ -101,7 +101,7 @@ type UnimplementedQueryServer struct {
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
-func (UnimplementedQueryServer) SingleCandidatePool(context.Context, *QuerySingleCandidatePool) (*QuerySingleCandidatePool, error) {
+func (UnimplementedQueryServer) SingleCandidatePool(context.Context, *QuerySingleCandidatePool) (*QuerySingleCandidatePoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SingleCandidatePool not implemented")
 }
 func (UnimplementedQueryServer) AllCandidatePool(context.Context, *QueryAllCandidatePool) (*QueryAllCandidatePoolResponse, error) {
