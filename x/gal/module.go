@@ -34,7 +34,7 @@ type AppModuleBasic struct {
 
 // Name returns gal module's name.
 func (AppModuleBasic) Name() string {
-	return types.ModuleName
+	return ModuleName
 }
 
 // RegisterLegacyAminoCodec registers the gal module's types on the LegacyAmino codec.
@@ -51,7 +51,7 @@ func (AppModuleBasic) DefaultGenesis(cdc codec.JSONCodec) json.RawMessage {
 func (AppModuleBasic) ValidateGenesis(cdc codec.JSONCodec, _ client.TxEncodingConfig, bz json.RawMessage) error {
 	var data types.GenesisState
 	if err := cdc.UnmarshalJSON(bz, &data); err != nil {
-		return fmt.Errorf("failed to unmarshal %s genesis state: %w", types.ModuleName, err)
+		return fmt.Errorf("failed to unmarshal %s genesis state: %w", ModuleName, err)
 	}
 
 	return data.Validate()
@@ -110,7 +110,7 @@ func NewAppModule(cdc codec.Codec, keeper keeper.Keeper, bankKeeper types.BankKe
 
 // Name returns the gal module's name.
 func (AppModule) Name() string {
-	return types.ModuleName
+	return ModuleName
 }
 
 // RegisterInvariants registers the gal module invariants.
@@ -131,7 +131,7 @@ func (AppModule) QuerierRoute() string {
 // LegacyQuerierHandler returns the gal module sdk.Querier.
 func (am AppModule) LegacyQuerierHandler(legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 	return func(sdk.Context, []string, abci.RequestQuery) ([]byte, error) {
-		return nil, fmt.Errorf("legacy querier not supported for the x/%s module", types.ModuleName)
+		return nil, fmt.Errorf("legacy querier not supported for the x/%s module", ModuleName)
 	}
 }
 
