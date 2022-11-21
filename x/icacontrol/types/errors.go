@@ -14,5 +14,7 @@ var (
 	ErrInvalidPortId     = errors.Register(ModuleName, 10, "invalid port id")
 	ErrInvalidConnId     = errors.Register(ModuleName, 11, "invalid connection id")
 	ErrInvalidAck        = errors.Register(ModuleName, 12, "ack is not receive")
-	ErrInvalidIcaVersion = errors.Register(ModuleName, 20, "invalid ica version")
+	ErrInvalidIcaVersion = errors.Register(ModuleName, 13, "invalid ica version")
+	ErrPortIdNotNil      = errors.Register(ModuleName, 14, "port id is not nil")
+	ErrChanIdNotNil      = errors.Register(ModuleName, 15, "channel id is not nil")
 )
