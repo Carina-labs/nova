@@ -9,7 +9,6 @@ import (
 	icacontrol "github.com/Carina-labs/nova/x/icacontrol"
 	icacontrolkeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
 	mintkeeper "github.com/Carina-labs/nova/x/mint/keeper"
-	"github.com/Carina-labs/nova/x/oracle"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
 	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/Carina-labs/nova/x/poolincentive"
@@ -362,8 +361,8 @@ func (appKeepers *AppKeepers) InitParamsKeeper(appCodec codec.BinaryCodec, legac
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(icacontroltypes.ModuleName)
-	paramsKeeper.Subspace(oracle.ModuleName)
-	paramsKeeper.Subspace(gal.ModuleName)
+	paramsKeeper.Subspace(oracletypes.ModuleName)
+	paramsKeeper.Subspace(galtypes.ModuleName)
 	paramsKeeper.Subspace(poolincentivetypes.ModuleName)
 
 	return paramsKeeper
