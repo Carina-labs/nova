@@ -28,10 +28,6 @@ type MinCommissionDecorator struct {
 	cdc codec.BinaryCodec
 }
 
-func NewMinCommissionDecorator(cdc codec.BinaryCodec) MinCommissionDecorator {
-	return MinCommissionDecorator{cdc}
-}
-
 func (min MinCommissionDecorator) AnteHandle(
 	ctx sdk.Context, tx sdk.Tx,
 	simulate bool, next sdk.AnteHandler) (newCtx sdk.Context, err error) {
