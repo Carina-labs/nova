@@ -3,6 +3,7 @@
 ---
 
 ## MsgRegisterZone
+
 ```protobuf
 message MsgRegisterZone {
   option (gogoproto.equal) = false;
@@ -22,6 +23,7 @@ message MsgRegisterZone {
 `MsgRegisterZone` is the message you use to register a new zone.
 
 ## MsgRegisterZoneResponse
+
 ```protobuf
 message MsgRegisterZoneResponse {
   string zone_id = 1;
@@ -39,9 +41,10 @@ message MsgRegisterZoneResponse {
 
 `MsgRegisterZoneResponse` is a response message for `MsgRegisterZone`.
 
-## MsgChangeRegisteredZoneInfo
+## MsgChangeRegisteredZone
+
 ```protobuf
-message MsgChangeRegisteredZoneInfo{
+message MsgChangeRegisteredZone{
   option (gogoproto.equal) = false;
 
   string zone_id = 1;
@@ -56,11 +59,12 @@ message MsgChangeRegisteredZoneInfo{
 }
 ```
 
-`MsgChangeRegisteredZoneInfo` modifies the information in the registeredZone.
+`MsgChangeRegisteredZone` modifies the information in the registeredZone.
 
-## MsgChangeRegisteredZoneInfoResponse
+## MsgChangeRegisteredZoneResponse
+
 ```protobuf
-message MsgChangeRegisteredZoneInfoResponse{
+message MsgChangeRegisteredZoneResponse{
   string zone_id = 1;
   IcaConnectionInfo ica_info = 2;
   IcaAccount ica_account = 3;
@@ -74,9 +78,10 @@ message MsgChangeRegisteredZoneInfoResponse{
 }
 ```
 
-`MsgChangeRegisteredZoneInfoResponse` is a response message for `MsgChangeRegisteredZone`.
+`MsgChangeRegisteredZoneResponse` is a response message for `MsgChangeRegisteredZone`.
 
 ## MsgDeleteRegisteredZone
+
 ```protobuf
 message MsgDeleteRegisteredZone{
   string zone_id = 1;
@@ -87,6 +92,7 @@ message MsgDeleteRegisteredZone{
 `MsgDeleteRegisteredZone` deletes registered Zone information.
 
 ## MsgDeleteRegisteredZoneResponse
+
 ```protobuf
 message MsgDeleteRegisteredZoneResponse{}
 ```
@@ -94,6 +100,7 @@ message MsgDeleteRegisteredZoneResponse{}
 `MsgDeleteRegisteredZoneResponse` is a response message for `MsgDeleteRegisteredZone`.
 
 ## MsgIcaDelegate
+
 ```protobuf
 message MsgIcaDelegate{
   string zone_id = 1;
@@ -105,6 +112,7 @@ message MsgIcaDelegate{
 `MsgIcaDelegate` is a message used for remote delegation using ICA.
 
 ## MsgIcaDelegateResponse
+
 ```protobuf
 message MsgIcaDelegateResponse{}
 ```
@@ -112,6 +120,7 @@ message MsgIcaDelegateResponse{}
 `MsgIcaDelegateResponse` is a response message for `MsgIcaDelegate`.
 
 ## MsgIcaUndelegate
+
 ```protobuf
 message MsgIcaUndelegate{
   string zone_id = 1;
@@ -123,6 +132,7 @@ message MsgIcaUndelegate{
 `MsgIcaUndelegate` is a message used to de-delegate remote using ICA.
 
 ## MsgIcaUndelegateResponse
+
 ```protobuf
 message MsgIcaUndelegateResponse{}
 ```
@@ -130,6 +140,7 @@ message MsgIcaUndelegateResponse{}
 `MsgIcaUndelegateResponse` is a response message for `MsgIcaUndelegate`.
 
 ## MsgIcaAutoStaking
+
 ```protobuf
 message MsgIcaAutoStaking{
   string zone_id = 1;
@@ -142,6 +153,7 @@ message MsgIcaAutoStaking{
 `MsgIcaAutoStaking` is a message for remote auto-compound using ICA.
 
 ## MsgIcaAutoStakingResponse
+
 ```protobuf
 message MsgIcaAutoStakingResponse{}
 ```
@@ -149,6 +161,7 @@ message MsgIcaAutoStakingResponse{}
 `MsgIcaAutoStakingResponse` is a response message for `MsgIcaAutoStaking`.
 
 ## MsgIcaTransfer
+
 ```protobuf
 message MsgIcaTransfer{
   string zone_id = 1;
@@ -163,6 +176,7 @@ message MsgIcaTransfer{
 `MsgIcaTransfer` is a message for IBC transfer from the counterpart to the Supernova chain using ICA.
 
 ## MsgIcaTransferResponse
+
 ```protobuf
 message MsgIcaTransferResponse{}
 ```
@@ -170,6 +184,7 @@ message MsgIcaTransferResponse{}
 `MsgIcaTransferResponse` is a response message for `MsgIcaTransfer`.
 
 ## MsgIcaAuthzGrant
+
 ```protobuf
 message MsgIcaAuthzGrant{
   string zone_id = 1;
@@ -179,9 +194,11 @@ message MsgIcaAuthzGrant{
 }
 ```
 
-`MsgIcaAuthzGrant` is a message used to transfer authority through authz between two accounts in the other chain using ICA.
+`MsgIcaAuthzGrant` is a message used to transfer authority through authz between two accounts in the other chain using
+ICA.
 
 ## MsgIcaAuthzGrantResponse
+
 ```protobuf
 message MsgIcaAuthzGrantResponse{}
 ```
@@ -189,6 +206,7 @@ message MsgIcaAuthzGrantResponse{}
 `MsgIcaAuthzGrantResponse` is a response messasge for `MsgIcaAuthzGrant`.
 
 ## MsgIcaAuthzRevoke
+
 ```protobuf
 message MsgIcaAuthzRevoke{
   string zone_id = 1;
@@ -201,6 +219,7 @@ message MsgIcaAuthzRevoke{
 `MsgIcaAuthzRevoke` is a message used for proxy execution between accounts linked to authz via ICA.
 
 ## MsgIcaAuthzRevokeReponse
+
 ```protobuf
 message MsgIcaAuthzRevokeResponse{}
 ```
@@ -217,7 +236,8 @@ message MsgRegisterControllerAddr{
 }
 ```
 
-`MsgRegisterControllerAddr` is used to register the address to be used as the controller address. It can be registered only with the key registered in keymanager.
+`MsgRegisterControllerAddr` is used to register the address to be used as the controller address. It can be registered
+only with the key registered in keymanager.
 
 ## MsgRegisterControllerAddrResponse
 

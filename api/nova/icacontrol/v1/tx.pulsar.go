@@ -11691,7 +11691,7 @@ func (x *MsgRegisterZoneResponse) GetDepositMaxEntries() int64 {
 	return 0
 }
 
-// MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
+// MsgChangeRegisteredZone modifies the information in the registeredZone.
 type MsgChangeRegisteredZone struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -11791,7 +11791,7 @@ func (x *MsgChangeRegisteredZone) GetDepositMaxEntries() int64 {
 	return 0
 }
 
-// MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
+// MsgChangeRegisteredZoneResponse is a response message for MsgChangeRegisteredZone.
 type MsgChangeRegisteredZoneResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

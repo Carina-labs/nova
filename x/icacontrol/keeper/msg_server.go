@@ -117,7 +117,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 	return &types.MsgDeleteRegisteredZoneResponse{}, nil
 }
 
-// ChangeRegisteredZoneInfo implements the Msg/MsgChangeRegisteredZoneInfo interface
+// ChangeRegisteredZone implements the Msg/MsgChangeRegisteredZone interface
 func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgChangeRegisteredZone) (*types.MsgChangeRegisteredZoneResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 

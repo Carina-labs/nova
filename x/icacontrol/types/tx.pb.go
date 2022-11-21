@@ -123,7 +123,7 @@ func (m *MsgRegisterZoneResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgRegisterZoneResponse proto.InternalMessageInfo
 
-// MsgChangeRegisteredZoneInfo modifies the information in the registeredZone.
+// MsgChangeRegisteredZone modifies the information in the registeredZone.
 type MsgChangeRegisteredZone struct {
 	ZoneId               string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	IcaInfo              *IcaConnectionInfo      `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
@@ -169,7 +169,7 @@ func (m *MsgChangeRegisteredZone) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgChangeRegisteredZone proto.InternalMessageInfo
 
-// MsgChangeRegisteredZoneInfoResponse is a response message for MsgChangeRegisteredZone.
+// MsgChangeRegisteredZoneResponse is a response message for MsgChangeRegisteredZone.
 type MsgChangeRegisteredZoneResponse struct {
 	ZoneId               string                  `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
 	IcaInfo              *IcaConnectionInfo      `protobuf:"bytes,2,opt,name=ica_info,json=icaInfo,proto3" json:"ica_info,omitempty"`
