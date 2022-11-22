@@ -68,7 +68,7 @@ func (suite *KeeperTestSuite) InitICA() {
 		ControllerAddressInfo: []*types.ControllerAddressInfo{
 			{
 				ZoneId:            zoneId,
-				ControllerAddress: []string{baseOwnerAcc.String()},
+				ControllerAddress: baseOwnerAcc.String(),
 			},
 		},
 	})
@@ -401,7 +401,7 @@ func (suite *KeeperTestSuite) TestChangeRegisteredZone() {
 		suite.Run(tc.name, func() {
 			suite.chainA.GetApp().IcaControlKeeper.RegisterZone(suite.chainA.GetContext(), &tc.zone)
 
-			suite.chainA.GetApp().IcaControlKeeper.SetControllerAddr(suite.chainA.GetContext(), tc.zoneId, []string{tc.msg.IcaAccount.ControllerAddress})
+			suite.chainA.GetApp().IcaControlKeeper.SetControllerAddr(suite.chainA.GetContext(), tc.zoneId, tc.msg.IcaAccount.ControllerAddress)
 
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
 			_, err := msgServer.ChangeRegisteredZone(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
@@ -520,7 +520,7 @@ func (suite *KeeperTestSuite) TestRegisterZoneMsg() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 
-			suite.chainA.GetApp().IcaControlKeeper.SetControllerAddr(suite.chainA.GetContext(), tc.zoneId, []string{tc.msg.IcaAccount.ControllerAddress})
+			suite.chainA.GetApp().IcaControlKeeper.SetControllerAddr(suite.chainA.GetContext(), tc.zoneId, tc.msg.IcaAccount.ControllerAddress)
 
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.GetApp().IcaControlKeeper)
 			_, err := msgServer.RegisterZone(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
@@ -967,5 +967,5 @@ func (suite *KeeperTestSuite) TestRegisterControllerAddress() {
 
 	controllerInfo := suite.chainA.GetApp().IcaControlKeeper.GetControllerAddr(suite.chainA.GetContext(), zoneId)
 
-	suite.Require().Equal(controllerInfo.ControllerAddress[0], controllerAddr.String())
+	suite.Require().Equal(controllerInfo.ControllerAddress, controllerAddr.String())
 }

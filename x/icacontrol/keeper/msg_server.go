@@ -452,11 +452,7 @@ func (k msgServer) RegisterControllerAddress(goCtx context.Context, msg *types.M
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.FromAddress)
 	}
 
-	controllerInfo := k.GetControllerAddr(ctx, msg.ZoneId)
-	controllerAddrs := controllerInfo.ControllerAddress
-
-	controllerAddrs = append(controllerAddrs, msg.ControllerAddress)
-	k.SetControllerAddr(ctx, msg.ZoneId, controllerAddrs)
+	k.SetControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress)
 
 	err := ctx.EventManager().EmitTypedEvent(types.NewEventRegisterControllerAddress(msg))
 	if err != nil {

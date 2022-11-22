@@ -40,5 +40,5 @@ message TransferConnectionInfo {
 
 message ControllerAddressInfo {
   string zone_id = 1;
-  repeated string controller_address = 2;
+  string controller_address = 2;
 }

@@ -12,7 +12,7 @@ func (k Keeper) GetControllerAddrStore(ctx sdk.Context) prefix.Store {
 }
 
 // set controller address
-func (k Keeper) SetControllerAddr(ctx sdk.Context, zoneId string, controllerAddrs []string) {
+func (k Keeper) SetControllerAddr(ctx sdk.Context, zoneId string, controllerAddrs string) {
 	store := k.GetControllerAddrStore(ctx)
 	key := zoneId
 	controllerInfo := types.ControllerAddressInfo{
@@ -28,18 +28,13 @@ func (k Keeper) GetControllerAddr(ctx sdk.Context, zoneId string) types.Controll
 	store := k.GetControllerAddrStore(ctx)
 	bz := store.Get([]byte(zoneId))
 
-	var address types.ControllerAddressInfo
-	k.cdc.MustUnmarshal(bz, &address)
+	var controllerInfo types.ControllerAddressInfo
+	k.cdc.MustUnmarshal(bz, &controllerInfo)
 
-	return address
+	return controllerInfo
 }
 
 func (k Keeper) IsValidControllerAddr(ctx sdk.Context, zoneId, address string) bool {
 	addrs := k.GetControllerAddr(ctx, zoneId)
-	for i := range addrs.ControllerAddress {
-		if addrs.ControllerAddress[i] == address {
-			return true
-		}
-	}
-	return false
+	return address == addrs.ControllerAddress
 }
