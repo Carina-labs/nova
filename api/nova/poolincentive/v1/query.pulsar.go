@@ -806,25 +806,25 @@ func (x *fastReflection_QueryParamsResponse) ProtoMethods() *protoiface.Methods 
 }
 
 var (
-	md_QuerySingleCandidatePool         protoreflect.MessageDescriptor
-	fd_QuerySingleCandidatePool_pool_id protoreflect.FieldDescriptor
+	md_QuerySingleCandidatePoolRequest         protoreflect.MessageDescriptor
+	fd_QuerySingleCandidatePoolRequest_pool_id protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_poolincentive_v1_query_proto_init()
-	md_QuerySingleCandidatePool = File_nova_poolincentive_v1_query_proto.Messages().ByName("QuerySingleCandidatePool")
-	fd_QuerySingleCandidatePool_pool_id = md_QuerySingleCandidatePool.Fields().ByName("pool_id")
+	md_QuerySingleCandidatePoolRequest = File_nova_poolincentive_v1_query_proto.Messages().ByName("QuerySingleCandidatePoolRequest")
+	fd_QuerySingleCandidatePoolRequest_pool_id = md_QuerySingleCandidatePoolRequest.Fields().ByName("pool_id")
 }
 
-var _ protoreflect.Message = (*fastReflection_QuerySingleCandidatePool)(nil)
+var _ protoreflect.Message = (*fastReflection_QuerySingleCandidatePoolRequest)(nil)
 
-type fastReflection_QuerySingleCandidatePool QuerySingleCandidatePool
+type fastReflection_QuerySingleCandidatePoolRequest QuerySingleCandidatePoolRequest
 
-func (x *QuerySingleCandidatePool) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QuerySingleCandidatePool)(x)
+func (x *QuerySingleCandidatePoolRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QuerySingleCandidatePoolRequest)(x)
 }
 
-func (x *QuerySingleCandidatePool) slowProtoReflect() protoreflect.Message {
+func (x *QuerySingleCandidatePoolRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_poolincentive_v1_query_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -836,43 +836,43 @@ func (x *QuerySingleCandidatePool) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QuerySingleCandidatePool_messageType fastReflection_QuerySingleCandidatePool_messageType
-var _ protoreflect.MessageType = fastReflection_QuerySingleCandidatePool_messageType{}
+var _fastReflection_QuerySingleCandidatePoolRequest_messageType fastReflection_QuerySingleCandidatePoolRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QuerySingleCandidatePoolRequest_messageType{}
 
-type fastReflection_QuerySingleCandidatePool_messageType struct{}
+type fastReflection_QuerySingleCandidatePoolRequest_messageType struct{}
 
-func (x fastReflection_QuerySingleCandidatePool_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QuerySingleCandidatePool)(nil)
+func (x fastReflection_QuerySingleCandidatePoolRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QuerySingleCandidatePoolRequest)(nil)
 }
-func (x fastReflection_QuerySingleCandidatePool_messageType) New() protoreflect.Message {
-	return new(fastReflection_QuerySingleCandidatePool)
+func (x fastReflection_QuerySingleCandidatePoolRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QuerySingleCandidatePoolRequest)
 }
-func (x fastReflection_QuerySingleCandidatePool_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QuerySingleCandidatePool
+func (x fastReflection_QuerySingleCandidatePoolRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QuerySingleCandidatePoolRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QuerySingleCandidatePool) Descriptor() protoreflect.MessageDescriptor {
-	return md_QuerySingleCandidatePool
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QuerySingleCandidatePoolRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QuerySingleCandidatePool) Type() protoreflect.MessageType {
-	return _fastReflection_QuerySingleCandidatePool_messageType
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QuerySingleCandidatePoolRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QuerySingleCandidatePool) New() protoreflect.Message {
-	return new(fastReflection_QuerySingleCandidatePool)
+func (x *fastReflection_QuerySingleCandidatePoolRequest) New() protoreflect.Message {
+	return new(fastReflection_QuerySingleCandidatePoolRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QuerySingleCandidatePool) Interface() protoreflect.ProtoMessage {
-	return (*QuerySingleCandidatePool)(x)
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Interface() protoreflect.ProtoMessage {
+	return (*QuerySingleCandidatePoolRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -880,10 +880,10 @@ func (x *fastReflection_QuerySingleCandidatePool) Interface() protoreflect.Proto
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QuerySingleCandidatePool) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.PoolId != "" {
 		value := protoreflect.ValueOfString(x.PoolId)
-		if !f(fd_QuerySingleCandidatePool_pool_id, value) {
+		if !f(fd_QuerySingleCandidatePoolRequest_pool_id, value) {
 			return
 		}
 	}
@@ -900,15 +900,15 @@ func (x *fastReflection_QuerySingleCandidatePool) Range(f func(protoreflect.Fiel
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QuerySingleCandidatePool) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleCandidatePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleCandidatePoolRequest.pool_id":
 		return x.PoolId != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -918,15 +918,15 @@ func (x *fastReflection_QuerySingleCandidatePool) Has(fd protoreflect.FieldDescr
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QuerySingleCandidatePool) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleCandidatePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleCandidatePoolRequest.pool_id":
 		x.PoolId = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -936,16 +936,16 @@ func (x *fastReflection_QuerySingleCandidatePool) Clear(fd protoreflect.FieldDes
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QuerySingleCandidatePool) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.poolincentive.v1.QuerySingleCandidatePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleCandidatePoolRequest.pool_id":
 		value := x.PoolId
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePool does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePoolRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -959,15 +959,15 @@ func (x *fastReflection_QuerySingleCandidatePool) Get(descriptor protoreflect.Fi
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QuerySingleCandidatePool) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleCandidatePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleCandidatePoolRequest.pool_id":
 		x.PoolId = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -981,40 +981,40 @@ func (x *fastReflection_QuerySingleCandidatePool) Set(fd protoreflect.FieldDescr
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QuerySingleCandidatePool) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleCandidatePool.pool_id":
-		panic(fmt.Errorf("field pool_id of message nova.poolincentive.v1.QuerySingleCandidatePool is not mutable"))
+	case "nova.poolincentive.v1.QuerySingleCandidatePoolRequest.pool_id":
+		panic(fmt.Errorf("field pool_id of message nova.poolincentive.v1.QuerySingleCandidatePoolRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QuerySingleCandidatePool) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleCandidatePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleCandidatePoolRequest.pool_id":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QuerySingleCandidatePool) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.poolincentive.v1.QuerySingleCandidatePool", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.poolincentive.v1.QuerySingleCandidatePoolRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1022,7 +1022,7 @@ func (x *fastReflection_QuerySingleCandidatePool) WhichOneof(d protoreflect.Oneo
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QuerySingleCandidatePool) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1033,7 +1033,7 @@ func (x *fastReflection_QuerySingleCandidatePool) GetUnknown() protoreflect.RawF
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QuerySingleCandidatePool) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1045,7 +1045,7 @@ func (x *fastReflection_QuerySingleCandidatePool) SetUnknown(fields protoreflect
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QuerySingleCandidatePool) IsValid() bool {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -1055,9 +1055,9 @@ func (x *fastReflection_QuerySingleCandidatePool) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QuerySingleCandidatePool) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QuerySingleCandidatePoolRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QuerySingleCandidatePool)
+		x := input.Message.Interface().(*QuerySingleCandidatePoolRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1083,7 +1083,7 @@ func (x *fastReflection_QuerySingleCandidatePool) ProtoMethods() *protoiface.Met
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QuerySingleCandidatePool)
+		x := input.Message.Interface().(*QuerySingleCandidatePoolRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1120,7 +1120,7 @@ func (x *fastReflection_QuerySingleCandidatePool) ProtoMethods() *protoiface.Met
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QuerySingleCandidatePool)
+		x := input.Message.Interface().(*QuerySingleCandidatePoolRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1152,10 +1152,10 @@ func (x *fastReflection_QuerySingleCandidatePool) ProtoMethods() *protoiface.Met
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QuerySingleCandidatePool: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QuerySingleCandidatePoolRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QuerySingleCandidatePool: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QuerySingleCandidatePoolRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -1710,25 +1710,25 @@ func (x *fastReflection_QuerySingleCandidatePoolResponse) ProtoMethods() *protoi
 }
 
 var (
-	md_QuerySingleIncentivePool         protoreflect.MessageDescriptor
-	fd_QuerySingleIncentivePool_pool_id protoreflect.FieldDescriptor
+	md_QuerySingleIncentivePoolRequest         protoreflect.MessageDescriptor
+	fd_QuerySingleIncentivePoolRequest_pool_id protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_poolincentive_v1_query_proto_init()
-	md_QuerySingleIncentivePool = File_nova_poolincentive_v1_query_proto.Messages().ByName("QuerySingleIncentivePool")
-	fd_QuerySingleIncentivePool_pool_id = md_QuerySingleIncentivePool.Fields().ByName("pool_id")
+	md_QuerySingleIncentivePoolRequest = File_nova_poolincentive_v1_query_proto.Messages().ByName("QuerySingleIncentivePoolRequest")
+	fd_QuerySingleIncentivePoolRequest_pool_id = md_QuerySingleIncentivePoolRequest.Fields().ByName("pool_id")
 }
 
-var _ protoreflect.Message = (*fastReflection_QuerySingleIncentivePool)(nil)
+var _ protoreflect.Message = (*fastReflection_QuerySingleIncentivePoolRequest)(nil)
 
-type fastReflection_QuerySingleIncentivePool QuerySingleIncentivePool
+type fastReflection_QuerySingleIncentivePoolRequest QuerySingleIncentivePoolRequest
 
-func (x *QuerySingleIncentivePool) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QuerySingleIncentivePool)(x)
+func (x *QuerySingleIncentivePoolRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QuerySingleIncentivePoolRequest)(x)
 }
 
-func (x *QuerySingleIncentivePool) slowProtoReflect() protoreflect.Message {
+func (x *QuerySingleIncentivePoolRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_poolincentive_v1_query_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1740,43 +1740,43 @@ func (x *QuerySingleIncentivePool) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QuerySingleIncentivePool_messageType fastReflection_QuerySingleIncentivePool_messageType
-var _ protoreflect.MessageType = fastReflection_QuerySingleIncentivePool_messageType{}
+var _fastReflection_QuerySingleIncentivePoolRequest_messageType fastReflection_QuerySingleIncentivePoolRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QuerySingleIncentivePoolRequest_messageType{}
 
-type fastReflection_QuerySingleIncentivePool_messageType struct{}
+type fastReflection_QuerySingleIncentivePoolRequest_messageType struct{}
 
-func (x fastReflection_QuerySingleIncentivePool_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QuerySingleIncentivePool)(nil)
+func (x fastReflection_QuerySingleIncentivePoolRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QuerySingleIncentivePoolRequest)(nil)
 }
-func (x fastReflection_QuerySingleIncentivePool_messageType) New() protoreflect.Message {
-	return new(fastReflection_QuerySingleIncentivePool)
+func (x fastReflection_QuerySingleIncentivePoolRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QuerySingleIncentivePoolRequest)
 }
-func (x fastReflection_QuerySingleIncentivePool_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QuerySingleIncentivePool
+func (x fastReflection_QuerySingleIncentivePoolRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QuerySingleIncentivePoolRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QuerySingleIncentivePool) Descriptor() protoreflect.MessageDescriptor {
-	return md_QuerySingleIncentivePool
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QuerySingleIncentivePoolRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QuerySingleIncentivePool) Type() protoreflect.MessageType {
-	return _fastReflection_QuerySingleIncentivePool_messageType
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QuerySingleIncentivePoolRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QuerySingleIncentivePool) New() protoreflect.Message {
-	return new(fastReflection_QuerySingleIncentivePool)
+func (x *fastReflection_QuerySingleIncentivePoolRequest) New() protoreflect.Message {
+	return new(fastReflection_QuerySingleIncentivePoolRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QuerySingleIncentivePool) Interface() protoreflect.ProtoMessage {
-	return (*QuerySingleIncentivePool)(x)
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Interface() protoreflect.ProtoMessage {
+	return (*QuerySingleIncentivePoolRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1784,10 +1784,10 @@ func (x *fastReflection_QuerySingleIncentivePool) Interface() protoreflect.Proto
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QuerySingleIncentivePool) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.PoolId != "" {
 		value := protoreflect.ValueOfString(x.PoolId)
-		if !f(fd_QuerySingleIncentivePool_pool_id, value) {
+		if !f(fd_QuerySingleIncentivePoolRequest_pool_id, value) {
 			return
 		}
 	}
@@ -1804,15 +1804,15 @@ func (x *fastReflection_QuerySingleIncentivePool) Range(f func(protoreflect.Fiel
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QuerySingleIncentivePool) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleIncentivePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleIncentivePoolRequest.pool_id":
 		return x.PoolId != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1822,15 +1822,15 @@ func (x *fastReflection_QuerySingleIncentivePool) Has(fd protoreflect.FieldDescr
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QuerySingleIncentivePool) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleIncentivePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleIncentivePoolRequest.pool_id":
 		x.PoolId = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1840,16 +1840,16 @@ func (x *fastReflection_QuerySingleIncentivePool) Clear(fd protoreflect.FieldDes
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QuerySingleIncentivePool) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.poolincentive.v1.QuerySingleIncentivePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleIncentivePoolRequest.pool_id":
 		value := x.PoolId
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePool does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePoolRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1863,15 +1863,15 @@ func (x *fastReflection_QuerySingleIncentivePool) Get(descriptor protoreflect.Fi
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QuerySingleIncentivePool) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleIncentivePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleIncentivePoolRequest.pool_id":
 		x.PoolId = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1885,40 +1885,40 @@ func (x *fastReflection_QuerySingleIncentivePool) Set(fd protoreflect.FieldDescr
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QuerySingleIncentivePool) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleIncentivePool.pool_id":
-		panic(fmt.Errorf("field pool_id of message nova.poolincentive.v1.QuerySingleIncentivePool is not mutable"))
+	case "nova.poolincentive.v1.QuerySingleIncentivePoolRequest.pool_id":
+		panic(fmt.Errorf("field pool_id of message nova.poolincentive.v1.QuerySingleIncentivePoolRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QuerySingleIncentivePool) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.poolincentive.v1.QuerySingleIncentivePool.pool_id":
+	case "nova.poolincentive.v1.QuerySingleIncentivePoolRequest.pool_id":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QuerySingleIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QuerySingleIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QuerySingleIncentivePool) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.poolincentive.v1.QuerySingleIncentivePool", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.poolincentive.v1.QuerySingleIncentivePoolRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1926,7 +1926,7 @@ func (x *fastReflection_QuerySingleIncentivePool) WhichOneof(d protoreflect.Oneo
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QuerySingleIncentivePool) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1937,7 +1937,7 @@ func (x *fastReflection_QuerySingleIncentivePool) GetUnknown() protoreflect.RawF
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QuerySingleIncentivePool) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1949,7 +1949,7 @@ func (x *fastReflection_QuerySingleIncentivePool) SetUnknown(fields protoreflect
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QuerySingleIncentivePool) IsValid() bool {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -1959,9 +1959,9 @@ func (x *fastReflection_QuerySingleIncentivePool) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QuerySingleIncentivePool) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QuerySingleIncentivePoolRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QuerySingleIncentivePool)
+		x := input.Message.Interface().(*QuerySingleIncentivePoolRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1987,7 +1987,7 @@ func (x *fastReflection_QuerySingleIncentivePool) ProtoMethods() *protoiface.Met
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QuerySingleIncentivePool)
+		x := input.Message.Interface().(*QuerySingleIncentivePoolRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2024,7 +2024,7 @@ func (x *fastReflection_QuerySingleIncentivePool) ProtoMethods() *protoiface.Met
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QuerySingleIncentivePool)
+		x := input.Message.Interface().(*QuerySingleIncentivePoolRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2056,10 +2056,10 @@ func (x *fastReflection_QuerySingleIncentivePool) ProtoMethods() *protoiface.Met
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QuerySingleIncentivePool: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QuerySingleIncentivePoolRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QuerySingleIncentivePool: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QuerySingleIncentivePoolRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -2614,23 +2614,23 @@ func (x *fastReflection_QuerySingleIncentivePoolResponse) ProtoMethods() *protoi
 }
 
 var (
-	md_QueryAllCandidatePool protoreflect.MessageDescriptor
+	md_QueryAllCandidatePoolRequest protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_nova_poolincentive_v1_query_proto_init()
-	md_QueryAllCandidatePool = File_nova_poolincentive_v1_query_proto.Messages().ByName("QueryAllCandidatePool")
+	md_QueryAllCandidatePoolRequest = File_nova_poolincentive_v1_query_proto.Messages().ByName("QueryAllCandidatePoolRequest")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryAllCandidatePool)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryAllCandidatePoolRequest)(nil)
 
-type fastReflection_QueryAllCandidatePool QueryAllCandidatePool
+type fastReflection_QueryAllCandidatePoolRequest QueryAllCandidatePoolRequest
 
-func (x *QueryAllCandidatePool) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryAllCandidatePool)(x)
+func (x *QueryAllCandidatePoolRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryAllCandidatePoolRequest)(x)
 }
 
-func (x *QueryAllCandidatePool) slowProtoReflect() protoreflect.Message {
+func (x *QueryAllCandidatePoolRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_poolincentive_v1_query_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2642,43 +2642,43 @@ func (x *QueryAllCandidatePool) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryAllCandidatePool_messageType fastReflection_QueryAllCandidatePool_messageType
-var _ protoreflect.MessageType = fastReflection_QueryAllCandidatePool_messageType{}
+var _fastReflection_QueryAllCandidatePoolRequest_messageType fastReflection_QueryAllCandidatePoolRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryAllCandidatePoolRequest_messageType{}
 
-type fastReflection_QueryAllCandidatePool_messageType struct{}
+type fastReflection_QueryAllCandidatePoolRequest_messageType struct{}
 
-func (x fastReflection_QueryAllCandidatePool_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryAllCandidatePool)(nil)
+func (x fastReflection_QueryAllCandidatePoolRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryAllCandidatePoolRequest)(nil)
 }
-func (x fastReflection_QueryAllCandidatePool_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryAllCandidatePool)
+func (x fastReflection_QueryAllCandidatePoolRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryAllCandidatePoolRequest)
 }
-func (x fastReflection_QueryAllCandidatePool_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllCandidatePool
+func (x fastReflection_QueryAllCandidatePoolRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryAllCandidatePoolRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryAllCandidatePool) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllCandidatePool
+func (x *fastReflection_QueryAllCandidatePoolRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryAllCandidatePoolRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryAllCandidatePool) Type() protoreflect.MessageType {
-	return _fastReflection_QueryAllCandidatePool_messageType
+func (x *fastReflection_QueryAllCandidatePoolRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryAllCandidatePoolRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryAllCandidatePool) New() protoreflect.Message {
-	return new(fastReflection_QueryAllCandidatePool)
+func (x *fastReflection_QueryAllCandidatePoolRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryAllCandidatePoolRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryAllCandidatePool) Interface() protoreflect.ProtoMessage {
-	return (*QueryAllCandidatePool)(x)
+func (x *fastReflection_QueryAllCandidatePoolRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryAllCandidatePoolRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -2686,7 +2686,7 @@ func (x *fastReflection_QueryAllCandidatePool) Interface() protoreflect.ProtoMes
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryAllCandidatePool) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryAllCandidatePoolRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 }
 
 // Has reports whether a field is populated.
@@ -2700,13 +2700,13 @@ func (x *fastReflection_QueryAllCandidatePool) Range(f func(protoreflect.FieldDe
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryAllCandidatePool) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryAllCandidatePoolRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2716,13 +2716,13 @@ func (x *fastReflection_QueryAllCandidatePool) Has(fd protoreflect.FieldDescript
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllCandidatePool) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryAllCandidatePoolRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2732,13 +2732,13 @@ func (x *fastReflection_QueryAllCandidatePool) Clear(fd protoreflect.FieldDescri
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryAllCandidatePool) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllCandidatePoolRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePool does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePoolRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2752,13 +2752,13 @@ func (x *fastReflection_QueryAllCandidatePool) Get(descriptor protoreflect.Field
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllCandidatePool) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryAllCandidatePoolRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2772,36 +2772,36 @@ func (x *fastReflection_QueryAllCandidatePool) Set(fd protoreflect.FieldDescript
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllCandidatePool) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllCandidatePoolRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryAllCandidatePool) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllCandidatePoolRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllCandidatePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllCandidatePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryAllCandidatePool) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryAllCandidatePoolRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.poolincentive.v1.QueryAllCandidatePool", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.poolincentive.v1.QueryAllCandidatePoolRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2809,7 +2809,7 @@ func (x *fastReflection_QueryAllCandidatePool) WhichOneof(d protoreflect.OneofDe
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryAllCandidatePool) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryAllCandidatePoolRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -2820,7 +2820,7 @@ func (x *fastReflection_QueryAllCandidatePool) GetUnknown() protoreflect.RawFiel
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllCandidatePool) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryAllCandidatePoolRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -2832,7 +2832,7 @@ func (x *fastReflection_QueryAllCandidatePool) SetUnknown(fields protoreflect.Ra
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryAllCandidatePool) IsValid() bool {
+func (x *fastReflection_QueryAllCandidatePoolRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -2842,9 +2842,9 @@ func (x *fastReflection_QueryAllCandidatePool) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryAllCandidatePool) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryAllCandidatePoolRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryAllCandidatePool)
+		x := input.Message.Interface().(*QueryAllCandidatePoolRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2866,7 +2866,7 @@ func (x *fastReflection_QueryAllCandidatePool) ProtoMethods() *protoiface.Method
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllCandidatePool)
+		x := input.Message.Interface().(*QueryAllCandidatePoolRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2896,7 +2896,7 @@ func (x *fastReflection_QueryAllCandidatePool) ProtoMethods() *protoiface.Method
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllCandidatePool)
+		x := input.Message.Interface().(*QueryAllCandidatePoolRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2928,10 +2928,10 @@ func (x *fastReflection_QueryAllCandidatePool) ProtoMethods() *protoiface.Method
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllCandidatePool: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllCandidatePoolRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllCandidatePool: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllCandidatePoolRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			default:
@@ -3464,23 +3464,23 @@ func (x *fastReflection_QueryAllCandidatePoolResponse) ProtoMethods() *protoifac
 }
 
 var (
-	md_QueryAllIncentivePool protoreflect.MessageDescriptor
+	md_QueryAllIncentivePoolRequest protoreflect.MessageDescriptor
 )
 
 func init() {
 	file_nova_poolincentive_v1_query_proto_init()
-	md_QueryAllIncentivePool = File_nova_poolincentive_v1_query_proto.Messages().ByName("QueryAllIncentivePool")
+	md_QueryAllIncentivePoolRequest = File_nova_poolincentive_v1_query_proto.Messages().ByName("QueryAllIncentivePoolRequest")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryAllIncentivePool)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryAllIncentivePoolRequest)(nil)
 
-type fastReflection_QueryAllIncentivePool QueryAllIncentivePool
+type fastReflection_QueryAllIncentivePoolRequest QueryAllIncentivePoolRequest
 
-func (x *QueryAllIncentivePool) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryAllIncentivePool)(x)
+func (x *QueryAllIncentivePoolRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryAllIncentivePoolRequest)(x)
 }
 
-func (x *QueryAllIncentivePool) slowProtoReflect() protoreflect.Message {
+func (x *QueryAllIncentivePoolRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_poolincentive_v1_query_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3492,43 +3492,43 @@ func (x *QueryAllIncentivePool) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryAllIncentivePool_messageType fastReflection_QueryAllIncentivePool_messageType
-var _ protoreflect.MessageType = fastReflection_QueryAllIncentivePool_messageType{}
+var _fastReflection_QueryAllIncentivePoolRequest_messageType fastReflection_QueryAllIncentivePoolRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryAllIncentivePoolRequest_messageType{}
 
-type fastReflection_QueryAllIncentivePool_messageType struct{}
+type fastReflection_QueryAllIncentivePoolRequest_messageType struct{}
 
-func (x fastReflection_QueryAllIncentivePool_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryAllIncentivePool)(nil)
+func (x fastReflection_QueryAllIncentivePoolRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryAllIncentivePoolRequest)(nil)
 }
-func (x fastReflection_QueryAllIncentivePool_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryAllIncentivePool)
+func (x fastReflection_QueryAllIncentivePoolRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryAllIncentivePoolRequest)
 }
-func (x fastReflection_QueryAllIncentivePool_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllIncentivePool
+func (x fastReflection_QueryAllIncentivePoolRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryAllIncentivePoolRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryAllIncentivePool) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllIncentivePool
+func (x *fastReflection_QueryAllIncentivePoolRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryAllIncentivePoolRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryAllIncentivePool) Type() protoreflect.MessageType {
-	return _fastReflection_QueryAllIncentivePool_messageType
+func (x *fastReflection_QueryAllIncentivePoolRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryAllIncentivePoolRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryAllIncentivePool) New() protoreflect.Message {
-	return new(fastReflection_QueryAllIncentivePool)
+func (x *fastReflection_QueryAllIncentivePoolRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryAllIncentivePoolRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryAllIncentivePool) Interface() protoreflect.ProtoMessage {
-	return (*QueryAllIncentivePool)(x)
+func (x *fastReflection_QueryAllIncentivePoolRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryAllIncentivePoolRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -3536,7 +3536,7 @@ func (x *fastReflection_QueryAllIncentivePool) Interface() protoreflect.ProtoMes
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryAllIncentivePool) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryAllIncentivePoolRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 }
 
 // Has reports whether a field is populated.
@@ -3550,13 +3550,13 @@ func (x *fastReflection_QueryAllIncentivePool) Range(f func(protoreflect.FieldDe
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryAllIncentivePool) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryAllIncentivePoolRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3566,13 +3566,13 @@ func (x *fastReflection_QueryAllIncentivePool) Has(fd protoreflect.FieldDescript
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllIncentivePool) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryAllIncentivePoolRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3582,13 +3582,13 @@ func (x *fastReflection_QueryAllIncentivePool) Clear(fd protoreflect.FieldDescri
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryAllIncentivePool) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllIncentivePoolRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePool does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePoolRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -3602,13 +3602,13 @@ func (x *fastReflection_QueryAllIncentivePool) Get(descriptor protoreflect.Field
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllIncentivePool) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryAllIncentivePoolRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -3622,36 +3622,36 @@ func (x *fastReflection_QueryAllIncentivePool) Set(fd protoreflect.FieldDescript
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllIncentivePool) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllIncentivePoolRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryAllIncentivePool) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryAllIncentivePoolRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePool"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.poolincentive.v1.QueryAllIncentivePoolRequest"))
 		}
-		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePool does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.poolincentive.v1.QueryAllIncentivePoolRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryAllIncentivePool) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryAllIncentivePoolRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.poolincentive.v1.QueryAllIncentivePool", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.poolincentive.v1.QueryAllIncentivePoolRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -3659,7 +3659,7 @@ func (x *fastReflection_QueryAllIncentivePool) WhichOneof(d protoreflect.OneofDe
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryAllIncentivePool) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryAllIncentivePoolRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -3670,7 +3670,7 @@ func (x *fastReflection_QueryAllIncentivePool) GetUnknown() protoreflect.RawFiel
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllIncentivePool) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryAllIncentivePoolRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -3682,7 +3682,7 @@ func (x *fastReflection_QueryAllIncentivePool) SetUnknown(fields protoreflect.Ra
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryAllIncentivePool) IsValid() bool {
+func (x *fastReflection_QueryAllIncentivePoolRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -3692,9 +3692,9 @@ func (x *fastReflection_QueryAllIncentivePool) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryAllIncentivePool) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryAllIncentivePoolRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryAllIncentivePool)
+		x := input.Message.Interface().(*QueryAllIncentivePoolRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -3716,7 +3716,7 @@ func (x *fastReflection_QueryAllIncentivePool) ProtoMethods() *protoiface.Method
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllIncentivePool)
+		x := input.Message.Interface().(*QueryAllIncentivePoolRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -3746,7 +3746,7 @@ func (x *fastReflection_QueryAllIncentivePool) ProtoMethods() *protoiface.Method
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllIncentivePool)
+		x := input.Message.Interface().(*QueryAllIncentivePoolRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -3778,10 +3778,10 @@ func (x *fastReflection_QueryAllIncentivePool) ProtoMethods() *protoiface.Method
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllIncentivePool: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllIncentivePoolRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllIncentivePool: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllIncentivePoolRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			default:
@@ -4390,7 +4390,7 @@ func (x *QueryParamsResponse) GetParams() *Params {
 	return nil
 }
 
-type QuerySingleCandidatePool struct {
+type QuerySingleCandidatePoolRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -4398,8 +4398,8 @@ type QuerySingleCandidatePool struct {
 	PoolId string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
 }
 
-func (x *QuerySingleCandidatePool) Reset() {
-	*x = QuerySingleCandidatePool{}
+func (x *QuerySingleCandidatePoolRequest) Reset() {
+	*x = QuerySingleCandidatePoolRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_poolincentive_v1_query_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4407,18 +4407,18 @@ func (x *QuerySingleCandidatePool) Reset() {
 	}
 }
 
-func (x *QuerySingleCandidatePool) String() string {
+func (x *QuerySingleCandidatePoolRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QuerySingleCandidatePool) ProtoMessage() {}
+func (*QuerySingleCandidatePoolRequest) ProtoMessage() {}
 
-// Deprecated: Use QuerySingleCandidatePool.ProtoReflect.Descriptor instead.
-func (*QuerySingleCandidatePool) Descriptor() ([]byte, []int) {
+// Deprecated: Use QuerySingleCandidatePoolRequest.ProtoReflect.Descriptor instead.
+func (*QuerySingleCandidatePoolRequest) Descriptor() ([]byte, []int) {
 	return file_nova_poolincentive_v1_query_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *QuerySingleCandidatePool) GetPoolId() string {
+func (x *QuerySingleCandidatePoolRequest) GetPoolId() string {
 	if x != nil {
 		return x.PoolId
 	}
@@ -4468,7 +4468,7 @@ func (x *QuerySingleCandidatePoolResponse) GetPoolAddress() string {
 	return ""
 }
 
-type QuerySingleIncentivePool struct {
+type QuerySingleIncentivePoolRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -4476,8 +4476,8 @@ type QuerySingleIncentivePool struct {
 	PoolId string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
 }
 
-func (x *QuerySingleIncentivePool) Reset() {
-	*x = QuerySingleIncentivePool{}
+func (x *QuerySingleIncentivePoolRequest) Reset() {
+	*x = QuerySingleIncentivePoolRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_poolincentive_v1_query_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4485,18 +4485,18 @@ func (x *QuerySingleIncentivePool) Reset() {
 	}
 }
 
-func (x *QuerySingleIncentivePool) String() string {
+func (x *QuerySingleIncentivePoolRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QuerySingleIncentivePool) ProtoMessage() {}
+func (*QuerySingleIncentivePoolRequest) ProtoMessage() {}
 
-// Deprecated: Use QuerySingleIncentivePool.ProtoReflect.Descriptor instead.
-func (*QuerySingleIncentivePool) Descriptor() ([]byte, []int) {
+// Deprecated: Use QuerySingleIncentivePoolRequest.ProtoReflect.Descriptor instead.
+func (*QuerySingleIncentivePoolRequest) Descriptor() ([]byte, []int) {
 	return file_nova_poolincentive_v1_query_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *QuerySingleIncentivePool) GetPoolId() string {
+func (x *QuerySingleIncentivePoolRequest) GetPoolId() string {
 	if x != nil {
 		return x.PoolId
 	}
@@ -4546,14 +4546,14 @@ func (x *QuerySingleIncentivePoolResponse) GetPoolAddress() string {
 	return ""
 }
 
-type QueryAllCandidatePool struct {
+type QueryAllCandidatePoolRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *QueryAllCandidatePool) Reset() {
-	*x = QueryAllCandidatePool{}
+func (x *QueryAllCandidatePoolRequest) Reset() {
+	*x = QueryAllCandidatePoolRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_poolincentive_v1_query_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4561,14 +4561,14 @@ func (x *QueryAllCandidatePool) Reset() {
 	}
 }
 
-func (x *QueryAllCandidatePool) String() string {
+func (x *QueryAllCandidatePoolRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryAllCandidatePool) ProtoMessage() {}
+func (*QueryAllCandidatePoolRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryAllCandidatePool.ProtoReflect.Descriptor instead.
-func (*QueryAllCandidatePool) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryAllCandidatePoolRequest.ProtoReflect.Descriptor instead.
+func (*QueryAllCandidatePoolRequest) Descriptor() ([]byte, []int) {
 	return file_nova_poolincentive_v1_query_proto_rawDescGZIP(), []int{6}
 }
 
@@ -4607,14 +4607,14 @@ func (x *QueryAllCandidatePoolResponse) GetCandidatePools() []*CandidatePool {
 	return nil
 }
 
-type QueryAllIncentivePool struct {
+type QueryAllIncentivePoolRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *QueryAllIncentivePool) Reset() {
-	*x = QueryAllIncentivePool{}
+func (x *QueryAllIncentivePoolRequest) Reset() {
+	*x = QueryAllIncentivePoolRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_poolincentive_v1_query_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4622,14 +4622,14 @@ func (x *QueryAllIncentivePool) Reset() {
 	}
 }
 
-func (x *QueryAllIncentivePool) String() string {
+func (x *QueryAllIncentivePoolRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryAllIncentivePool) ProtoMessage() {}
+func (*QueryAllIncentivePoolRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryAllIncentivePool.ProtoReflect.Descriptor instead.
-func (*QueryAllIncentivePool) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryAllIncentivePoolRequest.ProtoReflect.Descriptor instead.
+func (*QueryAllIncentivePoolRequest) Descriptor() ([]byte, []int) {
 	return file_nova_poolincentive_v1_query_proto_rawDescGZIP(), []int{8}
 }
 
@@ -4689,98 +4689,115 @@ var file_nova_poolincentive_v1_query_proto_rawDesc = []byte{
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c,
 	0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x61, 0x72,
 	0x61, 0x6d, 0x73, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x22, 0x33, 0x0a, 0x18, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65,
-	0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x12, 0x17, 0x0a,
+	0x73, 0x22, 0x3a, 0x0a, 0x1f, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65,
+	0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x64, 0x22, 0x5e, 0x0a,
+	0x20, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64,
+	0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x6f,
+	0x6f, 0x6c, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0b, 0x70, 0x6f, 0x6f, 0x6c, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x3a, 0x0a,
+	0x1f, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x63, 0x65,
+	0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x64, 0x22, 0x5e, 0x0a, 0x20, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76,
+	0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x17, 0x0a,
 	0x07, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
-	0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x64, 0x22, 0x5e, 0x0a, 0x20, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53,
-	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f,
-	0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f,
-	0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x6f,
-	0x6c, 0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x61, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x6f, 0x6f, 0x6c, 0x41,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x33, 0x0a, 0x18, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53,
-	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f,
-	0x6f, 0x6c, 0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x06, 0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x64, 0x22, 0x5e, 0x0a, 0x20, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74,
-	0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x17, 0x0a, 0x07, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x06, 0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x6f, 0x6f, 0x6c,
-	0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
-	0x70, 0x6f, 0x6f, 0x6c, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x17, 0x0a, 0x15, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65,
-	0x50, 0x6f, 0x6f, 0x6c, 0x22, 0x74, 0x0a, 0x1d, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c,
-	0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x53, 0x0a, 0x0f, 0x63, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61,
-	0x74, 0x65, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x24,
-	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74,
-	0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65,
-	0x50, 0x6f, 0x6f, 0x6c, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0e, 0x63, 0x61, 0x6e, 0x64,
-	0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x73, 0x22, 0x17, 0x0a, 0x15, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50,
-	0x6f, 0x6f, 0x6c, 0x22, 0x74, 0x0a, 0x1d, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x49,
-	0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x53, 0x0a, 0x0f, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76,
-	0x65, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x24, 0x2e,
-	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69,
-	0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50,
-	0x6f, 0x6f, 0x6c, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0e, 0x69, 0x6e, 0x63, 0x65, 0x6e,
-	0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x73, 0x32, 0xff, 0x04, 0x0a, 0x05, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x12, 0x86, 0x01, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x29,
-	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74,
-	0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61,
-	0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
+	0x70, 0x6f, 0x6f, 0x6c, 0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x6f, 0x6f, 0x6c, 0x5f, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x6f,
+	0x6f, 0x6c, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x1e, 0x0a, 0x1c, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x41, 0x6c, 0x6c, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f,
+	0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x74, 0x0a, 0x1d, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x41, 0x6c, 0x6c, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f,
+	0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x53, 0x0a, 0x0f, 0x63, 0x61,
+	0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69,
+	0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x61, 0x6e, 0x64,
+	0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52,
+	0x0e, 0x63, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x73, 0x22,
+	0x1e, 0x0a, 0x1c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x49, 0x6e, 0x63, 0x65, 0x6e,
+	0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22,
+	0x74, 0x0a, 0x1d, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x49, 0x6e, 0x63, 0x65, 0x6e,
+	0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x53, 0x0a, 0x0f, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x5f, 0x70, 0x6f,
+	0x6f, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
 	0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76,
-	0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x25, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1f, 0x12, 0x1d, 0x2f,
-	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69,
-	0x76, 0x65, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x7f, 0x0a, 0x13,
-	0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50,
-	0x6f, 0x6f, 0x6c, 0x12, 0x2f, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69,
-	0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65,
-	0x50, 0x6f, 0x6f, 0x6c, 0x1a, 0x37, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c,
-	0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65,
-	0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74,
-	0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x76, 0x0a,
-	0x10, 0x41, 0x6c, 0x6c, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f,
-	0x6c, 0x12, 0x2c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63,
-	0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41,
-	0x6c, 0x6c, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x1a,
-	0x34, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e,
-	0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c,
-	0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x7c, 0x0a, 0x13, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49,
-	0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x12, 0x2f, 0x2e, 0x6e,
-	0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76,
-	0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65,
-	0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x1a, 0x34, 0x2e,
-	0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69,
-	0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x43, 0x61,
-	0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x76, 0x0a, 0x10, 0x41, 0x6c, 0x6c, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74,
-	0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x12, 0x2c, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70,
-	0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76,
-	0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x1a, 0x34, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f,
+	0x31, 0x2e, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x42,
+	0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0e, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65,
+	0x50, 0x6f, 0x6f, 0x6c, 0x73, 0x32, 0xf1, 0x06, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12,
+	0x86, 0x01, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x29, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e,
+	0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f,
 	0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50,
-	0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xe4, 0x01, 0x0a, 0x19,
-	0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63,
-	0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x45, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f,
-	0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x70, 0x6f,
-	0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2f, 0x76, 0x31, 0x3b, 0x70,
-	0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x76, 0x31, 0xa2, 0x02,
-	0x03, 0x4e, 0x50, 0x58, 0xaa, 0x02, 0x15, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x50, 0x6f, 0x6f, 0x6c,
-	0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x15, 0x4e,
-	0x6f, 0x76, 0x61, 0x5c, 0x50, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76,
-	0x65, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x21, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x50, 0x6f, 0x6f, 0x6c,
-	0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x4e, 0x6f, 0x76, 0x61, 0x3a,
-	0x3a, 0x50, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x3a, 0x3a,
-	0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x25, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1f, 0x12, 0x1d, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
+	0x2f, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2f, 0x76,
+	0x31, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0xbc, 0x01, 0x0a, 0x13, 0x53, 0x69, 0x6e,
+	0x67, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c,
+	0x12, 0x36, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65,
+	0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69,
+	0x6e, 0x67, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f,
+	0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x37, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e,
+	0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31,
+	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x43, 0x61, 0x6e, 0x64,
+	0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x34, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2e, 0x12, 0x2c, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
+	0x2f, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2f, 0x76,
+	0x31, 0x2f, 0x73, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x5f, 0x63, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61,
+	0x74, 0x65, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x12, 0xb0, 0x01, 0x0a, 0x10, 0x41, 0x6c, 0x6c, 0x43,
+	0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x12, 0x33, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76,
+	0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x43, 0x61, 0x6e,
+	0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x34, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63,
+	0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41,
+	0x6c, 0x6c, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x31, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2b, 0x12,
+	0x29, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e,
+	0x74, 0x69, 0x76, 0x65, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x6c, 0x6c, 0x5f, 0x63, 0x61, 0x6e, 0x64,
+	0x69, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x12, 0xb9, 0x01, 0x0a, 0x13, 0x53,
+	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f,
+	0x6f, 0x6c, 0x12, 0x36, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e,
+	0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50,
+	0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x34, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e,
+	0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x43, 0x61, 0x6e, 0x64, 0x69,
+	0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x34, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2e, 0x12, 0x2c, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f,
+	0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2f, 0x76, 0x31,
+	0x2f, 0x73, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x5f, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76,
+	0x65, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x12, 0xb0, 0x01, 0x0a, 0x10, 0x41, 0x6c, 0x6c, 0x49, 0x6e,
+	0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x12, 0x33, 0x2e, 0x6e, 0x6f,
+	0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65,
+	0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x49, 0x6e, 0x63, 0x65,
+	0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x34, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65,
+	0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c,
+	0x6c, 0x49, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x50, 0x6f, 0x6f, 0x6c, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x31, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2b, 0x12, 0x29,
+	0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74,
+	0x69, 0x76, 0x65, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x6c, 0x6c, 0x5f, 0x69, 0x6e, 0x63, 0x65, 0x6e,
+	0x74, 0x69, 0x76, 0x65, 0x5f, 0x70, 0x6f, 0x6f, 0x6c, 0x42, 0xe4, 0x01, 0x0a, 0x19, 0x63, 0x6f,
+	0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x70, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e,
+	0x74, 0x69, 0x76, 0x65, 0x2e, 0x76, 0x31, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72,
+	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x45, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f,
+	0x76, 0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x70, 0x6f, 0x6f, 0x6c,
+	0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2f, 0x76, 0x31, 0x3b, 0x70, 0x6f, 0x6f,
+	0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e,
+	0x50, 0x58, 0xaa, 0x02, 0x15, 0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x50, 0x6f, 0x6f, 0x6c, 0x69, 0x6e,
+	0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x15, 0x4e, 0x6f, 0x76,
+	0x61, 0x5c, 0x50, 0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x5c,
+	0x56, 0x31, 0xe2, 0x02, 0x21, 0x4e, 0x6f, 0x76, 0x61, 0x5c, 0x50, 0x6f, 0x6f, 0x6c, 0x69, 0x6e,
+	0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x50,
+	0x6f, 0x6f, 0x6c, 0x69, 0x6e, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x76, 0x65, 0x3a, 0x3a, 0x56, 0x31,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4799,13 +4816,13 @@ var file_nova_poolincentive_v1_query_proto_msgTypes = make([]protoimpl.MessageIn
 var file_nova_poolincentive_v1_query_proto_goTypes = []interface{}{
 	(*QueryParamsRequest)(nil),               // 0: nova.poolincentive.v1.QueryParamsRequest
 	(*QueryParamsResponse)(nil),              // 1: nova.poolincentive.v1.QueryParamsResponse
-	(*QuerySingleCandidatePool)(nil),         // 2: nova.poolincentive.v1.QuerySingleCandidatePool
+	(*QuerySingleCandidatePoolRequest)(nil),  // 2: nova.poolincentive.v1.QuerySingleCandidatePoolRequest
 	(*QuerySingleCandidatePoolResponse)(nil), // 3: nova.poolincentive.v1.QuerySingleCandidatePoolResponse
-	(*QuerySingleIncentivePool)(nil),         // 4: nova.poolincentive.v1.QuerySingleIncentivePool
+	(*QuerySingleIncentivePoolRequest)(nil),  // 4: nova.poolincentive.v1.QuerySingleIncentivePoolRequest
 	(*QuerySingleIncentivePoolResponse)(nil), // 5: nova.poolincentive.v1.QuerySingleIncentivePoolResponse
-	(*QueryAllCandidatePool)(nil),            // 6: nova.poolincentive.v1.QueryAllCandidatePool
+	(*QueryAllCandidatePoolRequest)(nil),     // 6: nova.poolincentive.v1.QueryAllCandidatePoolRequest
 	(*QueryAllCandidatePoolResponse)(nil),    // 7: nova.poolincentive.v1.QueryAllCandidatePoolResponse
-	(*QueryAllIncentivePool)(nil),            // 8: nova.poolincentive.v1.QueryAllIncentivePool
+	(*QueryAllIncentivePoolRequest)(nil),     // 8: nova.poolincentive.v1.QueryAllIncentivePoolRequest
 	(*QueryAllIncentivePoolResponse)(nil),    // 9: nova.poolincentive.v1.QueryAllIncentivePoolResponse
 	(*Params)(nil),                           // 10: nova.poolincentive.v1.Params
 	(*CandidatePool)(nil),                    // 11: nova.poolincentive.v1.CandidatePool
@@ -4816,10 +4833,10 @@ var file_nova_poolincentive_v1_query_proto_depIdxs = []int32{
 	11, // 1: nova.poolincentive.v1.QueryAllCandidatePoolResponse.candidate_pools:type_name -> nova.poolincentive.v1.CandidatePool
 	12, // 2: nova.poolincentive.v1.QueryAllIncentivePoolResponse.incentive_pools:type_name -> nova.poolincentive.v1.IncentivePool
 	0,  // 3: nova.poolincentive.v1.Query.Params:input_type -> nova.poolincentive.v1.QueryParamsRequest
-	2,  // 4: nova.poolincentive.v1.Query.SingleCandidatePool:input_type -> nova.poolincentive.v1.QuerySingleCandidatePool
-	6,  // 5: nova.poolincentive.v1.Query.AllCandidatePool:input_type -> nova.poolincentive.v1.QueryAllCandidatePool
-	4,  // 6: nova.poolincentive.v1.Query.SingleIncentivePool:input_type -> nova.poolincentive.v1.QuerySingleIncentivePool
-	8,  // 7: nova.poolincentive.v1.Query.AllIncentivePool:input_type -> nova.poolincentive.v1.QueryAllIncentivePool
+	2,  // 4: nova.poolincentive.v1.Query.SingleCandidatePool:input_type -> nova.poolincentive.v1.QuerySingleCandidatePoolRequest
+	6,  // 5: nova.poolincentive.v1.Query.AllCandidatePool:input_type -> nova.poolincentive.v1.QueryAllCandidatePoolRequest
+	4,  // 6: nova.poolincentive.v1.Query.SingleIncentivePool:input_type -> nova.poolincentive.v1.QuerySingleIncentivePoolRequest
+	8,  // 7: nova.poolincentive.v1.Query.AllIncentivePool:input_type -> nova.poolincentive.v1.QueryAllIncentivePoolRequest
 	1,  // 8: nova.poolincentive.v1.Query.Params:output_type -> nova.poolincentive.v1.QueryParamsResponse
 	3,  // 9: nova.poolincentive.v1.Query.SingleCandidatePool:output_type -> nova.poolincentive.v1.QuerySingleCandidatePoolResponse
 	7,  // 10: nova.poolincentive.v1.Query.AllCandidatePool:output_type -> nova.poolincentive.v1.QueryAllCandidatePoolResponse
@@ -4865,7 +4882,7 @@ func file_nova_poolincentive_v1_query_proto_init() {
 			}
 		}
 		file_nova_poolincentive_v1_query_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QuerySingleCandidatePool); i {
+			switch v := v.(*QuerySingleCandidatePoolRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4889,7 +4906,7 @@ func file_nova_poolincentive_v1_query_proto_init() {
 			}
 		}
 		file_nova_poolincentive_v1_query_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QuerySingleIncentivePool); i {
+			switch v := v.(*QuerySingleIncentivePoolRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4913,7 +4930,7 @@ func file_nova_poolincentive_v1_query_proto_init() {
 			}
 		}
 		file_nova_poolincentive_v1_query_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryAllCandidatePool); i {
+			switch v := v.(*QueryAllCandidatePoolRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4937,7 +4954,7 @@ func file_nova_poolincentive_v1_query_proto_init() {
 			}
 		}
 		file_nova_poolincentive_v1_query_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryAllIncentivePool); i {
+			switch v := v.(*QueryAllIncentivePoolRequest); i {
 			case 0:
 				return &v.state
 			case 1:

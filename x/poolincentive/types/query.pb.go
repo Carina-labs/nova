@@ -112,22 +112,22 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
-type QuerySingleCandidatePool struct {
+type QuerySingleCandidatePoolRequest struct {
 	PoolId string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
 }
 
-func (m *QuerySingleCandidatePool) Reset()         { *m = QuerySingleCandidatePool{} }
-func (m *QuerySingleCandidatePool) String() string { return proto.CompactTextString(m) }
-func (*QuerySingleCandidatePool) ProtoMessage()    {}
-func (*QuerySingleCandidatePool) Descriptor() ([]byte, []int) {
+func (m *QuerySingleCandidatePoolRequest) Reset()         { *m = QuerySingleCandidatePoolRequest{} }
+func (m *QuerySingleCandidatePoolRequest) String() string { return proto.CompactTextString(m) }
+func (*QuerySingleCandidatePoolRequest) ProtoMessage()    {}
+func (*QuerySingleCandidatePoolRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d5b1fdbaaf3e4295, []int{2}
 }
-func (m *QuerySingleCandidatePool) XXX_Unmarshal(b []byte) error {
+func (m *QuerySingleCandidatePoolRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QuerySingleCandidatePool) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QuerySingleCandidatePoolRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QuerySingleCandidatePool.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QuerySingleCandidatePoolRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -137,19 +137,19 @@ func (m *QuerySingleCandidatePool) XXX_Marshal(b []byte, deterministic bool) ([]
 		return b[:n], nil
 	}
 }
-func (m *QuerySingleCandidatePool) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QuerySingleCandidatePool.Merge(m, src)
+func (m *QuerySingleCandidatePoolRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QuerySingleCandidatePoolRequest.Merge(m, src)
 }
-func (m *QuerySingleCandidatePool) XXX_Size() int {
+func (m *QuerySingleCandidatePoolRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QuerySingleCandidatePool) XXX_DiscardUnknown() {
-	xxx_messageInfo_QuerySingleCandidatePool.DiscardUnknown(m)
+func (m *QuerySingleCandidatePoolRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QuerySingleCandidatePoolRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QuerySingleCandidatePool proto.InternalMessageInfo
+var xxx_messageInfo_QuerySingleCandidatePoolRequest proto.InternalMessageInfo
 
-func (m *QuerySingleCandidatePool) GetPoolId() string {
+func (m *QuerySingleCandidatePoolRequest) GetPoolId() string {
 	if m != nil {
 		return m.PoolId
 	}
@@ -208,22 +208,22 @@ func (m *QuerySingleCandidatePoolResponse) GetPoolAddress() string {
 	return ""
 }
 
-type QuerySingleIncentivePool struct {
+type QuerySingleIncentivePoolRequest struct {
 	PoolId string `protobuf:"bytes,1,opt,name=pool_id,json=poolId,proto3" json:"pool_id,omitempty"`
 }
 
-func (m *QuerySingleIncentivePool) Reset()         { *m = QuerySingleIncentivePool{} }
-func (m *QuerySingleIncentivePool) String() string { return proto.CompactTextString(m) }
-func (*QuerySingleIncentivePool) ProtoMessage()    {}
-func (*QuerySingleIncentivePool) Descriptor() ([]byte, []int) {
+func (m *QuerySingleIncentivePoolRequest) Reset()         { *m = QuerySingleIncentivePoolRequest{} }
+func (m *QuerySingleIncentivePoolRequest) String() string { return proto.CompactTextString(m) }
+func (*QuerySingleIncentivePoolRequest) ProtoMessage()    {}
+func (*QuerySingleIncentivePoolRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d5b1fdbaaf3e4295, []int{4}
 }
-func (m *QuerySingleIncentivePool) XXX_Unmarshal(b []byte) error {
+func (m *QuerySingleIncentivePoolRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QuerySingleIncentivePool) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QuerySingleIncentivePoolRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QuerySingleIncentivePool.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QuerySingleIncentivePoolRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -233,19 +233,19 @@ func (m *QuerySingleIncentivePool) XXX_Marshal(b []byte, deterministic bool) ([]
 		return b[:n], nil
 	}
 }
-func (m *QuerySingleIncentivePool) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QuerySingleIncentivePool.Merge(m, src)
+func (m *QuerySingleIncentivePoolRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QuerySingleIncentivePoolRequest.Merge(m, src)
 }
-func (m *QuerySingleIncentivePool) XXX_Size() int {
+func (m *QuerySingleIncentivePoolRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QuerySingleIncentivePool) XXX_DiscardUnknown() {
-	xxx_messageInfo_QuerySingleIncentivePool.DiscardUnknown(m)
+func (m *QuerySingleIncentivePoolRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QuerySingleIncentivePoolRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QuerySingleIncentivePool proto.InternalMessageInfo
+var xxx_messageInfo_QuerySingleIncentivePoolRequest proto.InternalMessageInfo
 
-func (m *QuerySingleIncentivePool) GetPoolId() string {
+func (m *QuerySingleIncentivePoolRequest) GetPoolId() string {
 	if m != nil {
 		return m.PoolId
 	}
@@ -304,21 +304,21 @@ func (m *QuerySingleIncentivePoolResponse) GetPoolAddress() string {
 	return ""
 }
 
-type QueryAllCandidatePool struct {
+type QueryAllCandidatePoolRequest struct {
 }
 
-func (m *QueryAllCandidatePool) Reset()         { *m = QueryAllCandidatePool{} }
-func (m *QueryAllCandidatePool) String() string { return proto.CompactTextString(m) }
-func (*QueryAllCandidatePool) ProtoMessage()    {}
-func (*QueryAllCandidatePool) Descriptor() ([]byte, []int) {
+func (m *QueryAllCandidatePoolRequest) Reset()         { *m = QueryAllCandidatePoolRequest{} }
+func (m *QueryAllCandidatePoolRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllCandidatePoolRequest) ProtoMessage()    {}
+func (*QueryAllCandidatePoolRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d5b1fdbaaf3e4295, []int{6}
 }
-func (m *QueryAllCandidatePool) XXX_Unmarshal(b []byte) error {
+func (m *QueryAllCandidatePoolRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryAllCandidatePool) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryAllCandidatePoolRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryAllCandidatePool.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryAllCandidatePoolRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -328,17 +328,17 @@ func (m *QueryAllCandidatePool) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *QueryAllCandidatePool) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllCandidatePool.Merge(m, src)
+func (m *QueryAllCandidatePoolRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllCandidatePoolRequest.Merge(m, src)
 }
-func (m *QueryAllCandidatePool) XXX_Size() int {
+func (m *QueryAllCandidatePoolRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryAllCandidatePool) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllCandidatePool.DiscardUnknown(m)
+func (m *QueryAllCandidatePoolRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllCandidatePoolRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryAllCandidatePool proto.InternalMessageInfo
+var xxx_messageInfo_QueryAllCandidatePoolRequest proto.InternalMessageInfo
 
 type QueryAllCandidatePoolResponse struct {
 	CandidatePools []CandidatePool `protobuf:"bytes,1,rep,name=candidate_pools,json=candidatePools,proto3" json:"candidate_pools"`
@@ -384,21 +384,21 @@ func (m *QueryAllCandidatePoolResponse) GetCandidatePools() []CandidatePool {
 	return nil
 }
 
-type QueryAllIncentivePool struct {
+type QueryAllIncentivePoolRequest struct {
 }
 
-func (m *QueryAllIncentivePool) Reset()         { *m = QueryAllIncentivePool{} }
-func (m *QueryAllIncentivePool) String() string { return proto.CompactTextString(m) }
-func (*QueryAllIncentivePool) ProtoMessage()    {}
-func (*QueryAllIncentivePool) Descriptor() ([]byte, []int) {
+func (m *QueryAllIncentivePoolRequest) Reset()         { *m = QueryAllIncentivePoolRequest{} }
+func (m *QueryAllIncentivePoolRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllIncentivePoolRequest) ProtoMessage()    {}
+func (*QueryAllIncentivePoolRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d5b1fdbaaf3e4295, []int{8}
 }
-func (m *QueryAllIncentivePool) XXX_Unmarshal(b []byte) error {
+func (m *QueryAllIncentivePoolRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryAllIncentivePool) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryAllIncentivePoolRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryAllIncentivePool.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryAllIncentivePoolRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -408,17 +408,17 @@ func (m *QueryAllIncentivePool) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *QueryAllIncentivePool) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllIncentivePool.Merge(m, src)
+func (m *QueryAllIncentivePoolRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllIncentivePoolRequest.Merge(m, src)
 }
-func (m *QueryAllIncentivePool) XXX_Size() int {
+func (m *QueryAllIncentivePoolRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryAllIncentivePool) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllIncentivePool.DiscardUnknown(m)
+func (m *QueryAllIncentivePoolRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllIncentivePoolRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryAllIncentivePool proto.InternalMessageInfo
+var xxx_messageInfo_QueryAllIncentivePoolRequest proto.InternalMessageInfo
 
 type QueryAllIncentivePoolResponse struct {
 	IncentivePools []IncentivePool `protobuf:"bytes,1,rep,name=incentive_pools,json=incentivePools,proto3" json:"incentive_pools"`
@@ -467,52 +467,56 @@ func (m *QueryAllIncentivePoolResponse) GetIncentivePools() []IncentivePool {
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "nova.poolincentive.v1.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "nova.poolincentive.v1.QueryParamsResponse")
-	proto.RegisterType((*QuerySingleCandidatePool)(nil), "nova.poolincentive.v1.QuerySingleCandidatePool")
+	proto.RegisterType((*QuerySingleCandidatePoolRequest)(nil), "nova.poolincentive.v1.QuerySingleCandidatePoolRequest")
 	proto.RegisterType((*QuerySingleCandidatePoolResponse)(nil), "nova.poolincentive.v1.QuerySingleCandidatePoolResponse")
-	proto.RegisterType((*QuerySingleIncentivePool)(nil), "nova.poolincentive.v1.QuerySingleIncentivePool")
+	proto.RegisterType((*QuerySingleIncentivePoolRequest)(nil), "nova.poolincentive.v1.QuerySingleIncentivePoolRequest")
 	proto.RegisterType((*QuerySingleIncentivePoolResponse)(nil), "nova.poolincentive.v1.QuerySingleIncentivePoolResponse")
-	proto.RegisterType((*QueryAllCandidatePool)(nil), "nova.poolincentive.v1.QueryAllCandidatePool")
+	proto.RegisterType((*QueryAllCandidatePoolRequest)(nil), "nova.poolincentive.v1.QueryAllCandidatePoolRequest")
 	proto.RegisterType((*QueryAllCandidatePoolResponse)(nil), "nova.poolincentive.v1.QueryAllCandidatePoolResponse")
-	proto.RegisterType((*QueryAllIncentivePool)(nil), "nova.poolincentive.v1.QueryAllIncentivePool")
+	proto.RegisterType((*QueryAllIncentivePoolRequest)(nil), "nova.poolincentive.v1.QueryAllIncentivePoolRequest")
 	proto.RegisterType((*QueryAllIncentivePoolResponse)(nil), "nova.poolincentive.v1.QueryAllIncentivePoolResponse")
 }
 
 func init() { proto.RegisterFile("nova/poolincentive/v1/query.proto", fileDescriptor_d5b1fdbaaf3e4295) }
 
 var fileDescriptor_d5b1fdbaaf3e4295 = []byte{
-	// 512 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xdf, 0x6b, 0xd3, 0x40,
-	0x1c, 0x6f, 0xe6, 0xac, 0xf8, 0xad, 0x38, 0xb9, 0x6d, 0xac, 0x04, 0x9b, 0x6d, 0x51, 0x61, 0x8a,
-	0xe6, 0x68, 0x27, 0xf8, 0xe0, 0xd3, 0xb6, 0xa7, 0xe1, 0xcb, 0x6c, 0xdf, 0x7c, 0x70, 0x5c, 0x9b,
-	0x23, 0x1e, 0x64, 0x77, 0x59, 0xee, 0x1a, 0x1c, 0x08, 0x82, 0x0f, 0x3e, 0x0b, 0xfe, 0x53, 0x7b,
-	0x1c, 0xf8, 0xe2, 0x93, 0x48, 0xeb, 0xff, 0xa1, 0xe4, 0xd2, 0x84, 0x5e, 0x4d, 0x6b, 0x23, 0x7b,
-	0x6b, 0xef, 0xfb, 0xf9, 0x99, 0xfb, 0x26, 0xb0, 0xcb, 0x45, 0x42, 0x70, 0x24, 0x44, 0xc8, 0xf8,
-	0x80, 0x72, 0xc5, 0x12, 0x8a, 0x93, 0x36, 0x3e, 0x1f, 0xd2, 0xf8, 0xc2, 0x8b, 0x62, 0xa1, 0x04,
-	0xda, 0x4c, 0x21, 0x9e, 0x01, 0xf1, 0x92, 0xb6, 0xbd, 0x11, 0x88, 0x40, 0x68, 0x04, 0x4e, 0x7f,
-	0x65, 0x60, 0xfb, 0x7e, 0x20, 0x44, 0x10, 0x52, 0x4c, 0x22, 0x86, 0x09, 0xe7, 0x42, 0x11, 0xc5,
-	0x04, 0x97, 0x93, 0xa9, 0x5b, 0xee, 0x16, 0x91, 0x98, 0x9c, 0xe5, 0x98, 0x07, 0xe5, 0x98, 0x80,
-	0x72, 0x2a, 0xd9, 0x04, 0xe4, 0x6e, 0x00, 0x7a, 0x9d, 0x46, 0x3c, 0xd1, 0xcc, 0x2e, 0x3d, 0x1f,
-	0x52, 0xa9, 0xdc, 0x2e, 0xac, 0x1b, 0xa7, 0x32, 0x12, 0x5c, 0x52, 0xf4, 0x12, 0xea, 0x99, 0x43,
-	0xd3, 0xda, 0xb1, 0xf6, 0x1a, 0x9d, 0x96, 0x57, 0xda, 0xc8, 0xcb, 0x68, 0x87, 0xab, 0x97, 0x3f,
-	0xb6, 0x6b, 0xdd, 0x09, 0xc5, 0xdd, 0x87, 0xa6, 0xd6, 0xec, 0x31, 0x1e, 0x84, 0xf4, 0x88, 0x70,
-	0x9f, 0xf9, 0x44, 0xd1, 0x13, 0x21, 0x42, 0xb4, 0x05, 0xb7, 0x52, 0x91, 0x53, 0xe6, 0x6b, 0xe5,
-	0xdb, 0xdd, 0x7a, 0xfa, 0xf7, 0xd8, 0x77, 0xdf, 0xc2, 0xce, 0x3c, 0x52, 0x91, 0x6a, 0x1e, 0x19,
-	0xed, 0xc2, 0x1d, 0x3d, 0x20, 0xbe, 0x1f, 0x53, 0x29, 0x9b, 0x2b, 0x7a, 0xda, 0x48, 0xcf, 0x0e,
-	0xb2, 0xa3, 0x99, 0x50, 0xc7, 0x79, 0x89, 0x2a, 0xa1, 0x0c, 0xd2, 0xb5, 0x84, 0xda, 0x82, 0x4d,
-	0xad, 0x7f, 0x10, 0x86, 0x46, 0x63, 0x57, 0x41, 0xab, 0x74, 0x50, 0xb8, 0xf6, 0x60, 0x6d, 0x90,
-	0x0f, 0x4e, 0x53, 0xc9, 0xf4, 0xa6, 0x6e, 0xec, 0x35, 0x3a, 0x0f, 0xe7, 0xdc, 0x94, 0x21, 0x33,
-	0xb9, 0xb0, 0xbb, 0x83, 0xe9, 0x43, 0x23, 0x8e, 0xd1, 0x75, 0x3a, 0x4e, 0xf9, 0x43, 0xe8, 0xc1,
-	0x5a, 0xe1, 0xb6, 0x54, 0x1c, 0x43, 0x26, 0x8f, 0xc3, 0xa6, 0x0f, 0x65, 0xe7, 0xf7, 0x2a, 0xdc,
-	0xd4, 0xb6, 0xe8, 0xb3, 0x05, 0xf5, 0x6c, 0xd5, 0xd0, 0xe3, 0x39, 0x82, 0x7f, 0xef, 0xb6, 0xfd,
-	0x64, 0x19, 0x68, 0x56, 0xc0, 0x7d, 0xf4, 0xe9, 0xdb, 0xaf, 0xaf, 0x2b, 0xdb, 0xa8, 0x85, 0x17,
-	0xbd, 0x6f, 0xe8, 0x23, 0xac, 0x97, 0x6d, 0x35, 0x5e, 0xe4, 0x54, 0x42, 0xb0, 0x5f, 0x54, 0x24,
-	0x14, 0x0f, 0x3a, 0x81, 0x7b, 0xb3, 0x3b, 0x81, 0x9e, 0x2e, 0x12, 0x9b, 0x45, 0xdb, 0xcf, 0xab,
-	0xa0, 0x0b, 0xdf, 0x0f, 0x79, 0x71, 0xf3, 0xcd, 0x59, 0xa2, 0xb8, 0x41, 0xf8, 0x4f, 0xf7, 0xac,
-	0xb5, 0x69, 0xfd, 0xaf, 0xd6, 0xd5, 0x7c, 0x4b, 0xd7, 0xfa, 0xf0, 0xd5, 0xe5, 0xc8, 0xb1, 0xae,
-	0x46, 0x8e, 0xf5, 0x73, 0xe4, 0x58, 0x5f, 0xc6, 0x4e, 0xed, 0x6a, 0xec, 0xd4, 0xbe, 0x8f, 0x9d,
-	0xda, 0x9b, 0x76, 0xc0, 0xd4, 0xbb, 0x61, 0xdf, 0x1b, 0x88, 0x33, 0x7c, 0x44, 0x62, 0xc6, 0xc9,
-	0xb3, 0x90, 0xf4, 0x65, 0xb6, 0x3d, 0xef, 0x67, 0xf6, 0x47, 0x5d, 0x44, 0x54, 0xf6, 0xeb, 0xfa,
-	0x3b, 0xbc, 0xff, 0x27, 0x00, 0x00, 0xff, 0xff, 0xb0, 0x46, 0x30, 0x44, 0x40, 0x06, 0x00, 0x00,
+	// 561 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x95, 0x4d, 0x6f, 0xd3, 0x30,
+	0x18, 0xc7, 0x9b, 0x01, 0x45, 0xb8, 0x88, 0x21, 0x6f, 0x88, 0x29, 0x5a, 0xd3, 0x2d, 0x80, 0xb4,
+	0xf1, 0x92, 0xa8, 0xdd, 0x04, 0x12, 0x9c, 0xb6, 0x9d, 0x26, 0x2e, 0xa3, 0xbd, 0x71, 0xa0, 0x72,
+	0x1b, 0x2b, 0x58, 0xca, 0xec, 0x2c, 0x4e, 0x2b, 0x76, 0xe5, 0xc0, 0x19, 0x89, 0x2f, 0xc2, 0x15,
+	0x89, 0x0f, 0xb0, 0xe3, 0x24, 0x2e, 0x9c, 0x10, 0x6a, 0xf9, 0x02, 0x7c, 0x03, 0x14, 0xc7, 0x99,
+	0xea, 0x60, 0x97, 0xac, 0xe2, 0xd6, 0x3e, 0x2f, 0xff, 0xe7, 0xe7, 0xbf, 0x1f, 0x2b, 0x60, 0x93,
+	0xb2, 0x31, 0xf2, 0x63, 0xc6, 0x22, 0x42, 0x87, 0x98, 0xa6, 0x64, 0x8c, 0xfd, 0x71, 0xdb, 0x3f,
+	0x19, 0xe1, 0xe4, 0xd4, 0x8b, 0x13, 0x96, 0x32, 0x78, 0x27, 0x2b, 0xf1, 0x94, 0x12, 0x6f, 0xdc,
+	0xb6, 0x57, 0x43, 0x16, 0x32, 0x51, 0xe1, 0x67, 0xbf, 0xf2, 0x62, 0x7b, 0x3d, 0x64, 0x2c, 0x8c,
+	0xb0, 0x8f, 0x62, 0xe2, 0x23, 0x4a, 0x59, 0x8a, 0x52, 0xc2, 0x28, 0x97, 0x59, 0x57, 0x3f, 0x2d,
+	0x46, 0x09, 0x3a, 0x2e, 0x6a, 0xee, 0xe9, 0x6b, 0x42, 0x4c, 0x31, 0x27, 0xb2, 0xc8, 0x5d, 0x05,
+	0xf0, 0x55, 0x86, 0x78, 0x24, 0x3a, 0xbb, 0xf8, 0x64, 0x84, 0x79, 0xea, 0x76, 0xc1, 0x8a, 0x12,
+	0xe5, 0x31, 0xa3, 0x1c, 0xc3, 0x17, 0xa0, 0x9e, 0x4f, 0x58, 0xb3, 0x36, 0xac, 0xad, 0x46, 0xa7,
+	0xe9, 0x69, 0x4f, 0xe4, 0xe5, 0x6d, 0xfb, 0x57, 0xcf, 0x7e, 0xb4, 0x6a, 0x5d, 0xd9, 0xe2, 0x3e,
+	0x07, 0x2d, 0xa1, 0xd9, 0x23, 0x34, 0x8c, 0xf0, 0x01, 0xa2, 0x01, 0x09, 0x50, 0x8a, 0x8f, 0x18,
+	0x8b, 0xe4, 0x58, 0x78, 0x17, 0x5c, 0xcf, 0xb4, 0xfa, 0x24, 0x10, 0x03, 0x6e, 0x74, 0xeb, 0xd9,
+	0xdf, 0xc3, 0xc0, 0x7d, 0x03, 0x36, 0xcc, 0xbd, 0x12, 0xce, 0xd4, 0x0c, 0x37, 0xc1, 0x4d, 0x91,
+	0x40, 0x41, 0x90, 0x60, 0xce, 0xd7, 0x96, 0x44, 0xb6, 0x91, 0xc5, 0xf6, 0xf2, 0x50, 0x89, 0xed,
+	0xb0, 0x38, 0xcb, 0x02, 0x6c, 0xa5, 0xde, 0xff, 0xc0, 0xe6, 0x80, 0x75, 0xa1, 0xbf, 0x17, 0x45,
+	0x3a, 0xd3, 0xdc, 0x14, 0x34, 0x0d, 0x79, 0x39, 0xbc, 0x07, 0x96, 0x87, 0x45, 0xa2, 0x9f, 0x29,
+	0x67, 0xd7, 0x77, 0x65, 0xab, 0xd1, 0xb9, 0x6f, 0xb8, 0x3e, 0x45, 0x46, 0xde, 0xe2, 0xad, 0xe1,
+	0x6c, 0x50, 0xa1, 0xd2, 0xd9, 0x35, 0x4b, 0xa5, 0xb7, 0xa4, 0x07, 0x96, 0x2f, 0x86, 0x56, 0xa2,
+	0x52, 0x64, 0x0a, 0x2a, 0x32, 0x1b, 0xe4, 0x9d, 0xdf, 0x75, 0x70, 0x4d, 0x8c, 0x85, 0x1f, 0x2c,
+	0x50, 0xcf, 0xd7, 0x10, 0x6e, 0x1b, 0x04, 0xff, 0xde, 0x7b, 0xfb, 0x61, 0x95, 0xd2, 0xfc, 0x00,
+	0xee, 0x83, 0xf7, 0xdf, 0x7e, 0x7d, 0x5a, 0x6a, 0xc1, 0xa6, 0x3f, 0xef, 0x2d, 0xc2, 0xaf, 0x16,
+	0x58, 0xd1, 0xac, 0x2d, 0x7c, 0x3a, 0x6f, 0x94, 0xf9, 0x8d, 0xd8, 0xcf, 0x2e, 0xdd, 0x27, 0x79,
+	0x77, 0x05, 0xaf, 0x07, 0x1f, 0x1b, 0x78, 0xb9, 0xe8, 0xed, 0xab, 0xab, 0x02, 0x3f, 0x5b, 0xe0,
+	0x76, 0x79, 0xb3, 0xe0, 0xce, 0x3c, 0x06, 0xc3, 0x9e, 0xda, 0xbb, 0x97, 0x6b, 0x92, 0xd4, 0x6d,
+	0x41, 0xfd, 0x08, 0x6e, 0x1b, 0xa8, 0x51, 0x14, 0x95, 0x91, 0xbf, 0x5c, 0x38, 0xae, 0xac, 0x4c,
+	0x15, 0xc7, 0x75, 0xab, 0xbc, 0x20, 0x78, 0x45, 0xbb, 0xd5, 0x37, 0x50, 0xd8, 0xad, 0x82, 0xff,
+	0xcb, 0xee, 0x85, 0xa8, 0xb5, 0xaf, 0xb2, 0x92, 0xdd, 0x2a, 0xf2, 0xfe, 0xcb, 0xb3, 0x89, 0x63,
+	0x9d, 0x4f, 0x1c, 0xeb, 0xe7, 0xc4, 0xb1, 0x3e, 0x4e, 0x9d, 0xda, 0xf9, 0xd4, 0xa9, 0x7d, 0x9f,
+	0x3a, 0xb5, 0xd7, 0xed, 0x90, 0xa4, 0x6f, 0x47, 0x03, 0x6f, 0xc8, 0x8e, 0xfd, 0x03, 0x94, 0x10,
+	0x8a, 0x9e, 0x44, 0x68, 0xc0, 0x73, 0xe9, 0x77, 0x25, 0xf1, 0xf4, 0x34, 0xc6, 0x7c, 0x50, 0x17,
+	0x5f, 0xa5, 0x9d, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x20, 0xc4, 0x61, 0xb5, 0x4e, 0x07, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -528,10 +532,10 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
-	SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePool, opts ...grpc.CallOption) (*QuerySingleCandidatePoolResponse, error)
-	AllCandidatePool(ctx context.Context, in *QueryAllCandidatePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
-	SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
-	AllIncentivePool(ctx context.Context, in *QueryAllIncentivePool, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error)
+	SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePoolRequest, opts ...grpc.CallOption) (*QuerySingleCandidatePoolResponse, error)
+	AllCandidatePool(ctx context.Context, in *QueryAllCandidatePoolRequest, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
+	SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePoolRequest, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
+	AllIncentivePool(ctx context.Context, in *QueryAllIncentivePoolRequest, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error)
 }
 
 type queryClient struct {
@@ -551,7 +555,7 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
-func (c *queryClient) SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePool, opts ...grpc.CallOption) (*QuerySingleCandidatePoolResponse, error) {
+func (c *queryClient) SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePoolRequest, opts ...grpc.CallOption) (*QuerySingleCandidatePoolResponse, error) {
 	out := new(QuerySingleCandidatePoolResponse)
 	err := c.cc.Invoke(ctx, "/nova.poolincentive.v1.Query/SingleCandidatePool", in, out, opts...)
 	if err != nil {
@@ -560,7 +564,7 @@ func (c *queryClient) SingleCandidatePool(ctx context.Context, in *QuerySingleCa
 	return out, nil
 }
 
-func (c *queryClient) AllCandidatePool(ctx context.Context, in *QueryAllCandidatePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error) {
+func (c *queryClient) AllCandidatePool(ctx context.Context, in *QueryAllCandidatePoolRequest, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error) {
 	out := new(QueryAllCandidatePoolResponse)
 	err := c.cc.Invoke(ctx, "/nova.poolincentive.v1.Query/AllCandidatePool", in, out, opts...)
 	if err != nil {
@@ -569,7 +573,7 @@ func (c *queryClient) AllCandidatePool(ctx context.Context, in *QueryAllCandidat
 	return out, nil
 }
 
-func (c *queryClient) SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePool, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error) {
+func (c *queryClient) SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePoolRequest, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error) {
 	out := new(QueryAllCandidatePoolResponse)
 	err := c.cc.Invoke(ctx, "/nova.poolincentive.v1.Query/SingleIncentivePool", in, out, opts...)
 	if err != nil {
@@ -578,7 +582,7 @@ func (c *queryClient) SingleIncentivePool(ctx context.Context, in *QuerySingleIn
 	return out, nil
 }
 
-func (c *queryClient) AllIncentivePool(ctx context.Context, in *QueryAllIncentivePool, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error) {
+func (c *queryClient) AllIncentivePool(ctx context.Context, in *QueryAllIncentivePoolRequest, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error) {
 	out := new(QueryAllIncentivePoolResponse)
 	err := c.cc.Invoke(ctx, "/nova.poolincentive.v1.Query/AllIncentivePool", in, out, opts...)
 	if err != nil {
@@ -590,10 +594,10 @@ func (c *queryClient) AllIncentivePool(ctx context.Context, in *QueryAllIncentiv
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
-	SingleCandidatePool(context.Context, *QuerySingleCandidatePool) (*QuerySingleCandidatePoolResponse, error)
-	AllCandidatePool(context.Context, *QueryAllCandidatePool) (*QueryAllCandidatePoolResponse, error)
-	SingleIncentivePool(context.Context, *QuerySingleIncentivePool) (*QueryAllCandidatePoolResponse, error)
-	AllIncentivePool(context.Context, *QueryAllIncentivePool) (*QueryAllIncentivePoolResponse, error)
+	SingleCandidatePool(context.Context, *QuerySingleCandidatePoolRequest) (*QuerySingleCandidatePoolResponse, error)
+	AllCandidatePool(context.Context, *QueryAllCandidatePoolRequest) (*QueryAllCandidatePoolResponse, error)
+	SingleIncentivePool(context.Context, *QuerySingleIncentivePoolRequest) (*QueryAllCandidatePoolResponse, error)
+	AllIncentivePool(context.Context, *QueryAllIncentivePoolRequest) (*QueryAllIncentivePoolResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -603,16 +607,16 @@ type UnimplementedQueryServer struct {
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
-func (*UnimplementedQueryServer) SingleCandidatePool(ctx context.Context, req *QuerySingleCandidatePool) (*QuerySingleCandidatePoolResponse, error) {
+func (*UnimplementedQueryServer) SingleCandidatePool(ctx context.Context, req *QuerySingleCandidatePoolRequest) (*QuerySingleCandidatePoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SingleCandidatePool not implemented")
 }
-func (*UnimplementedQueryServer) AllCandidatePool(ctx context.Context, req *QueryAllCandidatePool) (*QueryAllCandidatePoolResponse, error) {
+func (*UnimplementedQueryServer) AllCandidatePool(ctx context.Context, req *QueryAllCandidatePoolRequest) (*QueryAllCandidatePoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllCandidatePool not implemented")
 }
-func (*UnimplementedQueryServer) SingleIncentivePool(ctx context.Context, req *QuerySingleIncentivePool) (*QueryAllCandidatePoolResponse, error) {
+func (*UnimplementedQueryServer) SingleIncentivePool(ctx context.Context, req *QuerySingleIncentivePoolRequest) (*QueryAllCandidatePoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SingleIncentivePool not implemented")
 }
-func (*UnimplementedQueryServer) AllIncentivePool(ctx context.Context, req *QueryAllIncentivePool) (*QueryAllIncentivePoolResponse, error) {
+func (*UnimplementedQueryServer) AllIncentivePool(ctx context.Context, req *QueryAllIncentivePoolRequest) (*QueryAllIncentivePoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllIncentivePool not implemented")
 }
 
@@ -639,7 +643,7 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 }
 
 func _Query_SingleCandidatePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QuerySingleCandidatePool)
+	in := new(QuerySingleCandidatePoolRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -651,13 +655,13 @@ func _Query_SingleCandidatePool_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/nova.poolincentive.v1.Query/SingleCandidatePool",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).SingleCandidatePool(ctx, req.(*QuerySingleCandidatePool))
+		return srv.(QueryServer).SingleCandidatePool(ctx, req.(*QuerySingleCandidatePoolRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_AllCandidatePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryAllCandidatePool)
+	in := new(QueryAllCandidatePoolRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -669,13 +673,13 @@ func _Query_AllCandidatePool_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/nova.poolincentive.v1.Query/AllCandidatePool",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).AllCandidatePool(ctx, req.(*QueryAllCandidatePool))
+		return srv.(QueryServer).AllCandidatePool(ctx, req.(*QueryAllCandidatePoolRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_SingleIncentivePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QuerySingleIncentivePool)
+	in := new(QuerySingleIncentivePoolRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -687,13 +691,13 @@ func _Query_SingleIncentivePool_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/nova.poolincentive.v1.Query/SingleIncentivePool",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).SingleIncentivePool(ctx, req.(*QuerySingleIncentivePool))
+		return srv.(QueryServer).SingleIncentivePool(ctx, req.(*QuerySingleIncentivePoolRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_AllIncentivePool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryAllIncentivePool)
+	in := new(QueryAllIncentivePoolRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -705,7 +709,7 @@ func _Query_AllIncentivePool_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/nova.poolincentive.v1.Query/AllIncentivePool",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).AllIncentivePool(ctx, req.(*QueryAllIncentivePool))
+		return srv.(QueryServer).AllIncentivePool(ctx, req.(*QueryAllIncentivePoolRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -795,7 +799,7 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QuerySingleCandidatePool) Marshal() (dAtA []byte, err error) {
+func (m *QuerySingleCandidatePoolRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -805,12 +809,12 @@ func (m *QuerySingleCandidatePool) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QuerySingleCandidatePool) MarshalTo(dAtA []byte) (int, error) {
+func (m *QuerySingleCandidatePoolRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QuerySingleCandidatePool) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QuerySingleCandidatePoolRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -862,7 +866,7 @@ func (m *QuerySingleCandidatePoolResponse) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 
-func (m *QuerySingleIncentivePool) Marshal() (dAtA []byte, err error) {
+func (m *QuerySingleIncentivePoolRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -872,12 +876,12 @@ func (m *QuerySingleIncentivePool) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QuerySingleIncentivePool) MarshalTo(dAtA []byte) (int, error) {
+func (m *QuerySingleIncentivePoolRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QuerySingleIncentivePool) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QuerySingleIncentivePoolRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -929,7 +933,7 @@ func (m *QuerySingleIncentivePoolResponse) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryAllCandidatePool) Marshal() (dAtA []byte, err error) {
+func (m *QueryAllCandidatePoolRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -939,12 +943,12 @@ func (m *QueryAllCandidatePool) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryAllCandidatePool) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryAllCandidatePoolRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryAllCandidatePool) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryAllCandidatePoolRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -989,7 +993,7 @@ func (m *QueryAllCandidatePoolResponse) MarshalToSizedBuffer(dAtA []byte) (int, 
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryAllIncentivePool) Marshal() (dAtA []byte, err error) {
+func (m *QueryAllIncentivePoolRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -999,12 +1003,12 @@ func (m *QueryAllIncentivePool) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryAllIncentivePool) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryAllIncentivePoolRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryAllIncentivePool) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryAllIncentivePoolRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1080,7 +1084,7 @@ func (m *QueryParamsResponse) Size() (n int) {
 	return n
 }
 
-func (m *QuerySingleCandidatePool) Size() (n int) {
+func (m *QuerySingleCandidatePoolRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1110,7 +1114,7 @@ func (m *QuerySingleCandidatePoolResponse) Size() (n int) {
 	return n
 }
 
-func (m *QuerySingleIncentivePool) Size() (n int) {
+func (m *QuerySingleIncentivePoolRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1140,7 +1144,7 @@ func (m *QuerySingleIncentivePoolResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryAllCandidatePool) Size() (n int) {
+func (m *QueryAllCandidatePoolRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1164,7 +1168,7 @@ func (m *QueryAllCandidatePoolResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryAllIncentivePool) Size() (n int) {
+func (m *QueryAllIncentivePoolRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1327,7 +1331,7 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QuerySingleCandidatePool) Unmarshal(dAtA []byte) error {
+func (m *QuerySingleCandidatePoolRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1350,10 +1354,10 @@ func (m *QuerySingleCandidatePool) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QuerySingleCandidatePool: wiretype end group for non-group")
+			return fmt.Errorf("proto: QuerySingleCandidatePoolRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QuerySingleCandidatePool: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QuerySingleCandidatePoolRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1523,7 +1527,7 @@ func (m *QuerySingleCandidatePoolResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QuerySingleIncentivePool) Unmarshal(dAtA []byte) error {
+func (m *QuerySingleIncentivePoolRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1546,10 +1550,10 @@ func (m *QuerySingleIncentivePool) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QuerySingleIncentivePool: wiretype end group for non-group")
+			return fmt.Errorf("proto: QuerySingleIncentivePoolRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QuerySingleIncentivePool: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QuerySingleIncentivePoolRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1719,7 +1723,7 @@ func (m *QuerySingleIncentivePoolResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryAllCandidatePool) Unmarshal(dAtA []byte) error {
+func (m *QueryAllCandidatePoolRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1742,10 +1746,10 @@ func (m *QueryAllCandidatePool) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllCandidatePool: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryAllCandidatePoolRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllCandidatePool: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryAllCandidatePoolRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
@@ -1853,7 +1857,7 @@ func (m *QueryAllCandidatePoolResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryAllIncentivePool) Unmarshal(dAtA []byte) error {
+func (m *QueryAllIncentivePoolRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1876,10 +1880,10 @@ func (m *QueryAllIncentivePool) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllIncentivePool: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryAllIncentivePoolRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllIncentivePool: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryAllIncentivePoolRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

@@ -12,16 +12,22 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/nova/poolincentive/v1/params";
   }
-
-  rpc SingleCandidatePool(QuerySingleCandidatePool) returns (QuerySingleCandidatePoolResponse);
-  rpc AllCandidatePool(QueryAllCandidatePool) returns (QueryAllCandidatePoolResponse);
-  rpc SingleIncentivePool(QuerySingleIncentivePool) returns (QueryAllCandidatePoolResponse);
-  rpc AllIncentivePool(QueryAllIncentivePool) returns (QueryAllIncentivePoolResponse);
+  rpc SingleCandidatePool(QuerySingleCandidatePoolRequest) returns (QuerySingleCandidatePoolResponse){
+    option (google.api.http).get = "/nova/poolincentive/v1/single_candidate_pool";
+  }
+  rpc AllCandidatePool(QueryAllCandidatePoolRequest) returns (QueryAllCandidatePoolResponse){
+    option (google.api.http).get = "/nova/poolincentive/v1/all_candidate_pool";
+  }
+  rpc SingleIncentivePool(QuerySingleIncentivePoolRequest) returns (QueryAllCandidatePoolResponse){
+    option (google.api.http).get = "/nova/poolincentive/v1/single_incentive_pool";
+  }
+  rpc AllIncentivePool(QueryAllIncentivePoolRequest) returns (QueryAllIncentivePoolResponse){
+    option (google.api.http).get = "/nova/poolincentive/v1/all_incentive_pool";
+  }
 }
 
 // QueryParamsRequest is the request type for the Query/Params RPC method.
 message QueryParamsRequest {
-
 }
 
 // QueryParamsResponse is the response type for the Query/Params RPC method.
@@ -30,7 +36,7 @@ message QueryParamsResponse {
   Params params = 1 [(gogoproto.nullable) = false];
 }
 
-message QuerySingleCandidatePool {
+message QuerySingleCandidatePoolRequest {
   string pool_id = 1;
 }
 
@@ -39,7 +45,7 @@ message QuerySingleCandidatePoolResponse {
   string pool_address = 2;
 }
 
-message QuerySingleIncentivePool {
+message QuerySingleIncentivePoolRequest {
   string pool_id = 1;
 }
 
@@ -48,7 +54,7 @@ message QuerySingleIncentivePoolResponse {
   string pool_address = 2;
 }
 
-message QueryAllCandidatePool {
+message QueryAllCandidatePoolRequest {
 
 }
 
@@ -56,8 +62,7 @@ message QueryAllCandidatePoolResponse {
   repeated CandidatePool candidate_pools = 1 [(gogoproto.nullable) = false];
 }
 
-message QueryAllIncentivePool {
-
+message QueryAllIncentivePoolRequest {
 }
 
 message QueryAllIncentivePoolResponse {
