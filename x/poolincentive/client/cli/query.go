@@ -33,11 +33,13 @@ func GetSingleCandidatePool() *cobra.Command {
 				return err
 			}
 
-			poolId := args[0]
 			queryClient := types.NewQueryClient(clientCtx)
 			ctx := cmd.Context()
 
-			msg := types.NewQuerySingleCandidatePool(poolId)
+			msg := &types.QuerySingleCandidatePoolRequest{
+				PoolId: args[0],
+			}
+
 			res, err := queryClient.SingleCandidatePool(ctx, msg)
 			if err != nil {
 				return err
@@ -63,7 +65,7 @@ func GetAllCandidatePool() *cobra.Command {
 			queryClient := types.NewQueryClient(clientCtx)
 			ctx := cmd.Context()
 
-			msg := types.NewQueryAllCandidatePool()
+			msg := &types.QueryAllCandidatePoolRequest{}
 			res, err := queryClient.AllCandidatePool(ctx, msg)
 			if err != nil {
 				return err
@@ -86,11 +88,12 @@ func GetSingleIncentivePool() *cobra.Command {
 				return err
 			}
 
-			poolId := args[0]
 			queryClient := types.NewQueryClient(clientCtx)
 			ctx := cmd.Context()
 
-			msg := types.NewQuerySingleIncentivePool(poolId)
+			msg := &types.QuerySingleIncentivePoolRequest{
+				PoolId: args[0],
+			}
 			res, err := queryClient.SingleIncentivePool(ctx, msg)
 			if err != nil {
 				return err
@@ -116,7 +119,8 @@ func GetAllIncentivePool() *cobra.Command {
 			queryClient := types.NewQueryClient(clientCtx)
 			ctx := cmd.Context()
 
-			msg := types.NewQueryAllIncentivePool()
+			msg := &types.QueryAllIncentivePoolRequest{}
+
 			res, err := queryClient.AllIncentivePool(ctx, msg)
 			if err != nil {
 				return err
