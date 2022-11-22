@@ -29,11 +29,13 @@ func (k Keeper) HandleUpdatePoolIncentivesProposal(ctx sdk.Context, proposal *ty
 		j, pool, err := k.FindIncentivePoolByIdWithIndex(ctx, updatePool.PoolId)
 		if err != nil {
 			incentiveInfo.IncentivePools = append(incentiveInfo.IncentivePools, &proposal.UpdatedIncentives[i])
+			incentiveInfo.TotalWeight += proposal.UpdatedIncentives[i].Weight
 		} else {
 			if incentiveInfo.IncentivePools[j].PoolContractAddress != updatePool.PoolContractAddress {
 				return fmt.Errorf("contract address mismatch, input: %s", pool.PoolContractAddress)
 			}
-
+			incentiveInfo.TotalWeight -= incentiveInfo.IncentivePools[j].Weight
+			incentiveInfo.TotalWeight += updatePool.Weight
 			incentiveInfo.IncentivePools[j].Weight = updatePool.Weight
 		}
 	}

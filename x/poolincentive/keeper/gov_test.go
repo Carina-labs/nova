@@ -81,11 +81,12 @@ func (suite *KeeperTestSuite) TestHandleReplacePoolIncentivesProposal() {
 
 func (suite *KeeperTestSuite) TestHandleUpdatePoolIncentivesProposal() {
 	tcs := []struct {
-		name       string
-		preset     []types.IncentivePool
-		updatePool []types.IncentivePool
-		expected   []types.IncentivePool
-		shouldErr  bool
+		name                string
+		preset              []types.IncentivePool
+		updatePool          []types.IncentivePool
+		expected            []types.IncentivePool
+		expectedTotalWeight uint64
+		shouldErr           bool
 	}{
 		{
 			name: "valid case",
@@ -145,7 +146,8 @@ func (suite *KeeperTestSuite) TestHandleUpdatePoolIncentivesProposal() {
 					Weight:              12,
 				},
 			},
-			shouldErr: false,
+			expectedTotalWeight: 35,
+			shouldErr:           false,
 		},
 	}
 
@@ -172,6 +174,8 @@ func (suite *KeeperTestSuite) TestHandleUpdatePoolIncentivesProposal() {
 					suite.NoError(err)
 					suite.Equal(item, *res)
 				}
+				tw := suite.App.PoolKeeper.GetTotalWeight(suite.Ctx)
+				suite.Require().Equal(tc.expectedTotalWeight, tw)
 			}
 		})
 	}
