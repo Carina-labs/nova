@@ -27,7 +27,7 @@ var (
 	_ module.AppModuleBasic = AppModuleBasic{}
 )
 
-// AppModuleBasic implements the AppModuleBasic interface for the capability module.
+// AppModuleBasic implements the AppModuleBasic interface for the icacontrol module.
 type AppModuleBasic struct {
 	cdc codec.Codec
 }
@@ -36,7 +36,7 @@ func NewAppModuleBasic(cdc codec.Codec) AppModuleBasic {
 	return AppModuleBasic{cdc: cdc}
 }
 
-// Name returns the capability module's name.
+// Name returns the icacontrol module's name.
 func (AppModuleBasic) Name() string {
 	return types.ModuleName
 }
@@ -113,7 +113,7 @@ func (am AppModule) Name() string {
 
 // Route returns the icacontrol module's message routing key.
 func (am AppModule) Route() sdk.Route {
-	return sdk.NewRoute(types.RouterKey, nil)
+	return sdk.NewRoute(types.RouterKey, NewHandler(am.keeper))
 }
 
 // QuerierRoute returns the icacontrol module's query routing key.

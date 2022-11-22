@@ -106,7 +106,6 @@ func (a AppModule) ExportGenesis(ctx sdk.Context, jsonCodec codec.JSONCodec) jso
 
 func (a AppModule) RegisterInvariants(registry sdk.InvariantRegistry) {}
 
-// Deprecated
 func (a AppModule) Route() sdk.Route {
 	return sdk.NewRoute(types.RouterKey, NewHandler(&a.keeper))
 }
