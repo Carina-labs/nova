@@ -33,7 +33,38 @@ func queryParams() *cobra.Command {
 	return cmd
 }
 
-func queryClaimableAsset() *cobra.Command {
+func queryEstimatesnAsset() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "estimate-snAsset [zone-id] [amount] [denom]",
+		Long: "Query for estimate snAsset",
+		Args: cobra.ExactArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			ctx := cmd.Context()
+			query := &types.QueryEstimateSnAssetRequest{
+				ZoneId: args[0],
+				Amount: args[1],
+				Denom:  args[2],
+			}
+			res, err := queryClient.EstimateSnAsset(ctx, query)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func queryClaimableAmount() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "claimable [zone-id] [address]",
 		Long: "Query for claimable snAssets",
@@ -63,10 +94,40 @@ func queryClaimableAsset() *cobra.Command {
 	return cmd
 }
 
-func queryIcaWithdrawal() *cobra.Command {
+func queryDepositAmount() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "ica-withdrawal [zone-id] [address]",
-		Long: "Query for Ica withdrawals",
+		Use:  "deposit-amount [zone-id] [address]",
+		Long: "Query for deposit amount",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+
+			ctx := cmd.Context()
+			query := &types.QueryDepositAmountRequest{
+				ZoneId:  args[0],
+				Address: args[1],
+			}
+			res, err := queryClient.DepositAmount(ctx, query)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
+
+func queryPendingWithdrawals() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "pending-withdrawal [zone-id] [address]",
+		Long: "Query for pen withdrawals",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)

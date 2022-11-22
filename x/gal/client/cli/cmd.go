@@ -30,7 +30,7 @@ func GetTxCmd() *cobra.Command {
 	return cmd
 }
 
-// GetQueryCmd creates and returns the icacontrol query command
+// GetQueryCmd creates and returns the gal query command
 func GetQueryCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,
@@ -42,16 +42,18 @@ func GetQueryCmd() *cobra.Command {
 
 	cmd.AddCommand(
 		queryParams(),
-		queryClaimableAsset(),
+		queryEstimatesnAsset(),
+		queryClaimableAmount(),
+		queryDepositAmount(),
+		queryPendingWithdrawals(),
 		queryActiveWithdrawal(),
 		queryDepositRecords(),
+		queryDelegateRecords(),
 		queryUndelegateRecords(),
 		queryWithdrawRecords(),
-		queryIcaWithdrawal(),
 		queryDelegateVersion(),
 		queryUndelegateVersion(),
 		queryWithdrawVersion(),
-		queryDelegateRecords(),
 		queryCurrentDelegateVersion(),
 		queryCurrentUndelegateVersion(),
 		queryCurrentWithdrawVersion(),
