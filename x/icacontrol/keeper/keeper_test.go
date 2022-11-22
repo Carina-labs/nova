@@ -128,7 +128,6 @@ func (suite *KeeperTestSuite) SetupTestIBCZone(zoneMsgs []types.RegisteredZone) 
 
 func (suite *KeeperTestSuite) TestIsValidControllerAddr() {
 	var keyManager []string
-	var controllerAddr []string
 
 	addr1 := suite.GenRandomAddress().String()
 	addr2 := suite.GenRandomAddress().String()
@@ -137,15 +136,13 @@ func (suite *KeeperTestSuite) TestIsValidControllerAddr() {
 	keyManager = append(keyManager, addr1)
 	keyManager = append(keyManager, addr2)
 
-	controllerAddr = append(controllerAddr, addr3)
-
 	params := types.Params{
 		ControllerKeyManager: keyManager,
 	}
 
 	suite.App.IcaControlKeeper.SetParams(suite.Ctx, params)
 
-	suite.App.IcaControlKeeper.SetControllerAddr(suite.Ctx, zoneId, controllerAddr)
+	suite.App.IcaControlKeeper.SetControllerAddr(suite.Ctx, zoneId, addr3)
 
 	tcs := []struct {
 		name   string

@@ -60,7 +60,7 @@ func (suite *KeeperTestSuite) InitICA() {
 		ControllerAddressInfo: []*icacontroltypes.ControllerAddressInfo{
 			{
 				ZoneId:            zoneId,
-				ControllerAddress: []string{baseOwnerAcc.String()},
+				ControllerAddress: baseOwnerAcc.String(),
 			},
 		},
 	})

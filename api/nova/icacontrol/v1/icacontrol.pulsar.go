@@ -2524,52 +2524,6 @@ func (x *fastReflection_TransferConnectionInfo) ProtoMethods() *protoiface.Metho
 	}
 }
 
-var _ protoreflect.List = (*_ControllerAddressInfo_2_list)(nil)
-
-type _ControllerAddressInfo_2_list struct {
-	list *[]string
-}
-
-func (x *_ControllerAddressInfo_2_list) Len() int {
-	if x.list == nil {
-		return 0
-	}
-	return len(*x.list)
-}
-
-func (x *_ControllerAddressInfo_2_list) Get(i int) protoreflect.Value {
-	return protoreflect.ValueOfString((*x.list)[i])
-}
-
-func (x *_ControllerAddressInfo_2_list) Set(i int, value protoreflect.Value) {
-	valueUnwrapped := value.String()
-	concreteValue := valueUnwrapped
-	(*x.list)[i] = concreteValue
-}
-
-func (x *_ControllerAddressInfo_2_list) Append(value protoreflect.Value) {
-	valueUnwrapped := value.String()
-	concreteValue := valueUnwrapped
-	*x.list = append(*x.list, concreteValue)
-}
-
-func (x *_ControllerAddressInfo_2_list) AppendMutable() protoreflect.Value {
-	panic(fmt.Errorf("AppendMutable can not be called on message ControllerAddressInfo at list field ControllerAddress as it is not of Message kind"))
-}
-
-func (x *_ControllerAddressInfo_2_list) Truncate(n int) {
-	*x.list = (*x.list)[:n]
-}
-
-func (x *_ControllerAddressInfo_2_list) NewElement() protoreflect.Value {
-	v := ""
-	return protoreflect.ValueOfString(v)
-}
-
-func (x *_ControllerAddressInfo_2_list) IsValid() bool {
-	return x.list != nil
-}
-
 var (
 	md_ControllerAddressInfo                    protoreflect.MessageDescriptor
 	fd_ControllerAddressInfo_zone_id            protoreflect.FieldDescriptor
@@ -2654,8 +2608,8 @@ func (x *fastReflection_ControllerAddressInfo) Range(f func(protoreflect.FieldDe
 			return
 		}
 	}
-	if len(x.ControllerAddress) != 0 {
-		value := protoreflect.ValueOfList(&_ControllerAddressInfo_2_list{list: &x.ControllerAddress})
+	if x.ControllerAddress != "" {
+		value := protoreflect.ValueOfString(x.ControllerAddress)
 		if !f(fd_ControllerAddressInfo_controller_address, value) {
 			return
 		}
@@ -2678,7 +2632,7 @@ func (x *fastReflection_ControllerAddressInfo) Has(fd protoreflect.FieldDescript
 	case "nova.icacontrol.v1.ControllerAddressInfo.zone_id":
 		return x.ZoneId != ""
 	case "nova.icacontrol.v1.ControllerAddressInfo.controller_address":
-		return len(x.ControllerAddress) != 0
+		return x.ControllerAddress != ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.ControllerAddressInfo"))
@@ -2698,7 +2652,7 @@ func (x *fastReflection_ControllerAddressInfo) Clear(fd protoreflect.FieldDescri
 	case "nova.icacontrol.v1.ControllerAddressInfo.zone_id":
 		x.ZoneId = ""
 	case "nova.icacontrol.v1.ControllerAddressInfo.controller_address":
-		x.ControllerAddress = nil
+		x.ControllerAddress = ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.ControllerAddressInfo"))
@@ -2719,11 +2673,8 @@ func (x *fastReflection_ControllerAddressInfo) Get(descriptor protoreflect.Field
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
 	case "nova.icacontrol.v1.ControllerAddressInfo.controller_address":
-		if len(x.ControllerAddress) == 0 {
-			return protoreflect.ValueOfList(&_ControllerAddressInfo_2_list{})
-		}
-		listValue := &_ControllerAddressInfo_2_list{list: &x.ControllerAddress}
-		return protoreflect.ValueOfList(listValue)
+		value := x.ControllerAddress
+		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.ControllerAddressInfo"))
@@ -2747,9 +2698,7 @@ func (x *fastReflection_ControllerAddressInfo) Set(fd protoreflect.FieldDescript
 	case "nova.icacontrol.v1.ControllerAddressInfo.zone_id":
 		x.ZoneId = value.Interface().(string)
 	case "nova.icacontrol.v1.ControllerAddressInfo.controller_address":
-		lv := value.List()
-		clv := lv.(*_ControllerAddressInfo_2_list)
-		x.ControllerAddress = *clv.list
+		x.ControllerAddress = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.ControllerAddressInfo"))
@@ -2770,14 +2719,10 @@ func (x *fastReflection_ControllerAddressInfo) Set(fd protoreflect.FieldDescript
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_ControllerAddressInfo) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.icacontrol.v1.ControllerAddressInfo.controller_address":
-		if x.ControllerAddress == nil {
-			x.ControllerAddress = []string{}
-		}
-		value := &_ControllerAddressInfo_2_list{list: &x.ControllerAddress}
-		return protoreflect.ValueOfList(value)
 	case "nova.icacontrol.v1.ControllerAddressInfo.zone_id":
 		panic(fmt.Errorf("field zone_id of message nova.icacontrol.v1.ControllerAddressInfo is not mutable"))
+	case "nova.icacontrol.v1.ControllerAddressInfo.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.icacontrol.v1.ControllerAddressInfo is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.ControllerAddressInfo"))
@@ -2794,8 +2739,7 @@ func (x *fastReflection_ControllerAddressInfo) NewField(fd protoreflect.FieldDes
 	case "nova.icacontrol.v1.ControllerAddressInfo.zone_id":
 		return protoreflect.ValueOfString("")
 	case "nova.icacontrol.v1.ControllerAddressInfo.controller_address":
-		list := []string{}
-		return protoreflect.ValueOfList(&_ControllerAddressInfo_2_list{list: &list})
+		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.icacontrol.v1.ControllerAddressInfo"))
@@ -2869,11 +2813,9 @@ func (x *fastReflection_ControllerAddressInfo) ProtoMethods() *protoiface.Method
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if len(x.ControllerAddress) > 0 {
-			for _, s := range x.ControllerAddress {
-				l = len(s)
-				n += 1 + l + runtime.Sov(uint64(l))
-			}
+		l = len(x.ControllerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -2905,13 +2847,11 @@ func (x *fastReflection_ControllerAddressInfo) ProtoMethods() *protoiface.Method
 			copy(dAtA[i:], x.unknownFields)
 		}
 		if len(x.ControllerAddress) > 0 {
-			for iNdEx := len(x.ControllerAddress) - 1; iNdEx >= 0; iNdEx-- {
-				i -= len(x.ControllerAddress[iNdEx])
-				copy(dAtA[i:], x.ControllerAddress[iNdEx])
-				i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ControllerAddress[iNdEx])))
-				i--
-				dAtA[i] = 0x12
-			}
+			i -= len(x.ControllerAddress)
+			copy(dAtA[i:], x.ControllerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ControllerAddress)))
+			i--
+			dAtA[i] = 0x12
 		}
 		if len(x.ZoneId) > 0 {
 			i -= len(x.ZoneId)
@@ -3031,7 +2971,7 @@ func (x *fastReflection_ControllerAddressInfo) ProtoMethods() *protoiface.Method
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.ControllerAddress = append(x.ControllerAddress, string(dAtA[iNdEx:postIndex]))
+				x.ControllerAddress = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -3332,8 +3272,8 @@ type ControllerAddressInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ZoneId            string   `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
-	ControllerAddress []string `protobuf:"bytes,2,rep,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+	ZoneId            string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	ControllerAddress string `protobuf:"bytes,2,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
 }
 
 func (x *ControllerAddressInfo) Reset() {
@@ -3363,11 +3303,11 @@ func (x *ControllerAddressInfo) GetZoneId() string {
 	return ""
 }
 
-func (x *ControllerAddressInfo) GetControllerAddress() []string {
+func (x *ControllerAddressInfo) GetControllerAddress() string {
 	if x != nil {
 		return x.ControllerAddress
 	}
-	return nil
+	return ""
 }
 
 var File_nova_icacontrol_v1_icacontrol_proto protoreflect.FileDescriptor
@@ -3436,7 +3376,7 @@ var file_nova_icacontrol_v1_icacontrol_proto_rawDesc = []byte{
 	0x6e, 0x66, 0x6f, 0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x2d, 0x0a, 0x12,
 	0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65,
-	0x73, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
+	0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f,
 	0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0xd4, 0x01, 0x0a, 0x16,
 	0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x69, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74,
 	0x72, 0x6f, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x0f, 0x49, 0x63, 0x61, 0x63, 0x6f, 0x6e, 0x74, 0x72,
