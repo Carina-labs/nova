@@ -385,7 +385,6 @@ func txAuthzGrantTxCmd() *cobra.Command {
 func txAuthzRevokeTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ica-authz-revoke [zone-id] [grantee-address] [msg_type]",
-
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
