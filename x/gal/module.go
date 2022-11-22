@@ -108,11 +108,6 @@ func NewAppModule(cdc codec.Codec, keeper keeper.Keeper, bankKeeper types.BankKe
 	}
 }
 
-// Name returns the gal module's name.
-func (AppModule) Name() string {
-	return ModuleName
-}
-
 // RegisterInvariants registers the gal module invariants.
 func (am AppModule) RegisterInvariants(ir sdk.InvariantRegistry) {
 	keeper.RegisterInvariants(ir, am.keeper)
