@@ -3,9 +3,11 @@ package keeper
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	icatypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
+	"time"
 )
 
 // Hooks wrapper struct for gal keeper
@@ -43,6 +45,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 		return
 	}
 
+	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterTransferEnd")
 	h.k.ChangeDepositState(ctx, zoneInfo.ZoneId, data.Sender)
 	ctx.Logger().Info("AfterTransferEnd", "zone_id", zoneInfo.ZoneId, "sender", data.Sender, "receiver", data.Receiver, "amount", data.Amount)
 }
@@ -67,6 +70,7 @@ func (h Hooks) AfterTransferFail(ctx sdk.Context, data transfertypes.FungibleTok
 		return
 	}
 
+	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterTransferFail")
 	// remove deposit state
 	err = h.k.DeleteRecordedDepositItem(ctx, zoneInfo.ZoneId, sender, types.DepositRequest, amount)
 	if err != nil {
@@ -102,6 +106,8 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 		h.k.Logger(ctx).Error("AfterOnRecvPacket", "transfer amount is zero", data.Amount)
 		return
 	}
+
+	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterOnRecvPacket")
 
 	controllerAddr, err := sdk.AccAddressFromBech32(data.Receiver)
 	if err != nil {
@@ -144,6 +150,7 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 
 func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
 	// getZoneInfoForValidatorAddr
+	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterDelegateEnd")
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
 	oracleVersion, _ := h.k.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 
@@ -180,6 +187,8 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 // 1. It removes undelegation history in store.
 // 2. It saves undelegation finish time to store.
 func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate, msg *stakingtypes.MsgUndelegateResponse) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterUndelegateEnd")
+
 	// get zone info from the validator address
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
 	if zoneInfo == nil {
@@ -215,6 +224,7 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 }
 
 func (h Hooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDelegate) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterDelegateFail")
 	zone := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, delegateMsg.ValidatorAddress)
 	ctx.Logger().Info("AfterDelegateFail", "zone", zone)
 
@@ -230,6 +240,7 @@ func (h Hooks) AfterDelegateFail(ctx sdk.Context, delegateMsg stakingtypes.MsgDe
 }
 
 func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterUndelegateFail")
 	zone := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
 	ctx.Logger().Info("AfterUndelegateFail", "zone", zone)
 
@@ -246,6 +257,7 @@ func (h Hooks) AfterUndelegateFail(ctx sdk.Context, undelegateMsg stakingtypes.M
 }
 
 func (h Hooks) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterIcaWithdrawFail")
 	zone, ok := h.k.icaControlKeeper.GetRegisterZoneForHostAddr(ctx, transferMsg.Sender)
 	if !ok {
 		ctx.Logger().Error("AfterIcaWithdrawFail", "err", "zone not found")
