@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/telemetry"
 	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
@@ -36,7 +37,8 @@ func (k Keeper) GetWithdrawRecord(ctx sdk.Context, zoneId, withdrawer string) (r
 }
 
 // SetWithdrawRecords write multiple withdraw record.
-func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Time) {
+func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, withdrawalTime time.Time) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "withdraw", "setWithdrawRecords")
 	k.IterateUndelegatedRecords(ctx, zoneId, func(index int64, undelegateInfo *types.UndelegateRecord) (stop bool) {
 		for _, items := range undelegateInfo.Records {
 			if items.State == types.UndelegateRequestByIca {
@@ -59,7 +61,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 						WithdrawVersion: items.UndelegateVersion,
 						Amount:          items.WithdrawAmount,
 						UnstakingAmount: items.SnAssetAmount,
-						CompletionTime:  time,
+						CompletionTime:  withdrawalTime,
 					}
 				} else {
 					withdrawRecordContent.Amount = items.WithdrawAmount.Add(withdrawRecordContent.Amount)
@@ -77,6 +79,7 @@ func (k Keeper) SetWithdrawRecords(ctx sdk.Context, zoneId string, time time.Tim
 
 // DeleteWithdrawRecord removes withdraw record.
 func (k Keeper) DeleteWithdrawRecord(ctx sdk.Context, withdraw *types.WithdrawRecord) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "withdraw", "deleteWithdrawRecord")
 	for key, record := range withdraw.Records {
 		if record.State == types.WithdrawStatusTransferred {
 			delete(withdraw.Records, key)
@@ -133,6 +136,7 @@ func (k Keeper) IsValidWithdrawVersion(ctx sdk.Context, zoneId string, version u
 
 // SetWithdrawRecordVersion set new version to withdraw record corresponding to zoneId and state.
 func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state types.WithdrawStatusType, version uint64) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "withdraw", "setWithdrawRecordVersion")
 	k.IterateWithdrawRecords(ctx, zoneId, func(index int64, withdrawRecord *types.WithdrawRecord) (stop bool) {
 		for key, record := range withdrawRecord.Records {
 			if record.State == state {
@@ -147,6 +151,7 @@ func (k Keeper) SetWithdrawRecordVersion(ctx sdk.Context, zoneId string, state t
 
 // GetWithdrawAmountForUser returns withdraw record corresponding to zone id and denom.
 func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, withdrawer string) sdk.Coin {
+	defer telemetry.MeasureSince(time.Now(), "gal", "withdraw", "getWithdrawAmountForUser")
 	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
 	withdrawRecord, found := k.GetWithdrawRecord(ctx, zoneId, withdrawer)
@@ -166,6 +171,7 @@ func (k Keeper) GetWithdrawAmountForUser(ctx sdk.Context, zoneId, denom string, 
 
 // GetTotalWithdrawAmountForZoneId returns total withdraw amount corresponding to zone-id and denom.
 func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {
+	defer telemetry.MeasureSince(time.Now(), "gal", "withdraw", "getTotalWithdrawAmountForZoneId")
 	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
 	k.IterateWithdrawRecords(ctx, zoneId, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
@@ -182,6 +188,7 @@ func (k Keeper) GetTotalWithdrawAmountForZoneId(ctx sdk.Context, zoneId, denom s
 }
 
 func (k Keeper) GetTotalWithdrawAmountForFailCase(ctx sdk.Context, zoneId, denom string, blockTime time.Time) sdk.Coin {
+	defer telemetry.MeasureSince(time.Now(), "gal", "withdraw", "getTotalWithdrawAmountForFailCase")
 	amount := sdk.NewCoin(denom, sdk.ZeroInt())
 
 	k.IterateWithdrawRecords(ctx, zoneId, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
@@ -219,6 +226,7 @@ func (k Keeper) IsAbleToWithdraw(ctx sdk.Context, from sdk.AccAddress, amt sdk.C
 // WithdrawStatusTransferred : WithdrawStatusTransferred is a state in which assets are periodically transferred to the Supernova chain.
 // Assets in this state can be withdrawn by the user.
 func (k Keeper) ChangeWithdrawState(ctx sdk.Context, zoneId string, preState, postState types.WithdrawStatusType) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "withdraw", "changeWithdrawState")
 	k.IterateWithdrawRecords(ctx, zoneId, func(index int64, withdrawInfo *types.WithdrawRecord) (stop bool) {
 		for _, record := range withdrawInfo.Records {
 			if record.State == preState {

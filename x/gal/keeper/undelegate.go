@@ -2,6 +2,8 @@ package keeper
 
 import (
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/telemetry"
+	"time"
 
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
@@ -82,6 +84,7 @@ func (k Keeper) GetUndelegateRecord(ctx sdk.Context, zoneId, delegator string) (
 
 // GetAllUndelegateRecord returns all undelegate records corresponding to zoneId.
 func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.UndelegateRecord {
+	defer telemetry.MeasureSince(time.Now(), "gal", "undelegate", "getAllUndelegateRecord")
 	var undelegateInfo []*types.UndelegateRecord
 	k.IterateUndelegatedRecords(ctx, zoneId, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		undelegateInfo = append(undelegateInfo, undelegateRecord)
@@ -93,6 +96,7 @@ func (k Keeper) GetAllUndelegateRecord(ctx sdk.Context, zoneId string) []*types.
 
 // GetUndelegateAmount gets the information that corresponds to the zone during the de-delegation history.
 func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone icacontroltypes.RegisteredZone, version uint64) (sdk.Coin, sdk.Int) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "undelegate", "getUndelegateAmount")
 	snAsset := sdk.NewCoin(snDenom, sdk.NewInt(0))
 	wAsset := sdk.NewInt(0)
 
@@ -117,6 +121,7 @@ func (k Keeper) GetUndelegateAmount(ctx sdk.Context, snDenom string, zone icacon
 }
 
 func (k Keeper) GetReUndelegateAmount(ctx sdk.Context, snDenom string, zone icacontroltypes.RegisteredZone, version uint64) (sdk.Coin, sdk.Int) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "undelegate", "getReUndelegateAmount")
 	snAsset := sdk.NewCoin(snDenom, sdk.NewInt(0))
 	wAsset := sdk.NewInt(0)
 
@@ -136,6 +141,7 @@ func (k Keeper) GetReUndelegateAmount(ctx sdk.Context, snDenom string, zone icac
 // UNDELEGATE_REQUEST_USER : Just requested undelegate by user. It is not in undelegate period.
 // UNDELEGATE_REQUEST_ICA  : Requested by ICA, It is in undelegate period.
 func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "undelegate", "changeUndelegateState")
 	k.IterateUndelegatedRecords(ctx, zoneId, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		for _, record := range undelegateRecord.Records {
 			record.State = state
@@ -149,6 +155,7 @@ func (k Keeper) ChangeUndelegateState(ctx sdk.Context, zoneId string, state type
 // after un-delegate. This function is executed when ICA un-delegate call executed,
 // and calculate using the balance of user's share coin.
 func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (*sdk.Coin, error) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "undelegate", "getWithdrawAmt")
 	baseDenom := k.icaControlKeeper.GetBaseDenomForSnDenom(ctx, amt.Denom)
 	totalSharedToken := k.bankKeeper.GetSupply(ctx, amt.Denom)
 
@@ -175,6 +182,7 @@ func (k Keeper) GetWithdrawAmt(ctx sdk.Context, amt sdk.Coin) (*sdk.Coin, error)
 
 // SetUndelegateRecordVersion navigates undelegate records and updates version for records corresponding to zoneId and state.
 func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType, version uint64) bool {
+	defer telemetry.MeasureSince(time.Now(), "gal", "undelegate", "setUndelegateRecordVersion")
 	k.IterateUndelegatedRecords(ctx, zoneId, func(index int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		isChanged := false
 		for _, record := range undelegateRecord.Records {
@@ -194,6 +202,7 @@ func (k Keeper) SetUndelegateRecordVersion(ctx sdk.Context, zoneId string, state
 
 // DeleteUndelegateRecords deletes records corresponding to zoneId and state for undelegate records.
 func (k Keeper) DeleteUndelegateRecords(ctx sdk.Context, zoneId string, state types.UndelegatedStatusType) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "undelegate", "deleteUndelegateRecords")
 	k.IterateUndelegatedRecords(ctx, zoneId, func(_ int64, undelegateRecord *types.UndelegateRecord) (stop bool) {
 		var recordItems []*types.UndelegateRecordContent
 		for _, record := range undelegateRecord.Records {
