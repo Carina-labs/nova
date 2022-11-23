@@ -5,7 +5,9 @@ import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
+	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"time"
 )
 
 // getDepositRecordStore returns "DepositRecord" store.
@@ -38,6 +40,7 @@ func (k Keeper) GetUserDepositRecord(ctx sdk.Context, zoneId string, depositor s
 
 // GetTotalDepositAmtForZoneId returns the sum of all Deposit coins corresponding to a specified zoneId.
 func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom string, state types.DepositStatusType) sdk.Coin {
+	defer telemetry.MeasureSince(time.Now(), "gal", "deposit", "getTotalDepositAmtForZoneId")
 	totalDepositAmt := sdk.Coin{
 		Amount: sdk.NewIntFromUint64(0),
 		Denom:  denom,
@@ -58,6 +61,7 @@ func (k Keeper) GetTotalDepositAmtForZoneId(ctx sdk.Context, zoneId, denom strin
 // GetTotalDepositAmtForUserAddr returns the sum of the user's address entered as input
 // and the deposit coin corresponding to the coin denom.
 func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, zoneId, userAddr, denom string) sdk.Coin {
+	defer telemetry.MeasureSince(time.Now(), "gal", "deposit", "getTotalDepositAmtForUserAddr")
 	totalDepositAmt := sdk.NewCoin(denom, sdk.NewInt(0))
 
 	k.IterateDepositRecord(ctx, zoneId, func(index int64, depositRecord types.DepositRecord) (stop bool) {
@@ -77,6 +81,7 @@ func (k Keeper) GetTotalDepositAmtForUserAddr(ctx sdk.Context, zoneId, userAddr,
 // ChangeDepositState updates the deposit records corresponding to the preState to postState.
 // This operation runs in the hook after the remote deposit is run.
 func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId, depositor string) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "deposit", "changeDepositState")
 	k.IterateDepositRecord(ctx, zoneId, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		stateCheck := false
 		if depositRecord.Depositor != depositor {
@@ -97,6 +102,7 @@ func (k Keeper) ChangeDepositState(ctx sdk.Context, zoneId, depositor string) {
 }
 
 func (k Keeper) DeleteDepositRecords(ctx sdk.Context, zoneId string, state types.DepositStatusType) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "deposit", "deleteDepositRecords")
 	k.IterateDepositRecord(ctx, zoneId, func(_ int64, depositRecord types.DepositRecord) (stop bool) {
 		var recordItems []*types.DepositRecordContent
 		for _, record := range depositRecord.Records {
@@ -115,6 +121,7 @@ func (k Keeper) DeleteDepositRecords(ctx sdk.Context, zoneId string, state types
 }
 
 func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, depositor sdk.AccAddress, state types.DepositStatusType, amount sdk.Int) error {
+	defer telemetry.MeasureSince(time.Now(), "gal", "deposit", "deleteRecordedDepositItem")
 	record, found := k.GetUserDepositRecord(ctx, zoneId, depositor)
 	if !found {
 		return types.ErrNoDepositRecord
@@ -144,6 +151,7 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 
 // GetAllAmountNotMintShareToken returns the sum of assets that have not yet been issued by the user among the assets that have been deposited.
 func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *icacontroltypes.RegisteredZone) (sdk.Coin, error) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "deposit", "getAllAmountNotMintShareToken")
 	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
 
 	res := sdk.NewInt64Coin(ibcDenom, 0)
