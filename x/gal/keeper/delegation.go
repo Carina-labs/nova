@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
+	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"time"
 )
 
 func (k Keeper) getDelegateRecordStore(ctx sdk.Context) prefix.Store {
@@ -19,6 +21,7 @@ func (k Keeper) SetDelegateRecord(ctx sdk.Context, msg *types.DelegateRecord) {
 }
 
 func (k Keeper) SetDelegateRecords(ctx sdk.Context, zoneId string) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "delegation", "setDelegateRecords")
 	k.IterateDepositRecord(ctx, zoneId, func(index int64, depositRecord types.DepositRecord) (stop bool) {
 		for _, record := range depositRecord.Records {
 			claimer, err := sdk.AccAddressFromBech32(record.Claimer)
@@ -85,6 +88,7 @@ func (k Keeper) SetDelegateOracleVersion(ctx sdk.Context, zoneId string, version
 }
 
 func (k Keeper) ChangeDelegateState(ctx sdk.Context, zoneId string, version types.DelegateVersion) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "delegation", "changeDelegateState")
 	k.IterateDelegateRecord(ctx, zoneId, func(index int64, delegateRecord types.DelegateRecord) (stop bool) {
 		_, found := delegateRecord.Records[version]
 		if !found {
@@ -98,6 +102,7 @@ func (k Keeper) ChangeDelegateState(ctx sdk.Context, zoneId string, version type
 }
 
 func (k Keeper) GetTotalDelegateAmtForZoneId(ctx sdk.Context, zoneId, denom string, version types.DelegateVersion, state types.DelegateStatusType) sdk.Coin {
+	defer telemetry.MeasureSince(time.Now(), "gal", "delegation", "getTotalDelegateAmtForZoneId")
 	totalDelegateAmt := sdk.NewCoin(denom, sdk.NewInt(0))
 
 	k.IterateDelegateRecord(ctx, zoneId, func(index int64, delegateRecord types.DelegateRecord) (stop bool) {
@@ -117,6 +122,7 @@ func (k Keeper) GetTotalDelegateAmtForZoneId(ctx sdk.Context, zoneId, denom stri
 }
 
 func (k Keeper) GetTotalDelegateAmtForUser(ctx sdk.Context, zoneId, denom string, userAddr sdk.AccAddress) sdk.Coin {
+	defer telemetry.MeasureSince(time.Now(), "gal", "delegation", "getTotalDelegateAmtForUser")
 	totalDelegateAmt := sdk.NewCoin(denom, sdk.NewInt(0))
 
 	record, found := k.GetUserDelegateRecord(ctx, zoneId, userAddr)
@@ -135,6 +141,7 @@ func (k Keeper) GetTotalDelegateAmtForUser(ctx sdk.Context, zoneId, denom string
 }
 
 func (k Keeper) DeleteDelegateRecord(ctx sdk.Context, delegate *types.DelegateRecord) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "delegation", "deleteDelegateRecord")
 	for key, record := range delegate.Records {
 		if record.State == types.DelegateSuccess {
 			delete(delegate.Records, key)
