@@ -384,7 +384,7 @@ func txAuthzGrantTxCmd() *cobra.Command {
 // txAuthzRevokeTxCmd is a transaction used to execute transferred permissions between accounts using ICA. This transaction can only be submitted by a given signatory.
 func txAuthzRevokeTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: "ica-authz-revoke [zone-id] [grantee-address] [msg_type]",
+		Use:  "ica-authz-revoke [zone-id] [grantee-address] [msg_type]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
