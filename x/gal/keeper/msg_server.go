@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strconv"
 	"time"
@@ -110,7 +109,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	}
 
 	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, delegate.ZoneId, delegate.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, delegate.ControllerAddress)
+		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, delegate.ControllerAddress)
 	}
 
 	// check unreceived ack
@@ -159,7 +158,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 			State:   types.IcaFail,
 		}
 		m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
-		return nil, sdkerrors.Wrapf(err, "IcaDelegateFail")
+		return nil, sdkerrors.Wrap(err, "IcaDelegateFail")
 	}
 
 	if err = ctx.EventManager().EmitTypedEvent(
@@ -281,11 +280,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, errors.New("zone is not found")
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, "zone is not found")
 	}
 
 	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	if !m.keeper.IsValidUndelegateVersion(ctx, msg.ZoneId, msg.Version) {
@@ -311,7 +310,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	if version.State == types.IcaPending {
 		burnAssets, undelegateAssets = m.keeper.GetUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo, oracleVersion)
 		if burnAssets.IsZero() || undelegateAssets.IsZero() {
-			return nil, errors.New("no coins to undelegate")
+			return nil, sdkerrors.Wrap(types.ErrInsufficientFunds, "no coins to undelegate")
 		}
 
 		m.keeper.ChangeUndelegateState(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca)
@@ -325,7 +324,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	if version.State == types.IcaFail {
 		burnAssets, undelegateAssets = m.keeper.GetReUndelegateAmount(ctx, zoneInfo.SnDenom, zoneInfo, oracleVersion)
 		if burnAssets.IsZero() || undelegateAssets.IsZero() {
-			return nil, errors.New("no coins to undelegate")
+			return nil, sdkerrors.Wrap(types.ErrInsufficientFunds, "no coins to undelegate")
 		}
 	}
 
@@ -343,7 +342,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 			State:   types.IcaFail,
 		}
 		m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
-		return nil, sdkerrors.Wrapf(err, "IcaUnDelegate transaction failed to send")
+		return nil, sdkerrors.Wrap(err, "IcaUnDelegate transaction failed to send")
 	}
 
 	if err := ctx.EventManager().EmitTypedEvent(
@@ -417,7 +416,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw) (*types.MsgIcaWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
@@ -478,7 +477,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 			State:   types.IcaFail,
 		}
 		m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
-		return nil, sdkerrors.Wrapf(err, "PendingWithdraw transaction failed to send")
+		return nil, sdkerrors.Wrap(err, "PendingWithdraw transaction failed to send")
 	}
 
 	if err = ctx.EventManager().EmitTypedEvent(types.NewEventIcaWithdraw(

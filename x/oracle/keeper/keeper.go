@@ -45,7 +45,7 @@ func (k Keeper) ChainStateStore(ctx sdk.Context) prefix.Store {
 // UpdateChainState updates the status of the zones stored in Oracle with a new status.
 func (k Keeper) UpdateChainState(ctx sdk.Context, chainInfo *types.ChainInfo) error {
 	if !k.IsValidOracleAddress(ctx, chainInfo.ZoneId, chainInfo.OperatorAddress) {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, chainInfo.OperatorAddress)
+		return sdkerrors.Wrap(types.ErrInvalidOperator, chainInfo.OperatorAddress)
 	}
 
 	store := k.ChainStateStore(ctx)

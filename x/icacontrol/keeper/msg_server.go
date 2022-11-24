@@ -34,18 +34,18 @@ func (k msgServer) RegisterZone(goCtx context.Context, zone *types.MsgRegisterZo
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, zone.ZoneId, zone.IcaAccount.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
 	}
 
 	_, ok := k.Keeper.GetRegisteredZone(ctx, zone.ZoneId)
 	if ok {
-		return nil, errors.New(zone.ZoneId + "already registered")
+		return nil, sdkerrors.Wrapf(types.ErrAlreadyExistZone, zone.ZoneId)
 	}
 
 	zoneId := k.DenomDuplicateCheck(ctx, zone.BaseDenom)
 
 	if zoneId != "" {
-		return nil, sdkerrors.Wrap(types.ErrDenomDuplicates, zone.BaseDenom)
+		return nil, sdkerrors.Wrapf(types.ErrDenomDuplicates, zone.BaseDenom)
 	}
 
 	zoneInfo := &types.RegisteredZone{
@@ -99,7 +99,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, zone.ZoneId, zone.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, zone.ControllerAddress)
 	}
 
 	_, ok := k.GetRegisteredZone(ctx, zone.ZoneId)
@@ -122,22 +122,22 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, zone.ZoneId, zone.IcaAccount.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, zone.IcaAccount.ControllerAddress)
 	}
 
 	zoneId := k.DenomDuplicateCheck(ctx, zone.BaseDenom)
 	if zoneId != "" {
-		return nil, sdkerrors.Wrap(types.ErrDenomDuplicates, zone.BaseDenom)
+		return nil, sdkerrors.Wrapf(types.ErrDenomDuplicates, zone.BaseDenom)
 	}
 
 	ok := k.Keeper.IcaControllerKeeper.IsBound(ctx, zone.IcaInfo.PortId)
 	if !ok {
-		return nil, sdkerrors.Wrap(types.ErrInvalidPortId, zone.IcaInfo.PortId)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidPortId, zone.IcaInfo.PortId)
 	}
 
 	_, ok = k.Keeper.IcaControllerKeeper.GetOpenActiveChannel(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.PortId)
 	if !ok {
-		return nil, sdkerrors.Wrap(types.ErrInvalidConnId, zone.IcaInfo.ConnectionId)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidConnId, zone.IcaInfo.ConnectionId)
 	}
 
 	zoneInfo := &types.RegisteredZone{
@@ -187,7 +187,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -226,7 +226,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -264,11 +264,11 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	if !k.IsValidAutoStakingVersion(ctx, msg.ZoneId, msg.Version) {
-		return nil, sdkerrors.Wrap(types.ErrInvalidIcaVersion, strconv.FormatUint(msg.Version, 10))
+		return nil, sdkerrors.Wrapf(types.ErrInvalidIcaVersion, strconv.FormatUint(msg.Version, 10))
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -317,7 +317,7 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -368,7 +368,7 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -408,7 +408,7 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
@@ -449,7 +449,7 @@ func (k msgServer) RegisterControllerAddress(goCtx context.Context, msg *types.M
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidKeyManager(ctx, msg.FromAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.FromAddress)
+		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, msg.FromAddress)
 	}
 
 	k.SetControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress)

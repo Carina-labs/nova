@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"errors"
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/gogo/protobuf/proto"
 
@@ -36,9 +35,6 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		msgResponse := &stakingtypes.MsgUndelegateResponse{}
 		if err := proto.Unmarshal(msgData.Data, msgResponse); err != nil {
 			return "", sdkerrors.Wrapf(sdkerrors.ErrJSONUnmarshal, "cannot unmarshal send response message: %s", err.Error())
-		}
-		if msgResponse.String() == "" {
-			return "", errors.New("response cannot be nil")
 		}
 
 		var data ibcaccounttypes.InterchainAccountPacketData
