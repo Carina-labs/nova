@@ -27,8 +27,8 @@ func GetTxCmd() *cobra.Command {
 
 func NewUpdateStateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update_state [amount] [block-height] [app-hash] [zone-id]",
-		Args:  cobra.ExactArgs(4),
+		Use:  "update_state [amount] [block-height] [app-hash] [zone-id]",
+		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
