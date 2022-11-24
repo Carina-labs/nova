@@ -1,7 +1,7 @@
 package types
 
 import (
-	"errors"
+	"github.com/Carina-labs/nova/x/icacontrol/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	"time"
 
@@ -135,8 +135,8 @@ func (msg MsgUndelegate) Type() string {
 }
 
 func (msg MsgUndelegate) ValidateBasic() error {
-	if msg.ControllerAddress == "" {
-		return errors.New("controller address is not null")
+	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
+		return err
 	}
 
 	if msg.ZoneId == "" {
@@ -229,7 +229,7 @@ func (msg MsgWithdraw) Type() string {
 
 func (msg MsgWithdraw) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Withdrawer)
+		return sdkerrors.Wrap(types.ErrInvalidAddress, msg.Withdrawer)
 	}
 
 	if msg.ZoneId == "" {
@@ -315,7 +315,7 @@ func (msg MsgIcaWithdraw) Type() string {
 
 func (msg MsgIcaWithdraw) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.ControllerAddress); err != nil {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ControllerAddress)
+		return sdkerrors.Wrap(types.ErrInvalidAddress, msg.ControllerAddress)
 	}
 
 	if msg.ZoneId == "" {

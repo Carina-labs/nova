@@ -1,7 +1,7 @@
 package types
 
 import (
-	"errors"
+	"fmt"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -50,20 +50,20 @@ func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAd
 // ValidateBasic implements sdk.Msg
 func (msg MsgRegisterZone) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	if strings.TrimSpace(msg.IcaInfo.ConnectionId) == "" {
-		return errors.New("missing ICA connection ID")
+		return fmt.Errorf("missing ICA connection ID")
 	}
 
 	_, err := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if strings.TrimSpace(msg.ValidatorAddress) == "" {
-		return errors.New("missing validator address")
+		return fmt.Errorf("missing validator address")
 	}
 
 	if err = sdk.ValidateDenom(msg.BaseDenom); err != nil {
@@ -71,19 +71,19 @@ func (msg MsgRegisterZone) ValidateBasic() error {
 	}
 
 	if msg.UndelegateMaxEntries == 0 {
-		return errors.New("cannot set undelegate max_entries to zero")
+		return fmt.Errorf("cannot set undelegate max_entries to zero")
 	}
 
 	if msg.DepositMaxEntries == 0 {
-		return errors.New("cannot set delegate max_entries to zero")
+		return fmt.Errorf("cannot set delegate max_entries to zero")
 	}
 
 	if msg.Decimal > 18 {
-		return errors.New("decimal cannot be more than 18")
+		return sdkerrors.Wrap(ErrInvalidDecimal, "decimal cannot be more than 18")
 	}
 
 	if msg.Decimal < 0 {
-		return errors.New("decimal value must be greater than or equal to 0")
+		return sdkerrors.Wrap(ErrInvalidDecimal, "decimal value must be greater than or equal to 0")
 	}
 
 	return nil
@@ -107,7 +107,7 @@ func NewMsgIcaDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.
 func (msg MsgIcaDelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if !msg.Amount.IsValid() {
@@ -124,7 +124,6 @@ func (msg MsgIcaDelegate) ValidateBasic() error {
 // GetSigners implements sdk.Msg
 func (msg MsgIcaDelegate) GetSigners() []sdk.AccAddress {
 	accAddr, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
-
 	if err != nil {
 		panic(err)
 	}
@@ -144,7 +143,7 @@ func NewMsgIcaUnDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sd
 func (msg MsgIcaUndelegate) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if !msg.Amount.IsValid() {
@@ -180,12 +179,12 @@ func NewMsgIcaAutoStaking(zoneId string, controllerAddr sdk.AccAddress, amount s
 // ValidateBasic implements sdk.Msg
 func (msg MsgIcaAutoStaking) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if !msg.Amount.IsValid() {
@@ -223,17 +222,17 @@ func NewMsgIcaTransfer(zoneId string, controllerAddr sdk.AccAddress, receiver, p
 // ValidateBasic implements sdk.Msg
 func (msg MsgIcaTransfer) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	_, err = sdk.AccAddressFromBech32(msg.ReceiverAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid receiver address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid receiver address")
 	}
 
 	if msg.IcaTransferChannelId == "" {
@@ -277,7 +276,7 @@ func NewMsgDeleteRegisteredZone(zoneId string, controllerAddr sdk.AccAddress) *M
 func (msg MsgDeleteRegisteredZone) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if strings.TrimSpace(msg.ZoneId) == "" {
@@ -325,19 +324,19 @@ func NewMsgChangeZoneInfo(zoneId, hostAddr string, controllerAddr sdk.AccAddress
 func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.IcaAccount.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	if strings.TrimSpace(msg.IcaInfo.ConnectionId) == "" {
-		return errors.New("missing ICA connection ID")
+		return sdkerrors.Wrap(ErrInvalidAddress, "missing ICA connection ID")
 	}
 
 	if strings.TrimSpace(msg.ValidatorAddress) == "" {
-		return errors.New("missing validator address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "missing validator address")
 	}
 
 	if err = sdk.ValidateDenom(msg.BaseDenom); err != nil {
@@ -345,18 +344,18 @@ func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 	}
 
 	if msg.UndelegateMaxEntries == 0 {
-		return errors.New("cannot set undelegate max_entries to zero")
+		return sdkerrors.Wrap(ErrInvalidMaxEntreis, "cannot set undelegate max_entries to zero")
 	}
 	if msg.DepositMaxEntries == 0 {
-		return errors.New("cannot set deposit max_entries to zero")
+		return sdkerrors.Wrap(ErrInvalidMaxEntreis, "cannot set deposit max_entries to zero")
 	}
 
 	if msg.Decimal > 18 {
-		return errors.New("decimal cannot be more than 18")
+		return sdkerrors.Wrap(ErrInvalidDecimal, "decimal cannot be more than 18")
 	}
 
 	if msg.Decimal < 0 {
-		return errors.New("decimal value must be greater than or equal to 0")
+		return sdkerrors.Wrap(ErrInvalidDecimal, "decimal value must be greater than or equal to 0")
 	}
 	return nil
 }
@@ -404,15 +403,15 @@ func (msg *MsgIcaAuthzGrant) SetAuthorization(a authz.Authorization) error {
 func (msg MsgIcaAuthzGrant) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if msg.Grantee == "" {
-		return sdkerrors.Wrapf(sdkerrors.ErrUnknownAddress, "Grantee address is not nil")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Grantee address is not nil")
 	}
 
 	if msg.ZoneId == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 
 	return nil
@@ -442,15 +441,15 @@ func NewMsgAuthzRevoke(zoneId, grantee, msgType string, granter sdk.AccAddress) 
 func (msg MsgIcaAuthzRevoke) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if msg.Grantee == "" {
-		return sdkerrors.Wrapf(sdkerrors.ErrUnknownAddress, "Grantee address is not nil")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Grantee address is not nil")
 	}
 
 	if msg.ZoneId == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 	return nil
 }
@@ -478,16 +477,16 @@ func NewMsgRegisterControllerAddress(zoneId string, controllerAddr, fromAddr sdk
 func (msg MsgRegisterControllerAddr) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.FromAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid from address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid from address")
 	}
 
 	_, err = sdk.AccAddressFromBech32(msg.ControllerAddress)
 	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "Invalid controller address")
+		return sdkerrors.Wrap(ErrInvalidAddress, "Invalid controller address")
 	}
 
 	if msg.ZoneId == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
 	}
 	return nil
 }

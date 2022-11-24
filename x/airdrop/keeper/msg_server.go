@@ -62,7 +62,7 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 	amount, _, _ := m.keeper.CalcClaimableAmount(ctx, userAddr)
 	if amount.IsZero() {
 		m.keeper.Logger(ctx).Error("claimable amount is zero | this is an unexpected error", "user", userAddr)
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrLogic, "claimable amount is zero")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrLogic, "claimable amount is zero")
 	}
 
 	// mint and send airdrop tokens to the user

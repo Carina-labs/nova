@@ -1,7 +1,6 @@
 package types
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 
@@ -119,7 +118,7 @@ func validateMintDenom(i interface{}) error {
 	}
 
 	if strings.TrimSpace(v) == "" {
-		return errors.New("mint denom cannot be blank")
+		return fmt.Errorf("mint denom cannot be blank")
 	}
 	if err := sdk.ValidateDenom(v); err != nil {
 		return err
@@ -212,21 +211,21 @@ func validateDistributionProportions(i interface{}) error {
 	}
 
 	if v.Staking.IsNegative() {
-		return errors.New("staking distribution ratio should not be negative")
+		return fmt.Errorf("staking distribution ratio should not be negative")
 	}
 
 	if v.LpIncentives.IsNegative() {
-		return errors.New("pool incentives distribution ratio should not be negative")
+		return fmt.Errorf("pool incentives distribution ratio should not be negative")
 	}
 
 	if v.CommunityPool.IsNegative() {
-		return errors.New("community pool distribution ratio should not be negative")
+		return fmt.Errorf("community pool distribution ratio should not be negative")
 	}
 
 	totalProportions := v.Staking.Add(v.LpIncentives).Add(v.CommunityPool)
 
 	if !totalProportions.Equal(sdk.NewDec(1)) {
-		return errors.New("total distributions ratio should be 1")
+		return fmt.Errorf("total distributions ratio should be 1")
 	}
 
 	return nil
