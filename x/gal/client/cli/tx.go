@@ -1,6 +1,7 @@
 package cli
 
 import (
+	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"strconv"
 	"time"
 
@@ -10,6 +11,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
+)
+
+const (
+	flagPacketTimeoutTimestamp = "packet-timeout-timestamp"
 )
 
 func txDepositCmd() *cobra.Command {
@@ -51,6 +56,31 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 	return cmd
 }
 
+func txClaimSnAssetCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "claim [zone-id]",
+		Short: "claim wrapped coin to nova",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+
+			msg := types.NewMsgClaimSnAsset(zoneId, clientCtx.GetFromAddress())
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	return cmd
+}
+
 func txUndelegateRequestCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:  "pending-undelegate [zone-id] [withdrawer] [amount]",
@@ -74,35 +104,6 @@ func txUndelegateRequestCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgPendingUndelegate(zoneId, clientCtx.GetFromAddress(), withdrawer, amount)
-			if err = msg.ValidateBasic(); err != nil {
-				return err
-			}
-
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-func txUndelegateCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "undelegate [zone-id] [sequence]",
-		Args: cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			seq, err := strconv.ParseUint(args[1], 10, 64)
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgUndelegate(zoneId, seq, clientCtx.GetFromAddress())
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -143,11 +144,10 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 	return cmd
 }
 
-func txClaimSnAssetCmd() *cobra.Command {
+func txDelegateCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "claim [zone-id]",
-		Short: "claim wrapped coin to nova",
-		Args:  cobra.ExactArgs(1),
+		Use:  "delegate [zone-id] [sequence]",
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -155,8 +155,17 @@ func txClaimSnAssetCmd() *cobra.Command {
 			}
 
 			zoneId := args[0]
+			seq, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
 
-			msg := types.NewMsgClaimSnAsset(zoneId, clientCtx.GetFromAddress())
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgDelegate(zoneId, seq, clientCtx.GetFromAddress(), timeoutTimestamp)
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -165,6 +174,43 @@ func txClaimSnAssetCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+
+	return cmd
+}
+
+func txUndelegateCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "undelegate [zone-id] [sequence]",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			seq, err := strconv.ParseUint(args[1], 10, 64)
+			if err != nil {
+				return err
+			}
+
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgUndelegate(zoneId, seq, clientCtx.GetFromAddress(), timeoutTimestamp)
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+
 	return cmd
 }
 
@@ -193,7 +239,12 @@ func txIcaWithdrawCmd() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgIcaWithdraw(zoneId, clientCtx.GetFromAddress(), portId, chanId, t, seq)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgIcaWithdraw(zoneId, clientCtx.GetFromAddress(), portId, chanId, t, seq, timeoutTimestamp)
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -202,35 +253,7 @@ func txIcaWithdrawCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-func txDelegateCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "delegate [zone-id] [sequence]",
-		Args: cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			seq, err := strconv.ParseUint(args[1], 10, 64)
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgDelegate(zoneId, seq, clientCtx.GetFromAddress())
-			if err = msg.ValidateBasic(); err != nil {
-				return err
-			}
-
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }

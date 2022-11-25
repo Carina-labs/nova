@@ -20,15 +20,16 @@ import (
 )
 
 const (
-	FlagSpendLimit        = "spend-limit"
-	FlagMsgType           = "msg-type"
-	FlagExpiration        = "expiration"
-	FlagAllowedValidators = "allowed-validators"
-	FlagDenyValidators    = "deny-validators"
-	FlagAllowList         = "allow-list"
-	delegate              = "delegate"
-	redelegate            = "redelegate"
-	unbond                = "unbond"
+	FlagSpendLimit             = "spend-limit"
+	FlagMsgType                = "msg-type"
+	FlagExpiration             = "expiration"
+	FlagAllowedValidators      = "allowed-validators"
+	FlagDenyValidators         = "deny-validators"
+	FlagAllowList              = "allow-list"
+	delegate                   = "delegate"
+	redelegate                 = "redelegate"
+	unbond                     = "unbond"
+	flagPacketTimeoutTimestamp = "packet-timeout-timestamp"
 )
 
 // txRegisterZoneCmd is a transaction that registers new Zone information. This transaction can only be submitted by a given signatory.
@@ -74,116 +75,6 @@ func txRegisterZoneCmd() *cobra.Command {
 		},
 	}
 
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-// txDelegateTxCmd is a transaction used for remote delegation using ICA. This transaction can only be submitted by a given signatory.
-func txDelegateTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "ica-delegate [zone-id] [amount]",
-		Args: cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			amount, err := sdk.ParseCoinNormalized(args[1])
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgIcaDelegate(zoneId, clientCtx.GetFromAddress(), amount)
-
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-// txUndelegateTxCmd is a transaction used for remote de-delegation using ICA. This transaction can only be submitted by a given signatory.
-func txUndelegateTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "ica-undelegate [zone-id] [amount]",
-		Args: cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			amount, _ := sdk.ParseCoinNormalized(args[1])
-
-			msg := types.NewMsgIcaUnDelegate(zoneId, clientCtx.GetFromAddress(), amount)
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-// txAutoStakingTxCmd is a transaction used for auto-compounding using ICA. This transaction can only be submitted by a given signatory.
-func txAutoStakingTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "ica-auto-staking [zone-id] [amount]",
-		Args: cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx, err := client.GetClientTxContext(cmd)
-
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			amount, err := sdk.ParseCoinNormalized(args[1])
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgIcaAutoStaking(zoneId, clientCtx.GetFromAddress(), amount)
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
-
-// txTransferTxCmd is a transaction used to transfer assets between chains using ICA. This transaction can only be submitted by a given signatory.
-func txTransferTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:  "ica-transfer [zone-id] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
-		Args: cobra.ExactArgs(5),
-		RunE: func(cmd *cobra.Command, args []string) error {
-
-			clientCtx, err := client.GetClientTxContext(cmd)
-
-			if err != nil {
-				return err
-			}
-
-			zoneId := args[0]
-			receiver := args[1]
-			portId := args[2]
-			chanId := args[3]
-			amount, err := sdk.ParseCoinNormalized(args[4])
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgIcaTransfer(zoneId, clientCtx.GetFromAddress(), receiver, portId, chanId, amount)
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
@@ -256,6 +147,140 @@ func txChangeZoneInfoTxCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
+
+	return cmd
+}
+
+// txDelegateTxCmd is a transaction used for remote delegation using ICA. This transaction can only be submitted by a given signatory.
+func txDelegateTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "ica-delegate [zone-id] [amount]",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			amount, err := sdk.ParseCoinNormalized(args[1])
+			if err != nil {
+				return err
+			}
+
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgIcaDelegate(zoneId, clientCtx.GetFromAddress(), amount, timeoutTimestamp)
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+
+	return cmd
+}
+
+// txUndelegateTxCmd is a transaction used for remote de-delegation using ICA. This transaction can only be submitted by a given signatory.
+func txUndelegateTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "ica-undelegate [zone-id] [amount]",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			amount, _ := sdk.ParseCoinNormalized(args[1])
+
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgIcaUnDelegate(zoneId, clientCtx.GetFromAddress(), amount, timeoutTimestamp)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+
+	return cmd
+}
+
+// txAutoStakingTxCmd is a transaction used for auto-compounding using ICA. This transaction can only be submitted by a given signatory.
+func txAutoStakingTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "ica-auto-staking [zone-id] [amount]",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			amount, err := sdk.ParseCoinNormalized(args[1])
+			if err != nil {
+				return err
+			}
+
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgIcaAutoStaking(zoneId, clientCtx.GetFromAddress(), amount, timeoutTimestamp)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+
+	return cmd
+}
+
+// txTransferTxCmd is a transaction used to transfer assets between chains using ICA. This transaction can only be submitted by a given signatory.
+func txTransferTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "ica-transfer [zone-id] [receiver] [ica-transfer-port-id] [ica-transfer-channel-id] [amount]",
+		Args: cobra.ExactArgs(5),
+		RunE: func(cmd *cobra.Command, args []string) error {
+
+			clientCtx, err := client.GetClientTxContext(cmd)
+
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			receiver := args[1]
+			portId := args[2]
+			chanId := args[3]
+			amount, err := sdk.ParseCoinNormalized(args[4])
+			if err != nil {
+				return err
+			}
+
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgIcaTransfer(zoneId, clientCtx.GetFromAddress(), receiver, portId, chanId, amount, timeoutTimestamp)
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }
@@ -362,7 +387,12 @@ func txAuthzGrantTxCmd() *cobra.Command {
 				return fmt.Errorf("invalid authorization type, %s", args[1])
 			}
 
-			msg, err := types.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, time.Unix(exp, 0))
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg, err := types.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, time.Unix(exp, 0), timeoutTimestamp)
 			if err != nil {
 				return err
 			}
@@ -378,6 +408,7 @@ func txAuthzGrantTxCmd() *cobra.Command {
 	cmd.Flags().StringSlice(FlagDenyValidators, []string{}, "Deny validators addresses separated by ,")
 	cmd.Flags().StringSlice(FlagAllowList, []string{}, "Allowed addresses grantee is allowed to send funds separated by ,")
 	cmd.Flags().Int64(FlagExpiration, time.Now().AddDate(2, 0, 0).Unix(), "The Unix timestamp. Default is one year.")
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 	return cmd
 }
 
@@ -397,7 +428,12 @@ func txAuthzRevokeTxCmd() *cobra.Command {
 			msgType := args[2]
 			controllerAddr := clientCtx.GetFromAddress()
 
-			msg := types.NewMsgAuthzRevoke(zoneId, grantee, msgType, controllerAddr)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgAuthzRevoke(zoneId, grantee, msgType, controllerAddr, timeoutTimestamp)
 
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -407,7 +443,7 @@ func txAuthzRevokeTxCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 	return cmd
 }
 
