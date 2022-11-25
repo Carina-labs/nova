@@ -145,8 +145,9 @@ func (suite *KeeperTestSuite) getGrantMsg(msg, zoneId, grantee string, controlle
 	}
 
 	t := time.Now().AddDate(2, 0, 0).UTC()
+	timeoutTimestamp := uint64(10000)
 
-	grantMsg, _ := types.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, t)
+	grantMsg, _ := types.NewMsgAuthzGrant(zoneId, grantee, controllerAddr, authorization, t, timeoutTimestamp)
 
 	return *grantMsg
 }

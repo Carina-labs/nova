@@ -81,11 +81,12 @@ func (msg MsgDeposit) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{depositor}
 }
 
-func NewMsgDelegate(zoneId string, version uint64, controllerAddr sdk.AccAddress) *MsgDelegate {
+func NewMsgDelegate(zoneId string, version uint64, controllerAddr sdk.AccAddress, timeoutTimestamp uint64) *MsgDelegate {
 	return &MsgDelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr.String(),
 		Version:           version,
+		TimeoutTimestamp:  timeoutTimestamp,
 	}
 }
 
@@ -118,11 +119,12 @@ func (msg MsgDelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{delegator}
 }
 
-func NewMsgUndelegate(zoneId string, version uint64, controllerAddr sdk.AccAddress) *MsgUndelegate {
+func NewMsgUndelegate(zoneId string, version uint64, controllerAddr sdk.AccAddress, timeoutTimestamp uint64) *MsgUndelegate {
 	return &MsgUndelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr.String(),
 		Version:           version,
+		TimeoutTimestamp:  timeoutTimestamp,
 	}
 }
 
@@ -294,7 +296,7 @@ func (msg MsgClaimSnAsset) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{claimer}
 }
 
-func NewMsgIcaWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId, chanId string, blockTime time.Time, version uint64) *MsgIcaWithdraw {
+func NewMsgIcaWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId, chanId string, blockTime time.Time, version, timeoutTimestamp uint64) *MsgIcaWithdraw {
 	return &MsgIcaWithdraw{
 		ZoneId:               zoneId,
 		ControllerAddress:    controllerAddr.String(),
@@ -302,6 +304,7 @@ func NewMsgIcaWithdraw(zoneId string, controllerAddr sdk.AccAddress, portId, cha
 		IcaTransferChannelId: chanId,
 		ChainTime:            blockTime,
 		Version:              version,
+		TimeoutTimestamp:     timeoutTimestamp,
 	}
 }
 

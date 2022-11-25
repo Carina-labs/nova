@@ -95,11 +95,12 @@ func (msg MsgRegisterZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaDelegate {
+func NewMsgIcaDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin, timeoutTimestamp uint64) *MsgIcaDelegate {
 	return &MsgIcaDelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr.String(),
 		Amount:            amount,
+		TimeoutTimestamp:  timeoutTimestamp,
 	}
 }
 
@@ -131,11 +132,12 @@ func (msg MsgIcaDelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaUnDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaUndelegate {
+func NewMsgIcaUnDelegate(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin, timeoutTimestamp uint64) *MsgIcaUndelegate {
 	return &MsgIcaUndelegate{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr.String(),
 		Amount:            amount,
+		TimeoutTimestamp:  timeoutTimestamp,
 	}
 }
 
@@ -168,11 +170,12 @@ func (msg MsgIcaUndelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaAutoStaking(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin) *MsgIcaAutoStaking {
+func NewMsgIcaAutoStaking(zoneId string, controllerAddr sdk.AccAddress, amount sdk.Coin, timeoutTimestamp uint64) *MsgIcaAutoStaking {
 	return &MsgIcaAutoStaking{
 		ZoneId:            zoneId,
 		ControllerAddress: controllerAddr.String(),
 		Amount:            amount,
+		TimeoutTimestamp:  timeoutTimestamp,
 	}
 }
 
@@ -208,7 +211,7 @@ func (msg MsgIcaAutoStaking) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgIcaTransfer(zoneId string, controllerAddr sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin) *MsgIcaTransfer {
+func NewMsgIcaTransfer(zoneId string, controllerAddr sdk.AccAddress, receiver, portId, chanId string, amount sdk.Coin, timeoutTimestamp uint64) *MsgIcaTransfer {
 	return &MsgIcaTransfer{
 		ZoneId:               zoneId,
 		ControllerAddress:    controllerAddr.String(),
@@ -216,6 +219,7 @@ func NewMsgIcaTransfer(zoneId string, controllerAddr sdk.AccAddress, receiver, p
 		IcaTransferPortId:    portId,
 		IcaTransferChannelId: chanId,
 		Amount:               amount,
+		TimeoutTimestamp:     timeoutTimestamp,
 	}
 }
 
@@ -371,12 +375,13 @@ func (msg MsgChangeRegisteredZone) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgAuthzGrant(zoneId, grantee string, granter sdk.AccAddress, authorization authz.Authorization, expiration time.Time) (*MsgIcaAuthzGrant, error) {
+func NewMsgAuthzGrant(zoneId, grantee string, granter sdk.AccAddress, authorization authz.Authorization, expiration time.Time, timeoutTimestamp uint64) (*MsgIcaAuthzGrant, error) {
 	m := &MsgIcaAuthzGrant{
 		ZoneId:            zoneId,
 		ControllerAddress: granter.String(),
 		Grantee:           grantee,
 		Grant:             authz.Grant{Expiration: expiration},
+		TimeoutTimestamp:  timeoutTimestamp,
 	}
 	err := m.SetAuthorization(authorization)
 	if err != nil {
@@ -428,12 +433,13 @@ func (msg MsgIcaAuthzGrant) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{accAddr}
 }
 
-func NewMsgAuthzRevoke(zoneId, grantee, msgType string, granter sdk.AccAddress) *MsgIcaAuthzRevoke {
+func NewMsgAuthzRevoke(zoneId, grantee, msgType string, granter sdk.AccAddress, timeoutTimestamp uint64) *MsgIcaAuthzRevoke {
 	return &MsgIcaAuthzRevoke{
 		ZoneId:            zoneId,
 		ControllerAddress: granter.String(),
 		Grantee:           grantee,
 		MsgTypeUrl:        msgType,
+		TimeoutTimestamp:  timeoutTimestamp,
 	}
 }
 
