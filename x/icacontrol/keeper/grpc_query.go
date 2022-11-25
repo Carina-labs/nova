@@ -35,7 +35,7 @@ func (q *QueryServer) Zone(goCtx context.Context, request *types.QueryZoneReques
 
 	zone, ok := q.keeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
-		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZone, request.ZoneId)
 	}
 
 	return &types.QueryZoneResponse{Zone: &zone}, nil
@@ -46,7 +46,7 @@ func (q QueryServer) AutoStakingVersion(goCtx context.Context, request *types.Qu
 
 	_, ok := q.keeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
-		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZone, request.ZoneId)
 	}
 
 	versionInfo := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)
@@ -66,7 +66,7 @@ func (q QueryServer) AutoStakingCurrentVersion(goCtx context.Context, request *t
 
 	_, ok := q.keeper.GetRegisteredZone(ctx, request.ZoneId)
 	if !ok {
-		return nil, sdkerrors.Wrap(types.ErrNotFoundZoneInfo, request.ZoneId)
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZone, request.ZoneId)
 	}
 
 	versionInfo := q.keeper.GetAutoStakingVersion(ctx, request.ZoneId)

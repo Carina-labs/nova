@@ -104,7 +104,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 	}
 
 	if data.Data == nil {
-		return types.ErrMsgNotNil
+		return types.ErrInvalidMsg
 	}
 
 	packetData, err := ibcaccounttypes.DeserializeCosmosTx(k.cdc, data.Data)

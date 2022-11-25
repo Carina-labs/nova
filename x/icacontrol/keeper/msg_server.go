@@ -104,7 +104,7 @@ func (k msgServer) DeleteRegisteredZone(goCtx context.Context, zone *types.MsgDe
 
 	_, ok := k.GetRegisteredZone(ctx, zone.ZoneId)
 	if !ok {
-		return nil, types.ErrNotFoundZoneInfo
+		return nil, types.ErrNotFoundZone
 	}
 
 	k.Keeper.DeleteRegisteredZone(ctx, zone.ZoneId)
@@ -192,7 +192,7 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, types.ErrNotFoundZoneInfo
+		return nil, types.ErrNotFoundZone
 	}
 
 	// check unreceived ack
@@ -231,7 +231,7 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, types.ErrNotFoundZoneInfo
+		return nil, types.ErrNotFoundZone
 	}
 
 	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
@@ -273,7 +273,7 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, types.ErrNotFoundZoneInfo
+		return nil, types.ErrNotFoundZone
 	}
 
 	// check unreceived ack
@@ -322,7 +322,7 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, types.ErrNotFoundZoneInfo
+		return nil, types.ErrNotFoundZone
 	}
 
 	// check unreceived ack
@@ -373,7 +373,7 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, types.ErrNotFoundZoneInfo
+		return nil, types.ErrNotFoundZone
 	}
 
 	// check unreceived ack
@@ -413,7 +413,7 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 
 	zoneInfo, ok := k.GetRegisteredZone(ctx, msg.ZoneId)
 	if !ok {
-		return nil, types.ErrNotFoundZoneInfo
+		return nil, types.ErrNotFoundZone
 	}
 
 	// check unreceived ack
