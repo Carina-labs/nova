@@ -342,7 +342,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 			State:   types.IcaFail,
 		}
 		m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
-		return nil, sdkerrors.Wrap(err, "IcaUnDelegate transaction failed to send")
+		return nil, sdkerrors.Wrap(err, "undelegate transaction failed to send")
 	}
 
 	if err := ctx.EventManager().EmitTypedEvent(
