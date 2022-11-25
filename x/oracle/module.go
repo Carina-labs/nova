@@ -133,11 +133,14 @@ func (a AppModule) EndBlock(context sdk.Context, block abci.RequestEndBlock) []a
 	return []abci.ValidatorUpdate{}
 }
 
+// ConsensusVersion implements AppModule/ConsensusVersion.
+func (AppModule) ConsensusVersion() uint64 { return 1 }
+
 // ___________________________________________________________________________
 
 // AppModuleSimulation functions
 
-// GenerateGenesisState creates a randomized GenState of the pool-incentives module.
+// GenerateGenesisState creates a randomized GenState of the oracle module.
 func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	// TODO
 }
@@ -147,7 +150,7 @@ func (AppModule) ProposalContents(simState module.SimulationState) []simtypes.We
 	return nil // TODO
 }
 
-// RandomizedParams creates randomized pool-incentives param changes for the simulator.
+// RandomizedParams creates randomized oracle param changes for the simulator.
 func (AppModule) RandomizedParams(r *rand.Rand) []simtypes.ParamChange {
 	return nil // TODO
 }
@@ -161,6 +164,3 @@ func (a AppModule) RegisterStoreDecoder(sdr sdk.StoreDecoderRegistry) {
 func (a AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	return nil
 }
-
-// ConsensusVersion implements AppModule/ConsensusVersion.
-func (AppModule) ConsensusVersion() uint64 { return 1 }

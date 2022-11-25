@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/Carina-labs/nova/x/icacontrol"
 	"github.com/Carina-labs/nova/x/poolincentive"
 	"io"
 	"net/http"
@@ -288,6 +289,7 @@ func NewNovaApp(
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
 		gal.NewAppModule(appCodec, *app.GalKeeper, app.BankKeeper),
+		icacontrol.NewAppModule(appCodec, *app.IcaControlKeeper, app.AccountKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
 		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.BankKeeper),
 		poolincentive.NewAppModule(appCodec, *app.PoolKeeper),
