@@ -50,7 +50,7 @@ func NewMsgRegisterZone(zoneId, icaConnectionId string, controllerAddr sdk.AccAd
 // ValidateBasic implements sdk.Msg
 func (msg MsgRegisterZone) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrInvalidZoneId, "zoneId cannot be nil")
 	}
 
 	if strings.TrimSpace(msg.IcaInfo.ConnectionId) == "" {
@@ -182,7 +182,7 @@ func NewMsgIcaAutoStaking(zoneId string, controllerAddr sdk.AccAddress, amount s
 // ValidateBasic implements sdk.Msg
 func (msg MsgIcaAutoStaking) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrInvalidZoneId, "zoneId cannot be nil")
 	}
 
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
@@ -226,7 +226,7 @@ func NewMsgIcaTransfer(zoneId string, controllerAddr sdk.AccAddress, receiver, p
 // ValidateBasic implements sdk.Msg
 func (msg MsgIcaTransfer) ValidateBasic() error {
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrInvalidZoneId, "zoneId cannot be nil")
 	}
 
 	_, err := sdk.AccAddressFromBech32(msg.ControllerAddress)
@@ -240,11 +240,11 @@ func (msg MsgIcaTransfer) ValidateBasic() error {
 	}
 
 	if msg.IcaTransferChannelId == "" {
-		return sdkerrors.Wrapf(ErrChanIdNotNil, msg.IcaTransferChannelId)
+		return sdkerrors.Wrapf(ErrInvalidChanId, msg.IcaTransferChannelId)
 	}
 
 	if msg.IcaTransferPortId == "" {
-		return sdkerrors.Wrapf(ErrPortIdNotNil, msg.IcaTransferPortId)
+		return fmt.Errorf("port id cannot be nil")
 	}
 
 	if !msg.Amount.IsValid() {
@@ -284,7 +284,7 @@ func (msg MsgDeleteRegisteredZone) ValidateBasic() error {
 	}
 
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrapf(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrapf(ErrInvalidZoneId, "zoneId is cannot be nil")
 	}
 
 	return nil
@@ -332,7 +332,7 @@ func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 	}
 
 	if strings.TrimSpace(msg.ZoneId) == "" {
-		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrInvalidZoneId, "zoneId cannot be nil")
 	}
 
 	if strings.TrimSpace(msg.IcaInfo.ConnectionId) == "" {
@@ -348,10 +348,10 @@ func (msg MsgChangeRegisteredZone) ValidateBasic() error {
 	}
 
 	if msg.UndelegateMaxEntries == 0 {
-		return sdkerrors.Wrap(ErrInvalidMaxEntreis, "cannot set undelegate max_entries to zero")
+		return sdkerrors.Wrap(ErrInvalidMaxEntries, "cannot set undelegate max_entries to zero")
 	}
 	if msg.DepositMaxEntries == 0 {
-		return sdkerrors.Wrap(ErrInvalidMaxEntreis, "cannot set deposit max_entries to zero")
+		return sdkerrors.Wrap(ErrInvalidMaxEntries, "cannot set deposit max_entries to zero")
 	}
 
 	if msg.Decimal > 18 {
@@ -416,7 +416,7 @@ func (msg MsgIcaAuthzGrant) ValidateBasic() error {
 	}
 
 	if msg.ZoneId == "" {
-		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrInvalidZoneId, "zoneId cannot be nil")
 	}
 
 	return nil
@@ -455,7 +455,7 @@ func (msg MsgIcaAuthzRevoke) ValidateBasic() error {
 	}
 
 	if msg.ZoneId == "" {
-		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrInvalidZoneId, "zoneId cannot be nil")
 	}
 	return nil
 }
@@ -492,7 +492,7 @@ func (msg MsgRegisterControllerAddr) ValidateBasic() error {
 	}
 
 	if msg.ZoneId == "" {
-		return sdkerrors.Wrap(ErrZoneIdNotNil, "zoneId is not nil")
+		return sdkerrors.Wrap(ErrInvalidZoneId, "zoneId cannot be nil")
 	}
 	return nil
 }
