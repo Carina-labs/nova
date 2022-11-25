@@ -1,17 +1,15 @@
 package keeper
 
 import (
-	"time"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	host "github.com/cosmos/ibc-go/v3/modules/core/24-host"
+	"time"
 )
 
-func (k Keeper) SendTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg) error {
+func (k Keeper) SendTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg, timeout uint64) error {
 	portID, err := icatypes.NewControllerPortID(controllerId)
 	if err != nil {
 		return err
@@ -39,7 +37,7 @@ func (k Keeper) SendTx(ctx sdk.Context, controllerId, connectionId string, msgs 
 
 	// timeoutTimestamp set to max value with the unsigned bit shifted to satisfy hermes timestamp conversion
 	// it is the responsibility of the auth module developer to ensure an appropriate timeout timestamp
-	timeoutTimestamp := uint64(ctx.BlockTime().UnixNano() + 10*time.Minute.Nanoseconds())
+	timeoutTimestamp := uint64(ctx.BlockTime().UnixNano()) + timeout*uint64(time.Minute.Nanoseconds())
 	_, err = k.IcaControllerKeeper.SendTx(ctx, chanCap, connectionId, portID, packetData, timeoutTimestamp)
 	if err != nil {
 		return err
