@@ -402,7 +402,7 @@ func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 		{
 			name:   "nil",
 			args:   suite.SetMsgs("nil", zone),
-			expect: types.ErrMsgNotNil,
+			expect: types.ErrInvalidMsg,
 			err:    true,
 		},
 	}
