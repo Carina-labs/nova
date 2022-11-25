@@ -38,6 +38,7 @@ message MsgDelegate {
   string zone_id = 1;
   string controller_address = 2;
   uint64 version = 3;
+  uint64 timeout_timestamp = 4;
 }
 
 message MsgDelegateResponse {}
@@ -46,6 +47,7 @@ message MsgUndelegate {
   string zone_id = 1;
   string controller_address = 2;
   uint64 version = 3;
+  uint64 timeout_timestamp = 4;
 }
 
 message MsgUndelegateResponse{
@@ -100,6 +102,7 @@ message MsgIcaWithdraw{
   string ica_transfer_channel_id = 4;
   google.protobuf.Timestamp chain_time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   uint64 version = 6;
+  uint64 timeout_timestamp = 7;
 }
 
 message MsgIcaWithdrawResponse{}
