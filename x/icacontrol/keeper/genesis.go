@@ -14,6 +14,19 @@ func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
 }
 
 func (k Keeper) ExportGenesis(ctx sdk.Context) *types.GenesisState {
-	params := k.GetParams(ctx)
-	return types.NewGenesisState(params)
+	result := &types.GenesisState{
+		Params:                k.GetParams(ctx),
+		ControllerAddressInfo: []*types.ControllerAddressInfo{},
+	}
+
+	var controllerAddr []*types.ControllerAddressInfo
+	k.IterateRegisteredZones(ctx, func(index int64, zoneInfo types.RegisteredZone) (stop bool) {
+		res := k.GetControllerAddr(ctx, zoneInfo.ZoneId)
+		controllerAddr = append(controllerAddr, &res)
+		return false
+	})
+
+	result.ControllerAddressInfo = controllerAddr
+
+	return result
 }
