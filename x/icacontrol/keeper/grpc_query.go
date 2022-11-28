@@ -41,6 +41,24 @@ func (q *QueryServer) Zone(goCtx context.Context, request *types.QueryZoneReques
 	return &types.QueryZoneResponse{Zone: &zone}, nil
 }
 
+func (q *QueryServer) IcaGrant(goCtx context.Context, request *types.QueryIcaGrantRequest) (*types.QueryIcaGrantResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zone, ok := q.keeper.GetRegisteredZone(ctx, request.ZoneId)
+	if !ok {
+		return nil, sdkerrors.Wrap(types.ErrNotFoundZone, request.ZoneId)
+	}
+
+	grantInfo := q.keeper.GetAuthzGrant(ctx, zone.ZoneId)
+
+	return &types.QueryIcaGrantResponse{
+		Grants: &types.AuthzGrantInfo{
+			ZoneId:    grantInfo.ZoneId,
+			GrantInfo: grantInfo.GrantInfo,
+		},
+	}, nil
+}
+
 func (q QueryServer) AutoStakingVersion(goCtx context.Context, request *types.QueryAutoStakingVersion) (*types.QueryAutoStakingVersionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 

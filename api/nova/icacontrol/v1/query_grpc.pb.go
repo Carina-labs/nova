@@ -25,6 +25,7 @@ type QueryClient interface {
 	// AllZones returns all the zones registered.
 	AllZones(ctx context.Context, in *QueryAllZonesRequest, opts ...grpc.CallOption) (*QueryAllZonesResponse, error)
 	Zone(ctx context.Context, in *QueryZoneRequest, opts ...grpc.CallOption) (*QueryZoneResponse, error)
+	IcaGrant(ctx context.Context, in *QueryIcaGrantRequest, opts ...grpc.CallOption) (*QueryIcaGrantResponse, error)
 	AutoStakingVersion(ctx context.Context, in *QueryAutoStakingVersion, opts ...grpc.CallOption) (*QueryAutoStakingVersionResponse, error)
 	AutoStakingCurrentVersion(ctx context.Context, in *QueryCurrentAutoStakingVersion, opts ...grpc.CallOption) (*QueryCurrentAutoStakingVersionResponse, error)
 }
@@ -49,6 +50,15 @@ func (c *queryClient) AllZones(ctx context.Context, in *QueryAllZonesRequest, op
 func (c *queryClient) Zone(ctx context.Context, in *QueryZoneRequest, opts ...grpc.CallOption) (*QueryZoneResponse, error) {
 	out := new(QueryZoneResponse)
 	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Query/Zone", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) IcaGrant(ctx context.Context, in *QueryIcaGrantRequest, opts ...grpc.CallOption) (*QueryIcaGrantResponse, error) {
+	out := new(QueryIcaGrantResponse)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Query/IcaGrant", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,6 +90,7 @@ type QueryServer interface {
 	// AllZones returns all the zones registered.
 	AllZones(context.Context, *QueryAllZonesRequest) (*QueryAllZonesResponse, error)
 	Zone(context.Context, *QueryZoneRequest) (*QueryZoneResponse, error)
+	IcaGrant(context.Context, *QueryIcaGrantRequest) (*QueryIcaGrantResponse, error)
 	AutoStakingVersion(context.Context, *QueryAutoStakingVersion) (*QueryAutoStakingVersionResponse, error)
 	AutoStakingCurrentVersion(context.Context, *QueryCurrentAutoStakingVersion) (*QueryCurrentAutoStakingVersionResponse, error)
 	mustEmbedUnimplementedQueryServer()
@@ -94,6 +105,9 @@ func (UnimplementedQueryServer) AllZones(context.Context, *QueryAllZonesRequest)
 }
 func (UnimplementedQueryServer) Zone(context.Context, *QueryZoneRequest) (*QueryZoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Zone not implemented")
+}
+func (UnimplementedQueryServer) IcaGrant(context.Context, *QueryIcaGrantRequest) (*QueryIcaGrantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IcaGrant not implemented")
 }
 func (UnimplementedQueryServer) AutoStakingVersion(context.Context, *QueryAutoStakingVersion) (*QueryAutoStakingVersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AutoStakingVersion not implemented")
@@ -150,6 +164,24 @@ func _Query_Zone_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_IcaGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryIcaGrantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).IcaGrant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.icacontrol.v1.Query/IcaGrant",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).IcaGrant(ctx, req.(*QueryIcaGrantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Query_AutoStakingVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryAutoStakingVersion)
 	if err := dec(in); err != nil {
@@ -200,6 +232,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Zone",
 			Handler:    _Query_Zone_Handler,
+		},
+		{
+			MethodName: "IcaGrant",
+			Handler:    _Query_IcaGrant_Handler,
 		},
 		{
 			MethodName: "AutoStakingVersion",

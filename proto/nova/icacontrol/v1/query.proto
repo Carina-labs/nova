@@ -17,6 +17,9 @@ service Query {
   rpc Zone(QueryZoneRequest) returns (QueryZoneResponse) {
     option (google.api.http).get = "/nova/icacontrol/v1/zone/{zone_id}";
   }
+  rpc IcaGrant(QueryIcaGrantRequest) returns (QueryIcaGrantResponse) {
+    option (google.api.http).get = "/nova/icacontrol/v1/ica_grant/{zone_id}";
+  }
   rpc AutoStakingVersion(QueryAutoStakingVersion) returns (QueryAutoStakingVersionResponse) {
     option (google.api.http).get = "/nova/icacontrol/v1/autostaking_version/{zone_id}/{version}";
   }
@@ -41,6 +44,14 @@ message QueryZoneRequest {
 // QueryZoneResponse is the response type for Query/Zone.
 message QueryZoneResponse {
   RegisteredZone zone = 1;
+}
+
+message QueryIcaGrantRequest{
+  string zone_id = 1;
+}
+
+message QueryIcaGrantResponse{
+  AuthzGrantInfo grants = 1;
 }
 
 message QueryAutoStakingVersion {

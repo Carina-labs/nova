@@ -2,7 +2,10 @@ package keeper_test
 
 import (
 	"github.com/Carina-labs/nova/x/icacontrol/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"strconv"
+	"time"
 )
 
 func (suite *KeeperTestSuite) TestAllZones() {
@@ -59,6 +62,39 @@ func (suite *KeeperTestSuite) TestZone() {
 
 	// invalid zone id
 	_, err = queryClient.Zone(ctx.Context(), &types.QueryZoneRequest{ZoneId: "invalid"})
+	suite.Require().Error(err)
+}
+
+func (suite *KeeperTestSuite) TestIcaGrant() {
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+
+	// zone is not registered
+	_, err := queryClient.IcaGrant(ctx.Context(), &types.QueryIcaGrantRequest{ZoneId: zoneId})
+	suite.Require().Error(err)
+
+	zoneInfo := newBaseRegisteredZone()
+	suite.App.IcaControlKeeper.RegisterZone(ctx, zoneInfo)
+
+	grantInfo := &types.AuthzGrantInfo{
+		ZoneId: zoneId,
+		GrantInfo: []*types.Grant{
+			{
+				Grant:      sdk.MsgTypeURL(&stakingtypes.MsgDelegate{}),
+				Granter:    zoneInfo.IcaAccount,
+				Grantee:    suite.GenRandomAddress().String(),
+				Expiration: time.Now(),
+			},
+		},
+	}
+	suite.App.IcaControlKeeper.SetAuthzGrant(ctx, grantInfo)
+	grants := suite.App.IcaControlKeeper.GetAuthzGrant(ctx, zoneId)
+
+	res, err := queryClient.IcaGrant(ctx.Context(), &types.QueryIcaGrantRequest{ZoneId: zoneId})
+	suite.Require().NoError(err)
+	suite.Require().Equal(grants, *res.Grants)
+
+	res, err = queryClient.IcaGrant(ctx.Context(), &types.QueryIcaGrantRequest{ZoneId: "err"})
 	suite.Require().Error(err)
 }
 
