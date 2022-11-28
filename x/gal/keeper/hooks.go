@@ -16,7 +16,6 @@ type Hooks struct {
 }
 
 var _ transfertypes.TransferHooks = Hooks{}
-
 var _ icatypes.ICAHooks = Hooks{}
 
 func (k Keeper) Hooks() Hooks {

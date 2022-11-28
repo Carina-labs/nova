@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/cosmos/cosmos-sdk/x/authz"
 	"github.com/gogo/protobuf/proto"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -92,6 +93,43 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		}
 
 		k.SetAutoStakingVersion(ctx, zone.ZoneId, versionInfo)
+		return "", nil
+	case sdk.MsgTypeURL(&authz.MsgGrant{}):
+		var data ibcaccounttypes.InterchainAccountPacketData
+		err := ibcaccounttypes.ModuleCdc.UnmarshalJSON(packet.GetData(), &data)
+		if err != nil {
+			return "", err
+		}
+
+		packetData, err := ibcaccounttypes.DeserializeCosmosTx(k.cdc, data.Data)
+		if err != nil {
+			return "", err
+		}
+
+		grantMsg, ok := packetData[0].(*authz.MsgGrant)
+		if !ok {
+			return "", types.ErrMsgNotFound
+		}
+
+		zoneInfo, ok := k.GetRegisterZoneForHostAddr(ctx, grantMsg.Granter)
+		if !ok {
+			return "", types.ErrNotFoundZone
+		}
+
+		grants := k.GetAuthzGrant(ctx, zoneInfo.ZoneId)
+		if grants.Size() == 0 {
+			grants.ZoneId = zoneInfo.ZoneId
+		}
+
+		grants.GrantInfo = append(grants.GrantInfo, &types.Grant{
+			Grantee:    grantMsg.Grantee,
+			Granter:    zoneInfo.IcaAccount,
+			Grant:      grantMsg.GetAuthorization().MsgTypeURL(),
+			Expiration: grantMsg.Grant.Expiration,
+		})
+
+		//set store
+		k.SetAuthzGrant(ctx, &grants)
 		return "", nil
 	default:
 		return "", nil

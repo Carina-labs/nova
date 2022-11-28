@@ -150,7 +150,7 @@ func (im IBCModule) OnAcknowledgementPacket(
 	}
 
 	switch len(txMsgData.Data) {
-	case 1: // Delegate, Undelegate, IcaWithdraw
+	case 1: // Delegate, Undelegate, IcaWithdraw, authz
 		response, err := im.keeper.HandleAckMsgData(ctx, packet, txMsgData.Data[0])
 		if err != nil {
 			return err
