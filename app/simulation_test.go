@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Carina-labs/nova/app"
+	"github.com/Carina-labs/nova/v2/app"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/simapp"

@@ -1,12 +1,12 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/app"
-	galtypes "github.com/Carina-labs/nova/x/gal/types"
-	"github.com/Carina-labs/nova/x/icacontrol/keeper"
-	"github.com/Carina-labs/nova/x/icacontrol/types"
-	minttypes "github.com/Carina-labs/nova/x/mint/types"
-	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
+	"github.com/Carina-labs/nova/v2/app"
+	galtypes "github.com/Carina-labs/nova/v2/x/gal/types"
+	"github.com/Carina-labs/nova/v2/x/icacontrol/keeper"
+	"github.com/Carina-labs/nova/v2/x/icacontrol/types"
+	minttypes "github.com/Carina-labs/nova/v2/x/mint/types"
+	oracletypes "github.com/Carina-labs/nova/v2/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"

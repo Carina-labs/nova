@@ -3,7 +3,7 @@ package nova.icacontrol.v1;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/icacontrol/types";
 
 message IBCTrace {
   uint64 version = 1;

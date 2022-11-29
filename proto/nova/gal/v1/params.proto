@@ -1,7 +1,7 @@
 syntax = "proto3";
 package nova.gal.v1;
 import "gogoproto/gogo.proto";
-option go_package = "github.com/Carina-labs/nova/x/gal/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/gal/types";
 
 // Params defines the parameters for the gal module.
 message Params {

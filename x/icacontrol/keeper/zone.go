@@ -5,7 +5,7 @@ import (
 
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 
-	"github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"

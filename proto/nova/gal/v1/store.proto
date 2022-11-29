@@ -3,7 +3,7 @@ package nova.gal.v1;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/gal/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/gal/types";
 
 message IBCTrace {
   uint64 version = 1;

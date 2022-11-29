@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Carina-labs/nova/testing/helpers"
-	minttypes "github.com/Carina-labs/nova/x/mint/types"
+	"github.com/Carina-labs/nova/v2/testing/helpers"
+	minttypes "github.com/Carina-labs/nova/v2/x/mint/types"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"

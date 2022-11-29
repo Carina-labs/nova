@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"context"
-	"github.com/Carina-labs/nova/x/poolincentive/types"
+	"github.com/Carina-labs/nova/v2/x/poolincentive/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"strconv"
 )

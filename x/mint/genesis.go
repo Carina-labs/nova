@@ -1,8 +1,8 @@
 package mint
 
 import (
-	"github.com/Carina-labs/nova/x/mint/keeper"
-	"github.com/Carina-labs/nova/x/mint/types"
+	"github.com/Carina-labs/nova/v2/x/mint/keeper"
+	"github.com/Carina-labs/nova/v2/x/mint/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 

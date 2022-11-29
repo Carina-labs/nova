@@ -12,9 +12,9 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/Carina-labs/nova/x/gal/client/cli"
-	"github.com/Carina-labs/nova/x/mint/keeper"
-	"github.com/Carina-labs/nova/x/mint/types"
+	"github.com/Carina-labs/nova/v2/x/gal/client/cli"
+	"github.com/Carina-labs/nova/v2/x/mint/keeper"
+	"github.com/Carina-labs/nova/v2/x/mint/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"

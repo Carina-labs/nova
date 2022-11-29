@@ -3,7 +3,7 @@ package nova.gal.v1;
 
 import "cosmos/base/v1beta1/coin.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/gal/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/gal/types";
 
 // EventDeposit is emitted when user deposit their asset.
 message EventDeposit {

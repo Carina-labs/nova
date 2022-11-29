@@ -1,6 +1,6 @@
 package gal
 
-import "github.com/Carina-labs/nova/x/gal/types"
+import "github.com/Carina-labs/nova/v2/x/gal/types"
 
 const (
 	ModuleName = types.ModuleName

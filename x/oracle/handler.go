@@ -1,8 +1,8 @@
 package oracle
 
 import (
-	"github.com/Carina-labs/nova/x/oracle/keeper"
-	"github.com/Carina-labs/nova/x/oracle/types"
+	"github.com/Carina-labs/nova/v2/x/oracle/keeper"
+	"github.com/Carina-labs/nova/v2/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )

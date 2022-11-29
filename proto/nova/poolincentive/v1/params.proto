@@ -3,7 +3,7 @@ package nova.poolincentive.v1;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/poolincentive/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/poolincentive/types";
 
 message Params {
   option (gogoproto.goproto_stringer) = false;

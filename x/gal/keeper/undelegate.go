@@ -2,14 +2,14 @@ package keeper
 
 import (
 	"fmt"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	"time"
 
-	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	icacontroltypes "github.com/Carina-labs/nova/v2/x/icacontrol/types"
 )
 
 // GetUndelegateVersionStore returns the store that stores the UndelegateVersion data.

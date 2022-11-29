@@ -2,11 +2,11 @@ package keeper
 
 import (
 	"fmt"
-	icacontrolkeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
+	icacontrolkeeper "github.com/Carina-labs/nova/v2/x/icacontrol/keeper"
 
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/Carina-labs/nova/x/oracle/types"
+	"github.com/Carina-labs/nova/v2/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"

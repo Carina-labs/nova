@@ -1,9 +1,9 @@
 package keeper
 
 import (
-	"github.com/Carina-labs/nova/x/gal/types"
-	icacontrolkeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
-	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
+	icacontrolkeeper "github.com/Carina-labs/nova/v2/x/icacontrol/keeper"
+	oraclekeeper "github.com/Carina-labs/nova/v2/x/oracle/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"

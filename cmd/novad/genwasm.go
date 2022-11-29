@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Carina-labs/nova/app"
+	"github.com/Carina-labs/nova/v2/app"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/spf13/cobra"
 

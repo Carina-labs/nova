@@ -1,7 +1,7 @@
 package simulation
 
 import (
-	"github.com/Carina-labs/nova/x/gal/keeper"
+	"github.com/Carina-labs/nova/v2/x/gal/keeper"
 	"github.com/cosmos/cosmos-sdk/codec"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"

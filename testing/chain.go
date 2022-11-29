@@ -2,7 +2,7 @@ package novatesting
 
 import (
 	"fmt"
-	"github.com/Carina-labs/nova/app"
+	"github.com/Carina-labs/nova/v2/app"
 	"testing"
 	"time"
 

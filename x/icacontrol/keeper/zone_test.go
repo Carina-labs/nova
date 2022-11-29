@@ -1,7 +1,7 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 )
 

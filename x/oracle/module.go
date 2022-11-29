@@ -7,9 +7,9 @@ import (
 	"log"
 	"math/rand"
 
-	"github.com/Carina-labs/nova/x/oracle/client/cli"
-	"github.com/Carina-labs/nova/x/oracle/keeper"
-	"github.com/Carina-labs/nova/x/oracle/types"
+	"github.com/Carina-labs/nova/v2/x/oracle/client/cli"
+	"github.com/Carina-labs/nova/v2/x/oracle/keeper"
+	"github.com/Carina-labs/nova/v2/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"

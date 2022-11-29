@@ -1,6 +1,6 @@
 package keeper_test
 
-import "github.com/Carina-labs/nova/x/icacontrol/types"
+import "github.com/Carina-labs/nova/v2/x/icacontrol/types"
 
 func (suite *KeeperTestSuite) TestExportGenesis() {
 	controllerKeyManager1 := suite.GenRandomAddress()

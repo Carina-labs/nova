@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Carina-labs/nova/app/params"
-	"github.com/Carina-labs/nova/x/airdrop/types"
+	"github.com/Carina-labs/nova/v2/app/params"
+	"github.com/Carina-labs/nova/v2/x/airdrop/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 )

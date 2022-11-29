@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/Carina-labs/nova/app"
-	appconfig "github.com/Carina-labs/nova/app/params"
+	"github.com/Carina-labs/nova/v2/app"
+	appconfig "github.com/Carina-labs/nova/v2/app/params"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	"github.com/tendermint/spm/cosmoscmd"
 	tmcmds "github.com/tendermint/tendermint/cmd/tendermint/commands"

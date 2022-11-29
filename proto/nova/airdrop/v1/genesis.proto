@@ -5,7 +5,7 @@ import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/airdrop/types";
 
 message GenesisState {
   // states for the airdrop, how much coins are allocated for each address is must be pre-defined.

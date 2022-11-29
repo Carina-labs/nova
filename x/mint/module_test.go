@@ -7,8 +7,8 @@ import (
 	abcitypes "github.com/tendermint/tendermint/abci/types"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	simapp "github.com/Carina-labs/nova/app"
-	"github.com/Carina-labs/nova/x/mint/types"
+	simapp "github.com/Carina-labs/nova/v2/app"
+	"github.com/Carina-labs/nova/v2/x/mint/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 

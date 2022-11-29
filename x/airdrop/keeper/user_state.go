@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Carina-labs/nova/x/airdrop/types"
+	"github.com/Carina-labs/nova/v2/x/airdrop/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 

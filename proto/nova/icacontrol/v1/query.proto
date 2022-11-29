@@ -6,7 +6,7 @@ import "nova/icacontrol/v1/icacontrol.proto";
 import "nova/icacontrol/v1/store.proto";
 import "google/api/annotations.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/icacontrol/types";
 
 // Query defines the gRPC querier service.
 service Query {

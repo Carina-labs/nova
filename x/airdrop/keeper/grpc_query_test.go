@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/Carina-labs/nova/x/airdrop/types"
+	"github.com/Carina-labs/nova/v2/x/airdrop/types"
 )
 
 func (suite *KeeperTestSuite) TestQueryAirdropInfo() {

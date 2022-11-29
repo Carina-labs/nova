@@ -5,7 +5,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"github.com/Carina-labs/nova/x/gal/types"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
 )
 
 type QueryServer struct {

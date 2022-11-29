@@ -2,7 +2,7 @@ package cli
 
 import (
 	"fmt"
-	"github.com/Carina-labs/nova/x/gal/types"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/spf13/cobra"
 )

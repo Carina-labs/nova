@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/Carina-labs/nova/x/gal/types"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	sdk "github.com/cosmos/cosmos-sdk/types"

@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"github.com/Carina-labs/nova/x/mint/types"
+	"github.com/Carina-labs/nova/v2/x/mint/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 

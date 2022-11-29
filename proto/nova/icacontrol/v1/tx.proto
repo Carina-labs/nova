@@ -6,7 +6,7 @@ import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/authz/v1beta1/authz.proto";
 import "nova/icacontrol/v1/icacontrol.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/icacontrol/types";
 option (gogoproto.goproto_getters_all) = false;
 
 // Msg defines the icacontrol Msg service.

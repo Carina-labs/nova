@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	"github.com/gogo/protobuf/proto"
 

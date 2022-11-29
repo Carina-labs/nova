@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"fmt"
-	"github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	capabilitykeeper "github.com/cosmos/cosmos-sdk/x/capability/keeper"

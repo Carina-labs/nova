@@ -7,7 +7,7 @@ import "cosmos/base/v1beta1/coin.proto";
 import "nova/icacontrol/v1/params.proto";
 import "nova/icacontrol/v1/icacontrol.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/icacontrol/types";
 
 message GenesisState {
   // params defines all the parameters of module.

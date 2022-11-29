@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	novatesting "github.com/Carina-labs/nova/testing"
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	novatesting "github.com/Carina-labs/nova/v2/testing"
+	icacontroltypes "github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"

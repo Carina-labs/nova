@@ -4,7 +4,7 @@ package nova.oracle.v1;
 import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/oracle/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/oracle/types";
 
 service Msg {
   rpc UpdateChainState(MsgUpdateChainState) returns (MsgUpdateChainStateResponse);

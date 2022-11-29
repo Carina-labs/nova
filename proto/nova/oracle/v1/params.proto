@@ -4,7 +4,7 @@ package nova.oracle.v1;
 import "gogoproto/gogo.proto";
 import "nova/oracle/v1/store.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/oracle/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/oracle/types";
 
 message Params {
   option (gogoproto.goproto_stringer) = false;

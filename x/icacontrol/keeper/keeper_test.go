@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -12,8 +12,8 @@ import (
 	ibcchanneltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/Carina-labs/nova/app/apptesting"
-	novatesting "github.com/Carina-labs/nova/testing"
+	"github.com/Carina-labs/nova/v2/app/apptesting"
+	novatesting "github.com/Carina-labs/nova/v2/testing"
 )
 
 var (

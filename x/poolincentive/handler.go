@@ -1,8 +1,8 @@
 package poolincentive
 
 import (
-	"github.com/Carina-labs/nova/x/poolincentive/keeper"
-	"github.com/Carina-labs/nova/x/poolincentive/types"
+	"github.com/Carina-labs/nova/v2/x/poolincentive/keeper"
+	"github.com/Carina-labs/nova/v2/x/poolincentive/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"

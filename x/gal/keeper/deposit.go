@@ -2,8 +2,8 @@ package keeper
 
 import (
 	"fmt"
-	"github.com/Carina-labs/nova/x/gal/types"
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
+	icacontroltypes "github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"

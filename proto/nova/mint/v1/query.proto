@@ -5,7 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "nova/mint/v1/mint.proto";
 
-option go_package = "github.com/Carina-labs/nova/x/mint/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/mint/types";
 
 // Query provides defines the gRPC querier service.
 service Query {

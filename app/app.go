@@ -1,24 +1,24 @@
 package app
 
 import (
-	"github.com/Carina-labs/nova/x/poolincentive"
+	"github.com/Carina-labs/nova/v2/x/poolincentive"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/Carina-labs/nova/x/airdrop"
+	"github.com/Carina-labs/nova/v2/x/airdrop"
 	"github.com/gorilla/mux"
 	"github.com/rakyll/statik/fs"
 
-	"github.com/Carina-labs/nova/app/keepers"
-	_ "github.com/Carina-labs/nova/client/docs/statik"
-	"github.com/Carina-labs/nova/x/gal"
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
-	"github.com/Carina-labs/nova/x/mint"
-	minttypes "github.com/Carina-labs/nova/x/mint/types"
-	"github.com/Carina-labs/nova/x/oracle"
+	"github.com/Carina-labs/nova/v2/app/keepers"
+	_ "github.com/Carina-labs/nova/v2/client/docs/statik"
+	"github.com/Carina-labs/nova/v2/x/gal"
+	icacontroltypes "github.com/Carina-labs/nova/v2/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/mint"
+	minttypes "github.com/Carina-labs/nova/v2/x/mint/types"
+	"github.com/Carina-labs/nova/v2/x/oracle"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"

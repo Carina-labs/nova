@@ -1,7 +1,7 @@
 package types
 
 import (
-	"github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	"time"
 

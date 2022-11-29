@@ -8,7 +8,7 @@ import "gogoproto/gogo.proto";
 import "nova/oracle/v1/params.proto";
 
 
-option go_package = "github.com/Carina-labs/nova/x/oracle/types";
+option go_package = "github.com/Carina-labs/nova/v2/x/oracle/types";
 
 service Query {
   // Params returns the total set of minting parameters.

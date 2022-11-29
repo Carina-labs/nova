@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/x/mint/types"
-	pooltypes "github.com/Carina-labs/nova/x/poolincentive/types"
+	"github.com/Carina-labs/nova/v2/x/mint/types"
+	pooltypes "github.com/Carina-labs/nova/v2/x/poolincentive/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	"testing"
 
@@ -13,7 +13,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/Carina-labs/nova/app/apptesting"
+	"github.com/Carina-labs/nova/v2/app/apptesting"
 	"github.com/cosmos/cosmos-sdk/x/distribution"
 )
 

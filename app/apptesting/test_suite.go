@@ -3,7 +3,7 @@ package apptesting
 import (
 	"time"
 
-	"github.com/Carina-labs/nova/app"
+	"github.com/Carina-labs/nova/v2/app"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"

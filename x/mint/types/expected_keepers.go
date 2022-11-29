@@ -1,7 +1,7 @@
 package types
 
 import (
-	pooltypes "github.com/Carina-labs/nova/x/poolincentive/types"
+	pooltypes "github.com/Carina-labs/nova/v2/x/poolincentive/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 )

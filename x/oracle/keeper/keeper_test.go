@@ -1,11 +1,11 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/x/oracle/keeper"
+	"github.com/Carina-labs/nova/v2/x/oracle/keeper"
 	"testing"
 
-	"github.com/Carina-labs/nova/app/apptesting"
-	"github.com/Carina-labs/nova/x/oracle/types"
+	"github.com/Carina-labs/nova/v2/app/apptesting"
+	"github.com/Carina-labs/nova/v2/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"

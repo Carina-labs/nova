@@ -1,9 +1,9 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/app/apptesting"
-	novatesting "github.com/Carina-labs/nova/testing"
-	"github.com/Carina-labs/nova/x/gal/types"
+	"github.com/Carina-labs/nova/v2/app/apptesting"
+	novatesting "github.com/Carina-labs/nova/v2/testing"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"

@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/Carina-labs/nova/x/poolincentive/types"
+	"github.com/Carina-labs/nova/v2/x/poolincentive/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"

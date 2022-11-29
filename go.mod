@@ -1,4 +1,4 @@
-module github.com/Carina-labs/nova
+module github.com/Carina-labs/nova/v2
 
 go 1.18
 

@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/Carina-labs/nova/x/poolincentive/client/cli"
+	"github.com/Carina-labs/nova/v2/x/poolincentive/client/cli"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/types/rest"
 	govclient "github.com/cosmos/cosmos-sdk/x/gov/client"

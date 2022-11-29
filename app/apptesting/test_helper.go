@@ -1,7 +1,7 @@
 package apptesting
 
 import (
-	"github.com/Carina-labs/nova/app"
+	"github.com/Carina-labs/nova/v2/app"
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/suite"

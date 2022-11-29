@@ -1,11 +1,11 @@
 package cli
 
 import (
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
+	icacontroltypes "github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	"strconv"
 	"time"
 
-	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"

@@ -1,14 +1,14 @@
 package keepers
 
 import (
-	"github.com/Carina-labs/nova/x/airdrop"
-	"github.com/Carina-labs/nova/x/gal"
-	"github.com/Carina-labs/nova/x/icacontrol"
-	icacontrolclient "github.com/Carina-labs/nova/x/icacontrol/client"
-	"github.com/Carina-labs/nova/x/mint"
-	"github.com/Carina-labs/nova/x/oracle"
-	"github.com/Carina-labs/nova/x/poolincentive"
-	poolincentiveclient "github.com/Carina-labs/nova/x/poolincentive/client"
+	"github.com/Carina-labs/nova/v2/x/airdrop"
+	"github.com/Carina-labs/nova/v2/x/gal"
+	"github.com/Carina-labs/nova/v2/x/icacontrol"
+	icacontrolclient "github.com/Carina-labs/nova/v2/x/icacontrol/client"
+	"github.com/Carina-labs/nova/v2/x/mint"
+	"github.com/Carina-labs/nova/v2/x/oracle"
+	"github.com/Carina-labs/nova/v2/x/poolincentive"
+	poolincentiveclient "github.com/Carina-labs/nova/v2/x/poolincentive/client"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	"github.com/cosmos/cosmos-sdk/types/module"

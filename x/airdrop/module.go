@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/Carina-labs/nova/x/airdrop/client/cli"
-	"github.com/Carina-labs/nova/x/airdrop/keeper"
-	"github.com/Carina-labs/nova/x/airdrop/types"
+	"github.com/Carina-labs/nova/v2/x/airdrop/client/cli"
+	"github.com/Carina-labs/nova/v2/x/airdrop/keeper"
+	"github.com/Carina-labs/nova/v2/x/airdrop/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"

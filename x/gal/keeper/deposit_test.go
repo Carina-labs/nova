@@ -1,8 +1,8 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/x/gal/types"
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
+	icacontroltypes "github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
