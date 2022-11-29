@@ -3,8 +3,8 @@ package keeper_test
 import (
 	"github.com/Carina-labs/nova/v2/app"
 	novatesting "github.com/Carina-labs/nova/v2/testing"
-	"github.com/Carina-labs/nova/v2/x/gal/types"
 	"github.com/Carina-labs/nova/v2/x/gal/keeper"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
 	icacontroltypes "github.com/Carina-labs/nova/v2/x/icacontrol/types"
 	minttypes "github.com/Carina-labs/nova/v2/x/mint/types"
 	oracletypes "github.com/Carina-labs/nova/v2/x/oracle/types"

@@ -1,7 +1,6 @@
 package keepers
 
 import (
-	airdropkeeper "github.com/Carina-labs/nova/v2/x/airdrop/keeper"
 	"github.com/Carina-labs/nova/v2/x/gal"
 	galkeeper "github.com/Carina-labs/nova/v2/x/gal/keeper"
 	galtypes "github.com/Carina-labs/nova/v2/x/gal/types"
@@ -12,7 +11,6 @@ import (
 	oracletypes "github.com/Carina-labs/nova/v2/x/oracle/types"
 	"github.com/Carina-labs/nova/v2/x/poolincentive"
 	poolincentivekeeper "github.com/Carina-labs/nova/v2/x/poolincentive/keeper"
-	airdroptypes "github.com/Carina-labs/nova/v2/x/airdrop/types"
 	poolincentivetypes "github.com/Carina-labs/nova/v2/x/poolincentive/types"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
@@ -93,7 +91,6 @@ type AppKeepers struct {
 	GalKeeper        *galkeeper.Keeper
 	IcaControlKeeper *icacontrolkeeper.Keeper
 	OracleKeeper     *oraclekeeper.Keeper
-	AirdropKeeper    *airdropkeeper.Keeper
 	PoolKeeper       *poolincentivekeeper.Keeper
 
 	// make scoped keepers public for test purposes
@@ -213,14 +210,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 	appKeepers.OracleKeeper = &oracleKeeper
 
-	// Register AirdropKeeper
-	airdropKeeper := airdropkeeper.NewKeeper(
-		appCodec,
-		appKeepers.keys[airdroptypes.StoreKey],
-		appKeepers.BankKeeper,
-	)
-	appKeepers.AirdropKeeper = &airdropKeeper
-
 	// Register GAL module.
 	galKeeper := galkeeper.NewKeeper(
 		appCodec,
@@ -231,7 +220,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		icaControlKeeper,
 		transferKeeper,
 		oracleKeeper,
-		appKeepers.AirdropKeeper,
 		appKeepers.IBCKeeper.ChannelKeeper,
 	)
 	appKeepers.GalKeeper = &galKeeper
@@ -289,7 +277,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 
 	appKeepers.GovKeeper = govKeeper.SetHooks(
-		govtypes.NewMultiGovHooks(appKeepers.AirdropKeeper.Hooks()),
+		govtypes.NewMultiGovHooks(),
 	)
 
 	// Create static IBC router, add transfer route, then set and seal it
@@ -392,6 +380,5 @@ func KVStoreKeys() []string {
 		authzkeeper.StoreKey,
 		oracletypes.StoreKey,
 		poolincentivetypes.StoreKey,
-		airdroptypes.StoreKey,
 	}
 }

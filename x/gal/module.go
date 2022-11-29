@@ -8,8 +8,8 @@ import (
 
 	"github.com/Carina-labs/nova/v2/x/gal/client/cli"
 	"github.com/Carina-labs/nova/v2/x/gal/keeper"
-	"github.com/Carina-labs/nova/v2/x/gal/types"
 	"github.com/Carina-labs/nova/v2/x/gal/simulation"
+	"github.com/Carina-labs/nova/v2/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"

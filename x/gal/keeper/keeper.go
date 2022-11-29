@@ -23,7 +23,6 @@ type Keeper struct {
 	icaControlKeeper  icacontrolkeeper.Keeper
 	ibcTransferKeeper transfer.Keeper
 	oracleKeeper      oraclekeeper.Keeper
-	airdropKeeper     types.AirdropKeeper
 	channelKeeper     ibcchanneltypes.Keeper
 }
 
@@ -35,7 +34,6 @@ func NewKeeper(cdc codec.BinaryCodec,
 	icaControlKeeper icacontrolkeeper.Keeper,
 	ibcTransferKeeper transfer.Keeper,
 	oracleKeeper oraclekeeper.Keeper,
-	airdropKeeper types.AirdropKeeper,
 	channelKeeper ibcchanneltypes.Keeper) Keeper {
 
 	if !paramSpace.HasKeyTable() {
@@ -51,7 +49,6 @@ func NewKeeper(cdc codec.BinaryCodec,
 		icaControlKeeper:  icaControlKeeper,
 		ibcTransferKeeper: ibcTransferKeeper,
 		oracleKeeper:      oracleKeeper,
-		airdropKeeper:     airdropKeeper,
 		channelKeeper:     channelKeeper,
 	}
 }

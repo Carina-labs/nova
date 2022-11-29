@@ -1,7 +1,6 @@
 package keepers
 
 import (
-	"github.com/Carina-labs/nova/v2/x/airdrop"
 	"github.com/Carina-labs/nova/v2/x/gal"
 	"github.com/Carina-labs/nova/v2/x/icacontrol"
 	icacontrolclient "github.com/Carina-labs/nova/v2/x/icacontrol/client"
@@ -74,6 +73,5 @@ var AppModuleBasic = []module.AppModuleBasic{
 	icacontrol.AppModuleBasic{},
 	authzmodule.AppModuleBasic{},
 	oracle.AppModuleBasic{},
-	airdrop.AppModuleBasic{},
 	poolincentive.AppModuleBasic{},
 }

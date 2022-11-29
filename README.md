@@ -46,10 +46,6 @@ For more information, see [Mint SPEC](x/mint/README.md).
 The Pool-Incentive module manages information to provide incentives to Supernova's liquidity providers.
 For more information, see [Mint SPEC](x/mint/README.md).
 
-### Airdrop
-
-The Airdrop module is a module that manages information to incentivize early participants in Supernova.
-
 ---
 
 ## Scripts

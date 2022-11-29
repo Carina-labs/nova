@@ -565,13 +565,6 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 
 	m.keeper.DeleteDelegateRecord(ctx, records)
 
-	// mark user performed claim action
-	m.keeper.airdropKeeper.PostClaimedSnAsset(ctx, claimerAddr)
-	if err = ctx.EventManager().EmitTypedEvent(
-		types.NewEventClaimSnToken(claimMsg.Claimer, claimSnAsset, oracleVersion)); err != nil {
-		return nil, err
-	}
-
 	return &types.MsgClaimSnAssetResponse{
 		Claimer: claimMsg.Claimer,
 		Minted:  *claimSnAsset,

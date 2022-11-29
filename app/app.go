@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Carina-labs/nova/v2/x/airdrop"
 	"github.com/gorilla/mux"
 	"github.com/rakyll/statik/fs"
 
@@ -112,7 +111,6 @@ var (
 		wasm.ModuleName:                    {authtypes.Burner},
 		icacontroltypes.ModuleName:         {authtypes.Minter, authtypes.Burner},
 		gal.ModuleName:                     {authtypes.Minter, authtypes.Burner},
-		airdrop.ModuleName:                 {authtypes.Minter, authtypes.Burner},
 	}
 )
 
@@ -289,7 +287,6 @@ func NewNovaApp(
 		transferModule,
 		gal.NewAppModule(appCodec, *app.GalKeeper, app.BankKeeper),
 		oracle.NewAppModule(appCodec, *app.OracleKeeper),
-		airdrop.NewAppModule(appCodec, *app.AirdropKeeper, app.BankKeeper),
 		poolincentive.NewAppModule(appCodec, *app.PoolKeeper),
 	)
 	app.sm.RegisterStoreDecoders()
