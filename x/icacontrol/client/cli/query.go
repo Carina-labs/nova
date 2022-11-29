@@ -121,3 +121,33 @@ func queryAutoStakingCurrentVersion() *cobra.Command {
 	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
+
+func queryAuthzGrant() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "authz-grant [zone-id]",
+		Long: "Query for authz grant",
+		Args: cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+			if err != nil {
+				return err
+			}
+
+			res, err := queryClient.IcaGrant(cmd.Context(), &types.QueryIcaGrantRequest{
+				ZoneId: args[0],
+			})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	return cmd
+}
