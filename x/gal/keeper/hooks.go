@@ -75,6 +75,9 @@ func (h Hooks) AfterTransferFail(ctx sdk.Context, data transfertypes.FungibleTok
 	}
 }
 
+// AfterOnRecvPacket is executed IcaWithdraw request finished.
+// 1. Increase the withdrawal version.
+// 2. The withdrawal status registered as transferred changes
 func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTokenPacketData) {
 	zone := h.k.icaControlKeeper.GetZoneForDenom(ctx, data.Denom)
 	if zone == nil {
@@ -123,8 +126,8 @@ func (h Hooks) AfterOnRecvPacket(ctx sdk.Context, data transfertypes.FungibleTok
 
 	// change version state
 	versionInfo.Record[currentVersion] = &types.IBCTrace{
-		Height:  uint64(ctx.BlockHeight()),
-		Version: types.IcaSuccess,
+		Height: uint64(ctx.BlockHeight()),
+		State:  types.IcaSuccess,
 	}
 	ctx.Logger().Info("AfterOnRecvPacket", "ZoneId", zone.ZoneId, "WithdrawNextVersion", currentVersion, "VersionState", versionInfo.Record[currentVersion].State)
 
@@ -171,46 +174,6 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	}
 	h.k.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
 	ctx.Logger().Info("AfterDelegateEnd", "ZoneId", zoneInfo.ZoneId, "DelegateNextVersion", nextVersion, "VersionState", versionInfo.Record[nextVersion].State)
-}
-
-// AfterWithdrawEnd is executed IcaWithdraw request finished.
-// 1. Increase the withdrawal version.
-// 2. The withdrawal status registered as transferred changes
-func (h Hooks) AfterWithdrawEnd(ctx sdk.Context, transferMsg transfertypes.MsgTransfer) {
-	asset := transferMsg.Token
-
-	zone := h.k.icaControlKeeper.GetZoneForDenom(ctx, asset.Denom)
-
-	if transferMsg.Receiver != zone.IcaAccount.ControllerAddress {
-		ctx.Logger().Error("Receiver is not controller address", "Receiver", transferMsg.Receiver, "ControllerAddress", zone.IcaAccount.ControllerAddress, "Hook", "AfterWithdrawEnd")
-		return
-	}
-
-	// get withdrawVersion
-	versionInfo := h.k.GetWithdrawVersion(ctx, zone.ZoneId)
-	if versionInfo.Size() == 0 {
-		ctx.Logger().Error("Zone id is not found", "versionInfo", "nil")
-		return
-	}
-	currentVersion := versionInfo.CurrentVersion
-	ctx.Logger().Info("AfterWithdrawEnd", "ZoneId", zone.ZoneId, "WithdrawCurrentVersion", currentVersion, "VersionState", versionInfo.Record[currentVersion].State)
-
-	h.k.SetWithdrawRecordVersion(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, currentVersion)
-	h.k.ChangeWithdrawState(ctx, zone.ZoneId, types.WithdrawStatusTransferRequest, types.WithdrawStatusTransferred)
-
-	versionInfo.Record[currentVersion] = &types.IBCTrace{
-		Height: uint64(ctx.BlockHeight()),
-		State:  types.IcaSuccess,
-	}
-
-	nextVersion := currentVersion + 1
-	versionInfo.CurrentVersion = nextVersion
-	versionInfo.Record[nextVersion] = &types.IBCTrace{
-		Version: nextVersion,
-		State:   types.IcaPending,
-	}
-	h.k.SetWithdrawVersion(ctx, zone.ZoneId, versionInfo)
-	ctx.Logger().Info("AfterWithdrawEnd", "ZoneId", zone.ZoneId, "WithdrawNextVersion", nextVersion, "VersionState", versionInfo.Record[nextVersion].State)
 }
 
 // AfterUndelegateEnd is executed when ICA undelegation request finished.
