@@ -155,6 +155,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	if err != nil {
 		versionInfo.Record[delegate.Version] = &types.IBCTrace{
 			Version: versionInfo.CurrentVersion,
+			Height:  uint64(ctx.BlockHeight()),
 			State:   types.IcaFail,
 		}
 		m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
@@ -170,6 +171,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 			zoneInfo.TransferInfo.PortId)); err != nil {
 		versionInfo.Record[delegate.Version] = &types.IBCTrace{
 			Version: versionInfo.CurrentVersion,
+			Height:  uint64(ctx.BlockHeight()),
 			State:   types.IcaFail,
 		}
 		m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
@@ -178,6 +180,7 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 
 	versionInfo.Record[delegate.Version] = &types.IBCTrace{
 		Version: versionInfo.CurrentVersion,
+		Height:  uint64(ctx.BlockHeight()),
 		State:   types.IcaRequest,
 	}
 	m.keeper.SetDelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
@@ -339,6 +342,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	if err != nil {
 		versionInfo.Record[msg.Version] = &types.IBCTrace{
 			Version: versionInfo.CurrentVersion,
+			Height:  uint64(ctx.BlockHeight()),
 			State:   types.IcaFail,
 		}
 		m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
@@ -349,6 +353,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 		types.NewEventUndelegate(zoneInfo.ZoneId, &burnAssets, &undelegateAmt)); err != nil {
 		versionInfo.Record[msg.Version] = &types.IBCTrace{
 			Version: versionInfo.CurrentVersion,
+			Height:  uint64(ctx.BlockHeight()),
 			State:   types.IcaFail,
 		}
 		m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
@@ -357,6 +362,7 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 
 	versionInfo.Record[msg.Version] = &types.IBCTrace{
 		Version: versionInfo.CurrentVersion,
+		Height:  uint64(ctx.BlockHeight()),
 		State:   types.IcaRequest,
 	}
 	m.keeper.SetUndelegateVersion(ctx, zoneInfo.ZoneId, versionInfo)
@@ -474,6 +480,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 	if err != nil {
 		versionInfo.Record[msg.Version] = &types.IBCTrace{
 			Version: versionInfo.CurrentVersion,
+			Height:  uint64(ctx.BlockHeight()),
 			State:   types.IcaFail,
 		}
 		m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
@@ -489,6 +496,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 		msg.IcaTransferPortId)); err != nil {
 		versionInfo.Record[msg.Version] = &types.IBCTrace{
 			Version: versionInfo.CurrentVersion,
+			Height:  uint64(ctx.BlockHeight()),
 			State:   types.IcaFail,
 		}
 		m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
@@ -497,6 +505,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 
 	versionInfo.Record[msg.Version] = &types.IBCTrace{
 		Version: versionInfo.CurrentVersion,
+		Height:  uint64(ctx.BlockHeight()),
 		State:   types.IcaRequest,
 	}
 	m.keeper.SetWithdrawVersion(ctx, zoneInfo.ZoneId, versionInfo)
