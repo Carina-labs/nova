@@ -35,7 +35,7 @@ func (k Keeper) TransferToTargetZone(ctx sdk.Context, option *IBCTransferOption)
 			RevisionHeight: 0,
 			RevisionNumber: 0,
 		},
-		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 5*time.Minute.Nanoseconds()),
+		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 10*time.Minute.Nanoseconds()),
 	}
 
 	_, err = k.ibcTransferKeeper.Transfer(goCtx, msgTrnasfer)
