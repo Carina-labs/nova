@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
 	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/flags"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
 	"strconv"
@@ -29,7 +30,7 @@ func queryParams() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -60,7 +61,7 @@ func queryEstimatesnAsset() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -90,7 +91,7 @@ func queryClaimableAmount() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -120,7 +121,7 @@ func queryDepositAmount() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -150,7 +151,7 @@ func queryPendingWithdrawals() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -180,7 +181,7 @@ func queryActiveWithdrawal() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -214,7 +215,7 @@ func queryDepositRecords() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -248,7 +249,7 @@ func queryDelegateRecords() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -281,7 +282,7 @@ func queryUndelegateRecords() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -314,7 +315,7 @@ func queryWithdrawRecords() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -344,7 +345,7 @@ func queryCurrentDelegateVersion() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -374,7 +375,7 @@ func queryCurrentUndelegateVersion() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -404,7 +405,7 @@ func queryCurrentWithdrawVersion() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -436,7 +437,7 @@ func queryDelegateVersion() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -468,7 +469,7 @@ func queryUndelegateVersion() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -500,7 +501,7 @@ func queryWithdrawVersion() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -527,6 +528,6 @@ func queryTotalSnAssetSupply() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
