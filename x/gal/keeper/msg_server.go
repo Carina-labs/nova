@@ -82,7 +82,7 @@ func (m msgServer) Deposit(goCtx context.Context, deposit *types.MsgDeposit) (*t
 		Token:         deposit.Amount,
 		Sender:        deposit.Depositor,
 		Receiver:      zoneInfo.IcaAccount.HostAddress,
-	})
+	}, deposit.TimeoutTimestamp)
 
 	if err != nil {
 		return nil, err
@@ -473,7 +473,7 @@ func (m msgServer) IcaWithdraw(goCtx context.Context, msg *types.MsgIcaWithdraw)
 			RevisionHeight: 0,
 			RevisionNumber: 0,
 		},
-		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 10*time.Minute.Nanoseconds()),
+		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano()) + msg.TimeoutTimestamp*uint64(time.Minute.Nanoseconds()),
 	})
 
 	err := m.keeper.icaControlKeeper.SendTx(ctx, zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ConnectionId, msgs, msg.TimeoutTimestamp)
