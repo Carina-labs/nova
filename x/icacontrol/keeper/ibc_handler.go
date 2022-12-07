@@ -78,8 +78,9 @@ func (k *Keeper) HandleAckMsgData(ctx sdk.Context, packet channeltypes.Packet, m
 		currentVersion := versionInfo.CurrentVersion
 
 		versionInfo.Record[currentVersion] = &types.IBCTrace{
+			Version: currentVersion,
 			Height:  uint64(ctx.BlockHeight()),
-			Version: types.IcaSuccess,
+			State:   types.IcaSuccess,
 		}
 
 		// set withdraw version
@@ -178,6 +179,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 
 		versionInfo.Record[currentVersion] = &types.IBCTrace{
 			Version: currentVersion,
+			Height:  uint64(ctx.BlockHeight()),
 			State:   types.IcaFail,
 		}
 
