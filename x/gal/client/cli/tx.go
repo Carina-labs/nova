@@ -43,7 +43,12 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 				return err
 			}
 
-			msg := types.NewMsgDeposit(zoneId, clientCtx.GetFromAddress(), claimer, coin)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgDeposit(zoneId, clientCtx.GetFromAddress(), claimer, coin, timeoutTimestamp)
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -52,7 +57,7 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in minutes from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 	return cmd
 }
 
@@ -174,7 +179,7 @@ func txDelegateCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in minutes from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }
@@ -209,7 +214,7 @@ func txUndelegateCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in minutes from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }
@@ -253,7 +258,7 @@ func txIcaWithdrawCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, icacontroltypes.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in minutes from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }
