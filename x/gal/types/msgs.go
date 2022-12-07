@@ -27,12 +27,13 @@ var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
 var _ sdk.Msg = &MsgIcaWithdraw{}
 
-func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin) *MsgDeposit {
+func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin, timeoutTimestamp uint64) *MsgDeposit {
 	return &MsgDeposit{
-		ZoneId:    zoneId,
-		Depositor: depositor.String(),
-		Claimer:   claimer.String(),
-		Amount:    amount,
+		ZoneId:           zoneId,
+		Depositor:        depositor.String(),
+		Claimer:          claimer.String(),
+		Amount:           amount,
+		TimeoutTimestamp: timeoutTimestamp,
 	}
 }
 
