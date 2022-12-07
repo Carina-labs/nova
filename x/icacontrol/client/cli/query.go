@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
 	"strconv"
 )
@@ -28,7 +29,7 @@ func queryAllZones() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -55,7 +56,7 @@ func queryZone() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -87,7 +88,7 @@ func queryAutoStakingVersion() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -117,6 +118,6 @@ func queryAutoStakingCurrentVersion() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
