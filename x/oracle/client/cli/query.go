@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/Carina-labs/nova/x/oracle/types"
 	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
 )
 
@@ -44,7 +45,7 @@ func GetStateCmd() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
 
@@ -71,6 +72,6 @@ func GetVersionCmd() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddTxFlagsToCmd(cmd)
 	return cmd
 }
