@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"fmt"
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -18,14 +19,14 @@ type IBCTransferOption struct {
 
 // TransferToTargetZone transfers user's asset to target zone(Host chain)
 // using IBC transfer.
-func (k Keeper) TransferToTargetZone(ctx sdk.Context, option *IBCTransferOption) error {
+func (k Keeper) TransferToTargetZone(ctx sdk.Context, option *IBCTransferOption, timeoutMinutes uint64) error {
 	goCtx := sdk.WrapSDKContext(ctx)
 	sender, err := sdk.AccAddressFromBech32(option.Sender)
 	if err != nil {
 		return err
 	}
 
-	msgTrnasfer := &transfertypes.MsgTransfer{
+	msgTransfer := &transfertypes.MsgTransfer{
 		SourcePort:    option.SourcePort,
 		SourceChannel: option.SourceChannel,
 		Token:         option.Token,
@@ -35,15 +36,16 @@ func (k Keeper) TransferToTargetZone(ctx sdk.Context, option *IBCTransferOption)
 			RevisionHeight: 0,
 			RevisionNumber: 0,
 		},
-		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano() + 10*time.Minute.Nanoseconds()),
+		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano()) + timeoutMinutes*uint64(time.Minute.Nanoseconds()),
 	}
+	fmt.Println(uint64(ctx.BlockTime().UnixNano()))
 
-	_, err = k.ibcTransferKeeper.Transfer(goCtx, msgTrnasfer)
+	_, err = k.ibcTransferKeeper.Transfer(goCtx, msgTransfer)
 	if err != nil {
 		return err
 	}
 
-	if err = ctx.EventManager().EmitTypedEvent(msgTrnasfer); err != nil {
+	if err = ctx.EventManager().EmitTypedEvent(msgTransfer); err != nil {
 		return err
 	}
 
