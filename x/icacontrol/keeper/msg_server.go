@@ -295,10 +295,10 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 		return nil, errors.New("IcaAutoStaking transaction failed to send")
 	}
 
-	// version state 변경
 	versionInfo := k.GetAutoStakingVersion(ctx, zoneInfo.ZoneId)
 	versionInfo.Record[versionInfo.CurrentVersion] = &types.IBCTrace{
 		Version: versionInfo.CurrentVersion,
+		Height:  uint64(ctx.BlockHeight()),
 		State:   types.IcaRequest,
 	}
 
