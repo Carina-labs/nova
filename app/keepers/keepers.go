@@ -258,7 +258,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	// If evidence needs to be handled for the app, set routes in router here and seal
 	appKeepers.EvidenceKeeper = evidenceKeeper
 
-	supportedFeatures := "iterator,staking,stargate"
+	supportedFeatures := "iterator,staking,stargate,cosmwasm_1_1"
 
 	wasmKeeper := wasm.NewKeeper(
 		appCodec, appKeepers.keys[wasm.StoreKey], appKeepers.GetSubspace(wasm.ModuleName), appKeepers.AccountKeeper, appKeepers.BankKeeper,
