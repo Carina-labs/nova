@@ -18,7 +18,7 @@ service Query {
   rpc AllCandidatePool(QueryAllCandidatePoolRequest) returns (QueryAllCandidatePoolResponse){
     option (google.api.http).get = "/nova/poolincentive/v1/all_candidate_pool";
   }
-  rpc SingleIncentivePool(QuerySingleIncentivePoolRequest) returns (QueryAllCandidatePoolResponse){
+  rpc SingleIncentivePool(QuerySingleIncentivePoolRequest) returns (QuerySingleIncentivePoolResponse){
     option (google.api.http).get = "/nova/poolincentive/v1/single_incentive_pool";
   }
   rpc AllIncentivePool(QueryAllIncentivePoolRequest) returns (QueryAllIncentivePoolResponse){
@@ -52,6 +52,7 @@ message QuerySingleIncentivePoolRequest {
 message QuerySingleIncentivePoolResponse {
   string pool_id = 1;
   string pool_address = 2;
+  string weight = 3;
 }
 
 message QueryAllCandidatePoolRequest {
@@ -59,12 +60,12 @@ message QueryAllCandidatePoolRequest {
 }
 
 message QueryAllCandidatePoolResponse {
-  repeated CandidatePool candidate_pools = 1 [(gogoproto.nullable) = false];
+  repeated CandidatePool candidate_pools = 1;
 }
 
 message QueryAllIncentivePoolRequest {
 }
 
 message QueryAllIncentivePoolResponse {
-  repeated IncentivePool incentive_pools = 1 [(gogoproto.nullable) = false];
+  repeated IncentivePool incentive_pools = 1;
 }
