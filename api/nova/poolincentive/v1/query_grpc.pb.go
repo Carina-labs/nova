@@ -25,7 +25,7 @@ type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	SingleCandidatePool(ctx context.Context, in *QuerySingleCandidatePoolRequest, opts ...grpc.CallOption) (*QuerySingleCandidatePoolResponse, error)
 	AllCandidatePool(ctx context.Context, in *QueryAllCandidatePoolRequest, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
-	SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePoolRequest, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
+	SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePoolRequest, opts ...grpc.CallOption) (*QuerySingleIncentivePoolResponse, error)
 	AllIncentivePool(ctx context.Context, in *QueryAllIncentivePoolRequest, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error)
 }
 
@@ -64,8 +64,8 @@ func (c *queryClient) AllCandidatePool(ctx context.Context, in *QueryAllCandidat
 	return out, nil
 }
 
-func (c *queryClient) SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePoolRequest, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error) {
-	out := new(QueryAllCandidatePoolResponse)
+func (c *queryClient) SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePoolRequest, opts ...grpc.CallOption) (*QuerySingleIncentivePoolResponse, error) {
+	out := new(QuerySingleIncentivePoolResponse)
 	err := c.cc.Invoke(ctx, "/nova.poolincentive.v1.Query/SingleIncentivePool", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	SingleCandidatePool(context.Context, *QuerySingleCandidatePoolRequest) (*QuerySingleCandidatePoolResponse, error)
 	AllCandidatePool(context.Context, *QueryAllCandidatePoolRequest) (*QueryAllCandidatePoolResponse, error)
-	SingleIncentivePool(context.Context, *QuerySingleIncentivePoolRequest) (*QueryAllCandidatePoolResponse, error)
+	SingleIncentivePool(context.Context, *QuerySingleIncentivePoolRequest) (*QuerySingleIncentivePoolResponse, error)
 	AllIncentivePool(context.Context, *QueryAllIncentivePoolRequest) (*QueryAllIncentivePoolResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
@@ -107,7 +107,7 @@ func (UnimplementedQueryServer) SingleCandidatePool(context.Context, *QuerySingl
 func (UnimplementedQueryServer) AllCandidatePool(context.Context, *QueryAllCandidatePoolRequest) (*QueryAllCandidatePoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllCandidatePool not implemented")
 }
-func (UnimplementedQueryServer) SingleIncentivePool(context.Context, *QuerySingleIncentivePoolRequest) (*QueryAllCandidatePoolResponse, error) {
+func (UnimplementedQueryServer) SingleIncentivePool(context.Context, *QuerySingleIncentivePoolRequest) (*QuerySingleIncentivePoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SingleIncentivePool not implemented")
 }
 func (UnimplementedQueryServer) AllIncentivePool(context.Context, *QueryAllIncentivePoolRequest) (*QueryAllIncentivePoolResponse, error) {
