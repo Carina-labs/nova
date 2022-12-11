@@ -70,10 +70,10 @@ func (k Keeper) SetIncentivePoolInfo(ctx sdk.Context, incentivePoolInfo types.In
 
 // FindCandidatePoolById searches for candidate pools based on poolId.
 func (k Keeper) FindCandidatePoolById(ctx sdk.Context, poolId string) (*types.CandidatePool, error) {
-	pools := k.GetCandidatePoolInfo(ctx).CandidatePools
-	for i := range pools {
-		if poolId == pools[i].PoolId {
-			return pools[i], nil
+	pools := k.GetCandidatePoolInfo(ctx)
+	for _, pool := range pools.CandidatePools {
+		if poolId == pool.PoolId {
+			return pool, nil
 		}
 	}
 
@@ -82,10 +82,10 @@ func (k Keeper) FindCandidatePoolById(ctx sdk.Context, poolId string) (*types.Ca
 
 // FindIncentivePoolById searches for incentive pools based on poolId.
 func (k Keeper) FindIncentivePoolById(ctx sdk.Context, poolId string) (*types.IncentivePool, error) {
-	pools := k.GetIncentivePoolInfo(ctx).IncentivePools
-	for i := range pools {
-		if poolId == pools[i].PoolId {
-			return pools[i], nil
+	pools := k.GetIncentivePoolInfo(ctx)
+	for _, pool := range pools.IncentivePools {
+		if poolId == pool.PoolId {
+			return pool, nil
 		}
 	}
 
@@ -93,10 +93,10 @@ func (k Keeper) FindIncentivePoolById(ctx sdk.Context, poolId string) (*types.In
 }
 
 func (k Keeper) FindCandidatePoolByIdWithIndex(ctx sdk.Context, poolId string) (int, *types.CandidatePool, error) {
-	pools := k.GetCandidatePoolInfo(ctx).CandidatePools
-	for i := range pools {
-		if poolId == pools[i].PoolId {
-			return i, pools[i], nil
+	pools := k.GetCandidatePoolInfo(ctx)
+	for i, pool := range pools.CandidatePools {
+		if poolId == pool.PoolId {
+			return i, pool, nil
 		}
 	}
 
@@ -104,10 +104,10 @@ func (k Keeper) FindCandidatePoolByIdWithIndex(ctx sdk.Context, poolId string) (
 }
 
 func (k Keeper) FindIncentivePoolByIdWithIndex(ctx sdk.Context, poolId string) (int, *types.IncentivePool, error) {
-	pools := k.GetIncentivePoolInfo(ctx).IncentivePools
-	for i := range pools {
-		if poolId == pools[i].PoolId {
-			return i, pools[i], nil
+	pools := k.GetIncentivePoolInfo(ctx)
+	for i, pool := range pools.IncentivePools {
+		if poolId == pool.PoolId {
+			return i, pool, nil
 		}
 	}
 
