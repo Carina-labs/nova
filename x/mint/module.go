@@ -12,7 +12,6 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/tendermint/tendermint/abci/types"
 
-	"github.com/Carina-labs/nova/x/gal/client/cli"
 	"github.com/Carina-labs/nova/x/mint/keeper"
 	"github.com/Carina-labs/nova/x/mint/types"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -82,7 +81,7 @@ func (AppModuleBasic) GetTxCmd() *cobra.Command { return nil }
 
 // GetQueryCmd returns the root query command for the mint module.
 func (AppModuleBasic) GetQueryCmd() *cobra.Command {
-	return cli.GetQueryCmd()
+	return nil
 }
 
 // AppModule implements an application module for the mint module.
