@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/Carina-labs/nova/x/poolincentive/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"strconv"
 )
 
 type QueryServer struct {
@@ -17,56 +18,65 @@ func NewQueryServer(keeper *Keeper) *QueryServer {
 	}
 }
 
-func (q QueryServer) NewQuerySingleCandidatePool(goCtx context.Context, request *types.QuerySingleCandidatePoolRequest) *types.QuerySingleCandidatePoolResponse {
+func (q QueryServer) Params(goCtx context.Context, request *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	res := q.keeper.GetParams(ctx)
+	return &types.QueryParamsResponse{Params: res}, nil
+}
+
+func (q QueryServer) SingleCandidatePool(goCtx context.Context, request *types.QuerySingleCandidatePoolRequest) (*types.QuerySingleCandidatePoolResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	pool, err := q.keeper.FindCandidatePoolById(ctx, request.PoolId)
 	if err != nil {
-		return nil
+		return &types.QuerySingleCandidatePoolResponse{}, err
 	}
 
 	return &types.QuerySingleCandidatePoolResponse{
 		PoolId:      pool.PoolId,
 		PoolAddress: pool.PoolContractAddress,
-	}
+	}, nil
 }
 
-func (q QueryServer) NewQueryAllCandidatePool(goCtx context.Context, request *types.QueryAllCandidatePoolRequest) *types.QueryAllCandidatePoolResponse {
+func (q QueryServer) AllCandidatePool(goCtx context.Context, request *types.QueryAllCandidatePoolRequest) (*types.QueryAllCandidatePoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	pools := q.keeper.GetAllCandidatePool(ctx)
 
-	var ret []types.CandidatePool
+	var ret []*types.CandidatePool
 	for _, p := range pools {
-		ret = append(ret, *p)
+		ret = append(ret, p)
 	}
 
 	return &types.QueryAllCandidatePoolResponse{
 		CandidatePools: ret,
-	}
+	}, nil
 }
 
-func (q QueryServer) NewQuerySingleIncentivePool(goCtx context.Context, request *types.QuerySingleIncentivePoolRequest) *types.QuerySingleIncentivePoolResponse {
+func (q QueryServer) SingleIncentivePool(goCtx context.Context, request *types.QuerySingleIncentivePoolRequest) (*types.QuerySingleIncentivePoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	pool, err := q.keeper.FindIncentivePoolById(ctx, request.PoolId)
 	if err != nil {
-		return nil
+		return &types.QuerySingleIncentivePoolResponse{}, err
 	}
 
 	return &types.QuerySingleIncentivePoolResponse{
 		PoolId:      pool.PoolId,
 		PoolAddress: pool.PoolContractAddress,
-	}
+		Weight:      strconv.FormatUint(pool.Weight, 10),
+	}, nil
 }
 
-func (q QueryServer) NewQueryAllIncentivePool(goCtx context.Context, request *types.QueryAllIncentivePoolRequest) *types.QueryAllIncentivePoolResponse {
+func (q QueryServer) AllIncentivePool(goCtx context.Context, request *types.QueryAllIncentivePoolRequest) (*types.QueryAllIncentivePoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	pools := q.keeper.GetAllIncentivePool(ctx)
 
-	var ret []types.IncentivePool
+	var ret []*types.IncentivePool
 	for _, p := range pools {
-		ret = append(ret, *p)
+		ret = append(ret, p)
 	}
 
 	return &types.QueryAllIncentivePoolResponse{
 		IncentivePools: ret,
-	}
+	}, nil
 }
