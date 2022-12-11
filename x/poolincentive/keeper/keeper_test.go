@@ -9,11 +9,14 @@ import (
 
 type KeeperTestSuite struct {
 	apptesting.KeeperTestHelper
-	msgServer types.MsgServer
+	queryClient types.QueryClient
+	msgServer   types.MsgServer
 }
 
 func (suite *KeeperTestSuite) SetupTest() {
 	suite.Setup()
+
+	suite.queryClient = types.NewQueryClient(suite.QueryHelper)
 }
 
 func TestKeeperTestSuite(t *testing.T) {
