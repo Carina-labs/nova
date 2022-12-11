@@ -27,7 +27,7 @@ func GetTxCmd() *cobra.Command {
 
 func NewUpdatePoolIncentivesProposalCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "update-pool-incentives-proposal [pool-id] [contract-address] [weight] [flag]",
+		Use:  "update-pool-incentives-proposal [pool-id] [contract-address] [weight]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -93,7 +93,7 @@ func NewUpdatePoolIncentivesProposalCmd() *cobra.Command {
 
 func NewReplacePoolIncentivesProposalCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "replace-pool-incentives-proposal [pool-id] [contract-address] [weight] [flag]",
+		Use:  "replace-pool-incentives-proposal [pool-id] [contract-address] [weight]",
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
