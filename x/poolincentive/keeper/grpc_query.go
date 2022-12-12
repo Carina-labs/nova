@@ -80,3 +80,12 @@ func (q QueryServer) AllIncentivePool(goCtx context.Context, request *types.Quer
 		IncentivePools: ret,
 	}, nil
 }
+
+func (q QueryServer) TotalWeight(goCtx context.Context, request *types.QueryTotalWeightRequest) (*types.QueryTotalWeightResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	res := q.keeper.GetTotalWeight(ctx)
+
+	return &types.QueryTotalWeightResponse{
+		TotalWeight: res,
+	}, nil
+}
