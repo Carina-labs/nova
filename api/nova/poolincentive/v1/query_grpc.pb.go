@@ -27,6 +27,7 @@ type QueryClient interface {
 	AllCandidatePool(ctx context.Context, in *QueryAllCandidatePoolRequest, opts ...grpc.CallOption) (*QueryAllCandidatePoolResponse, error)
 	SingleIncentivePool(ctx context.Context, in *QuerySingleIncentivePoolRequest, opts ...grpc.CallOption) (*QuerySingleIncentivePoolResponse, error)
 	AllIncentivePool(ctx context.Context, in *QueryAllIncentivePoolRequest, opts ...grpc.CallOption) (*QueryAllIncentivePoolResponse, error)
+	TotalWeight(ctx context.Context, in *QueryTotalWeightRequest, opts ...grpc.CallOption) (*QueryTotalWeightResponse, error)
 }
 
 type queryClient struct {
@@ -82,6 +83,15 @@ func (c *queryClient) AllIncentivePool(ctx context.Context, in *QueryAllIncentiv
 	return out, nil
 }
 
+func (c *queryClient) TotalWeight(ctx context.Context, in *QueryTotalWeightRequest, opts ...grpc.CallOption) (*QueryTotalWeightResponse, error) {
+	out := new(QueryTotalWeightResponse)
+	err := c.cc.Invoke(ctx, "/nova.poolincentive.v1.Query/TotalWeight", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type QueryServer interface {
 	AllCandidatePool(context.Context, *QueryAllCandidatePoolRequest) (*QueryAllCandidatePoolResponse, error)
 	SingleIncentivePool(context.Context, *QuerySingleIncentivePoolRequest) (*QuerySingleIncentivePoolResponse, error)
 	AllIncentivePool(context.Context, *QueryAllIncentivePoolRequest) (*QueryAllIncentivePoolResponse, error)
+	TotalWeight(context.Context, *QueryTotalWeightRequest) (*QueryTotalWeightResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedQueryServer) SingleIncentivePool(context.Context, *QuerySingl
 }
 func (UnimplementedQueryServer) AllIncentivePool(context.Context, *QueryAllIncentivePoolRequest) (*QueryAllIncentivePoolResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AllIncentivePool not implemented")
+}
+func (UnimplementedQueryServer) TotalWeight(context.Context, *QueryTotalWeightRequest) (*QueryTotalWeightResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TotalWeight not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -216,6 +230,24 @@ func _Query_AllIncentivePool_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_TotalWeight_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryTotalWeightRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).TotalWeight(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.poolincentive.v1.Query/TotalWeight",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).TotalWeight(ctx, req.(*QueryTotalWeightRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AllIncentivePool",
 			Handler:    _Query_AllIncentivePool_Handler,
+		},
+		{
+			MethodName: "TotalWeight",
+			Handler:    _Query_TotalWeight_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
