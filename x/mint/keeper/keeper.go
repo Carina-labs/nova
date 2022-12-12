@@ -6,7 +6,6 @@ import (
 	"github.com/Carina-labs/nova/x/mint/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 )
 
@@ -49,20 +48,6 @@ func NewKeeper(
 		distrKeeper:         dk,
 		PoolIncentiveKeeper: pk,
 		feeCollectorName:    feeCollectorName,
-	}
-}
-
-// CreateLpIncentiveModuleAccount creates the module account for developer vesting.
-// Should only be called in initial genesis creation, never again.
-func (k Keeper) CreateLpIncentiveModuleAccount(ctx sdk.Context, amount sdk.Coin) {
-	moduleAcc := authtypes.NewEmptyModuleAccount(
-		types.LpIncentiveModuleAccName, authtypes.Minter)
-
-	k.accountKeeper.SetModuleAccount(ctx, moduleAcc)
-
-	err := k.bankKeeper.MintCoins(ctx, types.LpIncentiveModuleAccName, sdk.NewCoins(amount))
-	if err != nil {
-		panic(err)
 	}
 }
 
@@ -152,12 +137,8 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 
 	lpIncentivesCoin := k.GetProportions(mintedCoin, proportions.LpIncentives)
 	ctx.Logger().Info("Mint", "LpIncentives", lpIncentivesCoin)
-	err = k.bankKeeper.SendCoinsFromModuleToModule(ctx, types.ModuleName, types.LpIncentiveModuleAccName, sdk.NewCoins(lpIncentivesCoin))
-	if err != nil {
-		return err
-	}
 
-	err = k.distributeLPIncentivePools(ctx, lpIncentivesCoin.Denom)
+	err = k.distributeLPIncentivePools(ctx, lpIncentivesCoin)
 	if err != nil {
 		return err
 	}
@@ -172,26 +153,24 @@ func (k Keeper) DistributeMintedCoin(ctx sdk.Context, mintedCoin sdk.Coin) error
 	return err
 }
 
-func (k Keeper) distributeLPIncentivePools(ctx sdk.Context, denom string) error {
+func (k Keeper) distributeLPIncentivePools(ctx sdk.Context, amount sdk.Coin) error {
 	pools := k.PoolIncentiveKeeper.GetAllIncentivePool(ctx)
 	if len(pools) == 0 {
 		return nil
 	}
 
 	totalWeight := k.PoolIncentiveKeeper.GetTotalWeight(ctx)
-	moduleAddr := k.accountKeeper.GetModuleAddress(types.LpIncentiveModuleAccName)
-	lpIncentiveCoin := k.bankKeeper.GetBalance(ctx, moduleAddr, denom)
 
 	for _, pool := range pools {
 		poolWeight := sdk.NewIntFromUint64(pool.Weight).ToDec().Quo(sdk.NewIntFromUint64(totalWeight).ToDec())
-		incentive := sdk.NewDecFromInt(lpIncentiveCoin.Amount).Mul(poolWeight)
-		incentivesCoins := sdk.NewCoins(sdk.NewCoin(lpIncentiveCoin.Denom, incentive.TruncateInt()))
+		incentive := sdk.NewDecFromInt(amount.Amount).Mul(poolWeight)
+		incentivesCoins := sdk.NewCoins(sdk.NewCoin(amount.Denom, incentive.TruncateInt()))
 		poolAddr, err := sdk.AccAddressFromBech32(pool.PoolContractAddress)
 		if err != nil {
 			return err
 		}
 
-		err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.LpIncentiveModuleAccName, poolAddr, incentivesCoins)
+		err = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, poolAddr, incentivesCoins)
 		if err != nil {
 			return err
 		}

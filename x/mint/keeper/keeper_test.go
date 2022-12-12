@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"github.com/Carina-labs/nova/x/mint/types"
 	pooltypes "github.com/Carina-labs/nova/x/poolincentive/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	"testing"
@@ -55,9 +54,9 @@ func (suite *KeeperTestSuite) TestMintCoinsToFeeCollectorAndGetProportions() {
 func (suite *KeeperTestSuite) TestMintIncentives() {
 	mintKeeper := suite.App.MintKeeper
 
-	gaiaAddr := suite.GenRandomAddress().String()
-	osmoAddr := suite.GenRandomAddress().String()
-	junoAddr := suite.GenRandomAddress().String()
+	gaiaAddr := suite.GenRandomAddress()
+	osmoAddr := suite.GenRandomAddress()
+	junoAddr := suite.GenRandomAddress()
 
 	params := suite.App.MintKeeper.GetParams(suite.Ctx)
 	// At this time, there is no distr record, so the asset should be allocated to the community pool.
@@ -67,10 +66,6 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 	suite.NoError(err)
 	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
 	suite.NoError(err)
-
-	lpModuleAddr := suite.App.AccountKeeper.GetModuleAddress(types.LpIncentiveModuleAccName)
-	lpModuleBalances := suite.App.BankKeeper.GetBalance(suite.Ctx, lpModuleAddr, "nova")
-	suite.Require().Equal(lpModuleBalances, sdk.NewCoin("nova", sdk.NewInt(40000)))
 
 	distribution.BeginBlocker(suite.Ctx, abci.RequestBeginBlock{}, *suite.App.DistrKeeper)
 
@@ -90,17 +85,17 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 		{
 			PoolId:              "gaia",
 			Weight:              5,
-			PoolContractAddress: gaiaAddr,
+			PoolContractAddress: gaiaAddr.String(),
 		},
 		{
 			PoolId:              "osmo",
 			Weight:              3,
-			PoolContractAddress: osmoAddr,
+			PoolContractAddress: osmoAddr.String(),
 		},
 		{
 			PoolId:              "juno",
 			Weight:              2,
-			PoolContractAddress: junoAddr,
+			PoolContractAddress: junoAddr.String(),
 		},
 	}
 	for _, pool := range pools {
@@ -111,8 +106,13 @@ func (suite *KeeperTestSuite) TestMintIncentives() {
 	suite.NoError(err)
 	err = mintKeeper.DistributeMintedCoin(suite.Ctx, mintCoin)
 	suite.NoError(err)
-	lpModuleBalances = suite.App.BankKeeper.GetBalance(suite.Ctx, lpModuleAddr, "nova")
-	suite.Require().Equal(lpModuleBalances, sdk.NewCoin("nova", sdk.NewInt(0)))
+
+	gaiaBalance := suite.App.BankKeeper.GetBalance(suite.Ctx, gaiaAddr, "nova")
+	suite.Require().Equal(gaiaBalance.Amount.String(), "20000")
+	osmoBalance := suite.App.BankKeeper.GetBalance(suite.Ctx, osmoAddr, "nova")
+	suite.Require().Equal(osmoBalance.Amount.String(), "12000")
+	junoBalance := suite.App.BankKeeper.GetBalance(suite.Ctx, junoAddr, "nova")
+	suite.Require().Equal(junoBalance.Amount.String(), "8000")
 }
 
 func (suite *KeeperTestSuite) GenRandomAddress() sdk.AccAddress {
