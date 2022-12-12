@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"fmt"
 	"github.com/Carina-labs/nova/x/poolincentive/types"
 	"strconv"
 )
@@ -116,4 +117,39 @@ func (suite *KeeperTestSuite) TestAllIncentivePool() {
 	res, err = queryClient.AllIncentivePool(ctx.Context(), &types.QueryAllIncentivePoolRequest{})
 	suite.Require().NoError(err)
 	suite.Require().Equal(res.IncentivePools, pools.IncentivePools)
+}
+
+func (suite *KeeperTestSuite) TestTotalWeight() {
+	queryClient := suite.queryClient
+	ctx := suite.Ctx
+
+	res, err := queryClient.TotalWeight(ctx.Context(), &types.QueryTotalWeightRequest{})
+	fmt.Println(res)
+	suite.Require().NoError(err)
+	suite.Require().Zero(res.TotalWeight)
+
+	suite.App.PoolKeeper.SetIncentivePoolInfo(ctx, types.IncentivePoolInfo{
+		TotalWeight: 10,
+		IncentivePools: []*types.IncentivePool{
+			{
+				PoolId:              "1",
+				PoolContractAddress: "test1",
+				Weight:              6,
+			},
+			{
+				PoolId:              "1",
+				PoolContractAddress: "test1",
+				Weight:              4,
+			},
+			{
+				PoolId:              "1",
+				PoolContractAddress: "test1",
+				Weight:              1,
+			},
+		},
+	})
+
+	res, err = queryClient.TotalWeight(ctx.Context(), &types.QueryTotalWeightRequest{})
+	suite.Require().NoError(err)
+	suite.Require().Equal(strconv.FormatUint(res.TotalWeight, 10), "10")
 }
