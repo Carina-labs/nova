@@ -20,6 +20,7 @@ func GetQueryCmd() *cobra.Command {
 	cmd.AddCommand(GetAllCandidatePool())
 	cmd.AddCommand(GetSingleIncentivePool())
 	cmd.AddCommand(GetAllIncentivePool())
+	cmd.AddCommand(GetTotalWeight())
 
 	return cmd
 }
@@ -123,6 +124,33 @@ func GetAllIncentivePool() *cobra.Command {
 			msg := &types.QueryAllIncentivePoolRequest{}
 
 			res, err := queryClient.AllIncentivePool(ctx, msg)
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	return cmd
+}
+
+func GetTotalWeight() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:  "total-weight",
+		Args: cobra.ExactArgs(0),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			queryClient := types.NewQueryClient(clientCtx)
+			ctx := cmd.Context()
+
+			msg := &types.QueryTotalWeightRequest{}
+
+			res, err := queryClient.TotalWeight(ctx, msg)
 			if err != nil {
 				return err
 			}
