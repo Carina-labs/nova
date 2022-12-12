@@ -24,6 +24,9 @@ service Query {
   rpc AllIncentivePool(QueryAllIncentivePoolRequest) returns (QueryAllIncentivePoolResponse){
     option (google.api.http).get = "/nova/poolincentive/v1/all_incentive_pool";
   }
+  rpc TotalWeight(QueryTotalWeightRequest) returns (QueryTotalWeightResponse){
+    option (google.api.http).get = "/nova/poolincentive/v1/total_weight";
+  }
 }
 
 // QueryParamsRequest is the request type for the Query/Params RPC method.
@@ -68,4 +71,11 @@ message QueryAllIncentivePoolRequest {
 
 message QueryAllIncentivePoolResponse {
   repeated IncentivePool incentive_pools = 1;
+}
+
+message QueryTotalWeightRequest {
+}
+
+message QueryTotalWeightResponse {
+  uint64 total_weight = 1;
 }
