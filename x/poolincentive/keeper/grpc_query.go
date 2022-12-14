@@ -44,9 +44,7 @@ func (q QueryServer) AllCandidatePool(goCtx context.Context, request *types.Quer
 	pools := q.keeper.GetAllCandidatePool(ctx)
 
 	var ret []*types.CandidatePool
-	for _, p := range pools {
-		ret = append(ret, p)
-	}
+	ret = append(ret, pools...)
 
 	return &types.QueryAllCandidatePoolResponse{
 		CandidatePools: ret,
@@ -72,9 +70,7 @@ func (q QueryServer) AllIncentivePool(goCtx context.Context, request *types.Quer
 	pools := q.keeper.GetAllIncentivePool(ctx)
 
 	var ret []*types.IncentivePool
-	for _, p := range pools {
-		ret = append(ret, p)
-	}
+	ret = append(ret, pools...)
 
 	return &types.QueryAllIncentivePoolResponse{
 		IncentivePools: ret,

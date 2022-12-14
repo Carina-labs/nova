@@ -2,7 +2,7 @@ package keeper_test
 
 import (
 	"fmt"
-	"github.com/Carina-labs/nova/x/poolincentive/types"
+	"github.com/Carina-labs/nova/v2/x/poolincentive/types"
 	"strconv"
 )
 
