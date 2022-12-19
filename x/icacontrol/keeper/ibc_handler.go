@@ -208,7 +208,7 @@ func (k *Keeper) HandleAckFail(ctx sdk.Context, packet channeltypes.Packet) erro
 		k.AfterIcaWithdrawFail(ctx, *msgData)
 	default:
 		ctx.Logger().Error("HandleAckFail", "MsgType", types.ErrMsgNotFound)
-		return types.ErrMsgNotFound
+		return nil
 	}
 
 	return nil
