@@ -95,6 +95,10 @@ func txDeleteZoneTxCmd() *cobra.Command {
 			zoneId := args[0]
 
 			msg := types.NewMsgDeleteRegisteredZone(zoneId, clientCtx.GetFromAddress())
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
@@ -276,6 +280,9 @@ func txTransferTxCmd() *cobra.Command {
 			}
 
 			msg := types.NewMsgIcaTransfer(zoneId, clientCtx.GetFromAddress(), receiver, portId, chanId, amount, timeoutTimestamp)
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
