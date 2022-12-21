@@ -67,3 +67,8 @@ message WithdrawRecordContent {
   uint64 withdraw_version = 5;
   google.protobuf.Timestamp completion_time = 6[(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }
+
+message AssetInfo {
+  string zone_id = 1;
+  string un_minted_w_asset = 2[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+}
