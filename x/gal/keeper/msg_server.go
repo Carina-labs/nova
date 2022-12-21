@@ -526,11 +526,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	}
 
 	records, found := m.keeper.GetUserDelegateRecord(ctx, claimMsg.ZoneId, claimerAddr)
-	if !found {
-		return nil, types.ErrNoDelegateRecord
-	}
-
-	if records.Records == nil {
+	if !found || records.Records == nil{
 		return nil, types.ErrNoDelegateRecord
 	}
 

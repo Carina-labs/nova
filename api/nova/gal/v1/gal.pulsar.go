@@ -5361,6 +5361,490 @@ func (x *fastReflection_WithdrawRecordContent) ProtoMethods() *protoiface.Method
 	}
 }
 
+var (
+	md_AssetInfo                   protoreflect.MessageDescriptor
+	fd_AssetInfo_zone_id           protoreflect.FieldDescriptor
+	fd_AssetInfo_un_minted_w_asset protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_gal_v1_gal_proto_init()
+	md_AssetInfo = File_nova_gal_v1_gal_proto.Messages().ByName("AssetInfo")
+	fd_AssetInfo_zone_id = md_AssetInfo.Fields().ByName("zone_id")
+	fd_AssetInfo_un_minted_w_asset = md_AssetInfo.Fields().ByName("un_minted_w_asset")
+}
+
+var _ protoreflect.Message = (*fastReflection_AssetInfo)(nil)
+
+type fastReflection_AssetInfo AssetInfo
+
+func (x *AssetInfo) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_AssetInfo)(x)
+}
+
+func (x *AssetInfo) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_gal_v1_gal_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_AssetInfo_messageType fastReflection_AssetInfo_messageType
+var _ protoreflect.MessageType = fastReflection_AssetInfo_messageType{}
+
+type fastReflection_AssetInfo_messageType struct{}
+
+func (x fastReflection_AssetInfo_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_AssetInfo)(nil)
+}
+func (x fastReflection_AssetInfo_messageType) New() protoreflect.Message {
+	return new(fastReflection_AssetInfo)
+}
+func (x fastReflection_AssetInfo_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_AssetInfo
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_AssetInfo) Descriptor() protoreflect.MessageDescriptor {
+	return md_AssetInfo
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_AssetInfo) Type() protoreflect.MessageType {
+	return _fastReflection_AssetInfo_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_AssetInfo) New() protoreflect.Message {
+	return new(fastReflection_AssetInfo)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_AssetInfo) Interface() protoreflect.ProtoMessage {
+	return (*AssetInfo)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_AssetInfo) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.ZoneId != "" {
+		value := protoreflect.ValueOfString(x.ZoneId)
+		if !f(fd_AssetInfo_zone_id, value) {
+			return
+		}
+	}
+	if x.UnMintedWAsset != "" {
+		value := protoreflect.ValueOfString(x.UnMintedWAsset)
+		if !f(fd_AssetInfo_un_minted_w_asset, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_AssetInfo) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.gal.v1.AssetInfo.zone_id":
+		return x.ZoneId != ""
+	case "nova.gal.v1.AssetInfo.un_minted_w_asset":
+		return x.UnMintedWAsset != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.AssetInfo"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.AssetInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_AssetInfo) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.gal.v1.AssetInfo.zone_id":
+		x.ZoneId = ""
+	case "nova.gal.v1.AssetInfo.un_minted_w_asset":
+		x.UnMintedWAsset = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.AssetInfo"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.AssetInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_AssetInfo) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.gal.v1.AssetInfo.zone_id":
+		value := x.ZoneId
+		return protoreflect.ValueOfString(value)
+	case "nova.gal.v1.AssetInfo.un_minted_w_asset":
+		value := x.UnMintedWAsset
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.AssetInfo"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.AssetInfo does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_AssetInfo) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.gal.v1.AssetInfo.zone_id":
+		x.ZoneId = value.Interface().(string)
+	case "nova.gal.v1.AssetInfo.un_minted_w_asset":
+		x.UnMintedWAsset = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.AssetInfo"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.AssetInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_AssetInfo) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.gal.v1.AssetInfo.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.AssetInfo is not mutable"))
+	case "nova.gal.v1.AssetInfo.un_minted_w_asset":
+		panic(fmt.Errorf("field un_minted_w_asset of message nova.gal.v1.AssetInfo is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.AssetInfo"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.AssetInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_AssetInfo) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.gal.v1.AssetInfo.zone_id":
+		return protoreflect.ValueOfString("")
+	case "nova.gal.v1.AssetInfo.un_minted_w_asset":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.AssetInfo"))
+		}
+		panic(fmt.Errorf("message nova.gal.v1.AssetInfo does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_AssetInfo) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.AssetInfo", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_AssetInfo) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_AssetInfo) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_AssetInfo) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_AssetInfo) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*AssetInfo)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.ZoneId)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.UnMintedWAsset)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*AssetInfo)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.UnMintedWAsset) > 0 {
+			i -= len(x.UnMintedWAsset)
+			copy(dAtA[i:], x.UnMintedWAsset)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.UnMintedWAsset)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.ZoneId) > 0 {
+			i -= len(x.ZoneId)
+			copy(dAtA[i:], x.ZoneId)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ZoneId)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*AssetInfo)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: AssetInfo: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: AssetInfo: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ZoneId", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ZoneId = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field UnMintedWAsset", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.UnMintedWAsset = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -5830,6 +6314,49 @@ func (x *WithdrawRecordContent) GetCompletionTime() *timestamppb.Timestamp {
 	return nil
 }
 
+type AssetInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ZoneId         string `protobuf:"bytes,1,opt,name=zone_id,json=zoneId,proto3" json:"zone_id,omitempty"`
+	UnMintedWAsset string `protobuf:"bytes,2,opt,name=un_minted_w_asset,json=unMintedWAsset,proto3" json:"un_minted_w_asset,omitempty"`
+}
+
+func (x *AssetInfo) Reset() {
+	*x = AssetInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_gal_v1_gal_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssetInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssetInfo) ProtoMessage() {}
+
+// Deprecated: Use AssetInfo.ProtoReflect.Descriptor instead.
+func (*AssetInfo) Descriptor() ([]byte, []int) {
+	return file_nova_gal_v1_gal_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *AssetInfo) GetZoneId() string {
+	if x != nil {
+		return x.ZoneId
+	}
+	return ""
+}
+
+func (x *AssetInfo) GetUnMintedWAsset() string {
+	if x != nil {
+		return x.UnMintedWAsset
+	}
+	return ""
+}
+
 var File_nova_gal_v1_gal_proto protoreflect.FileDescriptor
 
 var file_nova_gal_v1_gal_proto_rawDesc = []byte{
@@ -5952,17 +6479,25 @@ var file_nova_gal_v1_gal_proto_rawDesc = []byte{
 	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
 	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x08, 0xc8, 0xde, 0x1f, 0x00, 0x90,
 	0xdf, 0x1f, 0x01, 0x52, 0x0e, 0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x69, 0x6f, 0x6e, 0x54,
-	0x69, 0x6d, 0x65, 0x42, 0x9c, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76, 0x61,
-	0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x08, 0x47, 0x61, 0x6c, 0x50, 0x72, 0x6f, 0x74,
-	0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
-	0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76, 0x61,
-	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76, 0x31,
-	0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58, 0xaa, 0x02, 0x0b, 0x4e,
-	0x6f, 0x76, 0x61, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0b, 0x4e, 0x6f, 0x76,
-	0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x17, 0x4e, 0x6f, 0x76, 0x61, 0x5c,
-	0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x0d, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x47, 0x61, 0x6c, 0x3a, 0x3a,
-	0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x69, 0x6d, 0x65, 0x22, 0x7f, 0x0a, 0x09, 0x41, 0x73, 0x73, 0x65, 0x74, 0x49, 0x6e, 0x66, 0x6f,
+	0x12, 0x17, 0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x59, 0x0a, 0x11, 0x75, 0x6e, 0x5f,
+	0x6d, 0x69, 0x6e, 0x74, 0x65, 0x64, 0x5f, 0x77, 0x5f, 0x61, 0x73, 0x73, 0x65, 0x74, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x42, 0x2e, 0xc8, 0xde, 0x1f, 0x00, 0xda, 0xde, 0x1f, 0x26, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f,
+	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73,
+	0x2e, 0x49, 0x6e, 0x74, 0x52, 0x0e, 0x75, 0x6e, 0x4d, 0x69, 0x6e, 0x74, 0x65, 0x64, 0x57, 0x41,
+	0x73, 0x73, 0x65, 0x74, 0x42, 0x9c, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x42, 0x08, 0x47, 0x61, 0x6c, 0x50, 0x72, 0x6f,
+	0x74, 0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2f, 0x43, 0x61, 0x72, 0x69, 0x6e, 0x61, 0x2d, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x6e, 0x6f, 0x76,
+	0x61, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6e, 0x6f, 0x76, 0x61, 0x2f, 0x67, 0x61, 0x6c, 0x2f, 0x76,
+	0x31, 0x3b, 0x67, 0x61, 0x6c, 0x76, 0x31, 0xa2, 0x02, 0x03, 0x4e, 0x47, 0x58, 0xaa, 0x02, 0x0b,
+	0x4e, 0x6f, 0x76, 0x61, 0x2e, 0x47, 0x61, 0x6c, 0x2e, 0x56, 0x31, 0xca, 0x02, 0x0b, 0x4e, 0x6f,
+	0x76, 0x61, 0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0xe2, 0x02, 0x17, 0x4e, 0x6f, 0x76, 0x61,
+	0x5c, 0x47, 0x61, 0x6c, 0x5c, 0x56, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0xea, 0x02, 0x0d, 0x4e, 0x6f, 0x76, 0x61, 0x3a, 0x3a, 0x47, 0x61, 0x6c, 0x3a,
+	0x3a, 0x56, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -5977,7 +6512,7 @@ func file_nova_gal_v1_gal_proto_rawDescGZIP() []byte {
 	return file_nova_gal_v1_gal_proto_rawDescData
 }
 
-var file_nova_gal_v1_gal_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_nova_gal_v1_gal_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_nova_gal_v1_gal_proto_goTypes = []interface{}{
 	(*DepositRecord)(nil),           // 0: nova.gal.v1.DepositRecord
 	(*DepositRecordContent)(nil),    // 1: nova.gal.v1.DepositRecordContent
@@ -5987,21 +6522,22 @@ var file_nova_gal_v1_gal_proto_goTypes = []interface{}{
 	(*UndelegateRecordContent)(nil), // 5: nova.gal.v1.UndelegateRecordContent
 	(*WithdrawRecord)(nil),          // 6: nova.gal.v1.WithdrawRecord
 	(*WithdrawRecordContent)(nil),   // 7: nova.gal.v1.WithdrawRecordContent
-	nil,                             // 8: nova.gal.v1.DelegateRecord.RecordsEntry
-	nil,                             // 9: nova.gal.v1.WithdrawRecord.RecordsEntry
-	(*v1beta1.Coin)(nil),            // 10: cosmos.base.v1beta1.Coin
-	(*timestamppb.Timestamp)(nil),   // 11: google.protobuf.Timestamp
+	(*AssetInfo)(nil),               // 8: nova.gal.v1.AssetInfo
+	nil,                             // 9: nova.gal.v1.DelegateRecord.RecordsEntry
+	nil,                             // 10: nova.gal.v1.WithdrawRecord.RecordsEntry
+	(*v1beta1.Coin)(nil),            // 11: cosmos.base.v1beta1.Coin
+	(*timestamppb.Timestamp)(nil),   // 12: google.protobuf.Timestamp
 }
 var file_nova_gal_v1_gal_proto_depIdxs = []int32{
 	1,  // 0: nova.gal.v1.DepositRecord.records:type_name -> nova.gal.v1.DepositRecordContent
-	10, // 1: nova.gal.v1.DepositRecordContent.amount:type_name -> cosmos.base.v1beta1.Coin
-	8,  // 2: nova.gal.v1.DelegateRecord.records:type_name -> nova.gal.v1.DelegateRecord.RecordsEntry
-	10, // 3: nova.gal.v1.DelegateRecordContent.amount:type_name -> cosmos.base.v1beta1.Coin
+	11, // 1: nova.gal.v1.DepositRecordContent.amount:type_name -> cosmos.base.v1beta1.Coin
+	9,  // 2: nova.gal.v1.DelegateRecord.records:type_name -> nova.gal.v1.DelegateRecord.RecordsEntry
+	11, // 3: nova.gal.v1.DelegateRecordContent.amount:type_name -> cosmos.base.v1beta1.Coin
 	5,  // 4: nova.gal.v1.UndelegateRecord.records:type_name -> nova.gal.v1.UndelegateRecordContent
-	10, // 5: nova.gal.v1.UndelegateRecordContent.sn_asset_amount:type_name -> cosmos.base.v1beta1.Coin
-	9,  // 6: nova.gal.v1.WithdrawRecord.records:type_name -> nova.gal.v1.WithdrawRecord.RecordsEntry
-	10, // 7: nova.gal.v1.WithdrawRecordContent.unstaking_amount:type_name -> cosmos.base.v1beta1.Coin
-	11, // 8: nova.gal.v1.WithdrawRecordContent.completion_time:type_name -> google.protobuf.Timestamp
+	11, // 5: nova.gal.v1.UndelegateRecordContent.sn_asset_amount:type_name -> cosmos.base.v1beta1.Coin
+	10, // 6: nova.gal.v1.WithdrawRecord.records:type_name -> nova.gal.v1.WithdrawRecord.RecordsEntry
+	11, // 7: nova.gal.v1.WithdrawRecordContent.unstaking_amount:type_name -> cosmos.base.v1beta1.Coin
+	12, // 8: nova.gal.v1.WithdrawRecordContent.completion_time:type_name -> google.protobuf.Timestamp
 	3,  // 9: nova.gal.v1.DelegateRecord.RecordsEntry.value:type_name -> nova.gal.v1.DelegateRecordContent
 	7,  // 10: nova.gal.v1.WithdrawRecord.RecordsEntry.value:type_name -> nova.gal.v1.WithdrawRecordContent
 	11, // [11:11] is the sub-list for method output_type
@@ -6114,6 +6650,18 @@ func file_nova_gal_v1_gal_proto_init() {
 				return nil
 			}
 		}
+		file_nova_gal_v1_gal_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssetInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -6121,7 +6669,7 @@ func file_nova_gal_v1_gal_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_gal_v1_gal_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
