@@ -3,7 +3,6 @@ package keeper
 import (
 	"fmt"
 	"github.com/Carina-labs/nova/x/gal/types"
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -149,22 +148,29 @@ func (k Keeper) DeleteRecordedDepositItem(ctx sdk.Context, zoneId string, deposi
 	return types.ErrNoDeleteRecord
 }
 
-// GetAllAmountNotMintShareToken returns the sum of assets that have not yet been issued by the user among the assets that have been deposited.
-func (k Keeper) GetAllAmountNotMintShareToken(ctx sdk.Context, zone *icacontroltypes.RegisteredZone) (sdk.Coin, error) {
-	defer telemetry.MeasureSince(time.Now(), "gal", "deposit", "getAllAmountNotMintShareToken")
-	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, zone.BaseDenom)
+func (k Keeper) getAssetInfo(ctx sdk.Context) prefix.Store {
+	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyAssetInfo)
+}
 
-	res := sdk.NewInt64Coin(ibcDenom, 0)
-	k.IterateDelegateRecord(ctx, zone.ZoneId, func(_ int64, delegateRecord types.DelegateRecord) (stop bool) {
-		for _, record := range delegateRecord.Records {
-			if record.State == types.DelegateSuccess {
-				res = res.Add(*record.Amount)
-			}
-		}
-		return false
-	})
+func (k Keeper) SetAssetInfo(ctx sdk.Context, assetInfo *types.AssetInfo) {
+	store := k.getAssetInfo(ctx)
+	fmt.Println(assetInfo)
+	key := assetInfo.ZoneId
+	bz := k.cdc.MustMarshal(assetInfo)
+	store.Set([]byte(key), bz)
+}
 
-	return res, nil
+func (k Keeper) GetAssetInfoForZoneId(ctx sdk.Context, zoneId string) *types.AssetInfo {
+	store := k.getAssetInfo(ctx)
+	key := []byte(zoneId)
+	if !store.Has(key) {
+		return nil
+	}
+
+	res := store.Get(key)
+	var assetInfo types.AssetInfo
+	k.cdc.MustUnmarshal(res, &assetInfo)
+	return &assetInfo
 }
 
 // IterateDepositRecord navigates all deposit requests.
