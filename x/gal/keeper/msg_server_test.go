@@ -1989,6 +1989,18 @@ func (suite *KeeperTestSuite) TestClaimSnAsset() {
 			Version: tc.oracleVersion,
 			Height:  uint64(suite.chainA.GetContext().BlockHeight()),
 		}
+
+		res := &types.AssetInfo{
+			ZoneId:         tc.zoneId,
+			UnMintedWAsset: sdk.NewInt(0),
+		}
+
+		for _, record := range tc.delegateRecord.Records {
+			if record.State == types.DelegateSuccess {
+				res.UnMintedWAsset = res.UnMintedWAsset.Add(record.Amount.Amount)
+			}
+		}
+		suite.chainA.GetApp().GalKeeper.SetAssetInfo(suite.chainA.GetContext(), res)
 		suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), tc.zoneId, trace)
 
 		msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)

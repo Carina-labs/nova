@@ -397,7 +397,7 @@ func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 			name:   "unkowntype",
 			args:   suite.SetMsgs("unkowntype", zone),
 			expect: types.ErrMsgNotFound,
-			err:    true,
+			err:    false,
 		},
 		{
 			name:   "nil",

@@ -35,7 +35,7 @@ cat $HOME/.novad/config/genesis.json | jq '.app_state["gov"]["deposit_params"]["
 # update icacontrol params
 cat $HOME/.novad/config/genesis.json | jq '.app_state["icacontrol"]["params"]["controller_key_manager"][0]="nova1lds58drg8lvnaprcue2sqgfvjnz5ljlkq9lsyf"' > $HOME/.novad/config/tmp_genesis.json && mv $HOME/.novad/config/tmp_genesis.json $HOME/.novad/config/genesis.json
 cat $HOME/.novad/config/genesis.json | jq '.app_state["icacontrol"]["controller_address_info"][0]["zone_id"]="gaia"' > $HOME/.novad/config/tmp_genesis.json && mv $HOME/.novad/config/tmp_genesis.json $HOME/.novad/config/genesis.json
-cat $HOME/.novad/config/genesis.json | jq '.app_state["icacontrol"]["controller_address_info"][0]["controller_address"][0]="nova1lds58drg8lvnaprcue2sqgfvjnz5ljlkq9lsyf"' > $HOME/.novad/config/tmp_genesis.json && mv $HOME/.novad/config/tmp_genesis.json $HOME/.novad/config/genesis.json
+cat $HOME/.novad/config/genesis.json | jq '.app_state["icacontrol"]["controller_address_info"][0]["controller_address"]="nova1lds58drg8lvnaprcue2sqgfvjnz5ljlkq9lsyf"' > $HOME/.novad/config/tmp_genesis.json && mv $HOME/.novad/config/tmp_genesis.json $HOME/.novad/config/genesis.json
 #update oracle params
 cat $HOME/.novad/config/genesis.json | jq '.app_state["oracle"]["params"]["oracle_key_manager"][0]="nova1lds58drg8lvnaprcue2sqgfvjnz5ljlkq9lsyf"' > $HOME/.novad/config/tmp_genesis.json && mv $HOME/.novad/config/tmp_genesis.json $HOME/.novad/config/genesis.json
 cat $HOME/.novad/config/genesis.json | jq '.app_state["oracle"]["oracle_address_info"][0]["zone_id"]="gaia"' > $HOME/.novad/config/tmp_genesis.json && mv $HOME/.novad/config/tmp_genesis.json $HOME/.novad/config/genesis.json

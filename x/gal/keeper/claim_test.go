@@ -53,6 +53,10 @@ func (suite *KeeperTestSuite) TestTotalClaimableAssets() {
 		{zoneId: zoneId, claimer: claimer2, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(30000)), state: types.DelegateRequest, version: 3},
 		{zoneId: zoneId, claimer: claimer2, depositor: claimer1, amount: sdk.NewCoin(ibcDenom, sdk.NewInt(40000)), state: types.DelegateSuccess, version: 4},
 	}
+	suite.App.GalKeeper.SetAssetInfo(suite.Ctx, &types.AssetInfo{
+		ZoneId:         zoneId,
+		UnMintedWAsset: sdk.NewInt(80000),
+	})
 	suite.NewDelegateRecords(delegateRecords)
 
 	tcs := []struct {
@@ -199,7 +203,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 		name           string
 		stakedAmount   sdk.Coin
 		delegateRecord []*DelegateRecord
-		expect         sdk.Coin
+		expect         sdk.Int
 	}{
 		{
 			name:         "test case 1",
@@ -230,7 +234,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					version:   1,
 				},
 			},
-			expect: sdk.NewInt64Coin(ibcDenom, 700_000),
+			expect: sdk.NewInt(700_000),
 		},
 		{
 			name:         "test case 2",
@@ -261,7 +265,7 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 					version:   1,
 				},
 			},
-			expect: sdk.NewInt64Coin(ibcDenom, 900_000),
+			expect: sdk.NewInt(900_000),
 		},
 	}
 
@@ -297,12 +301,21 @@ func (suite *KeeperTestSuite) TestGetTotalStakedForLazyMinting() {
 			suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, baseTestZone)
 
 			suite.NewDelegateRecords(tc.delegateRecord)
+			assetInfo := types.AssetInfo{
+				ZoneId:         zoneId,
+				UnMintedWAsset: sdk.NewInt(0),
+			}
 
+			for _, record := range tc.delegateRecord {
+				assetInfo.UnMintedWAsset = assetInfo.UnMintedWAsset.Add(record.amount.Amount)
+			}
+
+			suite.App.GalKeeper.SetAssetInfo(suite.Ctx, &assetInfo)
 			// execute
-			res, err := suite.App.GalKeeper.GetTotalStakedForLazyMinting(suite.Ctx, baseDenom, transferPort, transferChannel)
+			res, err := suite.App.GalKeeper.GetTotalStakedForLazyMinting(suite.Ctx, baseDenom, transferPort, transferChannel, assetInfo)
 			// verify
 			suite.Require().NoError(err)
-			suite.Require().True(tc.expect.IsEqual(res))
+			suite.Require().True(tc.expect.Equal(res))
 		})
 	}
 }
