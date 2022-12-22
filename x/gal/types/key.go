@@ -27,4 +27,6 @@ var (
 	KeyDelegateVersion   = []byte{0x05}
 	KeyUndelegateVersion = []byte{0x06}
 	KeyWithdrawVersion   = []byte{0x07}
+
+	KeyAssetInfo = []byte{0x08}
 )
