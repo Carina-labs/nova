@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"fmt"
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -38,7 +37,6 @@ func (k Keeper) TransferToTargetZone(ctx sdk.Context, option *IBCTransferOption,
 		},
 		TimeoutTimestamp: uint64(ctx.BlockTime().UnixNano()) + timeoutMinutes*uint64(time.Minute.Nanoseconds()),
 	}
-	fmt.Println(uint64(ctx.BlockTime().UnixNano()))
 
 	_, err = k.ibcTransferKeeper.Transfer(goCtx, msgTransfer)
 	if err != nil {

@@ -1,7 +1,6 @@
 package keeper_test
 
 import (
-	"fmt"
 	"github.com/Carina-labs/nova/x/poolincentive/types"
 	"strconv"
 )
@@ -124,7 +123,6 @@ func (suite *KeeperTestSuite) TestTotalWeight() {
 	ctx := suite.Ctx
 
 	res, err := queryClient.TotalWeight(ctx.Context(), &types.QueryTotalWeightRequest{})
-	fmt.Println(res)
 	suite.Require().NoError(err)
 	suite.Require().Zero(res.TotalWeight)
 

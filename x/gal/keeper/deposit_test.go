@@ -2,7 +2,6 @@ package keeper_test
 
 import (
 	"github.com/Carina-labs/nova/x/gal/types"
-	icacontroltypes "github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
@@ -349,103 +348,6 @@ func (suite *KeeperTestSuite) TestChangeDepositState() {
 			for i, record := range result.Records {
 				suite.Require().Equal(record.State, tc.result[i])
 			}
-		})
-	}
-}
-
-func (suite *KeeperTestSuite) TestGetAllAmountNotMintShareToken() {
-	depositor1 := suite.GenRandomAddress()
-	depositor2 := suite.GenRandomAddress()
-
-	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
-	tcs := []struct {
-		name   string
-		zoneId string
-		result sdk.Coin
-	}{
-		{
-			name:   "success",
-			zoneId: zoneId,
-			result: sdk.NewCoin(ibcDenom, sdk.NewInt(50000)),
-		},
-	}
-
-	for _, tc := range tcs {
-		suite.Run(tc.name, func() {
-			delegateRecord := []*types.DelegateRecord{
-				{
-					ZoneId:  zoneId,
-					Claimer: depositor1.String(),
-					Records: map[uint64]*types.DelegateRecordContent{
-						1: {
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(10000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateSuccess,
-						},
-						2: {
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(30000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateSuccess,
-						},
-					},
-				},
-				{
-					ZoneId:  zoneId,
-					Claimer: depositor2.String(),
-					Records: map[uint64]*types.DelegateRecordContent{
-						1: {
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(15000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateRequest,
-						},
-						2: {
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(10000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateSuccess,
-						},
-						3: {
-							Amount: &sdk.Coin{
-								Amount: sdk.NewInt(10000),
-								Denom:  ibcDenom,
-							},
-							State: types.DelegateRequest,
-						},
-					},
-				},
-			}
-			for _, record := range delegateRecord {
-				suite.App.GalKeeper.SetDelegateRecord(suite.Ctx, record)
-			}
-
-			zone := icacontroltypes.RegisteredZone{
-				ZoneId: zoneId,
-				IcaAccount: &icacontroltypes.IcaAccount{
-					ControllerAddress: baseOwnerAcc.String(),
-				},
-				IcaConnectionInfo: &icacontroltypes.IcaConnectionInfo{
-					ConnectionId: icaConnection,
-					PortId:       zoneId + "." + baseOwnerAcc.String(),
-				},
-				TransferInfo: &icacontroltypes.TransferConnectionInfo{
-					ChannelId: transferChannel,
-					PortId:    transferPort,
-				},
-				BaseDenom: baseDenom,
-				SnDenom:   baseSnDenom,
-			}
-
-			result, err := suite.App.GalKeeper.GetAllAmountNotMintShareToken(suite.Ctx, &zone)
-			suite.Require().NoError(err)
-
-			suite.Require().Equal(result, tc.result)
 		})
 	}
 }

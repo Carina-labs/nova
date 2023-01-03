@@ -43,13 +43,8 @@ func (q QueryServer) AllCandidatePool(goCtx context.Context, request *types.Quer
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	pools := q.keeper.GetAllCandidatePool(ctx)
 
-	var ret []*types.CandidatePool
-	for _, p := range pools {
-		ret = append(ret, p)
-	}
-
 	return &types.QueryAllCandidatePoolResponse{
-		CandidatePools: ret,
+		CandidatePools: pools,
 	}, nil
 }
 
@@ -71,13 +66,8 @@ func (q QueryServer) AllIncentivePool(goCtx context.Context, request *types.Quer
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	pools := q.keeper.GetAllIncentivePool(ctx)
 
-	var ret []*types.IncentivePool
-	for _, p := range pools {
-		ret = append(ret, p)
-	}
-
 	return &types.QueryAllIncentivePoolResponse{
-		IncentivePools: ret,
+		IncentivePools: pools,
 	}, nil
 }
 
