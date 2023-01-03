@@ -48,6 +48,11 @@ func (suite *KeeperTestSuite) TestClaimableAssetQuery() {
 	oracleKeeper := suite.App.OracleKeeper
 	ctx := suite.Ctx
 
+	suite.App.GalKeeper.SetAssetInfo(suite.Ctx, &types.AssetInfo{
+		ZoneId:         zoneId,
+		UnMintedWAsset: sdk.NewInt(1000_000000),
+	})
+
 	denom := icaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
 	amount := sdk.NewInt(1000_000000)
 	coin := sdk.NewCoin(denom, amount)

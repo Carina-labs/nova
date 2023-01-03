@@ -168,6 +168,15 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	h.k.ChangeDelegateState(ctx, zoneInfo.ZoneId, versionInfo.CurrentVersion)
 	h.k.SetDelegateOracleVersion(ctx, zoneInfo.ZoneId, versionInfo.CurrentVersion, oracleVersion)
 
+	// change unminted wAsset
+	assetInfo := h.k.GetAssetInfoForZoneId(ctx, zoneInfo.ZoneId)
+	if assetInfo == nil {
+		ctx.Logger().Error("AfterDelegateEnd", "asset_info", "nil")
+		return
+	}
+	assetInfo.UnMintedWAsset = assetInfo.UnMintedWAsset.Add(delegateMsg.Amount.Amount)
+	h.k.SetAssetInfo(ctx, assetInfo)
+
 	versionInfo.Record[currentVersion] = &types.IBCTrace{
 		Height: uint64(ctx.BlockHeight()),
 		State:  types.IcaSuccess,

@@ -154,7 +154,6 @@ func (k Keeper) getAssetInfo(ctx sdk.Context) prefix.Store {
 
 func (k Keeper) SetAssetInfo(ctx sdk.Context, assetInfo *types.AssetInfo) {
 	store := k.getAssetInfo(ctx)
-	fmt.Println(assetInfo)
 	key := assetInfo.ZoneId
 	bz := k.cdc.MustMarshal(assetInfo)
 	store.Set([]byte(key), bz)

@@ -54,9 +54,11 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.Register
 		return nil, err
 	}
 
+	assetInfo := k.GetAssetInfoForZoneId(ctx, zone.ZoneId)
+
 	baseDenom := k.icaControlKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
-	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId)
+	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, *assetInfo)
 	if err != nil {
 		return nil, err
 	}
@@ -66,11 +68,14 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.Register
 	if err != nil {
 		return nil, err
 	}
-	convertTotalStakedAmount, err := k.ConvertWAssetToSnAssetDecimal(totalStakedAmount.Amount.BigInt(), zone.Decimal, baseDenom)
+	convertTotalStakedAmount, err := k.ConvertWAssetToSnAssetDecimal(totalStakedAmount.BigInt(), zone.Decimal, baseDenom)
 	if err != nil {
 		return nil, err
 	}
 	mintAmt := k.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), convertTotalStakedAmount.Amount.BigInt())
+
+	assetInfo.UnMintedWAsset = assetInfo.UnMintedWAsset.Sub(asset.Amount)
+	k.SetAssetInfo(ctx, assetInfo)
 
 	return &sdk.Coin{Denom: snDenom, Amount: sdk.NewIntFromBigInt(mintAmt)}, nil
 }
@@ -156,28 +161,23 @@ func (k Keeper) GetSnDenomForIBCDenom(ctx sdk.Context, ibcDenom string) (string,
 }
 
 // GetTotalStakedForLazyMinting returns the sum of coins delegated to the Host chain, which have not been issued snAsset.
-func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPortId, transferChanId string) (sdk.Coin, error) {
+func (k Keeper) GetTotalStakedForLazyMinting(ctx sdk.Context, denom, transferPortId, transferChanId string, assetInfo types.AssetInfo) (sdk.Int, error) {
 	zone := k.icaControlKeeper.GetZoneForDenom(ctx, denom)
 	if zone == nil {
-		return sdk.Coin{}, fmt.Errorf("cannot find zone denom : %s", denom)
+		return sdk.NewInt(0), fmt.Errorf("cannot find zone denom : %s", denom)
 	}
 
 	chainInfo, err := k.oracleKeeper.GetChainState(ctx, denom)
 	if err != nil {
-		return sdk.Coin{}, fmt.Errorf("cannot find zone denom in oracle : %s", denom)
-	}
-
-	unMintedAmount, err := k.GetAllAmountNotMintShareToken(ctx, zone)
-	if err != nil {
-		return sdk.Coin{}, err
+		return sdk.NewInt(0), fmt.Errorf("cannot find zone denom in oracle : %s", denom)
 	}
 
 	ibcDenom := k.icaControlKeeper.GetIBCHashDenom(transferPortId, transferChanId, denom)
 	chainBalanceWithIbcDenom := sdk.NewCoin(ibcDenom, chainInfo.Coin.Amount)
-	if chainBalanceWithIbcDenom.Sub(unMintedAmount).IsZero() {
-		return unMintedAmount, nil
+	if chainBalanceWithIbcDenom.Amount.Sub(assetInfo.UnMintedWAsset).IsZero() {
+		return assetInfo.UnMintedWAsset, nil
 	}
-	return chainBalanceWithIbcDenom.Sub(unMintedAmount), nil
+	return chainBalanceWithIbcDenom.Amount.Sub(assetInfo.UnMintedWAsset), nil
 }
 
 // ConvertWAssetToSnAssetDecimal changes the common coin to snAsset's denom and decimal.

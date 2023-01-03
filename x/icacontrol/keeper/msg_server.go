@@ -130,15 +130,15 @@ func (k msgServer) ChangeRegisteredZone(goCtx context.Context, zone *types.MsgCh
 		return nil, sdkerrors.Wrapf(types.ErrDenomDuplicates, zone.BaseDenom)
 	}
 
-	//ok := k.Keeper.IcaControllerKeeper.IsBound(ctx, zone.IcaInfo.PortId)
-	//if !ok {
-	//	return nil, sdkerrors.Wrapf(types.ErrInvalidPortId, zone.IcaInfo.PortId)
-	//}
+	ok := k.Keeper.IcaControllerKeeper.IsBound(ctx, zone.IcaInfo.PortId)
+	if !ok {
+		return nil, sdkerrors.Wrapf(types.ErrInvalidPortId, zone.IcaInfo.PortId)
+	}
 
-	//_, ok = k.Keeper.IcaControllerKeeper.GetOpenActiveChannel(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.PortId)
-	//if !ok {
-	//	return nil, sdkerrors.Wrapf(types.ErrInvalidConnId, zone.IcaInfo.ConnectionId)
-	//}
+	_, ok = k.Keeper.IcaControllerKeeper.GetOpenActiveChannel(ctx, zone.IcaInfo.ConnectionId, zone.IcaInfo.PortId)
+	if !ok {
+		return nil, sdkerrors.Wrapf(types.ErrInvalidConnId, zone.IcaInfo.ConnectionId)
+	}
 
 	zoneInfo := &types.RegisteredZone{
 		ZoneId: zone.ZoneId,
