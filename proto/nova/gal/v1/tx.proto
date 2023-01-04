@@ -17,6 +17,7 @@ service Msg {
   rpc PendingUndelegate(MsgPendingUndelegate) returns (MsgPendingUndelegateResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
   rpc ClaimSnAsset(MsgClaimSnAsset) returns (MsgClaimSnAssetResponse);
+  rpc AllClaimSnAsset(MsgAllClaimSnAsset) returns (MsgAllClaimSnAssetResponse);
   rpc IcaWithdraw(MsgIcaWithdraw) returns (MsgIcaWithdrawResponse);
 }
 
@@ -77,6 +78,7 @@ message MsgPendingUndelegateResponse {
 message MsgWithdraw {
   string zone_id = 1;
   string withdrawer = 2[(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string from_address = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgWithdrawResponse {
@@ -88,12 +90,23 @@ message MsgWithdrawResponse {
 message MsgClaimSnAsset {
   string zone_id = 1;
   string claimer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string from_address = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgClaimSnAssetResponse {
   string claimer = 1;
   cosmos.base.v1beta1.Coin minted = 2
   [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
+}
+
+// MsgClaim defines claim msg used when user want to claim their st token.
+message MsgAllClaimSnAsset {
+  string zone_id = 1;
+  string from_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+}
+
+message MsgAllClaimSnAssetResponse {
+  string claimer = 1;
 }
 
 message MsgIcaWithdraw{
