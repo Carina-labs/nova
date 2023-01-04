@@ -63,8 +63,37 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 func txClaimSnAssetCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "claim [zone-id]",
-		Short: "claim wrapped coin to nova",
+		Use:   "claim [zone-id] [claimer]",
+		Short: "claim to snAsset",
+		Args:  cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			zoneId := args[0]
+			claimer, err := sdk.AccAddressFromBech32(args[1])
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgClaimSnAsset(zoneId, claimer, clientCtx.GetFromAddress())
+			if err = msg.ValidateBasic(); err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	return cmd
+}
+
+func txAllClaimSnAssetCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "all-claim [zone-id]",
+		Short: "claim to snAsset for all user",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -74,7 +103,7 @@ func txClaimSnAssetCmd() *cobra.Command {
 
 			zoneId := args[0]
 
-			msg := types.NewMsgClaimSnAsset(zoneId, clientCtx.GetFromAddress())
+			msg := types.NewMsgAllClaimSnAsset(zoneId, clientCtx.GetFromAddress())
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -123,12 +152,12 @@ func txUndelegateRequestCmd() *cobra.Command {
 
 func txWithdrawCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "withdraw [zone-id]",
+		Use:   "withdraw [zone-id] [withdrawer]",
 		Short: "Withdraw wrapped token to nova",
 		Long: `Withdraw bonded token to wrapped-native token.
 Note, the '--to' flag is ignored as it is implied from [to_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
-		Args: cobra.ExactArgs(1),
+		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -136,8 +165,12 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 			}
 
 			zoneId := args[0]
+			withdrawer, err := sdk.AccAddressFromBech32(args[1])
+			if err != nil {
+				return err
+			}
 
-			msg := types.NewMsgWithdraw(zoneId, clientCtx.GetFromAddress())
+			msg := types.NewMsgWithdraw(zoneId, withdrawer, clientCtx.GetFromAddress())
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}

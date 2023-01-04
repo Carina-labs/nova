@@ -25,6 +25,7 @@ var _ sdk.Msg = &MsgUndelegate{}
 var _ sdk.Msg = &MsgPendingUndelegate{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
+var _ sdk.Msg = &MsgAllClaimSnAsset{}
 var _ sdk.Msg = &MsgIcaWithdraw{}
 
 func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin, timeoutTimestamp uint64) *MsgDeposit {
@@ -215,10 +216,11 @@ func (msg MsgPendingUndelegate) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{delegator}
 }
 
-func NewMsgWithdraw(zoneId string, withdrawer sdk.AccAddress) *MsgWithdraw {
+func NewMsgWithdraw(zoneId string, withdrawer, fromAddress sdk.AccAddress) *MsgWithdraw {
 	return &MsgWithdraw{
-		ZoneId:     zoneId,
-		Withdrawer: withdrawer.String(),
+		ZoneId:      zoneId,
+		Withdrawer:  withdrawer.String(),
+		FromAddress: fromAddress.String(),
 	}
 }
 
@@ -256,10 +258,11 @@ func (msg MsgWithdraw) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{withdrawer}
 }
 
-func NewMsgClaimSnAsset(zoneId string, claimer sdk.AccAddress) *MsgClaimSnAsset {
+func NewMsgClaimSnAsset(zoneId string, claimer, fromAddress sdk.AccAddress) *MsgClaimSnAsset {
 	return &MsgClaimSnAsset{
-		ZoneId:  zoneId,
-		Claimer: claimer.String(),
+		ZoneId:      zoneId,
+		Claimer:     claimer.String(),
+		FromAddress: fromAddress.String(),
 	}
 }
 
@@ -294,6 +297,42 @@ func (msg MsgClaimSnAsset) GetSignBytes() []byte {
 
 func (msg MsgClaimSnAsset) GetSigners() []sdk.AccAddress {
 	claimer, _ := sdk.AccAddressFromBech32(msg.Claimer)
+	return []sdk.AccAddress{claimer}
+}
+
+func NewMsgAllClaimSnAsset(zoneId string, fromAddress sdk.AccAddress) *MsgAllClaimSnAsset {
+	return &MsgAllClaimSnAsset{
+		ZoneId:      zoneId,
+		FromAddress: fromAddress.String(),
+	}
+}
+
+func (msg MsgAllClaimSnAsset) Route() string {
+	return RouterKey
+}
+
+func (msg MsgAllClaimSnAsset) Type() string {
+	return TypeMsgClaim
+}
+
+func (msg MsgAllClaimSnAsset) ValidateBasic() error {
+	if _, err := sdk.AccAddressFromBech32(msg.FromAddress); err != nil {
+		return err
+	}
+
+	if msg.ZoneId == "" {
+		return sdkerrors.Wrap(ErrNotFoundZoneInfo, "zoneId is not nil")
+	}
+
+	return nil
+}
+
+func (msg MsgAllClaimSnAsset) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
+}
+
+func (msg MsgAllClaimSnAsset) GetSigners() []sdk.AccAddress {
+	claimer, _ := sdk.AccAddressFromBech32(msg.FromAddress)
 	return []sdk.AccAddress{claimer}
 }
 
