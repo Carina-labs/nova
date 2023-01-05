@@ -554,7 +554,7 @@ func (suite *KeeperTestSuite) TestDeleteDelegateRecord() {
 			for i, record := range tc.delegateRecord {
 				suite.App.GalKeeper.SetDelegateRecord(suite.Ctx, record)
 
-				suite.App.GalKeeper.DeleteDelegateRecord(suite.Ctx, tc.delegateRecord[i])
+				suite.App.GalKeeper.DeleteDelegateRecords(suite.Ctx, tc.delegateRecord[i])
 
 				claimer, err := sdk.AccAddressFromBech32(tc.result[i].Claimer)
 				suite.Require().NoError(err)

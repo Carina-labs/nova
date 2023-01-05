@@ -532,7 +532,6 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	totalClaimAsset := sdk.NewCoin(ibcDenom, sdk.NewInt(0))
-	ctx.Logger().Info("ClaimSnAsset", "totalClaimAsset", totalClaimAsset)
 
 	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
 	for _, record := range records.Records {
@@ -545,7 +544,6 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	}
 
 	claimSnAsset, err := m.keeper.ClaimShareToken(ctx, &zoneInfo, totalClaimAsset)
-	ctx.Logger().Info("ClaimSnAsset", "claimSnAsset", claimSnAsset)
 	if err != nil {
 		ctx.Logger().Error("ClaimSnAsset", "ClaimShareToken", err)
 		return nil, sdkerrors.Wrapf(err,
@@ -559,7 +557,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
-	m.keeper.DeleteDelegateRecord(ctx, records)
+	m.keeper.DeleteDelegateRecords(ctx, records)
 
 	// mark user performed claim action
 	m.keeper.airdropKeeper.PostClaimedSnAsset(ctx, claimerAddr)
@@ -572,4 +570,26 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		Claimer: claimMsg.Claimer,
 		Minted:  *claimSnAsset,
 	}, nil
+}
+
+func (m msgServer) AllClaimSnAsset(goCtx context.Context, msg *types.MsgAllClaimSnAsset) (*types.MsgAllClaimSnAssetResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
+	if !ok {
+		return nil, fmt.Errorf("cannot find zone id : %s", msg.ZoneId)
+	}
+
+	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
+	claimRecords := m.keeper.GetAllUserClaimRecords(ctx, zoneInfo.ZoneId, oracleVersion)
+
+	for _, record := range claimRecords {
+		err := m.keeper.MintTo(ctx, record.claimer, record.amount)
+		if err != nil {
+			return nil, err
+		}
+		m.keeper.DeleteDelegateRecord(ctx, zoneInfo.ZoneId, record.claimer.String())
+	}
+
+	return &types.MsgAllClaimSnAssetResponse{Claimer: msg.FromAddress}, nil
 }

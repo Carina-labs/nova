@@ -9,6 +9,11 @@ import (
 	"time"
 )
 
+type ClaimRecord struct {
+	claimer sdk.AccAddress
+	amount  sdk.Coin
+}
+
 func (k Keeper) getDelegateRecordStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyDelegateRecordInfo)
 }
@@ -18,6 +23,11 @@ func (k Keeper) SetDelegateRecord(ctx sdk.Context, msg *types.DelegateRecord) {
 	key := msg.ZoneId + msg.Claimer
 	bz := k.cdc.MustMarshal(msg)
 	store.Set([]byte(key), bz)
+}
+
+func (k Keeper) DeleteDelegateRecord(ctx sdk.Context, zoneId, claimer string) {
+	store := k.getDelegateRecordStore(ctx)
+	store.Delete([]byte(zoneId + claimer))
 }
 
 func (k Keeper) SetDelegateRecords(ctx sdk.Context, zoneId string) {
@@ -140,14 +150,37 @@ func (k Keeper) GetTotalDelegateAmtForUser(ctx sdk.Context, zoneId, denom string
 	return totalDelegateAmt
 }
 
-func (k Keeper) DeleteDelegateRecord(ctx sdk.Context, delegate *types.DelegateRecord) {
-	defer telemetry.MeasureSince(time.Now(), "gal", "delegation", "deleteDelegateRecord")
+func (k Keeper) GetAllUserClaimRecords(ctx sdk.Context, zoneId string, oracleVersion uint64) []ClaimRecord {
+	var claimRecords []ClaimRecord
+	k.IterateDelegateRecord(ctx, zoneId, func(index int64, delegateRecord types.DelegateRecord) (stop bool) {
+		var totalAmount sdk.Coin
+		var claimRecord ClaimRecord
+		for _, item := range delegateRecord.Records {
+			if item.State == types.DelegateRequest || (item.State == types.DelegateSuccess && item.OracleVersion == oracleVersion) {
+				totalAmount = totalAmount.Add(*item.Amount)
+			}
+		}
+		claimRecord.amount = totalAmount
+		claimRecord.claimer, _ = sdk.AccAddressFromBech32(delegateRecord.Claimer)
+		claimRecords = append(claimRecords, claimRecord)
+		return false
+	})
+
+	return claimRecords
+}
+
+func (k Keeper) DeleteDelegateRecords(ctx sdk.Context, delegate *types.DelegateRecord) {
+	defer telemetry.MeasureSince(time.Now(), "gal", "delegation", "deleteDelegateRecords")
 	for key, record := range delegate.Records {
 		if record.State == types.DelegateSuccess {
 			delete(delegate.Records, key)
 		}
 	}
-	k.SetDelegateRecord(ctx, delegate)
+	if delegate.Records != nil {
+		k.SetDelegateRecord(ctx, delegate)
+	} else {
+		k.DeleteDelegateRecord(ctx, delegate.ZoneId, delegate.Claimer)
+	}
 }
 
 // GetDelegateVersionStore returns store for delegation.
