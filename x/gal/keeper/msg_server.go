@@ -557,7 +557,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 			"account: %s", claimMsg.Claimer)
 	}
 
-	m.keeper.DeleteDelegateRecords(ctx, records)
+	m.keeper.DeleteDelegateRecords(ctx, records, oracleVersion)
 
 	// mark user performed claim action
 	m.keeper.airdropKeeper.PostClaimedSnAsset(ctx, claimerAddr)
@@ -580,15 +580,24 @@ func (m msgServer) AllClaimSnAsset(goCtx context.Context, msg *types.MsgAllClaim
 		return nil, fmt.Errorf("cannot find zone id : %s", msg.ZoneId)
 	}
 
+	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	oracleVersion, _ := m.keeper.oracleKeeper.GetOracleVersion(ctx, zoneInfo.ZoneId)
-	claimRecords := m.keeper.GetAllUserClaimRecords(ctx, zoneInfo.ZoneId, oracleVersion)
 
+	records := m.keeper.GetAllUserDelegateRecords(ctx, zoneInfo.ZoneId, ibcDenom, oracleVersion)
+	if len(records) == 0 {
+		return nil, fmt.Errorf("claimable amount is zero")
+	}
+
+	claimRecords, err := m.keeper.AllClaimShareToken(ctx, &zoneInfo, records)
+	if err != nil {
+		return nil, err
+	}
 	for _, record := range claimRecords {
-		err := m.keeper.MintTo(ctx, record.claimer, record.amount)
+		err = m.keeper.MintTo(ctx, record.claimer, record.claimableAmount)
 		if err != nil {
 			return nil, err
 		}
-		m.keeper.DeleteDelegateRecord(ctx, zoneInfo.ZoneId, record.claimer.String())
+		m.keeper.DeleteDelegateRecords(ctx, &record.delegateRecord, oracleVersion)
 	}
 
 	return &types.MsgAllClaimSnAssetResponse{Claimer: msg.FromAddress}, nil

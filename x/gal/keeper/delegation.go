@@ -9,11 +9,6 @@ import (
 	"time"
 )
 
-type ClaimRecord struct {
-	claimer sdk.AccAddress
-	amount  sdk.Coin
-}
-
 func (k Keeper) getDelegateRecordStore(ctx sdk.Context) prefix.Store {
 	return prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyDelegateRecordInfo)
 }
@@ -150,33 +145,35 @@ func (k Keeper) GetTotalDelegateAmtForUser(ctx sdk.Context, zoneId, denom string
 	return totalDelegateAmt
 }
 
-func (k Keeper) GetAllUserClaimRecords(ctx sdk.Context, zoneId string, oracleVersion uint64) []ClaimRecord {
-	var claimRecords []ClaimRecord
+func (k Keeper) GetAllUserDelegateRecords(ctx sdk.Context, zoneId, denom string, oracleVersion uint64) []*ClaimRecord {
+	var claimRecords []*ClaimRecord
 	k.IterateDelegateRecord(ctx, zoneId, func(index int64, delegateRecord types.DelegateRecord) (stop bool) {
-		var totalAmount sdk.Coin
+		totalAmount := sdk.NewCoin(denom, sdk.NewInt(0))
 		var claimRecord ClaimRecord
 		for _, item := range delegateRecord.Records {
-			if item.State == types.DelegateRequest || (item.State == types.DelegateSuccess && item.OracleVersion == oracleVersion) {
+			if item.State == types.DelegateSuccess && item.OracleVersion < oracleVersion {
 				totalAmount = totalAmount.Add(*item.Amount)
+				claimRecord.depositAmount = totalAmount
+				claimRecord.claimer, _ = sdk.AccAddressFromBech32(delegateRecord.Claimer)
+				claimRecord.delegateRecord = delegateRecord
+				claimRecords = append(claimRecords, &claimRecord)
 			}
 		}
-		claimRecord.amount = totalAmount
-		claimRecord.claimer, _ = sdk.AccAddressFromBech32(delegateRecord.Claimer)
-		claimRecords = append(claimRecords, claimRecord)
 		return false
 	})
 
 	return claimRecords
 }
 
-func (k Keeper) DeleteDelegateRecords(ctx sdk.Context, delegate *types.DelegateRecord) {
+func (k Keeper) DeleteDelegateRecords(ctx sdk.Context, delegate *types.DelegateRecord, oracleVersion uint64) {
 	defer telemetry.MeasureSince(time.Now(), "gal", "delegation", "deleteDelegateRecords")
 	for key, record := range delegate.Records {
-		if record.State == types.DelegateSuccess {
+		if record.State == types.DelegateSuccess && record.OracleVersion < oracleVersion {
 			delete(delegate.Records, key)
 		}
 	}
-	if delegate.Records != nil {
+
+	if len(delegate.Records) > 0 {
 		k.SetDelegateRecord(ctx, delegate)
 	} else {
 		k.DeleteDelegateRecord(ctx, delegate.ZoneId, delegate.Claimer)
