@@ -220,10 +220,10 @@ func (suite *KeeperTestSuite) TestSetDelegateRecords() {
 			suite.App.GalKeeper.SetDelegateRecords(suite.Ctx, zoneId)
 
 			for _, res := range tc.result {
-				claimer, err := sdk.AccAddressFromBech32(res.Claimer)
+				claimerAddr, err := sdk.AccAddressFromBech32(res.Claimer)
 				suite.Require().NoError(err)
 
-				result, ok := suite.App.GalKeeper.GetUserDelegateRecord(suite.Ctx, tc.zoneId, claimer)
+				result, ok := suite.App.GalKeeper.GetUserDelegateRecord(suite.Ctx, tc.zoneId, claimerAddr)
 				suite.Require().True(ok)
 				suite.Require().Equal(res, result)
 			}
@@ -477,6 +477,7 @@ func (suite *KeeperTestSuite) TestDeleteDelegateRecord() {
 		claimer        sdk.AccAddress
 		delegateRecord []*types.DelegateRecord
 		result         []*types.DelegateRecord
+		oracleVersion  uint64
 		version        uint64
 		err            bool
 	}{
@@ -493,14 +494,16 @@ func (suite *KeeperTestSuite) TestDeleteDelegateRecord() {
 								Denom:  ibcDenom,
 								Amount: sdk.NewInt(20000),
 							},
-							State: types.DelegateRequest,
+							State:         types.DelegateRequest,
+							OracleVersion: 1,
 						},
 						1: {
 							Amount: &sdk.Coin{
 								Denom:  ibcDenom,
 								Amount: sdk.NewInt(30000),
 							},
-							State: types.DelegateSuccess,
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
 						},
 					},
 				},
@@ -513,14 +516,16 @@ func (suite *KeeperTestSuite) TestDeleteDelegateRecord() {
 								Denom:  ibcDenom,
 								Amount: sdk.NewInt(10000),
 							},
-							State: types.DelegateSuccess,
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
 						},
 						1: {
 							Amount: &sdk.Coin{
 								Denom:  ibcDenom,
 								Amount: sdk.NewInt(10000),
 							},
-							State: types.DelegateSuccess,
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
 						},
 					},
 				},
@@ -535,17 +540,15 @@ func (suite *KeeperTestSuite) TestDeleteDelegateRecord() {
 								Denom:  ibcDenom,
 								Amount: sdk.NewInt(20000),
 							},
-							State: types.DelegateRequest,
+							State:         types.DelegateRequest,
+							OracleVersion: 1,
 						},
 					},
 				},
-				{
-					ZoneId:  zoneId,
-					Claimer: claimer2.String(),
-					Records: map[uint64]*types.DelegateRecordContent(nil),
-				},
+				nil,
 			},
-			version: 0,
+			oracleVersion: 2,
+			version:       0,
 		},
 	}
 
@@ -554,12 +557,11 @@ func (suite *KeeperTestSuite) TestDeleteDelegateRecord() {
 			for i, record := range tc.delegateRecord {
 				suite.App.GalKeeper.SetDelegateRecord(suite.Ctx, record)
 
-				suite.App.GalKeeper.DeleteDelegateRecords(suite.Ctx, tc.delegateRecord[i])
+				suite.App.GalKeeper.DeleteDelegateRecords(suite.Ctx, tc.delegateRecord[i], tc.oracleVersion)
 
-				claimer, err := sdk.AccAddressFromBech32(tc.result[i].Claimer)
+				claimer, err := sdk.AccAddressFromBech32(tc.delegateRecord[i].Claimer)
 				suite.Require().NoError(err)
-				result, ok := suite.App.GalKeeper.GetUserDelegateRecord(suite.Ctx, tc.zoneId, claimer)
-				suite.Require().True(ok)
+				result, _ := suite.App.GalKeeper.GetUserDelegateRecord(suite.Ctx, tc.zoneId, claimer)
 				suite.Require().Equal(tc.result[i], result)
 			}
 		})
