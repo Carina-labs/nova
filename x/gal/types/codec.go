@@ -16,6 +16,7 @@ func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(MsgDeposit{}, "gal/MsgDeposit", nil)
 	cdc.RegisterConcrete(MsgDelegate{}, "gal/MsgDelegate", nil)
 	cdc.RegisterConcrete(MsgClaimSnAsset{}, "gal/MsgClaimSnAsset", nil)
+	cdc.RegisterConcrete(MsgClaimAllSnAsset{}, "gal/MsgClaimAllSnAsset", nil)
 	cdc.RegisterConcrete(MsgWithdraw{}, "gal/MsgWithdraw", nil)
 	cdc.RegisterConcrete(MsgUndelegate{}, "gal/MsgUndelegate", nil)
 	cdc.RegisterConcrete(MsgPendingUndelegate{}, "gal/MsgPendingUndelegate", nil)
@@ -29,6 +30,7 @@ func RegisterInterfaces(registry types.InterfaceRegistry) {
 		&MsgDeposit{},
 		&MsgDelegate{},
 		&MsgClaimSnAsset{},
+		&MsgClaimAllSnAsset{},
 		&MsgWithdraw{},
 		&MsgUndelegate{},
 		&MsgPendingUndelegate{},

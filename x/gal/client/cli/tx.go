@@ -90,10 +90,10 @@ func txClaimSnAssetCmd() *cobra.Command {
 	return cmd
 }
 
-func txAllClaimSnAssetCmd() *cobra.Command {
+func txClaimAllSnAssetCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "all-claim [zone-id]",
-		Short: "claim to snAsset for all user",
+		Use:   "claim-all [zone-id]",
+		Short: "claim all unminted snAsset and distribute to user",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -103,7 +103,7 @@ func txAllClaimSnAssetCmd() *cobra.Command {
 
 			zoneId := args[0]
 
-			msg := types.NewMsgAllClaimSnAsset(zoneId, clientCtx.GetFromAddress())
+			msg := types.NewMsgClaimAllSnAsset(zoneId, clientCtx.GetFromAddress())
 			if err = msg.ValidateBasic(); err != nil {
 				return err
 			}

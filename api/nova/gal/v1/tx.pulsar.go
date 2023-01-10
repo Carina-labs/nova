@@ -6762,27 +6762,27 @@ func (x *fastReflection_MsgClaimSnAssetResponse) ProtoMethods() *protoiface.Meth
 }
 
 var (
-	md_MsgAllClaimSnAsset              protoreflect.MessageDescriptor
-	fd_MsgAllClaimSnAsset_zone_id      protoreflect.FieldDescriptor
-	fd_MsgAllClaimSnAsset_from_address protoreflect.FieldDescriptor
+	md_MsgClaimAllSnAsset              protoreflect.MessageDescriptor
+	fd_MsgClaimAllSnAsset_zone_id      protoreflect.FieldDescriptor
+	fd_MsgClaimAllSnAsset_from_address protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_tx_proto_init()
-	md_MsgAllClaimSnAsset = File_nova_gal_v1_tx_proto.Messages().ByName("MsgAllClaimSnAsset")
-	fd_MsgAllClaimSnAsset_zone_id = md_MsgAllClaimSnAsset.Fields().ByName("zone_id")
-	fd_MsgAllClaimSnAsset_from_address = md_MsgAllClaimSnAsset.Fields().ByName("from_address")
+	md_MsgClaimAllSnAsset = File_nova_gal_v1_tx_proto.Messages().ByName("MsgClaimAllSnAsset")
+	fd_MsgClaimAllSnAsset_zone_id = md_MsgClaimAllSnAsset.Fields().ByName("zone_id")
+	fd_MsgClaimAllSnAsset_from_address = md_MsgClaimAllSnAsset.Fields().ByName("from_address")
 }
 
-var _ protoreflect.Message = (*fastReflection_MsgAllClaimSnAsset)(nil)
+var _ protoreflect.Message = (*fastReflection_MsgClaimAllSnAsset)(nil)
 
-type fastReflection_MsgAllClaimSnAsset MsgAllClaimSnAsset
+type fastReflection_MsgClaimAllSnAsset MsgClaimAllSnAsset
 
-func (x *MsgAllClaimSnAsset) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgAllClaimSnAsset)(x)
+func (x *MsgClaimAllSnAsset) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgClaimAllSnAsset)(x)
 }
 
-func (x *MsgAllClaimSnAsset) slowProtoReflect() protoreflect.Message {
+func (x *MsgClaimAllSnAsset) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_tx_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -6794,43 +6794,43 @@ func (x *MsgAllClaimSnAsset) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_MsgAllClaimSnAsset_messageType fastReflection_MsgAllClaimSnAsset_messageType
-var _ protoreflect.MessageType = fastReflection_MsgAllClaimSnAsset_messageType{}
+var _fastReflection_MsgClaimAllSnAsset_messageType fastReflection_MsgClaimAllSnAsset_messageType
+var _ protoreflect.MessageType = fastReflection_MsgClaimAllSnAsset_messageType{}
 
-type fastReflection_MsgAllClaimSnAsset_messageType struct{}
+type fastReflection_MsgClaimAllSnAsset_messageType struct{}
 
-func (x fastReflection_MsgAllClaimSnAsset_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgAllClaimSnAsset)(nil)
+func (x fastReflection_MsgClaimAllSnAsset_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgClaimAllSnAsset)(nil)
 }
-func (x fastReflection_MsgAllClaimSnAsset_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgAllClaimSnAsset)
+func (x fastReflection_MsgClaimAllSnAsset_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgClaimAllSnAsset)
 }
-func (x fastReflection_MsgAllClaimSnAsset_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgAllClaimSnAsset
+func (x fastReflection_MsgClaimAllSnAsset_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgClaimAllSnAsset
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_MsgAllClaimSnAsset) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgAllClaimSnAsset
+func (x *fastReflection_MsgClaimAllSnAsset) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgClaimAllSnAsset
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgAllClaimSnAsset) Type() protoreflect.MessageType {
-	return _fastReflection_MsgAllClaimSnAsset_messageType
+func (x *fastReflection_MsgClaimAllSnAsset) Type() protoreflect.MessageType {
+	return _fastReflection_MsgClaimAllSnAsset_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgAllClaimSnAsset) New() protoreflect.Message {
-	return new(fastReflection_MsgAllClaimSnAsset)
+func (x *fastReflection_MsgClaimAllSnAsset) New() protoreflect.Message {
+	return new(fastReflection_MsgClaimAllSnAsset)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgAllClaimSnAsset) Interface() protoreflect.ProtoMessage {
-	return (*MsgAllClaimSnAsset)(x)
+func (x *fastReflection_MsgClaimAllSnAsset) Interface() protoreflect.ProtoMessage {
+	return (*MsgClaimAllSnAsset)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -6838,16 +6838,16 @@ func (x *fastReflection_MsgAllClaimSnAsset) Interface() protoreflect.ProtoMessag
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_MsgAllClaimSnAsset) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_MsgClaimAllSnAsset) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.ZoneId != "" {
 		value := protoreflect.ValueOfString(x.ZoneId)
-		if !f(fd_MsgAllClaimSnAsset_zone_id, value) {
+		if !f(fd_MsgClaimAllSnAsset_zone_id, value) {
 			return
 		}
 	}
 	if x.FromAddress != "" {
 		value := protoreflect.ValueOfString(x.FromAddress)
-		if !f(fd_MsgAllClaimSnAsset_from_address, value) {
+		if !f(fd_MsgClaimAllSnAsset_from_address, value) {
 			return
 		}
 	}
@@ -6864,17 +6864,17 @@ func (x *fastReflection_MsgAllClaimSnAsset) Range(f func(protoreflect.FieldDescr
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgAllClaimSnAsset) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_MsgClaimAllSnAsset) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAsset.zone_id":
+	case "nova.gal.v1.MsgClaimAllSnAsset.zone_id":
 		return x.ZoneId != ""
-	case "nova.gal.v1.MsgAllClaimSnAsset.from_address":
+	case "nova.gal.v1.MsgClaimAllSnAsset.from_address":
 		return x.FromAddress != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAsset"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAsset"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAsset does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAsset does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6884,17 +6884,17 @@ func (x *fastReflection_MsgAllClaimSnAsset) Has(fd protoreflect.FieldDescriptor)
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgAllClaimSnAsset) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_MsgClaimAllSnAsset) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAsset.zone_id":
+	case "nova.gal.v1.MsgClaimAllSnAsset.zone_id":
 		x.ZoneId = ""
-	case "nova.gal.v1.MsgAllClaimSnAsset.from_address":
+	case "nova.gal.v1.MsgClaimAllSnAsset.from_address":
 		x.FromAddress = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAsset"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAsset"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAsset does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAsset does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6904,19 +6904,19 @@ func (x *fastReflection_MsgAllClaimSnAsset) Clear(fd protoreflect.FieldDescripto
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgAllClaimSnAsset) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgClaimAllSnAsset) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAsset.zone_id":
+	case "nova.gal.v1.MsgClaimAllSnAsset.zone_id":
 		value := x.ZoneId
 		return protoreflect.ValueOfString(value)
-	case "nova.gal.v1.MsgAllClaimSnAsset.from_address":
+	case "nova.gal.v1.MsgClaimAllSnAsset.from_address":
 		value := x.FromAddress
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAsset"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAsset"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAsset does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAsset does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -6930,17 +6930,17 @@ func (x *fastReflection_MsgAllClaimSnAsset) Get(descriptor protoreflect.FieldDes
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgAllClaimSnAsset) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_MsgClaimAllSnAsset) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAsset.zone_id":
+	case "nova.gal.v1.MsgClaimAllSnAsset.zone_id":
 		x.ZoneId = value.Interface().(string)
-	case "nova.gal.v1.MsgAllClaimSnAsset.from_address":
+	case "nova.gal.v1.MsgClaimAllSnAsset.from_address":
 		x.FromAddress = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAsset"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAsset"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAsset does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAsset does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -6954,44 +6954,44 @@ func (x *fastReflection_MsgAllClaimSnAsset) Set(fd protoreflect.FieldDescriptor,
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgAllClaimSnAsset) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgClaimAllSnAsset) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAsset.zone_id":
-		panic(fmt.Errorf("field zone_id of message nova.gal.v1.MsgAllClaimSnAsset is not mutable"))
-	case "nova.gal.v1.MsgAllClaimSnAsset.from_address":
-		panic(fmt.Errorf("field from_address of message nova.gal.v1.MsgAllClaimSnAsset is not mutable"))
+	case "nova.gal.v1.MsgClaimAllSnAsset.zone_id":
+		panic(fmt.Errorf("field zone_id of message nova.gal.v1.MsgClaimAllSnAsset is not mutable"))
+	case "nova.gal.v1.MsgClaimAllSnAsset.from_address":
+		panic(fmt.Errorf("field from_address of message nova.gal.v1.MsgClaimAllSnAsset is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAsset"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAsset"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAsset does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAsset does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgAllClaimSnAsset) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgClaimAllSnAsset) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAsset.zone_id":
+	case "nova.gal.v1.MsgClaimAllSnAsset.zone_id":
 		return protoreflect.ValueOfString("")
-	case "nova.gal.v1.MsgAllClaimSnAsset.from_address":
+	case "nova.gal.v1.MsgClaimAllSnAsset.from_address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAsset"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAsset"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAsset does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAsset does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgAllClaimSnAsset) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_MsgClaimAllSnAsset) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgAllClaimSnAsset", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgClaimAllSnAsset", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -6999,7 +6999,7 @@ func (x *fastReflection_MsgAllClaimSnAsset) WhichOneof(d protoreflect.OneofDescr
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgAllClaimSnAsset) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_MsgClaimAllSnAsset) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -7010,7 +7010,7 @@ func (x *fastReflection_MsgAllClaimSnAsset) GetUnknown() protoreflect.RawFields 
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgAllClaimSnAsset) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_MsgClaimAllSnAsset) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -7022,7 +7022,7 @@ func (x *fastReflection_MsgAllClaimSnAsset) SetUnknown(fields protoreflect.RawFi
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_MsgAllClaimSnAsset) IsValid() bool {
+func (x *fastReflection_MsgClaimAllSnAsset) IsValid() bool {
 	return x != nil
 }
 
@@ -7032,9 +7032,9 @@ func (x *fastReflection_MsgAllClaimSnAsset) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgAllClaimSnAsset) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_MsgClaimAllSnAsset) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgAllClaimSnAsset)
+		x := input.Message.Interface().(*MsgClaimAllSnAsset)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7064,7 +7064,7 @@ func (x *fastReflection_MsgAllClaimSnAsset) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgAllClaimSnAsset)
+		x := input.Message.Interface().(*MsgClaimAllSnAsset)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7108,7 +7108,7 @@ func (x *fastReflection_MsgAllClaimSnAsset) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgAllClaimSnAsset)
+		x := input.Message.Interface().(*MsgClaimAllSnAsset)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7140,10 +7140,10 @@ func (x *fastReflection_MsgAllClaimSnAsset) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgAllClaimSnAsset: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgClaimAllSnAsset: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgAllClaimSnAsset: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgClaimAllSnAsset: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -7246,25 +7246,25 @@ func (x *fastReflection_MsgAllClaimSnAsset) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_MsgAllClaimSnAssetResponse         protoreflect.MessageDescriptor
-	fd_MsgAllClaimSnAssetResponse_claimer protoreflect.FieldDescriptor
+	md_MsgClaimAllSnAssetResponse         protoreflect.MessageDescriptor
+	fd_MsgClaimAllSnAssetResponse_claimer protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_nova_gal_v1_tx_proto_init()
-	md_MsgAllClaimSnAssetResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgAllClaimSnAssetResponse")
-	fd_MsgAllClaimSnAssetResponse_claimer = md_MsgAllClaimSnAssetResponse.Fields().ByName("claimer")
+	md_MsgClaimAllSnAssetResponse = File_nova_gal_v1_tx_proto.Messages().ByName("MsgClaimAllSnAssetResponse")
+	fd_MsgClaimAllSnAssetResponse_claimer = md_MsgClaimAllSnAssetResponse.Fields().ByName("claimer")
 }
 
-var _ protoreflect.Message = (*fastReflection_MsgAllClaimSnAssetResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_MsgClaimAllSnAssetResponse)(nil)
 
-type fastReflection_MsgAllClaimSnAssetResponse MsgAllClaimSnAssetResponse
+type fastReflection_MsgClaimAllSnAssetResponse MsgClaimAllSnAssetResponse
 
-func (x *MsgAllClaimSnAssetResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_MsgAllClaimSnAssetResponse)(x)
+func (x *MsgClaimAllSnAssetResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgClaimAllSnAssetResponse)(x)
 }
 
-func (x *MsgAllClaimSnAssetResponse) slowProtoReflect() protoreflect.Message {
+func (x *MsgClaimAllSnAssetResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_nova_gal_v1_tx_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -7276,43 +7276,43 @@ func (x *MsgAllClaimSnAssetResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_MsgAllClaimSnAssetResponse_messageType fastReflection_MsgAllClaimSnAssetResponse_messageType
-var _ protoreflect.MessageType = fastReflection_MsgAllClaimSnAssetResponse_messageType{}
+var _fastReflection_MsgClaimAllSnAssetResponse_messageType fastReflection_MsgClaimAllSnAssetResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgClaimAllSnAssetResponse_messageType{}
 
-type fastReflection_MsgAllClaimSnAssetResponse_messageType struct{}
+type fastReflection_MsgClaimAllSnAssetResponse_messageType struct{}
 
-func (x fastReflection_MsgAllClaimSnAssetResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_MsgAllClaimSnAssetResponse)(nil)
+func (x fastReflection_MsgClaimAllSnAssetResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgClaimAllSnAssetResponse)(nil)
 }
-func (x fastReflection_MsgAllClaimSnAssetResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_MsgAllClaimSnAssetResponse)
+func (x fastReflection_MsgClaimAllSnAssetResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgClaimAllSnAssetResponse)
 }
-func (x fastReflection_MsgAllClaimSnAssetResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgAllClaimSnAssetResponse
+func (x fastReflection_MsgClaimAllSnAssetResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgClaimAllSnAssetResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_MsgAllClaimSnAssetResponse
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgClaimAllSnAssetResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Type() protoreflect.MessageType {
-	return _fastReflection_MsgAllClaimSnAssetResponse_messageType
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgClaimAllSnAssetResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) New() protoreflect.Message {
-	return new(fastReflection_MsgAllClaimSnAssetResponse)
+func (x *fastReflection_MsgClaimAllSnAssetResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgClaimAllSnAssetResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Interface() protoreflect.ProtoMessage {
-	return (*MsgAllClaimSnAssetResponse)(x)
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgClaimAllSnAssetResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -7320,10 +7320,10 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) Interface() protoreflect.Pro
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.Claimer != "" {
 		value := protoreflect.ValueOfString(x.Claimer)
-		if !f(fd_MsgAllClaimSnAssetResponse_claimer, value) {
+		if !f(fd_MsgClaimAllSnAssetResponse_claimer, value) {
 			return
 		}
 	}
@@ -7340,15 +7340,15 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) Range(f func(protoreflect.Fi
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAssetResponse.claimer":
+	case "nova.gal.v1.MsgClaimAllSnAssetResponse.claimer":
 		return x.Claimer != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAssetResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAssetResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAssetResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAssetResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7358,15 +7358,15 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) Has(fd protoreflect.FieldDes
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAssetResponse.claimer":
+	case "nova.gal.v1.MsgClaimAllSnAssetResponse.claimer":
 		x.Claimer = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAssetResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAssetResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAssetResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAssetResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7376,16 +7376,16 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) Clear(fd protoreflect.FieldD
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAssetResponse.claimer":
+	case "nova.gal.v1.MsgClaimAllSnAssetResponse.claimer":
 		value := x.Claimer
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAssetResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAssetResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAssetResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAssetResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -7399,15 +7399,15 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) Get(descriptor protoreflect.
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAssetResponse.claimer":
+	case "nova.gal.v1.MsgClaimAllSnAssetResponse.claimer":
 		x.Claimer = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAssetResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAssetResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAssetResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAssetResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -7421,40 +7421,40 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) Set(fd protoreflect.FieldDes
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAssetResponse.claimer":
-		panic(fmt.Errorf("field claimer of message nova.gal.v1.MsgAllClaimSnAssetResponse is not mutable"))
+	case "nova.gal.v1.MsgClaimAllSnAssetResponse.claimer":
+		panic(fmt.Errorf("field claimer of message nova.gal.v1.MsgClaimAllSnAssetResponse is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAssetResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAssetResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAssetResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAssetResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "nova.gal.v1.MsgAllClaimSnAssetResponse.claimer":
+	case "nova.gal.v1.MsgClaimAllSnAssetResponse.claimer":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgAllClaimSnAssetResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.gal.v1.MsgClaimAllSnAssetResponse"))
 		}
-		panic(fmt.Errorf("message nova.gal.v1.MsgAllClaimSnAssetResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message nova.gal.v1.MsgClaimAllSnAssetResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgAllClaimSnAssetResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in nova.gal.v1.MsgClaimAllSnAssetResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -7462,7 +7462,7 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) WhichOneof(d protoreflect.On
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -7473,7 +7473,7 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) GetUnknown() protoreflect.Ra
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -7485,7 +7485,7 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) SetUnknown(fields protorefle
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) IsValid() bool {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -7495,9 +7495,9 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_MsgAllClaimSnAssetResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_MsgClaimAllSnAssetResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*MsgAllClaimSnAssetResponse)
+		x := input.Message.Interface().(*MsgClaimAllSnAssetResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7523,7 +7523,7 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) ProtoMethods() *protoiface.M
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*MsgAllClaimSnAssetResponse)
+		x := input.Message.Interface().(*MsgClaimAllSnAssetResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7560,7 +7560,7 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) ProtoMethods() *protoiface.M
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*MsgAllClaimSnAssetResponse)
+		x := input.Message.Interface().(*MsgClaimAllSnAssetResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -7592,10 +7592,10 @@ func (x *fastReflection_MsgAllClaimSnAssetResponse) ProtoMethods() *protoiface.M
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgAllClaimSnAssetResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgClaimAllSnAssetResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgAllClaimSnAssetResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgClaimAllSnAssetResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -9453,7 +9453,7 @@ func (x *MsgClaimSnAssetResponse) GetMinted() *v1beta1.Coin {
 }
 
 // MsgClaim defines claim msg used when user want to claim their st token.
-type MsgAllClaimSnAsset struct {
+type MsgClaimAllSnAsset struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -9462,8 +9462,8 @@ type MsgAllClaimSnAsset struct {
 	FromAddress string `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3" json:"from_address,omitempty"`
 }
 
-func (x *MsgAllClaimSnAsset) Reset() {
-	*x = MsgAllClaimSnAsset{}
+func (x *MsgClaimAllSnAsset) Reset() {
+	*x = MsgClaimAllSnAsset{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_tx_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -9471,32 +9471,32 @@ func (x *MsgAllClaimSnAsset) Reset() {
 	}
 }
 
-func (x *MsgAllClaimSnAsset) String() string {
+func (x *MsgClaimAllSnAsset) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MsgAllClaimSnAsset) ProtoMessage() {}
+func (*MsgClaimAllSnAsset) ProtoMessage() {}
 
-// Deprecated: Use MsgAllClaimSnAsset.ProtoReflect.Descriptor instead.
-func (*MsgAllClaimSnAsset) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgClaimAllSnAsset.ProtoReflect.Descriptor instead.
+func (*MsgClaimAllSnAsset) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *MsgAllClaimSnAsset) GetZoneId() string {
+func (x *MsgClaimAllSnAsset) GetZoneId() string {
 	if x != nil {
 		return x.ZoneId
 	}
 	return ""
 }
 
-func (x *MsgAllClaimSnAsset) GetFromAddress() string {
+func (x *MsgClaimAllSnAsset) GetFromAddress() string {
 	if x != nil {
 		return x.FromAddress
 	}
 	return ""
 }
 
-type MsgAllClaimSnAssetResponse struct {
+type MsgClaimAllSnAssetResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -9504,8 +9504,8 @@ type MsgAllClaimSnAssetResponse struct {
 	Claimer string `protobuf:"bytes,1,opt,name=claimer,proto3" json:"claimer,omitempty"`
 }
 
-func (x *MsgAllClaimSnAssetResponse) Reset() {
-	*x = MsgAllClaimSnAssetResponse{}
+func (x *MsgClaimAllSnAssetResponse) Reset() {
+	*x = MsgClaimAllSnAssetResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_nova_gal_v1_tx_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -9513,18 +9513,18 @@ func (x *MsgAllClaimSnAssetResponse) Reset() {
 	}
 }
 
-func (x *MsgAllClaimSnAssetResponse) String() string {
+func (x *MsgClaimAllSnAssetResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MsgAllClaimSnAssetResponse) ProtoMessage() {}
+func (*MsgClaimAllSnAssetResponse) ProtoMessage() {}
 
-// Deprecated: Use MsgAllClaimSnAssetResponse.ProtoReflect.Descriptor instead.
-func (*MsgAllClaimSnAssetResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use MsgClaimAllSnAssetResponse.ProtoReflect.Descriptor instead.
+func (*MsgClaimAllSnAssetResponse) Descriptor() ([]byte, []int) {
 	return file_nova_gal_v1_tx_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *MsgAllClaimSnAssetResponse) GetClaimer() string {
+func (x *MsgClaimAllSnAssetResponse) GetClaimer() string {
 	if x != nil {
 		return x.Claimer
 	}
@@ -9784,15 +9784,15 @@ var file_nova_gal_v1_tx_proto_rawDesc = []byte{
 	0xc8, 0xde, 0x1f, 0x00, 0xaa, 0xdf, 0x1f, 0x28, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
 	0x6f, 0x6d, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
 	0x2d, 0x73, 0x64, 0x6b, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x73,
-	0x52, 0x06, 0x6d, 0x69, 0x6e, 0x74, 0x65, 0x64, 0x22, 0x6a, 0x0a, 0x12, 0x4d, 0x73, 0x67, 0x41,
-	0x6c, 0x6c, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x12, 0x17,
+	0x52, 0x06, 0x6d, 0x69, 0x6e, 0x74, 0x65, 0x64, 0x22, 0x6a, 0x0a, 0x12, 0x4d, 0x73, 0x67, 0x43,
+	0x6c, 0x61, 0x69, 0x6d, 0x41, 0x6c, 0x6c, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x12, 0x17,
 	0x0a, 0x07, 0x7a, 0x6f, 0x6e, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x06, 0x7a, 0x6f, 0x6e, 0x65, 0x49, 0x64, 0x12, 0x3b, 0x0a, 0x0c, 0x66, 0x72, 0x6f, 0x6d, 0x5f,
 	0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x18, 0xd2,
 	0xb4, 0x2d, 0x14, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
 	0x73, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x52, 0x0b, 0x66, 0x72, 0x6f, 0x6d, 0x41, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x22, 0x36, 0x0a, 0x1a, 0x4d, 0x73, 0x67, 0x41, 0x6c, 0x6c, 0x43, 0x6c,
-	0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x72, 0x65, 0x73, 0x73, 0x22, 0x36, 0x0a, 0x1a, 0x4d, 0x73, 0x67, 0x43, 0x6c, 0x61, 0x69, 0x6d,
+	0x41, 0x6c, 0x6c, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6c, 0x61, 0x69, 0x6d, 0x65, 0x72, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6c, 0x61, 0x69, 0x6d, 0x65, 0x72, 0x22, 0xcc, 0x02, 0x0a,
 	0x0e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12,
@@ -9847,12 +9847,12 @@ var file_nova_gal_v1_tx_proto_rawDesc = []byte{
 	0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65,
 	0x74, 0x1a, 0x24, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e,
 	0x4d, 0x73, 0x67, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5b, 0x0a, 0x0f, 0x41, 0x6c, 0x6c, 0x43, 0x6c,
-	0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x12, 0x1f, 0x2e, 0x6e, 0x6f, 0x76,
-	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x6c, 0x6c, 0x43,
-	0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x1a, 0x27, 0x2e, 0x6e, 0x6f,
-	0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x6c, 0x6c,
-	0x43, 0x6c, 0x61, 0x69, 0x6d, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5b, 0x0a, 0x0f, 0x43, 0x6c, 0x61, 0x69, 0x6d,
+	0x41, 0x6c, 0x6c, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x12, 0x1f, 0x2e, 0x6e, 0x6f, 0x76,
+	0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x6c, 0x61, 0x69,
+	0x6d, 0x41, 0x6c, 0x6c, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x1a, 0x27, 0x2e, 0x6e, 0x6f,
+	0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x6c, 0x61,
+	0x69, 0x6d, 0x41, 0x6c, 0x6c, 0x53, 0x6e, 0x41, 0x73, 0x73, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4f, 0x0a, 0x0b, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68, 0x64,
 	0x72, 0x61, 0x77, 0x12, 0x1b, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x67, 0x61, 0x6c, 0x2e, 0x76,
 	0x31, 0x2e, 0x4d, 0x73, 0x67, 0x49, 0x63, 0x61, 0x57, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77,
@@ -9897,8 +9897,8 @@ var file_nova_gal_v1_tx_proto_goTypes = []interface{}{
 	(*MsgWithdrawResponse)(nil),          // 9: nova.gal.v1.MsgWithdrawResponse
 	(*MsgClaimSnAsset)(nil),              // 10: nova.gal.v1.MsgClaimSnAsset
 	(*MsgClaimSnAssetResponse)(nil),      // 11: nova.gal.v1.MsgClaimSnAssetResponse
-	(*MsgAllClaimSnAsset)(nil),           // 12: nova.gal.v1.MsgAllClaimSnAsset
-	(*MsgAllClaimSnAssetResponse)(nil),   // 13: nova.gal.v1.MsgAllClaimSnAssetResponse
+	(*MsgClaimAllSnAsset)(nil),           // 12: nova.gal.v1.MsgClaimAllSnAsset
+	(*MsgClaimAllSnAssetResponse)(nil),   // 13: nova.gal.v1.MsgClaimAllSnAssetResponse
 	(*MsgIcaWithdraw)(nil),               // 14: nova.gal.v1.MsgIcaWithdraw
 	(*MsgIcaWithdrawResponse)(nil),       // 15: nova.gal.v1.MsgIcaWithdrawResponse
 	(*v1beta1.Coin)(nil),                 // 16: cosmos.base.v1beta1.Coin
@@ -9920,7 +9920,7 @@ var file_nova_gal_v1_tx_proto_depIdxs = []int32{
 	6,  // 12: nova.gal.v1.Msg.PendingUndelegate:input_type -> nova.gal.v1.MsgPendingUndelegate
 	8,  // 13: nova.gal.v1.Msg.Withdraw:input_type -> nova.gal.v1.MsgWithdraw
 	10, // 14: nova.gal.v1.Msg.ClaimSnAsset:input_type -> nova.gal.v1.MsgClaimSnAsset
-	12, // 15: nova.gal.v1.Msg.AllClaimSnAsset:input_type -> nova.gal.v1.MsgAllClaimSnAsset
+	12, // 15: nova.gal.v1.Msg.ClaimAllSnAsset:input_type -> nova.gal.v1.MsgClaimAllSnAsset
 	14, // 16: nova.gal.v1.Msg.IcaWithdraw:input_type -> nova.gal.v1.MsgIcaWithdraw
 	1,  // 17: nova.gal.v1.Msg.Deposit:output_type -> nova.gal.v1.MsgDepositResponse
 	3,  // 18: nova.gal.v1.Msg.Delegate:output_type -> nova.gal.v1.MsgDelegateResponse
@@ -9928,7 +9928,7 @@ var file_nova_gal_v1_tx_proto_depIdxs = []int32{
 	7,  // 20: nova.gal.v1.Msg.PendingUndelegate:output_type -> nova.gal.v1.MsgPendingUndelegateResponse
 	9,  // 21: nova.gal.v1.Msg.Withdraw:output_type -> nova.gal.v1.MsgWithdrawResponse
 	11, // 22: nova.gal.v1.Msg.ClaimSnAsset:output_type -> nova.gal.v1.MsgClaimSnAssetResponse
-	13, // 23: nova.gal.v1.Msg.AllClaimSnAsset:output_type -> nova.gal.v1.MsgAllClaimSnAssetResponse
+	13, // 23: nova.gal.v1.Msg.ClaimAllSnAsset:output_type -> nova.gal.v1.MsgClaimAllSnAssetResponse
 	15, // 24: nova.gal.v1.Msg.IcaWithdraw:output_type -> nova.gal.v1.MsgIcaWithdrawResponse
 	17, // [17:25] is the sub-list for method output_type
 	9,  // [9:17] is the sub-list for method input_type
@@ -10088,7 +10088,7 @@ func file_nova_gal_v1_tx_proto_init() {
 			}
 		}
 		file_nova_gal_v1_tx_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgAllClaimSnAsset); i {
+			switch v := v.(*MsgClaimAllSnAsset); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10100,7 +10100,7 @@ func file_nova_gal_v1_tx_proto_init() {
 			}
 		}
 		file_nova_gal_v1_tx_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MsgAllClaimSnAssetResponse); i {
+			switch v := v.(*MsgClaimAllSnAssetResponse); i {
 			case 0:
 				return &v.state
 			case 1:
