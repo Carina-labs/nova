@@ -572,7 +572,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 	}, nil
 }
 
-func (m msgServer) AllClaimSnAsset(goCtx context.Context, msg *types.MsgAllClaimSnAsset) (*types.MsgAllClaimSnAssetResponse, error) {
+func (m msgServer) ClaimAllSnAsset(goCtx context.Context, msg *types.MsgClaimAllSnAsset) (*types.MsgClaimAllSnAssetResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, msg.ZoneId)
@@ -600,5 +600,5 @@ func (m msgServer) AllClaimSnAsset(goCtx context.Context, msg *types.MsgAllClaim
 		m.keeper.DeleteDelegateRecords(ctx, &record.delegateRecord, oracleVersion)
 	}
 
-	return &types.MsgAllClaimSnAssetResponse{Claimer: msg.FromAddress}, nil
+	return &types.MsgClaimAllSnAssetResponse{Claimer: msg.FromAddress}, nil
 }

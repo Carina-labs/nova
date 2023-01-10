@@ -28,7 +28,7 @@ type MsgClient interface {
 	PendingUndelegate(ctx context.Context, in *MsgPendingUndelegate, opts ...grpc.CallOption) (*MsgPendingUndelegateResponse, error)
 	Withdraw(ctx context.Context, in *MsgWithdraw, opts ...grpc.CallOption) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts ...grpc.CallOption) (*MsgClaimSnAssetResponse, error)
-	AllClaimSnAsset(ctx context.Context, in *MsgAllClaimSnAsset, opts ...grpc.CallOption) (*MsgAllClaimSnAssetResponse, error)
+	ClaimAllSnAsset(ctx context.Context, in *MsgClaimAllSnAsset, opts ...grpc.CallOption) (*MsgClaimAllSnAssetResponse, error)
 	IcaWithdraw(ctx context.Context, in *MsgIcaWithdraw, opts ...grpc.CallOption) (*MsgIcaWithdrawResponse, error)
 }
 
@@ -94,9 +94,9 @@ func (c *msgClient) ClaimSnAsset(ctx context.Context, in *MsgClaimSnAsset, opts 
 	return out, nil
 }
 
-func (c *msgClient) AllClaimSnAsset(ctx context.Context, in *MsgAllClaimSnAsset, opts ...grpc.CallOption) (*MsgAllClaimSnAssetResponse, error) {
-	out := new(MsgAllClaimSnAssetResponse)
-	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/AllClaimSnAsset", in, out, opts...)
+func (c *msgClient) ClaimAllSnAsset(ctx context.Context, in *MsgClaimAllSnAsset, opts ...grpc.CallOption) (*MsgClaimAllSnAssetResponse, error) {
+	out := new(MsgClaimAllSnAssetResponse)
+	err := c.cc.Invoke(ctx, "/nova.gal.v1.Msg/ClaimAllSnAsset", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ type MsgServer interface {
 	PendingUndelegate(context.Context, *MsgPendingUndelegate) (*MsgPendingUndelegateResponse, error)
 	Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error)
 	ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error)
-	AllClaimSnAsset(context.Context, *MsgAllClaimSnAsset) (*MsgAllClaimSnAssetResponse, error)
+	ClaimAllSnAsset(context.Context, *MsgClaimAllSnAsset) (*MsgClaimAllSnAssetResponse, error)
 	IcaWithdraw(context.Context, *MsgIcaWithdraw) (*MsgIcaWithdrawResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
@@ -149,8 +149,8 @@ func (UnimplementedMsgServer) Withdraw(context.Context, *MsgWithdraw) (*MsgWithd
 func (UnimplementedMsgServer) ClaimSnAsset(context.Context, *MsgClaimSnAsset) (*MsgClaimSnAssetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClaimSnAsset not implemented")
 }
-func (UnimplementedMsgServer) AllClaimSnAsset(context.Context, *MsgAllClaimSnAsset) (*MsgAllClaimSnAssetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AllClaimSnAsset not implemented")
+func (UnimplementedMsgServer) ClaimAllSnAsset(context.Context, *MsgClaimAllSnAsset) (*MsgClaimAllSnAssetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClaimAllSnAsset not implemented")
 }
 func (UnimplementedMsgServer) IcaWithdraw(context.Context, *MsgIcaWithdraw) (*MsgIcaWithdrawResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IcaWithdraw not implemented")
@@ -276,20 +276,20 @@ func _Msg_ClaimSnAsset_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_AllClaimSnAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgAllClaimSnAsset)
+func _Msg_ClaimAllSnAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgClaimAllSnAsset)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).AllClaimSnAsset(ctx, in)
+		return srv.(MsgServer).ClaimAllSnAsset(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.gal.v1.Msg/AllClaimSnAsset",
+		FullMethod: "/nova.gal.v1.Msg/ClaimAllSnAsset",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).AllClaimSnAsset(ctx, req.(*MsgAllClaimSnAsset))
+		return srv.(MsgServer).ClaimAllSnAsset(ctx, req.(*MsgClaimAllSnAsset))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -344,8 +344,8 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_ClaimSnAsset_Handler,
 		},
 		{
-			MethodName: "AllClaimSnAsset",
-			Handler:    _Msg_AllClaimSnAsset_Handler,
+			MethodName: "ClaimAllSnAsset",
+			Handler:    _Msg_ClaimAllSnAsset_Handler,
 		},
 		{
 			MethodName: "IcaWithdraw",

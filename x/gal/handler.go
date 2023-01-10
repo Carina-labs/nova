@@ -36,8 +36,8 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgClaimSnAsset:
 			res, err := msgServer.ClaimSnAsset(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgAllClaimSnAsset:
-			res, err := msgServer.AllClaimSnAsset(sdk.WrapSDKContext(ctx), msg)
+		case *types.MsgClaimAllSnAsset:
+			res, err := msgServer.ClaimAllSnAsset(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 
 		default:

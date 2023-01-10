@@ -25,7 +25,7 @@ var _ sdk.Msg = &MsgUndelegate{}
 var _ sdk.Msg = &MsgPendingUndelegate{}
 var _ sdk.Msg = &MsgWithdraw{}
 var _ sdk.Msg = &MsgClaimSnAsset{}
-var _ sdk.Msg = &MsgAllClaimSnAsset{}
+var _ sdk.Msg = &MsgClaimAllSnAsset{}
 var _ sdk.Msg = &MsgIcaWithdraw{}
 
 func NewMsgDeposit(zoneId string, depositor, claimer sdk.AccAddress, amount sdk.Coin, timeoutTimestamp uint64) *MsgDeposit {
@@ -300,22 +300,22 @@ func (msg MsgClaimSnAsset) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{claimer}
 }
 
-func NewMsgAllClaimSnAsset(zoneId string, fromAddress sdk.AccAddress) *MsgAllClaimSnAsset {
-	return &MsgAllClaimSnAsset{
+func NewMsgClaimAllSnAsset(zoneId string, fromAddress sdk.AccAddress) *MsgClaimAllSnAsset {
+	return &MsgClaimAllSnAsset{
 		ZoneId:      zoneId,
 		FromAddress: fromAddress.String(),
 	}
 }
 
-func (msg MsgAllClaimSnAsset) Route() string {
+func (msg MsgClaimAllSnAsset) Route() string {
 	return RouterKey
 }
 
-func (msg MsgAllClaimSnAsset) Type() string {
+func (msg MsgClaimAllSnAsset) Type() string {
 	return TypeMsgClaim
 }
 
-func (msg MsgAllClaimSnAsset) ValidateBasic() error {
+func (msg MsgClaimAllSnAsset) ValidateBasic() error {
 	if _, err := sdk.AccAddressFromBech32(msg.FromAddress); err != nil {
 		return err
 	}
@@ -327,11 +327,11 @@ func (msg MsgAllClaimSnAsset) ValidateBasic() error {
 	return nil
 }
 
-func (msg MsgAllClaimSnAsset) GetSignBytes() []byte {
+func (msg MsgClaimAllSnAsset) GetSignBytes() []byte {
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(&msg))
 }
 
-func (msg MsgAllClaimSnAsset) GetSigners() []sdk.AccAddress {
+func (msg MsgClaimAllSnAsset) GetSigners() []sdk.AccAddress {
 	claimer, _ := sdk.AccAddressFromBech32(msg.FromAddress)
 	return []sdk.AccAddress{claimer}
 }

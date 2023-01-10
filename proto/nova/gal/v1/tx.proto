@@ -17,7 +17,7 @@ service Msg {
   rpc PendingUndelegate(MsgPendingUndelegate) returns (MsgPendingUndelegateResponse);
   rpc Withdraw(MsgWithdraw) returns (MsgWithdrawResponse);
   rpc ClaimSnAsset(MsgClaimSnAsset) returns (MsgClaimSnAssetResponse);
-  rpc AllClaimSnAsset(MsgAllClaimSnAsset) returns (MsgAllClaimSnAssetResponse);
+  rpc ClaimAllSnAsset(MsgClaimAllSnAsset) returns (MsgClaimAllSnAssetResponse);
   rpc IcaWithdraw(MsgIcaWithdraw) returns (MsgIcaWithdrawResponse);
 }
 
@@ -100,12 +100,12 @@ message MsgClaimSnAssetResponse {
 }
 
 // MsgClaim defines claim msg used when user want to claim their st token.
-message MsgAllClaimSnAsset {
+message MsgClaimAllSnAsset {
   string zone_id = 1;
   string from_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
-message MsgAllClaimSnAssetResponse {
+message MsgClaimAllSnAssetResponse {
   string claimer = 1;
 }
 

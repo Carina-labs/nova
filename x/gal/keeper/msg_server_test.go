@@ -2016,7 +2016,7 @@ func (suite *KeeperTestSuite) TestClaimSnAsset() {
 	}
 }
 
-func (suite *KeeperTestSuite) TestAllClaimSnAsset() {
+func (suite *KeeperTestSuite) TestClaimAllSnAsset() {
 	fromAddr := suite.GenRandomAddress()
 	claimer1 := suite.GenRandomAddress()
 	claimer2 := suite.GenRandomAddress()
@@ -2030,7 +2030,7 @@ func (suite *KeeperTestSuite) TestAllClaimSnAsset() {
 		zoneId          string
 		fromAddr        sdk.AccAddress
 		delegateRecords []*types.DelegateRecord
-		msg             types.MsgAllClaimSnAsset
+		msg             types.MsgClaimAllSnAsset
 		denom           string
 		oracleVersion   uint64
 		oracleAmount    sdk.Int
@@ -2109,7 +2109,7 @@ func (suite *KeeperTestSuite) TestAllClaimSnAsset() {
 					},
 				},
 			},
-			msg: types.MsgAllClaimSnAsset{
+			msg: types.MsgClaimAllSnAsset{
 				ZoneId:      zoneId,
 				FromAddress: fromAddr.String(),
 			},
@@ -2204,7 +2204,7 @@ func (suite *KeeperTestSuite) TestAllClaimSnAsset() {
 					},
 				},
 			},
-			msg: types.MsgAllClaimSnAsset{
+			msg: types.MsgClaimAllSnAsset{
 				ZoneId:      zoneId,
 				FromAddress: fromAddr.String(),
 			},
@@ -2220,7 +2220,7 @@ func (suite *KeeperTestSuite) TestAllClaimSnAsset() {
 			zoneId:          zoneId,
 			fromAddr:        fromAddr,
 			delegateRecords: []*types.DelegateRecord{},
-			msg: types.MsgAllClaimSnAsset{
+			msg: types.MsgClaimAllSnAsset{
 				ZoneId:      zoneId,
 				FromAddress: fromAddr.String(),
 			},
@@ -2265,7 +2265,7 @@ func (suite *KeeperTestSuite) TestAllClaimSnAsset() {
 			suite.chainA.GetApp().GalKeeper.SetAssetInfo(suite.chainA.GetContext(), res)
 
 			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
-			_, err := msgServer.AllClaimSnAsset(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
+			_, err := msgServer.ClaimAllSnAsset(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
 
 			if tc.err {
 				suite.Require().Error(err)
