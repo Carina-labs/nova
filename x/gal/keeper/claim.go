@@ -28,6 +28,13 @@ func init() {
 	}
 }
 
+type ClaimRecord struct {
+	claimer         sdk.AccAddress
+	depositAmount   sdk.Coin
+	claimableAmount sdk.Coin
+	delegateRecord  types.DelegateRecord
+}
+
 func precisionMultiplier(prec int64) (*big.Int, error) {
 	if prec > snAssetDecimal {
 		return nil, fmt.Errorf("too much precision, maximum %v, provided %v", snAssetDecimal, prec)
@@ -78,6 +85,42 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.Register
 	k.SetAssetInfo(ctx, assetInfo)
 
 	return &sdk.Coin{Denom: snDenom, Amount: sdk.NewIntFromBigInt(mintAmt)}, nil
+}
+
+func (k Keeper) AllClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.RegisteredZone, records []*ClaimRecord) ([]*ClaimRecord, error) {
+	assetInfo := k.GetAssetInfoForZoneId(ctx, zone.ZoneId)
+	totalMintedAmount := sdk.NewInt(0)
+	for _, record := range records {
+		snDenom, err := k.GetSnDenomForIBCDenom(ctx, record.depositAmount.Denom)
+		if err != nil {
+			return nil, err
+		}
+
+		baseDenom := k.icaControlKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
+		totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
+		totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, *assetInfo)
+		if err != nil {
+			return nil, err
+		}
+
+		snAsset, err := k.ConvertWAssetToSnAssetDecimal(record.depositAmount.Amount.BigInt(), zone.Decimal, snDenom)
+		if err != nil {
+			return nil, err
+		}
+
+		convertTotalStakedAmount, err := k.ConvertWAssetToSnAssetDecimal(totalStakedAmount.BigInt(), zone.Decimal, baseDenom)
+		if err != nil {
+			return nil, err
+		}
+
+		mintAmt := k.CalculateDepositAlpha(snAsset.Amount.BigInt(), totalSnSupply.Amount.BigInt(), convertTotalStakedAmount.Amount.BigInt())
+		record.claimableAmount = sdk.NewCoin(snDenom, sdk.NewIntFromBigInt(mintAmt))
+		totalMintedAmount = totalMintedAmount.Add(record.depositAmount.Amount)
+	}
+
+	assetInfo.UnMintedWAsset = assetInfo.UnMintedWAsset.Sub(totalMintedAmount)
+	k.SetAssetInfo(ctx, assetInfo)
+	return records, nil
 }
 
 // MintTo mints sn-asset(share token) regard with deposited token to claimer.

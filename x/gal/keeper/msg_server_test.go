@@ -1852,7 +1852,6 @@ func (suite *KeeperTestSuite) TestWithdraw() {
 					suite.Require().Equal(tc.result[i], result)
 				}
 			}
-
 		})
 	}
 }
@@ -2014,5 +2013,273 @@ func (suite *KeeperTestSuite) TestClaimSnAsset() {
 
 			suite.Require().Equal(tc.result, result)
 		}
+	}
+}
+
+func (suite *KeeperTestSuite) TestAllClaimSnAsset() {
+	fromAddr := suite.GenRandomAddress()
+	claimer1 := suite.GenRandomAddress()
+	claimer2 := suite.GenRandomAddress()
+	claimer3 := suite.GenRandomAddress()
+	claimer4 := suite.GenRandomAddress()
+	claimer5 := suite.GenRandomAddress()
+	baseIbcDenom := suite.chainA.App.IcaControlKeeper.GetIBCHashDenom(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, baseDenom)
+
+	tcs := []struct {
+		name            string
+		zoneId          string
+		fromAddr        sdk.AccAddress
+		delegateRecords []*types.DelegateRecord
+		msg             types.MsgAllClaimSnAsset
+		denom           string
+		oracleVersion   uint64
+		oracleAmount    sdk.Int
+		resultAmount    []*sdk.Coin
+		recordResult    []bool
+		err             bool
+	}{
+		{
+			name:     "success",
+			zoneId:   zoneId,
+			fromAddr: fromAddr,
+			delegateRecords: []*types.DelegateRecord{
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer1.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(1000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer2.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(1200)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer3.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(1000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+						2: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(5000)},
+							State:         types.DelegateRequest,
+							OracleVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer4.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(2000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+						2: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(5000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 2,
+						},
+					},
+				},
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer5.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(3000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+					},
+				},
+			},
+			msg: types.MsgAllClaimSnAsset{
+				ZoneId:      zoneId,
+				FromAddress: fromAddr.String(),
+			},
+			denom:         baseDenom,
+			oracleVersion: 2,
+			oracleAmount:  sdk.NewInt(82000),
+			resultAmount: []*sdk.Coin{
+				{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(1000, 18),
+				},
+				{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(1200, 18),
+				},
+				{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(1000, 18),
+				},
+				{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(2000, 18),
+				},
+				{
+					Denom:  baseSnDenom,
+					Amount: sdk.NewIntWithDecimal(3000, 18),
+				},
+			},
+			recordResult: []bool{
+				false, false, true, true, false,
+			},
+			err: false,
+		},
+		{
+			name:     "fail case 1 - claimable amount is zero",
+			zoneId:   zoneId,
+			fromAddr: fromAddr,
+			delegateRecords: []*types.DelegateRecord{
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer1.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(1000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer2.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(1200)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer3.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(1000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer4.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(2000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+					},
+				},
+				{
+					ZoneId:  zoneId,
+					Claimer: claimer5.String(),
+					Records: map[uint64]*types.DelegateRecordContent{
+						1: {
+							Amount:        &sdk.Coin{Denom: baseIbcDenom, Amount: sdk.NewInt(3000)},
+							State:         types.DelegateSuccess,
+							OracleVersion: 1,
+						},
+					},
+				},
+			},
+			msg: types.MsgAllClaimSnAsset{
+				ZoneId:      zoneId,
+				FromAddress: fromAddr.String(),
+			},
+			denom:         baseDenom,
+			oracleVersion: 1,
+			oracleAmount:  sdk.NewInt(82000),
+			resultAmount:  []*sdk.Coin{},
+			recordResult:  []bool{},
+			err:           true,
+		},
+		{
+			name:            "fail case 2 - delegate record not exist",
+			zoneId:          zoneId,
+			fromAddr:        fromAddr,
+			delegateRecords: []*types.DelegateRecord{},
+			msg: types.MsgAllClaimSnAsset{
+				ZoneId:      zoneId,
+				FromAddress: fromAddr.String(),
+			},
+			denom:         baseDenom,
+			oracleVersion: 1,
+			oracleAmount:  sdk.NewInt(82000),
+			resultAmount:  []*sdk.Coin{},
+			recordResult:  []bool{},
+			err:           true,
+		},
+	}
+
+	for _, tc := range tcs {
+		suite.Run(tc.name, func() {
+			suite.InitICA()
+			suite.setDenomTrace(suite.transferPath.EndpointA.ChannelConfig.PortID, suite.transferPath.EndpointA.ChannelID, tc.denom)
+
+			//set oracle info
+			chainInfo := oracletypes.ChainInfo{
+				ZoneId:          tc.zoneId,
+				OperatorAddress: baseOwnerAcc.String(),
+				Coin:            sdk.NewCoin(tc.denom, tc.oracleAmount),
+			}
+			suite.chainA.GetApp().OracleKeeper.UpdateChainState(suite.chainA.GetContext(), &chainInfo)
+
+			//set oracle version
+			trace := oracletypes.IBCTrace{
+				Version: tc.oracleVersion,
+				Height:  uint64(suite.chainA.GetContext().BlockHeight()),
+			}
+			suite.chainA.GetApp().OracleKeeper.SetOracleVersion(suite.chainA.GetContext(), tc.zoneId, trace)
+
+			// set unminted asset info
+			res := &types.AssetInfo{
+				ZoneId:         tc.zoneId,
+				UnMintedWAsset: sdk.NewInt(0),
+			}
+
+			for _, record := range tc.delegateRecords {
+				suite.chainA.GetApp().GalKeeper.SetDelegateRecord(suite.chainA.GetContext(), record)
+			}
+			suite.chainA.GetApp().GalKeeper.SetAssetInfo(suite.chainA.GetContext(), res)
+
+			msgServer := keeper.NewMsgServerImpl(suite.chainA.App.GalKeeper)
+			_, err := msgServer.AllClaimSnAsset(sdk.WrapSDKContext(suite.chainA.GetContext()), &tc.msg)
+
+			if tc.err {
+				suite.Require().Error(err)
+			} else {
+				suite.Require().NoError(err)
+				for i, record := range tc.delegateRecords {
+					claimer, _ := sdk.AccAddressFromBech32(record.Claimer)
+					result := suite.chainA.GetApp().BankKeeper.GetBalance(suite.chainA.GetContext(), claimer, baseSnDenom)
+					suite.Require().Equal(*tc.resultAmount[i], result)
+
+					_, found := suite.chainA.GetApp().GalKeeper.GetUserDelegateRecord(suite.chainA.GetContext(), tc.zoneId, claimer)
+					suite.Require().Equal(tc.recordResult[i], found)
+				}
+			}
+		})
 	}
 }
