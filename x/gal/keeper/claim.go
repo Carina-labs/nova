@@ -62,7 +62,6 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.Register
 	}
 
 	assetInfo := k.GetAssetInfoForZoneId(ctx, zone.ZoneId)
-
 	baseDenom := k.icaControlKeeper.GetBaseDenomForSnDenom(ctx, snDenom)
 	totalSnSupply := k.bankKeeper.GetSupply(ctx, snDenom)
 	totalStakedAmount, err := k.GetTotalStakedForLazyMinting(ctx, baseDenom, zone.TransferInfo.PortId, zone.TransferInfo.ChannelId, *assetInfo)
@@ -87,7 +86,7 @@ func (k Keeper) ClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.Register
 	return &sdk.Coin{Denom: snDenom, Amount: sdk.NewIntFromBigInt(mintAmt)}, nil
 }
 
-func (k Keeper) AllClaimShareToken(ctx sdk.Context, zone *icacontrolkeeper.RegisteredZone, records []*ClaimRecord) ([]*ClaimRecord, error) {
+func (k Keeper) ClaimAllShareToken(ctx sdk.Context, zone *icacontrolkeeper.RegisteredZone, records []*ClaimRecord) ([]*ClaimRecord, error) {
 	assetInfo := k.GetAssetInfoForZoneId(ctx, zone.ZoneId)
 	totalMintedAmount := sdk.NewInt(0)
 	for _, record := range records {
