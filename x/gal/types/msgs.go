@@ -233,8 +233,8 @@ func (msg MsgWithdraw) Type() string {
 }
 
 func (msg MsgWithdraw) ValidateBasic() error {
-	if _, err := sdk.AccAddressFromBech32(msg.Withdrawer); err != nil {
-		return sdkerrors.Wrap(types.ErrInvalidAddress, msg.Withdrawer)
+	if _, err := sdk.AccAddressFromBech32(msg.FromAddress); err != nil {
+		return sdkerrors.Wrap(types.ErrInvalidAddress, msg.FromAddress)
 	}
 
 	if msg.ZoneId == "" {
@@ -254,7 +254,7 @@ func (msg MsgWithdraw) GetSignBytes() []byte {
 }
 
 func (msg MsgWithdraw) GetSigners() []sdk.AccAddress {
-	withdrawer, _ := sdk.AccAddressFromBech32(msg.Withdrawer)
+	withdrawer, _ := sdk.AccAddressFromBech32(msg.FromAddress)
 	return []sdk.AccAddress{withdrawer}
 }
 
@@ -275,7 +275,7 @@ func (msg MsgClaimSnAsset) Type() string {
 }
 
 func (msg MsgClaimSnAsset) ValidateBasic() error {
-	if _, err := sdk.AccAddressFromBech32(msg.Claimer); err != nil {
+	if _, err := sdk.AccAddressFromBech32(msg.FromAddress); err != nil {
 		return err
 	}
 
@@ -296,8 +296,8 @@ func (msg MsgClaimSnAsset) GetSignBytes() []byte {
 }
 
 func (msg MsgClaimSnAsset) GetSigners() []sdk.AccAddress {
-	claimer, _ := sdk.AccAddressFromBech32(msg.Claimer)
-	return []sdk.AccAddress{claimer}
+	fromAddr, _ := sdk.AccAddressFromBech32(msg.FromAddress)
+	return []sdk.AccAddress{fromAddr}
 }
 
 func NewMsgClaimAllSnAsset(zoneId string, fromAddress sdk.AccAddress) *MsgClaimAllSnAsset {
