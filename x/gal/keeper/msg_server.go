@@ -588,7 +588,7 @@ func (m msgServer) ClaimAllSnAsset(goCtx context.Context, msg *types.MsgClaimAll
 		return nil, fmt.Errorf("claimable amount is zero")
 	}
 
-	claimRecords, err := m.keeper.AllClaimShareToken(ctx, &zoneInfo, records)
+	claimRecords, err := m.keeper.ClaimAllShareToken(ctx, &zoneInfo, records)
 	if err != nil {
 		return nil, err
 	}
