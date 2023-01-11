@@ -161,7 +161,6 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 		return
 	}
 	currentVersion := versionInfo.CurrentVersion
-
 	ctx.Logger().Info("AfterDelegateEnd", "zone_id", zoneInfo.ZoneId, "delegate_current_version", versionInfo.CurrentVersion, "version_state", versionInfo.Record[currentVersion].State)
 
 	// change delegate state (DELEGATE_REQUEST -> DELEGATE_SUCCESS)
@@ -171,11 +170,14 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	// change unminted wAsset
 	assetInfo := h.k.GetAssetInfoForZoneId(ctx, zoneInfo.ZoneId)
 	if assetInfo == nil {
-		ctx.Logger().Error("AfterDelegateEnd", "asset_info", "nil")
-		return
+		var newAssetInfo types.AssetInfo
+		newAssetInfo.ZoneId = zoneInfo.ZoneId
+		newAssetInfo.UnMintedWAsset = sdk.NewInt(delegateMsg.Amount.Amount.Int64())
+		h.k.SetAssetInfo(ctx, &newAssetInfo)
+	} else {
+		assetInfo.UnMintedWAsset = assetInfo.UnMintedWAsset.Add(delegateMsg.Amount.Amount)
+		h.k.SetAssetInfo(ctx, assetInfo)
 	}
-	assetInfo.UnMintedWAsset = assetInfo.UnMintedWAsset.Add(delegateMsg.Amount.Amount)
-	h.k.SetAssetInfo(ctx, assetInfo)
 
 	versionInfo.Record[currentVersion] = &types.IBCTrace{
 		Height: uint64(ctx.BlockHeight()),
@@ -197,7 +199,6 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 // 2. It saves undelegation finish time to store.
 func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.MsgUndelegate, msg *stakingtypes.MsgUndelegateResponse) {
 	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterUndelegateEnd")
-
 	// get zone info from the validator address
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
 	if zoneInfo == nil {
@@ -206,10 +207,6 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	}
 
 	versionInfo := h.k.GetUndelegateVersion(ctx, zoneInfo.ZoneId)
-	if versionInfo.Size() == 0 {
-		ctx.Logger().Error("Zone id is not found", "version_info", "nil")
-		return
-	}
 	currentVersion := versionInfo.CurrentVersion
 	h.k.SetUndelegateRecordVersion(ctx, zoneInfo.ZoneId, types.UndelegateRequestByIca, currentVersion)
 	h.k.SetWithdrawRecords(ctx, zoneInfo.ZoneId, msg.CompletionTime)
