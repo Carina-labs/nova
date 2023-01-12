@@ -1,9 +1,14 @@
 package cli
 
 import (
+	"errors"
 	"fmt"
+	"github.com/cosmos/cosmos-sdk/types/bech32"
+
+	//"github.com/cosmos/cosmos-sdk/types/bech32"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"strconv"
+	"strings"
 
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -372,13 +377,12 @@ func txAuthzGrantTxCmd() *cobra.Command {
 				if err != nil {
 					return err
 				}
-
 				denied, err := bech32toValidatorAddresses(denyValidators)
 				if err != nil {
 					return err
 				}
 
-				switch args[1] {
+				switch args[2] {
 				case delegate:
 					authorization, err = staking.NewStakeAuthorization(allowed, denied, staking.AuthorizationType_AUTHORIZATION_TYPE_DELEGATE, delegateLimit)
 				case unbond:
@@ -389,9 +393,10 @@ func txAuthzGrantTxCmd() *cobra.Command {
 				if err != nil {
 					return err
 				}
+				fmt.Println(allowed[0].String())
 
 			default:
-				return fmt.Errorf("invalid authorization type, %s", args[1])
+				return fmt.Errorf("invalid authorization type, %s", args[2])
 			}
 
 			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
@@ -539,11 +544,32 @@ func NewProposalZoneTxCmd() *cobra.Command {
 func bech32toValidatorAddresses(validators []string) ([]sdk.ValAddress, error) {
 	vals := make([]sdk.ValAddress, len(validators))
 	for i, validator := range validators {
-		addr, err := sdk.ValAddressFromBech32(validator)
+		//addr, err := sdk.ValAddressFromBech32(validator)
+		fmt.Println("bech32toValidatorAddresses : ", validator)
+		addr, err := ValAddressFromBech32(validator)
+		fmt.Println("bech32toValidatorAddresses : ", addr.String())
 		if err != nil {
 			return nil, err
 		}
 		vals[i] = addr
 	}
 	return vals, nil
+}
+
+func ValAddressFromBech32(address string) (addr sdk.ValAddress, err error) {
+	if len(strings.TrimSpace(address)) == 0 {
+		return sdk.ValAddress{}, errors.New("empty address string is not allowed")
+	}
+
+	_, bz, err := bech32.DecodeAndConvert(address)
+	if err != nil {
+		return nil, err
+	}
+
+	err = sdk.VerifyAddressFormat(bz)
+	if err != nil {
+		return nil, err
+	}
+
+	return bz, nil
 }
