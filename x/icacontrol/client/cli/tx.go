@@ -1,15 +1,7 @@
 package cli
 
 import (
-	"errors"
 	"fmt"
-	"github.com/cosmos/cosmos-sdk/types/bech32"
-
-	//"github.com/cosmos/cosmos-sdk/types/bech32"
-	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-	"strconv"
-	"strings"
-
 	"github.com/Carina-labs/nova/x/icacontrol/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -17,8 +9,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	bank "github.com/cosmos/cosmos-sdk/x/bank/types"
 	govcli "github.com/cosmos/cosmos-sdk/x/gov/client/cli"
+	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	staking "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/spf13/cobra"
+	"strconv"
 	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -34,7 +28,8 @@ const (
 	delegate                   = "delegate"
 	redelegate                 = "redelegate"
 	unbond                     = "unbond"
-	flagPacketTimeoutTimestamp = "packet-timeout-timestamp"
+	FlagPacketTimeoutTimestamp = "packet-timeout-timestamp"
+	FlagValidatorPrefix        = "validator-prefix"
 )
 
 // txRegisterZoneCmd is a transaction that registers new Zone information. This transaction can only be submitted by a given signatory.
@@ -178,7 +173,7 @@ func txDelegateTxCmd() *cobra.Command {
 				return err
 			}
 
-			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(FlagPacketTimeoutTimestamp)
 			if err != nil {
 				return err
 			}
@@ -189,7 +184,7 @@ func txDelegateTxCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(FlagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }
@@ -209,7 +204,7 @@ func txUndelegateTxCmd() *cobra.Command {
 			zoneId := args[0]
 			amount, _ := sdk.ParseCoinNormalized(args[1])
 
-			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(FlagPacketTimeoutTimestamp)
 			if err != nil {
 				return err
 			}
@@ -219,7 +214,7 @@ func txUndelegateTxCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(FlagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }
@@ -242,7 +237,7 @@ func txAutoStakingTxCmd() *cobra.Command {
 				return err
 			}
 
-			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(FlagPacketTimeoutTimestamp)
 			if err != nil {
 				return err
 			}
@@ -252,7 +247,7 @@ func txAutoStakingTxCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(FlagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }
@@ -279,7 +274,7 @@ func txTransferTxCmd() *cobra.Command {
 				return err
 			}
 
-			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(FlagPacketTimeoutTimestamp)
 			if err != nil {
 				return err
 			}
@@ -292,7 +287,7 @@ func txTransferTxCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(FlagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 
 	return cmd
 }
@@ -360,6 +355,11 @@ func txAuthzGrantTxCmd() *cobra.Command {
 					return err
 				}
 
+				validatorPrefix, err := cmd.Flags().GetString(FlagValidatorPrefix)
+				if err != nil {
+					return err
+				}
+
 				var delegateLimit *sdk.Coin
 				if limit != "" {
 					spendLimit, err := sdk.ParseCoinsNormalized(limit)
@@ -373,33 +373,33 @@ func txAuthzGrantTxCmd() *cobra.Command {
 					delegateLimit = &spendLimit[0]
 				}
 
-				allowed, err := bech32toValidatorAddresses(allowValidators)
+				allowed, err := bech32toValidatorAddresses(validatorPrefix, allowValidators)
 				if err != nil {
 					return err
 				}
-				denied, err := bech32toValidatorAddresses(denyValidators)
+				denied, err := bech32toValidatorAddresses(validatorPrefix, denyValidators)
 				if err != nil {
 					return err
 				}
 
 				switch args[2] {
 				case delegate:
-					authorization, err = staking.NewStakeAuthorization(allowed, denied, staking.AuthorizationType_AUTHORIZATION_TYPE_DELEGATE, delegateLimit)
+					authorization, err = NewStakeAuthorization(validatorPrefix, allowed, denied, staking.AuthorizationType_AUTHORIZATION_TYPE_DELEGATE, delegateLimit)
 				case unbond:
-					authorization, err = staking.NewStakeAuthorization(allowed, denied, staking.AuthorizationType_AUTHORIZATION_TYPE_UNDELEGATE, delegateLimit)
+					authorization, err = NewStakeAuthorization(validatorPrefix, allowed, denied, staking.AuthorizationType_AUTHORIZATION_TYPE_UNDELEGATE, delegateLimit)
 				default:
-					authorization, err = staking.NewStakeAuthorization(allowed, denied, staking.AuthorizationType_AUTHORIZATION_TYPE_REDELEGATE, delegateLimit)
+					authorization, err = NewStakeAuthorization(validatorPrefix, allowed, denied, staking.AuthorizationType_AUTHORIZATION_TYPE_REDELEGATE, delegateLimit)
 				}
 				if err != nil {
 					return err
 				}
-				fmt.Println(allowed[0].String())
+				fmt.Println("test", allowed[0].String())
 
 			default:
 				return fmt.Errorf("invalid authorization type, %s", args[2])
 			}
 
-			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(FlagPacketTimeoutTimestamp)
 			if err != nil {
 				return err
 			}
@@ -420,7 +420,8 @@ func txAuthzGrantTxCmd() *cobra.Command {
 	cmd.Flags().StringSlice(FlagDenyValidators, []string{}, "Deny validators addresses separated by ,")
 	cmd.Flags().StringSlice(FlagAllowList, []string{}, "Allowed addresses grantee is allowed to send funds separated by ,")
 	cmd.Flags().Int64(FlagExpiration, time.Now().AddDate(2, 0, 0).Unix(), "The Unix timestamp. Default is one year.")
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(FlagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().String(FlagValidatorPrefix, "", "Validator prefix value")
 	return cmd
 }
 
@@ -440,7 +441,7 @@ func txAuthzRevokeTxCmd() *cobra.Command {
 			msgType := args[2]
 			controllerAddr := clientCtx.GetFromAddress()
 
-			timeoutTimestamp, err := cmd.Flags().GetUint64(flagPacketTimeoutTimestamp)
+			timeoutTimestamp, err := cmd.Flags().GetUint64(FlagPacketTimeoutTimestamp)
 			if err != nil {
 				return err
 			}
@@ -455,7 +456,7 @@ func txAuthzRevokeTxCmd() *cobra.Command {
 		},
 	}
 	flags.AddTxFlagsToCmd(cmd)
-	cmd.Flags().Uint64(flagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
+	cmd.Flags().Uint64(FlagPacketTimeoutTimestamp, types.DefaultRelativePacketTimeoutTimestamp, "Packet timeout timestamp in nanoseconds from now. Default is 10 minutes. The timeout is disabled when set to 0.")
 	return cmd
 }
 
@@ -539,37 +540,4 @@ func NewProposalZoneTxCmd() *cobra.Command {
 	cmd.Flags().String(govcli.FlagDeposit, "", "deposit of proposal")
 
 	return cmd
-}
-
-func bech32toValidatorAddresses(validators []string) ([]sdk.ValAddress, error) {
-	vals := make([]sdk.ValAddress, len(validators))
-	for i, validator := range validators {
-		//addr, err := sdk.ValAddressFromBech32(validator)
-		fmt.Println("bech32toValidatorAddresses : ", validator)
-		addr, err := ValAddressFromBech32(validator)
-		fmt.Println("bech32toValidatorAddresses : ", addr.String())
-		if err != nil {
-			return nil, err
-		}
-		vals[i] = addr
-	}
-	return vals, nil
-}
-
-func ValAddressFromBech32(address string) (addr sdk.ValAddress, err error) {
-	if len(strings.TrimSpace(address)) == 0 {
-		return sdk.ValAddress{}, errors.New("empty address string is not allowed")
-	}
-
-	_, bz, err := bech32.DecodeAndConvert(address)
-	if err != nil {
-		return nil, err
-	}
-
-	err = sdk.VerifyAddressFormat(bz)
-	if err != nil {
-		return nil, err
-	}
-
-	return bz, nil
 }
