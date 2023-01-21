@@ -1,7 +1,10 @@
 package app
 
 import (
+	"github.com/Carina-labs/nova/app/upgrades"
+	champagne_v0_3_3 "github.com/Carina-labs/nova/app/upgrades/champagne-v0.3.3"
 	"github.com/Carina-labs/nova/x/poolincentive"
+	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	"io"
 	"net/http"
 	"os"
@@ -86,6 +89,8 @@ var (
 	// See: https://github.com/CosmWasm/wasmd/blob/02a54d33ff2c064f3539ae12d75d027d9c665f05/x/wasm/internal/types/proposal.go#L28-L34
 
 	EnableSpecificWasmProposals = ""
+
+	Upgrades = []upgrades.Upgrade{champagne_v0_3_3.Upgrade}
 )
 var (
 	// DefaultNodeHome default home directories for the application daemon
@@ -267,7 +272,8 @@ func NewNovaApp(
 
 	app.mm.RegisterInvariants(app.CrisisKeeper)
 	app.mm.RegisterRoutes(app.Router(), app.QueryRouter(), encodingConfig.Amino)
-	app.mm.RegisterServices(module.NewConfigurator(app.appCodec, app.MsgServiceRouter(), app.GRPCQueryRouter()))
+	cfg := module.NewConfigurator(app.appCodec, app.MsgServiceRouter(), app.GRPCQueryRouter())
+	app.mm.RegisterServices(cfg)
 
 	// create the simulation manager and define the order of the modules for deterministic simulations
 	app.sm = module.NewSimulationManager(
@@ -323,6 +329,9 @@ func NewNovaApp(
 
 	app.SetAnteHandler(anteHandler)
 	app.SetEndBlocker(app.EndBlocker)
+
+	app.setupUpgradeStoreLoaders()
+	app.setupUpgradeHandlers(cfg)
 
 	if loadLatest {
 		if err := app.LoadLatestVersion(); err != nil {
@@ -466,4 +475,37 @@ func RegisterSwaggerAPI(ctx client.Context, rtr *mux.Router) {
 	staticServer := http.FileServer(statikFS)
 	rtr.PathPrefix("/static/").Handler(http.StripPrefix("/static/", staticServer))
 	rtr.PathPrefix("/swagger/").Handler(staticServer)
+}
+
+// configure store loader that checks if version == upgradeHeight and applies store upgrades
+func (app *NovaApp) setupUpgradeStoreLoaders() {
+	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
+	if err != nil {
+		panic("failed to read upgrade info from disk" + err.Error())
+	}
+
+	if app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+		return
+	}
+
+	for _, upgrade := range Upgrades {
+		if upgradeInfo.Name == upgrade.UpgradeName {
+			app.SetStoreLoader(
+				upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &upgrade.StoreUpgrades),
+			)
+		}
+	}
+}
+
+func (app *NovaApp) setupUpgradeHandlers(cfg module.Configurator) {
+	for _, upgrade := range Upgrades {
+		app.UpgradeKeeper.SetUpgradeHandler(
+			upgrade.UpgradeName,
+			upgrade.CreateUpgradeHandler(
+				app.mm,
+				cfg,
+				&app.AppKeepers,
+			),
+		)
+	}
 }
