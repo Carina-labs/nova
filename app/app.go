@@ -2,7 +2,7 @@ package app
 
 import (
 	"github.com/Carina-labs/nova/app/upgrades"
-	champagne_v0_3_3 "github.com/Carina-labs/nova/app/upgrades/champagne-v0.3.3"
+	champagne_v0_0_3 "github.com/Carina-labs/nova/app/upgrades/champagne-v0.0.3"
 	"github.com/Carina-labs/nova/x/poolincentive"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
 	"io"
@@ -90,7 +90,7 @@ var (
 
 	EnableSpecificWasmProposals = ""
 
-	Upgrades = []upgrades.Upgrade{champagne_v0_3_3.Upgrade}
+	Upgrades = []upgrades.Upgrade{champagne_v0_0_3.Upgrade}
 )
 var (
 	// DefaultNodeHome default home directories for the application daemon
