@@ -67,7 +67,6 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 
 	// mint and send airdrop tokens to the user
 	airdropToken := sdk.NewCoin(info.AirdropDenom, amount)
-	err = m.keeper.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(airdropToken))
 	if err != nil {
 		m.keeper.Logger(ctx).Error("failed to mint token", "module", types.ModuleName, "token", airdropToken)
 		return nil, err

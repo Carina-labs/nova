@@ -8,23 +8,33 @@ import (
 )
 
 type Keeper struct {
-	cdc        codec.BinaryCodec
-	storeKey   sdk.StoreKey
-	bankKeeper types.BankKeeper
+	cdc           codec.BinaryCodec
+	storeKey      sdk.StoreKey
+	accountKeeper types.AccountKeeper
+	bankKeeper    types.BankKeeper
 }
 
 func NewKeeper(
 	cdc codec.BinaryCodec,
 	key sdk.StoreKey,
+	accountKeeper types.AccountKeeper,
 	bankKeeper types.BankKeeper,
 ) Keeper {
 	return Keeper{
-		cdc:        cdc,
-		storeKey:   key,
-		bankKeeper: bankKeeper,
+		cdc:           cdc,
+		storeKey:      key,
+		accountKeeper: accountKeeper,
+		bankKeeper:    bankKeeper,
 	}
 }
 
 func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 	return ctx.Logger().With("module", "x/"+types.ModuleName)
+}
+
+func (k Keeper) CreateModuleAccount(ctx sdk.Context, amount sdk.Coin) {
+	moduleAcc := k.accountKeeper.GetModuleAccount(ctx, types.ModuleName)
+	k.accountKeeper.SetModuleAccount(ctx, moduleAcc)
+
+	k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(amount))
 }
