@@ -7,6 +7,11 @@ import (
 )
 
 func (k Keeper) InitGenesis(ctx sdk.Context, genState *types.GenesisState) {
+
+	// Mint airdrop coin
+	airdropAmount := sdk.NewCoin(genState.AirdropInfo.AirdropDenom, genState.AirdropInfo.AirdropAmount)
+	k.CreateModuleAccount(ctx, airdropAmount)
+
 	// Set airdrop info
 	k.SetAirdropInfo(ctx, genState.AirdropInfo)
 

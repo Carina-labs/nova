@@ -35,17 +35,19 @@ message AirdropInfo {
     (gogoproto.nullable) = false
   ];
 
+  string airdrop_amount = 4[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+
   // The denom for the airdrop coin.
-  string airdrop_denom = 4;
+  string airdrop_denom = 5;
 
   // the number of quests user to do
-  int32 quests_count = 5;
+  int32 quests_count = 6;
 
   // controller address is responsible to check the user has performed the social quest (e.g. twitter, facebook or etc)
-  string controller_address = 6;
+  string controller_address = 7;
 
   // maximum token allocation for each user, an use cannot claim more than this amount;
-  string maximum_token_alloc_per_user = 7;
+  string maximum_token_alloc_per_user = 8;
 }
 
 enum QuestType {
