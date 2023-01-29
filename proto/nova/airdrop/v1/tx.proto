@@ -5,7 +5,6 @@ import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/msg/v1/msg.proto";
-
 import "nova/airdrop/v1/genesis.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/airdrop/types";
@@ -16,6 +15,8 @@ service Msg {
   rpc MarkSocialQuestPerformed(MsgMarkSocialQuestPerformedRequest) returns (MsgMarkSocialQuestPerformedResponse);
 
   rpc MarkUserProvidedLiquidity(MsgMarkUserProvidedLiquidityRequest) returns (MsgMarkUserProvidedLiquidityResponse);
+
+  rpc AirdropData(MsgAirdropDataRequest) returns (MsgAirdropDataResponse);
 }
 
 // MsgClaimAirdropRequest is an airdrop volume request message.
@@ -61,4 +62,15 @@ message MsgMarkUserProvidedLiquidityRequest {
 
 // MsgMarkUserProvidedLiquidityResponse is a response message for MsgMarkUserProvidedLiquidityRequest.
 message MsgMarkUserProvidedLiquidityResponse {
+}
+
+message MsgAirdropDataRequest{
+  option (cosmos.msg.v1.signer) = "controller_address";
+
+  repeated UserState states = 1;
+  string controller_address = 2;
+}
+
+message MsgAirdropDataResponse{
+
 }

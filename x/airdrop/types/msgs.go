@@ -8,6 +8,7 @@ import (
 var _ sdk.Msg = &MsgClaimAirdropRequest{}
 var _ sdk.Msg = &MsgMarkSocialQuestPerformedRequest{}
 var _ sdk.Msg = &MsgMarkUserProvidedLiquidityRequest{}
+var _ sdk.Msg = &MsgAirdropDataRequest{}
 
 func (m *MsgClaimAirdropRequest) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(m.UserAddress)
@@ -80,6 +81,28 @@ func (m *MsgMarkUserProvidedLiquidityRequest) ValidateBasic() error {
 }
 
 func (m *MsgMarkUserProvidedLiquidityRequest) GetSigners() []sdk.AccAddress {
+	controllerAddr, err := sdk.AccAddressFromBech32(m.ControllerAddress)
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{controllerAddr}
+}
+
+func (m *MsgAirdropDataRequest) ValidateBasic() error {
+	_, err := sdk.AccAddressFromBech32(m.ControllerAddress)
+	if err != nil {
+		return err
+	}
+
+	if len(m.States) == 0 {
+		return fmt.Errorf("user states cannot be nil")
+	}
+
+	return nil
+}
+
+func (m *MsgAirdropDataRequest) GetSigners() []sdk.AccAddress {
 	controllerAddr, err := sdk.AccAddressFromBech32(m.ControllerAddress)
 	if err != nil {
 		panic(err)

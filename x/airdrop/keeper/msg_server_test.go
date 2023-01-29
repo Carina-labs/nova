@@ -350,3 +350,78 @@ func (suite *KeeperTestSuite) TestMarkUserProvidedLiquidity() {
 		})
 	}
 }
+
+func (suite *KeeperTestSuite) TestAirdropData() {
+
+	tests := map[string]struct {
+		signer     sdk.AccAddress
+		userAddr   []sdk.AccAddress
+		userStates []*types.UserState
+		shouldErr  bool
+	}{
+		"only controller user can execute the airdrop data tx": {
+			signer: invalidUser,
+			userAddr: []sdk.AccAddress{
+				[]byte{0x01}, []byte{0x02},
+			},
+			userStates: []*types.UserState{
+				{
+					Recipient:   sdk.AccAddress{0x01}.String(),
+					TotalAmount: "100000000",
+				},
+				{
+					Recipient:   sdk.AccAddress{0x02}.String(),
+					TotalAmount: "200000000",
+				},
+			},
+			shouldErr: true,
+		},
+		"enter user states data": {
+			signer: controllerUser,
+			userAddr: []sdk.AccAddress{
+				[]byte{0x01}, []byte{0x02},
+			},
+			userStates: []*types.UserState{
+				{
+					Recipient:   sdk.AccAddress{0x01}.String(),
+					TotalAmount: "300000000",
+				},
+				{
+					Recipient:   sdk.AccAddress{0x02}.String(),
+					TotalAmount: "1200000000",
+				},
+			},
+			shouldErr: false,
+		},
+	}
+
+	for name, test := range tests {
+		suite.Run(name, func() {
+			suite.SetupTest()
+			airdropKeeper := suite.App.AirdropKeeper
+			msgServer := suite.msgServer
+			ctx := suite.Ctx
+
+			airdropKeeper.SetAirdropInfo(ctx, validAirdropInfo(ctx))
+
+			// send mark tx
+			msg := types.MsgAirdropDataRequest{
+				ControllerAddress: test.signer.String(),
+				States:            test.userStates,
+			}
+			_, err := msgServer.AirdropData(sdk.WrapSDKContext(suite.Ctx), &msg)
+			if test.shouldErr {
+				suite.Require().Error(err)
+				return
+			}
+
+			suite.Require().NoError(err)
+
+			for i, userAddr := range test.userAddr {
+				userState, err := airdropKeeper.GetUserState(ctx, userAddr)
+				suite.NoError(err)
+				suite.Require().EqualValues(userState, test.userStates[i])
+			}
+		})
+	}
+}
