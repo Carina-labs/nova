@@ -67,6 +67,7 @@ func (suite *KeeperTestSuite) TestMsgClaimAirdrop() {
 			user:      validUser,
 			questType: types.QuestType(keeper.QuestTypeSnAssetClaim),
 			before: func(ctx sdk.Context, k *keeper.Keeper) {
+				suite.App.BankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{sdk.NewCoin("unova", sdk.NewInt(20000000))})
 				k.SetAirdropInfo(ctx, validAirdropInfo(ctx))
 				userState := validUserState(ctx, validUser.String(), maxTotalAllocPerUser)
 				userState.QuestStates[keeper.QuestTypeSnAssetClaim].AchievedAt = ctx.BlockTime()
@@ -80,6 +81,7 @@ func (suite *KeeperTestSuite) TestMsgClaimAirdrop() {
 			user:      validUser,
 			questType: types.QuestType(keeper.QuestTypeSnAssetClaim),
 			before: func(ctx sdk.Context, k *keeper.Keeper) {
+				suite.App.BankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{sdk.NewCoin("unova", sdk.NewInt(20000000))})
 				k.SetAirdropInfo(ctx, validAirdropInfo(ctx))
 				userState := validUserState(ctx, validUser.String(), maxTotalAllocPerUser)
 				userState.QuestStates[keeper.QuestTypeSnAssetClaim].AchievedAt = ctx.BlockTime()
