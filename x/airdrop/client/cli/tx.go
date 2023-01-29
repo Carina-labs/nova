@@ -1,10 +1,7 @@
 package cli
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
-
 	"github.com/Carina-labs/nova/x/airdrop/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -98,30 +95,27 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 func txMarkSocialQuest() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "mark-social-quest [user-address]",
+		Use:   "mark-social-quest [user-address_csv_file]",
 		Short: "Mark that the user has completed social quest",
 		Long: `Mark that the user has completed social quest.
 Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[0]); err != nil {
-				return err
-			}
-
 			context, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			_, err = sdk.AccAddressFromBech32(args[0])
+			filename := args[0]
+			userAddressData, err := ReadUserAddressFromCSVFile(filename)
 			if err != nil {
 				return err
 			}
 
 			msg := &types.MsgMarkSocialQuestPerformedRequest{
 				ControllerAddress: context.GetFromAddress().String(),
-				UserAddresses:     []string{args[0]},
+				UserAddresses:     userAddressData,
 			}
 
 			return tx.GenerateOrBroadcastTxCLI(context, cmd.Flags(), msg)
@@ -134,30 +128,27 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 
 func txMarkProvideLiquidity() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "mark-provide-liquidity [user-address]",
+		Use:   "mark-provide-liquidity [user-address_csv_file]",
 		Short: "Mark that the user has completed providing liquidity quest",
 		Long: `Mark that the user has completed providing liquidity quest.
 Note, the '--from' flag is ignored as it is implied from [from_key_or_address].
 When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := cmd.Flags().Set(flags.FlagFrom, args[0]); err != nil {
-				return err
-			}
-
 			context, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			_, err = sdk.AccAddressFromBech32(args[0])
+			filename := args[0]
+			userAddressData, err := ReadUserAddressFromCSVFile(filename)
 			if err != nil {
 				return err
 			}
 
 			msg := &types.MsgMarkUserProvidedLiquidityRequest{
 				ControllerAddress: context.GetFromAddress().String(),
-				UserAddresses:     []string{args[0]},
+				UserAddresses:     userAddressData,
 			}
 
 			return tx.GenerateOrBroadcastTxCLI(context, cmd.Flags(), msg)
@@ -166,18 +157,4 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
-}
-
-func ReadUserStateFromFile(filename string) ([]*types.UserState, error) {
-	var userState []*types.UserState
-	contents, err := os.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	err = json.Unmarshal(contents, &userState)
-	if err != nil {
-		return nil, err
-	}
-
-	return userState, nil
 }
