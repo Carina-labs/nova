@@ -2640,6 +2640,920 @@ func (x *fastReflection_MsgMarkUserProvidedLiquidityResponse) ProtoMethods() *pr
 	}
 }
 
+var _ protoreflect.List = (*_MsgAirdropDataRequest_1_list)(nil)
+
+type _MsgAirdropDataRequest_1_list struct {
+	list *[]*UserState
+}
+
+func (x *_MsgAirdropDataRequest_1_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_MsgAirdropDataRequest_1_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_MsgAirdropDataRequest_1_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*UserState)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_MsgAirdropDataRequest_1_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*UserState)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_MsgAirdropDataRequest_1_list) AppendMutable() protoreflect.Value {
+	v := new(UserState)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_MsgAirdropDataRequest_1_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_MsgAirdropDataRequest_1_list) NewElement() protoreflect.Value {
+	v := new(UserState)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_MsgAirdropDataRequest_1_list) IsValid() bool {
+	return x.list != nil
+}
+
+var (
+	md_MsgAirdropDataRequest                    protoreflect.MessageDescriptor
+	fd_MsgAirdropDataRequest_states             protoreflect.FieldDescriptor
+	fd_MsgAirdropDataRequest_controller_address protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_nova_airdrop_v1_tx_proto_init()
+	md_MsgAirdropDataRequest = File_nova_airdrop_v1_tx_proto.Messages().ByName("MsgAirdropDataRequest")
+	fd_MsgAirdropDataRequest_states = md_MsgAirdropDataRequest.Fields().ByName("states")
+	fd_MsgAirdropDataRequest_controller_address = md_MsgAirdropDataRequest.Fields().ByName("controller_address")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgAirdropDataRequest)(nil)
+
+type fastReflection_MsgAirdropDataRequest MsgAirdropDataRequest
+
+func (x *MsgAirdropDataRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgAirdropDataRequest)(x)
+}
+
+func (x *MsgAirdropDataRequest) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_airdrop_v1_tx_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgAirdropDataRequest_messageType fastReflection_MsgAirdropDataRequest_messageType
+var _ protoreflect.MessageType = fastReflection_MsgAirdropDataRequest_messageType{}
+
+type fastReflection_MsgAirdropDataRequest_messageType struct{}
+
+func (x fastReflection_MsgAirdropDataRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgAirdropDataRequest)(nil)
+}
+func (x fastReflection_MsgAirdropDataRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgAirdropDataRequest)
+}
+func (x fastReflection_MsgAirdropDataRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgAirdropDataRequest
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgAirdropDataRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgAirdropDataRequest
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgAirdropDataRequest) Type() protoreflect.MessageType {
+	return _fastReflection_MsgAirdropDataRequest_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgAirdropDataRequest) New() protoreflect.Message {
+	return new(fastReflection_MsgAirdropDataRequest)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgAirdropDataRequest) Interface() protoreflect.ProtoMessage {
+	return (*MsgAirdropDataRequest)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgAirdropDataRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if len(x.States) != 0 {
+		value := protoreflect.ValueOfList(&_MsgAirdropDataRequest_1_list{list: &x.States})
+		if !f(fd_MsgAirdropDataRequest_states, value) {
+			return
+		}
+	}
+	if x.ControllerAddress != "" {
+		value := protoreflect.ValueOfString(x.ControllerAddress)
+		if !f(fd_MsgAirdropDataRequest_controller_address, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgAirdropDataRequest) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.MsgAirdropDataRequest.states":
+		return len(x.States) != 0
+	case "nova.airdrop.v1.MsgAirdropDataRequest.controller_address":
+		return x.ControllerAddress != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataRequest"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgAirdropDataRequest) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.MsgAirdropDataRequest.states":
+		x.States = nil
+	case "nova.airdrop.v1.MsgAirdropDataRequest.controller_address":
+		x.ControllerAddress = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataRequest"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgAirdropDataRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "nova.airdrop.v1.MsgAirdropDataRequest.states":
+		if len(x.States) == 0 {
+			return protoreflect.ValueOfList(&_MsgAirdropDataRequest_1_list{})
+		}
+		listValue := &_MsgAirdropDataRequest_1_list{list: &x.States}
+		return protoreflect.ValueOfList(listValue)
+	case "nova.airdrop.v1.MsgAirdropDataRequest.controller_address":
+		value := x.ControllerAddress
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataRequest"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataRequest does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgAirdropDataRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.MsgAirdropDataRequest.states":
+		lv := value.List()
+		clv := lv.(*_MsgAirdropDataRequest_1_list)
+		x.States = *clv.list
+	case "nova.airdrop.v1.MsgAirdropDataRequest.controller_address":
+		x.ControllerAddress = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataRequest"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgAirdropDataRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.MsgAirdropDataRequest.states":
+		if x.States == nil {
+			x.States = []*UserState{}
+		}
+		value := &_MsgAirdropDataRequest_1_list{list: &x.States}
+		return protoreflect.ValueOfList(value)
+	case "nova.airdrop.v1.MsgAirdropDataRequest.controller_address":
+		panic(fmt.Errorf("field controller_address of message nova.airdrop.v1.MsgAirdropDataRequest is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataRequest"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgAirdropDataRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "nova.airdrop.v1.MsgAirdropDataRequest.states":
+		list := []*UserState{}
+		return protoreflect.ValueOfList(&_MsgAirdropDataRequest_1_list{list: &list})
+	case "nova.airdrop.v1.MsgAirdropDataRequest.controller_address":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataRequest"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgAirdropDataRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.airdrop.v1.MsgAirdropDataRequest", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgAirdropDataRequest) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgAirdropDataRequest) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgAirdropDataRequest) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgAirdropDataRequest) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgAirdropDataRequest)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if len(x.States) > 0 {
+			for _, e := range x.States {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		l = len(x.ControllerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgAirdropDataRequest)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.ControllerAddress) > 0 {
+			i -= len(x.ControllerAddress)
+			copy(dAtA[i:], x.ControllerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ControllerAddress)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.States) > 0 {
+			for iNdEx := len(x.States) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.States[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0xa
+			}
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgAirdropDataRequest)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgAirdropDataRequest: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgAirdropDataRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field States", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.States = append(x.States, &UserState{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.States[len(x.States)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ControllerAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ControllerAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_MsgAirdropDataResponse protoreflect.MessageDescriptor
+)
+
+func init() {
+	file_nova_airdrop_v1_tx_proto_init()
+	md_MsgAirdropDataResponse = File_nova_airdrop_v1_tx_proto.Messages().ByName("MsgAirdropDataResponse")
+}
+
+var _ protoreflect.Message = (*fastReflection_MsgAirdropDataResponse)(nil)
+
+type fastReflection_MsgAirdropDataResponse MsgAirdropDataResponse
+
+func (x *MsgAirdropDataResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_MsgAirdropDataResponse)(x)
+}
+
+func (x *MsgAirdropDataResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_nova_airdrop_v1_tx_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_MsgAirdropDataResponse_messageType fastReflection_MsgAirdropDataResponse_messageType
+var _ protoreflect.MessageType = fastReflection_MsgAirdropDataResponse_messageType{}
+
+type fastReflection_MsgAirdropDataResponse_messageType struct{}
+
+func (x fastReflection_MsgAirdropDataResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_MsgAirdropDataResponse)(nil)
+}
+func (x fastReflection_MsgAirdropDataResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_MsgAirdropDataResponse)
+}
+func (x fastReflection_MsgAirdropDataResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgAirdropDataResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_MsgAirdropDataResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_MsgAirdropDataResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_MsgAirdropDataResponse) Type() protoreflect.MessageType {
+	return _fastReflection_MsgAirdropDataResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_MsgAirdropDataResponse) New() protoreflect.Message {
+	return new(fastReflection_MsgAirdropDataResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_MsgAirdropDataResponse) Interface() protoreflect.ProtoMessage {
+	return (*MsgAirdropDataResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_MsgAirdropDataResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_MsgAirdropDataResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataResponse"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgAirdropDataResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataResponse"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_MsgAirdropDataResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataResponse"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgAirdropDataResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataResponse"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgAirdropDataResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataResponse"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_MsgAirdropDataResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: nova.airdrop.v1.MsgAirdropDataResponse"))
+		}
+		panic(fmt.Errorf("message nova.airdrop.v1.MsgAirdropDataResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_MsgAirdropDataResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in nova.airdrop.v1.MsgAirdropDataResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_MsgAirdropDataResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_MsgAirdropDataResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_MsgAirdropDataResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_MsgAirdropDataResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*MsgAirdropDataResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*MsgAirdropDataResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*MsgAirdropDataResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgAirdropDataResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgAirdropDataResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -2872,6 +3786,75 @@ func (*MsgMarkUserProvidedLiquidityResponse) Descriptor() ([]byte, []int) {
 	return file_nova_airdrop_v1_tx_proto_rawDescGZIP(), []int{5}
 }
 
+type MsgAirdropDataRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	States            []*UserState `protobuf:"bytes,1,rep,name=states,proto3" json:"states,omitempty"`
+	ControllerAddress string       `protobuf:"bytes,2,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
+}
+
+func (x *MsgAirdropDataRequest) Reset() {
+	*x = MsgAirdropDataRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_airdrop_v1_tx_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgAirdropDataRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgAirdropDataRequest) ProtoMessage() {}
+
+// Deprecated: Use MsgAirdropDataRequest.ProtoReflect.Descriptor instead.
+func (*MsgAirdropDataRequest) Descriptor() ([]byte, []int) {
+	return file_nova_airdrop_v1_tx_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *MsgAirdropDataRequest) GetStates() []*UserState {
+	if x != nil {
+		return x.States
+	}
+	return nil
+}
+
+func (x *MsgAirdropDataRequest) GetControllerAddress() string {
+	if x != nil {
+		return x.ControllerAddress
+	}
+	return ""
+}
+
+type MsgAirdropDataResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *MsgAirdropDataResponse) Reset() {
+	*x = MsgAirdropDataResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_nova_airdrop_v1_tx_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgAirdropDataResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgAirdropDataResponse) ProtoMessage() {}
+
+// Deprecated: Use MsgAirdropDataResponse.ProtoReflect.Descriptor instead.
+func (*MsgAirdropDataResponse) Descriptor() ([]byte, []int) {
+	return file_nova_airdrop_v1_tx_proto_rawDescGZIP(), []int{7}
+}
+
 var File_nova_airdrop_v1_tx_proto protoreflect.FileDescriptor
 
 var file_nova_airdrop_v1_tx_proto_rawDesc = []byte{
@@ -2920,7 +3903,18 @@ var file_nova_airdrop_v1_tx_proto_rawDesc = []byte{
 	0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22,
 	0x26, 0x0a, 0x24, 0x4d, 0x73, 0x67, 0x4d, 0x61, 0x72, 0x6b, 0x55, 0x73, 0x65, 0x72, 0x50, 0x72,
 	0x6f, 0x76, 0x69, 0x64, 0x65, 0x64, 0x4c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x69, 0x74, 0x79, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xfb, 0x02, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x93, 0x01, 0x0a, 0x15, 0x4d, 0x73, 0x67, 0x41,
+	0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x32, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x1a, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
+	0x2e, 0x76, 0x31, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x06, 0x73,
+	0x74, 0x61, 0x74, 0x65, 0x73, 0x12, 0x2d, 0x0a, 0x12, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c,
+	0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x11, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64,
+	0x72, 0x65, 0x73, 0x73, 0x3a, 0x17, 0x82, 0xe7, 0xb0, 0x2a, 0x12, 0x63, 0x6f, 0x6e, 0x74, 0x72,
+	0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x18, 0x0a,
+	0x16, 0x4d, 0x73, 0x67, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xdb, 0x03, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x12,
 	0x61, 0x0a, 0x0c, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x12,
 	0x27, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76,
 	0x31, 0x2e, 0x4d, 0x73, 0x67, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f,
@@ -2944,6 +3938,12 @@ var file_nova_airdrop_v1_tx_proto_rawDesc = []byte{
 	0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31,
 	0x2e, 0x4d, 0x73, 0x67, 0x4d, 0x61, 0x72, 0x6b, 0x55, 0x73, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x76,
 	0x69, 0x64, 0x65, 0x64, 0x4c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5e, 0x0a, 0x0b, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70,
+	0x44, 0x61, 0x74, 0x61, 0x12, 0x26, 0x2e, 0x6e, 0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64,
+	0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x73, 0x67, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f,
+	0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x6e,
+	0x6f, 0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x2e, 0x4d,
+	0x73, 0x67, 0x41, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73,
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb7, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x6e, 0x6f,
 	0x76, 0x61, 0x2e, 0x61, 0x69, 0x72, 0x64, 0x72, 0x6f, 0x70, 0x2e, 0x76, 0x31, 0x42, 0x07, 0x54,
 	0x78, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
@@ -2971,7 +3971,7 @@ func file_nova_airdrop_v1_tx_proto_rawDescGZIP() []byte {
 	return file_nova_airdrop_v1_tx_proto_rawDescData
 }
 
-var file_nova_airdrop_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_nova_airdrop_v1_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_nova_airdrop_v1_tx_proto_goTypes = []interface{}{
 	(*MsgClaimAirdropRequest)(nil),               // 0: nova.airdrop.v1.MsgClaimAirdropRequest
 	(*MsgClaimAirdropResponse)(nil),              // 1: nova.airdrop.v1.MsgClaimAirdropResponse
@@ -2979,21 +3979,27 @@ var file_nova_airdrop_v1_tx_proto_goTypes = []interface{}{
 	(*MsgMarkSocialQuestPerformedResponse)(nil),  // 3: nova.airdrop.v1.MsgMarkSocialQuestPerformedResponse
 	(*MsgMarkUserProvidedLiquidityRequest)(nil),  // 4: nova.airdrop.v1.MsgMarkUserProvidedLiquidityRequest
 	(*MsgMarkUserProvidedLiquidityResponse)(nil), // 5: nova.airdrop.v1.MsgMarkUserProvidedLiquidityResponse
-	(QuestType)(0), // 6: nova.airdrop.v1.QuestType
+	(*MsgAirdropDataRequest)(nil),                // 6: nova.airdrop.v1.MsgAirdropDataRequest
+	(*MsgAirdropDataResponse)(nil),               // 7: nova.airdrop.v1.MsgAirdropDataResponse
+	(QuestType)(0),                               // 8: nova.airdrop.v1.QuestType
+	(*UserState)(nil),                            // 9: nova.airdrop.v1.UserState
 }
 var file_nova_airdrop_v1_tx_proto_depIdxs = []int32{
-	6, // 0: nova.airdrop.v1.MsgClaimAirdropRequest.quest_type:type_name -> nova.airdrop.v1.QuestType
-	0, // 1: nova.airdrop.v1.Msg.ClaimAirdrop:input_type -> nova.airdrop.v1.MsgClaimAirdropRequest
-	2, // 2: nova.airdrop.v1.Msg.MarkSocialQuestPerformed:input_type -> nova.airdrop.v1.MsgMarkSocialQuestPerformedRequest
-	4, // 3: nova.airdrop.v1.Msg.MarkUserProvidedLiquidity:input_type -> nova.airdrop.v1.MsgMarkUserProvidedLiquidityRequest
-	1, // 4: nova.airdrop.v1.Msg.ClaimAirdrop:output_type -> nova.airdrop.v1.MsgClaimAirdropResponse
-	3, // 5: nova.airdrop.v1.Msg.MarkSocialQuestPerformed:output_type -> nova.airdrop.v1.MsgMarkSocialQuestPerformedResponse
-	5, // 6: nova.airdrop.v1.Msg.MarkUserProvidedLiquidity:output_type -> nova.airdrop.v1.MsgMarkUserProvidedLiquidityResponse
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	8, // 0: nova.airdrop.v1.MsgClaimAirdropRequest.quest_type:type_name -> nova.airdrop.v1.QuestType
+	9, // 1: nova.airdrop.v1.MsgAirdropDataRequest.states:type_name -> nova.airdrop.v1.UserState
+	0, // 2: nova.airdrop.v1.Msg.ClaimAirdrop:input_type -> nova.airdrop.v1.MsgClaimAirdropRequest
+	2, // 3: nova.airdrop.v1.Msg.MarkSocialQuestPerformed:input_type -> nova.airdrop.v1.MsgMarkSocialQuestPerformedRequest
+	4, // 4: nova.airdrop.v1.Msg.MarkUserProvidedLiquidity:input_type -> nova.airdrop.v1.MsgMarkUserProvidedLiquidityRequest
+	6, // 5: nova.airdrop.v1.Msg.AirdropData:input_type -> nova.airdrop.v1.MsgAirdropDataRequest
+	1, // 6: nova.airdrop.v1.Msg.ClaimAirdrop:output_type -> nova.airdrop.v1.MsgClaimAirdropResponse
+	3, // 7: nova.airdrop.v1.Msg.MarkSocialQuestPerformed:output_type -> nova.airdrop.v1.MsgMarkSocialQuestPerformedResponse
+	5, // 8: nova.airdrop.v1.Msg.MarkUserProvidedLiquidity:output_type -> nova.airdrop.v1.MsgMarkUserProvidedLiquidityResponse
+	7, // 9: nova.airdrop.v1.Msg.AirdropData:output_type -> nova.airdrop.v1.MsgAirdropDataResponse
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_nova_airdrop_v1_tx_proto_init() }
@@ -3075,6 +4081,30 @@ func file_nova_airdrop_v1_tx_proto_init() {
 				return nil
 			}
 		}
+		file_nova_airdrop_v1_tx_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgAirdropDataRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_nova_airdrop_v1_tx_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgAirdropDataResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -3082,7 +4112,7 @@ func file_nova_airdrop_v1_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_nova_airdrop_v1_tx_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"context"
-
 	"github.com/Carina-labs/nova/x/airdrop/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -144,4 +143,36 @@ func (m msgServer) MarkUserProvidedLiquidity(goCtx context.Context, request *typ
 	}
 
 	return &types.MsgMarkUserProvidedLiquidityResponse{}, nil
+}
+
+func (m msgServer) AirdropData(goctx context.Context, request *types.MsgAirdropDataRequest) (*types.MsgAirdropDataResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goctx)
+	signer, err := sdk.AccAddressFromBech32(request.ControllerAddress)
+	if err != nil {
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "addr: %v", signer)
+	}
+
+	if !m.keeper.isValidControllerAddr(ctx, signer) {
+		ctx.Logger().Debug("invalid controller address", "addr: %v", request.GetControllerAddress())
+		return nil, sdkerrors.ErrUnauthorized
+	}
+
+	for _, data := range request.States {
+		userAddr, err := sdk.AccAddressFromBech32(data.Recipient)
+		if err != nil {
+			ctx.Logger().Debug("invalid user address", "user_addr: %v", userAddr)
+			return nil, err
+		}
+
+		err = m.keeper.SetUserState(ctx, userAddr, data)
+		state, err := m.keeper.GetUserState(ctx, userAddr)
+		ctx.Logger().Info("airdrop info", "state", state)
+
+		if err != nil {
+			ctx.Logger().Debug("invalid user state", "user_state : ", data)
+			return nil, err
+		}
+	}
+
+	return &types.MsgAirdropDataResponse{}, nil
 }

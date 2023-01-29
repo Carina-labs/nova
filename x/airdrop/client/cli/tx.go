@@ -1,7 +1,9 @@
 package cli
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 
 	"github.com/Carina-labs/nova/x/airdrop/types"
 	"github.com/cosmos/cosmos-sdk/client"
@@ -10,6 +12,42 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
 )
+
+func txAirdropData() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "airdrop-data [user_state_json_file]",
+		Short: "Enter user state data",
+		Long:  "Enter the user's airdrop information. Data can only be added by the controller account.",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			context, err := client.GetClientTxContext(cmd)
+			if err != nil {
+				return err
+			}
+
+			userState, err := ReadUserStateFromFile(args[0])
+			if err != nil {
+				return err
+			}
+
+			controllerAddr := context.GetFromAddress().String()
+
+			msg := &types.MsgAirdropDataRequest{
+				States:            userState,
+				ControllerAddress: controllerAddr,
+			}
+
+			err = msg.ValidateBasic()
+			if err != nil {
+				return err
+			}
+
+			return tx.GenerateOrBroadcastTxCLI(context, cmd.Flags(), msg)
+		},
+	}
+	flags.AddTxFlagsToCmd(cmd)
+	return cmd
+}
 
 func txClaim() *cobra.Command {
 	cmd := &cobra.Command{
@@ -128,4 +166,18 @@ When using '--dry-run' a key name cannot be used, only a bech32 address.`,
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
+}
+
+func ReadUserStateFromFile(filename string) ([]*types.UserState, error) {
+	var userState []*types.UserState
+	contents, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(contents, &userState)
+	if err != nil {
+		return nil, err
+	}
+
+	return userState, nil
 }
