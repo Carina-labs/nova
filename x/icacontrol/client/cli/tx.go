@@ -393,7 +393,6 @@ func txAuthzGrantTxCmd() *cobra.Command {
 				if err != nil {
 					return err
 				}
-				fmt.Println("test", allowed[0].String())
 
 			default:
 				return fmt.Errorf("invalid authorization type, %s", args[2])

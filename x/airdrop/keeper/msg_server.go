@@ -164,9 +164,10 @@ func (m msgServer) AirdropData(goctx context.Context, request *types.MsgAirdropD
 			return nil, err
 		}
 
-		err = m.keeper.SetUserState(ctx, userAddr, data)
-		state, err := m.keeper.GetUserState(ctx, userAddr)
-		ctx.Logger().Info("airdrop info", "state", state)
+		err = m.keeper.setInitialUserState(ctx, userAddr, data)
+		if err != nil {
+			return nil, err
+		}
 
 		if err != nil {
 			ctx.Logger().Debug("invalid user state", "user_state : ", data)
