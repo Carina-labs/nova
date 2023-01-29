@@ -24,6 +24,7 @@ func DefaultGenesis() *GenesisState {
 			AirdropStartTimestamp:    time.Now().UTC().Add(time.Hour * 24 * 7),
 			AirdropEndTimestamp:      time.Now().UTC().Add(time.Hour * 24 * 31),
 			AirdropDenom:             params.BaseCoinUnit,
+			AirdropAmount:            sdk.NewInt(15000000000000),
 			QuestsCount:              5,
 			ControllerAddress:        sdk.AccAddress([]byte{0x1}).String(),
 			MaximumTokenAllocPerUser: sdk.NewInt(10000_00000).String(),
