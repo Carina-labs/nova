@@ -140,6 +140,7 @@ func (a AppModule) RegisterServices(cfg module.Configurator) {
 
 // BeginBlock is executed before block was proposed
 func (a AppModule) BeginBlock(context sdk.Context, block abci.RequestBeginBlock) {
+	BeginBlocker(context, block, a.keeper)
 }
 
 // EndBlock is executed after a block has been committed.

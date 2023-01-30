@@ -38,3 +38,20 @@ func (k Keeper) CreateModuleAccount(ctx sdk.Context, amount sdk.Coin) {
 
 	k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(amount))
 }
+
+func (k Keeper) BurnToken(ctx sdk.Context) {
+	moduleAccount := k.accountKeeper.GetModuleAccount(ctx, types.ModuleName)
+	denom := k.GetAirdropInfo(ctx).AirdropDenom
+	amount := k.bankKeeper.GetBalance(ctx, moduleAccount.GetAddress(), denom)
+	if amount.IsZero() {
+		return
+	}
+
+	err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.NewCoins(amount))
+	if err != nil {
+		ctx.Logger().Error("Airdrop BurnToken", "error", err)
+	}
+
+	balance := k.bankKeeper.GetBalance(ctx, moduleAccount.GetAddress(), denom)
+	ctx.Logger().Info("Airdrop BurnToken", "burn amount", amount, "airdrop module account balance", balance)
+}
