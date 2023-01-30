@@ -50,7 +50,7 @@ func (q Querier) TotalAllocatedAirdropToken(goCtx context.Context, request *type
 	}
 	asset := sdk.NewCoin(info.AirdropDenom, amt)
 
-	return &types.QueryTotalAllocatedAirdropTokenResponse{TotalAssets: asset}, nil
+	return &types.QueryTotalAllocatedAirdropTokenResponse{TotalAssets: asset, StakedAssets: state.StakedAmount}, nil
 }
 
 // QuestState returns state of the quest for the given user

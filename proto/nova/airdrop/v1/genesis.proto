@@ -76,11 +76,12 @@ message UserState {
   // address of the airdrop recipient.
   string recipient = 1;
 
+  string staked_amount = 2;
   // amount of coins to be allocated to the recipient.
-  string total_amount = 2;
+  string total_amount = 3;
 
   // claim histories
-  map<int32, QuestState> quest_states = 3;
+  map<int32, QuestState> quest_states = 4;
 }
 
 // QuestState indicates the status of the quest that users perform.
