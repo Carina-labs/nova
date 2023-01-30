@@ -40,6 +40,8 @@ message QueryTotalAllocatedAirdropTokenResponse {
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins",
     (gogoproto.nullable) = false
   ];
+
+  string staked_assets = 2;
 }
 
 message QueryQuestStateRequest {
