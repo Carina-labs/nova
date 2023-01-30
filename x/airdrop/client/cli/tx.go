@@ -12,7 +12,7 @@ import (
 
 func txAirdropData() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "airdrop-data [user_state_json_file]",
+		Use:   "import-airdrop-data [user_state_json_file]",
 		Short: "Enter user state data",
 		Long:  "Enter the user's airdrop information. Data can only be added by the controller account.",
 		Args:  cobra.ExactArgs(1),
