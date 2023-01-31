@@ -54,7 +54,7 @@ func (k Keeper) setInitialUserState(ctx sdk.Context, userAddr sdk.AccAddress, st
 	userKey := types.GetKeyUserState(userAddr.String())
 
 	if store.Has(userKey) {
-		ctx.Logger().Error("err: duplicated user was given when blockchain initializes genesis state", "user", userAddr)
+		ctx.Logger().Error("airdrop", "user", userAddr)
 		return fmt.Errorf("this user is already registered: %v", userAddr)
 	}
 

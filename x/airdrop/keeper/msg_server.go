@@ -60,7 +60,7 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 	info := m.keeper.GetAirdropInfo(ctx)
 	amount, _, _ := m.keeper.CalcClaimableAmount(ctx, userAddr)
 	if amount.IsZero() {
-		m.keeper.Logger(ctx).Error("claimable amount is zero | this is an unexpected error", "user", userAddr)
+		m.keeper.Logger(ctx).Error("claimable amount is zero | this is an unexpected error", "module", types.ModuleName, "user", userAddr)
 		return nil, sdkerrors.Wrap(sdkerrors.ErrLogic, "claimable amount is zero")
 	}
 
@@ -80,7 +80,7 @@ func (m msgServer) ClaimAirdrop(goCtx context.Context, request *types.MsgClaimAi
 	quest.State = types.QuestStateType_QUEST_STATE_CLAIMED
 	quest.ClaimedAt = ctx.BlockTime()
 	if err = m.keeper.SetUserState(ctx, userAddr, userState); err != nil {
-		m.keeper.Logger(ctx).Error("failed to mark user claimed airdrop", "user", userAddr, "quest", request.QuestType)
+		m.keeper.Logger(ctx).Error("failed to mark user claimed airdrop", "module", types.ModuleName, "user", userAddr, "quest", request.QuestType)
 		return nil, err
 	}
 
@@ -92,12 +92,12 @@ func (m msgServer) MarkSocialQuestPerformed(goCtx context.Context, request *type
 	signer := request.GetSigners()[0]
 
 	if !m.keeper.ValidQuestDate(ctx) {
-		ctx.Logger().Debug("user cannot perform the quest anymore")
+		ctx.Logger().Debug("user cannot perform the quest anymore", "module", types.ModuleName)
 		return nil, types.ErrAirdropWasOver
 	}
 
 	if !m.keeper.isValidControllerAddr(ctx, signer) {
-		ctx.Logger().Debug("invalid controller address", "addr", signer)
+		ctx.Logger().Debug("invalid controller address", "module", types.ModuleName)
 		return nil, sdkerrors.ErrUnauthorized
 	}
 
@@ -121,12 +121,12 @@ func (m msgServer) MarkUserProvidedLiquidity(goCtx context.Context, request *typ
 	signer := request.GetSigners()[0]
 
 	if !m.keeper.ValidQuestDate(ctx) {
-		ctx.Logger().Debug("user cannot perform the quest anymore")
+		ctx.Logger().Debug("user cannot perform the quest anymore", "module", types.ModuleName)
 		return nil, types.ErrAirdropWasOver
 	}
 
 	if !m.keeper.isValidControllerAddr(ctx, signer) {
-		ctx.Logger().Debug("invalid controller address", "addr", signer)
+		ctx.Logger().Debug("invalid controller address", "module", types.ModuleName, "addr", signer)
 		return nil, sdkerrors.ErrUnauthorized
 	}
 
@@ -153,14 +153,14 @@ func (m msgServer) ImportAirdropData(goctx context.Context, request *types.MsgIm
 	}
 
 	if !m.keeper.isValidControllerAddr(ctx, signer) {
-		ctx.Logger().Debug("invalid controller address", "addr: %v", request.GetControllerAddress())
+		ctx.Logger().Debug("invalid controller address", "addr", request.GetControllerAddress(), "module", types.ModuleName)
 		return nil, sdkerrors.ErrUnauthorized
 	}
 
 	for _, data := range request.States {
 		userAddr, err := sdk.AccAddressFromBech32(data.Recipient)
 		if err != nil {
-			ctx.Logger().Debug("invalid user address", "user_addr: %v", userAddr)
+			ctx.Logger().Debug("invalid user address", "user_addr", userAddr, "module", types.ModuleName)
 			return nil, err
 		}
 
@@ -170,7 +170,7 @@ func (m msgServer) ImportAirdropData(goctx context.Context, request *types.MsgIm
 		}
 
 		if err != nil {
-			ctx.Logger().Debug("invalid user state", "user_state : ", data)
+			ctx.Logger().Debug("invalid user state", "module", types.ModuleName, "data", data)
 			return nil, err
 		}
 	}
