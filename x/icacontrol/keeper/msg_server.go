@@ -395,7 +395,7 @@ func (k msgServer) RegisterControllerAddress(goCtx context.Context, msg *types.M
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	if !k.IsValidKeyManager(ctx, msg.FromAddress) {
-		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, msg.FromAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, "from address: %s", msg.FromAddress)
 	}
 
 	k.SetControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress)
