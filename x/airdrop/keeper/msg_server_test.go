@@ -407,11 +407,11 @@ func (suite *KeeperTestSuite) TestAirdropData() {
 			airdropKeeper.SetAirdropInfo(ctx, validAirdropInfo(ctx))
 
 			// send mark tx
-			msg := types.MsgAirdropDataRequest{
+			msg := types.MsgImportAirdropDataRequest{
 				ControllerAddress: test.signer.String(),
 				States:            test.userStates,
 			}
-			_, err := msgServer.AirdropData(sdk.WrapSDKContext(suite.Ctx), &msg)
+			_, err := msgServer.ImportAirdropData(sdk.WrapSDKContext(suite.Ctx), &msg)
 			if test.shouldErr {
 				suite.Require().Error(err)
 				return

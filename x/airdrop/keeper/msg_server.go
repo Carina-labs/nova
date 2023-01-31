@@ -145,7 +145,7 @@ func (m msgServer) MarkUserProvidedLiquidity(goCtx context.Context, request *typ
 	return &types.MsgMarkUserProvidedLiquidityResponse{}, nil
 }
 
-func (m msgServer) AirdropData(goctx context.Context, request *types.MsgAirdropDataRequest) (*types.MsgAirdropDataResponse, error) {
+func (m msgServer) ImportAirdropData(goctx context.Context, request *types.MsgImportAirdropDataRequest) (*types.MsgImportAirdropDataResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goctx)
 	signer, err := sdk.AccAddressFromBech32(request.ControllerAddress)
 	if err != nil {
@@ -175,5 +175,5 @@ func (m msgServer) AirdropData(goctx context.Context, request *types.MsgAirdropD
 		}
 	}
 
-	return &types.MsgAirdropDataResponse{}, nil
+	return &types.MsgImportAirdropDataResponse{}, nil
 }

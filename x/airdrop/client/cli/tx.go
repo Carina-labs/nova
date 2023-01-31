@@ -29,7 +29,7 @@ func txAirdropData() *cobra.Command {
 
 			controllerAddr := context.GetFromAddress().String()
 
-			msg := &types.MsgAirdropDataRequest{
+			msg := &types.MsgImportAirdropDataRequest{
 				States:            userState,
 				ControllerAddress: controllerAddr,
 			}

@@ -8,7 +8,7 @@ import (
 var _ sdk.Msg = &MsgClaimAirdropRequest{}
 var _ sdk.Msg = &MsgMarkSocialQuestPerformedRequest{}
 var _ sdk.Msg = &MsgMarkUserProvidedLiquidityRequest{}
-var _ sdk.Msg = &MsgAirdropDataRequest{}
+var _ sdk.Msg = &MsgImportAirdropDataRequest{}
 
 func (m *MsgClaimAirdropRequest) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(m.UserAddress)
@@ -89,7 +89,7 @@ func (m *MsgMarkUserProvidedLiquidityRequest) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{controllerAddr}
 }
 
-func (m *MsgAirdropDataRequest) ValidateBasic() error {
+func (m *MsgImportAirdropDataRequest) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(m.ControllerAddress)
 	if err != nil {
 		return err
@@ -102,7 +102,7 @@ func (m *MsgAirdropDataRequest) ValidateBasic() error {
 	return nil
 }
 
-func (m *MsgAirdropDataRequest) GetSigners() []sdk.AccAddress {
+func (m *MsgImportAirdropDataRequest) GetSigners() []sdk.AccAddress {
 	controllerAddr, err := sdk.AccAddressFromBech32(m.ControllerAddress)
 	if err != nil {
 		panic(err)
