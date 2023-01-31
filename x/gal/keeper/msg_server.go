@@ -108,12 +108,12 @@ func (m msgServer) Delegate(goCtx context.Context, delegate *types.MsgDelegate) 
 	}
 
 	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, delegate.ZoneId, delegate.ControllerAddress) {
-		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, delegate.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, "controller addr: %v", delegate.ControllerAddress)
 	}
 
 	// version state check
 	if !m.keeper.IsValidDelegateVersion(ctx, delegate.ZoneId, delegate.Version) {
-		return nil, sdkerrors.Wrap(types.ErrInvalidIcaVersion, strconv.FormatUint(delegate.Version, 10))
+		return nil, sdkerrors.Wrapf(types.ErrInvalidIcaVersion, "delegate version: %v", strconv.FormatUint(delegate.Version, 10))
 	}
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
@@ -242,7 +242,7 @@ func (m msgServer) PendingUndelegate(goCtx context.Context, undelegate *types.Ms
 
 	err = m.keeper.bankKeeper.SendCoinsFromAccountToModule(ctx, delegatorAcc, types.ModuleName, sdk.Coins{undelegate.Amount})
 	if err != nil {
-		ctx.Logger().Error("PendingUndelegate", "msg", "send coins from account to module error", "err", err)
+		ctx.Logger().Error("PendingUndelegate", "module", types.ModuleName, "msg", "send coins from account to module error", "err", err)
 		return nil, err
 	}
 
@@ -278,11 +278,11 @@ func (m msgServer) Undelegate(goCtx context.Context, msg *types.MsgUndelegate) (
 	}
 
 	if !m.keeper.icaControlKeeper.IsValidControllerAddr(ctx, msg.ZoneId, msg.ControllerAddress) {
-		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, msg.ControllerAddress)
+		return nil, sdkerrors.Wrapf(types.ErrInvalidAddress, "controller addr: %v", msg.ControllerAddress)
 	}
 
 	if !m.keeper.IsValidUndelegateVersion(ctx, msg.ZoneId, msg.Version) {
-		return nil, sdkerrors.Wrap(types.ErrInvalidIcaVersion, strconv.FormatUint(msg.Version, 10))
+		return nil, sdkerrors.Wrapf(types.ErrInvalidIcaVersion, "undelegate version: %v", strconv.FormatUint(msg.Version, 10))
 	}
 
 	var burnAssets sdk.Coin
@@ -363,7 +363,7 @@ func (m msgServer) Withdraw(goCtx context.Context, withdraw *types.MsgWithdraw) 
 
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, withdraw.ZoneId)
 	if !ok {
-		return nil, sdkerrors.Wrapf(types.ErrNotFoundZoneInfo, "zone id: %s", withdraw.ZoneId)
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	ibcDenom := m.keeper.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
@@ -495,7 +495,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 
 	zoneInfo, ok := m.keeper.icaControlKeeper.GetRegisteredZone(ctx, claimMsg.ZoneId)
 	if !ok {
-		return nil, fmt.Errorf("cannot find zone id : %s", claimMsg.ZoneId)
+		return nil, types.ErrNotFoundZoneInfo
 	}
 
 	records, found := m.keeper.GetUserDelegateRecord(ctx, claimMsg.ZoneId, claimerAddr)
@@ -511,6 +511,7 @@ func (m msgServer) ClaimSnAsset(goCtx context.Context, claimMsg *types.MsgClaimS
 		if record.OracleVersion >= oracleVersion {
 			return nil, fmt.Errorf("oracle is not updated. current oracle version: %d", oracleVersion)
 		}
+
 		if record.State == types.DelegateSuccess {
 			totalClaimAsset = totalClaimAsset.Add(*record.Amount)
 		}
@@ -565,6 +566,7 @@ func (m msgServer) ClaimAllSnAsset(goCtx context.Context, msg *types.MsgClaimAll
 	if err != nil {
 		return nil, err
 	}
+
 	for _, record := range claimRecords {
 		err = m.keeper.MintTo(ctx, record.claimer, record.claimableAmount)
 		if err != nil {

@@ -42,6 +42,7 @@ func (h Hooks) AfterTransferEnd(ctx sdk.Context, data transfertypes.FungibleToke
 
 	ibcDenom := h.k.icaControlKeeper.GetIBCHashDenom(zoneInfo.TransferInfo.PortId, zoneInfo.TransferInfo.ChannelId, zoneInfo.BaseDenom)
 	if voucherDenom != ibcDenom {
+		ctx.Logger().Debug("different from registered denom", "module", types.ModuleName, "zone_id", zoneInfo.ZoneId, "denom", voucherDenom)
 		return
 	}
 
@@ -67,6 +68,7 @@ func (h Hooks) AfterTransferFail(ctx sdk.Context, data transfertypes.FungibleTok
 	}
 	amount, ok := sdk.NewIntFromString(data.Amount)
 	if !ok {
+		ctx.Logger().Error("transfer amount is must be a positive integer", "amount", amount)
 		return
 	}
 
@@ -157,7 +159,7 @@ func (h Hooks) AfterDelegateEnd(ctx sdk.Context, delegateMsg stakingtypes.MsgDel
 	// get delegateVersion
 	versionInfo := h.k.GetDelegateVersion(ctx, zoneInfo.ZoneId)
 	if versionInfo.Size() == 0 {
-		ctx.Logger().Error("AfterDelegateEnd", "version_info", "nil")
+		ctx.Logger().Error("AfterDelegateEnd", "err", "version info is nil")
 		return
 	}
 	currentVersion := versionInfo.CurrentVersion
@@ -202,7 +204,7 @@ func (h Hooks) AfterUndelegateEnd(ctx sdk.Context, undelegateMsg stakingtypes.Ms
 	// get zone info from the validator address
 	zoneInfo := h.k.icaControlKeeper.GetRegisteredZoneForValidatorAddr(ctx, undelegateMsg.ValidatorAddress)
 	if zoneInfo == nil {
-		ctx.Logger().Error("Zone id is not found", "validator_address", undelegateMsg.ValidatorAddress, "hook", "AfterUndelegateEnd")
+		ctx.Logger().Error("AfterUndelegateEnd", "validator_address", undelegateMsg.ValidatorAddress, "err", types.ErrNotFoundZoneInfo)
 		return
 	}
 
@@ -266,7 +268,7 @@ func (h Hooks) AfterIcaWithdrawFail(ctx sdk.Context, transferMsg transfertypes.M
 	defer telemetry.MeasureSince(time.Now(), "gal", "hook", "afterIcaWithdrawFail")
 	zone, ok := h.k.icaControlKeeper.GetRegisterZoneForHostAddr(ctx, transferMsg.Sender)
 	if !ok {
-		ctx.Logger().Error("AfterIcaWithdrawFail", "err", "zone not found")
+		ctx.Logger().Error("AfterIcaWithdrawFail", "err", types.ErrNotFoundZoneInfo)
 		return
 	}
 
