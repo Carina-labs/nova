@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"github.com/cosmos/cosmos-sdk/x/authz"
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	"strconv"
 	"time"
 
@@ -195,15 +194,6 @@ func (k msgServer) IcaDelegate(goCtx context.Context, msg *types.MsgIcaDelegate)
 		return nil, types.ErrNotFoundZone
 	}
 
-	// check unreceived ack
-	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
-	if len(commitment) != 0 {
-		ctx.Logger().Error("IcaDelegate", "packetSequence", packetSeq, "commitment", commitment)
-		return nil, types.ErrInvalidAck
-	}
-	ctx.Logger().Info("IcaDelegate", "packetSequence", packetSeq, "commitment", commitment)
-
 	var msgs []sdk.Msg
 
 	msgs = append(msgs, &stakingtype.MsgDelegate{DelegatorAddress: zoneInfo.IcaAccount.HostAddress, ValidatorAddress: zoneInfo.ValidatorAddress, Amount: msg.Amount})
@@ -233,14 +223,6 @@ func (k msgServer) IcaUndelegate(goCtx context.Context, msg *types.MsgIcaUndeleg
 	if !ok {
 		return nil, types.ErrNotFoundZone
 	}
-
-	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
-	if len(commitment) != 0 {
-		ctx.Logger().Error("IcaUndelegate", "packetSequence", packetSeq, "commitment", commitment)
-		return nil, types.ErrInvalidAck
-	}
-	ctx.Logger().Info("IcaUndelegate", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 
@@ -275,15 +257,6 @@ func (k msgServer) IcaAutoStaking(goCtx context.Context, msg *types.MsgIcaAutoSt
 	if !ok {
 		return nil, types.ErrNotFoundZone
 	}
-
-	// check unreceived ack
-	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
-	if len(commitment) != 0 {
-		ctx.Logger().Error("IcaAutoStaking", "packetSequence", packetSeq, "commitment", commitment)
-		return nil, types.ErrInvalidAck
-	}
-	ctx.Logger().Info("IcaAutoStaking", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 
@@ -324,15 +297,6 @@ func (k msgServer) IcaTransfer(goCtx context.Context, msg *types.MsgIcaTransfer)
 	if !ok {
 		return nil, types.ErrNotFoundZone
 	}
-
-	// check unreceived ack
-	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
-	if len(commitment) != 0 {
-		ctx.Logger().Error("IcaTransfer", "packetSequence", packetSeq, "commitment", commitment)
-		return nil, types.ErrInvalidAck
-	}
-	ctx.Logger().Info("IcaTransfer", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 
@@ -376,15 +340,6 @@ func (k msgServer) IcaAuthzGrant(goCtx context.Context, msg *types.MsgIcaAuthzGr
 		return nil, types.ErrNotFoundZone
 	}
 
-	// check unreceived ack
-	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
-	if len(commitment) != 0 {
-		ctx.Logger().Error("IcaAuthzGrant", "packetSequence", packetSeq, "commitment", commitment)
-		return nil, types.ErrInvalidAck
-	}
-	ctx.Logger().Info("IcaAuthzGrant", "packetSequence", packetSeq, "commitment", commitment)
-
 	var msgs []sdk.Msg
 	msgs = append(msgs, &authz.MsgGrant{
 		Granter: zoneInfo.IcaAccount.HostAddress,
@@ -415,15 +370,6 @@ func (k msgServer) IcaAuthzRevoke(goCtx context.Context, msg *types.MsgIcaAuthzR
 	if !ok {
 		return nil, types.ErrNotFoundZone
 	}
-
-	// check unreceived ack
-	packetSeq, _ := k.Keeper.channelKeeper.GetNextSequenceSend(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId)
-	commitment := k.Keeper.channelKeeper.GetPacketCommitment(ctx, icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, packetSeq-1)
-	if len(commitment) != 0 {
-		ctx.Logger().Error("IcaAuthzRevoke", "packetSequence", packetSeq, "commitment", commitment)
-		return nil, types.ErrInvalidAck
-	}
-	ctx.Logger().Info("IcaAuthzRevoke", "packetSequence", packetSeq, "commitment", commitment)
 
 	var msgs []sdk.Msg
 	msgs = append(msgs, &authz.MsgRevoke{
