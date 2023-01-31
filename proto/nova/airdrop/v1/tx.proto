@@ -16,7 +16,7 @@ service Msg {
 
   rpc MarkUserProvidedLiquidity(MsgMarkUserProvidedLiquidityRequest) returns (MsgMarkUserProvidedLiquidityResponse);
 
-  rpc AirdropData(MsgAirdropDataRequest) returns (MsgAirdropDataResponse);
+  rpc ImportAirdropData(MsgImportAirdropDataRequest) returns (MsgImportAirdropDataResponse);
 }
 
 // MsgClaimAirdropRequest is an airdrop volume request message.
@@ -64,13 +64,13 @@ message MsgMarkUserProvidedLiquidityRequest {
 message MsgMarkUserProvidedLiquidityResponse {
 }
 
-message MsgAirdropDataRequest{
+message MsgImportAirdropDataRequest{
   option (cosmos.msg.v1.signer) = "controller_address";
 
   repeated UserState states = 1;
   string controller_address = 2;
 }
 
-message MsgAirdropDataResponse{
+message MsgImportAirdropDataResponse{
 
 }

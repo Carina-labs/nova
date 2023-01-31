@@ -25,7 +25,7 @@ type MsgClient interface {
 	ClaimAirdrop(ctx context.Context, in *MsgClaimAirdropRequest, opts ...grpc.CallOption) (*MsgClaimAirdropResponse, error)
 	MarkSocialQuestPerformed(ctx context.Context, in *MsgMarkSocialQuestPerformedRequest, opts ...grpc.CallOption) (*MsgMarkSocialQuestPerformedResponse, error)
 	MarkUserProvidedLiquidity(ctx context.Context, in *MsgMarkUserProvidedLiquidityRequest, opts ...grpc.CallOption) (*MsgMarkUserProvidedLiquidityResponse, error)
-	AirdropData(ctx context.Context, in *MsgAirdropDataRequest, opts ...grpc.CallOption) (*MsgAirdropDataResponse, error)
+	ImportAirdropData(ctx context.Context, in *MsgImportAirdropDataRequest, opts ...grpc.CallOption) (*MsgImportAirdropDataResponse, error)
 }
 
 type msgClient struct {
@@ -63,9 +63,9 @@ func (c *msgClient) MarkUserProvidedLiquidity(ctx context.Context, in *MsgMarkUs
 	return out, nil
 }
 
-func (c *msgClient) AirdropData(ctx context.Context, in *MsgAirdropDataRequest, opts ...grpc.CallOption) (*MsgAirdropDataResponse, error) {
-	out := new(MsgAirdropDataResponse)
-	err := c.cc.Invoke(ctx, "/nova.airdrop.v1.Msg/AirdropData", in, out, opts...)
+func (c *msgClient) ImportAirdropData(ctx context.Context, in *MsgImportAirdropDataRequest, opts ...grpc.CallOption) (*MsgImportAirdropDataResponse, error) {
+	out := new(MsgImportAirdropDataResponse)
+	err := c.cc.Invoke(ctx, "/nova.airdrop.v1.Msg/ImportAirdropData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ type MsgServer interface {
 	ClaimAirdrop(context.Context, *MsgClaimAirdropRequest) (*MsgClaimAirdropResponse, error)
 	MarkSocialQuestPerformed(context.Context, *MsgMarkSocialQuestPerformedRequest) (*MsgMarkSocialQuestPerformedResponse, error)
 	MarkUserProvidedLiquidity(context.Context, *MsgMarkUserProvidedLiquidityRequest) (*MsgMarkUserProvidedLiquidityResponse, error)
-	AirdropData(context.Context, *MsgAirdropDataRequest) (*MsgAirdropDataResponse, error)
+	ImportAirdropData(context.Context, *MsgImportAirdropDataRequest) (*MsgImportAirdropDataResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -96,8 +96,8 @@ func (UnimplementedMsgServer) MarkSocialQuestPerformed(context.Context, *MsgMark
 func (UnimplementedMsgServer) MarkUserProvidedLiquidity(context.Context, *MsgMarkUserProvidedLiquidityRequest) (*MsgMarkUserProvidedLiquidityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MarkUserProvidedLiquidity not implemented")
 }
-func (UnimplementedMsgServer) AirdropData(context.Context, *MsgAirdropDataRequest) (*MsgAirdropDataResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AirdropData not implemented")
+func (UnimplementedMsgServer) ImportAirdropData(context.Context, *MsgImportAirdropDataRequest) (*MsgImportAirdropDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportAirdropData not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -166,20 +166,20 @@ func _Msg_MarkUserProvidedLiquidity_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_AirdropData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgAirdropDataRequest)
+func _Msg_ImportAirdropData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgImportAirdropDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).AirdropData(ctx, in)
+		return srv.(MsgServer).ImportAirdropData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.airdrop.v1.Msg/AirdropData",
+		FullMethod: "/nova.airdrop.v1.Msg/ImportAirdropData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).AirdropData(ctx, req.(*MsgAirdropDataRequest))
+		return srv.(MsgServer).ImportAirdropData(ctx, req.(*MsgImportAirdropDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -204,8 +204,8 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_MarkUserProvidedLiquidity_Handler,
 		},
 		{
-			MethodName: "AirdropData",
-			Handler:    _Msg_AirdropData_Handler,
+			MethodName: "ImportAirdropData",
+			Handler:    _Msg_ImportAirdropData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

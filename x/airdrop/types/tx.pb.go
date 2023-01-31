@@ -307,23 +307,23 @@ func (m *MsgMarkUserProvidedLiquidityResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgMarkUserProvidedLiquidityResponse proto.InternalMessageInfo
 
-type MsgAirdropDataRequest struct {
+type MsgImportAirdropDataRequest struct {
 	States            []*UserState `protobuf:"bytes,1,rep,name=states,proto3" json:"states,omitempty"`
 	ControllerAddress string       `protobuf:"bytes,2,opt,name=controller_address,json=controllerAddress,proto3" json:"controller_address,omitempty"`
 }
 
-func (m *MsgAirdropDataRequest) Reset()         { *m = MsgAirdropDataRequest{} }
-func (m *MsgAirdropDataRequest) String() string { return proto.CompactTextString(m) }
-func (*MsgAirdropDataRequest) ProtoMessage()    {}
-func (*MsgAirdropDataRequest) Descriptor() ([]byte, []int) {
+func (m *MsgImportAirdropDataRequest) Reset()         { *m = MsgImportAirdropDataRequest{} }
+func (m *MsgImportAirdropDataRequest) String() string { return proto.CompactTextString(m) }
+func (*MsgImportAirdropDataRequest) ProtoMessage()    {}
+func (*MsgImportAirdropDataRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7a7b020ec3f664eb, []int{6}
 }
-func (m *MsgAirdropDataRequest) XXX_Unmarshal(b []byte) error {
+func (m *MsgImportAirdropDataRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgAirdropDataRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgImportAirdropDataRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgAirdropDataRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgImportAirdropDataRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -333,47 +333,47 @@ func (m *MsgAirdropDataRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *MsgAirdropDataRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgAirdropDataRequest.Merge(m, src)
+func (m *MsgImportAirdropDataRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgImportAirdropDataRequest.Merge(m, src)
 }
-func (m *MsgAirdropDataRequest) XXX_Size() int {
+func (m *MsgImportAirdropDataRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgAirdropDataRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgAirdropDataRequest.DiscardUnknown(m)
+func (m *MsgImportAirdropDataRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgImportAirdropDataRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgAirdropDataRequest proto.InternalMessageInfo
+var xxx_messageInfo_MsgImportAirdropDataRequest proto.InternalMessageInfo
 
-func (m *MsgAirdropDataRequest) GetStates() []*UserState {
+func (m *MsgImportAirdropDataRequest) GetStates() []*UserState {
 	if m != nil {
 		return m.States
 	}
 	return nil
 }
 
-func (m *MsgAirdropDataRequest) GetControllerAddress() string {
+func (m *MsgImportAirdropDataRequest) GetControllerAddress() string {
 	if m != nil {
 		return m.ControllerAddress
 	}
 	return ""
 }
 
-type MsgAirdropDataResponse struct {
+type MsgImportAirdropDataResponse struct {
 }
 
-func (m *MsgAirdropDataResponse) Reset()         { *m = MsgAirdropDataResponse{} }
-func (m *MsgAirdropDataResponse) String() string { return proto.CompactTextString(m) }
-func (*MsgAirdropDataResponse) ProtoMessage()    {}
-func (*MsgAirdropDataResponse) Descriptor() ([]byte, []int) {
+func (m *MsgImportAirdropDataResponse) Reset()         { *m = MsgImportAirdropDataResponse{} }
+func (m *MsgImportAirdropDataResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgImportAirdropDataResponse) ProtoMessage()    {}
+func (*MsgImportAirdropDataResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7a7b020ec3f664eb, []int{7}
 }
-func (m *MsgAirdropDataResponse) XXX_Unmarshal(b []byte) error {
+func (m *MsgImportAirdropDataResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgAirdropDataResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgImportAirdropDataResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgAirdropDataResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgImportAirdropDataResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -383,17 +383,17 @@ func (m *MsgAirdropDataResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return b[:n], nil
 	}
 }
-func (m *MsgAirdropDataResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgAirdropDataResponse.Merge(m, src)
+func (m *MsgImportAirdropDataResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgImportAirdropDataResponse.Merge(m, src)
 }
-func (m *MsgAirdropDataResponse) XXX_Size() int {
+func (m *MsgImportAirdropDataResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgAirdropDataResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgAirdropDataResponse.DiscardUnknown(m)
+func (m *MsgImportAirdropDataResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgImportAirdropDataResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgAirdropDataResponse proto.InternalMessageInfo
+var xxx_messageInfo_MsgImportAirdropDataResponse proto.InternalMessageInfo
 
 func init() {
 	proto.RegisterType((*MsgClaimAirdropRequest)(nil), "nova.airdrop.v1.MsgClaimAirdropRequest")
@@ -402,49 +402,49 @@ func init() {
 	proto.RegisterType((*MsgMarkSocialQuestPerformedResponse)(nil), "nova.airdrop.v1.MsgMarkSocialQuestPerformedResponse")
 	proto.RegisterType((*MsgMarkUserProvidedLiquidityRequest)(nil), "nova.airdrop.v1.MsgMarkUserProvidedLiquidityRequest")
 	proto.RegisterType((*MsgMarkUserProvidedLiquidityResponse)(nil), "nova.airdrop.v1.MsgMarkUserProvidedLiquidityResponse")
-	proto.RegisterType((*MsgAirdropDataRequest)(nil), "nova.airdrop.v1.MsgAirdropDataRequest")
-	proto.RegisterType((*MsgAirdropDataResponse)(nil), "nova.airdrop.v1.MsgAirdropDataResponse")
+	proto.RegisterType((*MsgImportAirdropDataRequest)(nil), "nova.airdrop.v1.MsgImportAirdropDataRequest")
+	proto.RegisterType((*MsgImportAirdropDataResponse)(nil), "nova.airdrop.v1.MsgImportAirdropDataResponse")
 }
 
 func init() { proto.RegisterFile("nova/airdrop/v1/tx.proto", fileDescriptor_7a7b020ec3f664eb) }
 
 var fileDescriptor_7a7b020ec3f664eb = []byte{
-	// 551 bytes of a gzipped FileDescriptorProto
+	// 559 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x94, 0x41, 0x6f, 0x12, 0x41,
-	0x14, 0xc7, 0x19, 0x48, 0x9a, 0x30, 0xd4, 0x9a, 0x6e, 0x54, 0x96, 0x4d, 0xdc, 0x20, 0xda, 0x96,
-	0x68, 0xba, 0x1b, 0xa8, 0x1e, 0xec, 0xad, 0x56, 0x6f, 0x92, 0x54, 0xaa, 0x17, 0x0f, 0x92, 0x81,
-	0x1d, 0xc7, 0x89, 0xec, 0x0e, 0xcc, 0x1b, 0x48, 0xb9, 0x9a, 0x98, 0xe8, 0xcd, 0x44, 0x3f, 0x88,
-	0x1f, 0xc3, 0x63, 0x8f, 0x26, 0x5e, 0x0c, 0x1c, 0xfc, 0x1a, 0x66, 0x76, 0x87, 0x96, 0x16, 0x16,
-	0xd2, 0x53, 0x6f, 0xb3, 0xf3, 0xfe, 0xef, 0x3f, 0xbf, 0xb7, 0xef, 0xe5, 0x61, 0x3b, 0x12, 0x43,
-	0xe2, 0x13, 0x2e, 0x03, 0x29, 0x7a, 0xfe, 0xb0, 0xe6, 0xab, 0x13, 0xaf, 0x27, 0x85, 0x12, 0xd6,
-	0x4d, 0x1d, 0xf1, 0x4c, 0xc4, 0x1b, 0xd6, 0x1c, 0xb7, 0x23, 0x20, 0x14, 0xe0, 0xb7, 0x09, 0x50,
-	0x7f, 0x58, 0x6b, 0x53, 0x45, 0x6a, 0x7e, 0x47, 0xf0, 0x28, 0x49, 0x70, 0x6e, 0x31, 0xc1, 0x44,
-	0x7c, 0xf4, 0xf5, 0xc9, 0xdc, 0x96, 0x92, 0xac, 0x56, 0x12, 0x48, 0x3e, 0x4c, 0xa8, 0x68, 0x0c,
-	0x43, 0x60, 0xfa, 0xe5, 0x10, 0x98, 0x09, 0xdc, 0xbd, 0x0c, 0xc5, 0x68, 0x44, 0x81, 0x9b, 0xbc,
-	0xca, 0x57, 0x84, 0xef, 0x34, 0x80, 0x1d, 0x76, 0x09, 0x0f, 0x0f, 0x12, 0x51, 0x93, 0xf6, 0x07,
-	0x14, 0x94, 0x75, 0x0f, 0xaf, 0x0f, 0x80, 0xca, 0x16, 0x09, 0x02, 0x49, 0x01, 0x6c, 0x54, 0x46,
-	0xd5, 0x7c, 0xb3, 0xa0, 0xef, 0x0e, 0x92, 0x2b, 0xeb, 0x29, 0xc6, 0xb1, 0xb6, 0xa5, 0x46, 0x3d,
-	0x6a, 0x67, 0xcb, 0xa8, 0xba, 0x51, 0x77, 0xbc, 0x4b, 0xc5, 0x7a, 0xaf, 0xb4, 0xe4, 0xf5, 0xa8,
-	0x47, 0x9b, 0xf9, 0xfe, 0xf4, 0xb8, 0xbf, 0xf9, 0xe9, 0xdf, 0xcf, 0x87, 0x17, 0x1e, 0xa8, 0x94,
-	0x70, 0x71, 0x0e, 0x05, 0x7a, 0x22, 0x02, 0x5a, 0xf9, 0x8e, 0x70, 0xa5, 0x01, 0xac, 0x41, 0xe4,
-	0xc7, 0x63, 0xd1, 0xe1, 0xa4, 0x1b, 0x7b, 0x1e, 0x51, 0xf9, 0x5e, 0xc8, 0x90, 0x06, 0x53, 0xe4,
-	0x5d, 0x6c, 0x75, 0x44, 0xa4, 0xa4, 0xe8, 0x76, 0xe7, 0xc0, 0x37, 0xcf, 0x23, 0x53, 0xfc, 0x2d,
-	0xbc, 0x31, 0x0b, 0x40, 0xc1, 0xce, 0x96, 0x73, 0xd5, 0x7c, 0xf3, 0xc6, 0x4c, 0x8d, 0x14, 0xf6,
-	0x8b, 0x1a, 0x75, 0x81, 0x71, 0x65, 0x0b, 0xdf, 0x5f, 0x0a, 0x65, 0xe0, 0x7f, 0xa0, 0x33, 0xdd,
-	0x1b, 0xa0, 0xf2, 0x48, 0x8a, 0x21, 0x0f, 0x68, 0xf0, 0x92, 0xf7, 0x07, 0x3c, 0xe0, 0x6a, 0x74,
-	0x4d, 0xf4, 0xdb, 0xf8, 0xc1, 0x72, 0xaa, 0xf3, 0x7f, 0x7f, 0xbb, 0x01, 0xcc, 0xb4, 0xe4, 0x39,
-	0x51, 0x64, 0x0a, 0x5c, 0xc7, 0x6b, 0xa0, 0x88, 0xa2, 0x1a, 0x32, 0x57, 0x2d, 0x2c, 0x68, 0xbd,
-	0x76, 0x3e, 0xd6, 0x92, 0xa6, 0x51, 0xa6, 0x14, 0x99, 0x4d, 0x29, 0x32, 0x9d, 0xde, 0x8e, 0xe7,
-	0xf6, 0x02, 0x54, 0xc2, 0x5b, 0xff, 0x93, 0xc3, 0xb9, 0x06, 0x30, 0x8b, 0xe0, 0xf5, 0xd9, 0x59,
-	0xb2, 0x76, 0xe6, 0xe8, 0x16, 0x0f, 0xbe, 0x53, 0x5d, 0x2d, 0x4c, 0x9e, 0xb2, 0x3e, 0x23, 0x6c,
-	0xa7, 0xb5, 0xdf, 0xda, 0x5b, 0x64, 0xb3, 0x62, 0x82, 0x9d, 0xc7, 0x57, 0x4b, 0x32, 0x1c, 0x5f,
-	0x10, 0x2e, 0xa5, 0x36, 0xd2, 0x4a, 0xf5, 0x5c, 0x36, 0x8d, 0xce, 0x93, 0x2b, 0x66, 0x19, 0x94,
-	0x77, 0xb8, 0x30, 0xd3, 0x14, 0x6b, 0x7b, 0x91, 0xcb, 0xfc, 0x28, 0x39, 0x3b, 0x2b, 0x75, 0x89,
-	0xff, 0xb3, 0x17, 0xbf, 0xc6, 0x2e, 0x3a, 0x1d, 0xbb, 0xe8, 0xef, 0xd8, 0x45, 0xdf, 0x26, 0x6e,
-	0xe6, 0x74, 0xe2, 0x66, 0x7e, 0x4f, 0xdc, 0xcc, 0xdb, 0x47, 0x8c, 0xab, 0x0f, 0x83, 0xb6, 0xd7,
-	0x11, 0xa1, 0x7f, 0x48, 0x24, 0x8f, 0xc8, 0x6e, 0x97, 0xb4, 0xc1, 0x8f, 0x17, 0xe0, 0xc9, 0xd9,
-	0x0a, 0xd4, 0xab, 0x0a, 0xda, 0x6b, 0xf1, 0xfa, 0xdb, 0xfb, 0x1f, 0x00, 0x00, 0xff, 0xff, 0xd4,
-	0xa3, 0x5d, 0xf6, 0xb4, 0x05, 0x00, 0x00,
+	0x14, 0xc7, 0x19, 0x48, 0x9a, 0x30, 0xad, 0x35, 0x6c, 0x8c, 0xc0, 0xaa, 0x1b, 0x44, 0xab, 0x44,
+	0x65, 0x37, 0x50, 0x3d, 0xd8, 0x5b, 0xad, 0x1e, 0x4c, 0x24, 0xa9, 0x54, 0x2f, 0x5e, 0xc8, 0xc0,
+	0x8e, 0xe3, 0x44, 0x76, 0x67, 0x99, 0x37, 0x90, 0x72, 0x35, 0x31, 0xd1, 0x9b, 0x89, 0x5e, 0xfc,
+	0x16, 0x7e, 0x0c, 0x8f, 0x3d, 0x7a, 0x34, 0x70, 0xf0, 0xe4, 0x77, 0x30, 0xc3, 0x0e, 0x15, 0xcb,
+	0x2e, 0xb5, 0xa7, 0xde, 0x66, 0xe7, 0xfd, 0xdf, 0xff, 0xfd, 0x5e, 0xe6, 0xed, 0xc3, 0xa5, 0x50,
+	0x8c, 0x88, 0x47, 0xb8, 0xf4, 0xa5, 0x88, 0xbc, 0x51, 0xc3, 0x53, 0x87, 0x6e, 0x24, 0x85, 0x12,
+	0xd6, 0x45, 0x1d, 0x71, 0x4d, 0xc4, 0x1d, 0x35, 0x6c, 0xa7, 0x27, 0x20, 0x10, 0xe0, 0x75, 0x09,
+	0x50, 0x6f, 0xd4, 0xe8, 0x52, 0x45, 0x1a, 0x5e, 0x4f, 0xf0, 0x30, 0x4e, 0xb0, 0x2f, 0x31, 0xc1,
+	0xc4, 0xec, 0xe8, 0xe9, 0x93, 0xb9, 0x2d, 0xc7, 0x59, 0x9d, 0x38, 0x10, 0x7f, 0x98, 0x50, 0xd1,
+	0x18, 0x06, 0xc0, 0x74, 0xe5, 0x00, 0x98, 0x09, 0x5c, 0x3b, 0x09, 0xc5, 0x68, 0x48, 0x81, 0x9b,
+	0xbc, 0xea, 0x47, 0x84, 0x2f, 0xb7, 0x80, 0xed, 0xf5, 0x09, 0x0f, 0x76, 0x63, 0x51, 0x9b, 0x0e,
+	0x86, 0x14, 0x94, 0x75, 0x1d, 0x6f, 0x0c, 0x81, 0xca, 0x0e, 0xf1, 0x7d, 0x49, 0x01, 0x4a, 0xa8,
+	0x82, 0x6a, 0xf9, 0xf6, 0xba, 0xbe, 0xdb, 0x8d, 0xaf, 0xac, 0x87, 0x18, 0xcf, 0xb4, 0x1d, 0x35,
+	0x8e, 0x68, 0x29, 0x5b, 0x41, 0xb5, 0xcd, 0xa6, 0xed, 0x9e, 0x68, 0xd6, 0x7d, 0xae, 0x25, 0x2f,
+	0xc6, 0x11, 0x6d, 0xe7, 0x07, 0xf3, 0xe3, 0x4e, 0xe1, 0xdd, 0xaf, 0x6f, 0x77, 0xfe, 0x29, 0x50,
+	0x2d, 0xe3, 0xe2, 0x12, 0x0a, 0x44, 0x22, 0x04, 0x5a, 0xfd, 0x8c, 0x70, 0xb5, 0x05, 0xac, 0x45,
+	0xe4, 0xdb, 0x03, 0xd1, 0xe3, 0xa4, 0x3f, 0xf3, 0xdc, 0xa7, 0xf2, 0xb5, 0x90, 0x01, 0xf5, 0xe7,
+	0xc8, 0x75, 0x6c, 0xf5, 0x44, 0xa8, 0xa4, 0xe8, 0xf7, 0x97, 0xc0, 0x0b, 0x7f, 0x23, 0x73, 0xfc,
+	0x2d, 0xbc, 0xb9, 0x08, 0x40, 0xa1, 0x94, 0xad, 0xe4, 0x6a, 0xf9, 0xf6, 0x85, 0x85, 0x1e, 0x29,
+	0xec, 0x14, 0x35, 0x6a, 0x82, 0x71, 0x75, 0x0b, 0xdf, 0x58, 0x09, 0x65, 0xe0, 0xbf, 0xa0, 0x63,
+	0xdd, 0x4b, 0xa0, 0x72, 0x5f, 0x8a, 0x11, 0xf7, 0xa9, 0xff, 0x8c, 0x0f, 0x86, 0xdc, 0xe7, 0x6a,
+	0x7c, 0x4e, 0xf4, 0xb7, 0xf0, 0xcd, 0xd5, 0x54, 0x06, 0xff, 0x2b, 0xc2, 0x57, 0x5a, 0xc0, 0x9e,
+	0x06, 0x91, 0x90, 0xca, 0x3c, 0xcc, 0x63, 0xa2, 0xc8, 0x1c, 0xbb, 0x89, 0xd7, 0x40, 0x11, 0x45,
+	0x35, 0x6a, 0xae, 0xb6, 0x9e, 0x30, 0x00, 0xda, 0xff, 0x40, 0x4b, 0xda, 0x46, 0x99, 0xd2, 0x6a,
+	0x36, 0xa5, 0xd5, 0xf4, 0x1e, 0x1c, 0x7c, 0x35, 0x19, 0x2d, 0x66, 0x6f, 0xfe, 0xce, 0xe1, 0x5c,
+	0x0b, 0x98, 0x45, 0xf0, 0xc6, 0xe2, 0x5c, 0x59, 0xb7, 0x97, 0x18, 0x93, 0x7f, 0x02, 0xbb, 0x76,
+	0xba, 0x30, 0x2e, 0x65, 0xbd, 0x47, 0xb8, 0x94, 0x36, 0x0a, 0xd6, 0x76, 0x92, 0xcd, 0x29, 0xd3,
+	0x6c, 0xdf, 0x3f, 0x5b, 0x92, 0xe1, 0xf8, 0x80, 0x70, 0x39, 0xf5, 0x51, 0xad, 0x54, 0xcf, 0x55,
+	0x93, 0x69, 0x3f, 0x38, 0x63, 0x96, 0x41, 0x89, 0x70, 0x61, 0xe9, 0x69, 0xac, 0x7b, 0x49, 0x5e,
+	0x69, 0xc3, 0x65, 0xd7, 0xff, 0x53, 0x1d, 0x57, 0x7c, 0xf4, 0xe4, 0xfb, 0xc4, 0x41, 0x47, 0x13,
+	0x07, 0xfd, 0x9c, 0x38, 0xe8, 0xd3, 0xd4, 0xc9, 0x1c, 0x4d, 0x9d, 0xcc, 0x8f, 0xa9, 0x93, 0x79,
+	0x75, 0x97, 0x71, 0xf5, 0x66, 0xd8, 0x75, 0x7b, 0x22, 0xf0, 0xf6, 0x88, 0xe4, 0x21, 0xa9, 0xf7,
+	0x49, 0x17, 0xbc, 0xd9, 0x7a, 0x3c, 0x3c, 0x5e, 0x90, 0x7a, 0x91, 0x41, 0x77, 0x6d, 0xb6, 0x1c,
+	0xb7, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x0c, 0x62, 0xbc, 0xbb, 0xd2, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -462,7 +462,7 @@ type MsgClient interface {
 	ClaimAirdrop(ctx context.Context, in *MsgClaimAirdropRequest, opts ...grpc.CallOption) (*MsgClaimAirdropResponse, error)
 	MarkSocialQuestPerformed(ctx context.Context, in *MsgMarkSocialQuestPerformedRequest, opts ...grpc.CallOption) (*MsgMarkSocialQuestPerformedResponse, error)
 	MarkUserProvidedLiquidity(ctx context.Context, in *MsgMarkUserProvidedLiquidityRequest, opts ...grpc.CallOption) (*MsgMarkUserProvidedLiquidityResponse, error)
-	AirdropData(ctx context.Context, in *MsgAirdropDataRequest, opts ...grpc.CallOption) (*MsgAirdropDataResponse, error)
+	ImportAirdropData(ctx context.Context, in *MsgImportAirdropDataRequest, opts ...grpc.CallOption) (*MsgImportAirdropDataResponse, error)
 }
 
 type msgClient struct {
@@ -500,9 +500,9 @@ func (c *msgClient) MarkUserProvidedLiquidity(ctx context.Context, in *MsgMarkUs
 	return out, nil
 }
 
-func (c *msgClient) AirdropData(ctx context.Context, in *MsgAirdropDataRequest, opts ...grpc.CallOption) (*MsgAirdropDataResponse, error) {
-	out := new(MsgAirdropDataResponse)
-	err := c.cc.Invoke(ctx, "/nova.airdrop.v1.Msg/AirdropData", in, out, opts...)
+func (c *msgClient) ImportAirdropData(ctx context.Context, in *MsgImportAirdropDataRequest, opts ...grpc.CallOption) (*MsgImportAirdropDataResponse, error) {
+	out := new(MsgImportAirdropDataResponse)
+	err := c.cc.Invoke(ctx, "/nova.airdrop.v1.Msg/ImportAirdropData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -514,7 +514,7 @@ type MsgServer interface {
 	ClaimAirdrop(context.Context, *MsgClaimAirdropRequest) (*MsgClaimAirdropResponse, error)
 	MarkSocialQuestPerformed(context.Context, *MsgMarkSocialQuestPerformedRequest) (*MsgMarkSocialQuestPerformedResponse, error)
 	MarkUserProvidedLiquidity(context.Context, *MsgMarkUserProvidedLiquidityRequest) (*MsgMarkUserProvidedLiquidityResponse, error)
-	AirdropData(context.Context, *MsgAirdropDataRequest) (*MsgAirdropDataResponse, error)
+	ImportAirdropData(context.Context, *MsgImportAirdropDataRequest) (*MsgImportAirdropDataResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -530,8 +530,8 @@ func (*UnimplementedMsgServer) MarkSocialQuestPerformed(ctx context.Context, req
 func (*UnimplementedMsgServer) MarkUserProvidedLiquidity(ctx context.Context, req *MsgMarkUserProvidedLiquidityRequest) (*MsgMarkUserProvidedLiquidityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MarkUserProvidedLiquidity not implemented")
 }
-func (*UnimplementedMsgServer) AirdropData(ctx context.Context, req *MsgAirdropDataRequest) (*MsgAirdropDataResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AirdropData not implemented")
+func (*UnimplementedMsgServer) ImportAirdropData(ctx context.Context, req *MsgImportAirdropDataRequest) (*MsgImportAirdropDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportAirdropData not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -592,20 +592,20 @@ func _Msg_MarkUserProvidedLiquidity_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_AirdropData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgAirdropDataRequest)
+func _Msg_ImportAirdropData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgImportAirdropDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).AirdropData(ctx, in)
+		return srv.(MsgServer).ImportAirdropData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/nova.airdrop.v1.Msg/AirdropData",
+		FullMethod: "/nova.airdrop.v1.Msg/ImportAirdropData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).AirdropData(ctx, req.(*MsgAirdropDataRequest))
+		return srv.(MsgServer).ImportAirdropData(ctx, req.(*MsgImportAirdropDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -627,8 +627,8 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_MarkUserProvidedLiquidity_Handler,
 		},
 		{
-			MethodName: "AirdropData",
-			Handler:    _Msg_AirdropData_Handler,
+			MethodName: "ImportAirdropData",
+			Handler:    _Msg_ImportAirdropData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -817,7 +817,7 @@ func (m *MsgMarkUserProvidedLiquidityResponse) MarshalToSizedBuffer(dAtA []byte)
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgAirdropDataRequest) Marshal() (dAtA []byte, err error) {
+func (m *MsgImportAirdropDataRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -827,12 +827,12 @@ func (m *MsgAirdropDataRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgAirdropDataRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgImportAirdropDataRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgAirdropDataRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgImportAirdropDataRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -861,7 +861,7 @@ func (m *MsgAirdropDataRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgAirdropDataResponse) Marshal() (dAtA []byte, err error) {
+func (m *MsgImportAirdropDataResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -871,12 +871,12 @@ func (m *MsgAirdropDataResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgAirdropDataResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgImportAirdropDataResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgAirdropDataResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgImportAirdropDataResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -976,7 +976,7 @@ func (m *MsgMarkUserProvidedLiquidityResponse) Size() (n int) {
 	return n
 }
 
-func (m *MsgAirdropDataRequest) Size() (n int) {
+func (m *MsgImportAirdropDataRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -995,7 +995,7 @@ func (m *MsgAirdropDataRequest) Size() (n int) {
 	return n
 }
 
-func (m *MsgAirdropDataResponse) Size() (n int) {
+func (m *MsgImportAirdropDataResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1489,7 +1489,7 @@ func (m *MsgMarkUserProvidedLiquidityResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgAirdropDataRequest) Unmarshal(dAtA []byte) error {
+func (m *MsgImportAirdropDataRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1512,10 +1512,10 @@ func (m *MsgAirdropDataRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgAirdropDataRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgImportAirdropDataRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgAirdropDataRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgImportAirdropDataRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1605,7 +1605,7 @@ func (m *MsgAirdropDataRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgAirdropDataResponse) Unmarshal(dAtA []byte) error {
+func (m *MsgImportAirdropDataResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1628,10 +1628,10 @@ func (m *MsgAirdropDataResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgAirdropDataResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgImportAirdropDataResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgAirdropDataResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgImportAirdropDataResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
