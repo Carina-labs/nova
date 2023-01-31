@@ -16,7 +16,6 @@ import (
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	icahosttypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/host/types"
-	icatypes "github.com/cosmos/ibc-go/v3/modules/apps/27-interchain-accounts/types"
 	transfertypes "github.com/cosmos/ibc-go/v3/modules/apps/transfer/types"
 	ibcclienttypes "github.com/cosmos/ibc-go/v3/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v3/modules/core/04-channel/types"
@@ -364,7 +363,6 @@ func (suite *KeeperTestSuite) TestDelegate() {
 		denom         string
 		depositor     sdk.AccAddress
 		result        types.DelegateRecord
-		seq           uint64
 		err           bool
 	}{
 		{
@@ -406,7 +404,6 @@ func (suite *KeeperTestSuite) TestDelegate() {
 					},
 				},
 			},
-			seq: 1,
 			err: false,
 		},
 		{
@@ -426,7 +423,6 @@ func (suite *KeeperTestSuite) TestDelegate() {
 				TimeoutTimestamp:  uint64(10),
 			},
 			result: types.DelegateRecord{},
-			seq:    1,
 			err:    true,
 		},
 		{
@@ -468,7 +464,6 @@ func (suite *KeeperTestSuite) TestDelegate() {
 					},
 				},
 			},
-			seq: 1,
 			err: true,
 		},
 		{
@@ -488,63 +483,12 @@ func (suite *KeeperTestSuite) TestDelegate() {
 				TimeoutTimestamp:  uint64(10),
 			},
 			result: types.DelegateRecord{},
-			seq:    1,
 			err:    true,
-		},
-		{
-			name:      "fail case 4 - ack not found",
-			depositor: depositor,
-			zoneId:    zoneId,
-			denom:     baseDenom,
-			depositRecord: types.DepositRecord{
-				ZoneId:    zoneId,
-				Depositor: depositor.String(),
-				Records: []*types.DepositRecordContent{
-					{
-						Claimer: depositor.String(),
-						Amount: &sdk.Coin{
-							Amount: sdk.NewInt(10000),
-							Denom:  baseIbcDenom,
-						},
-						State: types.DepositSuccess,
-					},
-				},
-			},
-			msg: types.MsgDelegate{
-				ZoneId:            zoneId,
-				ControllerAddress: baseOwnerAcc.String(),
-				Version:           1,
-				TimeoutTimestamp:  uint64(10),
-			},
-			result: types.DelegateRecord{
-				ZoneId:  zoneId,
-				Claimer: depositor.String(),
-				Records: map[uint64]*types.DelegateRecordContent{
-					0: {
-						State: types.DelegateSuccess,
-						Amount: &sdk.Coin{
-							Amount: sdk.NewInt(10000),
-							Denom:  baseIbcDenom,
-						},
-						OracleVersion: 1,
-					},
-				},
-			},
-			seq: 3,
-			err: true,
 		},
 	}
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			if tc.seq != 1 {
-				//set channel sequence
-				zoneInfo, _ := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
-				suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceSend(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
-				if tc.err {
-					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetPacketCommitment(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq-1, []byte{2})
-				}
-			}
 			suite.setValidator()
 			hostAddr := suite.setHostAddr(tc.zoneId)
 
@@ -906,7 +850,6 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 		burnAmount        sdk.Int
 		undelegateResult  []*types.UndelegateRecord
 		result            []*types.WithdrawRecord
-		seq               uint64
 		err               bool
 	}{
 		{
@@ -1030,7 +973,6 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 					},
 				},
 			},
-			seq: 1,
 			err: false,
 		},
 		{
@@ -1069,7 +1011,6 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 			undelegateResult: []*types.UndelegateRecord(nil),
 			burnAmount:       sdk.NewIntWithDecimal(0, 18),
 			result:           []*types.WithdrawRecord{},
-			seq:              1,
 			err:              true,
 		},
 		{
@@ -1126,22 +1067,12 @@ func (suite *KeeperTestSuite) TestUndelegate() {
 			},
 			burnAmount: sdk.NewIntWithDecimal(10000, 18),
 			result:     []*types.WithdrawRecord{},
-			seq:        1,
 			err:        true,
 		},
 	}
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			if tc.seq != 1 {
-				//set channel sequence
-				zoneInfo, _ := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
-				suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceSend(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
-				if tc.err {
-					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetPacketCommitment(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq-1, []byte{2})
-				}
-			}
-
 			delegation := stakingtypes.MsgDelegate{
 				DelegatorAddress: hostAddr.String(),
 				ValidatorAddress: valAddr,
@@ -1217,7 +1148,6 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 		msg                  types.MsgIcaWithdraw
 		denom                string
 		result               bool
-		seq                  uint64
 		err                  bool
 	}{
 		{
@@ -1261,7 +1191,6 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 			},
 			denom:  baseDenom,
 			result: true,
-			seq:    1,
 			err:    false,
 		},
 		{
@@ -1305,7 +1234,6 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 			},
 			denom:  baseDenom,
 			result: true,
-			seq:    2,
 			err:    true,
 		},
 		{
@@ -1349,8 +1277,7 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 			},
 			denom:  baseDenom,
 			result: false,
-			seq:    3,
-			err:    true,
+			err:    false,
 		},
 		{
 			name:         "fail case 3 - time",
@@ -1393,51 +1320,6 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 			},
 			denom:  baseDenom,
 			result: false,
-			seq:    1,
-			err:    true,
-		},
-		{
-			name:         "fail case 4 - ack not receive",
-			zoneId:       zoneId,
-			withdrawAddr: withdrawAddr,
-			withdrawRecord: types.WithdrawRecord{
-				ZoneId:     zoneId,
-				Withdrawer: withdrawAddr.String(),
-				Records: map[uint64]*types.WithdrawRecordContent{
-					0: {
-						Amount:          sdk.NewInt(10000),
-						State:           types.WithdrawStatusRegistered,
-						OracleVersion:   1,
-						WithdrawVersion: 0,
-						CompletionTime:  suite.chainB.GetContext().BlockTime(),
-					},
-				},
-			},
-			resultWithdrawRecord: types.WithdrawRecord{
-				ZoneId:     zoneId,
-				Withdrawer: withdrawAddr.String(),
-				Records: map[uint64]*types.WithdrawRecordContent{
-					0: {
-						Amount:          sdk.NewInt(10000),
-						State:           types.WithdrawStatusTransferRequest,
-						OracleVersion:   1,
-						WithdrawVersion: 0,
-						CompletionTime:  suite.chainB.GetContext().BlockTime(),
-					},
-				},
-			},
-			msg: types.MsgIcaWithdraw{
-				ZoneId:               zoneId,
-				ControllerAddress:    baseOwnerAcc.String(),
-				IcaTransferPortId:    icaPortId,
-				IcaTransferChannelId: icaChanId,
-				ChainTime:            suite.chainA.GetContext().BlockTime().Add(time.Hour),
-				Version:              0,
-				TimeoutTimestamp:     uint64(10),
-			},
-			denom:  baseDenom,
-			result: true,
-			seq:    4,
 			err:    true,
 		},
 	}
@@ -1445,14 +1327,6 @@ func (suite *KeeperTestSuite) TestIcaWithdraw() {
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
 			excCtxA := suite.chainA.GetContext()
-			if tc.seq != 1 {
-				//set channel sequence
-				zoneInfo, _ := suite.chainA.GetApp().IcaControlKeeper.GetRegisteredZone(suite.chainA.GetContext(), zoneId)
-				suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetNextSequenceSend(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq)
-				if tc.err {
-					suite.chainA.GetApp().IBCKeeper.ChannelKeeper.SetPacketCommitment(suite.chainA.GetContext(), icatypes.PortPrefix+zoneInfo.IcaConnectionInfo.PortId, zoneInfo.IcaConnectionInfo.ChannelId, tc.seq-1, []byte{2})
-				}
-			}
 
 			suite.chainA.GetApp().GalKeeper.IsValidUndelegateVersion(suite.chainA.GetContext(), tc.zoneId, 0)
 			suite.chainA.GetApp().GalKeeper.SetWithdrawRecord(suite.chainA.GetContext(), &tc.withdrawRecord)
