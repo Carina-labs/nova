@@ -7,4 +7,5 @@ var (
 	ErrTimeConditionNotMet          = errors.Register(ModuleName, 2, "time condition not met")
 	ErrAirdropWasOver               = errors.Register(ModuleName, 3, "airdrop was over")
 	ErrUserNotEligible              = errors.Register(ModuleName, 4, "user not eligible for the airdrop")
+	ErrQuestTypeNotSupport          = errors.Register(ModuleName, 5, "this quest type is not supported")
 )

@@ -65,8 +65,8 @@ func (k Keeper) markUserPerformedQuest(ctx sdk.Context, userAddr sdk.AccAddress,
 	// mark this quest as performed
 	quest, ok := userState.QuestStates[int32(questType)]
 	if !ok {
-		ctx.Logger().Error("err: unsupported quest type was given", "questType", questType)
-		return fmt.Errorf("this quest type is not supported")
+		ctx.Logger().Error("unsupported quest type was given", "questType", questType, "module", types.ModuleName)
+		return types.ErrQuestTypeNotSupport
 	}
 
 	if quest.State != types.QuestStateType_QUEST_STATE_NOT_STARTED || !quest.AchievedAt.IsZero() {
