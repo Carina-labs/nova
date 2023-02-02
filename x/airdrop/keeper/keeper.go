@@ -49,7 +49,7 @@ func (k Keeper) BurnToken(ctx sdk.Context) {
 
 	err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.NewCoins(amount))
 	if err != nil {
-		ctx.Logger().Error("airdrop", "burn token error", err)
+		ctx.Logger().Error("burn token", "module", types.ModuleName, "err", err)
 	}
 
 	balance := k.bankKeeper.GetBalance(ctx, moduleAccount.GetAddress(), denom)

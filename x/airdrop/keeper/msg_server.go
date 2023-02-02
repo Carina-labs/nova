@@ -153,14 +153,14 @@ func (m msgServer) ImportAirdropData(goctx context.Context, request *types.MsgIm
 	}
 
 	if !m.keeper.isValidControllerAddr(ctx, signer) {
-		ctx.Logger().Debug("invalid controller address", "addr", request.GetControllerAddress(), "module", types.ModuleName)
+		ctx.Logger().Debug("invalid controller address", "module", types.ModuleName, "addr", request.GetControllerAddress())
 		return nil, sdkerrors.ErrUnauthorized
 	}
 
 	for _, data := range request.States {
 		userAddr, err := sdk.AccAddressFromBech32(data.Recipient)
 		if err != nil {
-			ctx.Logger().Debug("invalid user address", "user_addr", userAddr, "module", types.ModuleName)
+			ctx.Logger().Debug("invalid user address", "module", types.ModuleName, "user_addr", userAddr)
 			return nil, err
 		}
 
