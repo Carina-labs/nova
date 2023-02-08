@@ -99,7 +99,7 @@ func (k Keeper) GetIBCHashDenom(portId, chanId, baseDenom string) string {}
 ## Send Msgs
 `send_msgs.go` sends an ICA message.
 
-### SendIcaTx
+### SendTx
 ```go
-func (k Keeper) SendIcaTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg) error {}
+func (k Keeper) SendTx(ctx sdk.Context, controllerId, connectionId string, msgs []sdk.Msg) error {}
 ```

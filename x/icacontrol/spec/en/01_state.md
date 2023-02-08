@@ -49,6 +49,7 @@ Connection information includes connection-id and port-id.
 message IcaConnectionInfo {
   string connection_id = 1;
   string port_id = 2;
+  string channel_id = 3;
 }
 ```
 
@@ -74,6 +75,6 @@ Controller information includes zone_id and controller address.
 ```protobuf
 message ControllerAddressInfo {
   string zone_id = 1;
-  repeated string controller_address = 2;
+  string controller_address = 2;
 }
 ```
