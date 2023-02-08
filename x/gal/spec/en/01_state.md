@@ -2,11 +2,13 @@
 ---
 
 ## Overview
+
 This document describes the states used by the `GAL` module.
 
 ---
 
 ### DepositRecord
+
 ```protobuf
 message DepositRecord {
   string zone_id = 1;
@@ -14,10 +16,11 @@ message DepositRecord {
   repeated DepositRecordContent records = 3;
 }
 ```
+
 `DepositRecord` manages historical data that you deposit in a particular zone.
 
-
 ### DepositRecordContent
+
 ```protobuf
 message DepositRecordContent {
   string claimer = 1;
@@ -25,9 +28,11 @@ message DepositRecordContent {
   int64 state = 3;
 }
 ```
+
 `DepositRecordContent` stores the user's Deposit details. sn-tokens are paid to the claimer.
 
 ### DelegateRecord
+
 ```protobuf
 message DelegateRecord {
   string zone_id = 1;
@@ -35,9 +40,11 @@ message DelegateRecord {
   map <uint64, DelegateRecordContent> records = 3;
 }
 ```
+
 `DelegateRecord` manages historical data that you delegate in a particular zone.
 
 ### DelegateRecordContent
+
 ```protobuf
 message DelegateRecordContent {
   cosmos.base.v1beta1.Coin amount = 1;
@@ -45,9 +52,11 @@ message DelegateRecordContent {
   uint64 oracle_version = 3;
 }
 ```
+
 `DelegateRecordContent` stores the user's delegate details.
 
 ### UndelegateRecord
+
 ```protobuf
 message UndelegateRecord {
   string zone_id = 1;
@@ -55,9 +64,11 @@ message UndelegateRecord {
   repeated UndelegateRecordContent records = 3;
 }
 ```
+
 `UndelegateRecord` manages the history of the user's undelegation requests.
 
 ### UndelegateRecordContent
+
 ```protobuf
 message UndelegateRecordContent {
   string withdrawer = 1;
@@ -68,11 +79,14 @@ message UndelegateRecordContent {
   uint64 undelegate_version = 6;
 }
 ```
+
 UndelegateRecordContent manages information about each of the user's undelegated requests.
 
-Save the Oracle version at the time of the undelegation request and use it to calculate the amount of tokens that the user receives back.
+Save the Oracle version at the time of the undelegation request and use it to calculate the amount of tokens that the
+user receives back.
 
 ### WithdrawRecord
+
 ```protobuf
 message WithdrawRecord {
   string zone_id = 1;
@@ -80,9 +94,11 @@ message WithdrawRecord {
   map <uint64, WithdrawRecordContent> records = 3;
 }
 ```
+
 `WithdrawRecord` manages records of user withdrawal requests.
 
 ### WithdrawRecordContent
+
 ```protobuf
 message WithdrawRecordContent {
   string amount = 1[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
@@ -93,4 +109,17 @@ message WithdrawRecordContent {
   google.protobuf.Timestamp completion_time = 6[(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
 }
 ```
-`WithdrawRecordContent` manages detailed records of user withdrawal requests. The withdrawal request is made once every few days, so the version of the last bot's action and the withdrawal completion time are saved together.
+
+`WithdrawRecordContent` manages detailed records of user withdrawal requests. The withdrawal request is made once every
+few days, so the version of the last bot's action and the withdrawal completion time are saved together.
+
+### AsstInfo
+
+```protobuf
+message AssetInfo {
+  string zone_id = 1;
+  string un_minted_w_asset = 2[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
+}
+```
+
+`AssetInfo` manages the information not minted snAsset.

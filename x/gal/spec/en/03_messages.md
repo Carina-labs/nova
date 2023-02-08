@@ -1,22 +1,27 @@
 # Messages
 
 ---
+
 ## MsgDeposit
 
 ---
+
 ```protobuf
 message MsgDeposit {
   string zone_id = 1;
   string depositor = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   string claimer = 3;
   cosmos.base.v1beta1.Coin amount = 4 [(gogoproto.nullable) = false];
+  uint64 timeout_timestamp = 5;
 }
 ```
+
 `MsgDeposit` is a message used when depositing for asset liquidity.
 
 ## MsgDepositResponse
 
 ---
+
 ```protobuf
 message MsgDepositResponse {
   string receiver = 1;
@@ -24,18 +29,22 @@ message MsgDepositResponse {
   cosmos.base.v1beta1.Coin deposited_amount = 3 [(gogoproto.nullable) = false];
 }
 ```
+
 `MsgDepositResponse` is a message used response for `MsgDepsit`.
 
 ## MsgDelegate
 
 ---
+
 ```protobuf
 message MsgDelegate {
   string zone_id = 1;
   string controller_address = 2;
   uint64 version = 3;
+  uint64 timeout_timestamp = 4;
 }
 ```
+
 `MsgDelegate` is the message the bot requests for a delegate.
 
 ## MsgPendingUndelegate
@@ -50,9 +59,8 @@ message MsgPendingUndelegate {
 }
 ```
 `MsgPendingUndelegate` is the message the user requests to undelegate.
-This request does not result in an immediate Undelegate request. 
+This request does not result in an immediate Undelegate request.
 Requests recorded in the Undelegate Record actually result in a undelegate request via `Undelegate`.
-
 
 ## MsgPendingUndelegateResponse
 
@@ -76,6 +84,7 @@ message MsgUndelegate {
   string zone_id = 1;
   string controller_address = 2;
   uint64 version = 3;
+  uint64 timeout_timestamp = 4;
 }
 ```
 `MsgUndelegate` is the message the bot requests to undelegate.
@@ -99,6 +108,7 @@ message MsgUndelegateResponse{
 message MsgWithdraw {
   string zone_id = 1;
   string withdrawer = 2[(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string from_address = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 ```
 `MsgWithdraw` is a message used when user want to withdraw their asset with IBC.
@@ -107,7 +117,7 @@ message MsgWithdraw {
 
 ---
 ```protobuf
-mmessage MsgWithdrawResponse {
+message MsgWithdrawResponse {
   string withdrawer = 1;
   string withdraw_amount = 2[(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int", (gogoproto.nullable) = false];
 }
@@ -121,6 +131,7 @@ mmessage MsgWithdrawResponse {
 message MsgClaimSnAsset {
   string zone_id = 1;
   string claimer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string from_address = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 ```
 `MsgClaimSnAsset` receives the snAsset, which is the equity token for the assets deposited.
@@ -147,6 +158,7 @@ message MsgIcaWithdraw{
   string ica_transfer_channel_id = 4;
   google.protobuf.Timestamp chain_time = 5[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   uint64 version = 6;
+  uint64 timeout_timestamp = 7;
 }
 ```
 `MsgIcaWithdraw` remotely transfers the undelegated assets in the other zone to the Supernova chain.
@@ -158,3 +170,18 @@ message MsgIcaWithdraw{
 message MsgIcaWithdrawResponse {
 }
 ```
+
+## MsgClaimAllSnAsset
+
+---
+```protobuf
+message MsgClaimAllSnAsset {
+  string zone_id = 1;
+  string from_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+}
+
+message MsgClaimAllSnAssetResponse {
+  string claimer = 1;
+}
+```
+`MsgClaimAllSnAsset` claims snAsset for all users.
