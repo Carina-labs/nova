@@ -106,6 +106,7 @@ message MsgIcaDelegate{
   string zone_id = 1;
   string controller_address = 2;
   cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
+  uint64 timeout_timestamp = 4;
 }
 ```
 
@@ -126,6 +127,7 @@ message MsgIcaUndelegate{
   string zone_id = 1;
   string controller_address = 2;
   cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
+  uint64 timeout_timestamp = 4;
 }
 ```
 
@@ -147,6 +149,7 @@ message MsgIcaAutoStaking{
   string controller_address = 2;
   cosmos.base.v1beta1.Coin amount = 3[(gogoproto.nullable) = false];
   uint64 version = 4;
+  uint64 timeout_timestamp = 5;
 }
 ```
 
@@ -170,6 +173,7 @@ message MsgIcaTransfer{
   string ica_transfer_port_id = 4;
   string ica_transfer_channel_id = 5;
   cosmos.base.v1beta1.Coin amount = 6[(gogoproto.nullable) = false];
+  uint64 timeout_timestamp = 7;
 }
 ```
 
@@ -191,6 +195,7 @@ message MsgIcaAuthzGrant{
   string grantee = 2;
   string controller_address = 3;
   cosmos.authz.v1beta1.Grant grant = 4 [(gogoproto.nullable) = false];
+  uint64 timeout_timestamp = 5;
 }
 ```
 
@@ -213,6 +218,7 @@ message MsgIcaAuthzRevoke{
   string grantee = 2;
   string controller_address = 3;
   string msg_type_url = 4;
+  uint64 timeout_timestamp = 5;
 }
 ```
 
