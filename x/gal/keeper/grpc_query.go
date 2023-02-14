@@ -61,6 +61,9 @@ func (q QueryServer) ClaimableAmount(goCtx context.Context, request *types.Query
 	}
 
 	assets, err := q.keeper.TotalClaimableAssets(ctx, zone, addr)
+	if err == types.ErrNoDelegateRecord {
+		return &types.QueryClaimableAmountResponse{Amount: sdk.NewCoin(zone.SnDenom, sdk.NewInt(0))}, nil
+	}
 	if err != nil {
 		return nil, sdkerrors.Wrapf(types.ErrUnknown, "failed to get total claimable assets: %s", err.Error())
 	}
@@ -161,10 +164,7 @@ func (q QueryServer) DepositRecords(goCtx context.Context, request *types.QueryD
 		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
 	}
 
-	records, found := q.keeper.GetUserDepositRecord(ctx, request.ZoneId, user)
-	if !found {
-		return nil, types.ErrNoDepositRecord
-	}
+	records, _ := q.keeper.GetUserDepositRecord(ctx, request.ZoneId, user)
 
 	return &types.QueryDepositRecordResponse{
 		DepositRecord: records,
@@ -179,10 +179,7 @@ func (q QueryServer) DelegateRecords(goCtx context.Context, request *types.Query
 		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, err.Error())
 	}
 
-	records, found := q.keeper.GetUserDelegateRecord(ctx, request.ZoneId, user)
-	if !found {
-		return nil, types.ErrNoDelegateRecord
-	}
+	records, _ := q.keeper.GetUserDelegateRecord(ctx, request.ZoneId, user)
 
 	return &types.QueryDelegateRecordResponse{
 		DelegateRecord: records,
@@ -192,10 +189,7 @@ func (q QueryServer) DelegateRecords(goCtx context.Context, request *types.Query
 func (q QueryServer) UndelegateRecords(goCtx context.Context, request *types.QueryUndelegateRecordRequest) (*types.QueryUndelegateRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	result, found := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
-	if !found {
-		return nil, types.ErrNoUndelegateRecord
-	}
+	result, _ := q.keeper.GetUndelegateRecord(ctx, request.ZoneId, request.Address)
 
 	return &types.QueryUndelegateRecordResponse{
 		UndelegateRecord: result,
@@ -205,10 +199,7 @@ func (q QueryServer) UndelegateRecords(goCtx context.Context, request *types.Que
 func (q QueryServer) WithdrawRecords(goCtx context.Context, request *types.QueryWithdrawRecordRequest) (*types.QueryWithdrawRecordResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	result, found := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
-	if !found {
-		return nil, types.ErrNoWithdrawRecord
-	}
+	result, _ := q.keeper.GetWithdrawRecord(ctx, request.ZoneId, request.Address)
 
 	return &types.QueryWithdrawRecordResponse{
 		WithdrawRecord: result,

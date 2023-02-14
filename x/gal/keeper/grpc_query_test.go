@@ -245,11 +245,12 @@ func (suite *KeeperTestSuite) TestQueryDepositRecord() {
 	galKeeper := suite.App.GalKeeper
 
 	// query with invalid zone
-	_, err := queryClient.DepositRecords(ctx.Context(), &types.QueryDepositRecordRequest{
+	res, err := queryClient.DepositRecords(ctx.Context(), &types.QueryDepositRecordRequest{
 		ZoneId:  "invalid",
 		Address: fooUser.String(),
 	})
-	suite.Require().Error(err)
+	suite.Require().Nil(res.DepositRecord)
+	suite.Require().NoError(err)
 
 	// Save the deposit record to the keeper
 	token := sdk.NewInt64Coin(baseDenom, 100)
@@ -286,11 +287,12 @@ func (suite *KeeperTestSuite) TestQueryWithdrawRecord() {
 	galKeeper := suite.App.GalKeeper
 
 	// query with invalid zone
-	_, err := queryClient.WithdrawRecords(ctx.Context(), &types.QueryWithdrawRecordRequest{
+	res, err := queryClient.WithdrawRecords(ctx.Context(), &types.QueryWithdrawRecordRequest{
 		ZoneId:  zoneId,
 		Address: fooUser.String(),
 	})
-	suite.Require().Error(err)
+	suite.Require().Nil(res.WithdrawRecord)
+	suite.Require().NoError(err)
 
 	// Save the withdrawal record to the keeper
 	records := make(map[uint64]*types.WithdrawRecordContent)
@@ -328,11 +330,12 @@ func (suite *KeeperTestSuite) TestQueryUndelegateRecord() {
 	galKeeper := suite.App.GalKeeper
 
 	// query with invalid zone
-	_, err := queryClient.UndelegateRecords(ctx.Context(), &types.QueryUndelegateRecordRequest{
+	res, err := queryClient.UndelegateRecords(ctx.Context(), &types.QueryUndelegateRecordRequest{
 		ZoneId:  "invalid",
 		Address: fooUser.String(),
 	})
-	suite.Require().Error(err)
+	suite.Require().Nil(res.UndelegateRecord)
+	suite.Require().NoError(err)
 
 	// save the undelegate recod to the keeper
 	ibcDenom := suite.App.IcaControlKeeper.GetIBCHashDenom(transferPort, transferChannel, baseDenom)
@@ -582,5 +585,4 @@ func (suite *KeeperTestSuite) TestQueryTotalSnAssetSupply() {
 	})
 	suite.Require().NoError(err)
 	suite.Require().Equal(res.Amount, sdk.NewCoin(baseSnDenom, sdk.NewInt(10000)))
-
 }
