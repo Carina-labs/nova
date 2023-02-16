@@ -16,6 +16,7 @@ var (
 
 	zoneId       = "baseZone"
 	baseOwnerAcc = sdk.AccAddress(secp256k1.GenPrivKey().PubKey().Address())
+	ValAddress   = "testValAddr"
 	baseDenom    = "stake"
 	baseSnDenom  = "snstake"
 	baseDecimal  = int64(6)
@@ -106,6 +107,7 @@ func newBaseRegisteredZone() *icacontroltypes.RegisteredZone {
 		},
 		BaseDenom:            baseDenom,
 		SnDenom:              baseSnDenom,
+		ValidatorAddress:     ValAddress,
 		Decimal:              0,
 		DepositMaxEntries:    5,
 		UndelegateMaxEntries: 5,

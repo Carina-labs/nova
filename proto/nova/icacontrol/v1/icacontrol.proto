@@ -4,6 +4,7 @@ package nova.icacontrol.v1;
 import "gogoproto/gogo.proto";
 import "cosmos_proto/cosmos.proto";
 import "cosmos/base/v1beta1/coin.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/Carina-labs/nova/x/icacontrol/types";
 
@@ -41,4 +42,16 @@ message TransferConnectionInfo {
 message ControllerAddressInfo {
   string zone_id = 1;
   string controller_address = 2;
+}
+
+message AuthzGrantInfo {
+  string zone_id = 1;
+  repeated Grant grant_info = 2;
+}
+
+message Grant{
+  string grantee = 1;
+  IcaAccount granter = 2;
+  string grant = 3;
+  google.protobuf.Timestamp expiration = 4[(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
 }

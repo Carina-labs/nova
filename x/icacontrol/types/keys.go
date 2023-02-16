@@ -19,4 +19,5 @@ var (
 
 	KeyControllerAddress = []byte{0x03}
 	KeyZoneProposal      = []byte{0x04}
+	KeyAuthzGrantInfo    = []byte{0x05}
 )

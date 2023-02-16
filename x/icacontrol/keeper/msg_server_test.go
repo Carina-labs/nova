@@ -853,6 +853,15 @@ func (suite *KeeperTestSuite) TestAuthzGrant() {
 
 			auth := suite.chainB.GetApp().AuthzKeeper.GetAuthorizations(suite.chainB.GetContext(), tc.grantee, tc.granter)
 			suite.Equal(tc.result, auth[0].MsgTypeURL())
+
+			var result bool
+			authzInfo := suite.chainA.GetApp().IcaControlKeeper.GetAuthzGrant(suite.chainA.GetContext(), zoneId)
+			for _, grant := range authzInfo.GrantInfo {
+				if grant.Grant == tc.result {
+					result = true
+				}
+			}
+			suite.Require().True(result)
 		}
 	}
 }

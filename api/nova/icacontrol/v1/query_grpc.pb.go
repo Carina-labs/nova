@@ -26,6 +26,7 @@ type QueryClient interface {
 	AllZones(ctx context.Context, in *QueryAllZonesRequest, opts ...grpc.CallOption) (*QueryAllZonesResponse, error)
 	Zone(ctx context.Context, in *QueryZoneRequest, opts ...grpc.CallOption) (*QueryZoneResponse, error)
 	AutoStakingVersion(ctx context.Context, in *QueryAutoStakingVersion, opts ...grpc.CallOption) (*QueryAutoStakingVersionResponse, error)
+	IcaGrant(ctx context.Context, in *QueryIcaGrantRequest, opts ...grpc.CallOption) (*QueryIcaGrantResponse, error)
 	AutoStakingCurrentVersion(ctx context.Context, in *QueryCurrentAutoStakingVersion, opts ...grpc.CallOption) (*QueryCurrentAutoStakingVersionResponse, error)
 }
 
@@ -64,6 +65,15 @@ func (c *queryClient) AutoStakingVersion(ctx context.Context, in *QueryAutoStaki
 	return out, nil
 }
 
+func (c *queryClient) IcaGrant(ctx context.Context, in *QueryIcaGrantRequest, opts ...grpc.CallOption) (*QueryIcaGrantResponse, error) {
+	out := new(QueryIcaGrantResponse)
+	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Query/IcaGrant", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *queryClient) AutoStakingCurrentVersion(ctx context.Context, in *QueryCurrentAutoStakingVersion, opts ...grpc.CallOption) (*QueryCurrentAutoStakingVersionResponse, error) {
 	out := new(QueryCurrentAutoStakingVersionResponse)
 	err := c.cc.Invoke(ctx, "/nova.icacontrol.v1.Query/AutoStakingCurrentVersion", in, out, opts...)
@@ -81,6 +91,7 @@ type QueryServer interface {
 	AllZones(context.Context, *QueryAllZonesRequest) (*QueryAllZonesResponse, error)
 	Zone(context.Context, *QueryZoneRequest) (*QueryZoneResponse, error)
 	AutoStakingVersion(context.Context, *QueryAutoStakingVersion) (*QueryAutoStakingVersionResponse, error)
+	IcaGrant(context.Context, *QueryIcaGrantRequest) (*QueryIcaGrantResponse, error)
 	AutoStakingCurrentVersion(context.Context, *QueryCurrentAutoStakingVersion) (*QueryCurrentAutoStakingVersionResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
@@ -97,6 +108,9 @@ func (UnimplementedQueryServer) Zone(context.Context, *QueryZoneRequest) (*Query
 }
 func (UnimplementedQueryServer) AutoStakingVersion(context.Context, *QueryAutoStakingVersion) (*QueryAutoStakingVersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AutoStakingVersion not implemented")
+}
+func (UnimplementedQueryServer) IcaGrant(context.Context, *QueryIcaGrantRequest) (*QueryIcaGrantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IcaGrant not implemented")
 }
 func (UnimplementedQueryServer) AutoStakingCurrentVersion(context.Context, *QueryCurrentAutoStakingVersion) (*QueryCurrentAutoStakingVersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AutoStakingCurrentVersion not implemented")
@@ -168,6 +182,24 @@ func _Query_AutoStakingVersion_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_IcaGrant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryIcaGrantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).IcaGrant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/nova.icacontrol.v1.Query/IcaGrant",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).IcaGrant(ctx, req.(*QueryIcaGrantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Query_AutoStakingCurrentVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryCurrentAutoStakingVersion)
 	if err := dec(in); err != nil {
@@ -204,6 +236,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AutoStakingVersion",
 			Handler:    _Query_AutoStakingVersion_Handler,
+		},
+		{
+			MethodName: "IcaGrant",
+			Handler:    _Query_IcaGrant_Handler,
 		},
 		{
 			MethodName: "AutoStakingCurrentVersion",

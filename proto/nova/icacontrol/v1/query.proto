@@ -20,6 +20,9 @@ service Query {
   rpc AutoStakingVersion(QueryAutoStakingVersion) returns (QueryAutoStakingVersionResponse) {
     option (google.api.http).get = "/nova/icacontrol/v1/autostaking_version/{zone_id}/{version}";
   }
+  rpc IcaGrant(QueryIcaGrantRequest) returns (QueryIcaGrantResponse) {
+    option (google.api.http).get = "/nova/icacontrol/v1/ica_grant/{zone_id}";
+  }
   rpc AutoStakingCurrentVersion(QueryCurrentAutoStakingVersion) returns (QueryCurrentAutoStakingVersionResponse) {
     option (google.api.http).get = "/nova/icacontrol/v1/autostaking_version/{zone_id}";
   }
@@ -50,6 +53,14 @@ message QueryAutoStakingVersion {
 
 message QueryAutoStakingVersionResponse {
   IBCTrace version_info = 1;
+}
+
+message QueryIcaGrantRequest{
+  string zone_id = 1;
+}
+
+message QueryIcaGrantResponse{
+  AuthzGrantInfo grants = 1;
 }
 
 message QueryCurrentAutoStakingVersion {

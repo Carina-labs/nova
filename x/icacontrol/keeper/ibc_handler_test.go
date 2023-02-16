@@ -2,11 +2,13 @@ package keeper_test
 
 import (
 	"errors"
+	"github.com/cosmos/cosmos-sdk/x/authz"
 	distributiontype "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	"time"
 
 	galtypes "github.com/Carina-labs/nova/x/gal/types"
 	"github.com/Carina-labs/nova/x/icacontrol/types"
+	oracletypes "github.com/Carina-labs/nova/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -17,7 +19,12 @@ import (
 	"github.com/golang/protobuf/proto"
 )
 
-func (suite *KeeperTestSuite) SetVersion(msgType string, zoneInfo types.RegisteredZone) {
+func (suite *KeeperTestSuite) SetVersion(msgType string, zoneInfo *types.RegisteredZone) {
+	versionInfo := oracletypes.IBCTrace{
+		Version: uint64(0),
+		Height:  1,
+	}
+	suite.App.OracleKeeper.SetOracleVersion(suite.Ctx, zoneInfo.ZoneId, versionInfo)
 
 	switch msgType {
 	case "delegate":
@@ -74,24 +81,23 @@ func (suite *KeeperTestSuite) SetVersion(msgType string, zoneInfo types.Register
 		break
 	}
 	return
-
 }
-func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.RegisteredZone) icatypes.InterchainAccountPacketData {
+
+func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo *types.RegisteredZone) icatypes.InterchainAccountPacketData {
 	var msgs []sdk.Msg
 	switch msgType {
 	case "delegate":
 		delegateMsg := &stakingtypes.MsgDelegate{
-			DelegatorAddress: "test",
-			ValidatorAddress: zoneInfo[0].ValidatorAddress,
+			DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
+			ValidatorAddress: zoneInfo.ValidatorAddress,
 			Amount:           sdk.NewCoin("uatom", sdk.NewInt(1000)),
 		}
-
 		msgs = append(msgs, delegateMsg)
 		break
 	case "undelegate":
 		undelegateMsg := &stakingtypes.MsgUndelegate{
-			DelegatorAddress: "test",
-			ValidatorAddress: zoneInfo[0].ValidatorAddress,
+			DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
+			ValidatorAddress: zoneInfo.ValidatorAddress,
 			Amount:           sdk.NewCoin("uatom", sdk.NewInt(1000)),
 		}
 
@@ -99,14 +105,14 @@ func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.Registere
 		break
 	case "autostaking":
 		distMsg := &distributiontype.MsgWithdrawDelegatorReward{
-			DelegatorAddress: zoneInfo[0].IcaAccount.HostAddress,
-			ValidatorAddress: zoneInfo[0].ValidatorAddress,
+			DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
+			ValidatorAddress: zoneInfo.ValidatorAddress,
 		}
 		msgs = append(msgs, distMsg)
 
 		delegateMsg := &stakingtypes.MsgDelegate{
-			DelegatorAddress: zoneInfo[0].IcaAccount.HostAddress,
-			ValidatorAddress: zoneInfo[0].ValidatorAddress,
+			DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
+			ValidatorAddress: zoneInfo.ValidatorAddress,
 		}
 		msgs = append(msgs, delegateMsg)
 		break
@@ -115,7 +121,7 @@ func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.Registere
 			SourcePort:    "transfer",
 			SourceChannel: "channel-0",
 			Token:         sdk.NewCoin("uatom", sdk.NewInt(1000)),
-			Sender:        "test",
+			Sender:        zoneInfo.IcaAccount.HostAddress,
 			Receiver:      "receiver",
 			TimeoutHeight: ibcclienttypes.Height{
 				RevisionHeight: 0,
@@ -137,13 +143,24 @@ func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.Registere
 
 		msgs = append(msgs, bankMsg)
 		break
+	case "authzGrant":
+		spendLimit := sdk.NewCoins(sdk.NewCoin(baseDenom, sdk.NewInt(10000)))
+		authMsg := &authz.MsgGrant{
+			Granter: zoneInfo.IcaAccount.HostAddress,
+			Grantee: zoneInfo.IcaAccount.ControllerAddress,
+			Grant: authz.Grant{
+				Expiration: time.Now(),
+			},
+		}
+		authMsg.SetAuthorization(banktypes.NewSendAuthorization(spendLimit))
+		msgs = append(msgs, authMsg)
+		break
 	default:
 		return icatypes.InterchainAccountPacketData{
 			Type: icatypes.EXECUTE_TX,
 			Data: nil,
 		}
 	}
-
 	data, err := icatypes.SerializeCosmosTx(suite.App.AppCodec(), msgs)
 	suite.NoError(err)
 
@@ -154,14 +171,15 @@ func (suite *KeeperTestSuite) SetMsgs(msgType string, zoneInfo []types.Registere
 
 	return icapacket
 }
-func (suite *KeeperTestSuite) GetMsgs(msg string) *sdk.MsgData {
+
+func (suite *KeeperTestSuite) GetMsgs(msg string, zoneInfo *types.RegisteredZone) *sdk.MsgData {
 	var data sdk.MsgData
 	switch msg {
 	case "delegate":
 		res := &stakingtypes.MsgDelegateResponse{}
 		data.MsgType = sdk.MsgTypeURL(&stakingtypes.MsgDelegate{
-			DelegatorAddress: "test",
-			ValidatorAddress: "validator",
+			DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
+			ValidatorAddress: zoneInfo.ValidatorAddress,
 			Amount:           sdk.NewCoin("uatom", sdk.NewInt(10000)),
 		})
 		resMsg, err := proto.Marshal(res)
@@ -173,8 +191,8 @@ func (suite *KeeperTestSuite) GetMsgs(msg string) *sdk.MsgData {
 			CompletionTime: time.Unix(10000, 100000),
 		}
 		data.MsgType = sdk.MsgTypeURL(&stakingtypes.MsgUndelegate{
-			DelegatorAddress: "test",
-			ValidatorAddress: "validatorAddr",
+			DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
+			ValidatorAddress: zoneInfo.ValidatorAddress,
 			Amount:           sdk.NewCoin("uatom", sdk.NewInt(1000)),
 		})
 		resMsg, err := proto.Marshal(res)
@@ -191,9 +209,26 @@ func (suite *KeeperTestSuite) GetMsgs(msg string) *sdk.MsgData {
 	case "autostaking":
 		res := &distributiontype.MsgWithdrawDelegatorRewardResponse{}
 		data.MsgType = sdk.MsgTypeURL(&distributiontype.MsgWithdrawDelegatorReward{
-			DelegatorAddress: "delegator",
-			ValidatorAddress: "validator",
+			DelegatorAddress: zoneInfo.IcaAccount.HostAddress,
+			ValidatorAddress: zoneInfo.ValidatorAddress,
 		})
+		resMsg, err := proto.Marshal(res)
+		suite.NoError(err)
+		data.Data = resMsg
+		return &data
+	case "authzGrant":
+		spendLimit := sdk.NewCoins(sdk.NewCoin(baseDenom, sdk.NewInt(10000)))
+		res := &authz.MsgGrantResponse{}
+		grantMsg := &authz.MsgGrant{
+			Granter: zoneInfo.IcaAccount.HostAddress,
+			Grantee: zoneInfo.IcaAccount.ControllerAddress,
+			Grant: authz.Grant{
+				Expiration: time.Now(),
+			},
+		}
+		grantMsg.SetAuthorization(banktypes.NewSendAuthorization(spendLimit))
+		data.MsgType = sdk.MsgTypeURL(grantMsg)
+
 		resMsg, err := proto.Marshal(res)
 		suite.NoError(err)
 		data.Data = resMsg
@@ -209,21 +244,20 @@ func (suite *KeeperTestSuite) GetMsgs(msg string) *sdk.MsgData {
 		return &data
 	}
 }
-func (suite *KeeperTestSuite) GetPacket(msg string, zone types.RegisteredZone) channeltypes.Packet {
+func (suite *KeeperTestSuite) GetPacket(msg string, zone *types.RegisteredZone) channeltypes.Packet {
 	var msgs []sdk.Msg
 
-	addr := suite.GenRandomAddress()
 	switch msg {
 	case "delegate":
 		delegateMsg := &stakingtypes.MsgDelegate{
-			DelegatorAddress: addr.String(),
+			DelegatorAddress: zone.IcaAccount.HostAddress,
 			ValidatorAddress: zone.ValidatorAddress,
 		}
 		msgs = append(msgs, delegateMsg)
 		break
 	case "undelegate":
 		undelegateMsg := &stakingtypes.MsgUndelegate{
-			DelegatorAddress: addr.String(),
+			DelegatorAddress: zone.IcaAccount.HostAddress,
 			ValidatorAddress: zone.ValidatorAddress,
 			Amount:           sdk.NewCoin(zone.BaseDenom, sdk.NewInt(10000)),
 		}
@@ -231,7 +265,7 @@ func (suite *KeeperTestSuite) GetPacket(msg string, zone types.RegisteredZone) c
 		break
 	case "errUndelegate":
 		undelegateMsg := &stakingtypes.MsgUndelegate{
-			DelegatorAddress: addr.String(),
+			DelegatorAddress: zone.IcaAccount.HostAddress,
 			ValidatorAddress: zone.ValidatorAddress,
 			Amount:           sdk.NewCoin(zone.BaseDenom, sdk.NewInt(10000)),
 		}
@@ -251,10 +285,22 @@ func (suite *KeeperTestSuite) GetPacket(msg string, zone types.RegisteredZone) c
 		break
 	case "autostaking":
 		autostakingMsg := &distributiontype.MsgWithdrawDelegatorReward{
-			DelegatorAddress: addr.String(),
+			DelegatorAddress: zone.IcaAccount.HostAddress,
 			ValidatorAddress: zone.ValidatorAddress,
 		}
 		msgs = append(msgs, autostakingMsg)
+		break
+	case "authzGrant":
+		spendLimit := sdk.NewCoins(sdk.NewCoin(baseDenom, sdk.NewInt(10000)))
+		authzMsg := &authz.MsgGrant{
+			Granter: zone.IcaAccount.HostAddress,
+			Grantee: zone.IcaAccount.ControllerAddress,
+			Grant: authz.Grant{
+				Expiration: time.Now(),
+			},
+		}
+		authzMsg.SetAuthorization(banktypes.NewSendAuthorization(spendLimit))
+		msgs = append(msgs, authzMsg)
 		break
 	}
 
@@ -284,8 +330,10 @@ func (suite *KeeperTestSuite) GetPacket(msg string, zone types.RegisteredZone) c
 }
 
 func (suite *KeeperTestSuite) TestHandleMsgData() {
-	zone := suite.setZone(1)
-	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &zone[0])
+	zone := newBaseRegisteredZone()
+	zone.IcaAccount.HostAddress = suite.GenRandomAddress().String()
+
+	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, zone)
 
 	tcs := []struct {
 		name   string
@@ -296,36 +344,43 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 	}{
 		{
 			name:   "delegate",
-			args:   suite.GetMsgs("delegate"),
-			packet: suite.GetPacket("delegate", zone[0]),
+			args:   suite.GetMsgs("delegate", zone),
+			packet: suite.GetPacket("delegate", zone),
 			expect: "",
 			err:    nil,
 		},
 		{
 			name:   "undelegate",
-			args:   suite.GetMsgs("undelegate"),
-			packet: suite.GetPacket("undelegate", zone[0]),
+			args:   suite.GetMsgs("undelegate", zone),
+			packet: suite.GetPacket("undelegate", zone),
 			expect: "completion_time:<seconds:10000 nanos:100000 > ",
 			err:    nil,
 		},
 		{
 			name:   "transfer",
-			args:   suite.GetMsgs("transfer"),
-			packet: suite.GetPacket("transfer", zone[0]),
+			args:   suite.GetMsgs("transfer", zone),
+			packet: suite.GetPacket("transfer", zone),
 			expect: "",
 			err:    nil,
 		},
 		{
 			name:   "undelegate error",
-			args:   suite.GetMsgs("errUndelegate"),
-			packet: suite.GetPacket("errUndelegate", zone[0]),
+			args:   suite.GetMsgs("errUndelegate", zone),
+			packet: suite.GetPacket("errUndelegate", zone),
 			expect: "",
 			err:    errors.New("response cannot be nil"),
 		},
 		{
 			name:   "autostaking",
-			args:   suite.GetMsgs("autostaking"),
-			packet: suite.GetPacket("autostaking", zone[0]),
+			args:   suite.GetMsgs("autostaking", zone),
+			packet: suite.GetPacket("autostaking", zone),
+			expect: "",
+			err:    nil,
+		},
+		{
+			name:   "authzGrant",
+			args:   suite.GetMsgs("authzGrant", zone),
+			packet: suite.GetPacket("authzGrant", zone),
 			expect: "",
 			err:    nil,
 		},
@@ -333,7 +388,7 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.SetVersion(tc.name, zone[0])
+			suite.SetVersion(tc.name, zone)
 			res, err := suite.App.IcaControlKeeper.HandleAckMsgData(suite.Ctx, tc.packet, tc.args)
 			suite.NoError(err)
 
@@ -347,12 +402,12 @@ func (suite *KeeperTestSuite) TestHandleMsgData() {
 }
 
 func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
-	zone := suite.setZone(1)
-	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, &zone[0])
+	zone := newBaseRegisteredZone()
+	suite.App.IcaControlKeeper.RegisterZone(suite.Ctx, zone)
 
 	packetData := channeltypes.Packet{
 		Sequence:           1,
-		SourcePort:         icatypes.PortPrefix + zone[0].IcaAccount.ControllerAddress,
+		SourcePort:         icatypes.PortPrefix + zone.IcaAccount.ControllerAddress,
 		SourceChannel:      "channel-0",
 		DestinationPort:    "icahost",
 		DestinationChannel: "channel-0",
@@ -409,7 +464,7 @@ func (suite *KeeperTestSuite) TestHandleTimeoutPacket() {
 
 	for _, tc := range tcs {
 		suite.Run(tc.name, func() {
-			suite.SetVersion(tc.name, zone[0])
+			suite.SetVersion(tc.name, zone)
 			packetData.Data = tc.args.GetBytes()
 			err := suite.App.IcaControlKeeper.HandleAckFail(suite.Ctx, packetData)
 			if tc.err {
