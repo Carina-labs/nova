@@ -1,12 +1,10 @@
 package keepers
 
 import (
-	airdropkeeper "github.com/Carina-labs/nova/x/airdrop/keeper"
-	airdroptypes "github.com/Carina-labs/nova/x/airdrop/types"
 	"github.com/Carina-labs/nova/x/gal"
 	galkeeper "github.com/Carina-labs/nova/x/gal/keeper"
 	galtypes "github.com/Carina-labs/nova/x/gal/types"
-	icacontrol "github.com/Carina-labs/nova/x/icacontrol"
+	"github.com/Carina-labs/nova/x/icacontrol"
 	icacontrolkeeper "github.com/Carina-labs/nova/x/icacontrol/keeper"
 	mintkeeper "github.com/Carina-labs/nova/x/mint/keeper"
 	oraclekeeper "github.com/Carina-labs/nova/x/oracle/keeper"
@@ -93,7 +91,6 @@ type AppKeepers struct {
 	GalKeeper        *galkeeper.Keeper
 	IcaControlKeeper *icacontrolkeeper.Keeper
 	OracleKeeper     *oraclekeeper.Keeper
-	AirdropKeeper    *airdropkeeper.Keeper
 	PoolKeeper       *poolincentivekeeper.Keeper
 
 	// make scoped keepers public for test purposes
@@ -213,15 +210,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 	appKeepers.OracleKeeper = &oracleKeeper
 
-	// Register AirdropKeeper
-	airdropKeeper := airdropkeeper.NewKeeper(
-		appCodec,
-		appKeepers.keys[airdroptypes.StoreKey],
-		appKeepers.AccountKeeper,
-		appKeepers.BankKeeper,
-	)
-	appKeepers.AirdropKeeper = &airdropKeeper
-
 	// Register GAL module.
 	galKeeper := galkeeper.NewKeeper(
 		appCodec,
@@ -232,7 +220,6 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 		icaControlKeeper,
 		transferKeeper,
 		oracleKeeper,
-		appKeepers.AirdropKeeper,
 		appKeepers.IBCKeeper.ChannelKeeper,
 	)
 	appKeepers.GalKeeper = &galKeeper
@@ -290,7 +277,7 @@ func (appKeepers *AppKeepers) InitNormalKeepers(
 	)
 
 	appKeepers.GovKeeper = govKeeper.SetHooks(
-		govtypes.NewMultiGovHooks(appKeepers.AirdropKeeper.Hooks()),
+		govtypes.NewMultiGovHooks(),
 	)
 
 	// Create static IBC router, add transfer route, then set and seal it
@@ -393,6 +380,5 @@ func KVStoreKeys() []string {
 		authzkeeper.StoreKey,
 		oracletypes.StoreKey,
 		poolincentivetypes.StoreKey,
-		airdroptypes.StoreKey,
 	}
 }

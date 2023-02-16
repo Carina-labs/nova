@@ -16,11 +16,6 @@ type BankKeeper interface {
 	SendCoins(ctx sdk.Context, fromAddr sdk.AccAddress, toAddr sdk.AccAddress, amt sdk.Coins) error
 }
 
-// AirdropKeeper defines the contract needed to be fulfilled for airdrop dependencies.
-type AirdropKeeper interface {
-	PostClaimedSnAsset(ctx sdk.Context, userAddr sdk.AccAddress)
-}
-
 type AccountKeeper interface {
 	GetModuleAccount(ctx sdk.Context, moduleName string) types.ModuleAccountI
 }
